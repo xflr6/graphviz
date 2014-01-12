@@ -1,0 +1,5 @@
+*.py[cod]
+MANIFEST
+dist/
+*.egg-info/
+round-table.gv*
