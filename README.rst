@@ -1,6 +1,8 @@
 Graphviz
 ========
 
+|PyPI version| |License|
+
 This package facilitates the creation of graph descriptions in
 the `DOT <http://www.graphviz.org/doc/info/lang.html>`_ language
 of the `Graphviz <http://www.graphviz.org>`_ graph drawing software
@@ -68,7 +70,7 @@ Save the source code, optionally compile and view result:
 
     >>> dot.save('round-table.gv', compile=True, view=True)
 
-.. image:: docs/round-table.gv.png
+.. image:: https://raw.github.com/xflr6/graphviz/master/docs/round-table.gv.png
 
 
 License
@@ -76,3 +78,10 @@ License
 
 This package is distributed under the `MIT license
 <http://opensource.org/licenses/MIT>`_.
+
+.. |PyPI version| image:: https://pypip.in/v/graphviz/badge.png
+    :target: https://pypi.python.org/pypi/graphviz
+    :alt: Latest PyPI Version
+.. |License| image:: https://pypip.in/license/graphviz/badge.png
+    :target: https://pypi.python.org/pypi/graphviz
+    :alt: License
