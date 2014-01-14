@@ -1,7 +1,7 @@
 Graphviz
 ========
 
-|PyPI version| |License|
+|PyPI version| |License| |Downloads|
 
 This package facilitates the creation of graph descriptions in
 the `DOT <http://www.graphviz.org/doc/info/lang.html>`_ language
@@ -85,3 +85,6 @@ This package is distributed under the `MIT license
 .. |License| image:: https://pypip.in/license/graphviz/badge.png
     :target: https://pypi.python.org/pypi/graphviz
     :alt: License
+.. |Downloads| image:: https://pypip.in/d/graphviz/badge.png
+    :target: https://pypi.python.org/pypi/graphviz
+    :alt: Downloads
