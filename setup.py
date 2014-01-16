@@ -7,7 +7,7 @@ except ImportError:
     
 setup(
     name='graphviz',
-    version='0.1',
+    version='0.1.1',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Simple Python interface for Graphviz',
@@ -15,6 +15,7 @@ setup(
     keywords='graph visualization dot',
     url='http://github.com/xflr6/graphviz',
     packages=['graphviz'],
+    platforms='any',
     long_description=open('README.rst').read(),
     classifiers=[
         'Development Status :: 3 - Alpha',

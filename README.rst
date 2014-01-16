@@ -6,10 +6,12 @@ Graphviz
 This package facilitates the creation of graph descriptions in
 the `DOT <http://www.graphviz.org/doc/info/lang.html>`_ language
 of the `Graphviz <http://www.graphviz.org>`_ graph drawing software
-from Python. Create a graph object, assemble the graph by adding
-nodes and edges, and retrieve its DOT source code string. Save the
-source code to a file and compile it with the Graphviz installation
-of your system.
+from Python.
+
+Create a graph object, assemble the graph by adding nodes and edges,
+and retrieve its DOT source code string.
+Save the source code to a file and compile it with the Graphviz
+installation of your system.
 
 
 Installation
@@ -21,6 +23,7 @@ Installation
 
 To compile the generated DOT source code, you also need to install
 Graphviz (`download page <http://www.graphviz.org/Download.php>`_).
+
 Make sure that the ``dot`` executable is on your systems' path.
 
 
@@ -42,21 +45,21 @@ Add nodes and edges:
 
 .. code:: python
 	
-    >>> dot.node('A', 'Kind Arthur')
+    >>> dot.node('A', 'King Arthur')
     >>> dot.node('B', 'Sir Bedevere the Wise')
     >>> dot.node('L', 'Sir Lancelot the Brave')
 
     >>> dot.edges(['AB', 'AL'])
     >>> dot.edge('B', 'L', constraint='false')
 
-Check results:
+Check the generated source code:
 
 .. code:: python
 
     >>> print dot.source  # doctest: +NORMALIZE_WHITESPACE
     // 'The Round Table'
     digraph {
-        A [label="Kind Arthur"]
+        A [label="King Arthur"]
         B [label="Sir Bedevere the Wise"]
         L [label="Sir Lancelot the Brave"]
                 A -> B
@@ -64,13 +67,13 @@ Check results:
                 B -> L [constraint=false]
     }
 
-Save the source code, optionally compile and view result:
+Save the source code, optionally compile and view the result:
 
 .. code:: python
 
     >>> dot.save('round-table.gv', compile=True, view=True)
 
-.. image:: https://raw.github.com/xflr6/graphviz/master/docs/round-table.gv.png
+.. image:: https://raw.github.com/xflr6/graphviz/master/docs/round-table.png
 
 
 License

@@ -25,8 +25,7 @@ def attributes(label=None, kwargs=None, attributes=None, raw=None):
     if label is None:
         result = []
     else:
-        label = quote(label.replace('-', '&minus;'))
-        result = ['label=%s' % label]
+        result = ['label=%s' % quote(label)]
     if kwargs:
         result.extend(imap('%s=%s'.__mod__, kwargs.iteritems()))
     if attributes:
@@ -45,8 +44,8 @@ class Dot(files.File):
     _tail = '}'
     _filename = '%s.gv'
 
-    _key = staticmethod(quote)
-    _attributes = staticmethod(attributes)
+    quote = staticmethod(quote)
+    attributes = staticmethod(attributes)
 
     def __init__(self, comment=None, key=None, filename=None, directory=None,
             graph_attr=None, node_attr=None, edge_attr=None, body=None):
@@ -67,11 +66,11 @@ class Dot(files.File):
 
     def __iter__(self):
         yield self._comment % self.comment
-        yield self._head % (self._key(self.key) + ' ' if self.key else '')
+        yield self._head % (self.quote(self.key) + ' ' if self.key else '')
         for kw in ('graph', 'node', 'edge'):
             attr = getattr(self, '%s_attr' % kw)
             if attr:
-                yield '%s%s' % (kw, self._attributes(None, attr))
+                yield '%s%s' % (kw, self.attributes(None, attr))
         for line in self.body:
             yield line
         yield self._tail
@@ -94,21 +93,21 @@ class Dot(files.File):
 
     def node(self, key, label=None, _attributes=None, **kwargs):
         """Create a node."""
-        key = self._key(key)
-        attributes = self._attributes(label, kwargs, _attributes)
+        key = self.quote(key)
+        attributes = self.attributes(label, kwargs, _attributes)
         self.body.append('\t%s%s' % (key, attributes))
 
     def edge(self, parent_key, child_key, label=None, _attributes=None, **kwargs):
         """Create an edge."""
-        parent_key = self._key(parent_key)
-        child_key = self._key(child_key)
-        attributes = self._attributes(label, kwargs, _attributes)
+        parent_key = self.quote(parent_key)
+        child_key = self.quote(child_key)
+        attributes = self.attributes(label, kwargs, _attributes)
         self.body.append('\t\t%s -> %s%s' % (parent_key, child_key, attributes))
 
     def edges(self, parent_child):
         """Create a bunch of edges."""
-        key = self._key
-        self.body.extend('\t\t%s -> %s' % (key(p), key(c))
+        quote = self.quote
+        self.body.extend('\t\t%s -> %s' % (quote(p), quote(c))
             for p, c in parent_child)
 
 

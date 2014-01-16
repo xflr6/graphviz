@@ -3,3 +3,4 @@ MANIFEST
 dist/
 *.egg-info/
 round-table.gv*
+Thumbs.db

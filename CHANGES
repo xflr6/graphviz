@@ -2,6 +2,14 @@ Graphviz Changelog
 ==================
 
 
+Version 0.1.1
+-------------
+
+Removed automatic '-' to '&minus;' replacement from labels.
+
+Fixed documentation typos.
+
+
 Version 0.1
 -----------
 
