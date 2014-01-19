@@ -36,7 +36,7 @@ Create a graph object:
 
     >>> from graphviz import Digraph
 	
-    >>> dot = Digraph('The Round Table')
+    >>> dot = Digraph(comment='The Round Table')
 
     >>> dot  #doctest: +ELLIPSIS
     <graphviz.dot.Digraph object at 0x...>
@@ -57,21 +57,22 @@ Check the generated source code:
 .. code:: python
 
     >>> print dot.source  # doctest: +NORMALIZE_WHITESPACE
-    // 'The Round Table'
+    // The Round Table
     digraph {
         A [label="King Arthur"]
         B [label="Sir Bedevere the Wise"]
         L [label="Sir Lancelot the Brave"]
-                A -> B
-                A -> L
-                B -> L [constraint=false]
+            A -> B
+            A -> L
+            B -> L [constraint=false]
     }
 
-Save the source code, optionally compile and view the result:
+Save and render the source code, optionally view the result:
 
 .. code:: python
 
-    >>> dot.save('round-table.gv', compile=True, view=True)
+    >>> dot.render('round-table.gv', view=True)
+    'round-table.gv.pdf'
 
 .. image:: https://raw.github.com/xflr6/graphviz/master/docs/round-table.png
 

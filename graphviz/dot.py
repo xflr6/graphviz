@@ -2,71 +2,40 @@
 
 """Assemble DOT source code objects."""
 
-import re
-from itertools import imap
-
+import lang
 import files
 
 __all__ = ['Digraph', 'Subgraph']
 
 
-ID = re.compile(r'([a-zA-Z_]\w*|-?\d+)$')
-
-
-def quote(key, valid_id=ID.match):
-    """Return DOT identifier from key, quote if needed."""
-    if not valid_id(key):
-        return '"%s"' % key.replace('"', '\"')
-    return key
-
-
-def attributes(label=None, kwargs=None, attributes=None, raw=None):
-    """Return assembled DOT attributes string."""
-    if label is None:
-        result = []
-    else:
-        result = ['label=%s' % quote(label)]
-    if kwargs:
-        result.extend(imap('%s=%s'.__mod__, kwargs.iteritems()))
-    if attributes:
-        if hasattr(attributes, 'iteritems'):
-            attributes = attributes.iteritems()
-        result.extend(imap('%s=%s'.__mod__, attributes))
-    if raw:
-        result.append(raw)
-    return ' [%s]' % ' '.join(result) if result else ''
-
-
 class Dot(files.File):
     """Assemble, save, and compile DOT source code, open result in viewer."""
 
-    _comment = '// %r'
+    _comment = '// %s'
     _tail = '}'
-    _filename = '%s.gv'
 
-    quote = staticmethod(quote)
-    attributes = staticmethod(attributes)
+    quote = staticmethod(lang.quote)
+    attributes = staticmethod(lang.attributes)
 
-    def __init__(self, comment=None, key=None, filename=None, directory=None,
+    def __init__(self, name=None, comment=None,
+            filename=None, directory=None,
+            format=None, engine=None, encoding=None,
             graph_attr=None, node_attr=None, edge_attr=None, body=None):
 
+        self.name = name
         self.comment = comment
-        self.key = key
-        if filename is None:
-            filename = self._filename % (key if key else 'Graph')
-        self.filename =  filename
-        self.directory = directory
-        self._saved = False
+
+        super(Dot, self).__init__(filename, directory, format, engine, encoding)
 
         self.graph_attr = {} if graph_attr is None else dict(graph_attr)
         self.node_attr = {} if node_attr is None else dict(node_attr)
         self.edge_attr = {} if edge_attr is None else dict(edge_attr)
 
-        self.body = [] if body is None else body
+        self.body = [] if body is None else list(body)
 
     def __iter__(self):
         yield self._comment % self.comment
-        yield self._head % (self.quote(self.key) + ' ' if self.key else '')
+        yield self._head % (self.quote(self.name) + ' ' if self.name else '')
         for kw in ('graph', 'node', 'edge'):
             attr = getattr(self, '%s_attr' % kw)
             if attr:
@@ -91,24 +60,24 @@ class Dot(files.File):
         """Add lines to the source."""
         self.body.extend(lines)
 
-    def node(self, key, label=None, _attributes=None, **kwargs):
+    def node(self, name, label=None, _attributes=None, **kwargs):
         """Create a node."""
-        key = self.quote(key)
+        name = self.quote(name)
         attributes = self.attributes(label, kwargs, _attributes)
-        self.body.append('\t%s%s' % (key, attributes))
+        self.body.append('\t%s%s' % (name, attributes))
 
-    def edge(self, parent_key, child_key, label=None, _attributes=None, **kwargs):
+    def edge(self, tail_name, head_name, label=None, _attributes=None, **kwargs):
         """Create an edge."""
-        parent_key = self.quote(parent_key)
-        child_key = self.quote(child_key)
+        tail_name = self.quote(tail_name)
+        head_name = self.quote(head_name)
         attributes = self.attributes(label, kwargs, _attributes)
-        self.body.append('\t\t%s -> %s%s' % (parent_key, child_key, attributes))
+        self.body.append('\t\t%s -> %s%s' % (tail_name, head_name, attributes))
 
-    def edges(self, parent_child):
+    def edges(self, tail_head_iter):
         """Create a bunch of edges."""
         quote = self.quote
-        self.body.extend('\t\t%s -> %s' % (quote(p), quote(c))
-            for p, c in parent_child)
+        self.body.extend('\t\t%s -> %s' % (quote(t), quote(h))
+            for t, h in tail_head_iter)
 
 
 class Digraph(Dot):

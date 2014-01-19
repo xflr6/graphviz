@@ -7,12 +7,12 @@ except ImportError:
     
 setup(
     name='graphviz',
-    version='0.1.1',
+    version='0.2',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Simple Python interface for Graphviz',
     license='MIT',
-    keywords='graph visualization dot',
+    keywords='graph visualization dot render',
     url='http://github.com/xflr6/graphviz',
     packages=['graphviz'],
     platforms='any',

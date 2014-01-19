@@ -2,6 +2,22 @@ Graphviz Changelog
 ==================
 
 
+Version 0.2
+-----------
+
+Added format selection, use PDF as default.
+Added engines selection, use dot as default.
+Added source encoding, use UTF-8 as default.
+
+Changed constructor arguments order, removed compile and save method,
+reimplemented compilation in render method, make interface more similar
+to gv.3python (backwards incompatible change).
+
+Double-quote-sign escaping, attribute list quoting.
+
+mkdirs now correctly supports current directory filenames.
+
+
 Version 0.1.1
 -------------
 
