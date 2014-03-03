@@ -106,7 +106,7 @@ class File(Base):
 
         params = {'engine': self._engine, 'format': self._format, 'filepath': filepath}
         cmd = self._cmd % params
-        returncode = subprocess.Popen(cmd).wait()
+        returncode = subprocess.Popen(cmd.split()).wait()
 
         rendered = '%s.%s' % (filepath, self._format)
 
