@@ -2,6 +2,14 @@ Graphviz Changelog
 ==================
 
 
+Version 0.2.2
+-------------
+
+Support pdf opening on Linux.
+
+Fixed rendering filenames w/spaces.
+
+
 Version 0.2.1
 -------------
 

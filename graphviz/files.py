@@ -59,7 +59,9 @@ class File(Base):
 
     _default_extension = 'gv'
 
-    _cmd = '%(engine)s -T%(format)s -O %(filepath)s'
+    @staticmethod
+    def _cmd(engine, format, filepath):
+        return [engine, '-T%s' % format, '-O', filepath]
 
     @property
     def filepath(self):
@@ -104,9 +106,9 @@ class File(Base):
         if dry:
             return
 
-        params = {'engine': self._engine, 'format': self._format, 'filepath': filepath}
-        cmd = self._cmd % params
-        returncode = subprocess.Popen(cmd.split()).wait()
+        cmd = self._cmd(self._engine, self._format, filepath)
+
+        returncode = subprocess.Popen(cmd).wait()
 
         rendered = '%s.%s' % (filepath, self._format)
 
@@ -123,7 +125,7 @@ class File(Base):
     def _view(self, filepath, format):
         methods = [
             '_view_%s_%s' % (format, sys.platform),
-            '_view_%s' % format,
+            '_view_%s' % sys.platform,
         ]
         for name in methods:
             method = getattr(self, name, None)
@@ -135,11 +137,14 @@ class File(Base):
 
         return method(filepath)
 
-    def _view_pdf_linux2(self, filepath):
-        raise NotImplementedError
+    @staticmethod
+    def _view_pdf_linux2(filepath):
+        subprocess.Popen(['xdg-open', filepath], shell=True)
 
-    def _view_pdf_win32(self, filepath):
-        subprocess.Popen(filepath, shell=True)
+    @staticmethod
+    def _view_pdf_win32(filepath):
+        os.startfile(filepath)
 
-    def _view_pdf_darwin(self, filepath):
-        subprocess.Popen(filepath, shell=True)
+    @staticmethod
+    def _view_pdf_darwin(filepath):
+        subprocess.Popen(['open', filepath], shell=True)
