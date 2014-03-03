@@ -4,7 +4,6 @@ import re
 
 __all__ = ['quote', 'attributes']
 
-
 ID = re.compile(r'([a-zA-Z_]\w*|-?(\.\d+|\d+(\.\d*)?))$')
 
 
@@ -69,11 +68,3 @@ def attributes(label=None, kwargs=None, attributes=None, raw=None):
     if result:
         return ' [%s]' % ' '.join(result)
     return ''
-
-
-def _test(verbose=False):
-    import doctest
-    doctest.testmod(verbose=verbose)
-
-if __name__ == '__main__':
-    _test()

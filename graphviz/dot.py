@@ -5,7 +5,7 @@
 import lang
 import files
 
-__all__ = ['Digraph', 'Subgraph']
+__all__ = ['Graph', 'Digraph', 'Subgraph']
 
 
 class Dot(files.File):
@@ -78,6 +78,12 @@ class Dot(files.File):
         quote = self.quote
         self.body.extend('\t\t%s -> %s' % (quote(t), quote(h))
             for t, h in tail_head_iter)
+
+
+class Graph(Dot):
+    """Graph source code in the DOT language."""
+
+    _head = 'graph %s{'
 
 
 class Digraph(Dot):

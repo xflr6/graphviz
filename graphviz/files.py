@@ -12,18 +12,15 @@ import tools
 __all__ = ['File']
 
 FORMATS = {'pdf', 'ps', 'svg', 'fig', 'pcl', 'png', 'gif', 'dia'}
+
 ENGINES = {'dot', 'neato', 'twopi', 'circo', 'fdp', 'sfdp'}
 
 
 class Base(object):
 
-    _cmd = '%(engine)s -T%(format)s -O %(filepath)s'
-
     _format = 'pdf'
     _engine = 'dot'
     _encoding = 'utf8'
-
-    _default_extension = 'gv'
 
     @property
     def format(self):
@@ -56,10 +53,13 @@ class Base(object):
         self._encoding = encoding
 
 
-
 class File(Base):
 
     directory = ''
+
+    _default_extension = 'gv'
+
+    _cmd = '%(engine)s -T%(format)s -O %(filepath)s'
 
     @property
     def filepath(self):

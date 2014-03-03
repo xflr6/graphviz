@@ -7,7 +7,7 @@ except ImportError:
     
 setup(
     name='graphviz',
-    version='0.2',
+    version='0.2.1',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Simple Python interface for Graphviz',

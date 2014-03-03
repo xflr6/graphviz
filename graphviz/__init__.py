@@ -25,19 +25,11 @@ digraph {
 """
 
 __title__ = 'graphviz'
-__version__ = '0.2'
+__version__ = '0.2.1'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE'
 __copyright__ = 'Copyright (c) 2014 Sebastian Bank'
 
-from dot import Digraph, Subgraph
+from dot import Graph, Digraph, Subgraph
 
-__all__ = ['Digraph', 'Subgraph']
-
-
-def _test(verbose=False):
-    import doctest
-    doctest.testmod(verbose=verbose)
-
-if __name__ == '__main__':
-    _test()
+__all__ = ['Graph', 'Digraph', 'Subgraph']
