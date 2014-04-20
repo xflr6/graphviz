@@ -12,7 +12,7 @@
 
 >>> dot.edge('B', 'L', constraint='false')
 
->>> print dot  #doctest: +NORMALIZE_WHITESPACE
+>>> print(dot)  #doctest: +NORMALIZE_WHITESPACE
 // The Round Table
 digraph {
     A [label="King Arthur"]
@@ -24,12 +24,15 @@ digraph {
 }
 """
 
+from __future__ import (unicode_literals, absolute_import,
+                        division, print_function)
+
 __title__ = 'graphviz'
 __version__ = '0.2.2'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE'
 __copyright__ = 'Copyright (c) 2014 Sebastian Bank'
 
-from dot import Graph, Digraph, Subgraph
+from .dot import Graph, Digraph, Subgraph
 
 __all__ = ['Graph', 'Digraph', 'Subgraph']

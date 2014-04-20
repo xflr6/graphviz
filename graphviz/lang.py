@@ -52,12 +52,12 @@ def attributes(label=None, kwargs=None, attributes=None, raw=None):
 
     if kwargs:
         items = ['%s=%s' % (quote(k), quote(v))
-            for k, v in kwargs.iteritems() if v is not None]
+            for k, v in kwargs.items() if v is not None]
         result.extend(items)
 
     if attributes:
         if hasattr(attributes, 'iteritems'):
-            attributes = attributes.iteritems()
+            attributes = attributes.items()
         items = ['%s=%s' % (quote(k), quote(v))
             for k, v in attributes if v is not None]
         result.extend(items)

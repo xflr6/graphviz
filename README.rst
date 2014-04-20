@@ -53,7 +53,7 @@ Check the generated source code:
 
 .. code:: python
 
-    >>> print dot.source  # doctest: +NORMALIZE_WHITESPACE
+    >>> print(dot.source)  # doctest: +NORMALIZE_WHITESPACE
     // The Round Table
     digraph {
         A [label="King Arthur"]

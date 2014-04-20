@@ -7,7 +7,7 @@ import sys
 import codecs
 import subprocess
 
-import tools
+from . import tools
 
 __all__ = ['File']
 
