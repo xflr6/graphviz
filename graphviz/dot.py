@@ -2,8 +2,8 @@
 
 """Assemble DOT source code objects."""
 
-import lang
-import files
+from . import lang
+from . import files
 
 __all__ = ['Graph', 'Digraph', 'Subgraph']
 
