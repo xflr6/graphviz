@@ -7,18 +7,20 @@ This package facilitates the creation of graph descriptions in the DOT_ language
 of the Graphviz_ graph drawing software from Python.
 
 Create a graph object, assemble the graph by adding nodes and edges, and
-retrieve its DOT source code string. Save the source code to a file and compile
+retrieve its DOT source code string. Save the source code to a file and render
 it with the Graphviz installation of your system.
 
 
 Installation
 ------------
 
+This package runs under Python 2.7 and 3.3+, use pip_ to install:
+
 .. code:: bash
 
     $ pip install graphviz
 
-To compile the generated DOT source code, you also need to install Graphviz
+To render the generated DOT source code, you also need to install Graphviz
 (`download page`_).
 
 Make sure that the ``dot`` executable is on your systems' path.
@@ -88,7 +90,7 @@ License
 
 This package is distributed under the `MIT license`_.
 
-
+.. _pip: http://pip.readthedocs.org
 .. _Graphviz:  http://www.graphviz.org
 .. _download page: http://www.graphviz.org/Download.php
 .. _DOT: http://www.graphviz.org/doc/info/lang.html

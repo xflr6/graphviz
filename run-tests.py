@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # run-tests.py
 
 import doctest

@@ -3,7 +3,9 @@
 import os
 import errno
 
-__all__ = ['mkdirs']
+from ._compat import iteritems
+
+__all__ = ['mkdirs', 'mapping_items']
 
 
 def mkdirs(filename, mode=0o777):
@@ -19,3 +21,18 @@ def mkdirs(filename, mode=0o777):
             pass
         else:
             raise
+
+
+def mapping_items(mapping):
+    """Return an iterator over the mapping items, sort if it's a plain dict.
+
+    >>> list(mapping_items({'spam': 0, 'ham': 1, 'eggs': 2}))
+    [('eggs', 2), ('ham', 1), ('spam', 0)]
+
+    >>> from collections import OrderedDict
+    >>> list(mapping_items(OrderedDict(enumerate(['spam', 'ham', 'eggs']))))
+    [(0, 'spam'), (1, 'ham'), (2, 'eggs')]
+    """
+    if type(mapping) is dict:
+        return iter(sorted(iteritems(mapping)))
+    return iteritems(mapping)

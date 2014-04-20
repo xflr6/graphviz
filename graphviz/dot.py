@@ -1,15 +1,37 @@
 # dot.py - create dot code
 
-"""Assemble DOT source code objects."""
+"""Assemble DOT source code objects.
 
-from . import lang
-from . import files
+>>> dot = Graph(comment=u'M\xf8nti Pyth\xf8n lk den H\xf8lie Grailen')
+
+>>> dot.node(u'M\xf8\xf8se')
+>>> dot.node('trained_by', u'trained by')
+>>> dot.node('tutte', u'TUTTE HERMSGERVORDENBROTBORDA')
+
+>>> dot.edge(u'M\xf8\xf8se', 'trained_by')
+>>> dot.edge('trained_by', 'tutte')
+
+>>> print(dot.source.replace(u'\xf8', '0'))  #doctest: +NORMALIZE_WHITESPACE
+// M0nti Pyth0n lk den H0lie Grailen
+graph {
+    "M00se"
+    trained_by [label="trained by"]
+    tutte [label="TUTTE HERMSGERVORDENBROTBORDA"]
+        "M00se" -- trained_by
+    	trained_by -- tutte
+}
+
+>>> dot.render('m00se.gv', view=True)
+'m00se.gv.pdf'
+"""
+
+from . import lang, files
 
 __all__ = ['Graph', 'Digraph', 'Subgraph']
 
 
 class Dot(files.File):
-    """Assemble, save, and compile DOT source code, open result in viewer."""
+    """Assemble, save, and render DOT source code, open result in viewer."""
 
     _comment = '// %s'
     _tail = '}'
@@ -71,12 +93,14 @@ class Dot(files.File):
         tail_name = self.quote(tail_name)
         head_name = self.quote(head_name)
         attributes = self.attributes(label, kwargs, _attributes)
-        self.body.append('\t\t%s -> %s%s' % (tail_name, head_name, attributes))
+        edge = self._edge % (tail_name, head_name, attributes)
+        self.body.append(edge)
 
     def edges(self, tail_head_iter):
         """Create a bunch of edges."""
+        edge = self._edge_plain
         quote = self.quote
-        self.body.extend('\t\t%s -> %s' % (quote(t), quote(h))
+        self.body.extend(edge % (quote(t), quote(h))
             for t, h in tail_head_iter)
 
 
@@ -84,15 +108,19 @@ class Graph(Dot):
     """Graph source code in the DOT language."""
 
     _head = 'graph %s{'
+    _edge = '\t\t%s -- %s%s'
+    _edge_plain = '\t\t%s -- %s'
 
 
 class Digraph(Dot):
     """Directed graph source code in the DOT language."""
 
     _head = 'digraph %s{'
+    _edge = '\t\t%s -> %s%s'
+    _edge_plain = '\t\t%s -> %s'
 
 
-class Subgraph(Dot):
-    """Subgraph source code in the DOT language."""
+class Subgraph(Digraph):
+    """Directed subgraph source code in the DOT language."""
 
     _head = 'subgraph %s{'

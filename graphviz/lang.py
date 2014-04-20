@@ -2,9 +2,11 @@
 
 import re
 
+from .tools import mapping_items
+
 __all__ = ['quote', 'attributes']
 
-ID = re.compile(r'([a-zA-Z_]\w*|-?(\.\d+|\d+(\.\d*)?))$')
+ID = re.compile(r'([a-zA-Z_][a-zA-Z0-9_]*|-?(\.\d+|\d+(\.\d*)?))$')
 
 
 def quote(identifier, valid_id=ID.match):
@@ -36,6 +38,8 @@ def quote(identifier, valid_id=ID.match):
 def attributes(label=None, kwargs=None, attributes=None, raw=None):
     """Return assembled DOT attributes string.
 
+    Sorts kwargs and attributes if they are plain dicts for stable order.
+
     >>> attributes()
     ''
 
@@ -52,12 +56,12 @@ def attributes(label=None, kwargs=None, attributes=None, raw=None):
 
     if kwargs:
         items = ['%s=%s' % (quote(k), quote(v))
-            for k, v in kwargs.items() if v is not None]
+            for k, v in mapping_items(kwargs) if v is not None]
         result.extend(items)
 
     if attributes:
-        if hasattr(attributes, 'iteritems'):
-            attributes = attributes.items()
+        if hasattr(attributes, 'items'):
+            attributes = mapping_items(attributes)
         items = ['%s=%s' % (quote(k), quote(v))
             for k, v in attributes if v is not None]
         result.extend(items)

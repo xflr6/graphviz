@@ -1,6 +1,12 @@
-*.py[cod]
+*.py[co]
+__pycache__/
 MANIFEST
+build/
 dist/
 *.egg-info/
-round-table.gv*
+.coverage
+
 Thumbs.db
+
+round-table.gv*
+m00se.gv*

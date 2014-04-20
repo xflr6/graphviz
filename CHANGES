@@ -2,6 +2,14 @@ Graphviz Changelog
 ==================
 
 
+Version 0.3
+-----------
+
+Added Python 3.3+ support.
+Made attributes order stable (sorting plain dicts).
+Fixed edgeop in undirected graphs.
+
+
 Version 0.2.2
 -------------
 

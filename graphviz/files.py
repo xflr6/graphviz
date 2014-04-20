@@ -1,19 +1,24 @@
-# files.py - save, compile, view
+# files.py - save, render, view
 
-"""Save DOT code objects, compile with Graphviz dot, and open in viewer."""
+"""Save DOT code objects, render with Graphviz dot, and open in viewer."""
 
-import os
 import sys
+import os
+import io
 import codecs
 import subprocess
 
-from . import tools
+from ._compat import text_type
+
+from .tools import mkdirs
 
 __all__ = ['File']
 
 FORMATS = {'pdf', 'ps', 'svg', 'fig', 'pcl', 'png', 'gif', 'dia'}
 
 ENGINES = {'dot', 'neato', 'twopi', 'circo', 'fdp', 'sfdp'}
+
+PLATFORM = sys.platform
 
 
 class Base(object):
@@ -83,7 +88,7 @@ class File(Base):
             self.engine = engine
 
         if encoding is not None:
-            self.encoding = encoding            
+            self.encoding = encoding
 
 
     def render(self, filename=None, directory=None, view=False, dry=False):
@@ -94,14 +99,12 @@ class File(Base):
             self.directory = directory
 
         filepath = self.filepath
-        tools.mkdirs(filepath)
-        data = self.source
-        if self._encoding is None:
-            with open(filepath, 'wb') as fd:
-                fd.write(data)
-        else:
-            with codecs.open(filepath, 'wb', self._encoding) as fd:
-                fd.write(data)
+        mkdirs(filepath)
+
+        data = text_type(self.source)
+
+        with io.open(filepath, 'w', encoding=self.encoding) as fd:
+            fd.write(data)
 
         if dry:
             return
@@ -123,9 +126,10 @@ class File(Base):
         self._view(rendered, self._format)
 
     def _view(self, filepath, format):
+        """Start the right viewer based on file format and platform."""
         methods = [
-            '_view_%s_%s' % (format, sys.platform),
-            '_view_%s' % sys.platform,
+            '_view_%s_%s' % (format, PLATFORM),
+            '_view_%s' % PLATFORM,
         ]
         for name in methods:
             method = getattr(self, name, None)
@@ -133,18 +137,21 @@ class File(Base):
                 break
         else:
             raise RuntimeError('%r has no built-in viewer support for %r '
-                'on %r platform' % (self.__class__, format, sys.platform))
+                'on %r platform' % (self.__class__, format, PLATFORM))
 
-        return method(filepath)
+        method(filepath)
 
     @staticmethod
-    def _view_pdf_linux2(filepath):
+    def _view_linux2(filepath):
+        """Open filepath in the user's preferred application (linux)."""
         subprocess.Popen(['xdg-open', filepath], shell=True)
 
     @staticmethod
-    def _view_pdf_win32(filepath):
+    def _view_win32(filepath):
+        """Start filepath with its associated application (windows)."""
         os.startfile(filepath)
 
     @staticmethod
-    def _view_pdf_darwin(filepath):
+    def _view_darwin(filepath):
+        """Open filepath with its default application (mac)."""
         subprocess.Popen(['open', filepath], shell=True)

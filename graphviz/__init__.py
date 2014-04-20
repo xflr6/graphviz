@@ -1,6 +1,6 @@
-# graphviz - create dot, save, compile, view
+# graphviz - create dot, save, render, view
 
-"""Assemble DOT source code and compile it with Graphviz.
+"""Assemble DOT source code and render it with Graphviz.
 
 >>> dot = Digraph(comment='The Round Table')
 
@@ -24,11 +24,8 @@ digraph {
 }
 """
 
-from __future__ import (unicode_literals, absolute_import,
-                        division, print_function)
-
 __title__ = 'graphviz'
-__version__ = '0.2.2'
+__version__ = '0.3'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE'
 __copyright__ = 'Copyright (c) 2014 Sebastian Bank'
