@@ -8,5 +8,4 @@ dist/
 
 Thumbs.db
 
-round-table.gv*
-m00se.gv*
+test-output/

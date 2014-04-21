@@ -149,7 +149,7 @@ class File(Base):
     @staticmethod
     def _view_win32(filepath):
         """Start filepath with its associated application (windows)."""
-        os.startfile(filepath)
+        os.startfile(os.path.normpath(filepath))
 
     @staticmethod
     def _view_darwin(filepath):

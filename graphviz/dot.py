@@ -18,11 +18,11 @@ graph {
     trained_by [label="trained by"]
     tutte [label="TUTTE HERMSGERVORDENBROTBORDA"]
         "M00se" -- trained_by
-    	trained_by -- tutte
+        trained_by -- tutte
 }
 
->>> dot.render('m00se.gv', view=True)
-'m00se.gv.pdf'
+>>> dot.render('test-output/m00se.gv', view=True)
+'test-output/m00se.gv.pdf'
 """
 
 from . import lang, files

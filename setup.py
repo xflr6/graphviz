@@ -4,7 +4,7 @@ from setuptools import setup
     
 setup(
     name='graphviz',
-    version='0.3',
+    version='0.3.1',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Simple Python interface for Graphviz',

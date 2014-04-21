@@ -70,8 +70,8 @@ Save and render the source code, optionally view the result:
 
 .. code:: python
 
-    >>> dot.render('round-table.gv', view=True)
-    'round-table.gv.pdf'
+    >>> dot.render('test-output/round-table.gv', view=True)
+    'test-output/round-table.gv.pdf'
 
 .. image:: https://raw.github.com/xflr6/graphviz/master/docs/round-table.png
     :align: center
