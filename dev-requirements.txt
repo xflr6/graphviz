@@ -1,0 +1,8 @@
+nose
+coverage
+flake8
+pep8-naming
+pytest
+pytest-cov
+pytest-pep8
+pytest-flakes

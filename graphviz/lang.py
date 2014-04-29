@@ -38,7 +38,8 @@ def quote(identifier, valid_id=ID.match):
 def attributes(label=None, kwargs=None, attributes=None, raw=None):
     """Return assembled DOT attributes string.
 
-    Sorts kwargs and attributes if they are plain dicts for stable order.
+    Sorts kwargs and attributes if they are plain dicts (to avoid
+    unpredictable order from hash randomization in Python 3.3+).
 
     >>> attributes()
     ''
@@ -48,6 +49,15 @@ def attributes(label=None, kwargs=None, attributes=None, raw=None):
 
     >>> attributes(kwargs={'spam': None, 'eggs': ''})
     ' [eggs=""]'
+
+    >>> attributes(attributes=[('spam', 'eggs')])
+    ' [spam=eggs]'
+
+    >>> attributes(attributes={'spam': 'eggs'})
+    ' [spam=eggs]'
+
+    >>> attributes(raw='spam')
+    ' [spam]'
     """
     if label is None:
         result = []

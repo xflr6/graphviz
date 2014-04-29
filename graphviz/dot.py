@@ -11,14 +11,17 @@
 >>> dot.edge(u'M\xf8\xf8se', 'trained_by')
 >>> dot.edge('trained_by', 'tutte')
 
+>>> dot.node_attr['shape'] = 'rectangle'
+
 >>> print(dot.source.replace(u'\xf8', '0'))  #doctest: +NORMALIZE_WHITESPACE
 // M0nti Pyth0n lk den H0lie Grailen
 graph {
-    "M00se"
-    trained_by [label="trained by"]
-    tutte [label="TUTTE HERMSGERVORDENBROTBORDA"]
-        "M00se" -- trained_by
-        trained_by -- tutte
+    node [shape=rectangle]
+        "M00se"
+        trained_by [label="trained by"]
+        tutte [label="TUTTE HERMSGERVORDENBROTBORDA"]
+            "M00se" -- trained_by
+            trained_by -- tutte
 }
 
 >>> dot.render('test-output/m00se.gv', view=True)
@@ -34,6 +37,7 @@ class Dot(files.File):
     """Assemble, save, and render DOT source code, open result in viewer."""
 
     _comment = '// %s'
+    _node = '\t%s%s'
     _tail = '}'
 
     quote = staticmethod(lang.quote)
@@ -61,13 +65,14 @@ class Dot(files.File):
         for kw in ('graph', 'node', 'edge'):
             attr = getattr(self, '%s_attr' % kw)
             if attr:
-                yield '%s%s' % (kw, self.attributes(None, attr))
-        for line in self.body:
-            yield line
+                yield '\t%s%s' % (kw, self.attributes(None, attr))
+        if self.graph_attr or self.node_attr or self.edge_attr:
+            for line in self.body:
+                yield '\t' + line
+        else:
+            for line in self.body:
+                yield line
         yield self._tail
-
-    def lines(self):
-        return list(self)
 
     def __str__(self):
         return '\n'.join(self)
@@ -86,7 +91,7 @@ class Dot(files.File):
         """Create a node."""
         name = self.quote(name)
         attributes = self.attributes(label, kwargs, _attributes)
-        self.body.append('\t%s%s' % (name, attributes))
+        self.append(self._node % (name, attributes))
 
     def edge(self, tail_name, head_name, label=None, _attributes=None, **kwargs):
         """Create an edge."""
@@ -94,13 +99,13 @@ class Dot(files.File):
         head_name = self.quote(head_name)
         attributes = self.attributes(label, kwargs, _attributes)
         edge = self._edge % (tail_name, head_name, attributes)
-        self.body.append(edge)
+        self.append(edge)
 
     def edges(self, tail_head_iter):
         """Create a bunch of edges."""
         edge = self._edge_plain
         quote = self.quote
-        self.body.extend(edge % (quote(t), quote(h))
+        self.extend(edge % (quote(t), quote(h))
             for t, h in tail_head_iter)
 
 

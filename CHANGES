@@ -1,6 +1,13 @@
 Graphviz Changelog
 ==================
 
+
+Version 0.3.2
+-------------
+
+Indent graph_attr, node_attr, and edge_attr lines, adapt nodes and edges.
+
+
 Version 0.3.1
 -------------
 
@@ -11,7 +18,9 @@ Version 0.3
 -----------
 
 Added Python 3.3+ support.
+
 Made attributes order stable (sorting plain dicts).
+
 Fixed edgeop in undirected graphs.
 
 

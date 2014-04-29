@@ -11,6 +11,7 @@ if PY2:
     def iteritems(d):
         return d.iteritems()
 
+
 else:
     text_type = str
 

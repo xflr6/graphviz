@@ -90,7 +90,6 @@ class File(Base):
         if encoding is not None:
             self.encoding = encoding
 
-
     def render(self, filename=None, directory=None, view=False, dry=False):
         """Save the source to file and render with Graphviz engine."""
         if filename is not None:
