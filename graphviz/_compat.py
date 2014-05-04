@@ -5,14 +5,14 @@ import sys
 PY2 = sys.version_info[0] == 2
 
 
-if PY2:
+if PY2:  # pragma: no cover
     text_type = unicode
 
     def iteritems(d):
         return d.iteritems()
 
 
-else:
+else:  # pragma: no cover
     text_type = str
 
     def iteritems(d):

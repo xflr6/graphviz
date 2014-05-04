@@ -2,6 +2,12 @@ Graphviz Changelog
 ==================
 
 
+Version 0.3.3
+-------------
+
+Made format and engine case-insensitive.
+
+
 Version 0.3.2
 -------------
 

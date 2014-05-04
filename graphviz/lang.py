@@ -1,5 +1,7 @@
 # lang.py - dot language creation helpers
 
+"""Quote strings to be valid DOT identifiers, assemble attributes."""
+
 import re
 
 from .tools import mapping_items
@@ -20,9 +22,6 @@ def quote(identifier, valid_id=ID.match):
 
     >>> quote('spam spam')
     '"spam spam"'
-
-    >>> quote('"spam"') == '"' + chr(92) + '"' + 'spam' + chr(92) + '"' + '"'
-    True
 
     >>> quote('-4.2')
     '-4.2'
@@ -49,15 +48,6 @@ def attributes(label=None, kwargs=None, attributes=None, raw=None):
 
     >>> attributes(kwargs={'spam': None, 'eggs': ''})
     ' [eggs=""]'
-
-    >>> attributes(attributes=[('spam', 'eggs')])
-    ' [spam=eggs]'
-
-    >>> attributes(attributes={'spam': 'eggs'})
-    ' [spam=eggs]'
-
-    >>> attributes(raw='spam')
-    ' [spam]'
     """
     if label is None:
         result = []
@@ -79,6 +69,6 @@ def attributes(label=None, kwargs=None, attributes=None, raw=None):
     if raw:
         result.append(raw)
 
-    if result:
-        return ' [%s]' % ' '.join(result)
-    return ''
+    if not result:
+        return ''
+    return ' [%s]' % ' '.join(result)

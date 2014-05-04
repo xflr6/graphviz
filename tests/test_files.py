@@ -26,7 +26,7 @@ class TestBase(unittest.TestCase):
 class TestFile(unittest.TestCase):
 
     def test_init(self):
-        f = File('name', 'dir', 'png', 'neato', 'latin1')
+        f = File('name', 'dir', 'PNG', 'NEATO', 'latin1')
         self.assertEqual(f.filename, 'name')
         self.assertEqual(f.format, 'png')
         self.assertEqual(f.engine, 'neato')

@@ -1,17 +1,21 @@
 # setup.py
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='graphviz',
-    version='0.3.2',
+    version='0.3.3',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Simple Python interface for Graphviz',
     keywords='graph visualization dot render',
     license='MIT',
     url='http://github.com/xflr6/graphviz',
-    packages=['graphviz'],
+    packages=find_packages(),
+    extras_require={
+        'dev': ['wheel'],
+        'test': ['nose', 'coverage', 'flake8', 'pep8-naming'],
+    },
     platforms='any',
     long_description=open('README.rst').read(),
     classifiers=[

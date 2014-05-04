@@ -33,6 +33,7 @@ class Base(object):
 
     @format.setter
     def format(self, format):
+        format = format.lower()
         if format not in FORMATS:
             raise ValueError('Unknown format: %r' % format)
         self._format = format
@@ -43,6 +44,7 @@ class Base(object):
 
     @engine.setter
     def engine(self, engine):
+        engine = engine.lower()
         if engine not in ENGINES:
             raise ValueError('Unknown engine: %r' % engine)
         self._engine = engine

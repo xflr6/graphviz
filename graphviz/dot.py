@@ -60,6 +60,7 @@ class Dot(files.File):
         self.body = [] if body is None else list(body)
 
     def __iter__(self):
+        """Yield the DOT source code line by line."""
         yield self._comment % self.comment
         yield self._head % (self.quote(self.name) + ' ' if self.name else '')
         for kw in ('graph', 'node', 'edge'):

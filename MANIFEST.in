@@ -1,5 +1,0 @@
-include README.rst LICENSE CHANGES
-include dev-requirements.txt .gitignore
-include run-tests.py
-recursive-include tests *.py
-recursive-include docs *.png
