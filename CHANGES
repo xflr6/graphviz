@@ -2,6 +2,12 @@ Graphviz Changelog
 ==================
 
 
+Version 0.3.4
+-------------
+
+Fixed missing identifier quoting for DOT keywords (thanks to Paulo Urio).
+
+
 Version 0.3.3
 -------------
 

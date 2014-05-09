@@ -35,7 +35,7 @@ class Base(object):
     def format(self, format):
         format = format.lower()
         if format not in FORMATS:
-            raise ValueError('Unknown format: %r' % format)
+            raise ValueError('unknown format: %r' % format)
         self._format = format
 
     @property
@@ -46,7 +46,7 @@ class Base(object):
     def engine(self, engine):
         engine = engine.lower()
         if engine not in ENGINES:
-            raise ValueError('Unknown engine: %r' % engine)
+            raise ValueError('unknown engine: %r' % engine)
         self._engine = engine
 
     @property
