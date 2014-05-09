@@ -9,9 +9,9 @@ from .tools import mapping_items
 __all__ = ['quote', 'attributes']
 
 ID = re.compile(r'([a-zA-Z_][a-zA-Z0-9_]*|-?(\.\d+|\d+(\.\d*)?))$')
+KEYWORD = re.compile(r'((node)|(edge)|(graph)|(digraph)|(subgraph)|(strict))$', re.IGNORECASE)
 
-
-def quote(identifier, valid_id=ID.match):
+def quote(identifier, valid_id=ID.match, dot_keyword=KEYWORD.match):
     """Return DOT identifier from string, quote if needed.
 
     >>> quote('')
@@ -20,6 +20,9 @@ def quote(identifier, valid_id=ID.match):
     >>> quote('spam')
     'spam'
 
+    >>> quote('Graph')
+    '"Graph"'
+    
     >>> quote('spam spam')
     '"spam spam"'
 
@@ -29,7 +32,7 @@ def quote(identifier, valid_id=ID.match):
     >>> quote('.42')
     '.42'
     """
-    if not valid_id(identifier):
+    if not valid_id(identifier) or dot_keyword(identifier):
         return '"%s"' % identifier.replace('"', '\\"')
     return identifier
 
