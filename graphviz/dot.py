@@ -61,18 +61,22 @@ class Dot(files.File):
 
     def __iter__(self):
         """Yield the DOT source code line by line."""
-        yield self._comment % self.comment
+        if self.comment:
+            yield self._comment % self.comment
+
         yield self._head % (self.quote(self.name) + ' ' if self.name else '')
+
+        styled = False
         for kw in ('graph', 'node', 'edge'):
             attr = getattr(self, '%s_attr' % kw)
             if attr:
+                styled = True
                 yield '\t%s%s' % (kw, self.attributes(None, attr))
-        if self.graph_attr or self.node_attr or self.edge_attr:
-            for line in self.body:
-                yield '\t' + line
-        else:
-            for line in self.body:
-                yield line
+
+        indent = '\t' * styled
+        for line in self.body:
+            yield  indent + line
+
         yield self._tail
 
     def __str__(self):

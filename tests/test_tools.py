@@ -1,7 +1,6 @@
 # test_tools.py
 
 import unittest
-
 import os
 
 from graphviz.tools import mkdirs

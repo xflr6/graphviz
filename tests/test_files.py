@@ -11,15 +11,15 @@ class TestBase(unittest.TestCase):
         self.file = File()
 
     def test_format(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaisesRegexp(ValueError, 'format'):
             self.file.format = 'spam'
 
     def test_engine(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaisesRegexp(ValueError, 'engine'):
             self.file.engine = 'spam'
 
     def test_encoding(self):
-        with self.assertRaises(LookupError):
+        with self.assertRaisesRegexp(LookupError, 'encoding'):
             self.file.encoding = 'spam'
 
 
@@ -31,3 +31,20 @@ class TestFile(unittest.TestCase):
         self.assertEqual(f.format, 'png')
         self.assertEqual(f.engine, 'neato')
         self.assertEqual(f.encoding, 'latin1')
+
+
+class TestNoent(unittest.TestCase):
+
+    def setUp(self):
+        import graphviz.files
+        graphviz.files.ENGINES.add('spam')
+        self.file = File('spam.gv', 'test-output', engine='spam')
+        self.file.source = 'spam'
+
+    def tearDown(self):
+        import graphviz.files
+        graphviz.files.ENGINES.discard('spam')
+
+    def test_render(self):
+        with self.assertRaisesRegexp(RuntimeError, 'failed to execute'):
+            self.file.render()

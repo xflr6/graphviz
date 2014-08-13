@@ -77,6 +77,41 @@ Save and render the source code, optionally view the result:
     :align: center
 
 
+Styling
+-------
+
+Use the ``graph_attr``, ``node_attr``, and ``edge_attr`` arguments to change
+the default `appearance`_ of your graph, nodes, and edges.
+
+.. code:: python
+
+    >>> dot = Digraph(name='pet-shop', node_attr={'shape': 'plaintext'})
+
+    >>> dot.node('parrot')
+    >>> dot.node('dead')
+    >>> dot.edge('parrot', 'dead')
+
+After creation, they can be edited on the graph object:
+
+.. code:: python
+
+    >>> dot.graph_attr['rankdir'] = 'LR'
+    >>> dot.edge_attr.update(arrowhead='vee', arrowsize='2')
+
+    >>> print(dot.source)  # doctest: +NORMALIZE_WHITESPACE
+    digraph "pet-shop" {
+        graph [rankdir=LR]
+        node [shape=plaintext]
+        edge [arrowhead=vee arrowsize=2]
+            parrot
+            dead
+                parrot -> dead
+    }
+
+.. image:: https://raw.github.com/xflr6/graphviz/master/docs/pet-shop.png
+    :align: center
+
+
 See also
 --------
 
@@ -94,6 +129,7 @@ This package is distributed under the `MIT license`_.
 .. _Graphviz:  http://www.graphviz.org
 .. _download page: http://www.graphviz.org/Download.php
 .. _DOT: http://www.graphviz.org/doc/info/lang.html
+.. _appearance: http://www.graphviz.org/doc/info/attrs.html
 
 .. _pygraphviz: http://pypi.python.org/pypi/pygraphviz
 .. _graphviz-python: https://pypi.python.org/pypi/graphviz-python

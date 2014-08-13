@@ -5,6 +5,7 @@
 import sys
 import os
 import io
+import errno
 import codecs
 import subprocess
 
@@ -112,7 +113,15 @@ class File(Base):
 
         cmd = self._cmd(self._engine, self._format, filepath)
 
-        returncode = subprocess.Popen(cmd).wait()
+        try:
+            returncode = subprocess.Popen(cmd).wait()
+        except OSError as e:
+            if e.errno == errno.ENOENT:
+                raise RuntimeError('failed to execute %r, ' 
+                    'make sure the Graphviz executables '
+                    'are on your systems\' path' % cmd)
+            else:
+                raise
 
         rendered = '%s.%s' % (filepath, self._format)
 
@@ -135,12 +144,12 @@ class File(Base):
         for name in methods:
             method = getattr(self, name, None)
             if method is not None:
+                method(filepath)
                 break
         else:
             raise RuntimeError('%r has no built-in viewer support for %r '
                 'on %r platform' % (self.__class__, format, PLATFORM))
 
-        method(filepath)
 
     @staticmethod
     def _view_linux2(filepath):

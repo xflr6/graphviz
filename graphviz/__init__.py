@@ -25,7 +25,7 @@ digraph {
 """
 
 __title__ = 'graphviz'
-__version__ = '0.3.4'
+__version__ = '0.3.5'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE'
 __copyright__ = 'Copyright (c) 2013-2014 Sebastian Bank'

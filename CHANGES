@@ -2,6 +2,16 @@ Graphviz Changelog
 ==================
 
 
+Version 0.3.5
+-------------
+
+Skip empty comment when creating DOT source.
+
+Document graph_attr, node_attr, and edge_attr in the README.
+
+More informative exception when Graphviz excutables cannot be called.
+
+
 Version 0.3.4
 -------------
 
