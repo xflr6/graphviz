@@ -11,7 +11,7 @@ import subprocess
 
 from ._compat import text_type
 
-from .tools import mkdirs
+from . import tools
 
 __all__ = ['File']
 
@@ -71,10 +71,6 @@ class File(Base):
     def _cmd(engine, format, filepath):
         return [engine, '-T%s' % format, '-O', filepath]
 
-    @property
-    def filepath(self):
-        return os.path.join(self.directory, self.filename)
-
     def __init__(self, filename=None, directory=None, format=None, engine=None, encoding=None):
         if filename is None:
             name = getattr(self, 'name', None) or self.__class__.__name__
@@ -93,23 +89,30 @@ class File(Base):
         if encoding is not None:
             self.encoding = encoding
 
-    def render(self, filename=None, directory=None, view=False, dry=False):
-        """Save the source to file and render with Graphviz engine."""
+    @property
+    def filepath(self):
+        return os.path.join(self.directory, self.filename)
+
+    def save(self, filename=None, directory=None):
+        """Save the source to file."""
         if filename is not None:
             self.filename = filename
         if directory is not None:
             self.directory = directory
 
         filepath = self.filepath
-        mkdirs(filepath)
+        tools.mkdirs(filepath)
 
         data = text_type(self.source)
 
         with io.open(filepath, 'w', encoding=self.encoding) as fd:
             fd.write(data)
 
-        if dry:
-            return
+        return filepath
+
+    def render(self, filename=None, directory=None, view=False, cleanup=False):
+        """Save the source to file and render with Graphviz engine."""
+        filepath = self.save(filename, directory)
 
         cmd = self._cmd(self._engine, self._format, filepath)
 
@@ -117,11 +120,14 @@ class File(Base):
             returncode = subprocess.Popen(cmd).wait()
         except OSError as e:
             if e.errno == errno.ENOENT:
-                raise RuntimeError('failed to execute %r, ' 
+                raise RuntimeError('failed to execute %r, '
                     'make sure the Graphviz executables '
                     'are on your systems\' path' % cmd)
             else:
                 raise
+
+        if cleanup:
+            os.remove(filepath)
 
         rendered = '%s.%s' % (filepath, self._format)
 
@@ -149,7 +155,6 @@ class File(Base):
         else:
             raise RuntimeError('%r has no built-in viewer support for %r '
                 'on %r platform' % (self.__class__, format, PLATFORM))
-
 
     @staticmethod
     def _view_linux2(filepath):

@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='graphviz',
-    version='0.3.5',
+    version='0.4',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Simple Python interface for Graphviz',
@@ -19,7 +19,7 @@ setup(
     platforms='any',
     long_description=open('README.rst').read(),
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',

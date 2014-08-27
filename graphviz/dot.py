@@ -30,13 +30,14 @@ graph {
 
 from . import lang, files
 
-__all__ = ['Graph', 'Digraph', 'Subgraph']
+__all__ = ['Graph', 'Digraph']
 
 
 class Dot(files.File):
     """Assemble, save, and render DOT source code, open result in viewer."""
 
     _comment = '// %s'
+    _subgraph = 'subgraph %s{'
     _node = '\t%s%s'
     _tail = '}'
 
@@ -59,12 +60,13 @@ class Dot(files.File):
 
         self.body = [] if body is None else list(body)
 
-    def __iter__(self):
+    def __iter__(self, subgraph=False):
         """Yield the DOT source code line by line."""
         if self.comment:
             yield self._comment % self.comment
 
-        yield self._head % (self.quote(self.name) + ' ' if self.name else '')
+        head = self._subgraph if subgraph else self._head
+        yield head % (self.quote(self.name) + ' ' if self.name else '')
 
         styled = False
         for kw in ('graph', 'node', 'edge'):
@@ -75,7 +77,7 @@ class Dot(files.File):
 
         indent = '\t' * styled
         for line in self.body:
-            yield  indent + line
+            yield indent + line
 
         yield self._tail
 
@@ -84,19 +86,11 @@ class Dot(files.File):
 
     source = property(__str__)
 
-    def append(self, line):
-        """Add line to the source."""
-        self.body.append(line)
-
-    def extend(self, lines):
-        """Add lines to the source."""
-        self.body.extend(lines)
-
     def node(self, name, label=None, _attributes=None, **kwargs):
         """Create a node."""
         name = self.quote(name)
         attributes = self.attributes(label, kwargs, _attributes)
-        self.append(self._node % (name, attributes))
+        self.body.append(self._node % (name, attributes))
 
     def edge(self, tail_name, head_name, label=None, _attributes=None, **kwargs):
         """Create an edge."""
@@ -104,14 +98,31 @@ class Dot(files.File):
         head_name = self.quote(head_name)
         attributes = self.attributes(label, kwargs, _attributes)
         edge = self._edge % (tail_name, head_name, attributes)
-        self.append(edge)
+        self.body.append(edge)
 
     def edges(self, tail_head_iter):
         """Create a bunch of edges."""
         edge = self._edge_plain
         quote = self.quote
-        self.extend(edge % (quote(t), quote(h))
+        self.body.extend(edge % (quote(t), quote(h))
             for t, h in tail_head_iter)
+
+    def attr(self, kw, _attributes=None, **kwargs):
+        """Add a graph/node/edge attribute statement."""
+        if kw.lower() not in {'graph', 'node', 'edge'}:
+            raise ValueError('attr statement must target graph, node, or edge: '
+                '%r' % kw)
+        if _attributes or kwargs:
+            line = '\t%s%s' % (kw, self.attributes(None, kwargs, _attributes))
+            self.body.append(line)
+
+    def subgraph(self, graph):
+        """Add the current content of a graph as subgraph."""
+        if not isinstance(graph, self.__class__):
+            raise ValueError('%r cannot add subgraphs of different kind: %r '
+                % (self, graph))
+        lines = ['\t' + line for line in graph.__iter__(subgraph=True)]
+        self.body.extend(lines)
 
 
 class Graph(Dot):
@@ -128,9 +139,3 @@ class Digraph(Dot):
     _head = 'digraph %s{'
     _edge = '\t\t%s -> %s%s'
     _edge_plain = '\t\t%s -> %s'
-
-
-class Subgraph(Digraph):
-    """Directed subgraph source code in the DOT language."""
-
-    _head = 'subgraph %s{'

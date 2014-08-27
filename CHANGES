@@ -2,6 +2,21 @@ Graphviz Changelog
 ==================
 
 
+Version 0.4
+-----------
+
+Added attr() method for inline switching of node/edge attributes.
+
+Added subgraph() method (obsoletes separate Subgraph class).
+
+Add cleanup option to render().
+
+Replaced dry option on render() with separate save() method.
+
+Removed undocumented append() and extend() methods (if needed, the body
+attribute can be edited directly).
+
+
 Version 0.3.5
 -------------
 

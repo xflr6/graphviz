@@ -4,7 +4,7 @@
 
 import re
 
-from .tools import mapping_items
+from . import tools
 
 __all__ = ['quote', 'attributes']
 
@@ -58,12 +58,12 @@ def attributes(label=None, kwargs=None, attributes=None, raw=None):
 
     if kwargs:
         items = ['%s=%s' % (quote(k), quote(v))
-            for k, v in mapping_items(kwargs) if v is not None]
+            for k, v in tools.mapping_items(kwargs) if v is not None]
         result.extend(items)
 
     if attributes:
         if hasattr(attributes, 'items'):
-            attributes = mapping_items(attributes)
+            attributes = tools.mapping_items(attributes)
         items = ['%s=%s' % (quote(k), quote(v))
             for k, v in attributes if v is not None]
         result.extend(items)
