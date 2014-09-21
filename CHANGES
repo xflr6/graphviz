@@ -2,6 +2,18 @@ Graphviz Changelog
 ==================
 
 
+Version 0.4.1
+-------------
+
+Added support for less common output formats. Removed dropped formats (dia, pcl).
+
+Added osage layout engine.
+
+Documented format and engine options in the README.
+
+The view() convenience method now returns the result file name (like render()).
+
+
 Version 0.4
 -----------
 

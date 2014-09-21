@@ -1,14 +1,16 @@
 Graphviz
 ========
 
-|PyPI version| |License| |Wheel| |Downloads|
+|PyPI version| |License| |Supported Python| |Format| |Downloads|
 
 This package facilitates the creation of graph descriptions in the DOT_ language
 of the Graphviz_ graph drawing software from Python.
 
 Create a graph object, assemble the graph by adding nodes and edges, and
 retrieve its DOT source code string. Save the source code to a file and render
-it with the Graphviz installation of your system.
+it with the Graphviz installation of your system. Use the ``view``
+option/method to directly inspect the resulting (PDF, PNG, SVG, etc.) file with
+its default application.
 
 
 Installation
@@ -77,6 +79,28 @@ Save and render the source code, optionally view the result:
     :align: center
 
 
+Formats
+-------
+
+To use a different `output file format`_ than the default PDF, set the
+``format`` argument when creating your ``Graph`` or ``Digraph`` object:
+
+.. code:: python
+
+    >>> from graphviz import Graph
+
+    >>> g = Graph(format='png')
+
+You can also change the ``format`` attribute on an existing graph object:
+
+.. code:: python
+
+    >>> dot.format = 'svg'
+
+    >>> dot.render()
+    'test-output/round-table.gv.svg'
+
+
 Styling
 -------
 
@@ -112,6 +136,23 @@ After creation, they can be edited on the graph object:
     :align: center
 
 
+Engines
+-------
+
+To use a different layout command than the default ``dot`` when rendering your
+graph, set the ``engine`` argument on graph creation. 
+
+.. code:: python
+
+    >>> g = Graph(engine='neato')
+
+You can also change the ``engine`` attribute of an existing instance:
+
+.. code:: python
+
+    >>> dot.engine = 'circo'
+
+
 See also
 --------
 
@@ -129,6 +170,7 @@ This package is distributed under the `MIT license`_.
 .. _Graphviz:  http://www.graphviz.org
 .. _download page: http://www.graphviz.org/Download.php
 .. _DOT: http://www.graphviz.org/doc/info/lang.html
+.. _output file format: http://www.graphviz.org/doc/info/output.html
 .. _appearance: http://www.graphviz.org/doc/info/attrs.html
 
 .. _pygraphviz: http://pypi.python.org/pypi/pygraphviz
@@ -148,9 +190,12 @@ This package is distributed under the `MIT license`_.
 .. |License| image:: https://pypip.in/license/graphviz/badge.svg
     :target: https://pypi.python.org/pypi/graphviz
     :alt: License
-.. |Wheel| image:: https://pypip.in/wheel/graphviz/badge.svg
+.. |Supported Python| image:: https://pypip.in/py_versions/graphviz/badge.svg
     :target: https://pypi.python.org/pypi/graphviz
-    :alt: Wheel Status
+    :alt: Supported Python Versions
+.. |Format| image:: https://pypip.in/format/graphviz/badge.svg
+    :target: https://pypi.python.org/pypi/graphviz
+    :alt: Format
 .. |Downloads| image:: https://pypip.in/d/graphviz/badge.svg
     :target: https://pypi.python.org/pypi/graphviz
     :alt: Downloads

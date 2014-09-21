@@ -15,9 +15,46 @@ from . import tools
 
 __all__ = ['File']
 
-FORMATS = {'pdf', 'ps', 'svg', 'fig', 'pcl', 'png', 'gif', 'dia'}
+FORMATS = {  # http://www.graphviz.org/doc/info/output.html
+    'bmp',
+    'canon', 'dot', 'gv', 'xdot', 'xdot1.2', 'xdot1.4',
+    'cgimage',
+    'cmap',
+    'eps',
+    'exr',
+    'fig',
+    'gd', 'gd2',
+    'gif',
+    'gtk',
+    'ico',
+    'imap', 'cmapx',
+    'imap_np', 'cmapx_np',
+    'ismap',
+    'jp2',
+    'jpg', 'jpeg', 'jpe',
+    'pct', 'pict',
+    'pdf',
+    'pic',
+    'plain', 'plain-ext',
+    'png',
+    'pov',
+    'ps',
+    'ps2',
+    'psd',
+    'sgi',
+    'svg', 'svgz',
+    'tga',
+    'tif', 'tiff',
+    'tk',
+    'vml', 'vmlz',
+    'vrml',
+    'wbmp',
+    'webp',
+    'xlib',
+    'x11',
+}
 
-ENGINES = {'dot', 'neato', 'twopi', 'circo', 'fdp', 'sfdp'}
+ENGINES = {'dot', 'neato', 'twopi', 'circo', 'fdp', 'sfdp', 'osage'}
 
 PLATFORM = sys.platform
 
@@ -140,6 +177,7 @@ class File(Base):
         """Save the source to file, open the rendered result in a viewer."""
         rendered = self.render()
         self._view(rendered, self._format)
+        return rendered
 
     def _view(self, filepath, format):
         """Start the right viewer based on file format and platform."""
