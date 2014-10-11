@@ -2,6 +2,12 @@ Graphviz Changelog
 ==================
 
 
+Version 0.4.2
+-------------
+
+Added support for HTML-like labels.
+
+
 Version 0.4.1
 -------------
 

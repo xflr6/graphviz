@@ -8,9 +8,10 @@ of the Graphviz_ graph drawing software from Python.
 
 Create a graph object, assemble the graph by adding nodes and edges, and
 retrieve its DOT source code string. Save the source code to a file and render
-it with the Graphviz installation of your system. Use the ``view``
-option/method to directly inspect the resulting (PDF, PNG, SVG, etc.) file with
-its default application.
+it with the Graphviz installation of your system.
+
+Use the ``view`` option/method to directly inspect the resulting (PDF, PNG,
+SVG, etc.) file with its default application.
 
 
 Installation

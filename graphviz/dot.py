@@ -42,6 +42,7 @@ class Dot(files.File):
     _tail = '}'
 
     quote = staticmethod(lang.quote)
+    quote_edge = staticmethod(lang.quote_edge)
     attributes = staticmethod(lang.attributes)
 
     def __init__(self, name=None, comment=None,
@@ -94,8 +95,8 @@ class Dot(files.File):
 
     def edge(self, tail_name, head_name, label=None, _attributes=None, **kwargs):
         """Create an edge."""
-        tail_name = self.quote(tail_name)
-        head_name = self.quote(head_name)
+        tail_name = self.quote_edge(tail_name)
+        head_name = self.quote_edge(head_name)
         attributes = self.attributes(label, kwargs, _attributes)
         edge = self._edge % (tail_name, head_name, attributes)
         self.body.append(edge)
@@ -103,7 +104,7 @@ class Dot(files.File):
     def edges(self, tail_head_iter):
         """Create a bunch of edges."""
         edge = self._edge_plain
-        quote = self.quote
+        quote = self.quote_edge
         self.body.extend(edge % (quote(t), quote(h))
             for t, h in tail_head_iter)
 
