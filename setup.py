@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='graphviz',
-    version='0.4.2',
+    version='0.4.3.dev0',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Simple Python interface for Graphviz',
@@ -14,7 +14,7 @@ setup(
     packages=find_packages(),
     extras_require={
         'test': ['nose', 'coverage', 'flake8', 'pep8-naming'],
-        'dev': ['wheel'],
+        'dev': ['wheel', 'sphinx', 'sphinxcontrib-napoleon'],
     },
     platforms='any',
     long_description=open('README.rst').read(),

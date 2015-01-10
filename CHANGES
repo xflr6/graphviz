@@ -1,5 +1,13 @@
-Graphviz Changelog
-==================
+Changelog
+=========
+
+
+Version 0.4.3 (to be released)
+------------------------------
+
+Added examples generating some of the graphs from the Graphviz Gallery.
+
+Added sphinx-based API documentation.
 
 
 Version 0.4.2

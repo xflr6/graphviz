@@ -85,40 +85,67 @@ class Dot(files.File):
     def __str__(self):
         return '\n'.join(self)
 
-    source = property(__str__)
+    source = property(__str__, doc='The DOT source code as string.')
 
-    def node(self, name, label=None, _attributes=None, **kwargs):
-        """Create a node."""
+    def node(self, name, label=None, _attributes=None, **attrs):
+        """Create a node.
+
+        Args:
+            name: Unique identifier for the node inside the source.
+            label: Caption to be displayed (defaults to the node name).
+            attrs: Any additional node attributes (must be strings).
+        """
         name = self.quote(name)
-        attributes = self.attributes(label, kwargs, _attributes)
+        attributes = self.attributes(label, attrs, _attributes)
         self.body.append(self._node % (name, attributes))
 
-    def edge(self, tail_name, head_name, label=None, _attributes=None, **kwargs):
-        """Create an edge."""
+    def edge(self, tail_name, head_name, label=None, _attributes=None, **attrs):
+        """Create an edge between two nodes.
+
+        Args:
+            tail_name: Start node identifier.
+            head_name: End node identifier.
+            label: Caption to be displayed near the edge.
+            attrs: Any additional edge attributes (must be strings).
+        """
         tail_name = self.quote_edge(tail_name)
         head_name = self.quote_edge(head_name)
-        attributes = self.attributes(label, kwargs, _attributes)
+        attributes = self.attributes(label, attrs, _attributes)
         edge = self._edge % (tail_name, head_name, attributes)
         self.body.append(edge)
 
     def edges(self, tail_head_iter):
-        """Create a bunch of edges."""
+        """Create a bunch of edges.
+
+        Args:
+            tail_head_iter: Iterable of (tail_name, head_name) pairs.
+        """
         edge = self._edge_plain
         quote = self.quote_edge
         self.body.extend(edge % (quote(t), quote(h))
             for t, h in tail_head_iter)
 
-    def attr(self, kw, _attributes=None, **kwargs):
-        """Add a graph/node/edge attribute statement."""
+    def attr(self, kw, _attributes=None, **attrs):
+        """Add a graph/node/edge attribute statement.
+
+        Args:
+            kw: Attributes target ('graph', 'node', or 'edge')
+            attrs: Attributes to be set (must be strings, may be empty).
+        """
         if kw.lower() not in {'graph', 'node', 'edge'}:
             raise ValueError('attr statement must target graph, node, or edge: '
                 '%r' % kw)
-        if _attributes or kwargs:
-            line = '\t%s%s' % (kw, self.attributes(None, kwargs, _attributes))
+        if _attributes or attrs:
+            line = '\t%s%s' % (kw, self.attributes(None, attrs, _attributes))
             self.body.append(line)
 
     def subgraph(self, graph):
-        """Add the current content of a graph as subgraph."""
+        """Add the current content of the given graph as subgraph.
+
+        Args:
+            graph: An instance of the same kind (Graph, Digraph)
+                   as the current graph.
+        """
         if not isinstance(graph, self.__class__):
             raise ValueError('%r cannot add subgraphs of different kind: %r '
                 % (self, graph))
@@ -127,7 +154,25 @@ class Dot(files.File):
 
 
 class Graph(Dot):
-    """Graph source code in the DOT language."""
+    """Graph source code in the DOT language.
+
+    Args:
+        name: Graph name used in the source code.
+        comment: Comment added to the first line of the source.
+        filename: Filename for saving the source (defaults to name + '.gv').
+        directory: (Sub)directory for source saving and rendering.
+        format: Rendering output format ('pdf', 'png', ...).
+        engine: Layout command used ('dot', 'neato', ...).
+        encoding: Encoding for saving the source.
+        graph_attr: Mapping of (attribute, value) pairs for the graph.
+        node_attr: Mapping of (attribute, value) pairs set for all nodes.
+        edge_attr: Mapping of (attribute, value) pairs set for all edges.
+        body: Iterable of lines to add to the graph body.
+
+    .. note::
+        All parameters are optional and can be changed under their
+        corresponding attribute name after instance creation.
+    """
 
     _head = 'graph %s{'
     _edge = '\t\t%s -- %s%s'
@@ -136,6 +181,8 @@ class Graph(Dot):
 
 class Digraph(Dot):
     """Directed graph source code in the DOT language."""
+
+    __doc__ += Graph.__doc__.partition('.')[2]
 
     _head = 'digraph %s{'
     _edge = '\t\t%s -> %s%s'

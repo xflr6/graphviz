@@ -3,8 +3,10 @@ __pycache__/
 MANIFEST
 build/
 dist/
+docs/_build
 *.egg-info/
 *.egg
+.eggs
 
 .coverage
 cover/

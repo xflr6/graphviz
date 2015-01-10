@@ -67,6 +67,7 @@ class Base(object):
 
     @property
     def format(self):
+        """The output format used for rendering ('pdf', 'png', etc.)."""
         return self._format
 
     @format.setter
@@ -78,6 +79,7 @@ class Base(object):
 
     @property
     def engine(self):
+        """The layout commmand used for rendering ('dot', 'neato', ...)"""
         return self._engine
 
     @engine.setter
@@ -89,6 +91,7 @@ class Base(object):
 
     @property
     def encoding(self):
+        """The encoding for the saved source file."""
         return self._encoding
 
     @encoding.setter
@@ -131,7 +134,11 @@ class File(Base):
         return os.path.join(self.directory, self.filename)
 
     def save(self, filename=None, directory=None):
-        """Save the source to file."""
+        """Save the DOT source to file.
+
+        Returns:
+            The (possibly relative) path of the saved source file.
+        """
         if filename is not None:
             self.filename = filename
         if directory is not None:
@@ -148,7 +155,11 @@ class File(Base):
         return filepath
 
     def render(self, filename=None, directory=None, view=False, cleanup=False):
-        """Save the source to file and render with Graphviz engine."""
+        """Save the source to file and render with the Graphviz engine.
+
+        Returns:
+            The (possibly relative) path of the rendered file.
+        """
         filepath = self.save(filename, directory)
 
         cmd = self._cmd(self._engine, self._format, filepath)
@@ -174,7 +185,11 @@ class File(Base):
         return rendered
 
     def view(self):
-        """Save the source to file, open the rendered result in a viewer."""
+        """Save the source to file, open the rendered result in a viewer.
+
+        Returns:
+            The (possibly relative) path of the rendered file.
+        """
         rendered = self.render()
         self._view(rendered, self._format)
         return rendered
