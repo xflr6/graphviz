@@ -14,7 +14,7 @@ setup(
     packages=find_packages(),
     extras_require={
         'test': ['nose', 'coverage', 'flake8', 'pep8-naming'],
-        'dev': ['wheel', 'sphinx', 'sphinxcontrib-napoleon'],
+        'dev': ['wheel'],
     },
     platforms='any',
     long_description=open('README.rst').read(),
