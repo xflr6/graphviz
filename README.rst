@@ -14,6 +14,17 @@ Use the ``view`` option/method to directly inspect the resulting (PDF, PNG,
 SVG, etc.) file with its default application.
 
 
+Links
+-----
+
+- GitHub: http://github.com/xflr6/graphviz
+- PyPI: http://pypi.python.org/pypi/graphviz
+- Download: http://pypi.python.org/pypi/graphviz#downloads
+- Documentation: http://graphviz.readthedocs.org
+- Changelog: http://graphviz.readthedocs.org/en/latest/changelog.html
+- Isssue Tracker: http://github.com/xflr6/graphviz/issues
+
+
 Installation
 ------------
 
@@ -29,8 +40,8 @@ To render the generated DOT source code, you also need to install Graphviz
 Make sure that the ``dot`` executable is on your systems' path.
 
 
-Usage
------
+Quickstart
+----------
 
 Create a graph object:
 
@@ -80,80 +91,6 @@ Save and render the source code, optionally view the result:
     :align: center
 
 
-Formats
--------
-
-To use a different `output file format`_ than the default PDF, set the
-``format`` argument when creating your ``Graph`` or ``Digraph`` object:
-
-.. code:: python
-
-    >>> from graphviz import Graph
-
-    >>> g = Graph(format='png')
-
-You can also change the ``format`` attribute on an existing graph object:
-
-.. code:: python
-
-    >>> dot.format = 'svg'
-
-    >>> dot.render()
-    'test-output/round-table.gv.svg'
-
-
-Styling
--------
-
-Use the ``graph_attr``, ``node_attr``, and ``edge_attr`` arguments to change
-the default `appearance`_ of your graph, nodes, and edges.
-
-.. code:: python
-
-    >>> dot = Digraph(name='pet-shop', node_attr={'shape': 'plaintext'})
-
-    >>> dot.node('parrot')
-    >>> dot.node('dead')
-    >>> dot.edge('parrot', 'dead')
-
-After creation, they can be edited on the graph object:
-
-.. code:: python
-
-    >>> dot.graph_attr['rankdir'] = 'LR'
-    >>> dot.edge_attr.update(arrowhead='vee', arrowsize='2')
-
-    >>> print(dot.source)  # doctest: +NORMALIZE_WHITESPACE
-    digraph "pet-shop" {
-        graph [rankdir=LR]
-        node [shape=plaintext]
-        edge [arrowhead=vee arrowsize=2]
-            parrot
-            dead
-                parrot -> dead
-    }
-
-.. image:: https://raw.github.com/xflr6/graphviz/master/docs/pet-shop.png
-    :align: center
-
-
-Engines
--------
-
-To use a different layout command than the default ``dot`` when rendering your
-graph, set the ``engine`` argument on graph creation. 
-
-.. code:: python
-
-    >>> g = Graph(engine='neato')
-
-You can also change the ``engine`` attribute of an existing instance:
-
-.. code:: python
-
-    >>> dot.engine = 'circo'
-
-
 See also
 --------
 
@@ -167,12 +104,11 @@ License
 
 This package is distributed under the `MIT license`_.
 
+
 .. _pip: http://pip.readthedocs.org
 .. _Graphviz:  http://www.graphviz.org
 .. _download page: http://www.graphviz.org/Download.php
 .. _DOT: http://www.graphviz.org/doc/info/lang.html
-.. _output file format: http://www.graphviz.org/doc/info/output.html
-.. _appearance: http://www.graphviz.org/doc/info/attrs.html
 
 .. _pygraphviz: http://pypi.python.org/pypi/pygraphviz
 .. _graphviz-python: https://pypi.python.org/pypi/graphviz-python

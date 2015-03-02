@@ -17,3 +17,6 @@ htmlcov/
 Thumbs.db
 
 test-output/
+
+examples/*.gv
+examples/*.pdf
