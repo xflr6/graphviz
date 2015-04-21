@@ -34,7 +34,7 @@ The ``graphviz`` module provides two classes: :py:class:`~graphviz.Graph` and
 language for undirected and directed graphs respectively. They have the same
 API.
 
-Create a graph object by instantiating a new :py:class:`~graphviz.Graph` or
+Create a graph by instantiating a new :py:class:`~graphviz.Graph` or
 :py:class:`~graphviz.Digraph` object:
 
 .. code:: python

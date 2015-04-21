@@ -22,7 +22,7 @@ Links
 - Download: http://pypi.python.org/pypi/graphviz#downloads
 - Documentation: http://graphviz.readthedocs.org
 - Changelog: http://graphviz.readthedocs.org/en/latest/changelog.html
-- Isssue Tracker: http://github.com/xflr6/graphviz/issues
+- Issue Tracker: http://github.com/xflr6/graphviz/issues
 
 
 Installation
