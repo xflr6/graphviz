@@ -11,7 +11,8 @@ retrieve its DOT source code string. Save the source code to a file and render
 it with the Graphviz installation of your system.
 
 Use the ``view`` option/method to directly inspect the resulting (PDF, PNG,
-SVG, etc.) file with its default application.
+SVG, etc.) file with its default application. Graphs can also be rendered
+and displayed within `IPython notebooks`_.
 
 
 Links
@@ -109,6 +110,7 @@ This package is distributed under the `MIT license`_.
 .. _Graphviz:  http://www.graphviz.org
 .. _download page: http://www.graphviz.org/Download.php
 .. _DOT: http://www.graphviz.org/doc/info/lang.html
+.. _IPython notebooks: http://ipython.org/notebook.html
 
 .. _pygraphviz: http://pypi.python.org/pypi/pygraphviz
 .. _graphviz-python: https://pypi.python.org/pypi/graphviz-python

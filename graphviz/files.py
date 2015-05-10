@@ -132,8 +132,11 @@ class File(Base):
         if encoding is not None:
             self.encoding = encoding
 
-    def pipe(self):
-        cmd = self._cmd(self._engine, self._format)
+    def pipe(self, format=None):
+        if format is None:
+            format = self._format
+
+        cmd = self._cmd(self._engine, format)
 
         data = text_type(self.source).encode(self._encoding)
 

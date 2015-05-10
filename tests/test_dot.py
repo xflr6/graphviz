@@ -7,6 +7,10 @@ from graphviz.dot import Graph, Digraph
 
 class TestDot(unittest.TestCase):
 
+    def test_repr_svg(self):
+        self.assertRegexpMatches(Graph('spam')._repr_svg_(),
+            r'(?s)^<\?xml .+</svg>\s*$')
+
     def test_attr(self):
         with self.assertRaises(ValueError):
             Graph().attr('spam')

@@ -7,6 +7,8 @@ Version 0.4.4 (in development)
 
 Added the pipe()-method directly returning the stdout of the rendering.
 
+Added _repr_svg_ for inline rendering in IPython notebooks.
+
 
 Version 0.4.3
 -------------

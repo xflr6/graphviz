@@ -87,6 +87,9 @@ class Dot(files.File):
 
     source = property(__str__, doc='The DOT source code as string.')
 
+    def _repr_svg_(self):
+        return self.pipe(format='svg').decode(self._encoding)
+
     def node(self, name, label=None, _attributes=None, **attrs):
         """Create a node.
 
