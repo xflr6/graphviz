@@ -133,6 +133,13 @@ class File(Base):
             self.encoding = encoding
 
     def pipe(self, format=None):
+        """Return the source piped through the Graphviz layout command.
+
+        Args:
+            format: The output format used for rendering ('pdf', 'png', etc.).
+        Returns:
+            Stdout of the layout command.
+        """
         if format is None:
             format = self._format
 
@@ -161,6 +168,9 @@ class File(Base):
     def save(self, filename=None, directory=None):
         """Save the DOT source to file.
 
+        Args:
+            filename: Filename for saving the source (defaults to name + '.gv')
+            directory: (Sub)directory for source saving and rendering.
         Returns:
             The (possibly relative) path of the saved source file.
         """
@@ -182,6 +192,11 @@ class File(Base):
     def render(self, filename=None, directory=None, view=False, cleanup=False):
         """Save the source to file and render with the Graphviz engine.
 
+        Args:
+            filename: Filename for saving the source (defaults to name + '.gv')
+            directory: (Sub)directory for source saving and rendering.
+            view: Open the rendered result with the default application.
+            cleanup: Delete the source file after rendering.
         Returns:
             The (possibly relative) path of the rendered file.
         """
