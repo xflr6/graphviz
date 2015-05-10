@@ -5,7 +5,7 @@ Changelog
 Version 0.4.4 (in development)
 ------------------------------
 
-
+Added the pipe()-method directly returning the stdout of the rendering.
 
 
 Version 0.4.3

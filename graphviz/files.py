@@ -63,7 +63,7 @@ class Base(object):
 
     _format = 'pdf'
     _engine = 'dot'
-    _encoding = 'utf8'
+    _encoding = 'utf-8'
 
     @property
     def format(self):
@@ -108,8 +108,11 @@ class File(Base):
     _default_extension = 'gv'
 
     @staticmethod
-    def _cmd(engine, format, filepath):
-        return [engine, '-T%s' % format, '-O', filepath]
+    def _cmd(engine, format, filepath=None):
+        result = [engine, '-T%s' % format]
+        if filepath is not None:
+            result.extend(['-O', filepath])
+        return result
 
     def __init__(self, filename=None, directory=None, format=None, engine=None, encoding=None):
         if filename is None:
@@ -128,6 +131,25 @@ class File(Base):
 
         if encoding is not None:
             self.encoding = encoding
+
+    def pipe(self):
+        cmd = self._cmd(self._engine, self._format)
+
+        data = text_type(self.source).encode(self._encoding)
+
+        try:
+            proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        except OSError as e:
+            if e.errno == errno.ENOENT:
+                raise RuntimeError('failed to execute %r, '
+                    'make sure the Graphviz executables '
+                    'are on your systems\' path' % cmd)
+            else:  # pragma: no cover
+                raise
+
+        outs, errs = proc.communicate(data)
+
+        return outs
 
     @property
     def filepath(self):
@@ -165,14 +187,16 @@ class File(Base):
         cmd = self._cmd(self._engine, self._format, filepath)
 
         try:
-            returncode = subprocess.Popen(cmd).wait()
+            proc = subprocess.Popen(cmd)
         except OSError as e:
             if e.errno == errno.ENOENT:
                 raise RuntimeError('failed to execute %r, '
                     'make sure the Graphviz executables '
                     'are on your systems\' path' % cmd)
-            else:
+            else:  # pragma: no cover
                 raise
+
+        returncode = proc.wait()
 
         if cleanup:
             os.remove(filepath)

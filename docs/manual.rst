@@ -119,6 +119,37 @@ You can also change the ``format`` attribute on an existing graph object:
     'test-output/round-table.gv.svg'
 
 
+Piped output
+------------
+
+To directly access the results from the Graphviz rendering command (e.g.
+``dot``) as binary data string from within Python instead of writing to a file,
+use the ``pipe()``-method of your :py:class:`~graphviz.Graph` or
+:py:class:`~graphviz.Digraph` object:
+
+.. code:: python
+
+    >>> h = Graph('hello', format='svg')
+
+    >>> h.edge('Hello', 'World')
+
+    >>> print(h.pipe().decode('utf-8'))  # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <!DOCTYPE svg
+    ...
+    </svg>
+
+Note that ``pipe()`` returns the raw ``stdout`` from the rendering command
+(``str`` on Python 2, ``bytes`` on Python 3): When piping into plain-text
+formats like ``svg`` or ``plain``, you usually want to decode the return value
+as shown above.
+
+.. note::
+
+    The output for ``pipe()`` is buffered in memory, so do not use this method
+    if the data size is large.
+
+
 Styling
 -------
 

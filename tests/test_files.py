@@ -45,6 +45,10 @@ class TestNoent(unittest.TestCase):
         import graphviz.files
         graphviz.files.ENGINES.discard('spam')
 
+    def test_pipe(self):
+        with self.assertRaisesRegexp(RuntimeError, 'failed to execute'):
+            self.file.pipe()
+
     def test_render(self):
         with self.assertRaisesRegexp(RuntimeError, 'failed to execute'):
             self.file.render()
