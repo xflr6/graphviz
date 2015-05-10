@@ -156,7 +156,9 @@ IPython notebooks
 :py:class:`~graphviz.Graph` and :py:class:`~graphviz.Digraph` objects have a
 ``_repr_svg_``-method so they can be rendered and displayed directly inside an
 IPython notebook. For an example, see the ``examples/notebook.ipynb`` in the
-source repository/distribution.
+`source repository/distribution`__.
+
+__ http://nbviewer.ipython.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
 
 
 Styling
