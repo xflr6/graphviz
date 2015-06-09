@@ -62,3 +62,13 @@ unix.py
 
 .. image:: _static/unix.png
     :align: center
+
+
+structs.py
+----------
+
+.. literalinclude:: ../examples/structs.py
+    :lines: 2-
+
+.. image:: _static/structs.png
+    :align: center
