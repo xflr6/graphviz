@@ -31,5 +31,6 @@ __license__ = 'MIT, see LICENSE'
 __copyright__ = 'Copyright (c) 2013-2015 Sebastian Bank'
 
 from .dot import Graph, Digraph
+from .files import Source
 
-__all__ = ['Graph', 'Digraph']
+__all__ = ['Graph', 'Digraph', 'Source']

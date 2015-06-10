@@ -27,3 +27,12 @@ Digraph
         format, engine,
         pipe, save, render, view
     :undoc-members:
+
+
+Source
+------
+
+.. autoclass:: graphviz.Source
+    :members: format, engine,
+        pipe, save, render, view
+    :undoc-members:

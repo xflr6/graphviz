@@ -13,7 +13,7 @@ from ._compat import text_type
 
 from . import tools
 
-__all__ = ['File']
+__all__ = ['File', 'Source']
 
 FORMATS = {  # http://www.graphviz.org/doc/info/output.html
     'bmp',
@@ -265,3 +265,24 @@ class File(Base):
     def _view_darwin(filepath):
         """Open filepath with its default application (mac)."""
         subprocess.Popen(['open', filepath], shell=True)
+
+
+class Source(File):
+    """Verbatim DOT source code string to be rendered by Graphviz.
+
+    Args:
+        source: The verbatim DOT source code string.
+        filename: Filename for saving the source (defaults to name + '.gv').
+        directory: (Sub)directory for source saving and rendering.
+        format: Rendering output format ('pdf', 'png', ...).
+        engine: Layout command used ('dot', 'neato', ...).
+        encoding: Encoding for saving the source.
+
+    .. note::
+        All parameters except source are optional and can be changed under
+        their corresponding attribute name after instance creation.
+    """
+
+    def __init__(self, source, filename=None, directory=None, format=None, engine=None, encoding=None):
+        super(Source, self).__init__(filename, directory, format, engine, encoding)
+        self.source = source

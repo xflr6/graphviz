@@ -2,7 +2,7 @@
 
 import unittest
 
-from graphviz.files import File
+from graphviz.files import File, Source
 
 
 class TestBase(unittest.TestCase):
@@ -52,3 +52,11 @@ class TestNoent(unittest.TestCase):
     def test_render(self):
         with self.assertRaisesRegexp(RuntimeError, 'failed to execute'):
             self.file.render()
+
+
+class TestSource(unittest.TestCase):
+
+    def test_init(self):
+        source = 'graph { hello -> world }'
+        s = Source(source)
+        self.assertEqual(s.source, source)

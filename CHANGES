@@ -7,6 +7,8 @@ Version 0.4.5 (in development)
 
 Added example for HTML-like labels (structs.py).
 
+Added Source class for rendering verbatim DOT source code. 
+
 
 Version 0.4.4
 -------------
