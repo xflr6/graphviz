@@ -123,18 +123,18 @@ This package is distributed under the `MIT license`_.
 .. |--| unicode:: U+2013
 
 
-.. |PyPI version| image:: https://pypip.in/v/graphviz/badge.svg
+.. |PyPI version| image:: https://img.shields.io/pypi/v/graphviz.svg
     :target: https://pypi.python.org/pypi/graphviz
     :alt: Latest PyPI Version
-.. |License| image:: https://pypip.in/license/graphviz/badge.svg
+.. |License| image:: https://img.shields.io/pypi/l/graphviz.svg
     :target: https://pypi.python.org/pypi/graphviz
     :alt: License
-.. |Supported Python| image:: https://pypip.in/py_versions/graphviz/badge.svg
+.. |Supported Python| image:: https://img.shields.io/pypi/pyversions/graphviz.svg
     :target: https://pypi.python.org/pypi/graphviz
     :alt: Supported Python Versions
-.. |Format| image:: https://pypip.in/format/graphviz/badge.svg
+.. |Format| image:: https://img.shields.io/pypi/format/graphviz.svg
     :target: https://pypi.python.org/pypi/graphviz
     :alt: Format
-.. |Downloads| image:: https://pypip.in/d/graphviz/badge.svg
+.. |Downloads| image:: https://img.shields.io/pypi/dm/graphviz.svg
     :target: https://pypi.python.org/pypi/graphviz
     :alt: Downloads
