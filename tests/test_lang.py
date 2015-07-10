@@ -1,6 +1,6 @@
 # test_lang.py
 
-import unittest
+import unittest2 as unittest
 
 from graphviz.lang import quote, attributes
 

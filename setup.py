@@ -13,7 +13,7 @@ setup(
     url='http://github.com/xflr6/graphviz',
     packages=find_packages(),
     extras_require={
-        'test': ['nose', 'coverage', 'flake8', 'pep8-naming'],
+        'test': ['unittest2', 'nose', 'coverage', 'flake8', 'pep8-naming'],
         'dev': ['wheel'],
     },
     platforms='any',
@@ -26,6 +26,7 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',

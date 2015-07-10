@@ -1,6 +1,6 @@
 # test_files.py
 
-import unittest
+import unittest2 as unittest
 
 from graphviz.files import File, Source
 

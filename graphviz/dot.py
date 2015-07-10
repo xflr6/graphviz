@@ -135,7 +135,7 @@ class Dot(files.File):
             kw: Attributes target ('graph', 'node', or 'edge')
             attrs: Attributes to be set (must be strings, may be empty).
         """
-        if kw.lower() not in {'graph', 'node', 'edge'}:
+        if kw.lower() not in set(('graph', 'node', 'edge')):
             raise ValueError('attr statement must target graph, node, or edge: '
                 '%r' % kw)
         if _attributes or attrs:
