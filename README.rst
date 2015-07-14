@@ -20,10 +20,10 @@ Links
 
 - GitHub: http://github.com/xflr6/graphviz
 - PyPI: http://pypi.python.org/pypi/graphviz
-- Download: http://pypi.python.org/pypi/graphviz#downloads
 - Documentation: http://graphviz.readthedocs.org
 - Changelog: http://graphviz.readthedocs.org/en/latest/changelog.html
 - Issue Tracker: http://github.com/xflr6/graphviz/issues
+- Download: http://pypi.python.org/pypi/graphviz#downloads
 
 
 Installation

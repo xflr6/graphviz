@@ -9,7 +9,7 @@ Added example for HTML-like labels (structs.py).
 
 Added Source class for rendering verbatim DOT source code. 
 
-Added Python 2.6 support (pull request Jim Christ).
+Added Python 2.6 support (pull request Jim Crist).
 
 
 Version 0.4.4
