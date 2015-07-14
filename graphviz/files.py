@@ -15,7 +15,7 @@ from . import tools
 
 __all__ = ['File', 'Source']
 
-FORMATS = set((  # http://www.graphviz.org/doc/info/output.html
+FORMATS = set([  # http://www.graphviz.org/doc/info/output.html
     'bmp',
     'canon', 'dot', 'gv', 'xdot', 'xdot1.2', 'xdot1.4',
     'cgimage',
@@ -52,9 +52,9 @@ FORMATS = set((  # http://www.graphviz.org/doc/info/output.html
     'webp',
     'xlib',
     'x11',
-))
+])
 
-ENGINES = set(('dot', 'neato', 'twopi', 'circo', 'fdp', 'sfdp', 'osage'))
+ENGINES = set(['dot', 'neato', 'twopi', 'circo', 'fdp', 'sfdp', 'osage'])
 
 PLATFORM = sys.platform
 
