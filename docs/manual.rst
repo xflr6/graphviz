@@ -213,6 +213,38 @@ You can also change the ``engine`` attribute of an existing instance:
     >>> dot.engine = 'circo'
 
 
+Using raw DOT
+-------------
+
+To render a ready-made DOT source code string (instead of assembling one with
+the higher-level interface of :py:class:`~graphviz.Graph` or
+:py:class:`~graphviz.Digraph`), create a :py:class:`~graphviz.Source` object
+holding your DOT string:
+
+.. code:: python
+
+    >>> from graphviz import Source
+
+    >>> src = Source('digraph "the holy hand grenade" { rankdir=LR; 1 -> 2 -> 3 -> lob }')
+
+    >>> src  #doctest: +ELLIPSIS
+    <graphviz.files.Source object at 0x...>
+
+Use the ``render``-method to save and render it:
+
+.. code:: python
+
+    >>> src.render('test-output/holy-grenade.gv', view=True)
+    'test-output/holy-grenade.gv.pdf'
+
+.. image:: _static/holy-grenade.png
+    :align: center
+
+Apart from the missing editing methods, :py:class:`~graphviz.Source` objects
+are the same as the higher-level graph objects (``pipe()``-method, formats,
+engines, IPython notebook repr, etc.), see above.
+
+
 .. _pip: http://pip.readthedocs.org
 .. _virtualenv: http://virtualenv.pypa.io
 
