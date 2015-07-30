@@ -254,7 +254,7 @@ class File(Base):
     @staticmethod
     def _view_linux2(filepath):
         """Open filepath in the user's preferred application (linux)."""
-        subprocess.Popen(['xdg-open', filepath], shell=True)
+        subprocess.Popen(['xdg-open', filepath])
 
     @staticmethod
     def _view_win32(filepath):
@@ -264,7 +264,7 @@ class File(Base):
     @staticmethod
     def _view_darwin(filepath):
         """Open filepath with its default application (mac)."""
-        subprocess.Popen(['open', filepath], shell=True)
+        subprocess.Popen(['open', filepath])
 
 
 class Source(File):
