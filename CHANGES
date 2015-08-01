@@ -5,7 +5,7 @@ Changelog
 Version 0.4.6 (in development)
 ------------------------------
 
-
+Fixed view()-method on Linux and Darwin (pull request Eric L. Frederich).
 
 
 Version 0.4.5
