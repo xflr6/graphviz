@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.4.6 (in development)
-------------------------------
+Version 0.4.6
+-------------
 
 Fixed view()-method on Linux and Darwin (pull request Eric L. Frederich).
 
