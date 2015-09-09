@@ -2,11 +2,11 @@
 
 """Save DOT code objects, render with Graphviz dot, and open in viewer."""
 
-import platform
 import os
 import io
 import errno
 import codecs
+import platform
 import subprocess
 
 from ._compat import text_type
@@ -55,6 +55,8 @@ FORMATS = set([  # http://www.graphviz.org/doc/info/output.html
 ])
 
 ENGINES = set(['dot', 'neato', 'twopi', 'circo', 'fdp', 'sfdp', 'osage'])
+
+PLATFORM = platform.system().lower()
 
 
 class Base(object):
@@ -237,8 +239,8 @@ class File(Base):
     def _view(self, filepath, format):
         """Start the right viewer based on file format and platform."""
         methods = [
-            '_view_%s_%s' % (format, platform.system()),
-            '_view_%s' % platform.system(),
+            '_view_%s_%s' % (format, PLATFORM),
+            '_view_%s' % PLATFORM,
         ]
         for name in methods:
             method = getattr(self, name, None)
@@ -247,20 +249,20 @@ class File(Base):
                 break
         else:
             raise RuntimeError('%r has no built-in viewer support for %r '
-                'on %r platform' % (self.__class__, format, platform.system()))
+                'on %r platform' % (self.__class__, format, PLATFORM))
 
     @staticmethod
-    def _view_Linux(filepath):
+    def _view_linux(filepath):
         """Open filepath in the user's preferred application (linux)."""
         subprocess.Popen(['xdg-open', filepath])
 
     @staticmethod
-    def _view_Windows(filepath):
+    def _view_windows(filepath):
         """Start filepath with its associated application (windows)."""
         os.startfile(os.path.normpath(filepath))
 
     @staticmethod
-    def _view_Darwin(filepath):
+    def _view_darwin(filepath):
         """Open filepath with its default application (mac)."""
         subprocess.Popen(['open', filepath])
 
