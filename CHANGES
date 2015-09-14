@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.4.7 (in development)
-------------------------------
+Version 0.4.7
+-------------
 
 Fixed view()-method on Linux under Python 3 (pull request Antony Lee).
 
