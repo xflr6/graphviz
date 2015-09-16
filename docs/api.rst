@@ -13,26 +13,28 @@ Graph
 -----
 
 .. autoclass:: graphviz.Graph
-    :members: node, edge, edges, attr, subgraph, source,
-        format, engine,
+    :members:
+        source,
+        node, edge, edges, attr, subgraph,
+        format, engine, encoding,
         pipe, save, render, view
-    :undoc-members:
 
 
 Digraph
 -------
 
 .. autoclass:: graphviz.Digraph
-    :members: node, edge, edges, attr, subgraph, source,
-        format, engine,
+    :members:
+        source,
+        node, edge, edges, attr, subgraph,
+        format, engine, encoding,
         pipe, save, render, view
-    :undoc-members:
 
 
 Source
 ------
 
 .. autoclass:: graphviz.Source
-    :members: format, engine,
+    :members:
+        format, engine, encoding,
         pipe, save, render, view
-    :undoc-members:
