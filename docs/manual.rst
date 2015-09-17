@@ -20,7 +20,7 @@ isolated install, you can run the same inside a virtualenv_.
 
 The only dependency is a working installation of Graphviz (`download page`_).
 
-After installing Graphiz, make sure that its ``bin/`` subdirectory containing
+After installing Graphviz, make sure that its ``bin/`` subdirectory containing
 the layout commands for rendering graph descriptions (``dot``, ``circo``,
 ``neato``, etc.) is on your systems' path: On the command-line, ``dot -V``
 should print the version of your Graphiz installation.
@@ -156,9 +156,9 @@ IPython notebooks
 :py:class:`~graphviz.Graph` and :py:class:`~graphviz.Digraph` objects have a
 ``_repr_svg_``-method so they can be rendered and displayed directly inside an
 IPython notebook. For an example, see the ``examples/notebook.ipynb`` in the
-`source repository/distribution`__.
+`source repository/distribution`__ (nbviewer_).
 
-__ http://nbviewer.ipython.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
+__ notebook_
 
 
 Styling
@@ -248,8 +248,11 @@ engines, IPython notebook repr, etc.), see above.
 .. _pip: http://pip.readthedocs.org
 .. _virtualenv: http://virtualenv.pypa.io
 
-.. _Graphviz:  http://www.graphviz.org
+.. _Graphviz: http://www.graphviz.org
 .. _download page: http://www.graphviz.org/Download.php
 .. _DOT: http://www.graphviz.org/doc/info/lang.html
 .. _output file format: http://www.graphviz.org/doc/info/output.html
 .. _appearance: http://www.graphviz.org/doc/info/attrs.html
+
+.. _notebook: http://github.com/xflr6/graphviz/blob/master/examples/notebook.ipynb
+.. _nbviewer: http://nbviewer.ipython.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
