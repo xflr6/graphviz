@@ -132,6 +132,9 @@ class File(Base):
         if encoding is not None:
             self.encoding = encoding
 
+    def _repr_svg_(self):
+        return self.pipe(format='svg').decode(self._encoding)
+
     def pipe(self, format=None):
         """Return the source piped through the Graphviz layout command.
 
@@ -286,6 +289,3 @@ class Source(File):
     def __init__(self, source, filename=None, directory=None, format=None, engine=None, encoding=None):
         super(Source, self).__init__(filename, directory, format, engine, encoding)
         self.source = source
-
-    def _repr_svg_(self):
-        return self.pipe(format='svg').decode(self._encoding)
