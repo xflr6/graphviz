@@ -2,10 +2,10 @@ Changelog
 =========
 
 
-Version 0.4.8 (in development)
-------------------------------
+Version 0.4.8
+-------------
 
-
+Make _repr_svg_ available on Source (pull request RafalSkolasinski).
 
 
 Version 0.4.7

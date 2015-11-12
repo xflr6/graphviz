@@ -55,11 +55,11 @@ class Dot(files.File):
 
         super(Dot, self).__init__(filename, directory, format, engine, encoding)
 
-        self.graph_attr = {} if graph_attr is None else dict(graph_attr)
-        self.node_attr = {} if node_attr is None else dict(node_attr)
-        self.edge_attr = {} if edge_attr is None else dict(edge_attr)
+        self.graph_attr = dict(graph_attr)if graph_attr is not None else {}
+        self.node_attr = dict(node_attr) if node_attr is not None else {}
+        self.edge_attr = dict(edge_attr) if edge_attr is not None else {}
 
-        self.body = [] if body is None else list(body)
+        self.body = list(body) if body is not None else []
 
     def __iter__(self, subgraph=False):
         """Yield the DOT source code line by line."""

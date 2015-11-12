@@ -16,7 +16,8 @@ htmlcov/
 
 Thumbs.db
 
-test-output/
+/test-output/
 
-examples/*.gv
-examples/*.pdf
+/examples/*.gv
+/examples/*.pdf
+/examples/.ipynb_checkpoints/
