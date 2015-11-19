@@ -7,7 +7,7 @@ User Guide
 Installation
 ------------
 
-``graphviz`` provides a simple pure-python interface for the Graphviz_
+:mod:`graphviz` provides a simple pure-Python interface for the Graphviz_
 graph-drawing software. It runs under Python 2.6, 2.7 and 3.3+. To install it
 with pip_ run the following:
 
@@ -16,7 +16,8 @@ with pip_ run the following:
     $ pip install graphviz
 
 For a system-wide install, this typically requires administrator access. For an
-isolated install, you can run the same inside a virtualenv_.
+isolated install, you can run the same inside a virtualenv_ or a venv_ (Python
+3.3+ only).
 
 The only dependency is a working installation of Graphviz (`download page`_).
 
@@ -29,13 +30,13 @@ should print the version of your Graphiz installation.
 Basic usage
 -----------
 
-The ``graphviz`` module provides two classes: :py:class:`~graphviz.Graph` and
-:py:class:`~graphviz.Digraph`. They create graph descriptions in the DOT_
-language for undirected and directed graphs respectively. They have the same
-API.
+The :mod:`graphviz` module provides two classes: :class:`.Graph` and
+:class:`.Digraph`. They create graph descriptions in the DOT_ language for
+undirected and directed graphs respectively. They have the same
+:ref:`API <api>`.
 
-Create a graph by instantiating a new :py:class:`~graphviz.Graph` or
-:py:class:`~graphviz.Digraph` object:
+Create a graph by instantiating a new :class:`.Graph` or
+:class:`.Digraph` object:
 
 .. code:: python
 
@@ -46,11 +47,12 @@ Create a graph by instantiating a new :py:class:`~graphviz.Graph` or
     >>> dot  #doctest: +ELLIPSIS
     <graphviz.dot.Digraph object at 0x...>
 
-Their constructors allow to set the graph's ``name``, the ``filename`` for the
-DOT source and the rendered graph, a ``comment`` for the first source code
-line, etc.
+Their constructors allow to set the graph's :attr:`~.Graph.name`, the
+:attr:`~.Graph.filename` for the DOT source and the rendered graph, a
+:attr:`~.Graph.comment` for the first source code line, etc.
 
-Add nodes and edges using the ``node`` and ``edge`` or ``edges`` methods:
+Add nodes and edges to the graph object using its :meth:`~.Graph.node` and
+:meth:`~.Graph.edge` or :meth:`~.Graph.edges` methods:
 
 .. code:: python
 
@@ -61,10 +63,11 @@ Add nodes and edges using the ``node`` and ``edge`` or ``edges`` methods:
     >>> dot.edges(['AB', 'AL'])
     >>> dot.edge('B', 'L', constraint='false')
 
-The ``node``-method take a ``name`` identifier as first argument and an
-optional ``label``. The ``edge``-method takes the names of start- and end-node,
-while ``edges`` takes iterable of name-pairs. Keyword arguments are turned into
-(node and edge) attributes (see `Graphviz docs <appearance_>`_).
+The :meth:`~.Graph.node`-method takes a ``name`` identifier as first argument
+and an optional ``label``. The :meth:`~.Graph.edge`-method takes the names of
+start- and end-node, while :meth:`~.Graph.edges` takes iterable of name-pairs.
+Keyword arguments are turned into (node and edge) attributes (see `Graphviz
+docs <appearance_>`_).
 
 Check the generated source code:
 
@@ -81,8 +84,9 @@ Check the generated source code:
             B -> L [constraint=false]
     }
 
-Use the ``render``-method to save the source code and render it with the
-default layout program.
+Use the :meth:`~.Graph.render`-method to save the source code and render it with the
+default layout program (``dot``, see below for using `other layout commands
+<Engines_>`_). 
 
 .. code:: python
 
@@ -99,9 +103,9 @@ etc.) file with your system's default viewer application for the file type.
 Formats
 -------
 
-To use a different `output file format`_ than the default PDF, set the
-``format`` argument when creating your :py:class:`~graphviz.Graph` or
-:py:class:`~graphviz.Digraph` object:
+To use a different `output file format`_ than the default PDF, use the
+:attr:`~.Graph.format` argument when creating your :class:`.Graph` or
+:class:`.Digraph` object:
 
 .. code:: python
 
@@ -109,7 +113,8 @@ To use a different `output file format`_ than the default PDF, set the
 
     >>> g = Graph(format='png')
 
-You can also change the ``format`` attribute on an existing graph object:
+You can also change the :attr:`~.Graph.format` attribute on an existing graph
+object:
 
 .. code:: python
 
@@ -124,8 +129,8 @@ Piped output
 
 To directly access the results from the Graphviz rendering command (e.g.
 ``dot``) as binary data string from within Python instead of writing to a file,
-use the ``pipe()``-method of your :py:class:`~graphviz.Graph` or
-:py:class:`~graphviz.Digraph` object:
+use the :meth:`~.Graph.pipe`-method of your :class:`.Graph` or
+:class:`.Digraph` object:
 
 .. code:: python
 
@@ -139,33 +144,33 @@ use the ``pipe()``-method of your :py:class:`~graphviz.Graph` or
     ...
     </svg>
 
-Note that ``pipe()`` returns the raw ``stdout`` from the rendering command
-(``str`` on Python 2, ``bytes`` on Python 3): When piping into plain-text
-formats like ``svg`` or ``plain``, you usually want to decode the return value
-as shown above.
+Note that :meth:`~.Graph.pipe` returns the raw ``stdout`` from the rendering
+command (``str`` on Python 2, ``bytes`` on Python 3): When piping into
+plain-text formats like ``svg`` or ``plain``, you usually want to decode the
+return value as shown above.
 
 .. note::
 
-    The output for ``pipe()`` is buffered in memory, so do not use this method
-    if the data size is large.
+    The output for :meth:`~.Graph.pipe` is buffered in memory, so do not use
+    this method if the data size is large.
 
 
 IPython notebooks
 -----------------
 
-:py:class:`~graphviz.Graph` and :py:class:`~graphviz.Digraph` objects have a
-``_repr_svg_``-method so they can be rendered and displayed directly inside an
-IPython notebook. For an example, see the ``examples/notebook.ipynb`` in the
-`source repository/distribution`__ (nbviewer_).
-
-__ notebook_
+:class:`.Graph` and :class:`.Digraph` objects have a
+:meth:`~.Graph._repr_svg_`-method so they can be rendered and displayed
+directly inside an `IPython notebook`_. For an example, check the
+``examples/notebook.ipynb`` file in the
+`source repository/distribution <notebook_>`_ (nbviewer_).
 
 
 Styling
 -------
 
-Use the ``graph_attr``, ``node_attr``, and ``edge_attr`` arguments to change
-the default appearance_ of your graph, nodes, and edges.
+Use the :attr:`~.Graph.graph_attr`, :attr:`~.Graph.node_attr`, and
+:attr:`~.Graph.edge_attr` arguments to change the default appearance_ of your
+graph, nodes, and edges.
 
 .. code:: python
 
@@ -200,13 +205,14 @@ Engines
 -------
 
 To use a different layout command than the default ``dot`` when rendering your
-graph, set the ``engine`` argument on graph creation. 
+graph, use the :attr:`~.Graph.engine` argument when creating your graph. 
 
 .. code:: python
 
     >>> g = Graph(engine='neato')
 
-You can also change the ``engine`` attribute of an existing instance:
+You can also change the :attr:`~.Graph.engine` attribute of an existing
+instance:
 
 .. code:: python
 
@@ -217,9 +223,8 @@ Using raw DOT
 -------------
 
 To render a ready-made DOT source code string (instead of assembling one with
-the higher-level interface of :py:class:`~graphviz.Graph` or
-:py:class:`~graphviz.Digraph`), create a :py:class:`~graphviz.Source` object
-holding your DOT string:
+the higher-level interface of :class:`.Graph` or :class:`.Digraph`), create a
+:class:`.Source` object holding your DOT string:
 
 .. code:: python
 
@@ -230,7 +235,7 @@ holding your DOT string:
     >>> src  #doctest: +ELLIPSIS
     <graphviz.files.Source object at 0x...>
 
-Use the ``render``-method to save and render it:
+Use the :meth:`~.Source.render`-method to save and render it:
 
 .. code:: python
 
@@ -240,13 +245,15 @@ Use the ``render``-method to save and render it:
 .. image:: _static/holy-grenade.png
     :align: center
 
-Apart from the missing editing methods, :py:class:`~graphviz.Source` objects
-are the same as the higher-level graph objects (``pipe()``-method, formats,
-engines, IPython notebook repr, etc.), see above.
+Apart from the missing editing methods, :class:`.Source` objects are the same
+as the higher-level graph objects (:meth:`~.Source.pipe`-method,
+:attr:`~.Source.format`, :attr:`~.Source.engine`, IPython notebook repr, etc.),
+see above.
 
 
 .. _pip: http://pip.readthedocs.org
 .. _virtualenv: http://virtualenv.pypa.io
+.. _venv: http://docs.python.org/3/library/venv.html
 
 .. _Graphviz: http://www.graphviz.org
 .. _download page: http://www.graphviz.org/Download.php
@@ -254,5 +261,6 @@ engines, IPython notebook repr, etc.), see above.
 .. _output file format: http://www.graphviz.org/doc/info/output.html
 .. _appearance: http://www.graphviz.org/doc/info/attrs.html
 
+.. _IPython notebook: http://ipython.org/notebook.html
 .. _notebook: http://github.com/xflr6/graphviz/blob/master/examples/notebook.ipynb
 .. _nbviewer: http://nbviewer.ipython.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb

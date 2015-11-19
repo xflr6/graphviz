@@ -3,8 +3,8 @@ Graphviz
 
 |PyPI version| |License| |Supported Python| |Format| |Downloads|
 
-This package facilitates the creation of graph descriptions in the DOT_ language
-of the Graphviz_ graph drawing software from Python.
+This package facilitates the creation and rendering of graph descriptions in
+the DOT_ language of the Graphviz_ graph drawing software from Python.
 
 Create a graph object, assemble the graph by adding nodes and edges, and
 retrieve its DOT source code string. Save the source code to a file and render
@@ -12,7 +12,7 @@ it with the Graphviz installation of your system.
 
 Use the ``view`` option/method to directly inspect the resulting (PDF, PNG,
 SVG, etc.) file with its default application. Graphs can also be rendered
-and displayed within `IPython notebooks`_.
+and displayed within `IPython notebooks`_ (example_).
 
 
 Links
@@ -38,7 +38,8 @@ This package runs under Python 2.6, 2.7, and 3.3+, use pip_ to install:
 To render the generated DOT source code, you also need to install Graphviz
 (`download page`_).
 
-Make sure that the ``dot`` executable is on your systems' path.
+Make sure that the directory containing the ``dot`` executable is on your
+systems' path.
 
 
 Quickstart
@@ -111,9 +112,10 @@ This package is distributed under the `MIT license`_.
 .. _download page: http://www.graphviz.org/Download.php
 .. _DOT: http://www.graphviz.org/doc/info/lang.html
 .. _IPython notebooks: http://ipython.org/notebook.html
+.. _example: http://nbviewer.ipython.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
 
 .. _pygraphviz: http://pypi.python.org/pypi/pygraphviz
-.. _graphviz-python: https://pypi.python.org/pypi/graphviz-python
+.. _graphviz-python: http://pypi.python.org/pypi/graphviz-python
 .. _documentation: http://www.graphviz.org/pdf/gv.3python.pdf
 .. _pydot: http://pypi.python.org/pypi/pydot
 
