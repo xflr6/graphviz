@@ -5,7 +5,7 @@ Changelog
 Version 0.4.9 (in development)
 ------------------------------
 
-Hide render/pipe subrocess console window on Windows when invokes from
+Hide render/pipe subrocess console window on Windows when invoked from
 non-console process (e.g. from IDLE).
 
 Improve documentation markup/wording.
