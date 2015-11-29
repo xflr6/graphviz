@@ -58,6 +58,13 @@ ENGINES = set(['dot', 'neato', 'twopi', 'circo', 'fdp', 'sfdp', 'osage'])
 
 PLATFORM = platform.system().lower()
 
+STARTUPINFO = None
+
+if PLATFORM == 'windows':  # pragma: no cover
+    STARTUPINFO = subprocess.STARTUPINFO()
+    STARTUPINFO.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    STARTUPINFO.wShowWindow = subprocess.SW_HIDE
+
 
 class Base(object):
 
@@ -151,7 +158,8 @@ class File(Base):
         data = text_type(self.source).encode(self._encoding)
 
         try:
-            proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+            proc = subprocess.Popen(cmd, stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE, startupinfo=STARTUPINFO)
         except OSError as e:
             if e.errno == errno.ENOENT:
                 raise RuntimeError('failed to execute %r, '
@@ -208,7 +216,7 @@ class File(Base):
         cmd = self._cmd(self._engine, self._format, filepath)
 
         try:
-            proc = subprocess.Popen(cmd)
+            proc = subprocess.Popen(cmd, startupinfo=STARTUPINFO)
         except OSError as e:
             if e.errno == errno.ENOENT:
                 raise RuntimeError('failed to execute %r, '
