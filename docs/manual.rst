@@ -93,7 +93,7 @@ default layout program (``dot``, see below for using `other layout commands
     >>> dot.render('test-output/round-table.gv', view=True)
     'test-output/round-table.gv.pdf'
 
-.. image:: _static/round-table.png
+.. image:: _static/round-table.svg
     :align: center
 
 Passing ``view=True`` will automatically open the resulting (PDF, PNG, SVG,
@@ -197,7 +197,7 @@ After creation, they can be edited on the graph object:
                 parrot -> dead
     }
 
-.. image:: _static/pet-shop.png
+.. image:: _static/pet-shop.svg
     :align: center
 
 
@@ -242,7 +242,7 @@ Use the :meth:`~.Source.render`-method to save and render it:
     >>> src.render('test-output/holy-grenade.gv', view=True)
     'test-output/holy-grenade.gv.pdf'
 
-.. image:: _static/holy-grenade.png
+.. image:: _static/holy-grenade.svg
     :align: center
 
 Apart from the missing editing methods, :class:`.Source` objects are the same

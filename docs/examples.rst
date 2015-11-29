@@ -14,7 +14,7 @@ hello.py
 .. literalinclude:: ../examples/hello.py
     :lines: 2-
 
-.. image:: _static/hello.png
+.. image:: _static/hello.svg
     :align: center
 
 
@@ -24,7 +24,7 @@ process.py
 .. literalinclude:: ../examples/process.py
     :lines: 2-
 
-.. image:: _static/process.png
+.. image:: _static/process.svg
     :align: center
 
 
@@ -34,7 +34,7 @@ fsm.py
 .. literalinclude:: ../examples/fsm.py
     :lines: 2-
 
-.. image:: _static/fsm.png
+.. image:: _static/fsm.svg
     :align: center
 
 
@@ -44,7 +44,7 @@ cluster.py
 .. literalinclude:: ../examples/cluster.py
     :lines: 2-
 
-.. image:: _static/cluster.png
+.. image:: _static/cluster.svg
     :align: center
 
 
@@ -54,7 +54,7 @@ er.py
 .. literalinclude:: ../examples/er.py
     :lines: 2-
 
-.. image:: _static/er.png
+.. image:: _static/er.svg
     :align: center
 
 
@@ -64,7 +64,7 @@ unix.py
 .. literalinclude:: ../examples/unix.py
     :lines: 2-
 
-.. image:: _static/unix.png
+.. image:: _static/unix.svg
     :align: center
 
 
@@ -74,5 +74,5 @@ structs.py
 .. literalinclude:: ../examples/structs.py
     :lines: 2-
 
-.. image:: _static/structs.png
+.. image:: _static/structs.svg
     :align: center
