@@ -16,8 +16,8 @@ with pip_ run the following:
     $ pip install graphviz
 
 For a system-wide install, this typically requires administrator access. For an
-isolated install, you can run the same inside a virtualenv_ or a venv_ (Python
-3.3+ only).
+isolated install, you can run the same inside a virtualenv_ or a
+:mod:`py3:venv` (Python 3.3+ only).
 
 The only dependency is a working installation of Graphviz (`download page`_).
 
@@ -253,7 +253,6 @@ see above.
 
 .. _pip: http://pip.readthedocs.org
 .. _virtualenv: http://virtualenv.pypa.io
-.. _venv: http://docs.python.org/3/library/venv.html
 
 .. _Graphviz: http://www.graphviz.org
 .. _download page: http://www.graphviz.org/Download.php
