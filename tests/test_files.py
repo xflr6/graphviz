@@ -1,5 +1,6 @@
 # test_files.py
 
+import os
 import unittest2 as unittest
 
 from graphviz.files import File, Source
@@ -36,14 +37,16 @@ class TestFile(unittest.TestCase):
 class TestNoent(unittest.TestCase):
 
     def setUp(self):
-        import graphviz.files
-        graphviz.files.ENGINES.add('spam')
-        self.file = File('spam.gv', 'test-output', engine='spam')
+        self._oldpath = os.environ.get('PATH')
+        os.environ['PATH'] = ''
+        self.file = File('spam.gv', 'test-output')
         self.file.source = 'spam'
 
     def tearDown(self):
-        import graphviz.files
-        graphviz.files.ENGINES.discard('spam')
+        if self._oldpath is None:
+            del os.environ['PATH']
+        else:
+            os.environ['PATH'] = self._oldpath
 
     def test_pipe(self):
         with self.assertRaisesRegexp(RuntimeError, 'failed to execute'):
