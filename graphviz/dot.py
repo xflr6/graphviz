@@ -48,7 +48,8 @@ class Dot(files.File):
     def __init__(self, name=None, comment=None,
             filename=None, directory=None,
             format=None, engine=None, encoding=None,
-            graph_attr=None, node_attr=None, edge_attr=None, body=None):
+            graph_attr=None, node_attr=None, edge_attr=None, body=None,
+            strict=False):
 
         self.name = name
         self.comment = comment
@@ -61,12 +62,16 @@ class Dot(files.File):
 
         self.body = list(body) if body is not None else []
 
+        self.strict = strict
+
     def __iter__(self, subgraph=False):
         """Yield the DOT source code line by line."""
         if self.comment:
             yield self._comment % self.comment
 
         head = self._subgraph if subgraph else self._head
+        if self.strict:
+            head = 'strict %s' % head
         yield head % (self.quote(self.name) + ' ' if self.name else '')
 
         styled = False
@@ -168,6 +173,7 @@ class Graph(Dot):
         node_attr: Mapping of (attribute, value) pairs set for all nodes.
         edge_attr: Mapping of (attribute, value) pairs set for all edges.
         body: Iterable of lines to add to the graph body.
+        strict: Rendering should merge multi-edges (default: False).
 
     .. note::
         All parameters are optional and can be changed under their

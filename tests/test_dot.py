@@ -15,6 +15,10 @@ class TestDot(unittest.TestCase):
         with self.assertRaises(ValueError):
             Graph().attr('spam')
 
+    def test_strict(self):
+        self.assertEqual(Graph(strict=True).source, 'strict graph {\n}')
+        self.assertEqual(Digraph(strict=True).source, 'strict digraph {\n}')
+
     def test_subgraph_invalid(self):
         with self.assertRaises(ValueError):
             Graph().subgraph(Digraph())

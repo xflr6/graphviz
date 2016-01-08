@@ -28,7 +28,7 @@ __title__ = 'graphviz'
 __version__ = '0.4.9.dev0'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE'
-__copyright__ = 'Copyright (c) 2013-2015 Sebastian Bank'
+__copyright__ = 'Copyright (c) 2013-2016 Sebastian Bank'
 
 from .dot import Graph, Digraph
 from .files import Source
