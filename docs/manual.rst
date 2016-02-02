@@ -262,4 +262,4 @@ see above.
 
 .. _IPython notebook: http://ipython.org/notebook.html
 .. _notebook: http://github.com/xflr6/graphviz/blob/master/examples/notebook.ipynb
-.. _nbviewer: http://nbviewer.ipython.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
+.. _nbviewer: http://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb

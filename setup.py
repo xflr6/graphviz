@@ -12,10 +12,6 @@ setup(
     license='MIT',
     url='http://github.com/xflr6/graphviz',
     packages=find_packages(),
-    extras_require={
-        'test': ['unittest2', 'nose', 'coverage', 'flake8', 'pep8-naming'],
-        'dev': ['wheel'],
-    },
     platforms='any',
     long_description=open('README.rst').read(),
     classifiers=[

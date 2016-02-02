@@ -1,0 +1,8 @@
+# exact dependency versions used in development
+# dependencies for testing and building
+coverage
+flake8
+nose
+pep8-naming
+unittest2
+wheel
