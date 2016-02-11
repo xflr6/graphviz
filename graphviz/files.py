@@ -54,7 +54,9 @@ FORMATS = set([  # http://www.graphviz.org/doc/info/output.html
     'x11',
 ])
 
-ENGINES = set(['dot', 'neato', 'twopi', 'circo', 'fdp', 'sfdp', 'osage'])
+ENGINES = set([  # http://www.graphviz.org/cgi-bin/man?dot
+    'dot', 'neato', 'twopi', 'circo', 'fdp', 'sfdp', 'patchwork', 'osage',
+])
 
 PLATFORM = platform.system().lower()
 
