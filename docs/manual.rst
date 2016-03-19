@@ -155,12 +155,12 @@ return value as shown above.
     this method if the data size is large.
 
 
-IPython notebooks
+Jupyter notebooks
 -----------------
 
 :class:`.Graph` and :class:`.Digraph` objects have a
 :meth:`~.Graph._repr_svg_`-method so they can be rendered and displayed
-directly inside an `IPython notebook`_. For an example, check the
+directly inside a `Jupyter notebook`_. For an example, check the
 ``examples/notebook.ipynb`` file in the
 `source repository/distribution <notebook_>`_ (nbviewer_).
 
@@ -247,7 +247,7 @@ Use the :meth:`~.Source.render`-method to save and render it:
 
 Apart from the missing editing methods, :class:`.Source` objects are the same
 as the higher-level graph objects (:meth:`~.Source.pipe`-method,
-:attr:`~.Source.format`, :attr:`~.Source.engine`, IPython notebook repr, etc.),
+:attr:`~.Source.format`, :attr:`~.Source.engine`, Jupyter notebook repr, etc.),
 see above.
 
 
@@ -260,6 +260,6 @@ see above.
 .. _output file format: http://www.graphviz.org/doc/info/output.html
 .. _appearance: http://www.graphviz.org/doc/info/attrs.html
 
-.. _IPython notebook: http://ipython.org/notebook.html
+.. _Jupyter notebook: http://jupyter.org
 .. _notebook: http://github.com/xflr6/graphviz/blob/master/examples/notebook.ipynb
 .. _nbviewer: http://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb

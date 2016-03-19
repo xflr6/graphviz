@@ -12,7 +12,8 @@ it with the Graphviz installation of your system.
 
 Use the ``view`` option/method to directly inspect the resulting (PDF, PNG,
 SVG, etc.) file with its default application. Graphs can also be rendered
-and displayed within `IPython notebooks`_ (example_).
+and displayed within `Jupyter notebooks`_ (a.k.a `IPython notebooks`_,
+example_).
 
 
 Links
@@ -111,6 +112,7 @@ This package is distributed under the `MIT license`_.
 .. _Graphviz:  http://www.graphviz.org
 .. _download page: http://www.graphviz.org/Download.php
 .. _DOT: http://www.graphviz.org/doc/info/lang.html
+.. _Jupyter notebooks: http://jupyter.org
 .. _IPython notebooks: http://ipython.org/notebook.html
 .. _example: http://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
 
