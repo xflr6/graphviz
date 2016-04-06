@@ -1,0 +1,149 @@
+# backend.py - execute rendering, open files in viewer
+
+import os
+import errno
+import platform
+import subprocess
+
+__all__ = ['render', 'pipe', 'view_linux', 'view_windows', 'view_darwin']
+
+ENGINES = set([  # http://www.graphviz.org/cgi-bin/man?dot
+    'dot', 'neato', 'twopi', 'circo', 'fdp', 'sfdp', 'patchwork', 'osage',
+])
+
+FORMATS = set([  # http://www.graphviz.org/doc/info/output.html
+    'bmp',
+    'canon', 'dot', 'gv', 'xdot', 'xdot1.2', 'xdot1.4',
+    'cgimage',
+    'cmap',
+    'eps',
+    'exr',
+    'fig',
+    'gd', 'gd2',
+    'gif',
+    'gtk',
+    'ico',
+    'imap', 'cmapx',
+    'imap_np', 'cmapx_np',
+    'ismap',
+    'jp2',
+    'jpg', 'jpeg', 'jpe',
+    'pct', 'pict',
+    'pdf',
+    'pic',
+    'plain', 'plain-ext',
+    'png',
+    'pov',
+    'ps',
+    'ps2',
+    'psd',
+    'sgi',
+    'svg', 'svgz',
+    'tga',
+    'tif', 'tiff',
+    'tk',
+    'vml', 'vmlz',
+    'vrml',
+    'wbmp',
+    'webp',
+    'xlib',
+    'x11',
+])
+
+PLATFORM = platform.system().lower()
+
+STARTUPINFO = None
+
+if PLATFORM == 'windows':  # pragma: no cover
+    STARTUPINFO = subprocess.STARTUPINFO()
+    STARTUPINFO.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    STARTUPINFO.wShowWindow = subprocess.SW_HIDE
+
+
+def command(engine, format, filepath=None):
+    """Return args list for rendering using subprocess.Popen."""
+    if engine not in ENGINES:
+        raise ValueError('unknown engine: %r' % engine)
+    if format not in FORMATS:
+        raise ValueError('unknown format: %r' % format)
+
+    result = [engine, '-T%s' % format]
+    if filepath is not None:
+        result.extend(['-O', filepath])
+
+    return result
+
+
+def render(engine, format, filepath):
+    """Render file with Graphviz engine into format,  return result filename.
+
+    Args:
+        engine: The layout commmand used for rendering ('dot', 'neato', ...).
+        format: The output format used for rendering ('pdf', 'png', ...).
+        filepath: Path to the DOT source file to render.
+    Returns:
+        The (possibly relative) path of the rendered file.
+    Raises:
+        RuntimeError: If the Graphviz executable is not found.
+    """
+    args = command(engine, format, filepath)
+    rendered = '%s.%s' % (filepath, format)
+
+    try:
+        proc = subprocess.Popen(args, startupinfo=STARTUPINFO)
+    except OSError as e:
+        if e.errno == errno.ENOENT:
+            raise RuntimeError('failed to execute %r, '
+                'make sure the Graphviz executables '
+                'are on your systems\' path' % args)
+        else:  # pragma: no cover
+            raise
+
+    returncode = proc.wait()
+
+    return rendered
+
+
+def pipe(engine, format, data):
+    """Return data piped through Graphviz engine into format.
+
+    Args:
+        engine: The layout commmand used for rendering ('dot', 'neato', ...)
+        format: The output format used for rendering ('pdf', 'png', ...)
+        data: The binary (encoded) DOT source string to render.
+    Returns:
+        Binary (encoded) stdout of the layout command.
+    Raises:
+        RuntimeError: If the Graphviz executable is not found.
+    """
+    args = command(engine, format)
+
+    try:
+        proc = subprocess.Popen(args, stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE, startupinfo=STARTUPINFO)
+    except OSError as e:
+        if e.errno == errno.ENOENT:
+            raise RuntimeError('failed to execute %r, '
+                'make sure the Graphviz executables '
+                'are on your systems\' path' % args)
+        else:  # pragma: no cover
+            raise
+
+    outs, errs = proc.communicate(data)
+
+    return outs
+
+
+def view_linux(filepath):
+    """Open filepath in the user's preferred application (linux)."""
+    subprocess.Popen(['xdg-open', filepath])
+
+
+def view_windows(filepath):
+    """Start filepath with its associated application (windows)."""
+    os.startfile(os.path.normpath(filepath))
+
+
+def view_darwin(filepath):
+    """Open filepath with its default application (mac)."""
+    subprocess.Popen(['open', filepath])

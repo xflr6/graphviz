@@ -12,7 +12,7 @@ it with the Graphviz installation of your system.
 
 Use the ``view`` option/method to directly inspect the resulting (PDF, PNG,
 SVG, etc.) file with its default application. Graphs can also be rendered
-and displayed within `Jupyter notebooks`_ (a.k.a `IPython notebooks`_,
+and displayed within `Jupyter notebooks`_ (a.k.a. `IPython notebooks`_,
 example_).
 
 

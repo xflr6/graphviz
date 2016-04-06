@@ -4,68 +4,13 @@
 
 import os
 import io
-import errno
 import codecs
-import platform
-import subprocess
 
 from ._compat import text_type
 
-from . import tools
+from . import backend, tools
 
 __all__ = ['File', 'Source']
-
-FORMATS = set([  # http://www.graphviz.org/doc/info/output.html
-    'bmp',
-    'canon', 'dot', 'gv', 'xdot', 'xdot1.2', 'xdot1.4',
-    'cgimage',
-    'cmap',
-    'eps',
-    'exr',
-    'fig',
-    'gd', 'gd2',
-    'gif',
-    'gtk',
-    'ico',
-    'imap', 'cmapx',
-    'imap_np', 'cmapx_np',
-    'ismap',
-    'jp2',
-    'jpg', 'jpeg', 'jpe',
-    'pct', 'pict',
-    'pdf',
-    'pic',
-    'plain', 'plain-ext',
-    'png',
-    'pov',
-    'ps',
-    'ps2',
-    'psd',
-    'sgi',
-    'svg', 'svgz',
-    'tga',
-    'tif', 'tiff',
-    'tk',
-    'vml', 'vmlz',
-    'vrml',
-    'wbmp',
-    'webp',
-    'xlib',
-    'x11',
-])
-
-ENGINES = set([  # http://www.graphviz.org/cgi-bin/man?dot
-    'dot', 'neato', 'twopi', 'circo', 'fdp', 'sfdp', 'patchwork', 'osage',
-])
-
-PLATFORM = platform.system().lower()
-
-STARTUPINFO = None
-
-if PLATFORM == 'windows':  # pragma: no cover
-    STARTUPINFO = subprocess.STARTUPINFO()
-    STARTUPINFO.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-    STARTUPINFO.wShowWindow = subprocess.SW_HIDE
 
 
 class Base(object):
@@ -76,25 +21,25 @@ class Base(object):
 
     @property
     def format(self):
-        """The output format used for rendering ('pdf', 'png', etc.)."""
+        """The output format used for rendering ('pdf', 'png', ...)."""
         return self._format
 
     @format.setter
     def format(self, format):
         format = format.lower()
-        if format not in FORMATS:
+        if format not in backend.FORMATS:
             raise ValueError('unknown format: %r' % format)
         self._format = format
 
     @property
     def engine(self):
-        """The layout commmand used for rendering ('dot', 'neato', ...)"""
+        """The layout commmand used for rendering ('dot', 'neato', ...)."""
         return self._engine
 
     @engine.setter
     def engine(self, engine):
         engine = engine.lower()
-        if engine not in ENGINES:
+        if engine not in backend.ENGINES:
             raise ValueError('unknown engine: %r' % engine)
         self._engine = engine
 
@@ -115,13 +60,6 @@ class File(Base):
     directory = ''
 
     _default_extension = 'gv'
-
-    @staticmethod
-    def _cmd(engine, format, filepath=None):
-        result = [engine, '-T%s' % format]
-        if filepath is not None:
-            result.extend(['-O', filepath])
-        return result
 
     def __init__(self, filename=None, directory=None, format=None, engine=None, encoding=None):
         if filename is None:
@@ -150,27 +88,14 @@ class File(Base):
         Args:
             format: The output format used for rendering ('pdf', 'png', etc.).
         Returns:
-            Stdout of the layout command.
+            Binary (encoded) stdout of the layout command.
         """
         if format is None:
             format = self._format
 
-        cmd = self._cmd(self._engine, format)
-
         data = text_type(self.source).encode(self._encoding)
 
-        try:
-            proc = subprocess.Popen(cmd, stdin=subprocess.PIPE,
-                stdout=subprocess.PIPE, startupinfo=STARTUPINFO)
-        except OSError as e:
-            if e.errno == errno.ENOENT:
-                raise RuntimeError('failed to execute %r, '
-                    'make sure the Graphviz executables '
-                    'are on your systems\' path' % cmd)
-            else:  # pragma: no cover
-                raise
-
-        outs, errs = proc.communicate(data)
+        outs = backend.pipe(self._engine, format, data)
 
         return outs
 
@@ -215,24 +140,10 @@ class File(Base):
         """
         filepath = self.save(filename, directory)
 
-        cmd = self._cmd(self._engine, self._format, filepath)
-
-        try:
-            proc = subprocess.Popen(cmd, startupinfo=STARTUPINFO)
-        except OSError as e:
-            if e.errno == errno.ENOENT:
-                raise RuntimeError('failed to execute %r, '
-                    'make sure the Graphviz executables '
-                    'are on your systems\' path' % cmd)
-            else:  # pragma: no cover
-                raise
-
-        returncode = proc.wait()
+        rendered = backend.render(self._engine, self._format, filepath)
 
         if cleanup:
             os.remove(filepath)
-
-        rendered = '%s.%s' % (filepath, self._format)
 
         if view:
             self._view(rendered, self._format)
@@ -252,8 +163,8 @@ class File(Base):
     def _view(self, filepath, format):
         """Start the right viewer based on file format and platform."""
         methods = [
-            '_view_%s_%s' % (format, PLATFORM),
-            '_view_%s' % PLATFORM,
+            '_view_%s_%s' % (format, backend.PLATFORM),
+            '_view_%s' % backend.PLATFORM,
         ]
         for name in methods:
             method = getattr(self, name, None)
@@ -262,22 +173,11 @@ class File(Base):
                 break
         else:
             raise RuntimeError('%r has no built-in viewer support for %r '
-                'on %r platform' % (self.__class__, format, PLATFORM))
+                'on %r platform' % (self.__class__, format, backend.PLATFORM))
 
-    @staticmethod
-    def _view_linux(filepath):
-        """Open filepath in the user's preferred application (linux)."""
-        subprocess.Popen(['xdg-open', filepath])
-
-    @staticmethod
-    def _view_windows(filepath):
-        """Start filepath with its associated application (windows)."""
-        os.startfile(os.path.normpath(filepath))
-
-    @staticmethod
-    def _view_darwin(filepath):
-        """Open filepath with its default application (mac)."""
-        subprocess.Popen(['open', filepath])
+    _view_linux = staticmethod(backend.view_linux)
+    _view_windows = staticmethod(backend.view_windows)
+    _view_darwin = staticmethod(backend.view_darwin)
 
 
 class Source(File):
