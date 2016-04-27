@@ -61,17 +61,18 @@ if PLATFORM == 'windows':  # pragma: no cover
 
 
 def command(engine, format, filepath=None):
-    """Return args list for rendering using subprocess.Popen."""
+    """Return args list for subprocess.Popen and name of the rendered file."""
     if engine not in ENGINES:
         raise ValueError('unknown engine: %r' % engine)
     if format not in FORMATS:
         raise ValueError('unknown format: %r' % format)
 
-    result = [engine, '-T%s' % format]
+    args, rendered = [engine, '-T%s' % format], None
     if filepath is not None:
-        result.extend(['-O', filepath])
+        args.extend(['-O', filepath])
+        rendered = '%s.%s' % (filepath, format)
 
-    return result
+    return args, rendered
 
 
 def render(engine, format, filepath):
@@ -86,8 +87,7 @@ def render(engine, format, filepath):
     Raises:
         RuntimeError: If the Graphviz executable is not found.
     """
-    args = command(engine, format, filepath)
-    rendered = '%s.%s' % (filepath, format)
+    args, rendered = command(engine, format, filepath)
 
     try:
         proc = subprocess.Popen(args, startupinfo=STARTUPINFO)
@@ -116,7 +116,7 @@ def pipe(engine, format, data):
     Raises:
         RuntimeError: If the Graphviz executable is not found.
     """
-    args = command(engine, format)
+    args, _ = command(engine, format)
 
     try:
         proc = subprocess.Popen(args, stdin=subprocess.PIPE,
