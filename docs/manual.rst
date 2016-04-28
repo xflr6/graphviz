@@ -251,7 +251,7 @@ as the higher-level graph objects (:meth:`~.Source.pipe`-method,
 see above.
 
 
-.. _pip: http://pip.readthedocs.org
+.. _pip: http://pip.readthedocs.io
 .. _virtualenv: http://virtualenv.pypa.io
 
 .. _Graphviz: http://www.graphviz.org
