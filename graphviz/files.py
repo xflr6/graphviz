@@ -175,9 +175,9 @@ class File(Base):
             raise RuntimeError('%r has no built-in viewer support for %r '
                 'on %r platform' % (self.__class__, format, backend.PLATFORM))
 
+    _view_darwin = staticmethod(backend.view_darwin)
     _view_linux = staticmethod(backend.view_linux)
     _view_windows = staticmethod(backend.view_windows)
-    _view_darwin = staticmethod(backend.view_darwin)
 
 
 class Source(File):

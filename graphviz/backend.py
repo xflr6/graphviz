@@ -5,7 +5,7 @@ import errno
 import platform
 import subprocess
 
-__all__ = ['render', 'pipe', 'view_linux', 'view_windows', 'view_darwin']
+__all__ = ['render', 'pipe', 'view_darwin', 'view_linux', 'view_windows']
 
 ENGINES = set([  # http://www.graphviz.org/cgi-bin/man?dot
     'dot', 'neato', 'twopi', 'circo', 'fdp', 'sfdp', 'patchwork', 'osage',
