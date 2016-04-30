@@ -90,7 +90,7 @@ def render(engine, format, filepath):
     args, rendered = command(engine, format, filepath)
 
     try:
-        proc = subprocess.Popen(args, startupinfo=STARTUPINFO)
+        subprocess.call(args, startupinfo=STARTUPINFO)
     except OSError as e:
         if e.errno == errno.ENOENT:
             raise RuntimeError('failed to execute %r, '
@@ -98,8 +98,6 @@ def render(engine, format, filepath):
                 'are on your systems\' path' % args)
         else:  # pragma: no cover
             raise
-
-    returncode = proc.wait()
 
     return rendered
 
@@ -134,6 +132,11 @@ def pipe(engine, format, data):
     return outs
 
 
+def view_darwin(filepath):
+    """Open filepath with its default application (mac)."""
+    subprocess.Popen(['open', filepath])
+
+
 def view_linux(filepath):
     """Open filepath in the user's preferred application (linux)."""
     subprocess.Popen(['xdg-open', filepath])
@@ -142,8 +145,3 @@ def view_linux(filepath):
 def view_windows(filepath):
     """Start filepath with its associated application (windows)."""
     os.startfile(os.path.normpath(filepath))
-
-
-def view_darwin(filepath):
-    """Open filepath with its default application (mac)."""
-    subprocess.Popen(['open', filepath])
