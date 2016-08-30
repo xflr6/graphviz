@@ -2,7 +2,7 @@
 
 """Assemble DOT source code objects.
 
->>> dot = Graph(comment=u'M\xf8nti Pyth\xf8n lk den H\xf8lie Grailen')
+>>> dot = Graph(comment=u'M\xf8nti Pyth\xf8n ik den H\xf8lie Grailen')
 
 >>> dot.node(u'M\xf8\xf8se')
 >>> dot.node('trained_by', u'trained by')
@@ -14,7 +14,7 @@
 >>> dot.node_attr['shape'] = 'rectangle'
 
 >>> print(dot.source.replace(u'\xf8', '0'))  #doctest: +NORMALIZE_WHITESPACE
-// M0nti Pyth0n lk den H0lie Grailen
+// M0nti Pyth0n ik den H0lie Grailen
 graph {
     node [shape=rectangle]
         "M00se"
