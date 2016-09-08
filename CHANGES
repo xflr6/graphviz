@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.5 (in development)
-----------------------------
+Version 0.5
+-----------
 
 Add low-level functions render(), pipe(), and view() for directly working with
 existing files and strings.
