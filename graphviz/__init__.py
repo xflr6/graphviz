@@ -31,7 +31,7 @@ from .backend import render, pipe, view
 __all__ = ['Graph', 'Digraph', 'Source', 'render', 'pipe', 'view']
 
 __title__ = 'graphviz'
-__version__ = '0.5'
+__version__ = '0.5.1.dev0'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE'
 __copyright__ = 'Copyright (c) 2013-2016 Sebastian Bank'
