@@ -137,6 +137,9 @@ class File(Base):
             cleanup: Delete the source file after rendering.
         Returns:
             The (possibly relative) path of the rendered file.
+        Raises:
+            RuntimeError: If the Graphviz executable is not found.
+            RuntimeError: If viewer opening is requested but not supported.
         """
         filepath = self.save(filename, directory)
 
@@ -150,34 +153,42 @@ class File(Base):
 
         return rendered
 
-    def view(self):
+    def view(self, filename=None, directory=None, cleanup=False):
         """Save the source to file, open the rendered result in a viewer.
 
+        Args:
+            filename: Filename for saving the source (defaults to name + '.gv')
+            directory: (Sub)directory for source saving and rendering.
+            cleanup: Delete the source file after rendering.
         Returns:
             The (possibly relative) path of the rendered file.
+        Raises:
+            RuntimeError: If the Graphviz executable is not found.
+            RuntimeError: If opening the viewer is not supported.
+
+        Short-cut method for calling ``render()`` with ``view=True``.
         """
-        rendered = self.render()
-        self._view(rendered, self._format)
-        return rendered
+        return self.render(view=True,
+            filename=filename, directory=directory, cleanup=cleanup)
 
     def _view(self, filepath, format):
         """Start the right viewer based on file format and platform."""
-        methods = [
+        methodnames = [
             '_view_%s_%s' % (format, backend.PLATFORM),
             '_view_%s' % backend.PLATFORM,
         ]
-        for name in methods:
-            method = getattr(self, name, None)
-            if method is not None:
-                method(filepath)
+        for name in methodnames:
+            view_method = getattr(self, name, None)
+            if view_method is not None:
                 break
         else:
             raise RuntimeError('%r has no built-in viewer support for %r '
                 'on %r platform' % (self.__class__, format, backend.PLATFORM))
+        view_method(filepath)
 
-    _view_darwin = staticmethod(backend.view_darwin)
-    _view_linux = staticmethod(backend.view_linux)
-    _view_windows = staticmethod(backend.view_windows)
+    _view_darwin = staticmethod(backend.view.darwin)
+    _view_linux = staticmethod(backend.view.linux)
+    _view_windows = staticmethod(backend.view.windows)
 
 
 class Source(File):

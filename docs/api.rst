@@ -38,3 +38,14 @@ Source
     :members:
         format, engine, encoding,
         pipe, save, render, view
+
+
+Low-level functions
+-------------------
+
+The functions in this section are provided to work directly with existing
+files and strings instead of using the object-oriented DOT creation api above.
+
+.. autofunction:: graphviz.render
+.. autofunction:: graphviz.pipe
+.. autofunction:: graphviz.view

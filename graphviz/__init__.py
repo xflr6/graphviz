@@ -26,11 +26,12 @@ digraph {
 
 from .dot import Graph, Digraph
 from .files import Source
+from .backend import render, pipe, view
 
-__all__ = ['Graph', 'Digraph', 'Source']
+__all__ = ['Graph', 'Digraph', 'Source', 'render', 'pipe', 'view']
 
 __title__ = 'graphviz'
-__version__ = '0.4.11.dev0'
+__version__ = '0.5.dev0'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE'
 __copyright__ = 'Copyright (c) 2013-2016 Sebastian Bank'

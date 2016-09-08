@@ -4,8 +4,9 @@ import os
 import errno
 import platform
 import subprocess
+import tools
 
-__all__ = ['render', 'pipe', 'view_darwin', 'view_linux', 'view_windows']
+__all__ = ['render', 'pipe', 'view']
 
 ENGINES = set([  # http://www.graphviz.org/cgi-bin/man?dot
     'dot', 'neato', 'twopi', 'circo', 'fdp', 'sfdp', 'patchwork', 'osage',
@@ -106,8 +107,8 @@ def pipe(engine, format, data):
     """Return data piped through Graphviz engine into format.
 
     Args:
-        engine: The layout commmand used for rendering ('dot', 'neato', ...)
-        format: The output format used for rendering ('pdf', 'png', ...)
+        engine: The layout commmand used for rendering ('dot', 'neato', ...).
+        format: The output format used for rendering ('pdf', 'png', ...).
         data: The binary (encoded) DOT source string to render.
     Returns:
         Binary (encoded) stdout of the layout command.
@@ -132,16 +133,32 @@ def pipe(engine, format, data):
     return outs
 
 
+def view(filepath):
+    """Open filepath with its default viewing application (platform-specific).
+
+    Raises:
+        RuntimeError: If the current platform is not supported.
+    """
+    try:
+        view_func = getattr(view, PLATFORM)
+    except KeyError:
+        raise RuntimeError('platform %r not supported' % PLATFORM)
+    view_func(filepath)
+
+
+@tools.attach(view, 'darwin')
 def view_darwin(filepath):
     """Open filepath with its default application (mac)."""
     subprocess.Popen(['open', filepath])
 
 
+@tools.attach(view, 'linux')
 def view_linux(filepath):
     """Open filepath in the user's preferred application (linux)."""
     subprocess.Popen(['xdg-open', filepath])
 
 
+@tools.attach(view, 'windows')
 def view_windows(filepath):
     """Start filepath with its associated application (windows)."""
     os.startfile(os.path.normpath(filepath))

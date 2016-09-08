@@ -2,10 +2,13 @@ Changelog
 =========
 
 
-Version 0.4.11 (in development)
--------------------------------
+Version 0.5 (in development)
+----------------------------
 
+Add low-level functions render(), pipe(), and view() for directly working with
+existing files and strings.
 
+Support all render()-arguments in the view()-short-cut-method.
 
 
 Version 0.4.10

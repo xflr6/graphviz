@@ -24,7 +24,7 @@ graph {
             trained_by -- tutte
 }
 
->>> dot.render('test-output/m00se.gv', view=True)
+>>> dot.view('test-output/m00se.gv')
 'test-output/m00se.gv.pdf'
 """
 

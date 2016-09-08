@@ -5,7 +5,15 @@ import errno
 
 from ._compat import iteritems
 
-__all__ = ['mkdirs', 'mapping_items']
+__all__ = ['attach', 'mkdirs', 'mapping_items']
+
+
+def attach(object, name):
+    """Return a decorator doing setattr(object, name) with its argument."""
+    def decorator(func):
+        setattr(object, name, func)
+        return func
+    return decorator
 
 
 def mkdirs(filename, mode=0o777):
