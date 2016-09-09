@@ -4,7 +4,8 @@ import os
 import errno
 import platform
 import subprocess
-import tools
+
+from . import tools
 
 __all__ = ['render', 'pipe', 'view']
 
