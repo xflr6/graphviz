@@ -1,6 +1,6 @@
 # dot.py - create dot code
 
-"""Assemble DOT source code objects.
+r"""Assemble DOT source code objects.
 
 >>> dot = Graph(comment=u'M\xf8nti Pyth\xf8n ik den H\xf8lie Grailen')
 
@@ -134,7 +134,7 @@ class Dot(files.File):
         """Add a graph/node/edge attribute statement.
 
         Args:
-            kw: Attributes target ('graph', 'node', or 'edge')
+            kw: Attributes target ('graph', 'node', or 'edge').
             attrs: Attributes to be set (must be strings, may be empty).
         """
         if kw.lower() not in ('graph', 'node', 'edge'):
