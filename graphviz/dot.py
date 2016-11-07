@@ -56,7 +56,7 @@ class Dot(files.File):
 
         super(Dot, self).__init__(filename, directory, format, engine, encoding)
 
-        self.graph_attr = dict(graph_attr)if graph_attr is not None else {}
+        self.graph_attr = dict(graph_attr) if graph_attr is not None else {}
         self.node_attr = dict(node_attr) if node_attr is not None else {}
         self.edge_attr = dict(edge_attr) if edge_attr is not None else {}
 
