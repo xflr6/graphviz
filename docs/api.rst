@@ -49,3 +49,13 @@ files and strings instead of using the object-oriented DOT creation api above.
 .. autofunction:: graphviz.render
 .. autofunction:: graphviz.pipe
 .. autofunction:: graphviz.view
+
+
+Other
+-----
+
+.. autodata:: graphviz.ENGINES
+   :annotation:
+
+.. autodata:: graphviz.FORMATS
+   :annotation:

@@ -5,7 +5,7 @@ Changelog
 Version 0.5.2 (in development)
 ------------------------------
 
-
+Add ENGINES and FORMATS to the documented public API.
 
 
 Version 0.5.1
