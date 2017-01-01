@@ -39,7 +39,7 @@ __title__ = 'graphviz'
 __version__ = '0.5.3.dev0'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE'
-__copyright__ = 'Copyright (c) 2013-2016 Sebastian Bank'
+__copyright__ = 'Copyright (c) 2013-2017 Sebastian Bank'
 
 #: Set of the supported layout commands used for rendering ('dot', 'neato', ...)
 ENGINES = ENGINES
