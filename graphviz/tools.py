@@ -8,7 +8,15 @@ __all__ = ['attach', 'mkdirs', 'mapping_items']
 
 
 def attach(object, name):
-    """Return a decorator doing setattr(object, name) with its argument."""
+    """Return a decorator doing setattr(object, name) with its argument.
+
+    >>> spam = type('Spam', (object,), {})()
+    >>> @attach(spam, 'eggs')
+    ... def func():
+    ...     pass
+    >>> spam.eggs  # doctest: +ELLIPSIS
+    <function func at 0x...>
+    """
     def decorator(func):
         setattr(object, name, func)
         return func
