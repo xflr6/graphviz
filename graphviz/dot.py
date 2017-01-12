@@ -49,7 +49,7 @@ class Dot(files.File):
             filename=None, directory=None,
             format=None, engine=None, encoding=None,
             graph_attr=None, node_attr=None, edge_attr=None, body=None,
-            strict=False):
+            strict=False, stylesheet=None):
 
         self.name = name
         self.comment = comment
@@ -63,6 +63,7 @@ class Dot(files.File):
         self.body = list(body) if body is not None else []
 
         self.strict = strict
+        self.stylesheet = stylesheet
 
     def __iter__(self, subgraph=False):
         """Yield the DOT source code line by line."""
@@ -73,6 +74,10 @@ class Dot(files.File):
         if self.strict:
             head = 'strict %s' % head
         yield head % (self.quote(self.name) + ' ' if self.name else '')
+
+        if self.stylesheet:
+            stylesheet = '\tstylesheet = "%s"' % self.stylesheet
+            yield stylesheet
 
         styled = False
         for kw in ('graph', 'node', 'edge'):
