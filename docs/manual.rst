@@ -219,6 +219,17 @@ instance:
     >>> dot.engine = 'circo'
 
 
+Custom DOT statements
+---------------------
+
+To add arbitrary statements to the created DOT_ source, use the
+:attr:`~.Graph.body` attribute of the :class:`.Graph` or :class:`.Digraph`
+object. It holds the raw list of lines to be written to the source file:
+Use its ``append()`` or ``extend()`` method, as shown in some of the
+:ref:`Examples`. Note that you might need to correctly quote/escape identifiers
+and strings when doing so.
+
+
 Using raw DOT
 -------------
 

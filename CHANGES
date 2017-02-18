@@ -5,7 +5,9 @@ Changelog
 Version 0.5.3 (in development)
 ------------------------------
 
+Improve tests for mkdirs().
 
+Better document adding custom DOT using the body attribute.
 
 
 Version 0.5.2
