@@ -37,8 +37,8 @@ def mapping_items(mapping, _iteritems=_compat.iteritems):
     >>> list(mapping_items({'spam': 0, 'ham': 1, 'eggs': 2}))
     [('eggs', 2), ('ham', 1), ('spam', 0)]
 
-    >>> from collections import OrderedDict  # doctest: +SKIP
-    >>> list(mapping_items(OrderedDict(enumerate(['spam', 'ham', 'eggs']))))  # doctest:+SKIP
+    >>> from collections import OrderedDict
+    >>> list(mapping_items(OrderedDict(enumerate(['spam', 'ham', 'eggs']))))
     [(0, 'spam'), (1, 'ham'), (2, 'eggs')]
     """
     if type(mapping) is dict:

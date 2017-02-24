@@ -9,11 +9,11 @@ from . import tools
 
 __all__ = ['render', 'pipe', 'view']
 
-ENGINES = set([  # http://www.graphviz.org/cgi-bin/man?dot
+ENGINES = {  # http://www.graphviz.org/cgi-bin/man?dot
     'dot', 'neato', 'twopi', 'circo', 'fdp', 'sfdp', 'patchwork', 'osage',
-])
+}
 
-FORMATS = set([  # http://www.graphviz.org/doc/info/output.html
+FORMATS = {  # http://www.graphviz.org/doc/info/output.html
     'bmp',
     'canon', 'dot', 'gv', 'xdot', 'xdot1.2', 'xdot1.4',
     'cgimage',
@@ -50,7 +50,7 @@ FORMATS = set([  # http://www.graphviz.org/doc/info/output.html
     'webp',
     'xlib',
     'x11',
-])
+}
 
 PLATFORM = platform.system().lower()
 

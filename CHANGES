@@ -2,8 +2,10 @@ Changelog
 =========
 
 
-Version 0.5.3 (in development)
-------------------------------
+Version 0.6 (in development)
+----------------------------
+
+Drop Python 2.6 support (use graphviz<0.6 there).
 
 Improve tests for mkdirs().
 

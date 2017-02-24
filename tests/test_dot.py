@@ -1,6 +1,6 @@
 # test_dot.py
 
-import unittest2 as unittest
+import unittest
 
 from graphviz.dot import Graph, Digraph
 

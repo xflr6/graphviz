@@ -1,6 +1,5 @@
 # exact dependency versions used in development
 # dependencies for testing and building
-unittest2
 nose
 coverage
 flake8
