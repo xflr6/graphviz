@@ -159,6 +159,12 @@ def view_linux(filepath):
     subprocess.Popen(['xdg-open', filepath])
 
 
+@tools.attach(view, 'freebsd')
+def view_freebsd(filepath):
+    """Open filepath in the user's preferred application (freebsd)."""
+    subprocess.Popen(['xdg-open', filepath])
+
+
 @tools.attach(view, 'windows')
 def view_windows(filepath):
     """Start filepath with its associated application (windows)."""

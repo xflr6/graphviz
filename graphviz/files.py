@@ -188,6 +188,7 @@ class File(Base):
 
     _view_darwin = staticmethod(backend.view.darwin)
     _view_linux = staticmethod(backend.view.linux)
+    _view_freebsd = staticmethod(backend.view.freebsd)
     _view_windows = staticmethod(backend.view.windows)
 
 
