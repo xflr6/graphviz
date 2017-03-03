@@ -9,6 +9,8 @@ Improve tests for mkdirs().
 
 Better document adding custom DOT using the body attribute.
 
+Add view()-support for FreeBSD (pull request Julien Gamba).
+
 
 Version 0.5.2
 -------------

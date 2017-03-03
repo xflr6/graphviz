@@ -154,14 +154,9 @@ def view_darwin(filepath):
 
 
 @tools.attach(view, 'linux')
-def view_linux(filepath):
-    """Open filepath in the user's preferred application (linux)."""
-    subprocess.Popen(['xdg-open', filepath])
-
-
 @tools.attach(view, 'freebsd')
-def view_freebsd(filepath):
-    """Open filepath in the user's preferred application (freebsd)."""
+def view_unixoid(filepath):
+    """Open filepath in the user's preferred application (linux, freebsd)."""
     subprocess.Popen(['xdg-open', filepath])
 
 
