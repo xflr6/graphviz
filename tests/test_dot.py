@@ -19,6 +19,10 @@ class TestDot(unittest.TestCase):
         self.assertEqual(Graph(strict=True).source, 'strict graph {\n}')
         self.assertEqual(Digraph(strict=True).source, 'strict digraph {\n}')
 
+    def test_stylesheet(self):
+        self.assertEqual(Graph(stylesheet='style.css').source, 'graph {\n\tstylesheet = "style.css"\n}')
+        self.assertEqual(Digraph(stylesheet='style.css').source, 'digraph {\n\tstylesheet = "style.css"\n}')
+
     def test_subgraph_invalid(self):
         with self.assertRaises(ValueError):
             Graph().subgraph(Digraph())
