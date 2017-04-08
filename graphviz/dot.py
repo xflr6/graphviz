@@ -46,10 +46,10 @@ class Dot(files.File):
     attributes = staticmethod(lang.attributes)
 
     def __init__(self, name=None, comment=None,
-            filename=None, directory=None,
-            format=None, engine=None, encoding=None,
-            graph_attr=None, node_attr=None, edge_attr=None, body=None,
-            strict=False):
+                 filename=None, directory=None,
+                 format=None, engine=None, encoding=None,
+                 graph_attr=None, node_attr=None, edge_attr=None, body=None,
+                 strict=False):
 
         self.name = name
         self.comment = comment
@@ -102,7 +102,8 @@ class Dot(files.File):
         """
         name = self.quote(name)
         attributes = self.attributes(label, attrs, _attributes)
-        self.body.append(self._node % (name, attributes))
+        line = self._node % (name, attributes)
+        self.body.append(line)
 
     def edge(self, tail_name, head_name, label=None, _attributes=None, **attrs):
         """Create an edge between two nodes.
@@ -116,8 +117,8 @@ class Dot(files.File):
         tail_name = self.quote_edge(tail_name)
         head_name = self.quote_edge(head_name)
         attributes = self.attributes(label, attrs, _attributes)
-        edge = self._edge % (tail_name, head_name, attributes)
-        self.body.append(edge)
+        line = self._edge % (tail_name, head_name, attributes)
+        self.body.append(line)
 
     def edges(self, tail_head_iter):
         """Create a bunch of edges.
@@ -140,7 +141,7 @@ class Dot(files.File):
         if kw.lower() not in ('graph', 'node', 'edge'):
             raise ValueError('attr statement must target graph, node, or edge: '
                 '%r' % kw)
-        if _attributes or attrs:
+        if attrs or _attributes:
             line = '\t%s%s' % (kw, self.attributes(None, attrs, _attributes))
             self.body.append(line)
 
