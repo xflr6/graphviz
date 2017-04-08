@@ -25,7 +25,3 @@ class TestAttributes(unittest.TestCase):
     def test_attributes_map(self):
         self.assertEqual(attributes(attributes={'spam': 'eggs'}),
             ' [spam=eggs]')
-
-    def test_attributes_raw(self):
-        self.assertEqual(attributes(raw='spam'),
-            ' [spam]')
