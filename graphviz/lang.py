@@ -70,7 +70,7 @@ def quote_edge(identifier):
     return ':'.join(parts)
 
 
-def attributes(label=None, kwargs=None, attributes=None, raw=None):
+def attributes(label=None, kwargs=None, attributes=None):
     """Return assembled DOT attributes string.
 
     Sorts kwargs and attributes if they are plain dicts (to avoid
@@ -101,9 +101,6 @@ def attributes(label=None, kwargs=None, attributes=None, raw=None):
         items = ['%s=%s' % (quote(k), quote(v))
             for k, v in attributes if v is not None]
         result.extend(items)
-
-    if raw:
-        result.append(raw)
 
     if not result:
         return ''
