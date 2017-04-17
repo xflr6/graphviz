@@ -38,12 +38,12 @@ class Dot(files.File):
 
     _comment = '// %s'
     _subgraph = 'subgraph %s{'
-    _node = '\t%s%s'
+    _node = _attr ='\t%s%s'
     _tail = '}'
 
     _quote = staticmethod(lang.quote)
     _quote_edge = staticmethod(lang.quote_edge)
-    _attributes = staticmethod(lang.attributes)
+    _attr_list = staticmethod(lang.attr_list)
 
     def __init__(self, name=None, comment=None,
                  filename=None, directory=None,
@@ -76,10 +76,10 @@ class Dot(files.File):
 
         styled = False
         for kw in ('graph', 'node', 'edge'):
-            attr = getattr(self, '%s_attr' % kw)
-            if attr:
+            attrs = getattr(self, '%s_attr' % kw)
+            if attrs:
                 styled = True
-                yield '\t%s%s' % (kw, self._attributes(None, attr))
+                yield self._attr % (kw, self._attr_list(None, attrs))
 
         indent = '\t' * styled
         for line in self.body:
@@ -101,8 +101,8 @@ class Dot(files.File):
             attrs: Any additional node attributes (must be strings).
         """
         name = self._quote(name)
-        attributes = self._attributes(label, attrs, _attributes)
-        line = self._node % (name, attributes)
+        attr_list = self._attr_list(label, attrs, _attributes)
+        line = self._node % (name, attr_list)
         self.body.append(line)
 
     def edge(self, tail_name, head_name, label=None, _attributes=None, **attrs):
@@ -116,8 +116,8 @@ class Dot(files.File):
         """
         tail_name = self._quote_edge(tail_name)
         head_name = self._quote_edge(head_name)
-        attributes = self._attributes(label, attrs, _attributes)
-        line = self._edge % (tail_name, head_name, attributes)
+        attr_list = self._attr_list(label, attrs, _attributes)
+        line = self._edge % (tail_name, head_name, attr_list)
         self.body.append(line)
 
     def edges(self, tail_head_iter):
@@ -142,7 +142,8 @@ class Dot(files.File):
             raise ValueError('attr statement must target graph, node, or edge: '
                 '%r' % kw)
         if attrs or _attributes:
-            line = '\t%s%s' % (kw, self._attributes(None, attrs, _attributes))
+            attr_list = self._attr_list(None, attrs, _attributes)
+            line = self._attr % (kw, attr_list)
             self.body.append(line)
 
     def subgraph(self, graph):

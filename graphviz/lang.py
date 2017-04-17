@@ -1,12 +1,12 @@
 # lang.py - dot language creation helpers
 
-"""Quote strings to be valid DOT identifiers, assemble attributes."""
+"""Quote strings to be valid DOT identifiers, assemble attribute lists."""
 
 import re
 
 from . import tools
 
-__all__ = ['quote', 'quote_edge', 'attributes']
+__all__ = ['quote', 'quote_edge', 'a_list', 'attr_list']
 
 # http://www.graphviz.org/doc/info/lang.html
 
@@ -70,38 +70,42 @@ def quote_edge(identifier):
     return ':'.join(parts)
 
 
-def attributes(label=None, kwargs=None, attributes=None):
-    """Return assembled DOT attributes string.
+def a_list(label=None, kwargs=None, attributes=None):
+    """Return assembled DOT a_list string.
 
-    Sorts kwargs and attributes if they are plain dicts (to avoid
-    unpredictable order from hash randomization in Python 3.3+).
-
-    >>> attributes()
-    ''
-
-    >>> attributes('spam spam', kwargs={'eggs':'eggs', 'ham': 'ham ham'})
-    ' [label="spam spam" eggs=eggs ham="ham ham"]'
-
-    >>> attributes(kwargs={'spam': None, 'eggs': ''})
-    ' [eggs=""]'
+    >>> a_list('spam', {'spam': None, 'ham': 'ham ham', 'eggs': ''})
+    'label=spam eggs="" ham="ham ham"'
     """
-    if label is None:
-        result = []
-    else:
-        result = ['label=%s' % quote(label)]
-
+    result = ['label=%s' % quote(label)] if label is not None else []
     if kwargs:
         items = ['%s=%s' % (quote(k), quote(v))
             for k, v in tools.mapping_items(kwargs) if v is not None]
         result.extend(items)
-
     if attributes:
         if hasattr(attributes, 'items'):
             attributes = tools.mapping_items(attributes)
         items = ['%s=%s' % (quote(k), quote(v))
             for k, v in attributes if v is not None]
         result.extend(items)
+    return ' '.join(result)
 
-    if not result:
+
+def attr_list(label=None, kwargs=None, attributes=None):
+    """Return assembled DOT attribute list string.
+
+    Sorts kwargs and attributes if they are plain dicts (to avoid
+    unpredictable order from hash randomization in Python 3.3+).
+
+    >>> attr_list()
+    ''
+
+    >>> attr_list('spam spam', kwargs={'eggs': 'eggs', 'ham': 'ham ham'})
+    ' [label="spam spam" eggs=eggs ham="ham ham"]'
+
+    >>> attr_list(kwargs={'spam': None, 'eggs': ''})
+    ' [eggs=""]'
+    """
+    content = a_list(label, kwargs, attributes)
+    if not content:
         return ''
-    return ' [%s]' % ' '.join(result)
+    return ' [%s]' % content

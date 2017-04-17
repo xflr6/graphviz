@@ -2,7 +2,7 @@
 
 import unittest
 
-from graphviz.lang import quote, attributes
+from graphviz.lang import quote, attr_list
 
 
 class TestQuote(unittest.TestCase):
@@ -19,9 +19,9 @@ class TestQuote(unittest.TestCase):
 class TestAttributes(unittest.TestCase):
 
     def test_attributes_pairs(self):
-        self.assertEqual(attributes(attributes=[('spam', 'eggs')]),
+        self.assertEqual(attr_list(attributes=[('spam', 'eggs')]),
             ' [spam=eggs]')
 
     def test_attributes_map(self):
-        self.assertEqual(attributes(attributes={'spam': 'eggs'}),
+        self.assertEqual(attr_list(attributes={'spam': 'eggs'}),
             ' [spam=eggs]')
