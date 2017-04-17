@@ -117,7 +117,7 @@ class TestHTML(unittest.TestCase):
         dot.edge('struct1:f2', 'struct3:here')
         self.assertEqual(dot.source, '''digraph structs {
 	node [shape=plaintext]
-		struct1 [label=<
+	struct1 [label=<
 <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
   <TR>
     <TD>left</TD>
@@ -125,14 +125,14 @@ class TestHTML(unittest.TestCase):
     <TD PORT="f2">right</TD>
   </TR>
 </TABLE>>]
-		struct2 [label=<
+	struct2 [label=<
 <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
   <TR>
     <TD PORT="f0">one</TD>
     <TD>two</TD>
   </TR>
 </TABLE>>]
-		struct3 [label=<
+	struct3 [label=<
 <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
   <TR>
     <TD ROWSPAN="3">hello<BR/>world</TD>
@@ -149,7 +149,7 @@ class TestHTML(unittest.TestCase):
     <TD COLSPAN="3">f</TD>
   </TR>
 </TABLE>>]
-			struct1:f1 -> struct2:f0
-			struct1:f2 -> struct3:here
+		struct1:f1 -> struct2:f0
+		struct1:f2 -> struct3:here
 }''')
         dot.render('test-output/html.gv')

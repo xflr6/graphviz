@@ -74,16 +74,13 @@ class Dot(files.File):
             head = 'strict %s' % head
         yield head % (self._quote(self.name) + ' ' if self.name else '')
 
-        styled = False
         for kw in ('graph', 'node', 'edge'):
             attrs = getattr(self, '%s_attr' % kw)
             if attrs:
-                styled = True
                 yield self._attr % (kw, self._attr_list(None, attrs))
 
-        indent = '\t' * styled
         for line in self.body:
-            yield indent + line
+            yield line
 
         yield self._tail
 

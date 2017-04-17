@@ -5,6 +5,8 @@ Changelog
 Version 0.7 (in development)
 ------------------------------
 
+Drop extra indent level for DOT source with nonempty graph/node/edge_attr.
+
 Make undocumented quote(), quote_edge(), and attributes() methods private.
 
 
