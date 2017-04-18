@@ -4,7 +4,7 @@
 from graphviz import Digraph
 
 f = Digraph('finite_state_machine', filename='fsm.gv')
-f.body.extend(['rankdir=LR', 'size="8,5"'])
+f.attr(rankdir='LR', size='8,5')
 
 f.attr('node', shape='doublecircle')
 f.node('LR_0')

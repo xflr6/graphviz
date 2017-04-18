@@ -4,7 +4,7 @@
 from graphviz import Digraph
 
 u = Digraph('unix', filename='unix.gv')
-u.body.append('size="6,6"')
+u.attr(size='6,6')
 u.node_attr.update(color='lightblue2', style='filled')
 
 u.edge('5th Edition', '6th Edition')

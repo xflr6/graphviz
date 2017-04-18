@@ -6,17 +6,17 @@ from graphviz import Digraph
 g = Digraph('G', filename='cluster.gv')
 
 c0 = Digraph('cluster_0')
-c0.body.append('style=filled')
-c0.body.append('color=lightgrey')
+c0.attr(style='filled')
+c0.attr(color='lightgrey')
 c0.node_attr.update(style='filled', color='white')
 c0.edges([('a0', 'a1'), ('a1', 'a2'), ('a2', 'a3')])
-c0.body.append('label = "process #1"')
+c0.attr(label='process #1')
 
 c1 = Digraph('cluster_1')
 c1.node_attr.update(style='filled')
 c1.edges([('b0', 'b1'), ('b1', 'b2'), ('b2', 'b3')])
-c1.body.append('label = "process #2"')
-c1.body.append('color=blue')
+c1.attr(label='process #2')
+c1.attr(color='blue')
 
 g.subgraph(c0)
 g.subgraph(c1)

@@ -39,10 +39,12 @@ class Dot(files.File):
     _comment = '// %s'
     _subgraph = 'subgraph %s{'
     _node = _attr ='\t%s%s'
+    _attr_plain = '\t%s'
     _tail = '}'
 
     _quote = staticmethod(lang.quote)
     _quote_edge = staticmethod(lang.quote_edge)
+    _a_list = staticmethod(lang.a_list)
     _attr_list = staticmethod(lang.attr_list)
 
     def __init__(self, name=None, comment=None,
@@ -128,19 +130,23 @@ class Dot(files.File):
         self.body.extend(edge % (quote(t), quote(h))
             for t, h in tail_head_iter)
 
-    def attr(self, kw, _attributes=None, **attrs):
+    def attr(self, kw=None, _attributes=None, **attrs):
         """Add a graph/node/edge attribute statement.
 
         Args:
-            kw: Attributes target ('graph', 'node', or 'edge').
+            kw: Attributes target ('graph', 'node', 'edge', or None).
             attrs: Attributes to be set (must be strings, may be empty).
         """
-        if kw.lower() not in ('graph', 'node', 'edge'):
+        if kw is not None and kw.lower() not in ('graph', 'node', 'edge'):
             raise ValueError('attr statement must target graph, node, or edge: '
                 '%r' % kw)
         if attrs or _attributes:
-            attr_list = self._attr_list(None, attrs, _attributes)
-            line = self._attr % (kw, attr_list)
+            if kw is None:
+                a_list = self._a_list(None, attrs, _attributes)
+                line = self._attr_plain % a_list
+            else:
+                attr_list = self._attr_list(None, attrs, _attributes)
+                line = self._attr % (kw, attr_list)
             self.body.append(line)
 
     def subgraph(self, graph):
