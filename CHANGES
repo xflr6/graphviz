@@ -9,6 +9,8 @@ Support setting top-level attrs with g.attr(key=value).
 
 Drop extra indent level for DOT source with nonempty graph/node/edge_attr.
 
+Raise subprocess.CalledProcessError on non-zero exit status from rendering.
+
 Make undocumented quote(), quote_edge(), and attributes() methods private.
 
 

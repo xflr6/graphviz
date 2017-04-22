@@ -1,6 +1,7 @@
 # backend.py - execute rendering, open files in viewer
 
 import os
+import sys
 import errno
 import platform
 import subprocess
@@ -88,11 +89,12 @@ def render(engine, format, filepath):
         The (possibly relative) path of the rendered file.
     Raises:
         RuntimeError: If the Graphviz executable is not found.
+        subprocess.CalledProcessError: If the exit status is non-zero.
     """
     args, rendered = command(engine, format, filepath)
 
     try:
-        subprocess.call(args, startupinfo=STARTUPINFO)
+        subprocess.check_call(args, startupinfo=STARTUPINFO)
     except OSError as e:
         if e.errno == errno.ENOENT:
             raise RuntimeError('failed to execute %r, '
@@ -104,23 +106,26 @@ def render(engine, format, filepath):
     return rendered
 
 
-def pipe(engine, format, data):
+def pipe(engine, format, data, quiet=False):
     """Return data piped through Graphviz engine into format.
 
     Args:
         engine: The layout commmand used for rendering ('dot', 'neato', ...).
         format: The output format used for rendering ('pdf', 'png', ...).
         data: The binary (encoded) DOT source string to render.
+        quiet(bool): Suppress stderr output on non-zero exit status.
     Returns:
         Binary (encoded) stdout of the layout command.
     Raises:
         RuntimeError: If the Graphviz executable is not found.
+        subprocess.CalledProcessError: If the exit status is non-zero.
     """
     args, _ = command(engine, format)
 
     try:
         proc = subprocess.Popen(args, stdin=subprocess.PIPE,
-            stdout=subprocess.PIPE, startupinfo=STARTUPINFO)
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            startupinfo=STARTUPINFO)
     except OSError as e:
         if e.errno == errno.ENOENT:
             raise RuntimeError('failed to execute %r, '
@@ -130,6 +135,11 @@ def pipe(engine, format, data):
             raise
 
     outs, errs = proc.communicate(data)
+    if proc.returncode:
+        if not quiet:  # pragma: no cover
+            sys.stderr.write(errs)
+            sys.stderr.flush()
+        raise subprocess.CalledProcessError(proc.returncode, args, output=outs)
 
     return outs
 
