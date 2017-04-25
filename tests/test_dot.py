@@ -26,6 +26,13 @@ class TestDot(unittest.TestCase):
         with self.assertRaises(ValueError):
             Digraph().subgraph(Graph())
 
+    def test_subgraph_strict(self):
+        with self.assertRaises(ValueError):
+            Graph().subgraph(Graph(strict=True))
+
+        with self.assertRaises(ValueError):
+            Digraph().subgraph(Digraph(strict=True))
+
     def test_subgraph_recursive(self):  # guard against potential infinite loop
         dot = Graph()
         dot.subgraph(dot)

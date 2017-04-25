@@ -11,6 +11,8 @@ Drop extra indent level for DOT source with nonempty graph/node/edge_attr.
 
 Raise subprocess.CalledProcessError on non-zero exit status from rendering.
 
+Raise early when adding a subgraph() with strict=True (avoid DOT syntax error).
+
 Make undocumented quote(), quote_edge(), and attributes() methods private.
 
 

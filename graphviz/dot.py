@@ -44,6 +44,7 @@ class Dot(files.File):
 
     _quote = staticmethod(lang.quote)
     _quote_edge = staticmethod(lang.quote_edge)
+
     _a_list = staticmethod(lang.a_list)
     _attr_list = staticmethod(lang.attr_list)
 
@@ -71,9 +72,12 @@ class Dot(files.File):
         if self.comment:
             yield self._comment % self.comment
 
-        head = self._subgraph if subgraph else self._head
-        if self.strict:
-            head = 'strict %s' % head
+        if subgraph:
+            if self.strict:
+                raise ValueError('subgraphs cannot be strict')
+            head = self._subgraph
+        else:
+            head = self._head_strict if self.strict else self._head
         yield head % (self._quote(self.name) + ' ' if self.name else '')
 
         for kw in ('graph', 'node', 'edge'):
@@ -186,6 +190,7 @@ class Graph(Dot):
     """
 
     _head = 'graph %s{'
+    _head_strict = 'strict %s' % _head
     _edge = '\t\t%s -- %s%s'
     _edge_plain = '\t\t%s -- %s'
 
@@ -196,5 +201,6 @@ class Digraph(Dot):
     __doc__ += Graph.__doc__.partition('.')[2]
 
     _head = 'digraph %s{'
+    _head_strict = 'strict %s' % _head
     _edge = '\t\t%s -> %s%s'
     _edge_plain = '\t\t%s -> %s'
