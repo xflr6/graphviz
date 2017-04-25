@@ -153,18 +153,41 @@ class Dot(files.File):
                 line = self._attr % (kw, attr_list)
             self.body.append(line)
 
-    def subgraph(self, graph):
+    def subgraph(self, graph=None, name=None, comment=None,
+                 graph_attr=None, node_attr=None, edge_attr=None, body=None):
         """Add the current content of the given graph as subgraph.
 
         Args:
             graph: An instance of the same kind (Graph, Digraph)
                    as the current graph.
         """
+        if graph is None:
+            kwargs = {'name': name, 'comment': comment,
+                      'graph_attr': graph_attr, 'node_attr': node_attr,
+                      'edge_attr': edge_attr, 'body': body}
+            return SubgraphContext(self, kwargs)
+
+        args = [name, comment, graph_attr, node_attr, edge_attr, body]
+        if not all(a is None for a in args):
+            raise ValueError('graph must be sole argument of subgraph()')
         if not isinstance(graph, self.__class__):
             raise ValueError('%r cannot add subgraphs of different kind: %r '
                 % (self, graph))
         lines = ['\t' + line for line in graph.__iter__(subgraph=True)]
         self.body.extend(lines)
+
+
+class SubgraphContext(object):
+
+    def __init__(self, parent, kwargs):
+        self.parent = parent
+        self.graph = parent.__class__(**kwargs)
+
+    def __enter__(self):
+        return self.graph
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.parent.subgraph(self.graph)
 
 
 class Graph(Dot):
