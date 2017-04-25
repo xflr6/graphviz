@@ -11,7 +11,12 @@ class TestDot(unittest.TestCase):
         self.assertRegexpMatches(Graph('spam')._repr_svg_(),
             r'(?s)^<\?xml .+</svg>\s*$')
 
-    def test_attr(self):
+    def test_attr_plain(self):
+        dot = Graph()
+        dot.attr(spam='eggs')
+        self.assertEqual(dot.source, 'graph {\n\tspam=eggs\n}')
+
+    def test_attr_invalid(self):
         with self.assertRaises(ValueError):
             Graph().attr('spam')
 
