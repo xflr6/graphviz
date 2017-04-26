@@ -171,7 +171,7 @@ class Dot(files.File):
         if not all(a is None for a in args):
             raise ValueError('graph must be sole argument of subgraph()')
         if not isinstance(graph, self.__class__):
-            raise ValueError('%r cannot add subgraphs of different kind: %r '
+            raise ValueError('%r cannot add subgraph of different kind: %r '
                 % (self, graph))
         lines = ['\t' + line for line in graph.__iter__(subgraph=True)]
         self.body.extend(lines)
@@ -186,8 +186,9 @@ class SubgraphContext(object):
     def __enter__(self):
         return self.graph
 
-    def __exit__(self, exc_type, exc_value, traceback):
-        self.parent.subgraph(self.graph)
+    def __exit__(self, type_, value, traceback):
+        if type_ is None:
+            self.parent.subgraph(self.graph)
 
 
 class Graph(Dot):
