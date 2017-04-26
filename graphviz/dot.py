@@ -160,6 +160,10 @@ class Dot(files.File):
         Args:
             graph: An instance of the same kind (Graph, Digraph)
                    as the current graph.
+
+        .. note::
+            If the name of the subgraph begins with 'cluster' (all lowercase)
+            the layout engine will treat it as a special cluster subgraph.
         """
         if graph is None:
             kwargs = {'name': name, 'comment': comment,

@@ -5,6 +5,9 @@ from graphviz import Digraph
 
 g = Digraph('G', filename='cluster.gv')
 
+# NOTE: the subgraph name needs to begin with 'cluster' (all lowercase)
+#       so that Graphviz recognizes it as a special cluster subgraph
+
 with g.subgraph(name='cluster_0') as c:
     c.attr(style='filled')
     c.attr(color='lightgrey')
