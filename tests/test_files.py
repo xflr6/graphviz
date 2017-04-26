@@ -12,15 +12,15 @@ class TestBase(unittest.TestCase):
         self.file = File()
 
     def test_format(self):
-        with self.assertRaisesRegexp(ValueError, 'format'):
+        with self.assertRaisesRegexp(ValueError, r'format'):
             self.file.format = 'spam'
 
     def test_engine(self):
-        with self.assertRaisesRegexp(ValueError, 'engine'):
+        with self.assertRaisesRegexp(ValueError, r'engine'):
             self.file.engine = 'spam'
 
     def test_encoding(self):
-        with self.assertRaisesRegexp(LookupError, 'encoding'):
+        with self.assertRaisesRegexp(LookupError, r'encoding'):
             self.file.encoding = 'spam'
 
 
@@ -49,11 +49,11 @@ class TestNoent(unittest.TestCase):
             os.environ['PATH'] = self._oldpath
 
     def test_pipe(self):
-        with self.assertRaisesRegexp(RuntimeError, 'failed to execute'):
+        with self.assertRaisesRegexp(RuntimeError, r'failed to execute'):
             self.file.pipe()
 
     def test_render(self):
-        with self.assertRaisesRegexp(RuntimeError, 'failed to execute'):
+        with self.assertRaisesRegexp(RuntimeError, r'failed to execute'):
             self.file.render()
 
 

@@ -1,44 +1,49 @@
 # test_dot.py
 
 import unittest
+import itertools
 
 from graphviz.dot import Graph, Digraph
 
 
 class TestDot(unittest.TestCase):
 
-    def test_repr_svg(self):
-        self.assertRegexpMatches(Graph('spam')._repr_svg_(),
-            r'(?s)^<\?xml .+</svg>\s*$')
+    def test_repr_svg(self, pattern=r'(?s)^<\?xml .+</svg>\s*$'):
+        self.assertRegexpMatches(Graph('spam')._repr_svg_(), pattern)
 
-    def test_attr_plain(self):
+    def test_iter_subgraph_strict(self):
+        with self.assertRaisesRegexp(ValueError, r'strict'):
+            Graph().subgraph(Graph(strict=True))
+
+    def test_iter_strict(self):
+        self.assertEqual(Graph(strict=True).source, 'strict graph {\n}')
+        self.assertEqual(Digraph(strict=True).source, 'strict digraph {\n}')
+
+    def test_attr_invalid_kw(self):
+        with self.assertRaisesRegexp(ValueError, r'attr'):
+            Graph().attr('spam')
+
+    def test_attr_kw_none(self):
         dot = Graph()
         dot.attr(spam='eggs')
         self.assertEqual(dot.source, 'graph {\n\tspam=eggs\n}')
 
-    def test_attr_invalid(self):
-        with self.assertRaises(ValueError):
-            Graph().attr('spam')
+    def test_subgraph_graph_none(self):
+        dot = Graph()
+        with dot.subgraph(name='name', comment='comment'):
+            pass
+        self.assertEqual(dot.source, 'graph {\n\t// comment\n\tsubgraph name {\n\t}\n}')
 
-    def test_strict(self):
-        self.assertEqual(Graph(strict=True).source, 'strict graph {\n}')
-        self.assertEqual(Digraph(strict=True).source, 'strict digraph {\n}')
+    def test_subgraph_graph_notsole(self):
+        with self.assertRaisesRegexp(ValueError, r'sole'):
+            Graph().subgraph(Graph(), name='spam')
 
-    def test_subgraph_invalid(self):
-        with self.assertRaises(ValueError):
-            Graph().subgraph(Digraph())
+    def test_subgraph_mixed(self):
+        for cls1, cls2 in itertools.permutations([Graph, Digraph], 2):
+            with self.assertRaisesRegexp(ValueError, r'kind'):
+                cls1().subgraph(cls2())
 
-        with self.assertRaises(ValueError):
-            Digraph().subgraph(Graph())
-
-    def test_subgraph_strict(self):
-        with self.assertRaises(ValueError):
-            Graph().subgraph(Graph(strict=True))
-
-        with self.assertRaises(ValueError):
-            Digraph().subgraph(Digraph(strict=True))
-
-    def test_subgraph_recursive(self):  # guard against potential infinite loop
+    def test_subgraph_reflexive(self):  # guard against potential infinite loop
         dot = Graph()
         dot.subgraph(dot)
         self.assertEqual(dot.source, 'graph {\n\tsubgraph {\n\t}\n}')
