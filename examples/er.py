@@ -36,7 +36,7 @@ e.edge('student', 'number')
 e.edge('student', 'S-C', label='m', len='1.00')
 e.edge('S-C', 'course', label='n', len='1.00')
 
-e.body.append(r'label = "\n\nEntity Relation Diagram\ndrawn by NEATO"')
-e.body.append('fontsize=20')
+e.attr(label=r'\n\nEntity Relation Diagram\ndrawn by NEATO')
+e.attr(fontsize='20')
 
 e.view()
