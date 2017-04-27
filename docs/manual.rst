@@ -8,7 +8,7 @@ Installation
 ------------
 
 :mod:`graphviz` provides a simple pure-Python interface for the Graphviz_
-graph-drawing software. It runs under Python 2.6, 2.7 and 3.3+. To install it
+graph-drawing software. It runs under Python 2.7 and 3.3+. To install it
 with pip_ run the following:
 
 .. code:: bash
