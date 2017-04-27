@@ -38,6 +38,8 @@ fsm.py
     :align: center
 
 
+.. _cluster.py:
+
 cluster.py
 ----------
 

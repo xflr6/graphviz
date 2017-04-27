@@ -7,6 +7,8 @@ Version 0.7 (in development)
 
 Support setting top-level attrs with g.attr(key=value).
 
+Add context manager usage of subgraph() for adding a subgraph in a with-block.
+
 Drop extra indent level for DOT source with nonempty graph/node/edge_attr.
 
 Raise subprocess.CalledProcessError on non-zero exit status from rendering.

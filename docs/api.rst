@@ -4,8 +4,9 @@ API Reference
 =============
 
 .. note::
-    The two main classes ``Graph`` and ``Digraph`` (for creating `undirected`
-    vs. `directed` graphs) have exactly the same API.
+
+    The two main classes :class:`.Graph` and :class:`.Digraph` (for creating
+    `undirected` vs. `directed` graphs) have exactly the same API.
     Their division reflects the fact that both graph types cannot be mixed.
 
 
@@ -44,7 +45,8 @@ Low-level functions
 -------------------
 
 The functions in this section are provided to work directly with existing
-files and strings instead of using the object-oriented DOT creation api above.
+files and strings instead of using the object-oriented DOT creation methods
+documented above.
 
 .. autofunction:: graphviz.render
 .. autofunction:: graphviz.pipe

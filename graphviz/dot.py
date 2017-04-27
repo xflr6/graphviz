@@ -155,14 +155,25 @@ class Dot(files.File):
 
     def subgraph(self, graph=None, name=None, comment=None,
                  graph_attr=None, node_attr=None, edge_attr=None, body=None):
-        """Add the current content of the given graph as subgraph.
+        """Add the current content of the given sole `graph` argument as subgraph \
+           or return a context manager returning a new graph instance created \
+           with the given (`name`, `comment`, etc.) arguments whose content is \
+           added as subgraph when leaving the context manager's ``with``-block.
 
         Args:
-            graph: An instance of the same kind (Graph, Digraph)
-                   as the current graph.
+            graph: An instance of the same kind (:class:`.Graph`, :class:`.Digraph`)
+                   as the current graph (sole argument in non-with-block use).
+            name: Subgraph name (with-block use).
+            comment: Subgraph comment (with-block use).
+            graph_attr: Subgraph-level attribute-value mapping (with-block use).
+            node_attr: Node-level attribute-value mapping (with-block use).
+            edge_attr: Edge-level attribute-value mapping (with-block use).
+            body: Verbatim lines to add to the subgraph body (with-block use).
+
+        See the :ref:`usage examples in the User Guide <subgraphs>`.
 
         .. note::
-            If the name of the subgraph begins with 'cluster' (all lowercase)
+            If the `name` of the subgraph begins with 'cluster' (all lowercase)
             the layout engine will treat it as a special cluster subgraph.
         """
         if graph is None:
@@ -201,7 +212,7 @@ class Graph(Dot):
     Args:
         name: Graph name used in the source code.
         comment: Comment added to the first line of the source.
-        filename: Filename for saving the source (defaults to name + '.gv').
+        filename: Filename for saving the source (defaults to `name` + '.gv').
         directory: (Sub)directory for source saving and rendering.
         format: Rendering output format ('pdf', 'png', ...).
         engine: Layout command used ('dot', 'neato', ...).
@@ -209,8 +220,8 @@ class Graph(Dot):
         graph_attr: Mapping of (attribute, value) pairs for the graph.
         node_attr: Mapping of (attribute, value) pairs set for all nodes.
         edge_attr: Mapping of (attribute, value) pairs set for all edges.
-        body: Iterable of lines to add to the graph body.
-        strict: Rendering should merge multi-edges (default: False).
+        body: Iterable of verbatim lines to add to the graph body.
+        strict(bool): Rendering should merge multi-edges (default: False).
 
     .. note::
         All parameters are optional and can be changed under their

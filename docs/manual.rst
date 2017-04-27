@@ -201,6 +201,62 @@ After creation, they can be edited on the graph object:
     :align: center
 
 
+.. _subgraphs:
+
+Subgraphs & clusters
+--------------------
+
+:class:`.Graph` and :class:`.Digraph` objects have a
+:meth:`~.Graph.subgraph`-method for adding a subgraph to an instance.
+
+There are two ways to use it: Either with a ready-made graph object of the same
+kind as the only argument (whose content is added as a subgraph) or omitting
+the ``graph`` argument (returning a context manager for defining the subgraph
+content more elegantly within a ``with``-block).
+
+First usage option, with ``graph`` as the only argument:
+
+.. code:: python
+
+    >>> p = Graph(name='parent')
+    >>> p.edge('spam', 'eggs')
+
+    >>> c = Graph(name='child', node_attr={'shape': 'box'})
+    >>> c.edge('foo', 'bar')
+
+    >>> p.subgraph(c)
+
+Second usage, with a ``with``-block usage (omitting the ``graph`` argument):
+
+.. code:: python
+
+    >>> p = Graph(name='parent')
+    >>> p.edge('spam', 'eggs')
+
+    >>> with p.subgraph(name='child', node_attr={'shape': 'box'}) as c:
+    ...    c.edge('foo', 'bar')
+
+Both produce the same result:
+
+.. code:: python
+
+    >>> print(p.source)  # doctest: +NORMALIZE_WHITESPACE
+    graph parent {
+            spam -- eggs
+        subgraph child {
+            node [shape=box]
+                foo -- bar
+        }
+    }
+
+.. note::
+
+    If the ``name`` of a subgraph begins with 'cluster' (all lowercase) the
+    layout engine will treat it as a special cluster subgraph
+    (:ref:`example <cluster.py>`). Also see the `Subgraphs and Clusters`
+    section of `the DOT language documentaion <DOT_>`_.
+
+
 Engines
 -------
 
@@ -224,10 +280,27 @@ Custom DOT statements
 
 To add arbitrary statements to the created DOT_ source, use the
 :attr:`~.Graph.body` attribute of the :class:`.Graph` or :class:`.Digraph`
-object. It holds the raw list of lines to be written to the source file:
-Use its ``append()`` or ``extend()`` method, as shown in some of the
-:ref:`Examples`. Note that you might need to correctly quote/escape identifiers
-and strings when doing so.
+object. It holds the verbatim list of lines to be written to the source file.
+Use its ``append()`` or ``extend()`` method:
+
+.. code:: python
+
+    >>> dot = Digraph(comment='The Round Table')
+
+    >>> dot.body.append('\t\t"King Arthur" -> {\n\t\t\t"Sir Bedevere", "Sir Lancelot"\n\t\t}')
+    >>> dot.edge('Sir Bedevere', 'Sir Lancelot', constraint='false')
+
+    >>> print(dot.source)  # doctest: +NORMALIZE_WHITESPACE
+    // The Round Table
+    digraph {
+            "King Arthur" -> {
+                "Sir Bedevere", "Sir Lancelot"
+            }
+            "Sir Bedevere" -> "Sir Lancelot" [constraint=false]
+    }
+
+Note that you might need to correctly quote/escape identifiers and strings
+containing whitespace or other special characters when using this method.
 
 
 Using raw DOT

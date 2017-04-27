@@ -107,7 +107,7 @@ class File(Base):
         """Save the DOT source to file.
 
         Args:
-            filename: Filename for saving the source (defaults to name + '.gv')
+            filename: Filename for saving the source (defaults to `name` + '.gv')
             directory: (Sub)directory for source saving and rendering.
         Returns:
             The (possibly relative) path of the saved source file.
@@ -131,10 +131,10 @@ class File(Base):
         """Save the source to file and render with the Graphviz engine.
 
         Args:
-            filename: Filename for saving the source (defaults to name + '.gv')
+            filename: Filename for saving the source (defaults to `name` + '.gv')
             directory: (Sub)directory for source saving and rendering.
-            view: Open the rendered result with the default application.
-            cleanup: Delete the source file after rendering.
+            view(bool): Open the rendered result with the default application.
+            cleanup(bool): Delete the source file after rendering.
         Returns:
             The (possibly relative) path of the rendered file.
         Raises:
@@ -159,7 +159,7 @@ class File(Base):
         Args:
             filename: Filename for saving the source (defaults to name + '.gv')
             directory: (Sub)directory for source saving and rendering.
-            cleanup: Delete the source file after rendering.
+            cleanup(bool): Delete the source file after rendering.
         Returns:
             The (possibly relative) path of the rendered file.
         Raises:
@@ -197,7 +197,7 @@ class Source(File):
 
     Args:
         source: The verbatim DOT source code string.
-        filename: Filename for saving the source (defaults to name + '.gv').
+        filename: Filename for saving the source (defaults to `name` + '.gv').
         directory: (Sub)directory for source saving and rendering.
         format: Rendering output format ('pdf', 'png', ...).
         engine: Layout command used ('dot', 'neato', ...).
