@@ -5,7 +5,7 @@ Examples
 
 See the ``examples`` directory in the `source repository/distribution`__.
 
-.. __: http://github.com/xflr6/graphviz/tree/master/examples/
+.. __: https://github.com/xflr6/graphviz/tree/master/examples/
 
 
 hello.py 

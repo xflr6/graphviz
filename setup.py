@@ -10,7 +10,7 @@ setup(
     description='Simple Python interface for Graphviz',
     keywords='graph visualization dot render',
     license='MIT',
-    url='http://github.com/xflr6/graphviz',
+    url='https://github.com/xflr6/graphviz',
     packages=find_packages(),
     platforms='any',
     long_description=open('README.rst').read(),

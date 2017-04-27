@@ -37,8 +37,8 @@ extensions = [
 ]
 
 intersphinx_mapping = {
-    'py': ('http://docs.python.org/2', None),
-    'py3': ('http://docs.python.org/3', None),
+    'py': ('https://docs.python.org/2', None),
+    'py3': ('https://docs.python.org/3', None),
 }
 
 # Add any paths that contain templates here, relative to this directory.

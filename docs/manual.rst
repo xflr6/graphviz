@@ -335,8 +335,8 @@ as the higher-level graph objects (:meth:`~.Source.pipe`-method,
 see above.
 
 
-.. _pip: http://pip.readthedocs.io
-.. _virtualenv: http://virtualenv.pypa.io
+.. _pip: https://pip.readthedocs.io
+.. _virtualenv: https://virtualenv.pypa.io
 
 .. _Graphviz: http://www.graphviz.org
 .. _download page: http://www.graphviz.org/Download.php
@@ -344,6 +344,6 @@ see above.
 .. _output file format: http://www.graphviz.org/doc/info/output.html
 .. _appearance: http://www.graphviz.org/doc/info/attrs.html
 
-.. _Jupyter notebook: http://jupyter.org
-.. _notebook: http://github.com/xflr6/graphviz/blob/master/examples/notebook.ipynb
-.. _nbviewer: http://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
+.. _Jupyter notebook: https://jupyter.org
+.. _notebook: https://github.com/xflr6/graphviz/blob/master/examples/notebook.ipynb
+.. _nbviewer: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
