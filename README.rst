@@ -19,12 +19,12 @@ example_).
 Links
 -----
 
-- GitHub: http://github.com/xflr6/graphviz
-- PyPI: http://pypi.python.org/pypi/graphviz
-- Documentation: http://graphviz.readthedocs.io
-- Changelog: http://graphviz.readthedocs.io/en/latest/changelog.html
-- Issue Tracker: http://github.com/xflr6/graphviz/issues
-- Download: http://pypi.python.org/pypi/graphviz#downloads
+- GitHub: https://github.com/xflr6/graphviz
+- PyPI: https://pypi.python.org/pypi/graphviz
+- Documentation: https://graphviz.readthedocs.io
+- Changelog: https://graphviz.readthedocs.io/en/latest/changelog.html
+- Issue Tracker: https://github.com/xflr6/graphviz/issues
+- Download: https://pypi.python.org/pypi/graphviz#downloads
 
 
 Installation
@@ -108,21 +108,21 @@ License
 This package is distributed under the `MIT license`_.
 
 
-.. _pip: http://pip.readthedocs.io
+.. _pip: https://pip.readthedocs.io
 .. _Graphviz:  http://www.graphviz.org
-.. _repo: http://github.com/ellson/graphviz/
+.. _repo: https://github.com/ellson/graphviz/
 .. _download page: http://www.graphviz.org/Download.php
 .. _DOT: http://www.graphviz.org/doc/info/lang.html
-.. _Jupyter notebooks: http://jupyter.org
-.. _IPython notebooks: http://ipython.org/notebook.html
-.. _example: http://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
+.. _Jupyter notebooks: https://jupyter.org
+.. _IPython notebooks: https://ipython.org/notebook.html
+.. _example: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
 
-.. _pygraphviz: http://pypi.python.org/pypi/pygraphviz
-.. _graphviz-python: http://pypi.python.org/pypi/graphviz-python
+.. _pygraphviz: https://pypi.python.org/pypi/pygraphviz
+.. _graphviz-python: https://pypi.python.org/pypi/graphviz-python
 .. _documentation: http://www.graphviz.org/pdf/gv.3python.pdf
-.. _pydot: http://pypi.python.org/pypi/pydot
+.. _pydot: https://pypi.python.org/pypi/pydot
 
-.. _MIT license: http://opensource.org/licenses/MIT
+.. _MIT license: https://opensource.org/licenses/MIT
 
 
 .. |--| unicode:: U+2013
