@@ -143,6 +143,6 @@ This package is distributed under the `MIT license`_.
 .. |Downloads| image:: https://img.shields.io/pypi/dm/graphviz.svg
     :target: https://pypi.python.org/pypi/graphviz
     :alt: Downloads
-.. |Docs| image:: https://readthedocs.org/projects/graphviz/badge/?version=latest
+.. |Docs| image:: https://readthedocs.org/projects/graphviz/badge/?version=stable
     :target: https://graphviz.readthedocs.io/en/latest/
     :alt: Readthedocs
