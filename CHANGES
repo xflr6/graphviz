@@ -11,6 +11,8 @@ Add context manager usage of subgraph() for adding a subgraph in a with-block.
 
 Drop extra indent level for DOT source with nonempty graph/node/edge_attr.
 
+Add a final newline to a saved DOT source file if it does not end with one.
+
 Raise subprocess.CalledProcessError on non-zero exit status from rendering.
 
 Raise early when adding a subgraph() with strict=True (avoid DOT syntax error).

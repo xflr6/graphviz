@@ -124,6 +124,8 @@ class File(Base):
 
         with io.open(filepath, 'w', encoding=self.encoding) as fd:
             fd.write(data)
+            if not data.endswith(u'\n'):
+                fd.write(u'\n')
 
         return filepath
 
