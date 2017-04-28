@@ -78,3 +78,39 @@ structs.py
 
 .. image:: _static/structs.svg
     :align: center
+
+
+traffic_lights.py
+-----------------
+.. literalinclude:: ../examples/traffic_lights.py
+    :lines: 2-
+
+.. image:: _static/traffic_lights.svg
+    :align: center
+
+
+fdpclust.py
+-----------
+.. literalinclude:: ../examples/fdpclust.py
+    :lines: 2-
+
+.. image:: _static/fdpclust.svg
+    :align: center
+
+
+g_c_n.py
+--------
+.. literalinclude:: ../examples/g_c_n.py
+    :lines: 2-
+
+.. image:: _static/g_c_n.svg
+    :align: center
+
+
+angles.py
+---------
+.. literalinclude:: ../examples/angles.py
+    :lines: 2-
+
+.. image:: _static/angles.svg
+    :align: center
