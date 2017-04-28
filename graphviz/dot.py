@@ -38,8 +38,9 @@ class Dot(files.File):
 
     _comment = '// %s'
     _subgraph = 'subgraph %s{'
+    _subgraph_plain = '%s{'
     _node = _attr ='\t%s%s'
-    _attr_plain = '\t%s'
+    _attr_plain = _attr % ('%s', '')
     _tail = '}'
 
     _quote = staticmethod(lang.quote)
@@ -75,7 +76,7 @@ class Dot(files.File):
         if subgraph:
             if self.strict:
                 raise ValueError('subgraphs cannot be strict')
-            head = self._subgraph
+            head = self._subgraph if self.name else self._subgraph_plain
         else:
             head = self._head_strict if self.strict else self._head
         yield head % (self._quote(self.name) + ' ' if self.name else '')
@@ -231,7 +232,7 @@ class Graph(Dot):
     _head = 'graph %s{'
     _head_strict = 'strict %s' % _head
     _edge = '\t\t%s -- %s%s'
-    _edge_plain = '\t\t%s -- %s'
+    _edge_plain = _edge % ('%s', '%s', '')
 
 
 class Digraph(Dot):
@@ -242,4 +243,4 @@ class Digraph(Dot):
     _head = 'digraph %s{'
     _head_strict = 'strict %s' % _head
     _edge = '\t\t%s -> %s%s'
-    _edge_plain = '\t\t%s -> %s'
+    _edge_plain = _edge % ('%s', '%s', '')

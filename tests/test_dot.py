@@ -46,7 +46,7 @@ class TestDot(unittest.TestCase):
     def test_subgraph_reflexive(self):  # guard against potential infinite loop
         dot = Graph()
         dot.subgraph(dot)
-        self.assertEqual(dot.source, 'graph {\n\tsubgraph {\n\t}\n}')
+        self.assertEqual(dot.source, 'graph {\n\t{\n\t}\n}')
 
     def test_subgraph(self):
         s1 = Graph()
@@ -70,7 +70,7 @@ class TestDot(unittest.TestCase):
         dot.edges(['AD', 'BE', 'CF'])
 
         self.assertEqual(dot.source, '''graph {
-	subgraph {
+	{
 		A
 		B
 		C
@@ -78,7 +78,7 @@ class TestDot(unittest.TestCase):
 			A -- C
 			B -- C
 	}
-	subgraph {
+	{
 		D
 		E
 		F
