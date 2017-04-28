@@ -144,5 +144,5 @@ This package is distributed under the `MIT license`_.
     :target: https://pypi.python.org/pypi/graphviz
     :alt: Downloads
 .. |Docs| image:: https://readthedocs.org/projects/graphviz/badge/?version=stable
-    :target: https://graphviz.readthedocs.io/en/latest/
+    :target: https://graphviz.readthedocs.io/en/stable/
     :alt: Readthedocs
