@@ -18,5 +18,5 @@ class TestPipe(unittest.TestCase):
 
     def test_pipe_invalid_dot(self):
         with self.assertRaises(subprocess.CalledProcessError) as c:
-            pipe('dot', 'svg', 'spam', quiet=True)
+            pipe('dot', 'svg', b'spam', quiet=True)
         self.assertEqual(c.exception.returncode, 1)
