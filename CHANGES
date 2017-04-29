@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.7 (in development)
-------------------------------
+Version 0.7
+-----------
 
 Support setting top-level attrs with g.attr(key=value).
 
