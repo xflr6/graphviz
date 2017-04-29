@@ -10,7 +10,7 @@ from . import tools
 
 __all__ = ['render', 'pipe', 'view']
 
-ENGINES = {  # http://www.graphviz.org/cgi-bin/man?dot
+ENGINES = {  # http://www.graphviz.org/pdf/dot.1.pdf
     'dot', 'neato', 'twopi', 'circo', 'fdp', 'sfdp', 'patchwork', 'osage',
 }
 
@@ -31,6 +31,7 @@ FORMATS = {  # http://www.graphviz.org/doc/info/output.html
     'ismap',
     'jp2',
     'jpg', 'jpeg', 'jpe',
+    'json', 'json0', 'dot_json', 'xdot_json',  # Graphviz 2.40
     'pct', 'pict',
     'pdf',
     'pic',
@@ -88,6 +89,7 @@ def render(engine, format, filepath):
     Returns:
         The (possibly relative) path of the rendered file.
     Raises:
+        ValueError: If engine or format are not known.
         RuntimeError: If the Graphviz executable is not found.
         subprocess.CalledProcessError: If the exit status is non-zero.
     """
@@ -117,6 +119,7 @@ def pipe(engine, format, data, quiet=False):
     Returns:
         Binary (encoded) stdout of the layout command.
     Raises:
+        ValueError: If engine or format are not known.
         RuntimeError: If the Graphviz executable is not found.
         subprocess.CalledProcessError: If the exit status is non-zero.
     """
