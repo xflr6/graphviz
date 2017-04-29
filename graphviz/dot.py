@@ -39,7 +39,7 @@ class Dot(files.File):
     _comment = '// %s'
     _subgraph = 'subgraph %s{'
     _subgraph_plain = '%s{'
-    _node = _attr ='\t%s%s'
+    _node = _attr = '\t%s%s'
     _attr_plain = _attr % ('%s', '')
     _tail = '}'
 
@@ -189,7 +189,7 @@ class Dot(files.File):
         args = [name, comment, graph_attr, node_attr, edge_attr, body]
         if not all(a is None for a in args):
             raise ValueError('graph must be sole argument of subgraph()')
-        if not isinstance(graph, self.__class__):
+        if graph.directed != self.directed:
             raise ValueError('%r cannot add subgraph of different kind: %r '
                 % (self, graph))
         lines = ['\t' + line for line in graph.__iter__(subgraph=True)]
@@ -238,6 +238,8 @@ class Graph(Dot):
     _edge = '\t\t%s -- %s%s'
     _edge_plain = _edge % ('%s', '%s', '')
 
+    directed = False
+
 
 class Digraph(Dot):
     """Directed graph source code in the DOT language."""
@@ -248,3 +250,5 @@ class Digraph(Dot):
     _head_strict = 'strict %s' % _head
     _edge = '\t\t%s -> %s%s'
     _edge_plain = _edge % ('%s', '%s', '')
+
+    directed = True
