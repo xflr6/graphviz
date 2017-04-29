@@ -1,4 +1,5 @@
 # test_dot.py
+# flake8: noqa
 
 import unittest
 import itertools

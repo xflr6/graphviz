@@ -5,7 +5,7 @@ import os
 import io
 import glob
 
-import graphviz
+import graphviz  # noqa: F401
 
 os.chdir('examples')
 for filename in glob.iglob('*.py'):
