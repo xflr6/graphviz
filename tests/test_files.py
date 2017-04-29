@@ -54,7 +54,7 @@ class TestNoent(unittest.TestCase):
 
     def test_render(self):
         with self.assertRaisesRegexp(RuntimeError, r'failed to execute'):
-            self.file.render()
+            self.file.render(directory=self.file.directory)
 
 
 class TestSource(unittest.TestCase):

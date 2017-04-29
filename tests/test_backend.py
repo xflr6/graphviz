@@ -36,3 +36,7 @@ class TestPipe(unittest.TestCase):
         with self.assertRaises(subprocess.CalledProcessError) as c:
             pipe('dot', 'svg', b'spam', quiet=True)
         self.assertEqual(c.exception.returncode, 1)
+
+    def test_pipe(self, pattern=r'(?s)^<\?xml .+</svg>\s*$'):
+        src = pipe('dot', 'svg', b'graph { spam }').decode('ascii')
+        self.assertRegexpMatches(src, pattern)
