@@ -278,7 +278,7 @@ First usage option, with ``graph`` as the only argument:
 
     >>> p.subgraph(c)
 
-Second usage, with a ``with``-block usage (omitting the ``graph`` argument):
+Second usage, with a ``with``-block (omitting the ``graph`` argument):
 
 .. code:: python
 
