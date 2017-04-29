@@ -80,6 +80,26 @@ structs.py
     :align: center
 
 
+structs_revisited.py
+--------------------
+
+.. literalinclude:: ../examples/structs_revisited.py
+    :lines: 2-
+
+.. image:: _static/structs_revisited.svg
+    :align: center
+
+
+btree.py
+--------
+
+.. literalinclude:: ../examples/btree.py
+    :lines: 2-
+
+.. image:: _static/btree.svg
+    :align: center
+
+
 traffic_lights.py
 -----------------
 .. literalinclude:: ../examples/traffic_lights.py
@@ -95,6 +115,15 @@ fdpclust.py
     :lines: 2-
 
 .. image:: _static/fdpclust.svg
+    :align: center
+
+
+cluster_edge.py
+---------------
+.. literalinclude:: ../examples/cluster_edge.py
+    :lines: 2-
+
+.. image:: _static/cluster_edge.svg
     :align: center
 
 
