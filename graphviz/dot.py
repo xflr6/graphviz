@@ -69,7 +69,7 @@ class Dot(files.File):
         self.strict = strict
 
     def __iter__(self, subgraph=False):
-        """Yield the DOT source code line by line."""
+        """Yield the DOT source code line by line (as graph or subgraph)."""
         if self.comment:
             yield self._comment % self.comment
 
@@ -92,9 +92,10 @@ class Dot(files.File):
         yield self._tail
 
     def __str__(self):
+        """The DOT source code as string."""
         return '\n'.join(self)
 
-    source = property(__str__, doc='The DOT source code as string.')
+    source = property(__str__, doc=__str__.__doc__)
 
     def node(self, name, label=None, _attributes=None, **attrs):
         """Create a node.
@@ -136,11 +137,13 @@ class Dot(files.File):
             for t, h in tail_head_iter)
 
     def attr(self, kw=None, _attributes=None, **attrs):
-        """Add a graph/node/edge attribute statement.
+        """Add a general or graph/node/edge attribute statement.
 
         Args:
-            kw: Attributes target ('graph', 'node', 'edge', or None).
+            kw: Attributes target (None or 'graph', 'node', 'edge').
             attrs: Attributes to be set (must be strings, may be empty).
+
+        See the :ref:`usage examples in the User Guide <attributes>`.
         """
         if kw is not None and kw.lower() not in ('graph', 'node', 'edge'):
             raise ValueError('attr statement must target graph, node, or edge: '
@@ -194,6 +197,7 @@ class Dot(files.File):
 
 
 class SubgraphContext(object):
+    """Return a blank instance of the parent and add as subgraph on exit."""
 
     def __init__(self, parent, kwargs):
         self.parent = parent
@@ -222,7 +226,7 @@ class Graph(Dot):
         node_attr: Mapping of (attribute, value) pairs set for all nodes.
         edge_attr: Mapping of (attribute, value) pairs set for all edges.
         body: Iterable of verbatim lines to add to the graph body.
-        strict(bool): Rendering should merge multi-edges (default: False).
+        strict(bool): Rendering should merge multi-edges.
 
     .. note::
         All parameters are optional and can be changed under their

@@ -174,20 +174,20 @@ graph, nodes, and edges.
 
 .. code:: python
 
-    >>> dot = Digraph(name='pet-shop', node_attr={'shape': 'plaintext'})
+    >>> ps = Digraph(name='pet-shop', node_attr={'shape': 'plaintext'})
 
-    >>> dot.node('parrot')
-    >>> dot.node('dead')
-    >>> dot.edge('parrot', 'dead')
+    >>> ps.node('parrot')
+    >>> ps.node('dead')
+    >>> ps.edge('parrot', 'dead')
 
 After creation, they can be edited on the graph object:
 
 .. code:: python
 
-    >>> dot.graph_attr['rankdir'] = 'LR'
-    >>> dot.edge_attr.update(arrowhead='vee', arrowsize='2')
+    >>> ps.graph_attr['rankdir'] = 'LR'
+    >>> ps.edge_attr.update(arrowhead='vee', arrowsize='2')
 
-    >>> print(dot.source)  # doctest: +NORMALIZE_WHITESPACE
+    >>> print(ps.source)  # doctest: +NORMALIZE_WHITESPACE
     digraph "pet-shop" {
         graph [rankdir=LR]
         node [shape=plaintext]
@@ -198,6 +198,58 @@ After creation, they can be edited on the graph object:
     }
 
 .. image:: _static/pet-shop.svg
+    :align: center
+
+
+.. _attributes:
+
+Attributes
+----------
+
+To directly add attitbute statements (affecting all following graph, node, or
+edge items within the same (sub-)graph), use the :meth:`~.Graph.attr`-method
+with the target as first argument:
+
+.. code:: python
+
+    >>> ni = Graph('ni')
+
+    >>> ni.attr('node', shape='rarrow')
+    >>> ni.node('1', 'Ni!')
+    >>> ni.node('2', 'Ni!')
+
+    >>> ni.node('3', 'Ni!', shape='egg')
+
+    >>> ni.attr('node', shape='star')
+    >>> ni.node('4', 'Ni!')
+    >>> ni.node('5', 'Ni!')
+
+By omitting its first argument, you can use it to set arbitrary attributes as
+key-value pairs targeting the current (sub-)graph (e.g. for ``rankdir``,
+``label``, or setting ``rank=same`` within a subgraph context):
+
+.. code:: python
+
+    >>> ni.attr(rankdir='LR')
+
+    >>> ni.edges(['12', '23', '34', '45'])
+    >>> print(ni.source)  # doctest: +NORMALIZE_WHITESPACE
+    graph ni {
+        node [shape=rarrow]
+        1 [label="Ni!"]
+        2 [label="Ni!"]
+        3 [label="Ni!" shape=egg]
+        node [shape=star]
+        4 [label="Ni!"]
+        5 [label="Ni!"]
+        rankdir=LR
+            1 -- 2
+            2 -- 3
+            3 -- 4
+            4 -- 5
+    }
+
+.. image:: _static/ni.svg
     :align: center
 
 
@@ -285,12 +337,12 @@ Use its ``append()`` or ``extend()`` method:
 
 .. code:: python
 
-    >>> dot = Digraph(comment='The Round Table')
+    >>> rt = Digraph(comment='The Round Table')
 
-    >>> dot.body.append('\t\t"King Arthur" -> {\n\t\t\t"Sir Bedevere", "Sir Lancelot"\n\t\t}')
-    >>> dot.edge('Sir Bedevere', 'Sir Lancelot', constraint='false')
+    >>> rt.body.append('\t\t"King Arthur" -> {\n\t\t\t"Sir Bedevere", "Sir Lancelot"\n\t\t}')
+    >>> rt.edge('Sir Bedevere', 'Sir Lancelot', constraint='false')
 
-    >>> print(dot.source)  # doctest: +NORMALIZE_WHITESPACE
+    >>> print(rt.source)  # doctest: +NORMALIZE_WHITESPACE
     // The Round Table
     digraph {
             "King Arthur" -> {

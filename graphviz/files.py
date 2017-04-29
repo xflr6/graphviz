@@ -50,7 +50,7 @@ class Base(object):
 
     @encoding.setter
     def encoding(self, encoding):
-        if encoding is not None:
+        if encoding is not None:  # raise early
             codecs.lookup(encoding)
         self._encoding = encoding
 
@@ -61,7 +61,8 @@ class File(Base):
 
     _default_extension = 'gv'
 
-    def __init__(self, filename=None, directory=None, format=None, engine=None, encoding=None):
+    def __init__(self, filename=None, directory=None,
+                 format=None, engine=None, encoding=None):
         if filename is None:
             name = getattr(self, 'name', None) or self.__class__.__name__
             filename = '%s.%s' % (name, self._default_extension)
@@ -89,6 +90,10 @@ class File(Base):
             format: The output format used for rendering ('pdf', 'png', etc.).
         Returns:
             Binary (encoded) stdout of the layout command.
+        Raises:
+            ValueError: If `format` is not known.
+            RuntimeError: If the Graphviz executable is not found.
+            subprocess.CalledProcessError: If the exit status is non-zero.
         """
         if format is None:
             format = self._format
@@ -104,7 +109,7 @@ class File(Base):
         return os.path.join(self.directory, self.filename)
 
     def save(self, filename=None, directory=None):
-        """Save the DOT source to file.
+        """Save the DOT source to file. Ensure the file ends with a newline.
 
         Args:
             filename: Filename for saving the source (defaults to `name` + '.gv')
@@ -141,6 +146,7 @@ class File(Base):
             The (possibly relative) path of the rendered file.
         Raises:
             RuntimeError: If the Graphviz executable is not found.
+            subprocess.CalledProcessError: If the exit status is non-zero.
             RuntimeError: If viewer opening is requested but not supported.
         """
         filepath = self.save(filename, directory)
@@ -166,9 +172,10 @@ class File(Base):
             The (possibly relative) path of the rendered file.
         Raises:
             RuntimeError: If the Graphviz executable is not found.
+            subprocess.CalledProcessError: If the exit status is non-zero.
             RuntimeError: If opening the viewer is not supported.
 
-        Short-cut method for calling ``render()`` with ``view=True``.
+        Short-cut method for calling :meth:`.render` with ``view=True``.
         """
         return self.render(view=True,
             filename=filename, directory=directory, cleanup=cleanup)
@@ -206,10 +213,11 @@ class Source(File):
         encoding: Encoding for saving the source.
 
     .. note::
-        All parameters except source are optional and can be changed under
+        All parameters except `source` are optional and can be changed under
         their corresponding attribute name after instance creation.
     """
 
-    def __init__(self, source, filename=None, directory=None, format=None, engine=None, encoding=None):
+    def __init__(self, source, filename=None, directory=None,
+                 format=None, engine=None, encoding=None):
         super(Source, self).__init__(filename, directory, format, engine, encoding)
         self.source = source
