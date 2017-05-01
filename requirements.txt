@@ -1,6 +1,7 @@
 # exact dependency versions used in development
 # dependencies for testing and building
-nose
+pytest>=3
+pytest-cov
 coverage
 flake8
 pep8-naming

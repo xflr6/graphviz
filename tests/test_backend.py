@@ -1,42 +1,37 @@
 # test_backend.py
 
-import unittest
+import re
 import subprocess
+
+import pytest
 
 from graphviz.backend import render, pipe
 
 
-class TestRender(unittest.TestCase):
-
-    def test_render_engine_unknown(self):
-        with self.assertRaisesRegexp(ValueError, r'engine'):
-            render('spam', 'pdf', '')
-
-    def test_render_format_unknown(self):
-        with self.assertRaisesRegexp(ValueError, r'format'):
-            render('dot', 'spam', '')
-
-    def test_render_filepath_missing(self):
-        with self.assertRaises(subprocess.CalledProcessError) as c:
-            render('dot', 'pdf', 'doesnotexist')
-        self.assertEqual(c.exception.returncode, 2)
+def test_render_filepath_missing():
+    with pytest.raises(subprocess.CalledProcessError) as e:
+        render('dot', 'pdf', 'doesnotexist')
+    assert e.value.returncode == 2
 
 
-class TestPipe(unittest.TestCase):
+def test_render_engine_unknown():
+    with pytest.raises(ValueError) as e:
+        pipe('spam', 'pdf', b'')
+    e.match(r'engine')
 
-    def test_render_engine_unknown(self):
-        with self.assertRaisesRegexp(ValueError, r'engine'):
-            pipe('spam', 'pdf', b'')
 
-    def test_render_format_unknown(self):
-        with self.assertRaisesRegexp(ValueError, r'format'):
-            pipe('dot', 'spam', b'')
+def test_render_format_unknown():
+    with pytest.raises(ValueError) as e:
+        pipe('dot', 'spam', b'')
+    e.match(r'format')
 
-    def test_pipe_invalid_dot(self):
-        with self.assertRaises(subprocess.CalledProcessError) as c:
-            pipe('dot', 'svg', b'spam', quiet=True)
-        self.assertEqual(c.exception.returncode, 1)
 
-    def test_pipe(self, pattern=r'(?s)^<\?xml .+</svg>\s*$'):
-        src = pipe('dot', 'svg', b'graph { spam }').decode('ascii')
-        self.assertRegexpMatches(src, pattern)
+def test_pipe_invalid_dot():
+    with pytest.raises(subprocess.CalledProcessError) as e:
+        pipe('dot', 'svg', b'spam', quiet=True)
+    assert e.value.returncode == 1
+
+
+def test_pipe(pattern=r'(?s)^<\?xml .+</svg>\s*$'):
+    src = pipe('dot', 'svg', b'graph { spam }').decode('ascii')
+    assert re.match(pattern, src)

@@ -1,65 +1,65 @@
 # test_files.py
 
 import os
-import unittest
+import pytest
 
 from graphviz.files import File, Source
 
 
-class TestBase(unittest.TestCase):
-
-    def setUp(self):
-        self.file = File()
-
-    def test_format(self):
-        with self.assertRaisesRegexp(ValueError, r'format'):
-            self.file.format = 'spam'
-
-    def test_engine(self):
-        with self.assertRaisesRegexp(ValueError, r'engine'):
-            self.file.engine = 'spam'
-
-    def test_encoding(self):
-        with self.assertRaisesRegexp(LookupError, r'encoding'):
-            self.file.encoding = 'spam'
+@pytest.fixture(scope='session')
+def file():
+    f = File('name', 'dir', 'PNG', 'NEATO', 'latin1')
+    assert f.filename == 'name'
+    assert f.format == 'png'
+    assert f.engine == 'neato'
+    assert f.encoding == 'latin1'
+    return f
 
 
-class TestFile(unittest.TestCase):
-
-    def test_init(self):
-        f = File('name', 'dir', 'PNG', 'NEATO', 'latin1')
-        self.assertEqual(f.filename, 'name')
-        self.assertEqual(f.format, 'png')
-        self.assertEqual(f.engine, 'neato')
-        self.assertEqual(f.encoding, 'latin1')
+def test_format(file):
+    with pytest.raises(ValueError) as e:
+        file.format = 'spam'
+    e.match(r'format')
 
 
-class TestNoent(unittest.TestCase):
-
-    def setUp(self):
-        self._oldpath = os.environ.get('PATH')
-        os.environ['PATH'] = ''
-        self.file = File('spam.gv', 'test-output')
-        self.file.source = 'spam'
-
-    def tearDown(self):
-        if self._oldpath is None:
-            del os.environ['PATH']
-        else:
-            os.environ['PATH'] = self._oldpath
-
-    def test_pipe(self):
-        with self.assertRaisesRegexp(RuntimeError, r'failed to execute'):
-            self.file.pipe()
-
-    def test_render(self):
-        with self.assertRaisesRegexp(RuntimeError, r'failed to execute'):
-            self.file.render(directory=self.file.directory)
+def test_engine(file):
+    with pytest.raises(ValueError) as e:
+        file.engine = 'spam'
+    e.match(r'engine')
 
 
-class TestSource(unittest.TestCase):
+def test_encoding(file):
+    with pytest.raises(LookupError) as e:
+        file.encoding = 'spam'
+    e.match(r'encoding')
 
-    def test_init(self):
-        source = 'graph { hello -> world }'
-        s = Source(source)
-        self.assertEqual(s.source, source)
+
+@pytest.fixture
+def file_noent():
+    oldpath = os.environ.get('PATH')
+    os.environ['PATH'] = ''
+    file = File('spam.gv', 'test-output')
+    file.source = 'spam'
+    yield file
+    if oldpath is None:
+        del os.environ['PATH']
+    else:
+        os.environ['PATH'] = oldpath
+
+
+def test_render_noent(file_noent):
+    with pytest.raises(RuntimeError) as e:
+        file_noent.render(directory=file_noent.directory)
+    e.match(r'failed to execute')
+
+
+def test_pipe_noent(file_noent):
+    with pytest.raises(RuntimeError) as e:
+        file_noent.pipe()
+    e.match(r'failed to execute')
+
+
+def test_source():
+    source = 'graph { hello -> world }'
+    s = Source(source)
+    assert s.source == source
