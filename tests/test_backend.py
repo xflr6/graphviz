@@ -1,6 +1,5 @@
 # test_backend.py
 
-import re
 import subprocess
 
 import pytest
@@ -32,6 +31,6 @@ def test_pipe_invalid_dot():
     assert e.value.returncode == 1
 
 
-def test_pipe(pattern=r'(?s)^<\?xml .+</svg>\s*$'):
+def test_pipe(svg_pattern):
     src = pipe('dot', 'svg', b'graph { spam }').decode('ascii')
-    assert re.match(pattern, src)
+    assert svg_pattern.match(src)

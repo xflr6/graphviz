@@ -1,7 +1,6 @@
 # test_dot.py
 # flake8: noqa
 
-import re
 import itertools
 
 import pytest
@@ -9,8 +8,8 @@ import pytest
 from graphviz.dot import Graph, Digraph
 
 
-def test_repr_svg(pattern=r'(?s)^<\?xml .+</svg>\s*$'):
-    assert re.match(pattern, Graph('spam')._repr_svg_())
+def test_repr_svg(svg_pattern):
+    assert svg_pattern.match(Graph('spam')._repr_svg_())
 
 
 def test_iter_subgraph_strict():
