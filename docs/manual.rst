@@ -90,7 +90,7 @@ default layout program (``dot``, see below for using `other layout commands
 
 .. code:: python
 
-    >>> dot.render('test-output/round-table.gv', view=True)
+    >>> dot.render('test-output/round-table.gv', view=True)  # doctest: +SKIP
     'test-output/round-table.gv.pdf'
 
 .. image:: _static/round-table.svg
@@ -120,7 +120,7 @@ object:
 
     >>> dot.format = 'svg'
 
-    >>> dot.render()
+    >>> dot.render()  # doctest: +SKIP
     'test-output/round-table.gv.svg'
 
 
@@ -375,7 +375,7 @@ Use the :meth:`~.Source.render`-method to save and render it:
 
 .. code:: python
 
-    >>> src.render('test-output/holy-grenade.gv', view=True)
+    >>> src.render('test-output/holy-grenade.gv', view=True)  # doctest: +SKIP
     'test-output/holy-grenade.gv.pdf'
 
 .. image:: _static/holy-grenade.svg

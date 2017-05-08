@@ -87,7 +87,7 @@ Save and render the source code, optionally view the result:
 
 .. code:: python
 
-    >>> dot.render('test-output/round-table.gv', view=True)
+    >>> dot.render('test-output/round-table.gv', view=True)  # doctest: +SKIP
     'test-output/round-table.gv.pdf'
 
 .. image:: https://raw.github.com/xflr6/graphviz/master/docs/round-table.png

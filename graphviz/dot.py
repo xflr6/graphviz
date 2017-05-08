@@ -24,7 +24,7 @@ graph {
             trained_by -- tutte
 }
 
->>> dot.view('test-output/m00se.gv')
+>>> dot.view('test-output/m00se.gv')  # doctest: +SKIP
 'test-output/m00se.gv.pdf'
 """
 
