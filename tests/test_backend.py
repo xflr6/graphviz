@@ -2,7 +2,6 @@
 
 import subprocess
 
-import mock
 import pytest
 
 from graphviz.backend import render, pipe, view
@@ -37,29 +36,22 @@ def test_pipe(svg_pattern):
     assert svg_pattern.match(src)
 
 
-@mock.patch('graphviz.backend.PLATFORM', 'spam')
-def test_view_unsupported():
+def test_view_unknown(unknown_platform):
     with pytest.raises(RuntimeError) as e:
         view('spam')
     e.match(r'platform')
 
 
-@mock.patch('graphviz.backend.PLATFORM', 'darwin')
-@mock.patch('subprocess.Popen')
-def test_view_darwin(Popen):
+def test_view_darwin(darwin, Popen):
     view('spam')
     Popen.assert_called_once_with(['open', 'spam'])
 
 
-@mock.patch('graphviz.backend.PLATFORM', 'linux')
-@mock.patch('subprocess.Popen')
-def test_view_linux(Popen):
+def test_view_unixoid(unixoid, Popen):
     view('spam')
     Popen.assert_called_once_with(['xdg-open', 'spam'])
 
 
-@mock.patch('graphviz.backend.PLATFORM', 'windows')
-@mock.patch('os.startfile', create=True)
-def test_view_windows(startfile):
+def test_view_windows(windows, startfile):
     view('spam')
     startfile.assert_called_once_with('spam')
