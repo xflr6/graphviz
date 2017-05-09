@@ -155,7 +155,7 @@ def view(filepath):
     """
     try:
         view_func = getattr(view, PLATFORM)
-    except KeyError:
+    except AttributeError:
         raise RuntimeError('platform %r not supported' % PLATFORM)
     view_func(filepath)
 
