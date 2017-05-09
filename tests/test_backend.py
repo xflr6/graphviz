@@ -59,7 +59,7 @@ def test_view_linux(Popen):
 
 
 @mock.patch('graphviz.backend.PLATFORM', 'windows')
-@mock.patch('os.startfile')
+@mock.patch('os.startfile', create=True)
 def test_view_windows(startfile):
     view('spam')
     startfile.assert_called_once_with('spam')
