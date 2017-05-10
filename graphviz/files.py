@@ -177,8 +177,8 @@ class File(Base):
 
         Short-cut method for calling :meth:`.render` with ``view=True``.
         """
-        return self.render(view=True,
-            filename=filename, directory=directory, cleanup=cleanup)
+        return self.render(filename=filename, directory=directory, view=True,
+                           cleanup=cleanup)
 
     def _view(self, filepath, format):
         """Start the right viewer based on file format and platform."""
