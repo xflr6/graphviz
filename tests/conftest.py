@@ -11,26 +11,9 @@ def svg_pattern():
     return re.compile(r'(?s)^<\?xml .+</svg>\s*$')
 
 
-@pytest.fixture
-def unknown_platform(name='spam'):
-    with mock.patch('graphviz.backend.PLATFORM', name):
-        yield name
-
-
-@pytest.fixture
-def darwin(name='darwin'):
-    with mock.patch('graphviz.backend.PLATFORM', name):
-        yield name
-
-
-@pytest.fixture
-def unixoid(name='linux'):
-    with mock.patch('graphviz.backend.PLATFORM', name):
-        yield name
-
-
-@pytest.fixture
-def windows(name='windows'):
+@pytest.fixture(params=['', 'darwin', 'freebsd', 'linux', 'windows'])
+def platform(request):
+    name = request.param
     with mock.patch('graphviz.backend.PLATFORM', name):
         yield name
 

@@ -36,22 +36,18 @@ def test_pipe(svg_pattern):
     assert svg_pattern.match(src)
 
 
-def test_view_unknown(unknown_platform):
-    with pytest.raises(RuntimeError) as e:
+def test_view(platform, Popen, startfile):
+    if not platform:
+        with pytest.raises(RuntimeError) as e:
+            view('spam')
+        e.match(r'platform')
+    else:
         view('spam')
-    e.match(r'platform')
-
-
-def test_view_darwin(darwin, Popen):
-    view('spam')
-    Popen.assert_called_once_with(['open', 'spam'])
-
-
-def test_view_unixoid(unixoid, Popen):
-    view('spam')
-    Popen.assert_called_once_with(['xdg-open', 'spam'])
-
-
-def test_view_windows(windows, startfile):
-    view('spam')
-    startfile.assert_called_once_with('spam')
+        if platform == 'darwin':
+            Popen.assert_called_once_with(['open', 'spam'])
+        elif platform in ('linux', 'freebsd'):
+            Popen.assert_called_once_with(['xdg-open', 'spam'])
+        elif platform == 'windows':
+            startfile.assert_called_once_with('spam')
+        else:
+            raise RuntimeError

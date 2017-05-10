@@ -63,25 +63,21 @@ def test_render_noent(file_noent):
     e.match(r'failed to execute')
 
 
-def test_view_unknown(unknown_platform, file):
-    with pytest.raises(RuntimeError) as e:
+def test_view_unknown(platform, Popen, startfile, file):
+    if not platform:
+        with pytest.raises(RuntimeError) as e:
+            file._view('name', 'png')
+        e.match(r'support')
+    else:
         file._view('name', 'png')
-    e.match(r'support')
-
-
-def test_view_darwin(darwin, Popen, file):
-    file._view('name', 'png')
-    Popen.assert_called_once_with(['open', 'name'])
-
-
-def test_view_unixoid(unixoid, Popen, file):
-    file._view('name', 'png')
-    Popen.assert_called_once_with(['xdg-open', 'name'])
-
-
-def test_view_windows(windows, startfile, file):
-    file._view('name', 'png')
-    startfile.assert_called_once_with('name')
+        if platform == 'darwin':
+            Popen.assert_called_once_with(['open', 'name'])
+        elif platform in ('freebsd', 'linux'):
+            Popen.assert_called_once_with(['xdg-open', 'name'])
+        elif platform == 'windows':
+            startfile.assert_called_once_with('name')
+        else:
+            raise RuntimeError
 
 
 def test_source():
