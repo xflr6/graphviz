@@ -33,4 +33,4 @@ def startfile(mocker):
 
 @pytest.fixture
 def empty_path(monkeypatch):
-    monkeypatch.delenv('PATH', raising=False)
+    monkeypatch.setenv('PATH', '')
