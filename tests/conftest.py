@@ -2,7 +2,6 @@
 
 import re
 
-import mock
 import pytest
 
 
@@ -12,19 +11,26 @@ def svg_pattern():
 
 
 @pytest.fixture(params=['', 'darwin', 'freebsd', 'linux', 'windows'])
-def platform(request):
-    name = request.param
-    with mock.patch('graphviz.backend.PLATFORM', name):
-        yield name
+def platform(monkeypatch, request):
+    monkeypatch.setattr('graphviz.backend.PLATFORM', request.param)
+    yield request.param
 
 
 @pytest.fixture
-def Popen():
-    with mock.patch('subprocess.Popen') as Popen:
-        yield Popen
+def check_call(mocker):
+    yield mocker.patch('subprocess.check_call')
 
 
 @pytest.fixture
-def startfile():
-    with mock.patch('os.startfile', create=True) as startfile:
-        yield startfile
+def Popen(mocker):
+    yield mocker.patch('subprocess.Popen')
+
+
+@pytest.fixture
+def startfile(mocker):
+    yield mocker.patch('os.startfile', create=True)
+
+
+@pytest.fixture
+def empty_path(monkeypatch):
+    monkeypatch.delenv('PATH', raising=False)

@@ -4,31 +4,53 @@ import subprocess
 
 import pytest
 
-from graphviz.backend import render, pipe, view
+from graphviz.backend import render, pipe, view, STARTUPINFO
 
 
 def test_render_engine_unknown():
     with pytest.raises(ValueError) as e:
-        pipe('spam', 'pdf', b'')
+        render('', 'pdf', '')
     e.match(r'engine')
 
 
 def test_render_format_unknown():
     with pytest.raises(ValueError) as e:
-        pipe('dot', 'spam', b'')
+        render('dot', '', '')
     e.match(r'format')
 
 
+def test_render_missingdot(empty_path):
+    with pytest.raises(RuntimeError) as e:
+        render('dot', 'pdf', '')
+    e.match(r'execute')
+    
+
 def test_render_missingfile():
     with pytest.raises(subprocess.CalledProcessError) as e:
-        render('dot', 'pdf', 'doesnotexist')
+        render('dot', 'pdf', '')
     assert e.value.returncode == 2
+
+
+def test_render_mock(check_call):
+    assert render('dot', 'pdf', '') == '.pdf'
+    check_call.assert_called_once_with(['dot', '-Tpdf', '-O', ''],
+                                       startupinfo=STARTUPINFO)
+
+
+def test_pipe_missingdot(empty_path):
+    with pytest.raises(RuntimeError) as e:
+        pipe('dot', 'pdf', b'')
+    e.match(r'execute')
 
 
 def test_pipe_invalid_data():
     with pytest.raises(subprocess.CalledProcessError) as e:
-        pipe('dot', 'svg', b'spam', quiet=True)
+        pipe('dot', 'svg', b'nongraph', quiet=True)
     assert e.value.returncode == 1
+
+
+def test_pipe_mock(Popen):
+    pass  # TODO
 
 
 def test_pipe(svg_pattern):

@@ -1,75 +1,62 @@
 # test_files.py
 
-import os
-
 import pytest
 
 from graphviz.files import File, Source
 
 
-@pytest.fixture(scope='session')
-def file():
-    return File('name', 'dir', 'PNG', 'NEATO', 'latin1')
+@pytest.fixture(scope='module')
+def source():
+    return Source('graph { hello -> world }', 'hello.gv', 'test-output',
+                  format='PNG', engine='NEATO', encoding='utf-8')
 
 
-@pytest.fixture
-def file_noent():
-    oldpath = os.environ.get('PATH')
-    os.environ['PATH'] = ''
-    file = File('spam.gv', 'test-output')
-    file.source = 'spam'
-    yield file
-    if oldpath is None:
-        del os.environ['PATH']
-    else:
-        os.environ['PATH'] = oldpath
-
-
-def test_format(file):
+def test_format(source):
     with pytest.raises(ValueError) as e:
-        file.format = 'spam'
+        source.format = ''
     e.match(r'format')
 
 
-def test_engine(file):
+def test_engine(source):
     with pytest.raises(ValueError) as e:
-        file.engine = 'spam'
+        source.engine = ''
     e.match(r'engine')
 
 
-def test_encoding(file):
+def test_encoding(source):
     with pytest.raises(LookupError) as e:
-        file.encoding = 'spam'
+        source.encoding = ''
     e.match(r'encoding')
 
 
-def test_init(file):
-    assert file.filename == 'name'
-    assert file.directory == 'dir'
-    assert file.format == 'png'
-    assert file.engine == 'neato'
-    assert file.encoding == 'latin1'
+def test_init(source):
+    assert source.source == 'graph { hello -> world }'
+    assert source.filename == 'hello.gv'
+    assert source.directory == 'test-output'
+    assert source.format == 'png'
+    assert source.engine == 'neato'
+    assert source.encoding == 'utf-8'
 
 
-def test_pipe_noent(file_noent):
-    with pytest.raises(RuntimeError) as e:
-        file_noent.pipe()
-    e.match(r'failed to execute')
+def test_init_filename():
+    assert Source('').filename == 'Source.gv'
+    assert type('Named', (Source,), {'name': 'name'})('').filename == 'name.gv'
 
 
-def test_render_noent(file_noent):
-    with pytest.raises(RuntimeError) as e:
-        file_noent.render(directory=file_noent.directory)
-    e.match(r'failed to execute')
+def test_view(mocker, source):
+    render = mocker.patch.object(source, 'render')
+    kwargs = {'filename': 'filename', 'directory': 'directory', 'cleanup': True}
+    source.view(**kwargs)
+    render.assert_called_once_with(view=True, **kwargs)
 
 
-def test_view_unknown(platform, Popen, startfile, file):
+def test__view(platform, Popen, startfile, source):
     if not platform:
         with pytest.raises(RuntimeError) as e:
-            file._view('name', 'png')
+            source._view('name', 'png')
         e.match(r'support')
     else:
-        file._view('name', 'png')
+        source._view('name', 'png')
         if platform == 'darwin':
             Popen.assert_called_once_with(['open', 'name'])
         elif platform in ('freebsd', 'linux'):
@@ -78,9 +65,3 @@ def test_view_unknown(platform, Popen, startfile, file):
             startfile.assert_called_once_with('name')
         else:
             raise RuntimeError
-
-
-def test_source():
-    source = 'graph { hello -> world }'
-    s = Source(source)
-    assert s.source == source
