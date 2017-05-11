@@ -25,6 +25,7 @@ def test_render_missingdot(empty_path):
     e.match(r'execute')
     
 
+@pytest.exe
 def test_render_missingfile():
     with pytest.raises(subprocess.CalledProcessError) as e:
         render('dot', 'pdf', '', quiet=True)
@@ -36,7 +37,7 @@ def test_render_mocked(check_call):
     check_call.assert_called_once_with(['dot', '-Tpdf', '-O', ''],
                                        startupinfo=STARTUPINFO, stderr=None)
 
-
+@pytest.exe
 def test_render(check_call):
     pass  # TODO
 
@@ -47,6 +48,7 @@ def test_pipe_missingdot(empty_path):
     e.match(r'execute')
 
 
+@pytest.exe
 def test_pipe_invalid_data():
     with pytest.raises(subprocess.CalledProcessError) as e:
         pipe('dot', 'svg', b'nongraph', quiet=True)
@@ -67,6 +69,7 @@ def test_pipe_mocked(mocker, Popen):
     assert result is outs
 
 
+@pytest.exe
 def test_pipe(svg_pattern):
     src = pipe('dot', 'svg', b'graph { spam }').decode('ascii')
     assert svg_pattern.match(src)

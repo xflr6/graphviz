@@ -5,6 +5,16 @@ import re
 import pytest
 
 
+def pytest_addoption(parser):
+    parser.addoption('--skipexe', action='store_true',
+                     help='skip tests that run Graphviz executables')
+
+
+def pytest_configure(config):
+    pytest.exe = pytest.mark.skipif(config.getoption('--skipexe'),
+                                    reason='skipped by --skipexe option')
+
+
 @pytest.fixture(scope='session')
 def svg_pattern():
     return re.compile(r'(?s)^<\?xml .+</svg>\s*$')
