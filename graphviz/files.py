@@ -92,7 +92,7 @@ class File(Base):
             Binary (encoded) stdout of the layout command.
         Raises:
             ValueError: If `format` is not known.
-            RuntimeError: If the Graphviz executable is not found.
+            graphviz.ExecutableNotFound: If the Graphviz executable is not found.
             subprocess.CalledProcessError: If the exit status is non-zero.
         """
         if format is None:
@@ -145,7 +145,7 @@ class File(Base):
         Returns:
             The (possibly relative) path of the rendered file.
         Raises:
-            RuntimeError: If the Graphviz executable is not found.
+            graphviz.ExecutableNotFound: If the Graphviz executable is not found.
             subprocess.CalledProcessError: If the exit status is non-zero.
             RuntimeError: If viewer opening is requested but not supported.
         """
@@ -171,7 +171,7 @@ class File(Base):
         Returns:
             The (possibly relative) path of the rendered file.
         Raises:
-            RuntimeError: If the Graphviz executable is not found.
+            graphviz.ExecutableNotFound: If the Graphviz executable is not found.
             subprocess.CalledProcessError: If the exit status is non-zero.
             RuntimeError: If opening the viewer is not supported.
 

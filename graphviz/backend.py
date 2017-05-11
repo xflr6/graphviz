@@ -64,6 +64,16 @@ if PLATFORM == 'windows':  # pragma: no cover
     STARTUPINFO.wShowWindow = subprocess.SW_HIDE
 
 
+class ExecutableNotFound(RuntimeError):
+    """Exception raised if the Graphviz executable is not found."""
+
+    _msg = ('failed to execute %r, '
+            'make sure the Graphviz executables are on your systems\' PATH')
+
+    def __init__(self, args):
+        super(ExecutableNotFound, self).__init__(self._msg % args)
+
+
 def command(engine, format, filepath=None):
     """Return args list for subprocess.Popen and name of the rendered file."""
     if engine not in ENGINES:
@@ -90,7 +100,7 @@ def render(engine, format, filepath):
         The (possibly relative) path of the rendered file.
     Raises:
         ValueError: If engine or format are not known.
-        RuntimeError: If the Graphviz executable is not found.
+        graphviz.ExecutableNotFound: If the Graphviz executable is not found.
         subprocess.CalledProcessError: If the exit status is non-zero.
     """
     args, rendered = command(engine, format, filepath)
@@ -99,9 +109,7 @@ def render(engine, format, filepath):
         subprocess.check_call(args, startupinfo=STARTUPINFO)
     except OSError as e:
         if e.errno == errno.ENOENT:
-            raise RuntimeError('failed to execute %r, '
-                'make sure the Graphviz executables '
-                'are on your systems\' path' % args)
+            raise ExecutableNotFound(args)
         else:  # pragma: no cover
             raise
 
@@ -120,7 +128,7 @@ def pipe(engine, format, data, quiet=False):
         Binary (encoded) stdout of the layout command.
     Raises:
         ValueError: If engine or format are not known.
-        RuntimeError: If the Graphviz executable is not found.
+        graphviz.ExecutableNotFound: If the Graphviz executable is not found.
         subprocess.CalledProcessError: If the exit status is non-zero.
     """
     args, _ = command(engine, format)
@@ -131,9 +139,7 @@ def pipe(engine, format, data, quiet=False):
             startupinfo=STARTUPINFO)
     except OSError as e:
         if e.errno == errno.ENOENT:
-            raise RuntimeError('failed to execute %r, '
-                'make sure the Graphviz executables '
-                'are on your systems\' path' % args)
+            raise ExecutableNotFound(args)
         else:  # pragma: no cover
             raise
 

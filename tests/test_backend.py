@@ -4,7 +4,8 @@ import subprocess
 
 import pytest
 
-from graphviz.backend import render, pipe, view, STARTUPINFO
+
+from graphviz.backend import render, pipe, view, ExecutableNotFound, STARTUPINFO
 
 
 def test_render_engine_unknown():
@@ -20,7 +21,7 @@ def test_render_format_unknown():
 
 
 def test_render_missingdot(empty_path):
-    with pytest.raises(RuntimeError) as e:
+    with pytest.raises(ExecutableNotFound) as e:
         render('dot', 'pdf', '')
     e.match(r'execute')
     
@@ -31,14 +32,18 @@ def test_render_missingfile():
     assert e.value.returncode == 2
 
 
-def test_render_mock(check_call):
+def test_render_mocked(check_call):
     assert render('dot', 'pdf', '') == '.pdf'
     check_call.assert_called_once_with(['dot', '-Tpdf', '-O', ''],
                                        startupinfo=STARTUPINFO)
 
 
+def test_render(check_call):
+    pass  # TODO
+
+
 def test_pipe_missingdot(empty_path):
-    with pytest.raises(RuntimeError) as e:
+    with pytest.raises(ExecutableNotFound) as e:
         pipe('dot', 'pdf', b'')
     e.match(r'execute')
 
@@ -49,7 +54,7 @@ def test_pipe_invalid_data():
     assert e.value.returncode == 1
 
 
-def test_pipe_mock(Popen):
+def test_pipe_mocked(Popen):
     pass  # TODO
 
 

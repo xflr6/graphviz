@@ -26,13 +26,14 @@ digraph {
 
 from .dot import Graph, Digraph
 from .files import Source
-from .backend import render, pipe, view, ENGINES, FORMATS
+from .backend import render, pipe, view, ENGINES, FORMATS, ExecutableNotFound
 
 __all__ = [
     'Graph', 'Digraph',
     'Source',
     'render', 'pipe', 'view',
     'ENGINES', 'FORMATS',
+    'ExecutableNotFound',
 ]
 
 __title__ = 'graphviz'
@@ -46,3 +47,5 @@ ENGINES = ENGINES
 
 #: Set of known output formats for rendering ('pdf', 'png', ...)
 FORMATS = FORMATS
+
+ExecutableNotFound = ExecutableNotFound

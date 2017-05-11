@@ -61,3 +61,6 @@ Other
 
 .. autodata:: graphviz.FORMATS
    :annotation:
+
+.. autodata:: graphviz.ExecutableNotFound
+   :annotation:
