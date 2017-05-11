@@ -26,4 +26,5 @@ else:  # pragma: no cover
     def iteritems(d):
         return iter(d.items())
 
-    makedirs = os.makedirs
+    def makedirs(name, mode=0o777, exist_ok=False):  # allow os.makedirs mocking
+        return os.makedirs(name, mode, exist_ok=exist_ok)

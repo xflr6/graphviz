@@ -4,7 +4,6 @@ import subprocess
 
 import pytest
 
-
 from graphviz.backend import render, pipe, view, ExecutableNotFound, STARTUPINFO
 
 
@@ -28,14 +27,14 @@ def test_render_missingdot(empty_path):
 
 def test_render_missingfile():
     with pytest.raises(subprocess.CalledProcessError) as e:
-        render('dot', 'pdf', '')
+        render('dot', 'pdf', '', quiet=True)
     assert e.value.returncode == 2
 
 
 def test_render_mocked(check_call):
     assert render('dot', 'pdf', '') == '.pdf'
     check_call.assert_called_once_with(['dot', '-Tpdf', '-O', ''],
-                                       startupinfo=STARTUPINFO)
+                                       startupinfo=STARTUPINFO, stderr=None)
 
 
 def test_render(check_call):

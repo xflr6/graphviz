@@ -34,3 +34,13 @@ def startfile(mocker):
 @pytest.fixture
 def empty_path(monkeypatch):
     monkeypatch.setenv('PATH', '')
+
+
+@pytest.fixture
+def pipe(mocker):
+    yield mocker.patch('graphviz.backend.pipe')
+
+
+@pytest.fixture
+def render(mocker):
+    yield mocker.patch('graphviz.backend.render')
