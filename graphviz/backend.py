@@ -1,10 +1,12 @@
 # backend.py - execute rendering, open files in viewer
 
 import os
+import io
 import sys
 import errno
 import platform
 import subprocess
+import contextlib
 
 from . import tools
 
@@ -89,13 +91,14 @@ def command(engine, format, filepath=None):
     return args, rendered
 
 
-def render(engine, format, filepath):
+def render(engine, format, filepath, quiet=False):
     """Render file with Graphviz engine into format,  return result filename.
 
     Args:
         engine: The layout commmand used for rendering ('dot', 'neato', ...).
         format: The output format used for rendering ('pdf', 'png', ...).
         filepath: Path to the DOT source file to render.
+        quiet(bool): Suppress stderr output on non-zero exit status.
     Returns:
         The (possibly relative) path of the rendered file.
     Raises:
@@ -105,13 +108,22 @@ def render(engine, format, filepath):
     """
     args, rendered = command(engine, format, filepath)
 
-    try:
-        subprocess.check_call(args, startupinfo=STARTUPINFO)
-    except OSError as e:
-        if e.errno == errno.ENOENT:
-            raise ExecutableNotFound(args)
-        else:  # pragma: no cover
-            raise
+    if quiet:
+        open = io.open
+    else:
+        @contextlib.contextmanager
+        def open(name, mode):
+            assert name == os.devnull and mode == 'w'
+            yield None
+        
+    with open(os.devnull, 'w') as stderr:
+        try:
+            subprocess.check_call(args, startupinfo=STARTUPINFO, stderr=stderr)
+        except OSError as e:
+            if e.errno == errno.ENOENT:
+                raise ExecutableNotFound(args)
+            else:  # pragma: no cover
+                raise
 
     return rendered
 
