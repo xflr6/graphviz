@@ -53,8 +53,18 @@ def test_pipe_invalid_data():
     assert e.value.returncode == 1
 
 
-def test_pipe_mocked(Popen):
-    pass  # TODO
+def test_pipe_mocked(mocker, Popen):
+    proc = Popen.return_value
+    proc.returncode = 0
+    outs, errs = proc.communicate.return_value = mocker.MagicMock(), mocker.MagicMock()
+
+    result = pipe('dot', 'png', b'nograph', quiet=True)
+
+    Popen.assert_called_once_with(['dot', '-Tpng'],
+                                  stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE, startupinfo=STARTUPINFO)
+    proc.communicate.assert_called_once_with(b'nograph')
+    assert result is outs
 
 
 def test_pipe(svg_pattern):
