@@ -50,7 +50,10 @@ def _get_graphviz_urls(version="latest"):
         # regex for the binaries
         regex = re.compile(r"/pub/graphviz/stable/.*\.(?:msi|deb|pkg)")
         # a list of urls to the bainaries
-        graphviz_urls_list = regex.findall(content.decode("utf-8"))
+        graphviz_urls_list = [
+            url_frag.split('"')[0]
+            for url_frag in regex.findall(content.decode("utf-8"))
+        ]
         # actual graphviz version
         version = graphviz_urls_list[0].split('/')[5]
         # dict that lookup the platform from binary extension
@@ -142,8 +145,8 @@ def _handle_win32(filename, targetfolder):
     subprocess.check_call(cmd)
 
     # graphviz.exe, graphviz-citeproc.exe, and the COPYRIGHT are in the graphviz subfolder
-    for exe in ["graphviz.exe", "graphviz-citeproc.exe", "COPYRIGHT.txt"]:
-        src = os.path.join(tempfolder, "graphviz", exe)
+    for exe in os.listdir(os.path.join(tempfolder, "bin")):
+        src = os.path.join(tempfolder, "bin", exe)
         dst = os.path.join(targetfolder, exe)
         print("* Copying %s to %s ..." % (exe, targetfolder))
         shutil.copyfile(src, dst)
