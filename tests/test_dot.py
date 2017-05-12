@@ -180,4 +180,3 @@ def test_label_html():
 		struct1:f1 -> struct2:f0
 		struct1:f2 -> struct3:here
 }'''
-    dot.render('test-output/html.gv')
