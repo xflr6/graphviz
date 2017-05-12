@@ -52,6 +52,11 @@ def empty_path(monkeypatch):
     monkeypatch.setenv('PATH', '')
 
 
+@pytest.fixture(params=[False, True])
+def quiet(request):
+    return request.param
+
+
 @pytest.fixture
 def pipe(mocker):
     yield mocker.patch('graphviz.backend.pipe')

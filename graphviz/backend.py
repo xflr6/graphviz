@@ -157,7 +157,7 @@ def pipe(engine, format, data, quiet=False):
 
     outs, errs = proc.communicate(data)
     if proc.returncode:
-        if not quiet:  # pragma: no cover
+        if not quiet:
             sys.stderr.write(errs)
             sys.stderr.flush()
         raise subprocess.CalledProcessError(proc.returncode, args, output=outs)
