@@ -76,12 +76,12 @@ def test_pipe_invalid_data(engine='dot', format_='svg'):
 def test_pipe_mocked_fail(mocker, Popen, quiet):
     stderr = mocker.patch('sys.stderr')
     proc = Popen.return_value
-    proc.returncode = 1
+    proc.returncode = mocker.MagicMock()
     outs, errs = proc.communicate.return_value = mocker.MagicMock(), mocker.MagicMock()
 
     with pytest.raises(subprocess.CalledProcessError) as e:
         pipe('dot', 'png', b'nongraph', quiet=quiet)
-    assert e.value.returncode == 1
+    assert e.value.returncode is proc.returncode
 
     Popen.assert_called_once_with(['dot', '-Tpng'],
                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE,
