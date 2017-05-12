@@ -1,7 +1,5 @@
 # test_files.py
 
-import sys
-
 import pytest
 
 from graphviz.files import File, Source
@@ -87,7 +85,7 @@ def test_filepath(source):
     assert source.filepath in ('test-output/hello.gv', 'test-output\\hello.gv')
 
 
-def test_save(mocker, filename='filename', directory='directory'):
+def test_save(mocker, py2, filename='filename', directory='directory'):
     source = Source(**SOURCE)
     makedirs = mocker.patch('os.makedirs')
     open = mocker.patch('io.open')
@@ -95,7 +93,7 @@ def test_save(mocker, filename='filename', directory='directory'):
     result = source.save(filename, directory)
 
     assert source.filename == filename and source.directory == directory
-    if sys.version_info[0] == 2:
+    if py2:
         makedirs.assert_called_once_with(source.directory, 0o777)
     else:
         makedirs.assert_called_once_with(source.directory, 0o777, exist_ok=True)

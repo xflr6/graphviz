@@ -1,6 +1,7 @@
 # conftest.py
 
 import re
+import sys
 
 import pytest
 
@@ -24,6 +25,11 @@ def svg_pattern():
 def platform(monkeypatch, request):
     monkeypatch.setattr('graphviz.backend.PLATFORM', request.param)
     yield request.param
+
+
+@pytest.fixture
+def py2():
+    return sys.version_info[0] == 2
 
 
 @pytest.fixture
