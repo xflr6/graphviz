@@ -112,7 +112,7 @@ def test_pipe(svg_pattern, engine='dot', format_='svg', data=b'graph { spam }'):
 
 
 def test_view(platform, Popen, startfile):
-    if not platform:
+    if platform == 'nonplatform':
         with pytest.raises(RuntimeError) as e:
             view('nonfilepath')
         e.match(r'platform')

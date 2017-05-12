@@ -128,7 +128,7 @@ def test_view(mocker, source):
 
 
 def test__view(mocker, platform, source):
-    if not platform:
+    if platform == 'nonplatform':
         with pytest.raises(RuntimeError) as e:
             source._view('name', 'png')
         e.match(r'support')

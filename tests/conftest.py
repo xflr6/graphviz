@@ -21,7 +21,7 @@ def svg_pattern():
     return re.compile(r'(?s)^<\?xml .+</svg>\s*$')
 
 
-@pytest.fixture(params=['', 'darwin', 'freebsd', 'linux', 'windows'])
+@pytest.fixture(params=['nonplatform', 'darwin', 'freebsd', 'linux', 'windows'])
 def platform(monkeypatch, request):
     monkeypatch.setattr('graphviz.backend.PLATFORM', request.param)
     yield request.param
