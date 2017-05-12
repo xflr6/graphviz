@@ -1,10 +1,9 @@
 # test_tools.py
 
-import unittest
 import os
-import shutil
-import tempfile
 import functools
+
+import pytest
 
 from graphviz.tools import mkdirs
 
@@ -18,31 +17,17 @@ def itertree(root):
                 yield is_file, rel_path(n).replace('\\', '/')
 
 
-class TestMkdirs(unittest.TestCase):
+def test_mkdirs_invalid(tmpdir):
+    with tmpdir.as_cwd():
+        tmpdir.join('spam.eggs').write(b'')
+        with pytest.raises(OSError):
+            mkdirs('spam.eggs/spam')
 
-    def setUp(self):
-        self.old_dir = os.getcwd()
-        self.test_dir = tempfile.mkdtemp()
-        assert not self._dentries()
-        os.chdir(self.test_dir)
 
-    def tearDown(self):
-        os.chdir(self.old_dir)
-        shutil.rmtree(self.test_dir)
-
-    def _dentries(self):
-        return list(itertree(self.test_dir))
-
-    def test_mkdirs(self):
+def test_mkdirs(tmpdir):
+    with tmpdir.as_cwd():
         mkdirs('spam.eggs')
-        self.assertEqual(self._dentries(), [])
+        assert list(itertree(str(tmpdir))) == []
         for _ in range(2):
             mkdirs('spam/eggs/spam.eggs')
-            self.assertEqual(self._dentries(),
-                             [(False, 'spam'), (False, 'spam/eggs')])
-
-    def test_mkdirs_invalid(self):
-        with open('spam.eggs', 'wb'):
-            pass
-        with self.assertRaises(OSError):
-            mkdirs('spam.eggs/spam')
+            assert list(itertree(str(tmpdir))) == [(False, 'spam'), (False, 'spam/eggs')]
