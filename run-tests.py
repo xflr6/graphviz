@@ -11,7 +11,7 @@ ARGS = [
     #'--pdb',
 ]
 
-if 'idlelib' in sys.modules:
+if 'idlelib' in sys.modules or 'thonny' in sys.modules:
     ARGS.append('--color=no')
 
 if platform.system().lower() == 'windows':
