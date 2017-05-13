@@ -27,8 +27,15 @@ def test_copy(cls):
     assert c.copy().__dict__ == c.__dict__
 
 
-def test_repr_svg(svg_pattern, cls):
-    assert svg_pattern.match(cls('spam')._repr_svg_())
+def test__repr_svg_(mocker, cls):
+    c = cls()
+    kwargs = {'return_value.decode.return_value': mocker.sentinel.decoded}
+    pipe = mocker.patch.object(c, 'pipe', **kwargs)
+
+    assert c._repr_svg_() is mocker.sentinel.decoded
+
+    pipe.assert_called_once_with(format='svg')
+    pipe.return_value.decode.assert_called_once_with(c.encoding)
 
 
 def test_iter_subgraph_strict(cls):
