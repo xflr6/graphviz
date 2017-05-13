@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# run-examples.py - import graphviz here and run all scripts in the example dir
+# try-examples.py - import graphviz here and run all scripts in the example dir
 
 import os
 import io
