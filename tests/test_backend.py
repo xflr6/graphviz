@@ -52,12 +52,10 @@ def test_render(tmpdir, engine='dot', format_='pdf', filename='hello.gv',
                 data=b'digraph { hello -> world }'):
     source = tmpdir.join(filename)
     source.write(data)
-
-    result = render(engine, format_, str(source))
-
     rendered = source.new(ext='%s.%s' % (source.ext, format_))
+
+    assert render(engine, format_, str(source)) == str(rendered)
     assert rendered.size()
-    assert result == str(rendered)
 
 
 def test_pipe_missingdot(empty_path):

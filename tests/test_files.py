@@ -54,31 +54,29 @@ def test_init_filename():
 
 
 def test__repr_svg_(mocker, source):
-    pipe = mocker.patch.object(source, 'pipe')
+    kwargs = {'return_value.decode.return_value': mocker.sentinel.decoded}
+    pipe = mocker.patch.object(source, 'pipe', **kwargs)
 
-    result = source._repr_svg_()
+    assert source._repr_svg_() is mocker.sentinel.decoded
 
     pipe.assert_called_once_with(format='svg')
     pipe.return_value.decode.assert_called_once_with(source.encoding)
-    assert result is pipe.return_value.decode.return_value
 
 
 def test_pipe_format(pipe, source, format_='svg'):
     assert source.format != format_
 
-    result = source.pipe(format=format_)
+    assert source.pipe(format=format_) is pipe.return_value
 
     data = source.source.encode(source.encoding)
     pipe.assert_called_once_with(source.engine, format_, data)
-    assert result is pipe.return_value
 
 
 def test_pipe(pipe, source):
-    result = source.pipe()
+    assert source.pipe() is pipe.return_value
 
     data = source.source.encode(source.encoding)
     pipe.assert_called_once_with(source.engine, source.format, data)
-    assert result is pipe.return_value
 
 
 def test_filepath(source):
@@ -90,7 +88,7 @@ def test_save(mocker, py2, filename='filename', directory='directory'):
     makedirs = mocker.patch('os.makedirs')
     open_ = mocker.patch('io.open', mocker.mock_open())
 
-    result = source.save(filename, directory)
+    assert source.save(filename, directory) == source.filepath
 
     assert source.filename == filename and source.directory == directory
     if py2:
@@ -99,7 +97,6 @@ def test_save(mocker, py2, filename='filename', directory='directory'):
         makedirs.assert_called_once_with(source.directory, 0o777, exist_ok=True)
     open_.assert_called_once_with(source.filepath, 'w', encoding=source.encoding)
     assert open_.return_value.write.call_args_list == [mocker.call(source.source), mocker.call(u'\n')]
-    assert result == source.filepath
 
 
 def test_render(mocker, render, source):
@@ -107,20 +104,19 @@ def test_render(mocker, render, source):
     _view = mocker.patch.object(source, '_view')
     remove = mocker.patch('os.remove')
 
-    result = source.render(cleanup=True, view=True)
+    assert source.render(cleanup=True, view=True) is render.return_value
 
     save.assert_called_once_with(None, None)
     render.assert_called_once_with(source.engine, source.format, save.return_value)
     remove.assert_called_once_with(save.return_value)
-    _view.assert_called_once_with(result, source.format)
-    assert result is render.return_value
+    _view.assert_called_once_with(render.return_value, source.format)
     
 
 def test_view(mocker, source):
     render = mocker.patch.object(source, 'render')
     kwargs = {'filename': 'filename', 'directory': 'directory', 'cleanup': True}
 
-    source.view(**kwargs)
+    assert source.view(**kwargs) is render.return_value
 
     render.assert_called_once_with(view=True, **kwargs)
 
@@ -133,9 +129,9 @@ def test__view(mocker, platform, source):
     else:
         _view_platform = mocker.patch.object(source, '_view_%s' % platform)
 
-        source._view('name', 'png')
+        assert source._view(mocker.sentinel.name, 'png') is None
 
-        _view_platform.assert_called_once_with('name')
+        _view_platform.assert_called_once_with(mocker.sentinel.name)
 
 
 def test_copy(source):
