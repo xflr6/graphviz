@@ -13,6 +13,11 @@ def cls(request):
     return request.param
 
 
+@pytest.fixture(params=list(itertools.permutations([Graph, Digraph], 2))) 
+def classes(request):
+    return request.param
+
+
 def test_copy(cls):
     c = cls()
     assert c.__class__ is cls
@@ -62,11 +67,11 @@ def test_subgraph_graph_notsole():
     e.match(r'sole')
 
 
-def test_subgraph_mixed():
-    for cls1, cls2 in itertools.permutations([Graph, Digraph], 2):
-        with pytest.raises(ValueError) as e:
-            cls1().subgraph(cls2())
-        e.match(r'kind')
+def test_subgraph_mixed(classes):
+    cls1, cls2 = classes
+    with pytest.raises(ValueError) as e:
+        cls1().subgraph(cls2())
+    e.match(r'kind')
 
 
 def test_subgraph_reflexive():  # guard against potential infinite loop
