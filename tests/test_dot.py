@@ -27,13 +27,13 @@ def test_copy(cls):
     assert c.copy().__dict__ == c.__dict__
 
 
-def test_repr_svg(svg_pattern):
-    assert svg_pattern.match(Graph('spam')._repr_svg_())
+def test_repr_svg(svg_pattern, cls):
+    assert svg_pattern.match(cls('spam')._repr_svg_())
 
 
-def test_iter_subgraph_strict():
+def test_iter_subgraph_strict(cls):
     with pytest.raises(ValueError) as e:
-        Graph().subgraph(Graph(strict=True))
+        cls().subgraph(cls(strict=True))
     e.match(r'strict')
 
 
@@ -42,9 +42,9 @@ def test_iter_strict():
     assert Digraph(strict=True).source == 'strict digraph {\n}'
 
 
-def test_attr_invalid_kw():
+def test_attr_invalid_kw(cls):
     with pytest.raises(ValueError) as e:
-        Graph().attr('spam')
+        cls().attr('spam')
     e.match(r'attr')
 
 
@@ -61,9 +61,9 @@ def test_subgraph_graph_none():
     assert dot.source == 'graph {\n\t// comment\n\tsubgraph name {\n\t}\n}'
 
 
-def test_subgraph_graph_notsole():
+def test_subgraph_graph_notsole(cls):
     with pytest.raises(ValueError) as e:
-        Graph().subgraph(Graph(), name='spam')
+        cls().subgraph(cls(), name='spam')
     e.match(r'sole')
 
 
