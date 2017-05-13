@@ -238,7 +238,9 @@ class Graph(Dot):
     _edge = '\t\t%s -- %s%s'
     _edge_plain = _edge % ('%s', '%s', '')
 
-    directed = False
+    @property
+    def directed(self):
+        return False
 
 
 class Digraph(Dot):
@@ -251,4 +253,6 @@ class Digraph(Dot):
     _edge = '\t\t%s -> %s%s'
     _edge_plain = _edge % ('%s', '%s', '')
 
-    directed = True
+    @property
+    def directed(self):
+        return True
