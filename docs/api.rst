@@ -18,7 +18,7 @@ Graph
         source,
         node, edge, edges, attr, subgraph,
         format, engine, encoding,
-        pipe, save, render, view
+        copy, pipe, save, render, view
 
 
 Digraph
@@ -29,7 +29,7 @@ Digraph
         source,
         node, edge, edges, attr, subgraph,
         format, engine, encoding,
-        pipe, save, render, view
+        copy, pipe, save, render, view
 
 
 Source
@@ -38,7 +38,7 @@ Source
 .. autoclass:: graphviz.Source
     :members:
         format, engine, encoding,
-        pipe, save, render, view
+        copy, pipe, save, render, view
 
 
 Low-level functions

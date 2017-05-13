@@ -8,6 +8,20 @@ import pytest
 from graphviz.dot import Graph, Digraph
 
 
+@pytest.fixture(params=[Graph, Digraph]) 
+def cls(request):
+    return request.param
+
+
+def test_copy(cls):
+    c = cls()
+    assert c.__class__ is cls
+    assert c.copy() is not c
+    assert c.copy() is not c.copy()
+    assert c.copy().__class__ is c.__class__
+    assert c.copy().__dict__ == c.__dict__
+
+
 def test_repr_svg(svg_pattern):
     assert svg_pattern.match(Graph('spam')._repr_svg_())
 

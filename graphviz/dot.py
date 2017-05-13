@@ -68,6 +68,17 @@ class Dot(files.File):
 
         self.strict = strict
 
+    def _kwargs(self):
+        result = super(Dot, self)._kwargs()
+        result.update({
+            'name': self.name, 'comment': self.comment,
+            'graph_attr': dict(self.graph_attr),
+            'node_attr': dict(self.node_attr),
+            'edge_attr': dict(self.edge_attr),
+            'body': list(self.body), 'strict': self.strict,
+        })
+        return result
+
     def __iter__(self, subgraph=False):
         """Yield the DOT source code line by line (as graph or subgraph)."""
         if self.comment:

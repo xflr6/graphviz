@@ -54,6 +54,16 @@ class Base(object):
             codecs.lookup(encoding)
         self._encoding = encoding
 
+    def copy(self):
+        """Return a copied instance of the object."""
+        kwargs = self._kwargs()
+        return self.__class__(**kwargs)
+
+    def _kwargs(self):
+        ns = self.__dict__
+        attrs = ('_format', '_engine', '_encoding')
+        return {a[1:]: ns[a] for a in attrs if a in ns}
+
 
 class File(Base):
 
@@ -79,6 +89,13 @@ class File(Base):
 
         if encoding is not None:
             self.encoding = encoding
+
+    def _kwargs(self):
+        result = super(File, self)._kwargs()
+        result['filename'] = self.filename
+        if 'directory' in self.__dict__:
+            result['directory'] = self.directory
+        return result
 
     def _repr_svg_(self):
         return self.pipe(format='svg').decode(self._encoding)
@@ -221,3 +238,8 @@ class Source(File):
                  format=None, engine=None, encoding=None):
         super(Source, self).__init__(filename, directory, format, engine, encoding)
         self.source = source
+
+    def _kwargs(self):
+        result = super(Source, self)._kwargs()
+        result['source'] = self.source
+        return result

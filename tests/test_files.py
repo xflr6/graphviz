@@ -138,3 +138,10 @@ def test__view(mocker, platform, source):
         source._view('name', 'png')
 
         _view_platform.assert_called_once_with('name')
+
+
+def test_copy(source):
+    assert source.copy() is not source
+    assert source.copy() is not source.copy()
+    assert source.copy().__class__ is source.__class__
+    assert source.copy().__dict__ == source.__dict__
