@@ -33,14 +33,14 @@ def test_render_missingfile(engine='dot', format_='pdf'):
 
 
 def test_render_mocked(mocker, check_call, quiet):
-    open = mocker.patch('io.open')
-    devnull = mocker.patch('os.devnull')
+    open_ = mocker.patch('io.open', mocker.mock_open())
+    mocker.patch('os.devnull', mocker.sentinel.devnull)
 
     assert render('dot', 'pdf', 'nonfilepath', quiet=quiet) == 'nonfilepath.pdf'
 
     if quiet:
-        open.called_once_with(devnull, 'w')
-        stderr = open.return_value.__enter__.return_value
+        open_.assert_called_once_with(mocker.sentinel.devnull, 'w')
+        stderr = open_.return_value
     else:
         stderr = None
     check_call.assert_called_once_with(['dot', '-Tpdf', '-O', 'nonfilepath'],
@@ -76,28 +76,28 @@ def test_pipe_invalid_data(engine='dot', format_='svg'):
 def test_pipe_mocked_fail(mocker, Popen, quiet):
     stderr = mocker.patch('sys.stderr')
     proc = Popen.return_value
-    proc.returncode = mocker.MagicMock()
-    outs, errs = proc.communicate.return_value = mocker.MagicMock(), mocker.MagicMock()
+    proc.returncode = mocker.sentinel.returncode
+    proc.communicate.return_value = mocker.sentinel.outs, mocker.sentinel.errs
 
     with pytest.raises(subprocess.CalledProcessError) as e:
         pipe('dot', 'png', b'nongraph', quiet=quiet)
-    assert e.value.returncode is proc.returncode
+    assert e.value.returncode is mocker.sentinel.returncode
 
     Popen.assert_called_once_with(['dot', '-Tpng'],
                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE, startupinfo=STARTUPINFO)
     proc.communicate.assert_called_once_with(b'nongraph')
     if not quiet:
-        stderr.write.assert_called_once_with(errs)
+        stderr.write.assert_called_once_with(mocker.sentinel.errs)
         stderr.flush.assert_called_once_with()
 
 
 def test_pipe_mocked(mocker, Popen):
     proc = Popen.return_value
     proc.returncode = 0
-    outs, errs = proc.communicate.return_value = mocker.MagicMock(), mocker.MagicMock()
+    proc.communicate.return_value = mocker.sentinel.outs, mocker.sentinel.errs
 
-    assert pipe('dot', 'png', b'nongraph') is outs
+    assert pipe('dot', 'png', b'nongraph') is mocker.sentinel.outs
 
     Popen.assert_called_once_with(['dot', '-Tpng'],
                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE,

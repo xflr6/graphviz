@@ -88,7 +88,7 @@ def test_filepath(source):
 def test_save(mocker, py2, filename='filename', directory='directory'):
     source = Source(**SOURCE)
     makedirs = mocker.patch('os.makedirs')
-    open = mocker.patch('io.open')
+    open_ = mocker.patch('io.open', mocker.mock_open())
 
     result = source.save(filename, directory)
 
@@ -97,12 +97,10 @@ def test_save(mocker, py2, filename='filename', directory='directory'):
         makedirs.assert_called_once_with(source.directory, 0o777)
     else:
         makedirs.assert_called_once_with(source.directory, 0o777, exist_ok=True)
-    open.assert_called_once_with(source.filepath, 'w', encoding=source.encoding)
-    fd = open.return_value.__enter__.return_value
-    assert len(fd.write.mock_calls) == 2
-    fd.write.assert_has_calls([mocker.call(source.source), mocker.call(u'\n')])
+    open_.assert_called_once_with(source.filepath, 'w', encoding=source.encoding)
+    assert open_.return_value.write.call_args_list == [mocker.call(source.source), mocker.call(u'\n')]
     assert result == source.filepath
-    
+
 
 def test_render(mocker, render, source):
     save = mocker.patch.object(source, 'save')
