@@ -38,7 +38,7 @@ def check_call(mocker):
 
 
 @pytest.fixture
-def Popen(mocker):
+def Popen(mocker):  # noqa: N802
     yield mocker.patch('subprocess.Popen')
 
 

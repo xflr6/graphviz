@@ -115,7 +115,7 @@ def render(engine, format, filepath, quiet=False):
         def open(name, mode):
             assert name == os.devnull and mode == 'w'
             yield None
-        
+
     with open(os.devnull, 'w') as stderr:
         try:
             subprocess.check_call(args, startupinfo=STARTUPINFO, stderr=stderr)

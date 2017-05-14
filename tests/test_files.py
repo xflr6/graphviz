@@ -2,7 +2,7 @@
 
 import pytest
 
-from graphviz.files import File, Source
+from graphviz.files import Source
 
 SOURCE = {
     'source': 'digraph { hello -> world }',
@@ -96,7 +96,8 @@ def test_save(mocker, py2, filename='filename', directory='directory'):
     else:
         makedirs.assert_called_once_with(source.directory, 0o777, exist_ok=True)
     open_.assert_called_once_with(source.filepath, 'w', encoding=source.encoding)
-    assert open_.return_value.write.call_args_list == [mocker.call(source.source), mocker.call(u'\n')]
+    assert open_.return_value.write.call_args_list == \
+           [mocker.call(source.source), mocker.call(u'\n')]
 
 
 def test_render(mocker, render, source):
@@ -110,7 +111,7 @@ def test_render(mocker, render, source):
     render.assert_called_once_with(source.engine, source.format, save.return_value)
     remove.assert_called_once_with(save.return_value)
     _view.assert_called_once_with(render.return_value, source.format)
-    
+
 
 def test_view(mocker, source):
     render = mocker.patch.object(source, 'render')

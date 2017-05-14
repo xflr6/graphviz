@@ -23,7 +23,7 @@ def test_render_missingdot(empty_path):
     with pytest.raises(ExecutableNotFound) as e:
         render('dot', 'pdf', 'nonfilepath')
     e.match(r'execute')
-    
+
 
 @pytest.exe
 def test_render_missingfile(engine='dot', format_='pdf'):
@@ -55,6 +55,7 @@ def test_render(tmpdir, engine='dot', format_='pdf', filename='hello.gv',
     rendered = source.new(ext='%s.%s' % (source.ext, format_))
 
     assert render(engine, format_, str(source)) == str(rendered)
+
     assert rendered.size()
 
 
@@ -71,7 +72,7 @@ def test_pipe_invalid_data(engine='dot', format_='svg'):
     assert e.value.returncode == 1
 
 
-def test_pipe_mocked_fail(mocker, Popen, quiet):
+def test_pipe_mocked_fail(mocker, Popen, quiet):  # noqa: N803
     stderr = mocker.patch('sys.stderr')
     proc = Popen.return_value
     proc.returncode = mocker.sentinel.returncode
@@ -90,7 +91,7 @@ def test_pipe_mocked_fail(mocker, Popen, quiet):
         stderr.flush.assert_called_once_with()
 
 
-def test_pipe_mocked(mocker, Popen):
+def test_pipe_mocked(mocker, Popen):  # noqa: N803
     proc = Popen.return_value
     proc.returncode = 0
     proc.communicate.return_value = mocker.sentinel.outs, mocker.sentinel.errs
@@ -109,7 +110,7 @@ def test_pipe(svg_pattern, engine='dot', format_='svg', data=b'graph { spam }'):
     assert svg_pattern.match(src)
 
 
-def test_view(platform, Popen, startfile):
+def test_view(platform, Popen, startfile):  # noqa: N803
     if platform == 'nonplatform':
         with pytest.raises(RuntimeError) as e:
             view('nonfilepath')
