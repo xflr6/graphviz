@@ -27,7 +27,7 @@ def platform(monkeypatch, request):
     yield request.param
 
 
-@pytest.fixture
+@pytest.fixture(scope='session')
 def py2():
     return sys.version_info[0] == 2
 
