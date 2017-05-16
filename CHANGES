@@ -2,8 +2,10 @@ Changelog
 =========
 
 
-Version 0.7.1 (in development)
-------------------------------
+Version 0.7.1
+-------------
+
+Fix TypeError in graphviz.pipe() with invalid dot code under Python 3.
 
 Add copy()-method for Graph, Digraph, and Source.
 
@@ -13,6 +15,8 @@ Fix graphivz.view() exception on unsupported platform.
 
 Raise a dedicated RuntimeError subclass graphviz.ExecutableNotFound when the
 Graphviz executables are not found.
+
+Port tests from nose/unittest to pytest, extend, use mocks.
 
 
 Version 0.7

@@ -19,6 +19,9 @@ if PY2:  # pragma: no cover
             if not exist_ok or not os.path.isdir(name):
                 raise
 
+    def stderr_write_binary(data):
+        sys.stderr.write(data)
+
 
 else:  # pragma: no cover
     text_type = str
@@ -28,3 +31,7 @@ else:  # pragma: no cover
 
     def makedirs(name, mode=0o777, exist_ok=False):  # allow os.makedirs mocking
         return os.makedirs(name, mode, exist_ok=exist_ok)
+
+    def stderr_write_binary(data):
+        encoding = sys.stderr.encoding or sys.getdefaultencoding()
+        sys.stderr.write(data.decode(encoding))

@@ -26,9 +26,9 @@ def test_render_missingdot(empty_path):
 
 
 @pytest.exe
-def test_render_missingfile(engine='dot', format_='pdf'):
+def test_render_missingfile(quiet, engine='dot', format_='pdf'):
     with pytest.raises(subprocess.CalledProcessError) as e:
-        render(engine, format_, '', quiet=True)
+        render(engine, format_, '', quiet=quiet)
     assert e.value.returncode == 2
 
 
@@ -66,17 +66,18 @@ def test_pipe_missingdot(empty_path):
 
 
 @pytest.exe
-def test_pipe_invalid_data(engine='dot', format_='svg'):
+def test_pipe_invalid_data(quiet, engine='dot', format_='svg'):
     with pytest.raises(subprocess.CalledProcessError) as e:
-        pipe(engine, format_, b'nongraph', quiet=True)
+        pipe(engine, format_, b'nongraph', quiet=quiet)
     assert e.value.returncode == 1
 
 
-def test_pipe_mocked_fail(mocker, Popen, quiet):  # noqa: N803
+def test_pipe_mocked_fail(mocker, py2, Popen, quiet):  # noqa: N803
     stderr = mocker.patch('sys.stderr')
     proc = Popen.return_value
     proc.returncode = mocker.sentinel.returncode
-    proc.communicate.return_value = mocker.sentinel.outs, mocker.sentinel.errs
+    errs = mocker.Mock()
+    proc.communicate.return_value = mocker.sentinel.outs, errs
 
     with pytest.raises(subprocess.CalledProcessError) as e:
         pipe('dot', 'png', b'nongraph', quiet=quiet)
@@ -87,7 +88,11 @@ def test_pipe_mocked_fail(mocker, Popen, quiet):  # noqa: N803
                                   stderr=subprocess.PIPE, startupinfo=STARTUPINFO)
     proc.communicate.assert_called_once_with(b'nongraph')
     if not quiet:
-        stderr.write.assert_called_once_with(mocker.sentinel.errs)
+        if py2:
+            stderr.write.assert_called_once_with(errs)
+        else:
+            errs.decode.assert_called_once_with(stderr.encoding)
+            stderr.write.assert_called_once_with(errs.decode.return_value)            
         stderr.flush.assert_called_once_with()
 
 

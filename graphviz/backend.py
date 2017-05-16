@@ -8,6 +8,8 @@ import platform
 import subprocess
 import contextlib
 
+from ._compat import stderr_write_binary
+
 from . import tools
 
 __all__ = ['render', 'pipe', 'view']
@@ -158,7 +160,7 @@ def pipe(engine, format, data, quiet=False):
     outs, errs = proc.communicate(data)
     if proc.returncode:
         if not quiet:
-            sys.stderr.write(errs)
+            stderr_write_binary(errs)
             sys.stderr.flush()
         raise subprocess.CalledProcessError(proc.returncode, args, output=outs)
 
