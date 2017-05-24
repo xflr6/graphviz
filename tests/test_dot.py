@@ -39,9 +39,8 @@ def test__repr_svg_(mocker, cls):
 
 
 def test_iter_subgraph_strict(cls):
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError, match=r'strict'):
         cls().subgraph(cls(strict=True))
-    e.match(r'strict')
 
 
 def test_iter_strict():
@@ -50,9 +49,8 @@ def test_iter_strict():
 
 
 def test_attr_invalid_kw(cls):
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError, match=r'attr'):
         cls().attr('spam')
-    e.match(r'attr')
 
 
 def test_attr_kw_none():
@@ -69,16 +67,14 @@ def test_subgraph_graph_none():
 
 
 def test_subgraph_graph_notsole(cls):
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError, match=r'sole'):
         cls().subgraph(cls(), name='spam')
-    e.match(r'sole')
 
 
 def test_subgraph_mixed(classes):
     cls1, cls2 = classes
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError, match=r'kind'):
         cls1().subgraph(cls2())
-    e.match(r'kind')
 
 
 def test_subgraph_reflexive():  # guard against potential infinite loop

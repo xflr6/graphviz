@@ -1,7 +1,7 @@
 # exact dependency versions used in development
 # dependencies for testing and building
 mock
-pytest>=3
+pytest>=3.1
 pytest-mock
 pytest-cov
 coverage

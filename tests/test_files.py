@@ -20,26 +20,23 @@ def test_format(source):
     assert not SOURCE['format'].islower()
 
     assert source.format == SOURCE['format'].lower()
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError, match=r'format'):
         source.format = ''
-    e.match(r'format')
 
 
 def test_engine(source):
     assert not SOURCE['engine'].islower()
 
     source.engine == SOURCE['engine'].lower()
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError, match=r'engine'):
         source.engine = ''
-    e.match(r'engine')
 
 
 def test_encoding(source):
     assert source.encoding == SOURCE['encoding']
 
-    with pytest.raises(LookupError) as e:
+    with pytest.raises(LookupError, match=r'encoding'):
         source.encoding = ''
-    e.match(r'encoding')
 
 
 def test_init(source):
@@ -124,9 +121,8 @@ def test_view(mocker, source):
 
 def test__view(mocker, platform, source):
     if platform == 'nonplatform':
-        with pytest.raises(RuntimeError) as e:
+        with pytest.raises(RuntimeError, match=r'support'):
             source._view('name', 'png')
-        e.match(r'support')
     else:
         _view_platform = mocker.patch.object(source, '_view_%s' % platform)
 

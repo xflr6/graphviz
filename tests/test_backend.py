@@ -8,21 +8,18 @@ from graphviz.backend import render, pipe, view, ExecutableNotFound, STARTUPINFO
 
 
 def test_render_engine_unknown():
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError, match=r'engine'):
         render('', 'pdf', 'nonfilepath')
-    e.match(r'engine')
 
 
 def test_render_format_unknown():
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError, match=r'format'):
         render('dot', '', 'nonfilepath')
-    e.match(r'format')
 
 
 def test_render_missingdot(empty_path):
-    with pytest.raises(ExecutableNotFound) as e:
+    with pytest.raises(ExecutableNotFound, match=r'execute'):
         render('dot', 'pdf', 'nonfilepath')
-    e.match(r'execute')
 
 
 @pytest.exe
@@ -60,9 +57,8 @@ def test_render(tmpdir, engine='dot', format_='pdf', filename='hello.gv',
 
 
 def test_pipe_missingdot(empty_path):
-    with pytest.raises(ExecutableNotFound) as e:
+    with pytest.raises(ExecutableNotFound, match=r'execute'):
         pipe('dot', 'pdf', b'nongraph')
-    e.match(r'execute')
 
 
 @pytest.exe
@@ -117,9 +113,8 @@ def test_pipe(svg_pattern, engine='dot', format_='svg', data=b'graph { spam }'):
 
 def test_view(platform, Popen, startfile):  # noqa: N803
     if platform == 'nonplatform':
-        with pytest.raises(RuntimeError) as e:
+        with pytest.raises(RuntimeError, match=r'platform'):
             view('nonfilepath')
-        e.match(r'platform')
     else:
         view('nonfilepath')
         if platform == 'darwin':
