@@ -17,16 +17,29 @@ def test_render_format_unknown():
         render('dot', '', 'nonfilepath')
 
 
-def test_render_missingdot(empty_path):
+def test_render_missing_executable(empty_path):
     with pytest.raises(ExecutableNotFound, match=r'execute'):
         render('dot', 'pdf', 'nonfilepath')
 
 
 @pytest.exe
-def test_render_missingfile(quiet, engine='dot', format_='pdf'):
+def test_render_missing_file(quiet, engine='dot', format_='pdf'):
     with pytest.raises(subprocess.CalledProcessError) as e:
         render(engine, format_, '', quiet=quiet)
     assert e.value.returncode == 2
+
+
+@pytest.exe
+def test_render(capsys, tmpdir, engine='dot', format_='pdf',
+                filename='hello.gv', data=b'digraph { hello -> world }'):
+    source = tmpdir.join(filename)
+    source.write(data)
+    rendered = source.new(ext='%s.%s' % (source.ext, format_))
+
+    assert render(engine, format_, str(source)) == str(rendered)
+
+    assert rendered.size()
+    assert capsys.readouterr() == ('', '')
 
 
 def test_render_mocked(mocker, check_call, quiet):
@@ -44,31 +57,35 @@ def test_render_mocked(mocker, check_call, quiet):
                                        startupinfo=STARTUPINFO, stderr=stderr)
 
 
-@pytest.exe
-def test_render(tmpdir, engine='dot', format_='pdf', filename='hello.gv',
-                data=b'digraph { hello -> world }'):
-    source = tmpdir.join(filename)
-    source.write(data)
-    rendered = source.new(ext='%s.%s' % (source.ext, format_))
-
-    assert render(engine, format_, str(source)) == str(rendered)
-
-    assert rendered.size()
-
-
-def test_pipe_missingdot(empty_path):
+def test_pipe_missing_executable(empty_path):
     with pytest.raises(ExecutableNotFound, match=r'execute'):
         pipe('dot', 'pdf', b'nongraph')
 
 
 @pytest.exe
-def test_pipe_invalid_data(quiet, engine='dot', format_='svg'):
+def test_pipe_invalid_data(capsys, quiet, engine='dot', format_='svg'):
     with pytest.raises(subprocess.CalledProcessError) as e:
         pipe(engine, format_, b'nongraph', quiet=quiet)
+
     assert e.value.returncode == 1
+    out, err = capsys.readouterr()
+    assert out == ''
+    if quiet:
+        assert err == ''
+    else:
+        assert 'syntax error' in err
 
 
-def test_pipe_mocked_fail(mocker, py2, Popen, quiet):  # noqa: N803
+@pytest.exe
+def test_pipe(capsys, svg_pattern, engine='dot', format_='svg',
+              data=b'graph { spam }'):
+    src = pipe(engine, format_, data).decode('ascii')
+
+    assert svg_pattern.match(src)
+    assert capsys.readouterr() == ('', '')
+
+
+def test_pipe_pipe_invalid_data_mocked(mocker, py2, Popen, quiet):  # noqa: N803
     stderr = mocker.patch('sys.stderr')
     proc = Popen.return_value
     proc.returncode = mocker.sentinel.returncode
@@ -77,8 +94,8 @@ def test_pipe_mocked_fail(mocker, py2, Popen, quiet):  # noqa: N803
 
     with pytest.raises(subprocess.CalledProcessError) as e:
         pipe('dot', 'png', b'nongraph', quiet=quiet)
-    assert e.value.returncode is mocker.sentinel.returncode
 
+    assert e.value.returncode is mocker.sentinel.returncode
     Popen.assert_called_once_with(['dot', '-Tpng'],
                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE, startupinfo=STARTUPINFO)
@@ -103,12 +120,6 @@ def test_pipe_mocked(mocker, Popen):  # noqa: N803
                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE, startupinfo=STARTUPINFO)
     proc.communicate.assert_called_once_with(b'nongraph')
-
-
-@pytest.exe
-def test_pipe(svg_pattern, engine='dot', format_='svg', data=b'graph { spam }'):
-    src = pipe(engine, format_, data).decode('ascii')
-    assert svg_pattern.match(src)
 
 
 def test_view(platform, Popen, startfile):  # noqa: N803
