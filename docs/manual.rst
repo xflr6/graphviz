@@ -164,6 +164,11 @@ directly inside a `Jupyter notebook`_. For an example, check the
 ``examples/notebook.ipynb`` file in the
 `source repository/distribution <notebook_>`_ (nbviewer_).
 
+This also allows direct displaying within the `Jupyter Qt Console`_:
+
+.. image:: _static/qtconsole.png
+    :align: center
+
 
 Styling
 -------
@@ -399,3 +404,4 @@ see above.
 .. _Jupyter notebook: https://jupyter.org
 .. _notebook: https://github.com/xflr6/graphviz/blob/master/examples/notebook.ipynb
 .. _nbviewer: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
+.. _Jupyter Qt Console: https://qtconsole.readthedocs.io
