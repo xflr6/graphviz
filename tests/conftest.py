@@ -21,7 +21,8 @@ def svg_pattern():
     return re.compile(r'(?s)^<\?xml .+</svg>\s*$')
 
 
-@pytest.fixture(params=['nonplatform', 'darwin', 'freebsd', 'linux', 'windows'])
+@pytest.fixture(params=['nonplatform', 'darwin', 'freebsd', 'linux', 'windows'],
+                ids=lambda p: 'platform=%r' % p)
 def platform(monkeypatch, request):
     monkeypatch.setattr('graphviz.backend.PLATFORM', request.param)
     yield request.param
@@ -52,7 +53,7 @@ def empty_path(monkeypatch):
     monkeypatch.setenv('PATH', '')
 
 
-@pytest.fixture(params=[False, True])
+@pytest.fixture(params=[False, True], ids=lambda q: 'quiet=%r' % q)
 def quiet(request):
     return request.param
 

@@ -13,7 +13,8 @@ def cls(request):
     return request.param
 
 
-@pytest.fixture(params=list(itertools.permutations([Graph, Digraph], 2))) 
+@pytest.fixture(params=list(itertools.permutations([Graph, Digraph], 2)),
+                ids=lambda c: '%s, %s' % (c[0].__name__, c[1].__name__))
 def classes(request):
     return request.param
 
