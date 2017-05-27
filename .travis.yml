@@ -8,9 +8,10 @@ python:
 cache: pip
 before_cache:
   - rm -f $HOME/.cache/pip/log/debug.log
-before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y graphviz
+addons:
+  apt:
+    packages:
+    - graphviz
 install:
   - pip install -e .
   - pip install mock "pytest>=3.1" pytest-mock pytest-cov coveralls
