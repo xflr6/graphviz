@@ -1,4 +1,4 @@
-dist: trusty
+dist: precise
 language: python
 python:
   - "2.7"
