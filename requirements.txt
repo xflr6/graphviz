@@ -1,6 +1,6 @@
 # exact dependency versions used in development
 # dependencies for testing and building
-mock
+mock>=2
 pytest>=3.1
 pytest-mock
 pytest-cov
