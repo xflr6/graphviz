@@ -50,6 +50,7 @@ documented above.
 
 .. autofunction:: graphviz.render
 .. autofunction:: graphviz.pipe
+.. autofunction:: graphviz.version
 .. autofunction:: graphviz.view
 
 

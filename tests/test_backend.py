@@ -4,7 +4,8 @@ import subprocess
 
 import pytest
 
-from graphviz.backend import render, pipe, view, ExecutableNotFound, STARTUPINFO
+from graphviz.backend import (render, pipe, version, view,
+                              ExecutableNotFound, STARTUPINFO)
 
 
 def test_render_engine_unknown():
@@ -120,6 +121,24 @@ def test_pipe_mocked(mocker, Popen):  # noqa: N803
                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE, startupinfo=STARTUPINFO)
     proc.communicate.assert_called_once_with(b'nongraph')
+
+
+def test_version_missing_executable(empty_path):
+    with pytest.raises(ExecutableNotFound, match=r'execute'):
+        version()
+
+
+@pytest.exe
+def test_version(capsys):
+    assert version() is not None
+    assert capsys.readouterr() == ('', '')
+
+
+def test_version_mocked(check_output):
+    check_output.return_value = b'dot - graphviz version 1.2.3 (mocked)'
+    assert version() == (1, 2, 3)
+    check_output.assert_called_once_with(['dot', '-V'], startupinfo=STARTUPINFO,
+                                         stderr=subprocess.STDOUT)
 
 
 def test_view(platform, Popen, startfile):  # noqa: N803

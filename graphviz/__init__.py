@@ -26,12 +26,12 @@ digraph {
 
 from .dot import Graph, Digraph
 from .files import Source
-from .backend import render, pipe, view, ENGINES, FORMATS, ExecutableNotFound
+from .backend import render, pipe, version, view, ENGINES, FORMATS, ExecutableNotFound
 
 __all__ = [
     'Graph', 'Digraph',
     'Source',
-    'render', 'pipe', 'view',
+    'render', 'pipe', 'version', 'view',
     'ENGINES', 'FORMATS',
     'ExecutableNotFound',
 ]

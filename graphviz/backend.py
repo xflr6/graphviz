@@ -2,6 +2,7 @@
 
 import os
 import io
+import re
 import sys
 import errno
 import platform
@@ -12,7 +13,7 @@ from ._compat import stderr_write_binary
 
 from . import tools
 
-__all__ = ['render', 'pipe', 'view']
+__all__ = ['render', 'pipe', 'version', 'view']
 
 ENGINES = {  # http://www.graphviz.org/pdf/dot.1.pdf
     'dot', 'neato', 'twopi', 'circo', 'fdp', 'sfdp', 'patchwork', 'osage',
@@ -165,6 +166,30 @@ def pipe(engine, format, data, quiet=False):
         raise subprocess.CalledProcessError(proc.returncode, args, output=outs)
 
     return outs
+
+
+def version():
+    """Return the version number tuple from the stderr output of ``dot -V``.
+
+    Returns:
+        Two/three int version tuple or None (if the output cannot be parsed).
+    Raises:
+        graphviz.ExecutableNotFound: If the Graphviz executable is not found.
+        subprocess.CalledProcessError: If the exit status is non-zero.
+    """
+    args = ['dot', '-V']
+    try:
+        outs = subprocess.check_output(args, startupinfo=STARTUPINFO,
+                                       stderr=subprocess.STDOUT)
+    except OSError as e:
+        if e.errno == errno.ENOENT:
+            raise ExecutableNotFound(args)
+        else:  # pragma: no cover
+            raise
+
+    info = outs.decode('ascii')
+    ma = re.search(r'graphviz version (\d+\.\d+(?:\.\d+)?) ', info)
+    return tuple(int(d) for d in ma.group(1).split('.')) if ma is not None else None
 
 
 def view(filepath):
