@@ -64,6 +64,7 @@ def test_pipe_missing_executable(empty_path):
 
 
 @pytest.exe
+@pytest.mark.xfail('version() == (2, 36, 0)', reason='https://bugs.launchpad.net/ubuntu/+source/graphviz/+bug/1694108')
 def test_pipe_invalid_data(capsys, quiet, engine='dot', format_='svg'):
     with pytest.raises(subprocess.CalledProcessError) as e:
         pipe(engine, format_, b'nongraph', quiet=quiet)
