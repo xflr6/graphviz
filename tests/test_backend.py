@@ -105,7 +105,7 @@ def test_pipe_pipe_invalid_data_mocked(mocker, py2, Popen, quiet):  # noqa: N803
             stderr.write.assert_called_once_with(errs)
         else:
             errs.decode.assert_called_once_with(stderr.encoding)
-            stderr.write.assert_called_once_with(errs.decode.return_value)            
+            stderr.write.assert_called_once_with(errs.decode.return_value)
         stderr.flush.assert_called_once_with()
 
 
