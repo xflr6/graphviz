@@ -197,9 +197,9 @@ After creation, they can be edited on the graph object:
         graph [rankdir=LR]
         node [shape=plaintext]
         edge [arrowhead=vee arrowsize=2]
-            parrot
-            dead
-                parrot -> dead
+        parrot
+        dead
+            parrot -> dead
     }
 
 .. image:: _static/pet-shop.svg
