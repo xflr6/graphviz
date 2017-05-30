@@ -135,6 +135,14 @@ def test_version(capsys):
     assert capsys.readouterr() == ('', '')
 
 
+def test_version_parsefail_mocked(check_output):
+    check_output.return_value = b'nonversioninfo'
+    with pytest.raises(RuntimeError):
+        version()
+    check_output.assert_called_once_with(['dot', '-V'], startupinfo=STARTUPINFO,
+                                         stderr=subprocess.STDOUT)
+
+
 def test_version_mocked(check_output):
     check_output.return_value = b'dot - graphviz version 1.2.3 (mocked)'
     assert version() == (1, 2, 3)

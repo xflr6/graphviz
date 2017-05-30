@@ -50,7 +50,6 @@ documented above.
 
 .. autofunction:: graphviz.render
 .. autofunction:: graphviz.pipe
-.. autofunction:: graphviz.version
 .. autofunction:: graphviz.view
 
 
@@ -65,3 +64,5 @@ Other
 
 .. autodata:: graphviz.ExecutableNotFound
    :annotation:
+
+.. autofunction:: graphviz.version
