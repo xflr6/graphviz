@@ -14,7 +14,7 @@ ID = re.compile(r'([a-zA-Z_][a-zA-Z0-9_]*|-?(\.\d+|\d+(\.\d*)?))$')
 
 KEYWORD = re.compile(r'((node)|(edge)|(graph)|(digraph)|(subgraph)|(strict))$', re.IGNORECASE)
 
-HTML_STRING = re.compile(r'<.*?>$', re.DOTALL)
+HTML_STRING = re.compile(r'<.*>$', re.DOTALL)
 
 COMPASS = re.compile(r'((n)|(ne)|(e)|(se)|(s)|(sw)|(w)|(nw)|(c)|(_))$')
 
