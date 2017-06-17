@@ -7,6 +7,8 @@ Version 0.8 (in development)
 
 Add grapviz.version() function.
 
+Drop dot source extra indent for edge statements following dotguide examples.
+
 
 Version 0.7.1
 -------------

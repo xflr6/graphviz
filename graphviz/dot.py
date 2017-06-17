@@ -17,11 +17,11 @@ r"""Assemble DOT source code objects.
 // M0nti Pyth0n ik den H0lie Grailen
 graph {
     node [shape=rectangle]
-        "M00se"
-        trained_by [label="trained by"]
-        tutte [label="TUTTE HERMSGERVORDENBROTBORDA"]
-            "M00se" -- trained_by
-            trained_by -- tutte
+    "M00se"
+    trained_by [label="trained by"]
+    tutte [label="TUTTE HERMSGERVORDENBROTBORDA"]
+    "M00se" -- trained_by
+    trained_by -- tutte
 }
 
 >>> dot.view('test-output/m00se.gv')  # doctest: +SKIP
@@ -246,7 +246,7 @@ class Graph(Dot):
 
     _head = 'graph %s{'
     _head_strict = 'strict %s' % _head
-    _edge = '\t\t%s -- %s%s'
+    _edge = '\t%s -- %s%s'
     _edge_plain = _edge % ('%s', '%s', '')
 
     @property
@@ -261,7 +261,7 @@ class Digraph(Dot):
 
     _head = 'digraph %s{'
     _head_strict = 'strict %s' % _head
-    _edge = '\t\t%s -> %s%s'
+    _edge = '\t%s -> %s%s'
     _edge_plain = _edge % ('%s', '%s', '')
 
     @property

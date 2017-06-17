@@ -110,22 +110,22 @@ def test_subgraph():
 		A
 		B
 		C
-			A -- B [constraint=false]
-			A -- C
-			B -- C
+		A -- B [constraint=false]
+		A -- C
+		B -- C
 	}
 	{
 		D
 		E
 		F
-			D -- E [constraint=false]
-			D -- F
-			E -- F
+		D -- E [constraint=false]
+		D -- F
+		E -- F
 	}
 	edge [style=dashed]
-		A -- D
-		B -- E
-		C -- F
+	A -- D
+	B -- E
+	C -- F
 }'''
 
 
@@ -200,6 +200,6 @@ def test_label_html():
     <TD COLSPAN="3">f</TD>
   </TR>
 </TABLE>>]
-		struct1:f1 -> struct2:f0
-		struct1:f2 -> struct3:here
+	struct1:f1 -> struct2:f0
+	struct1:f2 -> struct3:here
 }'''

@@ -18,9 +18,9 @@ digraph {
     A [label="King Arthur"]
     B [label="Sir Bedevere the Wise"]
     L [label="Sir Lancelot the Brave"]
-        A -> B
-        A -> L
-        B -> L [constraint=false]
+    A -> B
+    A -> L
+    B -> L [constraint=false]
 }
 """
 

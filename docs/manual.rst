@@ -79,9 +79,9 @@ Check the generated source code:
         A [label="King Arthur"]
         B [label="Sir Bedevere the Wise"]
         L [label="Sir Lancelot the Brave"]
-            A -> B
-            A -> L
-            B -> L [constraint=false]
+        A -> B
+        A -> L
+        B -> L [constraint=false]
     }
 
 Use the :meth:`~.Graph.render`-method to save the source code and render it with the
@@ -199,7 +199,7 @@ After creation, they can be edited on the graph object:
         edge [arrowhead=vee arrowsize=2]
         parrot
         dead
-            parrot -> dead
+        parrot -> dead
     }
 
 .. image:: _static/pet-shop.svg
@@ -248,10 +248,10 @@ key-value pairs targeting the current (sub-)graph (e.g. for ``rankdir``,
         4 [label="Ni!"]
         5 [label="Ni!"]
         rankdir=LR
-            1 -- 2
-            2 -- 3
-            3 -- 4
-            4 -- 5
+        1 -- 2
+        2 -- 3
+        3 -- 4
+        4 -- 5
     }
 
 .. image:: _static/ni.svg
@@ -299,10 +299,10 @@ Both produce the same result:
 
     >>> print(p.source)  # doctest: +NORMALIZE_WHITESPACE
     graph parent {
-            spam -- eggs
+        spam -- eggs
         subgraph child {
             node [shape=box]
-                foo -- bar
+            foo -- bar
         }
     }
 
@@ -344,16 +344,16 @@ Use its ``append()`` or ``extend()`` method:
 
     >>> rt = Digraph(comment='The Round Table')
 
-    >>> rt.body.append('\t\t"King Arthur" -> {\n\t\t\t"Sir Bedevere", "Sir Lancelot"\n\t\t}')
+    >>> rt.body.append('\t"King Arthur" -> {\n\t\t"Sir Bedevere", "Sir Lancelot"\n\t}')
     >>> rt.edge('Sir Bedevere', 'Sir Lancelot', constraint='false')
 
     >>> print(rt.source)  # doctest: +NORMALIZE_WHITESPACE
     // The Round Table
     digraph {
-            "King Arthur" -> {
-                "Sir Bedevere", "Sir Lancelot"
-            }
-            "Sir Bedevere" -> "Sir Lancelot" [constraint=false]
+        "King Arthur" -> {
+            "Sir Bedevere", "Sir Lancelot"
+        }
+        "Sir Bedevere" -> "Sir Lancelot" [constraint=false]
     }
 
 Note that you might need to correctly quote/escape identifiers and strings
