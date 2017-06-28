@@ -39,6 +39,24 @@ def test__repr_svg_(mocker, cls):
     pipe.return_value.decode.assert_called_once_with(c.encoding)
 
 
+@pytest.mark.parametrize('keep_attrs', [False, True])
+def test_clear(cls, keep_attrs):
+    kwargs = {'%s_attr' % a: {a: a} for a in ('graph', 'node', 'edge')}
+    c = cls(**kwargs)
+    assert all(getattr(c, k) == v for k, v in kwargs.items())
+    c.node('spam')
+    assert len(c.body) == 1
+    body = c.body
+
+    c.clear(keep_attrs)
+    assert c.body == []
+    assert c.body is body
+    if keep_attrs:
+        assert all(getattr(c, k) == v for k, v in kwargs.items())
+    else:
+        assert all(getattr(c, k) == {} for k, v in kwargs.items())
+
+
 def test_iter_subgraph_strict(cls):
     with pytest.raises(ValueError, match=r'strict'):
         cls().subgraph(cls(strict=True))

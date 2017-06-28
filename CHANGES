@@ -5,6 +5,8 @@ Changelog
 Version 0.8 (in development)
 ----------------------------
 
+Add clear()-method for Graph and Digraph. 
+
 Add grapviz.version() function.
 
 Drop dot source extra indent for edge statements following dotguide examples.

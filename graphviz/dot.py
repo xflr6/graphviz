@@ -79,6 +79,17 @@ class Dot(files.File):
         })
         return result
 
+    def clear(self, keep_attrs=False):
+        """Reset content to an empty body, clear graph/node/egde_attr mappings.
+
+        Args:
+            keep_attrs(bool): preserve graph/node/egde_attr mappings
+        """
+        if not keep_attrs:
+            for a in (self.graph_attr, self.node_attr, self.edge_attr):
+                a.clear()
+        self.body[:] = []
+
     def __iter__(self, subgraph=False):
         """Yield the DOT source code line by line (as graph or subgraph)."""
         if self.comment:
