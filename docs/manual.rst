@@ -164,7 +164,8 @@ directly inside a `Jupyter notebook`_. For an example, check the
 ``examples/notebook.ipynb`` file in the
 `source repository/distribution <notebook_>`_ (nbviewer_).
 
-This also allows direct displaying within the `Jupyter Qt Console`_:
+This also allows direct displaying within the `Jupyter Qt Console`_ (e.g.
+`the one <spyderconsole_>`_ inside `Spyder IDE`_):
 
 .. image:: _static/qtconsole.png
     :align: center
@@ -405,3 +406,5 @@ see above.
 .. _notebook: https://github.com/xflr6/graphviz/blob/master/examples/notebook.ipynb
 .. _nbviewer: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
 .. _Jupyter Qt Console: https://qtconsole.readthedocs.io
+.. _spyderconsole: https://pythonhosted.org/spyder/ipythonconsole.html
+.. _Spyder IDE: https://github.com/spyder-ide/spyder
