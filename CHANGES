@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.8 (in development)
-----------------------------
+Version 0.8
+-----------
 
 Add clear()-method for Graph and Digraph. 
 
