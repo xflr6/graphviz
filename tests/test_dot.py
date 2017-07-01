@@ -54,7 +54,7 @@ def test_clear(cls, keep_attrs):
     if keep_attrs:
         assert all(getattr(c, k) == v for k, v in kwargs.items())
     else:
-        assert all(getattr(c, k) == {} for k, v in kwargs.items())
+        assert all(getattr(c, k) == {} for k in kwargs)
 
 
 def test_iter_subgraph_strict(cls):
