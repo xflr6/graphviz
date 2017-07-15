@@ -198,6 +198,8 @@ def version():
 def view(filepath):
     """Open filepath with its default viewing application (platform-specific).
 
+    Args:
+        filepath: Path to the file to open in viewer.
     Raises:
         RuntimeError: If the current platform is not supported.
     """

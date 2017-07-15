@@ -55,7 +55,11 @@ class Base(object):
         self._encoding = encoding
 
     def copy(self):
-        """Return a copied instance of the object."""
+        """Return a copied instance of the object.
+
+        Returns:
+            An independent copy of the current object.
+        """
         kwargs = self._kwargs()
         return self.__class__(**kwargs)
 
