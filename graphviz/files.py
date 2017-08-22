@@ -5,6 +5,7 @@
 import os
 import io
 import codecs
+import tempfile
 
 from ._compat import text_type
 
@@ -24,7 +25,7 @@ class Base(object):
         """The output format used for rendering ('pdf', 'png', ...)."""
         return self._format
 
-    @format.setter
+    @format.setter  
     def format(self, format):
         format = format.lower()
         if format not in backend.FORMATS:
@@ -170,12 +171,13 @@ class File(Base):
             subprocess.CalledProcessError: If the exit status is non-zero.
             RuntimeError: If viewer opening is requested but not supported.
         """
-        filepath = self.save(filename, directory)
+        if cleanup:
+            filepath = self.save(tempfile.mkstemp('.gv')[1])
+        
+        else:
+            filepath = self.save(filename, directory)
 
         rendered = backend.render(self._engine, self._format, filepath)
-
-        if cleanup:
-            os.remove(filepath)
 
         if view:
             self._view(rendered, self._format)
