@@ -130,7 +130,7 @@ class File(Base):
     def filepath(self):
         return os.path.join(self.directory, self.filename)
 
-    def save(self, filename=None, directory=None):
+    def save(self, filename=None, directory=None, cleanup=False):
         """Save the DOT source to file. Ensure the file ends with a newline.
 
         Args:
@@ -144,7 +144,14 @@ class File(Base):
         if directory is not None:
             self.directory = directory
 
-        filepath = self.filepath
+        if self.filename is None and self.directory is None and cleanup:
+            nmdtmpfile = tempfile.NamedTemporaryFile(suffix='.gv', delete=False)
+            nmdtmpfile.close()
+            filepath = nmdtmpfile.name
+
+        else:
+            filepath = self.filepath
+
         tools.mkdirs(filepath)
 
         data = text_type(self.source)
@@ -158,7 +165,6 @@ class File(Base):
 
     def render(self, filename=None, directory=None, view=False, cleanup=False):
         """Save the source to file and render with the Graphviz engine.
-
         Args:
             filename: Filename for saving the source (defaults to `name` + '.gv')
             directory: (Sub)directory for source saving and rendering.
@@ -171,13 +177,12 @@ class File(Base):
             subprocess.CalledProcessError: If the exit status is non-zero.
             RuntimeError: If viewer opening is requested but not supported.
         """
-        if cleanup:
-            filepath = self.save(tempfile.mkstemp('.gv')[1])
-        
-        else:
-            filepath = self.save(filename, directory)
+        filepath = self.save(filename, directory, cleanup)
 
         rendered = backend.render(self._engine, self._format, filepath)
+
+        if cleanup:
+            os.remove(filepath)
 
         if view:
             self._view(rendered, self._format)

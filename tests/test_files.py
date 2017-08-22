@@ -103,7 +103,7 @@ def test_render(mocker, render, source):
 
     assert source.render(cleanup=True, view=True) is render.return_value
 
-    save.assert_called_once_with(None, None)
+    save.assert_called_once_with(None, None, True)
     render.assert_called_once_with(source.engine, source.format, save.return_value)
     remove.assert_called_once_with(save.return_value)
     _view.assert_called_once_with(render.return_value, source.format)
