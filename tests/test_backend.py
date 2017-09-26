@@ -33,11 +33,11 @@ def test_render_missing_file(quiet, engine='dot', format_='pdf'):
 @pytest.exe
 def test_render(capsys, tmpdir, engine='dot', format_='pdf',
                 filename='hello.gv', data=b'digraph { hello -> world }'):
-    source = tmpdir.join(filename)
-    source.write(data)
-    rendered = source.new(ext='%s.%s' % (source.ext, format_))
+    lpath = tmpdir.join(filename)
+    lpath.write(data)
+    rendered = lpath.new(ext='%s.%s' % (lpath.ext, format_))
 
-    assert render(engine, format_, str(source)) == str(rendered)
+    assert render(engine, format_, str(lpath)) == str(rendered)
 
     assert rendered.size()
     assert capsys.readouterr() == ('', '')
