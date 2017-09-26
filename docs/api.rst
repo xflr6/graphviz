@@ -38,7 +38,8 @@ Source
 .. autoclass:: graphviz.Source
     :members:
         format, engine, encoding,
-        copy, pipe, save, render, view
+        copy, pipe, save, render, view,
+        from_file
 
 
 Low-level functions

@@ -394,6 +394,33 @@ as the higher-level graph objects (:meth:`~.Source.pipe`-method,
 see above.
 
 
+Existing files
+--------------
+
+To directly render an existing DOT source file (e.g. created with other tools),
+you can use the :func:`graphviz.render` function. 
+
+.. code:: python
+
+    >>> from graphviz import render
+
+    >>> render('dot', 'png', 'test-output/holy-grenade.gv')  # doctest: +SKIP
+    'test-output/holy-grenade.gv.png'
+
+To directly display the graph of an existing DOT source file inside a 
+Jupyter `notebook <Jupyter notebook_>`_ or `Qt Console <Jupyter Qt Console_>`_,
+you can use the :meth:`.Source.from_file`-classmethod (alternate constructor):
+
+.. image:: _static/qtconsole-source.png
+    :align: center
+
+Note that if you call :meth:`~.Source.render` or :meth:`~.Source.view` on the
+returned :class:`.Source` object, it will still :meth:`~.Source.save` as usual
+(i.e. write the content read into :attr:`~.Source.source` back into the file).
+You can use :func:`graphviz.render` and :func:`graphiz.view` to directly work
+on files in case you need to avoid this round-trip.
+
+
 .. _pip: https://pip.readthedocs.io
 .. _virtualenv: https://virtualenv.pypa.io
 

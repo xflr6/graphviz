@@ -138,3 +138,16 @@ def test_copy(source):
     assert source.copy() is not source.copy()
     assert source.copy().__class__ is source.__class__
     assert source.copy().__dict__ == source.__dict__
+
+
+def test_from_file(tmpdir, filename='hello.gv', directory='source_hello',
+                   data=u'digraph { hello -> world }', encoding='utf-8'):
+    lpath = tmpdir.mkdir(directory)
+    lpath.join(filename).write_text(data, encoding=encoding)
+
+    source = Source.from_file(filename, str(lpath), encoding=encoding)
+
+    assert source.source == data
+    assert source.filename == filename
+    assert source.directory == str(lpath)
+    assert source.encoding == encoding
