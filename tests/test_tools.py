@@ -19,7 +19,7 @@ def itertree(root):
 
 def test_mkdirs_invalid(tmpdir):
     with tmpdir.as_cwd():
-        tmpdir.join('spam.eggs').write(b'')
+        tmpdir.join('spam.eggs').write_binary(b'')
         with pytest.raises(OSError):
             mkdirs('spam.eggs/spam')
 
