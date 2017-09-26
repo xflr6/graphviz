@@ -76,8 +76,11 @@ def test_pipe(pipe, source):
     pipe.assert_called_once_with(source.engine, source.format, data)
 
 
-def test_filepath(source):
-    assert source.filepath in ('test-output/hello.gv', 'test-output\\hello.gv')
+def test_filepath(test_platform, source):
+    if test_platform == 'windows':
+        assert source.filepath == 'test-output\\hello.gv'
+    else:
+        assert source.filepath == 'test-output/hello.gv'
 
 
 def test_save(mocker, py2, filename='filename', directory='directory'):

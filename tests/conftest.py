@@ -2,6 +2,7 @@
 
 import re
 import sys
+import platform as _platform
 
 import pytest
 
@@ -21,16 +22,21 @@ def svg_pattern():
     return re.compile(r'(?s)^<\?xml .+</svg>\s*$')
 
 
+@pytest.fixture(scope='session')
+def py2():
+    return sys.version_info[0] == 2
+
+
+@pytest.fixture(scope='session')
+def test_platform():
+    return _platform.system().lower()
+
+
 @pytest.fixture(params=['nonplatform', 'darwin', 'freebsd', 'linux', 'windows'],
                 ids=lambda p: 'platform=%r' % p)
 def platform(monkeypatch, request):
     monkeypatch.setattr('graphviz.backend.PLATFORM', request.param)
     yield request.param
-
-
-@pytest.fixture(scope='session')
-def py2():
-    return sys.version_info[0] == 2
 
 
 @pytest.fixture
