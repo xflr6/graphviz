@@ -227,15 +227,15 @@ class Source(File):
 
     Args:
         source: The verbatim DOT source code string.
-        filename: Filename for saving the source (defaults to `name` + '.gv').
+        filename: Filename for saving the source (defaults to 'Source.gv').
         directory: (Sub)directory for source saving and rendering.
         format: Rendering output format ('pdf', 'png', ...).
         engine: Layout command used ('dot', 'neato', ...).
         encoding: Encoding for saving the source.
 
     .. note::
-        All parameters except `source` are optional and can be changed under
-        their corresponding attribute name after instance creation.
+        All parameters except `source` are optional. All of them can be changed
+        under their corresponding attribute name after instance creation.
     """
 
     def __init__(self, source, filename=None, directory=None,
