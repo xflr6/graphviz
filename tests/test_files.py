@@ -145,6 +145,10 @@ def test_from_file(tmpdir, filename='hello.gv', directory='source_hello',
     lpath = tmpdir.mkdir(directory)
     lpath.join(filename).write_text(data, encoding=encoding)
 
+    source = Source.from_file(filename, str(lpath))
+
+    assert source.encoding == 'utf-8'
+
     source = Source.from_file(filename, str(lpath), encoding=encoding)
 
     assert source.source == data
