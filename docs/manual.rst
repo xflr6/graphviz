@@ -162,7 +162,8 @@ Jupyter notebooks
 :meth:`~.Graph._repr_svg_`-method so they can be rendered and displayed
 directly inside a `Jupyter notebook`_. For an example, check the
 ``examples/notebook.ipynb`` file in the
-`source repository/distribution <notebook_>`_ (nbviewer_).
+`source repository/distribution <notebook.ipynb_>`_ (or the same within
+nbviewer_).
 
 This also allows direct displaying within the `Jupyter Qt Console`_ (e.g.
 `the one <spyderconsole_>`_ inside `Spyder IDE`_):
@@ -403,7 +404,7 @@ see above.
 .. _appearance: http://www.graphviz.org/doc/info/attrs.html
 
 .. _Jupyter notebook: https://jupyter.org
-.. _notebook: https://github.com/xflr6/graphviz/blob/master/examples/notebook.ipynb
+.. _notebook.ipynb: https://github.com/xflr6/graphviz/blob/master/examples/notebook.ipynb
 .. _nbviewer: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
 .. _Jupyter Qt Console: https://qtconsole.readthedocs.io
 .. _spyderconsole: https://pythonhosted.org/spyder/ipythonconsole.html
