@@ -421,6 +421,36 @@ You can use :func:`graphviz.render` and :func:`graphiz.view` to directly work
 on files in case you need to avoid this round-trip.
 
 
+Integration with viewers
+------------------------
+
+On platforms such as Windows, viewer programs opened by rendering with
+``view=true`` or the :meth:`~.Graph.view`-method might lock the (PDF, PNG,
+etc.) file for as long as the viewer is open (blocking re-rendering it with a
+``Permission denied`` error). You can use the :func:`~tempfile.mktemp` function
+from the stdlib :mod:`tempfile` module to render to a different file for each
+invocation to avoid needing to close the viewer window each time within such an
+incremental workflow (and also preserve its intermediate steps):
+
+.. code:: python
+
+    >>> import tempfile
+
+    >>> g = Graph()
+    >>> g.node('spam')
+
+    >>> g.view(tempfile.mktemp('.gv'))  # doctest: +SKIP
+    'C:\\Users\\User\\AppData\\Local\\Temp\\tmp3aoie8d0.gv.pdf'
+
+    >>> g.view(tempfile.mktemp('.gv'))  # doctest: +SKIP
+    'C:\\Users\\User\\AppData\\Local\\Temp\\tmphh4ig7a_.gv.pdf'
+
+Other options are viewers that `support live updates`_ or using the Jupyter
+`notebook <Jupyter notebook_>`_ or `Qt Console <Jupyter Qt Console_>`_ to
+display the current version of the rendered graph in repeated add/render/view
+cycles.
+
+
 .. _pip: https://pip.readthedocs.io
 .. _virtualenv: https://virtualenv.pypa.io
 
@@ -436,3 +466,4 @@ on files in case you need to avoid this round-trip.
 .. _Jupyter Qt Console: https://qtconsole.readthedocs.io
 .. _spyderconsole: https://pythonhosted.org/spyder/ipythonconsole.html
 .. _Spyder IDE: https://github.com/spyder-ide/spyder
+.. _support live updates: https://superuser.com/questions/599442/pdf-viewer-that-handles-live-updating-of-pdf-doesnt-lock-the-file
