@@ -94,7 +94,7 @@ def attr_list(label=None, kwargs=None, attributes=None):
     """Return assembled DOT attribute list string.
 
     Sorts kwargs and attributes if they are plain dicts (to avoid
-    unpredictable order from hash randomization in Python 3.3+).
+    unpredictable order from hash randomization in Python 3 versions).
 
     >>> attr_list()
     ''

@@ -8,7 +8,7 @@ Installation
 ------------
 
 :mod:`graphviz` provides a simple pure-Python interface for the Graphviz_
-graph-drawing software. It runs under Python 2.7 and 3.3+. To install it
+graph-drawing software. It runs under Python 2.7 and 3.4+. To install it
 with pip_ run the following:
 
 .. code:: bash
@@ -17,7 +17,7 @@ with pip_ run the following:
 
 For a system-wide install, this typically requires administrator access. For an
 isolated install, you can run the same inside a virtualenv_ or a
-:mod:`py3:venv` (Python 3.3+ only).
+:mod:`py3:venv` (Python 3 only).
 
 The only dependency is a working installation of Graphviz (`download page`_).
 
