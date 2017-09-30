@@ -20,6 +20,8 @@ Add grapviz.version() function.
 
 Drop dot source extra indent for edge statements following dotguide examples.
 
+Include license file in wheel.
+
 
 Version 0.7.1
 -------------
