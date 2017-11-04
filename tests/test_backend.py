@@ -18,7 +18,8 @@ def test_render_format_unknown():
         render('dot', '', 'nonfilepath')
 
 
-def test_render_missing_executable(empty_path):
+@pytest.mark.usefixtures('empty_path')
+def test_render_missing_executable():
     with pytest.raises(ExecutableNotFound, match=r'execute'):
         render('dot', 'pdf', 'nonfilepath')
 
@@ -58,7 +59,8 @@ def test_render_mocked(mocker, check_call, quiet):
                                        startupinfo=STARTUPINFO, stderr=stderr)
 
 
-def test_pipe_missing_executable(empty_path):
+@pytest.mark.usefixtures('empty_path')
+def test_pipe_missing_executable():
     with pytest.raises(ExecutableNotFound, match=r'execute'):
         pipe('dot', 'pdf', b'nongraph')
 
@@ -124,7 +126,8 @@ def test_pipe_mocked(mocker, Popen):  # noqa: N803
     proc.communicate.assert_called_once_with(b'nongraph')
 
 
-def test_version_missing_executable(empty_path):
+@pytest.mark.usefixtures('empty_path')
+def test_version_missing_executable():
     with pytest.raises(ExecutableNotFound, match=r'execute'):
         version()
 
