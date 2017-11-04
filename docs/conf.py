@@ -295,3 +295,11 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
+
+# monkey patch, see https://github.com/sphinx-doc/sphinx/issues/2044
+from sphinx.ext.autodoc import ClassLevelDocumenter, InstanceAttributeDocumenter
+
+def add_directive_header(self, sig):
+    ClassLevelDocumenter.add_directive_header(self, sig)
+
+InstanceAttributeDocumenter.add_directive_header = add_directive_header

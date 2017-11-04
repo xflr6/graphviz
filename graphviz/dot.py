@@ -262,6 +262,7 @@ class Graph(Dot):
 
     @property
     def directed(self):
+        """``False``"""
         return False
 
 
@@ -277,4 +278,5 @@ class Digraph(Dot):
 
     @property
     def directed(self):
+        """``True``"""
         return True

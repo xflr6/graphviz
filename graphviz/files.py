@@ -260,7 +260,7 @@ class Source(File):
     def __init__(self, source, filename=None, directory=None,
                  format=None, engine=None, encoding=None):
         super(Source, self).__init__(filename, directory, format, engine, encoding)
-        self.source = source
+        self.source = source  #: The verbatim DOT source code string.
 
     def _kwargs(self):
         result = super(Source, self)._kwargs()

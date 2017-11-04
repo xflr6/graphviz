@@ -18,7 +18,8 @@ Graph
         source,
         node, edge, edges, attr, subgraph,
         format, engine, encoding,
-        clear, copy, pipe, save, render, view
+        clear, copy, pipe, save, render, view,
+        directed
 
 
 Digraph
@@ -29,7 +30,8 @@ Digraph
         source,
         node, edge, edges, attr, subgraph,
         format, engine, encoding,
-        clear, copy, pipe, save, render, view
+        clear, copy, pipe, save, render, view,
+        directed
 
 
 Source
@@ -39,7 +41,7 @@ Source
     :members:
         format, engine, encoding,
         copy, pipe, save, render, view,
-        from_file
+        from_file, source
 
 
 Low-level functions
