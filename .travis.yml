@@ -1,4 +1,3 @@
-dist: trusty
 language: python
 python:
   - "2.7"
@@ -13,7 +12,6 @@ addons:
     packages:
     - graphviz
 install:
-  - pip install -e .
-  - pip install "mock>=2" "pytest>=3.1" pytest-mock pytest-cov coveralls
+  - pip install .[test] coveralls
 script: pytest
 after_success: if [[ $TRAVIS_PYTHON_VERSION == 3.6* ]]; then coveralls; fi

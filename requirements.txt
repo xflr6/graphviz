@@ -1,10 +1,2 @@
-# exact dependency versions used in development
-# dependencies for testing and building
-mock>=2
-pytest>=3.1
-pytest-mock
-pytest-cov
-flake8
-pep8-naming
-wheel
-twine
+# development enviroment: install in development mode
+-e .[dev,test]
