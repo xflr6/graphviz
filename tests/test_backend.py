@@ -34,7 +34,7 @@ def test_render_missing_file(quiet, engine='dot', format_='pdf'):
 @pytest.exe
 def test_render(capsys, tmpdir, engine='dot', format_='pdf',
                 filename='hello.gv', data=b'digraph { hello -> world }'):
-    lpath = tmpdir.join(filename)
+    lpath = tmpdir / filename
     lpath.write_binary(data)
     rendered = lpath.new(ext='%s.%s' % (lpath.ext, format_))
 
