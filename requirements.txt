@@ -1,2 +1,3 @@
 # development enviroment: install in development mode
 -e .[dev,test]
+# exact dependency versions used in development

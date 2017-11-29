@@ -5,13 +5,11 @@ python:
   - "3.5"
   - "3.6"
 cache: pip
-before_cache:
-  - rm -f $HOME/.cache/pip/log/debug.log
+before_cache: rm -f $HOME/.cache/pip/log/debug.log
 addons:
   apt:
     packages:
     - graphviz
-install:
-  - pip install .[test] coveralls
+install: pip install .[test] coveralls
 script: pytest
 after_success: if [[ $TRAVIS_PYTHON_VERSION == 3.6* ]]; then coveralls; fi

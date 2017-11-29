@@ -12,11 +12,12 @@ setup(
     license='MIT',
     url='https://github.com/xflr6/graphviz',
     packages=find_packages(),
+    platforms='any',
+    python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*',
     extras_require={
         'dev': ['flake8', 'pep8-naming', 'wheel', 'twine'],
         'test': ['mock>=2', 'pytest>=3.3', 'pytest-mock', 'pytest-cov'],
     },
-    platforms='any',
     long_description=open('README.rst').read(),
     classifiers=[
         'Development Status :: 4 - Beta',
