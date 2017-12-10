@@ -3,9 +3,13 @@
 Examples
 ========
 
-See the ``examples`` directory in the `source repository/distribution`__.
+The following code examples are included in the ``examples`` directory of the
+`source repository/distribution`__. Most of them recreate examples from the
+`graphviz.org gallery`__ or the `graphviz.org documentation`__.
 
 .. __: https://github.com/xflr6/graphviz/tree/master/examples/
+.. __: http://www.graphviz.org/gallery/
+.. __: http://www.graphviz.org/documentation/
 
 
 hello.py 

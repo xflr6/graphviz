@@ -6,7 +6,8 @@ Graphviz
 |Travis| |Coveralls|
 
 This package facilitates the creation and rendering of graph descriptions in
-the DOT_ language of the Graphviz_ graph drawing software (repo_) from Python.
+the DOT_ language of the Graphviz_ graph drawing software (`master repo`_) from
+Python.
 
 Create a graph object, assemble the graph by adding nodes and edges, and
 retrieve its DOT source code string. Save the source code to a file and render
@@ -14,8 +15,8 @@ it with the Graphviz installation of your system.
 
 Use the ``view`` option/method to directly inspect the resulting (PDF, PNG,
 SVG, etc.) file with its default application. Graphs can also be rendered
-and displayed within `Jupyter notebooks`_ (a.k.a. `IPython notebooks`_,
-example_) as well as the `Jupyter Qt Console`_.
+and displayed within `Jupyter notebooks`_ (formerly known as
+`IPython notebooks`_, example_) as well as the `Jupyter Qt Console`_.
 
 
 Links
@@ -111,10 +112,10 @@ This package is distributed under the `MIT license`_.
 
 
 .. _pip: https://pip.readthedocs.io
-.. _Graphviz:  http://www.graphviz.org
-.. _repo: https://github.com/ellson/graphviz/
-.. _download page: http://www.graphviz.org/Download.php
-.. _DOT: http://www.graphviz.org/doc/info/lang.html
+.. _Graphviz:  https://www.graphviz.org
+.. _master repo: https://gitlab.com/graphviz/graphviz/
+.. _download page: https://www.graphviz.org/download/
+.. _DOT: https://www.graphviz.org/doc/info/lang.html
 .. _Jupyter notebooks: https://jupyter.org
 .. _IPython notebooks: https://ipython.org/notebook.html
 .. _example: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
@@ -122,7 +123,7 @@ This package is distributed under the `MIT license`_.
 
 .. _pygraphviz: https://pypi.python.org/pypi/pygraphviz
 .. _graphviz-python: https://pypi.python.org/pypi/graphviz-python
-.. _documentation: http://www.graphviz.org/pdf/gv.3python.pdf
+.. _documentation: https://www.graphviz.org/pdf/gv.3python.pdf
 .. _pydot: https://pypi.python.org/pypi/pydot
 
 .. _MIT license: https://opensource.org/licenses/MIT

@@ -454,11 +454,11 @@ cycles.
 .. _pip: https://pip.readthedocs.io
 .. _virtualenv: https://virtualenv.pypa.io
 
-.. _Graphviz: http://www.graphviz.org
-.. _download page: http://www.graphviz.org/Download.php
-.. _DOT: http://www.graphviz.org/doc/info/lang.html
-.. _output file format: http://www.graphviz.org/doc/info/output.html
-.. _appearance: http://www.graphviz.org/doc/info/attrs.html
+.. _Graphviz: https://www.graphviz.org
+.. _download page: https://www.graphviz.org/download/
+.. _DOT: https://www.graphviz.org/doc/info/lang.html
+.. _output file format: https://www.graphviz.org/doc/info/output.html
+.. _appearance: https://www.graphviz.org/doc/info/attrs.html
 
 .. _Jupyter notebook: https://jupyter.org
 .. _notebook.ipynb: https://github.com/xflr6/graphviz/blob/master/examples/notebook.ipynb
