@@ -10,6 +10,6 @@ addons:
   apt:
     packages:
     - graphviz
-install: pip install .[test] coveralls
+install: pip install .[test] codecov
 script: pytest
-after_success: if [[ $TRAVIS_PYTHON_VERSION == 3.6* ]]; then coveralls; fi
+after_success: codecov

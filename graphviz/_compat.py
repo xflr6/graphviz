@@ -6,7 +6,7 @@ import sys
 PY2 = sys.version_info[0] == 2
 
 
-if PY2:  # pragma: no cover
+if PY2:
     text_type = unicode
 
     def iteritems(d):
@@ -23,7 +23,7 @@ if PY2:  # pragma: no cover
         sys.stderr.write(data)
 
 
-else:  # pragma: no cover
+else:
     text_type = str
 
     def iteritems(d):

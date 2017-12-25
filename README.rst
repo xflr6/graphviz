@@ -3,7 +3,7 @@ Graphviz
 
 |PyPI version| |License| |Supported Python| |Format| |Docs|
 
-|Travis| |Coveralls|
+|Travis| |Codecov|
 
 This package facilitates the creation and rendering of graph descriptions in
 the DOT_ language of the Graphviz_ graph drawing software (`master repo`_) from
@@ -151,8 +151,11 @@ This package is distributed under the `MIT license`_.
     :target: https://graphviz.readthedocs.io/en/stable/
     :alt: Readthedocs
 .. |Travis| image:: https://img.shields.io/travis/xflr6/graphviz.svg
-   :target: https://travis-ci.org/xflr6/graphviz
-   :alt: Travis
+    :target: https://travis-ci.org/xflr6/graphviz
+    :alt: Travis
+.. |Codecov| image:: https://codecov.io/gh/xflr6/graphviz/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/xflr6/graphviz
+    :alt: Codecov
 .. |Coveralls| image:: https://img.shields.io/coveralls/xflr6/graphviz.svg
-   :target: https://coveralls.io/github/xflr6/graphviz
-   :alt: Coveralls
+    :target: https://coveralls.io/github/xflr6/graphviz
+    :alt: Coveralls
