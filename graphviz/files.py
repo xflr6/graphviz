@@ -5,6 +5,7 @@
 import os
 import io
 import codecs
+import locale
 
 from ._compat import text_type
 
@@ -50,8 +51,9 @@ class Base(object):
 
     @encoding.setter
     def encoding(self, encoding):
-        if encoding is not None:  # raise early
-            codecs.lookup(encoding)
+        if encoding is None:
+            encoding = locale.getpreferredencoding()
+        codecs.lookup(encoding)  # raise early
         self._encoding = encoding
 
     def copy(self):
@@ -76,7 +78,7 @@ class File(Base):
     _default_extension = 'gv'
 
     def __init__(self, filename=None, directory=None,
-                 format=None, engine=None, encoding=None):
+                 format=None, engine=None, encoding=Base._encoding):
         if filename is None:
             name = getattr(self, 'name', None) or self.__class__.__name__
             filename = '%s.%s' % (name, self._default_extension)
@@ -91,8 +93,7 @@ class File(Base):
         if engine is not None:
             self.engine = engine
 
-        if encoding is not None:
-            self.encoding = encoding
+        self.encoding = encoding
 
     def _kwargs(self):
         result = super(File, self)._kwargs()
@@ -217,8 +218,8 @@ class File(Base):
         view_method(filepath)
 
     _view_darwin = staticmethod(backend.view.darwin)
-    _view_linux = staticmethod(backend.view.linux)
     _view_freebsd = staticmethod(backend.view.freebsd)
+    _view_linux = staticmethod(backend.view.linux)
     _view_windows = staticmethod(backend.view.windows)
 
 
@@ -240,7 +241,7 @@ class Source(File):
 
     @classmethod
     def from_file(cls, filename, directory=None,
-                  format=None, engine=None, encoding=None):
+                  format=None, engine=None, encoding=File._encoding):
         """Return an instance with the source string read from the given file.
 
         Args:
@@ -252,13 +253,13 @@ class Source(File):
         """
         filepath = os.path.join(directory or '', filename)
         if encoding is None:
-            encoding = cls._encoding
+            encoding = locale.getpreferredencoding()
         with io.open(filepath, encoding=encoding) as fd:
             source = fd.read()
         return cls(source, filename, directory, format, engine, encoding)
 
     def __init__(self, source, filename=None, directory=None,
-                 format=None, engine=None, encoding=None):
+                 format=None, engine=None, encoding=File._encoding):
         super(Source, self).__init__(filename, directory, format, engine, encoding)
         self.source = source  #: The verbatim DOT source code string.
 

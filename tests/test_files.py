@@ -1,5 +1,7 @@
 # test_files.py
 
+import locale
+
 import pytest
 
 from graphviz.files import Source
@@ -37,6 +39,12 @@ def test_encoding(source):
 
     with pytest.raises(LookupError, match=r'encoding'):
         source.encoding = ''
+
+
+def test_encoding_none(source):
+    source_copy = source.copy()
+    source_copy.encoding = None
+    assert source_copy.encoding == locale.getpreferredencoding()
 
 
 def test_init(source):
@@ -146,11 +154,12 @@ def test_from_file(tmpdir, filename='hello.gv', directory='source_hello',
     (lpath / filename).write_text(data, encoding=encoding)
 
     source = Source.from_file(filename, str(lpath))
-
     assert source.encoding == 'utf-8'
 
-    source = Source.from_file(filename, str(lpath), encoding=encoding)
+    source = Source.from_file(filename, str(lpath), encoding=None)
+    assert source.encoding == locale.getpreferredencoding()
 
+    source = Source.from_file(filename, str(lpath), encoding=encoding)
     assert source.source == data
     assert source.filename == filename
     assert source.directory == str(lpath)

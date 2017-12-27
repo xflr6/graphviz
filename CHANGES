@@ -5,7 +5,10 @@ Changelog
 Version 0.8.2 (in development)
 ------------------------------
 
+Make default utf-8 encoding more visible.
 
+Set encoding = locale.getpreferredencoding() when encoding argument/property is
+set to None explicitly (follow stdlib io.open behaviour).
 
 
 Version 0.8.1
