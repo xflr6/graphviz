@@ -88,7 +88,7 @@ class Dot(files.File):
         if not keep_attrs:
             for a in (self.graph_attr, self.node_attr, self.edge_attr):
                 a.clear()
-        self.body[:] = []
+        del self.body[:]
 
     def __iter__(self, subgraph=False):
         """Yield the DOT source code line by line (as graph or subgraph)."""
@@ -155,8 +155,8 @@ class Dot(files.File):
         """
         edge = self._edge_plain
         quote = self._quote_edge
-        self.body.extend(edge % (quote(t), quote(h))
-            for t, h in tail_head_iter)
+        lines = (edge % (quote(t), quote(h)) for t, h in tail_head_iter)
+        self.body.extend(lines)
 
     def attr(self, kw=None, _attributes=None, **attrs):
         """Add a general or graph/node/edge attribute statement.
