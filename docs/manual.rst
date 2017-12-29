@@ -260,6 +260,60 @@ key-value pairs targeting the current (sub-)graph (e.g. for ``rankdir``,
     :align: center
 
 
+Quoting and HTML-like labels
+----------------------------
+
+The graph-building methods of :class:`.Graph` and :class:`.Digraph` objects
+automatically take care of quoting/escaping strings `where required <DOT_>`_
+(whitespace, keywords, double quotes, etc.):
+
+.. code:: python
+
+    >>> q = Digraph()
+    >>> q.edge('spam', 'eggs eggs')
+    >>> q.edge('node', '"here\'s a quote"')
+    >>> print(q.source)  # doctest: +NORMALIZE_WHITESPACE
+    digraph {
+        spam -> "eggs eggs"
+        "node" -> "\"here's a quote\""
+    }
+
+If a string starts with ``<`` and ends with ``>``, it is passed on as is,
+without quoting/escaping: The content between the angle brackets is treated by
+the engine as special **HTML string** that can be used for `HTML-like labels`_:
+
+.. code:: python
+
+    >>> h = Graph('html_table')
+    >>> h.node('tab', label='''<<TABLE>
+    ...  <TR>
+    ...    <TD>left</TD>
+    ...    <TD>right</TD>
+    ...  </TR>
+    ... </TABLE>>''')
+
+.. image:: _static/html_table.svg
+    :align: center
+
+For strings that should literally begin with ``<`` and end with ``>``, use the
+:func:`.nohtml` function to disable the special meaning of angled parenthesis
+and apply normal quoting/escaping (before ``0.8.2``, the only workaround was to
+add leading or trailing space, e.g. ``label=' <>'``):
+
+.. code:: python
+
+    >>> from graphviz import nohtml
+    >>> d = Digraph(format='svg')
+    >>> d.node('diamond', label=nohtml('<>'))
+    >>> print(d.source)  # doctest: +NORMALIZE_WHITESPACE
+    digraph {
+        diamond [label="<>"]
+    }
+
+.. image:: _static/diamond.svg
+    :align: center
+
+
 .. _subgraphs:
 
 Subgraphs & clusters
@@ -313,7 +367,7 @@ Both produce the same result:
     If the ``name`` of a subgraph begins with 'cluster' (all lowercase) the
     layout engine will treat it as a special cluster subgraph
     (:ref:`example <cluster.py>`). Also see the `Subgraphs and Clusters`
-    section of `the DOT language documentaion <DOT_>`_.
+    section of `the DOT language documentation <DOT_>`_.
 
 
 Engines
@@ -459,6 +513,7 @@ cycles.
 .. _DOT: https://www.graphviz.org/doc/info/lang.html
 .. _output file format: https://www.graphviz.org/doc/info/output.html
 .. _appearance: https://www.graphviz.org/doc/info/attrs.html
+.. _HTML-like labels: https://graphviz.gitlab.io/_pages/doc/info/shapes.html#html
 
 .. _Jupyter notebook: https://jupyter.org
 .. _notebook.ipynb: https://github.com/xflr6/graphviz/blob/master/examples/notebook.ipynb

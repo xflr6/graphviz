@@ -3,8 +3,9 @@
 """Quote strings to be valid DOT identifiers, assemble attribute lists."""
 
 import re
+import collections
 
-from . import tools
+from . import _compat, tools
 
 __all__ = ['quote', 'quote_edge', 'a_list', 'attr_list']
 
@@ -40,8 +41,11 @@ def quote(identifier,
 
     >>> quote('<<b>spam</b>>')
     '<<b>spam</b>>'
+
+    >>> quote(nohtml('<>'))
+    '"<>"'
     """
-    if html(identifier):
+    if html(identifier) and not isinstance(identifier, NoHtml):
         pass
     elif not valid_id(identifier) or dot_keyword(identifier):
         return '"%s"' % identifier.replace('"', '\\"')
@@ -109,3 +113,43 @@ def attr_list(label=None, kwargs=None, attributes=None):
     if not content:
         return ''
     return ' [%s]' % content
+
+
+class NoHtml(object):
+    """Mixin for string subclasses disabling fall-through of ``<...>``."""
+
+    __slots__ = ()
+
+    _doc = "%s subclass that does not treat ``<...>`` as DOT HTML string."
+
+    @classmethod
+    def _subcls(cls, other):
+        name = '%s_%s' % (cls.__name__, other.__name__)
+        bases = (other, cls)
+        ns = {'__doc__': cls._doc % other.__name__}
+        return type(name, bases, ns)
+
+
+NOHTML = collections.OrderedDict((c, NoHtml._subcls(c)) for c in _compat.string_classes)
+
+
+def nohtml(s):
+    """Return copy of ``s`` that will not treat ``<...>`` as DOT HTML string in quoting.
+
+    Args:
+        s: String in which leading ``<`` and trailing ``>`` should be treated as literal.
+    Raises:
+        TypeError: If s is not a ``str`` on Python 3, or a ``str``/``unicode`` on Python 2.
+
+    >>> quote('<>-*-<>')
+    '<>-*-<>'
+
+    >>> quote(nohtml('<>-*-<>'))
+    '"<>-*-<>"'
+    """
+    try:
+        subcls = NOHTML[type(s)]
+    except KeyError:
+        raise TypeError('%r does not have one of the required types: %r' %
+                        (s, list(NOHTML)))
+    return subcls(s) 

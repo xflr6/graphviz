@@ -69,3 +69,6 @@ Other
    :annotation:
 
 .. autofunction:: graphviz.version
+
+.. autofunction:: graphviz.nohtml
+

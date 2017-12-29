@@ -7,6 +7,7 @@ PY2 = sys.version_info[0] == 2
 
 
 if PY2:
+    string_classes = (str, unicode)  # needed individually for sublassing
     text_type = unicode
 
     def iteritems(d):
@@ -24,6 +25,7 @@ if PY2:
 
 
 else:
+    string_classes = (str,)
     text_type = str
 
     def iteritems(d):
