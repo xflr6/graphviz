@@ -11,17 +11,17 @@ __all__ = ['quote', 'quote_edge', 'a_list', 'attr_list']
 
 # http://www.graphviz.org/doc/info/lang.html
 
-ID = re.compile(r'([a-zA-Z_][a-zA-Z0-9_]*|-?(\.\d+|\d+(\.\d*)?))$')
-
-KEYWORD = re.compile(r'(?:node|edge|graph|digraph|subgraph|strict)$', re.IGNORECASE)
-
 HTML_STRING = re.compile(r'<.*>$', re.DOTALL)
 
-COMPASS = re.compile(r'(?:n|ne|e|se|s|sw|w|nw|c|_)$')  # TODO
+ID = re.compile(r'([a-zA-Z_][a-zA-Z0-9_]*|-?(\.\d+|\d+(\.\d*)?))$')
+
+KEYWORDS = {'node', 'edge', 'graph', 'digraph', 'subgraph', 'strict'}
+
+COMPASS = {'n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw', 'c', '_'}  # TODO
 
 
 def quote(identifier,
-          valid_id=ID.match, dot_keyword=KEYWORD.match, html=HTML_STRING.match):
+          html=HTML_STRING.match, valid_id=ID.match, dot_keywords=KEYWORDS):
     """Return DOT identifier from string, quote if needed.
 
     >>> quote('')
@@ -47,7 +47,7 @@ def quote(identifier,
     """
     if html(identifier) and not isinstance(identifier, NoHtml):
         pass
-    elif not valid_id(identifier) or dot_keyword(identifier):
+    elif not valid_id(identifier) or identifier.lower() in dot_keywords:
         return '"%s"' % identifier.replace('"', '\\"')
     return identifier
 
