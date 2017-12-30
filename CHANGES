@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.8.2 (in development)
-------------------------------
+Version 0.8.2
+-------------
 
 Add nohtml() to support labels of the form '<...>' (disabling their default
 treatment as HTML strings).
