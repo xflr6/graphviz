@@ -41,7 +41,7 @@ __all__ = [
 __title__ = 'graphviz'
 __version__ = '0.8.3.dev0'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
-__license__ = 'MIT, see LICENSE'
+__license__ = 'MIT, see LICENSE.txt'
 __copyright__ = 'Copyright (c) 2013-2017 Sebastian Bank'
 
 #: Set of known layout commands used for rendering ('dot', 'neato', ...)

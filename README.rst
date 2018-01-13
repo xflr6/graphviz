@@ -156,6 +156,3 @@ This package is distributed under the `MIT license`_.
 .. |Codecov| image:: https://codecov.io/gh/xflr6/graphviz/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/xflr6/graphviz
     :alt: Codecov
-.. |Coveralls| image:: https://img.shields.io/coveralls/xflr6/graphviz.svg
-    :target: https://coveralls.io/github/xflr6/graphviz
-    :alt: Coveralls

@@ -1,5 +1,6 @@
 # setup.py
 
+import io
 from setuptools import setup, find_packages
 
 setup(
@@ -19,7 +20,7 @@ setup(
         'test': ['mock>=2', 'pytest>=3.3', 'pytest-mock', 'pytest-cov'],
         'docs': ['sphinx>=1.3', 'sphinx-rtd-theme'],
     },
-    long_description=open('README.rst').read(),
+    long_description=io.open('README.rst', encoding='utf-8').read(),
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',

@@ -1,4 +1,4 @@
-include README.rst LICENSE CHANGES
+include README.rst LICENSE.txt CHANGES.txt
 include requirements.txt
 include run-tests.py try-examples.py
 recursive-include tests *.py

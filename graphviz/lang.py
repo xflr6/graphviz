@@ -152,4 +152,4 @@ def nohtml(s):
     except KeyError:
         raise TypeError('%r does not have one of the required types: %r' %
                         (s, list(NOHTML)))
-    return subcls(s) 
+    return subcls(s)

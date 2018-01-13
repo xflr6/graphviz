@@ -1,3 +1,3 @@
 .. _changelog:
 
-.. include:: ../CHANGES
+.. include:: ../CHANGES.txt
