@@ -97,7 +97,7 @@ def a_list(label=None, kwargs=None, attributes=None):
 def attr_list(label=None, kwargs=None, attributes=None):
     """Return assembled DOT attribute list string.
 
-    Sorts kwargs and attributes if they are plain dicts (to avoid
+    Sorts ``kwargs`` and ``attributes`` if they are plain dicts (to avoid
     unpredictable order from hash randomization in Python 3 versions).
 
     >>> attr_list()
@@ -116,11 +116,11 @@ def attr_list(label=None, kwargs=None, attributes=None):
 
 
 class NoHtml(object):
-    """Mixin for string subclasses disabling fall-through of ``<...>``."""
+    """Mixin for string subclasses disabling fall-through of ``'<...>'``."""
 
     __slots__ = ()
 
-    _doc = "%s subclass that does not treat ``<...>`` as DOT HTML string."
+    _doc = "%s subclass that does not treat ``'<...>'`` as DOT HTML string."
 
     @classmethod
     def _subcls(cls, other):
@@ -134,12 +134,12 @@ NOHTML = collections.OrderedDict((c, NoHtml._subcls(c)) for c in _compat.string_
 
 
 def nohtml(s):
-    """Return copy of ``s`` that will not treat ``<...>`` as DOT HTML string in quoting.
+    """Return copy of ``s`` that will not treat ``'<...>'`` as DOT HTML string in quoting.
 
     Args:
-        s: String in which leading ``<`` and trailing ``>`` should be treated as literal.
+        s: String in which leading ``'<'`` and trailing ``'>'`` should be treated as literal.
     Raises:
-        TypeError: If s is not a ``str`` on Python 3, or a ``str``/``unicode`` on Python 2.
+        TypeError: If ``s`` is not a ``str`` on Python 3, or a ``str``/``unicode`` on Python 2.
 
     >>> quote('<>-*-<>')
     '<>-*-<>'

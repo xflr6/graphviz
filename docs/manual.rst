@@ -146,8 +146,8 @@ use the :meth:`~.Graph.pipe`-method of your :class:`.Graph` or
 
 Note that :meth:`~.Graph.pipe` returns the raw ``stdout`` from the rendering
 command (``str`` on Python 2, ``bytes`` on Python 3): When piping into
-plain-text formats like ``svg`` or ``plain``, you usually want to decode the
-return value as shown above.
+plain-text formats like ``'svg'`` or ``'plain'``, you usually want to decode
+the return value as shown above.
 
 .. note::
 
@@ -233,7 +233,7 @@ with the target as first argument:
 
 By omitting its first argument, you can use it to set arbitrary attributes as
 key-value pairs targeting the current (sub-)graph (e.g. for ``rankdir``,
-``label``, or setting ``rank=same`` within a subgraph context):
+``label``, or setting ``rank='same'`` within a subgraph context):
 
 .. code:: python
 
@@ -278,7 +278,7 @@ automatically take care of quoting/escaping strings `where required <DOT_>`_
         "node" -> "\"here's a quote\""
     }
 
-If a string starts with ``<`` and ends with ``>``, it is passed on as is,
+If a string starts with ``'<'`` and ends with ``'>'``, it is passed on as is,
 without quoting/escaping: The content between the angle brackets is treated by
 the engine as special **HTML string** that can be used for `HTML-like labels`_:
 
@@ -295,10 +295,10 @@ the engine as special **HTML string** that can be used for `HTML-like labels`_:
 .. image:: _static/html_table.svg
     :align: center
 
-For strings that should literally begin with ``<`` and end with ``>``, use the
-:func:`.nohtml` function to disable the special meaning of angled parenthesis
-and apply normal quoting/escaping (before ``0.8.2``, the only workaround was to
-add leading or trailing space, e.g. ``label=' <>'``):
+For strings that should literally begin with ``'<'`` and end with ``'>'``, use
+the :func:`.nohtml` function to disable the special meaning of angled
+parenthesis and apply normal quoting/escaping (before ``0.8.2``, the only
+workaround was to add leading or trailing space, e.g. ``label=' <>'``):
 
 .. code:: python
 
@@ -364,7 +364,7 @@ Both produce the same result:
 
 .. note::
 
-    If the ``name`` of a subgraph begins with 'cluster' (all lowercase) the
+    If the ``name`` of a subgraph begins with ``'cluster'`` (all lowercase) the
     layout engine will treat it as a special cluster subgraph
     (:ref:`example <cluster.py>`). Also see the `Subgraphs and Clusters`
     section of `the DOT language documentation <DOT_>`_.
@@ -479,7 +479,7 @@ Integration with viewers
 ------------------------
 
 On platforms such as Windows, viewer programs opened by rendering with
-``view=true`` or the :meth:`~.Graph.view`-method might lock the (PDF, PNG,
+``view=True`` or the :meth:`~.Graph.view`-method might lock the (PDF, PNG,
 etc.) file for as long as the viewer is open (blocking re-rendering it with a
 ``Permission denied`` error). You can use the :func:`~tempfile.mktemp` function
 from the stdlib :mod:`tempfile` module to render to a different file for each

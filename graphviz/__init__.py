@@ -44,10 +44,10 @@ __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE.txt'
 __copyright__ = 'Copyright (c) 2013-2017 Sebastian Bank'
 
-#: Set of known layout commands used for rendering ('dot', 'neato', ...)
+#: Set of known layout commands used for rendering (``'dot'``, ``'neato'``, ...)
 ENGINES = ENGINES
 
-#: Set of known output formats for rendering ('pdf', 'png', ...)
+#: Set of known output formats for rendering (``'pdf'``, ``'png'``, ...)
 FORMATS = FORMATS
 
 ExecutableNotFound = ExecutableNotFound

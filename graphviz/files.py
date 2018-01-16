@@ -22,7 +22,7 @@ class Base(object):
 
     @property
     def format(self):
-        """The output format used for rendering ('pdf', 'png', ...)."""
+        """The output format used for rendering (``'pdf'``, ``'png'``, ...)."""
         return self._format
 
     @format.setter
@@ -34,7 +34,7 @@ class Base(object):
 
     @property
     def engine(self):
-        """The layout commmand used for rendering ('dot', 'neato', ...)."""
+        """The layout commmand used for rendering (``'dot'``, ``'neato'``, ...)."""
         return self._engine
 
     @engine.setter
@@ -109,11 +109,11 @@ class File(Base):
         """Return the source piped through the Graphviz layout command.
 
         Args:
-            format: The output format used for rendering ('pdf', 'png', etc.).
+            format: The output format used for rendering (``'pdf'``, ``'png'``, etc.).
         Returns:
             Binary (encoded) stdout of the layout command.
         Raises:
-            ValueError: If `format` is not known.
+            ValueError: If ``format`` is not known.
             graphviz.ExecutableNotFound: If the Graphviz executable is not found.
             subprocess.CalledProcessError: If the exit status is non-zero.
         """
@@ -134,7 +134,7 @@ class File(Base):
         """Save the DOT source to file. Ensure the file ends with a newline.
 
         Args:
-            filename: Filename for saving the source (defaults to `name` + '.gv')
+            filename: Filename for saving the source (defaults to ``name`` + ``'.gv'``)
             directory: (Sub)directory for source saving and rendering.
         Returns:
             The (possibly relative) path of the saved source file.
@@ -160,10 +160,10 @@ class File(Base):
         """Save the source to file and render with the Graphviz engine.
 
         Args:
-            filename: Filename for saving the source (defaults to `name` + '.gv')
+            filename: Filename for saving the source (defaults to ``name`` + ``'.gv'``)
             directory: (Sub)directory for source saving and rendering.
-            view(bool): Open the rendered result with the default application.
-            cleanup(bool): Delete the source file after rendering.
+            view (bool): Open the rendered result with the default application.
+            cleanup (bool): Delete the source file after rendering.
         Returns:
             The (possibly relative) path of the rendered file.
         Raises:
@@ -187,9 +187,9 @@ class File(Base):
         """Save the source to file, open the rendered result in a viewer.
 
         Args:
-            filename: Filename for saving the source (defaults to name + '.gv')
+            filename: Filename for saving the source (defaults to ``name`` + ``'.gv'``)
             directory: (Sub)directory for source saving and rendering.
-            cleanup(bool): Delete the source file after rendering.
+            cleanup (bool): Delete the source file after rendering.
         Returns:
             The (possibly relative) path of the rendered file.
         Raises:
@@ -228,14 +228,14 @@ class Source(File):
 
     Args:
         source: The verbatim DOT source code string.
-        filename: Filename for saving the source (defaults to 'Source.gv').
+        filename: Filename for saving the source (defaults to ``'Source.gv'``).
         directory: (Sub)directory for source saving and rendering.
-        format: Rendering output format ('pdf', 'png', ...).
-        engine: Layout command used ('dot', 'neato', ...).
+        format: Rendering output format (``'pdf'``, ``'png'``, ...).
+        engine: Layout command used (``'dot'``, ``'neato'``, ...).
         encoding: Encoding for saving the source.
 
-    .. note::
-        All parameters except `source` are optional. All of them can be changed
+    Note:
+        All parameters except ``source`` are optional. All of them can be changed
         under their corresponding attribute name after instance creation.
     """
 
@@ -247,8 +247,8 @@ class Source(File):
         Args:
             filename: Filename for loading/saving the source.
             directory: (Sub)directory for source loading/saving and rendering.
-            format: Rendering output format ('pdf', 'png', ...).
-            engine: Layout command used ('dot', 'neato', ...).
+            format: Rendering output format (``'pdf'``, ``'png'``, ...).
+            engine: Layout command used (``'dot'``, ``'neato'``, ...).
             encoding: Encoding for loading/saving the source.
         """
         filepath = os.path.join(directory or '', filename)

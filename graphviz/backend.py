@@ -80,7 +80,7 @@ class ExecutableNotFound(RuntimeError):
 
 
 def command(engine, format, filepath=None):
-    """Return args list for subprocess.Popen and name of the rendered file."""
+    """Return args list for ``subprocess.Popen`` and name of the rendered file."""
     if engine not in ENGINES:
         raise ValueError('unknown engine: %r' % engine)
     if format not in FORMATS:
@@ -95,17 +95,17 @@ def command(engine, format, filepath=None):
 
 
 def render(engine, format, filepath, quiet=False):
-    """Render file with Graphviz engine into format,  return result filename.
+    """Render file with Graphviz ``engine`` into ``format``,  return result filename.
 
     Args:
-        engine: The layout commmand used for rendering ('dot', 'neato', ...).
-        format: The output format used for rendering ('pdf', 'png', ...).
+        engine: The layout commmand used for rendering (``'dot'``, ``'neato'``, ...).
+        format: The output format used for rendering (``'pdf'``, ``'png'``, ...).
         filepath: Path to the DOT source file to render.
-        quiet(bool): Suppress stderr output on non-zero exit status.
+        quiet (bool): Suppress ``stderr`` output on non-zero exit status.
     Returns:
         The (possibly relative) path of the rendered file.
     Raises:
-        ValueError: If engine or format are not known.
+        ValueError: If ``engine`` or ``format`` are not known.
         graphviz.ExecutableNotFound: If the Graphviz executable is not found.
         subprocess.CalledProcessError: If the exit status is non-zero.
     """
@@ -132,17 +132,17 @@ def render(engine, format, filepath, quiet=False):
 
 
 def pipe(engine, format, data, quiet=False):
-    """Return data piped through Graphviz engine into format.
+    """Return ``data`` piped through Graphviz ``engine`` into ``format``.
 
     Args:
-        engine: The layout commmand used for rendering ('dot', 'neato', ...).
-        format: The output format used for rendering ('pdf', 'png', ...).
+        engine: The layout commmand used for rendering (``'dot'``, ``'neato'``, ...).
+        format: The output format used for rendering (``'pdf'``, ``'png'``, ...).
         data: The binary (encoded) DOT source string to render.
-        quiet(bool): Suppress stderr output on non-zero exit status.
+        quiet (bool): Suppress ``stderr`` output on non-zero exit status.
     Returns:
         Binary (encoded) stdout of the layout command.
     Raises:
-        ValueError: If engine or format are not known.
+        ValueError: If ``engine`` or ``format`` are not known.
         graphviz.ExecutableNotFound: If the Graphviz executable is not found.
         subprocess.CalledProcessError: If the exit status is non-zero.
     """
@@ -169,10 +169,10 @@ def pipe(engine, format, data, quiet=False):
 
 
 def version():
-    """Return the version number tuple from the stderr output of ``dot -V``.
+    """Return the version number tuple from the ``stderr`` output of ``dot -V``.
 
     Returns:
-        Two or three int version tuple.
+        Two or three ``int`` version ``tuple``.
     Raises:
         graphviz.ExecutableNotFound: If the Graphviz executable is not found.
         subprocess.CalledProcessError: If the exit status is non-zero.
