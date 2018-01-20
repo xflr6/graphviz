@@ -3,6 +3,16 @@
 API Reference
 =============
 
+.. autosummary::
+    :nosignatures:
+
+    ~graphviz.Graph
+    ~graphviz.Digraph
+    ~graphviz.Source
+    graphviz.render
+    graphviz.pipe
+    graphviz.view
+
 .. note::
 
     The two main classes :class:`.Graph` and :class:`.Digraph` (for creating
