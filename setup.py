@@ -16,7 +16,7 @@ setup(
     platforms='any',
     python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*',
     extras_require={
-        'dev': ['flake8', 'pep8-naming', 'wheel', 'twine'],
+        'dev': ['tox>=3.0', 'flake8', 'pep8-naming', 'wheel', 'twine'],
         'test': ['mock>=2', 'pytest>=3.4', 'pytest-mock', 'pytest-cov'],
         'docs': ['sphinx>=1.3', 'sphinx-rtd-theme'],
     },
