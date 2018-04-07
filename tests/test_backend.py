@@ -90,7 +90,7 @@ def test_pipe(capsys, svg_pattern, engine='dot', format_='svg',
 
 
 def test_pipe_pipe_invalid_data_mocked(mocker, py2, Popen, quiet):  # noqa: N803
-    stderr = mocker.patch('sys.stderr')
+    stderr = mocker.patch('sys.stderr', new_callable=mocker.NonCallableMock)
     proc = Popen.return_value
     proc.returncode = mocker.sentinel.returncode
     errs = mocker.Mock()

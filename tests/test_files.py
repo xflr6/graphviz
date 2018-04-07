@@ -60,7 +60,7 @@ def test_init_filename():
 
 def test__repr_svg_(mocker, source):
     kwargs = {'return_value.decode.return_value': mocker.sentinel.decoded}
-    pipe = mocker.patch.object(source, 'pipe', **kwargs)
+    pipe = mocker.patch.object(source, 'pipe', new_callable=mocker.Mock, **kwargs)
 
     assert source._repr_svg_() is mocker.sentinel.decoded
 
@@ -93,7 +93,7 @@ def test_filepath(test_platform, source):
 
 def test_save(mocker, py2, filename='filename', directory='directory'):
     source = Source(**SOURCE)
-    makedirs = mocker.patch('os.makedirs')
+    makedirs = mocker.patch('os.makedirs', new_callable=mocker.Mock)
     open_ = mocker.patch('io.open', mocker.mock_open())
 
     assert source.save(filename, directory) == source.filepath
@@ -108,9 +108,9 @@ def test_save(mocker, py2, filename='filename', directory='directory'):
 
 
 def test_render(mocker, render, source):
-    save = mocker.patch.object(source, 'save')
-    _view = mocker.patch.object(source, '_view')
-    remove = mocker.patch('os.remove')
+    save = mocker.patch.object(source, 'save', new_callable=mocker.Mock)
+    _view = mocker.patch.object(source, '_view', new_callable=mocker.Mock)
+    remove = mocker.patch('os.remove', new_callable=mocker.Mock)
 
     assert source.render(cleanup=True, view=True) is render.return_value
 
@@ -121,7 +121,7 @@ def test_render(mocker, render, source):
 
 
 def test_view(mocker, source):
-    render = mocker.patch.object(source, 'render')
+    render = mocker.patch.object(source, 'render', new_callable=mocker.Mock)
     kwargs = {'filename': 'filename', 'directory': 'directory', 'cleanup': True}
 
     assert source.view(**kwargs) is render.return_value
@@ -134,7 +134,8 @@ def test__view(mocker, platform, source):
         with pytest.raises(RuntimeError, match=r'support'):
             source._view('name', 'png')
     else:
-        _view_platform = mocker.patch.object(source, '_view_%s' % platform)
+        _view_platform = mocker.patch.object(source, '_view_%s' % platform,
+                                             new_callable=mocker.Mock)
 
         assert source._view(mocker.sentinel.name, 'png') is None
 
