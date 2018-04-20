@@ -23,11 +23,11 @@ Links
 -----
 
 - GitHub: https://github.com/xflr6/graphviz
-- PyPI: https://pypi.python.org/pypi/graphviz
+- PyPI: https://pypi.org/project/graphviz/
 - Documentation: https://graphviz.readthedocs.io
 - Changelog: https://graphviz.readthedocs.io/en/latest/changelog.html
 - Issue Tracker: https://github.com/xflr6/graphviz/issues
-- Download: https://pypi.python.org/pypi/graphviz#downloads
+- Download: https://pypi.org/project/graphviz/#files
 
 
 Installation
@@ -121,10 +121,10 @@ This package is distributed under the `MIT license`_.
 .. _example: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
 .. _Jupyter Qt Console: https://qtconsole.readthedocs.io
 
-.. _pygraphviz: https://pypi.python.org/pypi/pygraphviz
-.. _graphviz-python: https://pypi.python.org/pypi/graphviz-python
+.. _pygraphviz: https://pypi.org/project/pygraphviz/
+.. _graphviz-python: https://pypi.org/project/graphviz-python/
 .. _documentation: https://www.graphviz.org/pdf/gv.3python.pdf
-.. _pydot: https://pypi.python.org/pypi/pydot
+.. _pydot: https://pypi.org/project/pydot/
 
 .. _MIT license: https://opensource.org/licenses/MIT
 
@@ -133,20 +133,17 @@ This package is distributed under the `MIT license`_.
 
 
 .. |PyPI version| image:: https://img.shields.io/pypi/v/graphviz.svg
-    :target: https://pypi.python.org/pypi/graphviz
+    :target: https://pypi.org/project/graphviz/
     :alt: Latest PyPI Version
 .. |License| image:: https://img.shields.io/pypi/l/graphviz.svg
-    :target: https://pypi.python.org/pypi/graphviz
+    :target: https://pypi.org/project/graphviz/
     :alt: License
 .. |Supported Python| image:: https://img.shields.io/pypi/pyversions/graphviz.svg
-    :target: https://pypi.python.org/pypi/graphviz
+    :target: https://pypi.org/project/graphviz/
     :alt: Supported Python Versions
 .. |Format| image:: https://img.shields.io/pypi/format/graphviz.svg
-    :target: https://pypi.python.org/pypi/graphviz
+    :target: https://pypi.org/project/graphviz/
     :alt: Format
-.. |Downloads| image:: https://img.shields.io/pypi/dm/graphviz.svg
-    :target: https://pypi.python.org/pypi/graphviz
-    :alt: Downloads
 .. |Docs| image:: https://readthedocs.org/projects/graphviz/badge/?version=stable
     :target: https://graphviz.readthedocs.io/en/stable/
     :alt: Readthedocs
