@@ -29,7 +29,7 @@ def test_format(source):
 def test_engine(source):
     assert not SOURCE['engine'].islower()
 
-    source.engine == SOURCE['engine'].lower()
+    assert source.engine == SOURCE['engine'].lower()
     with pytest.raises(ValueError, match=r'engine'):
         source.engine = ''
 
