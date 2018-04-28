@@ -269,7 +269,8 @@ class Graph(Dot):
 class Digraph(Dot):
     """Directed graph source code in the DOT language."""
 
-    __doc__ += Graph.__doc__.partition('.')[2]
+    if isinstance(Graph.__doc__, str):
+        __doc__ += Graph.__doc__.partition('.')[2]
 
     _head = 'digraph %s{'
     _head_strict = 'strict %s' % _head
