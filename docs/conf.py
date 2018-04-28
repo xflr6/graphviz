@@ -49,7 +49,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'graphviz'
-copyright = u'2013-2017, Sebastian Bank'
+copyright = u'2013-2018, Sebastian Bank'
 author = u'Sebastian Bank'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -57,7 +57,7 @@ author = u'Sebastian Bank'
 # built documents.
 #
 # The short X.Y version.
-version = u'0.8.3.dev0'
+version = u'0.8.3'
 # The full version, including alpha/beta/rc tags.
 release = version
 

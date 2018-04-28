@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='graphviz',
-    version='0.8.3.dev0',
+    version='0.8.3',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Simple Python interface for Graphviz',

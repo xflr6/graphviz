@@ -2,10 +2,10 @@ Changelog
 =========
 
 
-Version 0.8.3 (in development)
-------------------------------
+Version 0.8.3
+-------------
 
-
+Fix compatibility with ``python -OO``.
 
 
 Version 0.8.2
