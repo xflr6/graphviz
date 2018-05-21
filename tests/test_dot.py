@@ -8,7 +8,7 @@ import pytest
 from graphviz.dot import Graph, Digraph
 
 
-@pytest.fixture(params=[Graph, Digraph]) 
+@pytest.fixture(params=[Graph, Digraph])
 def cls(request):
     return request.param
 
