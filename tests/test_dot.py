@@ -1,5 +1,4 @@
 # test_dot.py
-# flake8: noqa
 
 import itertools
 
@@ -124,26 +123,26 @@ def test_subgraph():
     dot.edges(['AD', 'BE', 'CF'])
 
     assert dot.source == '''graph {
-	{
-		A
-		B
-		C
-		A -- B [constraint=false]
-		A -- C
-		B -- C
-	}
-	{
-		D
-		E
-		F
-		D -- E [constraint=false]
-		D -- F
-		E -- F
-	}
-	edge [style=dashed]
-	A -- D
-	B -- E
-	C -- F
+\t{
+\t\tA
+\t\tB
+\t\tC
+\t\tA -- B [constraint=false]
+\t\tA -- C
+\t\tB -- C
+\t}
+\t{
+\t\tD
+\t\tE
+\t\tF
+\t\tD -- E [constraint=false]
+\t\tD -- F
+\t\tE -- F
+\t}
+\tedge [style=dashed]
+\tA -- D
+\tB -- E
+\tC -- F
 }'''
 
 
@@ -185,8 +184,8 @@ def test_label_html():
     dot.edge('struct1:f1', 'struct2:f0')
     dot.edge('struct1:f2', 'struct3:here')
     assert dot.source == '''digraph structs {
-	node [shape=plaintext]
-	struct1 [label=<
+\tnode [shape=plaintext]
+\tstruct1 [label=<
 <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
   <TR>
     <TD>left</TD>
@@ -194,14 +193,14 @@ def test_label_html():
     <TD PORT="f2">right</TD>
   </TR>
 </TABLE>>]
-	struct2 [label=<
+\tstruct2 [label=<
 <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
   <TR>
     <TD PORT="f0">one</TD>
     <TD>two</TD>
   </TR>
 </TABLE>>]
-	struct3 [label=<
+\tstruct3 [label=<
 <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
   <TR>
     <TD ROWSPAN="3">hello<BR/>world</TD>
@@ -218,6 +217,6 @@ def test_label_html():
     <TD COLSPAN="3">f</TD>
   </TR>
 </TABLE>>]
-	struct1:f1 -> struct2:f0
-	struct1:f2 -> struct3:here
+\tstruct1:f1 -> struct2:f0
+\tstruct1:f2 -> struct3:here
 }'''
