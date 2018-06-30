@@ -5,7 +5,7 @@ import subprocess
 import pytest
 
 from graphviz.backend import (render, pipe, version, view,
-                              ExecutableNotFound, STARTUPINFO)
+                              ExecutableNotFound, POPEN_KWARGS)
 
 
 def test_render_engine_unknown():
@@ -56,7 +56,8 @@ def test_render_mocked(mocker, check_call, quiet):
     else:
         stderr = None
     check_call.assert_called_once_with(['dot', '-Tpdf', '-O', 'nonfilepath'],
-                                       startupinfo=STARTUPINFO, stderr=stderr)
+                                       stderr=stderr,
+                                       **POPEN_KWARGS)
 
 
 @pytest.mark.usefixtures('empty_path')
@@ -101,8 +102,10 @@ def test_pipe_pipe_invalid_data_mocked(mocker, py2, Popen, quiet):  # noqa: N803
 
     assert e.value.returncode is mocker.sentinel.returncode
     Popen.assert_called_once_with(['dot', '-Tpng'],
-                                  stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                                  stderr=subprocess.PIPE, startupinfo=STARTUPINFO)
+                                  stdin=subprocess.PIPE,
+                                  stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE,
+                                  **POPEN_KWARGS)
     proc.communicate.assert_called_once_with(b'nongraph')
     if not quiet:
         if py2:
@@ -121,8 +124,10 @@ def test_pipe_mocked(mocker, Popen):  # noqa: N803
     assert pipe('dot', 'png', b'nongraph') is mocker.sentinel.outs
 
     Popen.assert_called_once_with(['dot', '-Tpng'],
-                                  stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                                  stderr=subprocess.PIPE, startupinfo=STARTUPINFO)
+                                  stdin=subprocess.PIPE,
+                                  stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE,
+                                  **POPEN_KWARGS)
     proc.communicate.assert_called_once_with(b'nongraph')
 
 
@@ -142,15 +147,17 @@ def test_version_parsefail_mocked(check_output):
     check_output.return_value = b'nonversioninfo'
     with pytest.raises(RuntimeError):
         version()
-    check_output.assert_called_once_with(['dot', '-V'], startupinfo=STARTUPINFO,
-                                         stderr=subprocess.STDOUT)
+    check_output.assert_called_once_with(['dot', '-V'],
+                                         stderr=subprocess.STDOUT,
+                                         **POPEN_KWARGS)
 
 
 def test_version_mocked(check_output):
     check_output.return_value = b'dot - graphviz version 1.2.3 (mocked)'
     assert version() == (1, 2, 3)
-    check_output.assert_called_once_with(['dot', '-V'], startupinfo=STARTUPINFO,
-                                         stderr=subprocess.STDOUT)
+    check_output.assert_called_once_with(['dot', '-V'],
+                                         stderr=subprocess.STDOUT,
+                                         **POPEN_KWARGS)
 
 
 def test_view(platform, Popen, startfile):  # noqa: N803

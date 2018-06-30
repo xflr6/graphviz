@@ -61,12 +61,16 @@ FORMATS = {  # http://www.graphviz.org/doc/info/output.html
 
 PLATFORM = platform.system().lower()
 
-STARTUPINFO = None
+POPEN_KWARGS = {}
 
 if PLATFORM == 'windows':  # pragma: no cover
-    STARTUPINFO = subprocess.STARTUPINFO()
-    STARTUPINFO.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-    STARTUPINFO.wShowWindow = subprocess.SW_HIDE
+    POPEN_KWARGS['startupinfo'] = subprocess.STARTUPINFO()
+    POPEN_KWARGS['startupinfo'].dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    POPEN_KWARGS['startupinfo'].wShowWindow = subprocess.SW_HIDE
+    # work around WinError 87 from https://bugs.python.org/issue19764
+    # https://github.com/python/cpython/commit/b2a6083eb0384f38839d3f1ed32262a3852026fa
+    if sys.version_info >= (3, 7):
+        POPEN_KWARGS['close_fds'] = False
 
 
 class ExecutableNotFound(RuntimeError):
@@ -121,7 +125,7 @@ def render(engine, format, filepath, quiet=False):
 
     with open(os.devnull, 'w') as stderr:
         try:
-            subprocess.check_call(args, startupinfo=STARTUPINFO, stderr=stderr)
+            subprocess.check_call(args, stderr=stderr, **POPEN_KWARGS)
         except OSError as e:
             if e.errno == errno.ENOENT:
                 raise ExecutableNotFound(args)
@@ -151,7 +155,7 @@ def pipe(engine, format, data, quiet=False):
     try:
         proc = subprocess.Popen(args, stdin=subprocess.PIPE,
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            startupinfo=STARTUPINFO)
+            **POPEN_KWARGS)
     except OSError as e:
         if e.errno == errno.ENOENT:
             raise ExecutableNotFound(args)
@@ -180,8 +184,8 @@ def version():
     """
     args = ['dot', '-V']
     try:
-        outs = subprocess.check_output(args, startupinfo=STARTUPINFO,
-                                       stderr=subprocess.STDOUT)
+        outs = subprocess.check_output(args, stderr=subprocess.STDOUT,
+                                       **POPEN_KWARGS)
     except OSError as e:
         if e.errno == errno.ENOENT:
             raise ExecutableNotFound(args)
