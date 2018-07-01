@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.8.4 (in development)
-------------------------------
+Version 0.8.4
+-------------
 
 Tag Python 3.7 support (work around subprocess close_fds issue on Windows).
 

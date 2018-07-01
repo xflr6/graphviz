@@ -69,6 +69,7 @@ if PLATFORM == 'windows':  # pragma: no cover
     POPEN_KWARGS['startupinfo'].wShowWindow = subprocess.SW_HIDE
     # work around WinError 87 from https://bugs.python.org/issue19764
     # https://github.com/python/cpython/commit/b2a6083eb0384f38839d3f1ed32262a3852026fa
+    # TODO: consider not reusing the instance instead (adapt test code for this)
     if sys.version_info >= (3, 7):
         POPEN_KWARGS['close_fds'] = False
 
