@@ -4,6 +4,11 @@ python:
   - "3.4"
   - "3.5"
   - "3.6"
+matrix:
+  include:
+    - python: "3.7"
+      dist: xenial
+      sudo: true
 cache: pip
 before_cache: rm -f $HOME/.cache/pip/log/debug.log
 addons:
