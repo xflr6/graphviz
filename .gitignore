@@ -19,6 +19,4 @@ Thumbs.db
 
 /test-output/
 
-/examples/*.gv
-/examples/*.pdf
 /examples/.ipynb_checkpoints/
