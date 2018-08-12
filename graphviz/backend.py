@@ -9,7 +9,7 @@ import platform
 import subprocess
 import contextlib
 
-from ._compat import stderr_write_binary
+from ._compat import stderr_write_bytes
 
 from . import tools
 
@@ -167,8 +167,7 @@ def pipe(engine, format, data, quiet=False):
     out, err = proc.communicate(data)
     if proc.returncode:
         if not quiet:
-            stderr_write_binary(err)
-            sys.stderr.flush()
+            stderr_write_bytes(err, flush=True)
         raise subprocess.CalledProcessError(proc.returncode, cmd, output=out)
 
     return out
