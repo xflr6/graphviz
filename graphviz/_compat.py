@@ -2,6 +2,7 @@
 
 import os
 import sys
+import subprocess
 
 PY2 = sys.version_info.major == 2
 
@@ -41,3 +42,23 @@ else:
         sys.stderr.write(data.decode(encoding))
         if flush:
             sys.stderr.flush()
+
+
+if sys.version_info < (3, 5):
+    class CalledProcessError(subprocess.CalledProcessError):
+
+        def __init__(self, returncode, cmd, output=None, stderr=None):
+            super(CalledProcessError, self).__init__(returncode, cmd, output)
+            self.stderr = stderr
+
+        @property
+        def stdout(self):
+            return self.output
+
+        @stdout.setter
+        def stdout(self, value):  # pragma: no cover
+            self.output = value
+
+
+else:
+    CalledProcessError = subprocess.CalledProcessError

@@ -40,16 +40,6 @@ def platform(monkeypatch, request):
 
 
 @pytest.fixture
-def check_call(mocker):
-    yield mocker.patch('subprocess.check_call')
-
-
-@pytest.fixture
-def check_output(mocker):
-    yield mocker.patch('subprocess.check_output')
-
-
-@pytest.fixture
 def Popen(mocker):  # noqa: N802
     yield mocker.patch('subprocess.Popen')
 

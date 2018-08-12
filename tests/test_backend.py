@@ -44,20 +44,18 @@ def test_render(capsys, tmpdir, engine='dot', format_='pdf',
     assert capsys.readouterr() == ('', '')
 
 
-def test_render_mocked(mocker, check_call, quiet):
-    open_ = mocker.patch('io.open', mocker.mock_open())
-    mocker.patch('os.devnull', mocker.sentinel.devnull)
+def test_render_mocked(mocker, Popen, quiet):
+    proc = Popen.return_value
+    proc.returncode = 0
+    proc.communicate.return_value = (mocker.sentinel.out, mocker.sentinel.err)
 
     assert render('dot', 'pdf', 'nonfilepath', quiet=quiet) == 'nonfilepath.pdf'
 
-    if quiet:
-        open_.assert_called_once_with(mocker.sentinel.devnull, 'w')
-        stderr = open_.return_value
-    else:
-        stderr = None
-    check_call.assert_called_once_with(['dot', '-Tpdf', '-O', 'nonfilepath'],
-                                       stderr=stderr,
-                                       **POPEN_KWARGS)
+    Popen.assert_called_once_with(['dot', '-Tpdf', '-O', 'nonfilepath'],
+                                  stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE,
+                                  **POPEN_KWARGS)
+    proc.communicate.assert_called_once_with(None)
 
 
 @pytest.mark.usefixtures('empty_path')
@@ -101,6 +99,8 @@ def test_pipe_pipe_invalid_data_mocked(mocker, py2, Popen, quiet):  # noqa: N803
         pipe('dot', 'png', b'nongraph', quiet=quiet)
 
     assert e.value.returncode is mocker.sentinel.returncode
+    assert e.value.stdout is mocker.sentinel.out
+    assert e.value.stderr is err
     Popen.assert_called_once_with(['dot', '-Tpng'],
                                   stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE,
@@ -143,21 +143,33 @@ def test_version(capsys):
     assert capsys.readouterr() == ('', '')
 
 
-def test_version_parsefail_mocked(check_output):
-    check_output.return_value = b'nonversioninfo'
+def test_version_parsefail_mocked(Popen):
+    proc = Popen.return_value
+    proc.returncode = 0
+    proc.communicate.return_value = (b'nonversioninfo', None)
+
     with pytest.raises(RuntimeError):
         version()
-    check_output.assert_called_once_with(['dot', '-V'],
-                                         stderr=subprocess.STDOUT,
-                                         **POPEN_KWARGS)
+
+    Popen.assert_called_once_with(['dot', '-V'],
+                                  stdout=subprocess.PIPE,
+                                  stderr=subprocess.STDOUT,
+                                  **POPEN_KWARGS)
+    proc.communicate.assert_called_once_with(None)
 
 
-def test_version_mocked(check_output):
-    check_output.return_value = b'dot - graphviz version 1.2.3 (mocked)'
+def test_version_mocked(Popen):
+    proc = Popen.return_value
+    proc.returncode = 0
+    proc.communicate.return_value = (b'dot - graphviz version 1.2.3 (mocked)', None)
+
     assert version() == (1, 2, 3)
-    check_output.assert_called_once_with(['dot', '-V'],
-                                         stderr=subprocess.STDOUT,
-                                         **POPEN_KWARGS)
+
+    Popen.assert_called_once_with(['dot', '-V'],
+                                  stdout=subprocess.PIPE,
+                                  stderr=subprocess.STDOUT,
+                                  **POPEN_KWARGS)
+    proc.communicate.assert_called_once_with(None)
 
 
 def test_view(platform, Popen, startfile):  # noqa: N803

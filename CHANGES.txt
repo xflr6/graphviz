@@ -5,7 +5,7 @@ Changelog
 Version 0.8.5 (in development)
 ------------------------------
 
-
+Include stderr from command in CalledProcessError exception.
 
 
 Version 0.8.4
