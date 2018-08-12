@@ -91,12 +91,13 @@ def command(engine, format, filepath=None):
     if format not in FORMATS:
         raise ValueError('unknown format: %r' % format)
 
-    args, rendered = [engine, '-T%s' % format], None
+    cmd = [engine, '-T%s' % format]
+    rendered = None
     if filepath is not None:
-        args.extend(['-O', filepath])
+        cmd.extend(['-O', filepath])
         rendered = '%s.%s' % (filepath, format)
 
-    return args, rendered
+    return cmd, rendered
 
 
 def render(engine, format, filepath, quiet=False):
@@ -114,7 +115,7 @@ def render(engine, format, filepath, quiet=False):
         graphviz.ExecutableNotFound: If the Graphviz executable is not found.
         subprocess.CalledProcessError: If the exit status is non-zero.
     """
-    args, rendered = command(engine, format, filepath)
+    cmd, rendered = command(engine, format, filepath)
 
     if quiet:
         open = io.open
@@ -126,10 +127,10 @@ def render(engine, format, filepath, quiet=False):
 
     with open(os.devnull, 'w') as stderr:
         try:
-            subprocess.check_call(args, stderr=stderr, **POPEN_KWARGS)
+            subprocess.check_call(cmd, stderr=stderr, **POPEN_KWARGS)
         except OSError as e:
             if e.errno == errno.ENOENT:
-                raise ExecutableNotFound(args)
+                raise ExecutableNotFound(cmd)
             else:  # pragma: no cover
                 raise
 
@@ -151,26 +152,26 @@ def pipe(engine, format, data, quiet=False):
         graphviz.ExecutableNotFound: If the Graphviz executable is not found.
         subprocess.CalledProcessError: If the exit status is non-zero.
     """
-    args, _ = command(engine, format)
+    cmd, _ = command(engine, format)
 
     try:
-        proc = subprocess.Popen(args, stdin=subprocess.PIPE,
+        proc = subprocess.Popen(cmd, stdin=subprocess.PIPE,
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             **POPEN_KWARGS)
     except OSError as e:
         if e.errno == errno.ENOENT:
-            raise ExecutableNotFound(args)
+            raise ExecutableNotFound(cmd)
         else:  # pragma: no cover
             raise
 
-    outs, errs = proc.communicate(data)
+    out, err = proc.communicate(data)
     if proc.returncode:
         if not quiet:
-            stderr_write_binary(errs)
+            stderr_write_binary(err)
             sys.stderr.flush()
-        raise subprocess.CalledProcessError(proc.returncode, args, output=outs)
+        raise subprocess.CalledProcessError(proc.returncode, cmd, output=out)
 
-    return outs
+    return out
 
 
 def version():
@@ -183,17 +184,17 @@ def version():
         subprocess.CalledProcessError: If the exit status is non-zero.
         RuntimmeError: If the output cannot be parsed into a version number.
     """
-    args = ['dot', '-V']
+    cmd = ['dot', '-V']
     try:
-        outs = subprocess.check_output(args, stderr=subprocess.STDOUT,
-                                       **POPEN_KWARGS)
+        out = subprocess.check_output(cmd, stderr=subprocess.STDOUT,
+                                      **POPEN_KWARGS)
     except OSError as e:
         if e.errno == errno.ENOENT:
-            raise ExecutableNotFound(args)
+            raise ExecutableNotFound(cmd)
         else:  # pragma: no cover
             raise
 
-    info = outs.decode('ascii')
+    info = out.decode('ascii')
     ma = re.search(r'graphviz version (\d+\.\d+(?:\.\d+)?) ', info)
     if ma is None:
         raise RuntimeError

@@ -94,8 +94,8 @@ def test_pipe_pipe_invalid_data_mocked(mocker, py2, Popen, quiet):  # noqa: N803
     stderr = mocker.patch('sys.stderr', new_callable=mocker.NonCallableMock)
     proc = Popen.return_value
     proc.returncode = mocker.sentinel.returncode
-    errs = mocker.Mock()
-    proc.communicate.return_value = mocker.sentinel.outs, errs
+    err = mocker.Mock()
+    proc.communicate.return_value = (mocker.sentinel.out, err)
 
     with pytest.raises(subprocess.CalledProcessError) as e:
         pipe('dot', 'png', b'nongraph', quiet=quiet)
@@ -109,19 +109,19 @@ def test_pipe_pipe_invalid_data_mocked(mocker, py2, Popen, quiet):  # noqa: N803
     proc.communicate.assert_called_once_with(b'nongraph')
     if not quiet:
         if py2:
-            stderr.write.assert_called_once_with(errs)
+            stderr.write.assert_called_once_with(err)
         else:
-            errs.decode.assert_called_once_with(stderr.encoding)
-            stderr.write.assert_called_once_with(errs.decode.return_value)
+            err.decode.assert_called_once_with(stderr.encoding)
+            stderr.write.assert_called_once_with(err.decode.return_value)
         stderr.flush.assert_called_once_with()
 
 
 def test_pipe_mocked(mocker, Popen):  # noqa: N803
     proc = Popen.return_value
     proc.returncode = 0
-    proc.communicate.return_value = mocker.sentinel.outs, mocker.sentinel.errs
+    proc.communicate.return_value = (mocker.sentinel.out, mocker.sentinel.err)
 
-    assert pipe('dot', 'png', b'nongraph') is mocker.sentinel.outs
+    assert pipe('dot', 'png', b'nongraph') is mocker.sentinel.out
 
     Popen.assert_called_once_with(['dot', '-Tpng'],
                                   stdin=subprocess.PIPE,
