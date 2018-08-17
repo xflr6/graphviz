@@ -116,9 +116,9 @@ def run(cmd, input=None, capture_output=False, check=False, quiet=False, **kwarg
             raise
 
     out, err = proc.communicate(input)
+    if not quiet and err:
+        stderr_write_bytes(err, flush=True)
     if check and proc.returncode:
-        if not quiet and err is not None:
-            stderr_write_bytes(err, flush=True)
         raise CalledProcessError(proc.returncode, cmd, output=out, stderr=err)
     return out, err
 
@@ -130,7 +130,7 @@ def render(engine, format, filepath, quiet=False):
         engine: The layout commmand used for rendering (``'dot'``, ``'neato'``, ...).
         format: The output format used for rendering (``'pdf'``, ``'png'``, ...).
         filepath: Path to the DOT source file to render.
-        quiet (bool): Suppress ``stderr`` output on non-zero exit status.
+        quiet (bool): Suppress ``stderr`` output.
     Returns:
         The (possibly relative) path of the rendered file.
     Raises:
@@ -150,7 +150,7 @@ def pipe(engine, format, data, quiet=False):
         engine: The layout commmand used for rendering (``'dot'``, ``'neato'``, ...).
         format: The output format used for rendering (``'pdf'``, ``'png'``, ...).
         data: The binary (encoded) DOT source string to render.
-        quiet (bool): Suppress ``stderr`` output on non-zero exit status.
+        quiet (bool): Suppress ``stderr`` output.
     Returns:
         Binary (encoded) stdout of the layout command.
     Raises:

@@ -2,10 +2,17 @@ Changelog
 =========
 
 
-Version 0.8.5 (in development)
-------------------------------
+Version 0.9 (in development)
+----------------------------
 
-Include stderr from command in CalledProcessError exception.
+Use sys.stderr to write stderr output from rendering process to stderr (instead
+of file descriptor inhertiance). Ensures stderr is passed in special
+enviroments such as IDLE.
+
+Make quiet=True also suppress stderr on success of render() and pipe() (zero
+exit-status).
+
+Include stderr from rendering process in CalledProcessError exception.
 
 
 Version 0.8.4

@@ -44,10 +44,10 @@ def test_render(capsys, tmpdir, engine='dot', format_='pdf',
     assert capsys.readouterr() == ('', '')
 
 
-def test_render_mocked(mocker, Popen, quiet):
+def test_render_mocked(capsys, mocker, Popen, quiet):
     proc = Popen.return_value
     proc.returncode = 0
-    proc.communicate.return_value = (mocker.sentinel.out, mocker.sentinel.err)
+    proc.communicate.return_value = (mocker.sentinel.out, b'stderr')
 
     assert render('dot', 'pdf', 'nonfilepath', quiet=quiet) == 'nonfilepath.pdf'
 
@@ -56,6 +56,7 @@ def test_render_mocked(mocker, Popen, quiet):
                                   stderr=subprocess.PIPE,
                                   **POPEN_KWARGS)
     proc.communicate.assert_called_once_with(None)
+    assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
 @pytest.mark.usefixtures('empty_path')
@@ -116,12 +117,12 @@ def test_pipe_pipe_invalid_data_mocked(mocker, py2, Popen, quiet):  # noqa: N803
         stderr.flush.assert_called_once_with()
 
 
-def test_pipe_mocked(mocker, Popen):  # noqa: N803
+def test_pipe_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
     proc = Popen.return_value
     proc.returncode = 0
-    proc.communicate.return_value = (mocker.sentinel.out, mocker.sentinel.err)
+    proc.communicate.return_value = (mocker.sentinel.out, b'stderr')
 
-    assert pipe('dot', 'png', b'nongraph') is mocker.sentinel.out
+    assert pipe('dot', 'png', b'nongraph', quiet=quiet) is mocker.sentinel.out
 
     Popen.assert_called_once_with(['dot', '-Tpng'],
                                   stdin=subprocess.PIPE,
@@ -129,6 +130,7 @@ def test_pipe_mocked(mocker, Popen):  # noqa: N803
                                   stderr=subprocess.PIPE,
                                   **POPEN_KWARGS)
     proc.communicate.assert_called_once_with(b'nongraph')
+    assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
 @pytest.mark.usefixtures('empty_path')
