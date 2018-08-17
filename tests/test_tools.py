@@ -12,9 +12,9 @@ def itertree(root):
     for path, dirs, files in os.walk(root):
         base = os.path.relpath(path, root)
         rel_path = functools.partial(os.path.join, base if base != '.' else '')
-        for is_file, names in [(False, dirs), (True, files)]:
+        for is_file, names in enumerate((dirs, files)):
             for n in names:
-                yield is_file, rel_path(n).replace('\\', '/')
+                yield bool(is_file), rel_path(n).replace('\\', '/')
 
 
 def test_mkdirs_invalid(tmpdir):
