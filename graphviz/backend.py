@@ -61,18 +61,6 @@ FORMATS = {  # http://www.graphviz.org/doc/info/output.html
 
 PLATFORM = platform.system().lower()
 
-POPEN_KWARGS = {}
-
-if PLATFORM == 'windows':  # pragma: no cover
-    POPEN_KWARGS['startupinfo'] = subprocess.STARTUPINFO()
-    POPEN_KWARGS['startupinfo'].dwFlags |= subprocess.STARTF_USESHOWWINDOW
-    POPEN_KWARGS['startupinfo'].wShowWindow = subprocess.SW_HIDE
-    # work around WinError 87 from https://bugs.python.org/issue19764
-    # https://github.com/python/cpython/commit/b2a6083eb0384f38839d3f1ed32262a3852026fa
-    # TODO: consider not reusing the instance instead (adapt test code for this)
-    if sys.version_info >= (3, 7):
-        POPEN_KWARGS['close_fds'] = False
-
 
 class ExecutableNotFound(RuntimeError):
     """Exception raised if the Graphviz executable is not found."""
@@ -105,7 +93,13 @@ def run(cmd, input=None, capture_output=False, check=False, quiet=False, **kwarg
         kwargs['stdin'] = subprocess.PIPE
     if capture_output:
         kwargs['stdout'] = kwargs['stderr'] = subprocess.PIPE
-    kwargs.update(POPEN_KWARGS)
+
+    if PLATFORM == 'windows':  # pragma: no cover
+        kwargs['startupinfo'] = startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        startupinfo.wShowWindow = subprocess.SW_HIDE
+    else:
+        kwargs['startupinfo'] = None
 
     try:
         proc = subprocess.Popen(cmd, **kwargs)
