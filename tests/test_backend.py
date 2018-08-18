@@ -47,7 +47,7 @@ def test_render(capsys, tmpdir, engine='dot', format_='pdf',
 def test_render_mocked(capsys, mocker, Popen, quiet):
     proc = Popen.return_value
     proc.returncode = 0
-    proc.communicate.return_value = (mocker.sentinel.out, b'stderr')
+    proc.communicate.return_value = (b'stdout', b'stderr')
 
     assert render('dot', 'pdf', 'nonfilepath', quiet=quiet) == 'nonfilepath.pdf'
 
