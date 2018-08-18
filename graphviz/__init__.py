@@ -39,7 +39,7 @@ __all__ = [
 ]
 
 __title__ = 'graphviz'
-__version__ = '0.9.dev0'
+__version__ = '0.9'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE.txt'
 __copyright__ = 'Copyright (c) 2013-2018 Sebastian Bank'

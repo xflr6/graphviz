@@ -2,12 +2,14 @@ Changelog
 =========
 
 
-Version 0.9 (in development)
-----------------------------
+Version 0.9
+-----------
 
 Use sys.stderr to write stderr output from rendering process to stderr (instead
 of file descriptor inhertiance). Ensures stderr is passed in special
 enviroments such as IDLE.
+
+Suppress rendering process stdout in render().
 
 Make quiet=True also suppress stderr on success of render() and pipe() (zero
 exit-status).
