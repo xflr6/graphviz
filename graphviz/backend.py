@@ -85,21 +85,25 @@ def command(engine, format, filepath=None):
     return cmd, rendered
 
 
+if PLATFORM == 'windows':  # pragma: no cover
+    def get_startupinfo():
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        startupinfo.wShowWindow = subprocess.SW_HIDE
+        return startupinfo
+else:
+    def get_startupinfo():
+        return None
+
+
 def run(cmd, input=None, capture_output=False, check=False, quiet=False, **kwargs):
     if input is not None:
         kwargs['stdin'] = subprocess.PIPE
     if capture_output:
         kwargs['stdout'] = kwargs['stderr'] = subprocess.PIPE
 
-    if PLATFORM == 'windows':  # pragma: no cover
-        kwargs['startupinfo'] = startupinfo = subprocess.STARTUPINFO()
-        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-        startupinfo.wShowWindow = subprocess.SW_HIDE
-    else:
-        kwargs['startupinfo'] = None
-
     try:
-        proc = subprocess.Popen(cmd, **kwargs)
+        proc = subprocess.Popen(cmd, startupinfo=get_startupinfo(), **kwargs)
     except OSError as e:
         if e.errno == errno.ENOENT:
             raise ExecutableNotFound(cmd)
@@ -107,10 +111,12 @@ def run(cmd, input=None, capture_output=False, check=False, quiet=False, **kwarg
             raise
 
     out, err = proc.communicate(input)
+
     if not quiet and err:
         stderr_write_bytes(err, flush=True)
     if check and proc.returncode:
         raise CalledProcessError(proc.returncode, cmd, output=out, stderr=err)
+
     return out, err
 
 

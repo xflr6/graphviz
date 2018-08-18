@@ -1,5 +1,6 @@
 # test_backend.py
 
+import platform
 import subprocess
 
 import pytest
@@ -7,18 +8,15 @@ import pytest
 from graphviz.backend import render, pipe, version, view, ExecutableNotFound
 
 
-@pytest.fixture(scope='session')
-def check_startupinfo(test_platform):
-    if test_platform == 'windows':
-        def check_func(Popen):
-            startupinfo = Popen.call_args[1]['startupinfo']
-            assert isinstance(startupinfo, subprocess.STARTUPINFO)
-            assert startupinfo.dwFlags & subprocess.STARTF_USESHOWWINDOW
-            assert startupinfo.wShowWindow == subprocess.SW_HIDE
-    else:
-        def check_func(Popen):
-            assert Popen.call_args[1]['startupinfo'] is None
-    return check_func
+if platform.system().lower() == 'windows':
+    def check_startupinfo(Popen):
+        startupinfo = Popen.call_args[1]['startupinfo']
+        assert isinstance(startupinfo, subprocess.STARTUPINFO)
+        assert startupinfo.dwFlags & subprocess.STARTF_USESHOWWINDOW
+        assert startupinfo.wShowWindow == subprocess.SW_HIDE
+else:
+    def check_startupinfo(Popen):
+        assert Popen.call_args[1]['startupinfo'] is None
 
 
 def test_render_engine_unknown():
@@ -57,7 +55,7 @@ def test_render(capsys, tmpdir, engine='dot', format_='pdf',
     assert capsys.readouterr() == ('', '')
 
 
-def test_render_mocked(capsys, mocker, Popen, check_startupinfo, quiet):
+def test_render_mocked(capsys, mocker, Popen, quiet):
     proc = Popen.return_value
     proc.returncode = 0
     proc.communicate.return_value = (b'stdout', b'stderr')
@@ -103,7 +101,7 @@ def test_pipe(capsys, svg_pattern, engine='dot', format_='svg',
     assert capsys.readouterr() == ('', '')
 
 
-def test_pipe_pipe_invalid_data_mocked(mocker, py2, Popen, check_startupinfo, quiet):  # noqa: N803
+def test_pipe_pipe_invalid_data_mocked(mocker, py2, Popen, quiet):  # noqa: N803
     stderr = mocker.patch('sys.stderr', new_callable=mocker.NonCallableMock)
     proc = Popen.return_value
     proc.returncode = mocker.sentinel.returncode
@@ -132,7 +130,7 @@ def test_pipe_pipe_invalid_data_mocked(mocker, py2, Popen, check_startupinfo, qu
         stderr.flush.assert_called_once_with()
 
 
-def test_pipe_mocked(capsys, mocker, Popen, check_startupinfo, quiet):  # noqa: N803
+def test_pipe_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
     proc = Popen.return_value
     proc.returncode = 0
     proc.communicate.return_value = (mocker.sentinel.out, b'stderr')
@@ -161,7 +159,7 @@ def test_version(capsys):
     assert capsys.readouterr() == ('', '')
 
 
-def test_version_parsefail_mocked(mocker, Popen, check_startupinfo):
+def test_version_parsefail_mocked(mocker, Popen):
     proc = Popen.return_value
     proc.returncode = 0
     proc.communicate.return_value = (b'nonversioninfo', None)
@@ -177,7 +175,7 @@ def test_version_parsefail_mocked(mocker, Popen, check_startupinfo):
     proc.communicate.assert_called_once_with(None)
 
 
-def test_version_mocked(mocker, Popen, check_startupinfo):
+def test_version_mocked(mocker, Popen):
     proc = Popen.return_value
     proc.returncode = 0
     proc.communicate.return_value = (b'dot - graphviz version 1.2.3 (mocked)', None)
