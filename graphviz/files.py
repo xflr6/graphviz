@@ -122,9 +122,9 @@ class File(Base):
 
         data = text_type(self.source).encode(self._encoding)
 
-        outs = backend.pipe(self._engine, format, data)
+        out = backend.pipe(self._engine, format, data)
 
-        return outs
+        return out
 
     @property
     def filepath(self):
