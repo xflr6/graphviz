@@ -22,6 +22,7 @@ if PY2:
                 raise
 
     def stderr_write_bytes(data, flush=False):
+        """Write data str to sys.stderr (flush if requested)."""
         sys.stderr.write(data)
         if flush:
             sys.stderr.flush()
@@ -38,6 +39,7 @@ else:
         return os.makedirs(name, mode, exist_ok=exist_ok)
 
     def stderr_write_bytes(data, flush=False):
+        """Encode data str and write to sys.stderr (flush if requested)."""
         encoding = sys.stderr.encoding or sys.getdefaultencoding()
         sys.stderr.write(data.decode(encoding))
         if flush:

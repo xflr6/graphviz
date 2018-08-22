@@ -87,16 +87,19 @@ def command(engine, format, filepath=None):
 
 if PLATFORM == 'windows':  # pragma: no cover
     def get_startupinfo():
+        """Return subprocess.STARTUPINFO instance hiding the console window."""
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         startupinfo.wShowWindow = subprocess.SW_HIDE
         return startupinfo
 else:
     def get_startupinfo():
+        """Return None for startupinfo argument of ``subprocess.Popen``."""
         return None
 
 
 def run(cmd, input=None, capture_output=False, check=False, quiet=False, **kwargs):
+    """Run the command described by cmd and return its (stdout, stderr) tuple."""
     if input is not None:
         kwargs['stdin'] = subprocess.PIPE
     if capture_output:
