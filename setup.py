@@ -18,7 +18,7 @@ setup(
     extras_require={
         'dev': ['tox>=3.0', 'flake8', 'pep8-naming', 'wheel', 'twine'],
         'test': ['mock>=2', 'pytest>=3.4', 'pytest-mock>=1.8', 'pytest-cov'],
-        'docs': ['sphinx>=1.3', 'sphinx-rtd-theme'],
+        'docs': ['sphinx>=1.7', 'sphinx-rtd-theme'],
     },
     long_description=io.open('README.rst', encoding='utf-8').read(),
     classifiers=[
