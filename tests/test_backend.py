@@ -5,7 +5,9 @@ import subprocess
 
 import pytest
 
-from graphviz.backend import render, pipe, version, view, ExecutableNotFound
+from graphviz.backend import (
+    render, pipe, version, view,
+    ExecutableNotFound, RequiredArgumentError)
 
 
 if platform.system().lower() == 'windows':
@@ -20,13 +22,28 @@ else:
 
 
 def test_render_engine_unknown():
-    with pytest.raises(ValueError, match=r'engine'):
+    with pytest.raises(ValueError, match=r'unknown engine'):
         render('', 'pdf', 'nonfilepath')
 
 
 def test_render_format_unknown():
-    with pytest.raises(ValueError, match=r'format'):
+    with pytest.raises(ValueError, match=r'unknown format'):
         render('dot', '', 'nonfilepath')
+
+
+def test_render_renderer_unknown():
+    with pytest.raises(ValueError, match=r'unknown renderer'):
+        render('dot', 'ps', 'nonfilepath', '', None)
+
+
+def test_render_renderer_missing():
+    with pytest.raises(RequiredArgumentError, match=r'without renderer'):
+        render('dot', 'ps', 'nonfilepath', None, 'core')
+
+
+def test_render_formatter_unknown():
+    with pytest.raises(ValueError, match=r'unknown formatter'):
+        render('dot', 'ps', 'nonfilepath', 'ps', '')
 
 
 @pytest.mark.usefixtures('empty_path')
@@ -43,13 +60,18 @@ def test_render_missing_file(quiet, engine='dot', format_='pdf'):
 
 
 @pytest.exe
-def test_render(capsys, tmpdir, engine='dot', format_='pdf',
+@pytest.mark.parametrize('format_, renderer, formatter, expected_suffix', [
+    ('pdf', None, None, 'pdf'),
+    ('plain', 'dot', 'core', 'core.dot.plain'),
+])
+@pytest.mark.parametrize('engine', ['dot'])
+def test_render(capsys, tmpdir, engine, format_, renderer, formatter, expected_suffix,
                 filename='hello.gv', data=b'digraph { hello -> world }'):
     lpath = tmpdir / filename
     lpath.write_binary(data)
-    rendered = lpath.new(ext='%s.%s' % (lpath.ext, format_))
+    rendered = lpath.new(ext='%s.%s' % (lpath.ext, expected_suffix))
 
-    assert render(engine, format_, str(lpath)) == str(rendered)
+    assert render(engine, format_, str(lpath), renderer, formatter) == str(rendered)
 
     assert rendered.size()
     assert capsys.readouterr() == ('', '')
@@ -93,9 +115,11 @@ def test_pipe_invalid_data(capsys, quiet, engine='dot', format_='svg'):
 
 
 @pytest.exe
-def test_pipe(capsys, svg_pattern, engine='dot', format_='svg',
+@pytest.mark.parametrize('format_, renderer, formatter', [('svg', None, None)])
+@pytest.mark.parametrize('engine', ['dot'])
+def test_pipe(capsys, svg_pattern, engine, format_, renderer, formatter,
               data=b'graph { spam }'):
-    src = pipe(engine, format_, data).decode('ascii')
+    src = pipe(engine, format_, data, renderer, formatter).decode('ascii')
 
     assert svg_pattern.match(src)
     assert capsys.readouterr() == ('', '')

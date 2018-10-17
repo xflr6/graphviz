@@ -105,15 +105,18 @@ class File(Base):
     def _repr_svg_(self):
         return self.pipe(format='svg').decode(self._encoding)
 
-    def pipe(self, format=None):
+    def pipe(self, format=None, renderer=None, formatter=None):
         """Return the source piped through the Graphviz layout command.
 
         Args:
             format: The output format used for rendering (``'pdf'``, ``'png'``, etc.).
+            renderer: The output renderer used for rendering (``'cairo'``, ``'gd'``, ...).
+            formatter: The output formatter used for rendering (``'cairo'``, ``'gd'``, ...).
         Returns:
             Binary (encoded) stdout of the layout command.
         Raises:
-            ValueError: If ``format`` is not known.
+            ValueError: If ``format``, ``renderer``, or ``formatter`` are not known.
+            graphviz.RequiredArgumentError: If ``formatter`` is given but ``renderer`` is None.
             graphviz.ExecutableNotFound: If the Graphviz executable is not found.
             subprocess.CalledProcessError: If the exit status is non-zero.
         """
@@ -122,7 +125,7 @@ class File(Base):
 
         data = text_type(self.source).encode(self._encoding)
 
-        out = backend.pipe(self._engine, format, data)
+        out = backend.pipe(self._engine, format, data, renderer, formatter)
 
         return out
 
@@ -156,7 +159,8 @@ class File(Base):
 
         return filepath
 
-    def render(self, filename=None, directory=None, view=False, cleanup=False):
+    def render(self, filename=None, directory=None, view=False, cleanup=False,
+               format=None, renderer=None, formatter=None):
         """Save the source to file and render with the Graphviz engine.
 
         Args:
@@ -164,16 +168,24 @@ class File(Base):
             directory: (Sub)directory for source saving and rendering.
             view (bool): Open the rendered result with the default application.
             cleanup (bool): Delete the source file after rendering.
+            format: The output format used for rendering (``'pdf'``, ``'png'``, etc.).
+            renderer: The output renderer used for rendering (``'cairo'``, ``'gd'``, ...).
+            formatter: The output formatter used for rendering (``'cairo'``, ``'gd'``, ...).
         Returns:
             The (possibly relative) path of the rendered file.
         Raises:
+            ValueError: If ``format``, ``renderer``, or ``formatter`` are not known.
+            graphviz.RequiredArgumentError: If ``formatter`` is given but ``renderer`` is None.
             graphviz.ExecutableNotFound: If the Graphviz executable is not found.
             subprocess.CalledProcessError: If the exit status is non-zero.
             RuntimeError: If viewer opening is requested but not supported.
         """
         filepath = self.save(filename, directory)
 
-        rendered = backend.render(self._engine, self._format, filepath)
+        if format is None:
+            format = self._format
+
+        rendered = backend.render(self._engine, format, filepath, renderer, formatter)
 
         if cleanup:
             os.remove(filepath)

@@ -5,28 +5,33 @@ Changelog
 Version 0.9.1 (in development)
 ------------------------------
 
+Add ``format`` argument to ``Graph/Digraph.render()``. This follows stand-alone
+``render()`` function and mirrors the ``Graph/Digraph.pipe()`` method (usually,
+``format`` is set on the instance).
 
+Add ``renderer`` and ``formatter`` arguments to ``Graph/Digraph.render()`` and
+``pipe()`` methods, as well as stand-alone ``render()`` and ``pipe()`` functions.
 
 
 Version 0.9
 -----------
 
-Use sys.stderr to write stderr output from rendering process to stderr (instead
-of file descriptor inhertiance). Ensures stderr is passed in special
+Use ``sys.stderr`` to write stderr output from rendering process to stderr
+(instead of file descriptor inhertiance). Ensures stderr is passed in special
 enviroments such as IDLE.
 
-Suppress rendering process stdout in render().
+Suppress rendering process stdout in ``render()``.
 
-Make quiet=True also suppress stderr on success of render() and pipe() (zero
-exit-status).
+Make ``quiet=True`` also suppress ``stderr`` on success of ``render()`` and
+``pipe()`` (exit-status ``0``).
 
-Include stderr from rendering process in CalledProcessError exception.
+Include ``stderr`` from rendering process in ``CalledProcessError`` exception.
 
 
 Version 0.8.4
 -------------
 
-Tag Python 3.7 support (work around subprocess close_fds issue on Windows).
+Tag Python 3.7 support (work around subprocess ``close_fds`` issue on Windows).
 
 
 Version 0.8.3
