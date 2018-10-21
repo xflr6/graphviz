@@ -60,7 +60,7 @@ FORMATS = {  # http://www.graphviz.org/doc/info/output.html
     'x11',
 }
 
-RENDERERS = {
+RENDERERS = {  # $ dot -T:
     'cairo',
     'dot',
     'fig',
