@@ -53,7 +53,7 @@ ENGINES = ENGINES
 FORMATS = FORMATS
 
 #: Set of known output renderers for rendering (``'cairo'``, ``'gd'``, ...)
-RENDERERS = RENDERERS
+FORMATTERS = FORMATTERS
 
 #: Set of known output formatters for rendering (``'cairo'``, ``'gd'``, ...)
 RENDERERS = RENDERERS
