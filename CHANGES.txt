@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.9.1 (in development)
-------------------------------
+Version 0.10 (in development)
+-----------------------------
 
 Add ``format`` argument to ``Graph/Digraph.render()``. This follows stand-alone
 ``render()`` function and mirrors the ``Graph/Digraph.pipe()`` method (usually,
