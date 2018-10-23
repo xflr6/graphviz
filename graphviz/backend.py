@@ -202,7 +202,7 @@ def pipe(engine, format, data, renderer=None, formatter=None, quiet=False):
         graphviz.ExecutableNotFound: If the Graphviz executable is not found.
         subprocess.CalledProcessError: If the exit status is non-zero.
     """
-    cmd, _ = command(engine, format, renderer, formatter)
+    cmd, _ = command(engine, format, None, renderer, formatter)
     out, _ = run(cmd, input=data, capture_output=True, check=True, quiet=quiet)
     return out
 

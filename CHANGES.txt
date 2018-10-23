@@ -5,10 +5,9 @@ Changelog
 Version 0.10.1 (in development)
 -------------------------------
 
+Fix broken renderer argument in ``pipe()`` method and function.
 
 
-
-------------
 Version 0.10
 ------------
 
