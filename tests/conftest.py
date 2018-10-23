@@ -1,6 +1,5 @@
 # conftest.py
 
-import re
 import sys
 import platform as _platform
 
@@ -15,11 +14,6 @@ def pytest_addoption(parser):
 def pytest_configure(config):
     pytest.exe = pytest.mark.skipif(config.getoption('--skipexe'),
                                     reason='skipped by --skipexe option')
-
-
-@pytest.fixture(scope='session')
-def svg_pattern():
-    return re.compile(r'(?s)^<\?xml .+</svg>\s*$')
 
 
 @pytest.fixture(scope='session')

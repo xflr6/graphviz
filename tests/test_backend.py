@@ -1,5 +1,6 @@
 # test_backend.py
 
+import re
 import platform
 import subprocess
 
@@ -115,13 +116,17 @@ def test_pipe_invalid_data(capsys, quiet, engine='dot', format_='svg'):
 
 
 @pytest.exe
-@pytest.mark.parametrize('format_, renderer, formatter', [('svg', None, None)])
+@pytest.mark.parametrize('format_, renderer, formatter, pattern', [
+    ('svg', None, None, r'(?s)^<\?xml .+</svg>\s*$'),
+    ('ps', 'ps', 'core', r'%!PS-'),
+])
 @pytest.mark.parametrize('engine', ['dot'])
-def test_pipe(capsys, svg_pattern, engine, format_, renderer, formatter,
+def test_pipe(capsys, engine, format_, renderer, formatter, pattern,
               data=b'graph { spam }'):
     src = pipe(engine, format_, data, renderer, formatter).decode('ascii')
 
-    assert svg_pattern.match(src)
+    if pattern is not None:
+        assert re.match(pattern, src)
     assert capsys.readouterr() == ('', '')
 
 
