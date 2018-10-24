@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.10.1 (in development)
--------------------------------
+Version 0.10.1
+--------------
 
 Fix broken renderer argument in ``pipe()`` method and function.
 
