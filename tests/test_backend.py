@@ -23,6 +23,7 @@ else:
         assert Popen.call_args[1]['startupinfo'] is None
 
 
+@pytest.exe
 def test_run_oserror():
     with pytest.raises(OSError) as e:
         run([''])
