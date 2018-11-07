@@ -148,7 +148,7 @@ def run(cmd, input=None, capture_output=False, check=False, quiet=False, **kwarg
     except OSError as e:
         if e.errno == errno.ENOENT:
             raise ExecutableNotFound(cmd)
-        else:  # pragma: no cover
+        else:
             raise
 
     out, err = proc.communicate(input)

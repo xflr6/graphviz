@@ -1,13 +1,14 @@
 # test_backend.py
 
 import re
+import errno
 import platform
 import subprocess
 
 import pytest
 
 from graphviz.backend import (
-    render, pipe, version, view,
+    run, render, pipe, version, view,
     ExecutableNotFound, RequiredArgumentError)
 
 
@@ -20,6 +21,12 @@ if platform.system().lower() == 'windows':
 else:
     def check_startupinfo(Popen):
         assert Popen.call_args[1]['startupinfo'] is None
+
+
+def test_run_oserror():
+    with pytest.raises(OSError) as e:
+        run([''])
+    assert e.value.errno in (errno.EACCES, errno.EINVAL)
 
 
 def test_render_engine_unknown():
