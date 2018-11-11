@@ -24,7 +24,7 @@ def test_copy(cls):
     assert c.copy() is not c
     assert c.copy() is not c.copy()
     assert c.copy().__class__ is c.__class__
-    assert c.copy().__dict__ == c.__dict__
+    assert c.copy().__dict__ == c.__dict__ == c.copy().__dict__
 
 
 def test__repr_svg_(mocker, cls):
@@ -60,10 +60,12 @@ def test_iter_subgraph_strict(cls):
     with pytest.raises(ValueError, match=r'strict'):
         cls().subgraph(cls(strict=True))
 
-
-def test_iter_strict():
-    assert Graph(strict=True).source == 'strict graph {\n}'
-    assert Digraph(strict=True).source == 'strict digraph {\n}'
+@pytest.mark.parametrize('cls, expected', [
+    (Graph, 'strict graph {\n}'),
+    (Digraph, 'strict digraph {\n}'),
+], ids=lambda p: getattr(p, '__name__', '...'))
+def test_iter_strict(cls, expected):
+    assert cls(strict=True).source == expected
 
 
 def test_attr_invalid_kw(cls):
@@ -71,17 +73,25 @@ def test_attr_invalid_kw(cls):
         cls().attr('spam')
 
 
-def test_attr_kw_none():
-    dot = Graph()
+@pytest.mark.parametrize('cls, expected', [
+    (Graph, 'graph {\n\tspam=eggs\n}'),
+    (Digraph, 'digraph {\n\tspam=eggs\n}'),
+], ids=lambda p: getattr(p, '__name__', '...'))
+def test_attr_kw_none(cls, expected):
+    dot = cls()
     dot.attr(spam='eggs')
-    assert dot.source == 'graph {\n\tspam=eggs\n}'
+    assert dot.source == expected
 
 
-def test_subgraph_graph_none():
-    dot = Graph()
+@pytest.mark.parametrize('cls, expected', [
+    (Graph, 'graph {\n\t// comment\n\tsubgraph name {\n\t}\n}'),
+    (Digraph, 'digraph {\n\t// comment\n\tsubgraph name {\n\t}\n}'),
+], ids=lambda p: getattr(p, '__name__', '...'))
+def test_subgraph_graph_none(cls, expected):
+    dot = cls()
     with dot.subgraph(name='name', comment='comment'):
         pass
-    assert dot.source == 'graph {\n\t// comment\n\tsubgraph name {\n\t}\n}'
+    assert dot.source == expected
 
 
 def test_subgraph_graph_notsole(cls):
@@ -95,10 +105,14 @@ def test_subgraph_mixed(classes):
         cls1().subgraph(cls2())
 
 
-def test_subgraph_reflexive():  # guard against potential infinite loop
-    dot = Graph()
+@pytest.mark.parametrize('cls, expected', [
+    (Graph, 'graph {\n\t{\n\t}\n}'),
+    (Digraph, 'digraph {\n\t{\n\t}\n}'),
+], ids=lambda p: getattr(p, '__name__', '...'))
+def test_subgraph_reflexive(cls, expected):  # guard against potential infinite loop
+    dot = cls()
     dot.subgraph(dot)
-    assert dot.source == 'graph {\n\t{\n\t}\n}'
+    assert dot.source == expected
 
 
 def test_subgraph():

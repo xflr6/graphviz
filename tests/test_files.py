@@ -146,7 +146,7 @@ def test_copy(source):
     assert source.copy() is not source
     assert source.copy() is not source.copy()
     assert source.copy().__class__ is source.__class__
-    assert source.copy().__dict__ == source.__dict__
+    assert source.copy().__dict__ == source.__dict__ == source.copy().__dict__
 
 
 def test_from_file(tmpdir, filename='hello.gv', directory='source_hello',
