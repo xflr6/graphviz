@@ -8,7 +8,7 @@ import pytest
 
 def pytest_addoption(parser):
     parser.addoption('--skipexe', action='store_true',
-                     help='skip tests that run Graphviz executables')
+                     help='skip tests that run Graphviz executables or subprocesses')
 
 
 def pytest_configure(config):
