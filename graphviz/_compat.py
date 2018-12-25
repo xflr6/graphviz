@@ -4,7 +4,7 @@ import os
 import sys
 import subprocess
 
-PY2 = sys.version_info.major == 2
+PY2 = (sys.version_info.major == 2)
 
 
 if PY2:
