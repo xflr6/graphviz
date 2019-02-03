@@ -519,6 +519,6 @@ cycles.
 .. _notebook.ipynb: https://github.com/xflr6/graphviz/blob/master/examples/notebook.ipynb
 .. _nbviewer: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
 .. _Jupyter Qt Console: https://qtconsole.readthedocs.io
-.. _spyderconsole: https://pythonhosted.org/spyder/ipythonconsole.html
+.. _spyderconsole: https://docs.spyder-ide.org/ipythonconsole.html
 .. _Spyder IDE: https://github.com/spyder-ide/spyder
 .. _support live updates: https://superuser.com/questions/599442/pdf-viewer-that-handles-live-updating-of-pdf-doesnt-lock-the-file
