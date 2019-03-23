@@ -233,7 +233,8 @@ with the target as first argument:
 
 By omitting its first argument, you can use it to set arbitrary attributes as
 key-value pairs targeting the current (sub-)graph (e.g. for ``rankdir``,
-``label``, or setting ``rank='same'`` within a subgraph context):
+``label``, or setting ``rank='same'`` within a subgraph context,
+:ref:`example <rank_same.py>`):
 
 .. code:: python
 

@@ -147,3 +147,14 @@ angles.py
 
 .. image:: _static/angles.svg
     :align: center
+
+
+.. _rank_same.py:
+
+rank_same.py
+------------
+.. literalinclude:: ../examples/rank_same.py
+    :lines: 2-
+
+.. image:: _static/rank_same.svg
+    :align: center
