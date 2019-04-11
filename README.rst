@@ -3,7 +3,10 @@ Graphviz
 
 |PyPI version| |License| |Supported Python| |Format| |Docs|
 
-|Travis| |Codecov|
+|Travis| |Codecov| 
+
+.. image:: https://mybinder.org/badge_logo.svg
+ :target: https://mybinder.org/v2/gh/xflr6/graphviz/master|
 
 This package facilitates the creation and rendering of graph descriptions in
 the DOT_ language of the Graphviz_ graph drawing software (`master repo`_) from
