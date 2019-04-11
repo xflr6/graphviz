@@ -1,0 +1,3 @@
+#Load the package defined at the top of this repo
+# This file is run in the context of that directory
+.
