@@ -138,6 +138,8 @@ else:
 
 def run(cmd, input=None, capture_output=False, check=False, quiet=False, **kwargs):
     """Run the command described by cmd and return its (stdout, stderr) tuple."""
+    if PLATFORM == 'windows':  # pragma: no cover
+        kwargs['shell'] = True
     if input is not None:
         kwargs['stdin'] = subprocess.PIPE
     if capture_output:
