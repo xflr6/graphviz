@@ -60,6 +60,7 @@ def test_iter_subgraph_strict(cls):
     with pytest.raises(ValueError, match=r'strict'):
         cls().subgraph(cls(strict=True))
 
+
 @pytest.mark.parametrize('cls, expected', [
     (Graph, 'strict graph {\n}'),
     (Digraph, 'strict digraph {\n}'),

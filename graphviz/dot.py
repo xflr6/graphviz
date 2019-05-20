@@ -54,7 +54,6 @@ class Dot(files.File):
                  format=None, engine=None, encoding=files.File._encoding,
                  graph_attr=None, node_attr=None, edge_attr=None, body=None,
                  strict=False):
-
         self.name = name
         self.comment = comment
 
@@ -70,13 +69,13 @@ class Dot(files.File):
 
     def _kwargs(self):
         result = super(Dot, self)._kwargs()
-        result.update({
-            'name': self.name, 'comment': self.comment,
-            'graph_attr': dict(self.graph_attr),
-            'node_attr': dict(self.node_attr),
-            'edge_attr': dict(self.edge_attr),
-            'body': list(self.body), 'strict': self.strict,
-        })
+        result.update(name=self.name,
+                      comment=self.comment,
+                      graph_attr=dict(self.graph_attr),
+                      node_attr=dict(self.node_attr),
+                      edge_attr=dict(self.edge_attr),
+                      body=list(self.body),
+                      strict=self.strict)
         return result
 
     def clear(self, keep_attrs=False):
@@ -203,9 +202,14 @@ class Dot(files.File):
             the layout engine will treat it as a special cluster subgraph.
         """
         if graph is None:
-            kwargs = {'name': name, 'comment': comment,
-                      'graph_attr': graph_attr, 'node_attr': node_attr,
-                      'edge_attr': edge_attr, 'body': body}
+            kwargs = {
+                'name': name,
+                'comment': comment,
+                'graph_attr': graph_attr,
+                'node_attr': node_attr,
+                'edge_attr': edge_attr,
+                'body': body,
+            }
             return SubgraphContext(self, kwargs)
 
         args = [name, comment, graph_attr, node_attr, edge_attr, body]
