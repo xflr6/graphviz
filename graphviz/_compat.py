@@ -2,6 +2,7 @@
 
 import os
 import sys
+import operator
 import subprocess
 
 PY2 = (sys.version_info.major == 2)
@@ -11,8 +12,7 @@ if PY2:
     string_classes = (str, unicode)  # needed individually for sublassing
     text_type = unicode
 
-    def iteritems(d):
-        return d.iteritems()
+    iteritems = operator.methodcaller('iteritems')
 
     def makedirs(name, mode=0o777, exist_ok=False):
         try:
