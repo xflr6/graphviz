@@ -13,12 +13,14 @@ from . import backend, tools
 
 __all__ = ['File', 'Source']
 
+ENCODING = 'utf-8'
+
 
 class Base(object):
 
     _format = 'pdf'
     _engine = 'dot'
-    _encoding = 'utf-8'
+    _encoding = ENCODING
 
     @property
     def format(self):
@@ -78,7 +80,7 @@ class File(Base):
     _default_extension = 'gv'
 
     def __init__(self, filename=None, directory=None,
-                 format=None, engine=None, encoding=Base._encoding):
+                 format=None, engine=None, encoding=ENCODING):
         if filename is None:
             name = getattr(self, 'name', None) or self.__class__.__name__
             filename = '%s.%s' % (name, self._default_extension)
@@ -253,7 +255,7 @@ class Source(File):
 
     @classmethod
     def from_file(cls, filename, directory=None,
-                  format=None, engine=None, encoding=File._encoding):
+                  format=None, engine=None, encoding=ENCODING):
         """Return an instance with the source string read from the given file.
 
         Args:
@@ -271,7 +273,7 @@ class Source(File):
         return cls(source, filename, directory, format, engine, encoding)
 
     def __init__(self, source, filename=None, directory=None,
-                 format=None, engine=None, encoding=File._encoding):
+                 format=None, engine=None, encoding=ENCODING):
         super(Source, self).__init__(filename, directory, format, engine, encoding)
         self.source = source  #: The verbatim DOT source code string.
 

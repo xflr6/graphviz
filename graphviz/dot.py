@@ -51,7 +51,7 @@ class Dot(files.File):
 
     def __init__(self, name=None, comment=None,
                  filename=None, directory=None,
-                 format=None, engine=None, encoding=files.File._encoding,
+                 format=None, engine=None, encoding=files.ENCODING,
                  graph_attr=None, node_attr=None, edge_attr=None, body=None,
                  strict=False):
         self.name = name
