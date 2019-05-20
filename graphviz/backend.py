@@ -96,28 +96,27 @@ class RequiredArgumentError(Exception):
     """Exception raised if a required argument is missing."""
 
 
-def command(engine, format, filepath=None, renderer=None, formatter=None):
+def command(engine, format_, filepath=None, renderer=None, formatter=None):
     """Return args list for ``subprocess.Popen`` and name of the rendered file."""
     if formatter is not None and renderer is None:
         raise RequiredArgumentError('formatter given without renderer')
 
     if engine not in ENGINES:
         raise ValueError('unknown engine: %r' % engine)
-    if format not in FORMATS:
-        raise ValueError('unknown format: %r' % format)
+    if format_ not in FORMATS:
+        raise ValueError('unknown format: %r' % format_)
     if renderer is not None and renderer not in RENDERERS:
         raise ValueError('unknown renderer: %r' % renderer)
     if formatter is not None and formatter not in FORMATTERS:
         raise ValueError('unknown formatter: %r' % formatter)
 
-    format_arg = [s for s in (format, renderer, formatter) if s is not None]
-    suffix = '.'.join(reversed(format_arg))
-    format_arg = ':'.join(format_arg)
-
-    cmd = [engine, '-T%s' % format_arg]
+    output_format = [f for f in (format_, renderer, formatter) if f is not None]
+    cmd = [engine, '-T%s' % ':'.join(output_format)]
     rendered = None
+
     if filepath is not None:
         cmd.extend(['-O', filepath])
+        suffix = '.'.join(reversed(output_format))
         rendered = '%s.%s' % (filepath, suffix)
 
     return cmd, rendered
