@@ -27,6 +27,20 @@ if PY2:
         if flush:
             sys.stderr.flush()
 
+    class CalledProcessError(subprocess.CalledProcessError):
+
+        def __init__(self, returncode, cmd, output=None, stderr=None):
+            super(CalledProcessError, self).__init__(returncode, cmd, output)
+            self.stderr = stderr
+
+        @property
+        def stdout(self):
+            return self.output
+
+        @stdout.setter
+        def stdout(self, value):  # pragma: no cover
+            self.output = value
+
 
 else:
     string_classes = (str,)
@@ -45,22 +59,4 @@ else:
         if flush:
             sys.stderr.flush()
 
-
-if sys.version_info < (3, 5):
-    class CalledProcessError(subprocess.CalledProcessError):
-
-        def __init__(self, returncode, cmd, output=None, stderr=None):
-            super(CalledProcessError, self).__init__(returncode, cmd, output)
-            self.stderr = stderr
-
-        @property
-        def stdout(self):
-            return self.output
-
-        @stdout.setter
-        def stdout(self, value):  # pragma: no cover
-            self.output = value
-
-
-else:
     CalledProcessError = subprocess.CalledProcessError
