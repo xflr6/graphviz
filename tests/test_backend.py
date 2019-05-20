@@ -193,7 +193,9 @@ def test_version_missing_executable():
 
 @pytest.exe
 def test_version(capsys):
-    assert version() is not None
+    result = version()
+    assert isinstance(result, tuple) and result
+    assert all(isinstance(d, int) for d in result)
     assert capsys.readouterr() == ('', '')
 
 
@@ -202,7 +204,7 @@ def test_version_parsefail_mocked(mocker, Popen):
     proc.returncode = 0
     proc.communicate.return_value = (b'nonversioninfo', None)
 
-    with pytest.raises(RuntimeError):
+    with pytest.raises(RuntimeError, match=r'nonversioninfo'):
         version()
 
     Popen.assert_called_once_with(['dot', '-V'],

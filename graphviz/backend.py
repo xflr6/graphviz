@@ -223,7 +223,7 @@ def version():
     info = out.decode('ascii')
     ma = re.search(r'graphviz version (\d+\.\d+(?:\.\d+)?) ', info)
     if ma is None:
-        raise RuntimeError
+        raise RuntimeError('cannot parse %r output: %r' % (cmd, info))
     return tuple(int(d) for d in ma.group(1).split('.'))
 
 
