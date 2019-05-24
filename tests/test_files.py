@@ -59,8 +59,10 @@ def test_init_filename():
 
 
 def test__repr_svg_(mocker, source):
-    kwargs = {'return_value.decode.return_value': mocker.sentinel.decoded}
-    pipe = mocker.patch.object(source, 'pipe', new_callable=mocker.Mock, **kwargs)
+    pipe = mocker.patch.object(source, 'pipe',
+                               new_callable=mocker.Mock,
+                               **{'return_value.decode.return_value':
+                                  mocker.sentinel.decoded})
 
     assert source._repr_svg_() is mocker.sentinel.decoded
 
@@ -103,8 +105,10 @@ def test_save(mocker, py2, filename='filename', directory='directory'):
         makedirs.assert_called_once_with(source.directory, 0o777)
     else:
         makedirs.assert_called_once_with(source.directory, 0o777, exist_ok=True)
-    open_.assert_called_once_with(source.filepath, 'w', encoding=source.encoding)
-    assert open_.return_value.write.call_args_list == [((source.source,),), ((u'\n',),)]
+    open_.assert_called_once_with(source.filepath, 'w',
+                                  encoding=source.encoding)
+    assert open_.return_value.write.call_args_list == [((source.source,),),
+                                                       ((u'\n',),)]
 
 
 def test_render(mocker, render, source):
@@ -115,7 +119,8 @@ def test_render(mocker, render, source):
     assert source.render(cleanup=True, view=True) is render.return_value
 
     save.assert_called_once_with(None, None)
-    render.assert_called_once_with(source.engine, source.format, save.return_value, None, None)
+    render.assert_called_once_with(source.engine, source.format,
+                                   save.return_value, None, None)
     remove.assert_called_once_with(save.return_value)
     _view.assert_called_once_with(render.return_value, source.format)
 

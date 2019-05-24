@@ -202,22 +202,21 @@ class Dot(files.File):
             the layout engine will treat it as a special cluster subgraph.
         """
         if graph is None:
-            kwargs = {
-                'name': name,
-                'comment': comment,
-                'graph_attr': graph_attr,
-                'node_attr': node_attr,
-                'edge_attr': edge_attr,
-                'body': body,
-            }
-            return SubgraphContext(self, kwargs)
+            return SubgraphContext(self, {'name': name,
+                                          'comment': comment,
+                                          'graph_attr': graph_attr,
+                                          'node_attr': node_attr,
+                                          'edge_attr': edge_attr,
+                                          'body': body})
 
         args = [name, comment, graph_attr, node_attr, edge_attr, body]
         if not all(a is None for a in args):
             raise ValueError('graph must be sole argument of subgraph()')
+
         if graph.directed != self.directed:
-            raise ValueError('%r cannot add subgraph of different kind: %r '
-                % (self, graph))
+            raise ValueError('%r cannot add subgraph of different kind:'
+                             ' %r' % (self, graph))
+
         lines = ['\t' + line for line in graph.__iter__(subgraph=True)]
         self.body.extend(lines)
 

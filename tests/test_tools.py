@@ -30,4 +30,5 @@ def test_mkdirs(tmpdir):
         assert list(itertree(str(tmpdir))) == []
         for _ in range(2):
             mkdirs('spam/eggs/spam.eggs')
-            assert list(itertree(str(tmpdir))) == [(False, 'spam'), (False, 'spam/eggs')]
+            assert list(itertree(str(tmpdir))) == [(False, 'spam'),
+                                                   (False, 'spam/eggs')]

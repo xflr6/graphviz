@@ -69,8 +69,8 @@ class Base(object):
 
     def _kwargs(self):
         ns = self.__dict__
-        attrs = ('_format', '_engine', '_encoding')
-        return {a[1:]: ns[a] for a in attrs if a in ns}
+        return {a[1:]: ns[a] for a in ('_format', '_engine', '_encoding')
+                if a in ns}
 
 
 class File(Base):
@@ -187,7 +187,8 @@ class File(Base):
         if format is None:
             format = self._format
 
-        rendered = backend.render(self._engine, format, filepath, renderer, formatter)
+        rendered = backend.render(self._engine, format, filepath,
+                                  renderer, formatter)
 
         if cleanup:
             os.remove(filepath)
@@ -213,8 +214,8 @@ class File(Base):
 
         Short-cut method for calling :meth:`.render` with ``view=True``.
         """
-        return self.render(filename=filename, directory=directory, view=True,
-                           cleanup=cleanup)
+        return self.render(filename=filename, directory=directory,
+                           view=True, cleanup=cleanup)
 
     def _view(self, filepath, format):
         """Start the right viewer based on file format and platform."""
@@ -227,8 +228,9 @@ class File(Base):
             if view_method is not None:
                 break
         else:
-            raise RuntimeError('%r has no built-in viewer support for %r '
-                'on %r platform' % (self.__class__, format, backend.PLATFORM))
+            raise RuntimeError('%r has no built-in viewer support for %r'
+                               ' on %r platform' % (self.__class__, format,
+                                                    backend.PLATFORM))
         view_method(filepath)
 
     _view_darwin = staticmethod(backend.view.darwin)
@@ -274,7 +276,8 @@ class Source(File):
 
     def __init__(self, source, filename=None, directory=None,
                  format=None, engine=None, encoding=ENCODING):
-        super(Source, self).__init__(filename, directory, format, engine, encoding)
+        super(Source, self).__init__(filename, directory,
+                                     format, engine, encoding)
         self.source = source  #: The verbatim DOT source code string.
 
     def _kwargs(self):

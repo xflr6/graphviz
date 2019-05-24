@@ -7,9 +7,8 @@ import subprocess
 
 import pytest
 
-from graphviz.backend import (
-    run, render, pipe, version, view,
-    ExecutableNotFound, RequiredArgumentError)
+from graphviz.backend import (run, render, pipe, version, view,
+                              ExecutableNotFound, RequiredArgumentError)
 
 
 if platform.system().lower() == 'windows':
@@ -74,8 +73,9 @@ def test_render_missing_file(quiet, engine='dot', format_='pdf'):
     ('plain', 'dot', 'core', 'core.dot.plain'),
 ])
 @pytest.mark.parametrize('engine', ['dot'])
-def test_render(capsys, tmpdir, engine, format_, renderer, formatter, expected_suffix,
-                filename='hello.gv', data=b'digraph { hello -> world }'):
+def test_render(capsys, tmpdir, engine, format_, renderer, formatter,
+                expected_suffix, filename='hello.gv',
+                data=b'digraph { hello -> world }'):
     lpath = tmpdir / filename
     lpath.write_binary(data)
     rendered = lpath.new(ext='%s.%s' % (lpath.ext, expected_suffix))
@@ -218,7 +218,8 @@ def test_version_parsefail_mocked(mocker, Popen):
 def test_version_mocked(mocker, Popen):
     proc = Popen.return_value
     proc.returncode = 0
-    proc.communicate.return_value = (b'dot - graphviz version 1.2.3 (mocked)', None)
+    proc.communicate.return_value = (b'dot - graphviz version 1.2.3 (mocked)',
+                                     None)
 
     assert version() == (1, 2, 3)
 

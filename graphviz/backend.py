@@ -217,7 +217,9 @@ def version():
         RuntimmeError: If the output cannot be parsed into a version number.
     """
     cmd = ['dot', '-V']
-    out, _ = run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    out, _ = run(cmd, check=True,
+                 stdout=subprocess.PIPE,
+                 stderr=subprocess.STDOUT)
 
     info = out.decode('ascii')
     ma = re.search(r'graphviz version (\d+\.\d+(?:\.\d+)?) ', info)
