@@ -12,13 +12,13 @@ from graphviz.backend import (run, render, pipe, version, view,
 
 
 if platform.system().lower() == 'windows':
-    def check_startupinfo(Popen):
+    def check_startupinfo(Popen):  # noqa: N803
         startupinfo = Popen.call_args[1]['startupinfo']
         assert isinstance(startupinfo, subprocess.STARTUPINFO)
         assert startupinfo.dwFlags & subprocess.STARTF_USESHOWWINDOW
         assert startupinfo.wShowWindow == subprocess.SW_HIDE
 else:
-    def check_startupinfo(Popen):
+    def check_startupinfo(Popen):  # noqa: N803
         assert Popen.call_args[1]['startupinfo'] is None
 
 
@@ -86,7 +86,7 @@ def test_render(capsys, tmpdir, engine, format_, renderer, formatter,
     assert capsys.readouterr() == ('', '')
 
 
-def test_render_mocked(capsys, mocker, Popen, quiet):
+def test_render_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
     proc = Popen.return_value
     proc.returncode = 0
     proc.communicate.return_value = (b'stdout', b'stderr')
@@ -199,7 +199,7 @@ def test_version(capsys):
     assert capsys.readouterr() == ('', '')
 
 
-def test_version_parsefail_mocked(mocker, Popen):
+def test_version_parsefail_mocked(mocker, Popen):  # noqa: N803
     proc = Popen.return_value
     proc.returncode = 0
     proc.communicate.return_value = (b'nonversioninfo', None)
@@ -215,7 +215,7 @@ def test_version_parsefail_mocked(mocker, Popen):
     proc.communicate.assert_called_once_with(None)
 
 
-def test_version_mocked(mocker, Popen):
+def test_version_mocked(mocker, Popen):  # noqa: N803
     proc = Popen.return_value
     proc.returncode = 0
     proc.communicate.return_value = (b'dot - graphviz version 1.2.3 (mocked)',
