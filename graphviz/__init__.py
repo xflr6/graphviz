@@ -52,10 +52,10 @@ ENGINES = ENGINES
 #: Set of known output formats for rendering (``'pdf'``, ``'png'``, ...)
 FORMATS = FORMATS
 
-#: Set of known output renderers for rendering (``'cairo'``, ``'gd'``, ...)
+#: Set of known output formatters for rendering (``'cairo'``, ``'gd'``, ...)
 FORMATTERS = FORMATTERS
 
-#: Set of known output formatters for rendering (``'cairo'``, ``'gd'``, ...)
+#: Set of known output renderers for rendering (``'cairo'``, ``'gd'``, ...)
 RENDERERS = RENDERERS
 
 ExecutableNotFound = ExecutableNotFound
