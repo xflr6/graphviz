@@ -132,10 +132,10 @@ def test_pipe_invalid_data(capsys, quiet, engine='dot', format_='svg'):
 @pytest.mark.parametrize('engine', ['dot'])
 def test_pipe(capsys, engine, format_, renderer, formatter, pattern,
               data=b'graph { spam }'):
-    src = pipe(engine, format_, data, renderer, formatter).decode('ascii')
+    out = pipe(engine, format_, data, renderer, formatter).decode('ascii')
 
     if pattern is not None:
-        assert re.match(pattern, src)
+        assert re.match(pattern, out)
     assert capsys.readouterr() == ('', '')
 
 
