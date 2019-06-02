@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.10.2 (in development)
--------------------------------
+Version 0.11 (in development)
+-----------------------------
 
 Drop Python 3.4 support.
 
@@ -32,7 +32,7 @@ Use ``sys.stderr`` to write stderr output from rendering process to stderr
 (instead of file descriptor inhertiance). Ensures stderr is passed in special
 enviroments such as IDLE.
 
-Suppress rendering process stdout in ``render()``.
+Suppress rendering process ``stdout`` in ``render()``.
 
 Make ``quiet=True`` also suppress ``stderr`` on success of ``render()`` and
 ``pipe()`` (exit-status ``0``).
