@@ -133,7 +133,8 @@ def test_render(mocker, render, source):
 
 def test_view(mocker, source):
     render = mocker.patch.object(source, 'render', new_callable=mocker.Mock)
-    kwargs = {'filename': 'filename', 'directory': 'directory', 'cleanup': True}
+    kwargs = {'filename': 'filename', 'directory': 'directory',
+              'cleanup': True,  'quiet': True}
 
     assert source.view(**kwargs) is render.return_value
 

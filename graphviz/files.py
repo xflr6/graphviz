@@ -207,13 +207,14 @@ class File(Base):
 
         return rendered
 
-    def view(self, filename=None, directory=None, cleanup=False):
+    def view(self, filename=None, directory=None, cleanup=False, quiet=False):
         """Save the source to file, open the rendered result in a viewer.
 
         Args:
             filename: Filename for saving the source (defaults to ``name`` + ``'.gv'``)
             directory: (Sub)directory for source saving and rendering.
             cleanup (bool): Delete the source file after rendering.
+            quiet (bool): Suppress ``stderr`` output from the layout subprocess.
         Returns:
             The (possibly relative) path of the rendered file.
         Raises:
@@ -224,7 +225,7 @@ class File(Base):
         Short-cut method for calling :meth:`.render` with ``view=True``.
         """
         return self.render(filename=filename, directory=directory,
-                           view=True, cleanup=cleanup)
+                           view=True, cleanup=cleanup, quiet=quiet)
 
     def _view(self, filepath, format):
         """Start the right viewer based on file format and platform."""
