@@ -177,6 +177,10 @@ def render(engine, format, filepath, renderer=None, formatter=None, quiet=False)
         graphviz.RequiredArgumentError: If ``formatter`` is given but ``renderer`` is None.
         graphviz.ExecutableNotFound: If the Graphviz executable is not found.
         subprocess.CalledProcessError: If the exit status is non-zero.
+
+    The layout command is started from the directory of ``filepath``, so that
+    references to external files (e.g. ``[image=...]``) can be given as paths
+    relative to the DOT source file.
     """
     dirname, filename = os.path.split(filepath)
     cmd, rendered = command(engine, format, filename, renderer, formatter)

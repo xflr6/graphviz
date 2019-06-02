@@ -10,6 +10,14 @@ Add ``quiet`` argument to ``.render()`` and ``.pipe()`` methods of ``Graph``,
 layout subprocess (parity with stand-alone ``render()`` and ``pipe()``
 functions).
 
+The rendering process for ``render()`` methods and stand-alone function is now
+started from the directory of the renderred dot source file. This allows to
+render graph descriptions that use relative paths inline (e.g. for referring to
+image files to be included) by using paths relative to the source file
+location. Previously, such relative paths would need to be given relative to
+the directory from which ``render()`` was  started, so this change is backwards
+incompatible for code that relied on the previous behaviour.
+
 Drop Python 3.4 support.
 
 

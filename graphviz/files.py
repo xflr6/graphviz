@@ -185,6 +185,10 @@ class File(Base):
             graphviz.ExecutableNotFound: If the Graphviz executable is not found.
             subprocess.CalledProcessError: If the exit status is non-zero.
             RuntimeError: If viewer opening is requested but not supported.
+
+        The layout command is started from the directory of ``filepath``, so that
+        references to external files (e.g. ``[image=...]``) can be given as paths
+        relative to the DOT source file.
         """
         filepath = self.save(filename, directory)
 
