@@ -97,9 +97,9 @@ def test_render_img(capsys, tmpdir, filesdir, engine='dot', format_='pdf'):
 
     gv_path = subdir / 'img.gv'
     rendered = gv_path.new(ext='%s.%s' % (gv_path.ext, format_))
-    img_rel, gv_rel, rendered_rel = map(tmpdir.bestrelpath, (img_path, gv_path, rendered))
-    assert all(s.startswith('subdir') for s in (img_rel, gv_rel, rendered_rel))
-    gv_path.write_text(u'graph { red_dot [image="%s"] }' % img_rel,
+    gv_rel, rendered_rel = map(tmpdir.bestrelpath, (gv_path, rendered))
+    assert all(s.startswith('subdir') for s in (gv_rel, rendered_rel))
+    gv_path.write_text(u'graph { red_dot [image="%s"] }' % img_path.basename,
                        encoding='ascii')
 
     with tmpdir.as_cwd():
