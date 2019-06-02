@@ -86,6 +86,29 @@ def test_render(capsys, tmpdir, engine, format_, renderer, formatter,
     assert capsys.readouterr() == ('', '')
 
 
+@pytest.exe
+def test_render_img(capsys, tmpdir, filesdir, engine='dot', format_='pdf'):
+    subdir = tmpdir / 'subdir'
+    subdir.ensure(dir=True)
+
+    img_path = subdir / 'dot_red.png'
+    (filesdir / img_path.basename).copy(img_path)
+    assert img_path.size()
+
+    gv_path = subdir / 'img.gv'
+    rendered = gv_path.new(ext='%s.%s' % (gv_path.ext, format_))
+    img_rel, gv_rel, rendered_rel = map(tmpdir.bestrelpath, (img_path, gv_path, rendered))
+    assert all(s.startswith('subdir') for s in (img_rel, gv_rel, rendered_rel))
+    gv_path.write_text(u'graph { red_dot [image="%s"] }' % img_rel,
+                       encoding='ascii')
+
+    with tmpdir.as_cwd():
+        assert render(engine, format_, gv_rel) == rendered_rel
+
+    assert rendered.size()
+    assert capsys.readouterr() == ('', '')
+
+
 def test_render_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
     proc = Popen.return_value
     proc.returncode = 0
