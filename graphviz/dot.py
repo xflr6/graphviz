@@ -28,7 +28,8 @@ graph {
 'test-output/m00se.gv.pdf'
 """
 
-from . import lang, files
+from . import lang
+from . import files
 
 __all__ = ['Graph', 'Digraph']
 

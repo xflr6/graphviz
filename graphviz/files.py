@@ -9,7 +9,8 @@ import locale
 
 from ._compat import text_type
 
-from . import backend, tools
+from . import backend
+from . import tools
 
 __all__ = ['File', 'Source']
 

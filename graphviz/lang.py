@@ -5,7 +5,9 @@
 import re
 import collections
 
-from . import _compat, tools
+from . import _compat
+
+from . import tools
 
 __all__ = ['quote', 'quote_edge', 'a_list', 'attr_list']
 

@@ -6,7 +6,7 @@ import errno
 import platform
 import subprocess
 
-from ._compat import CalledProcessError, stderr_write_bytes
+from . import _compat
 
 from . import tools
 
@@ -153,9 +153,10 @@ def run(cmd, input=None, capture_output=False, check=False, quiet=False, **kwarg
     out, err = proc.communicate(input)
 
     if not quiet and err:
-        stderr_write_bytes(err, flush=True)
+        _compat.stderr_write_bytes(err, flush=True)
     if check and proc.returncode:
-        raise CalledProcessError(proc.returncode, cmd, output=out, stderr=err)
+        raise _compat.CalledProcessError(proc.returncode, cmd,
+                                         output=out, stderr=err)
 
     return out, err
 
