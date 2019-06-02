@@ -107,13 +107,14 @@ class File(Base):
     def _repr_svg_(self):
         return self.pipe(format='svg').decode(self._encoding)
 
-    def pipe(self, format=None, renderer=None, formatter=None):
+    def pipe(self, format=None, renderer=None, formatter=None, quiet=False):
         """Return the source piped through the Graphviz layout command.
 
         Args:
             format: The output format used for rendering (``'pdf'``, ``'png'``, etc.).
             renderer: The output renderer used for rendering (``'cairo'``, ``'gd'``, ...).
             formatter: The output formatter used for rendering (``'cairo'``, ``'gd'``, ...).
+            quiet (bool): Suppress ``stderr`` output from the layout subprocess.
         Returns:
             Binary (encoded) stdout of the layout command.
         Raises:
@@ -127,7 +128,9 @@ class File(Base):
 
         data = text_type(self.source).encode(self._encoding)
 
-        out = backend.pipe(self._engine, format, data, renderer, formatter)
+        out = backend.pipe(self._engine, format, data,
+                           renderer=renderer, formatter=formatter,
+                           quiet=quiet)
 
         return out
 
@@ -162,7 +165,7 @@ class File(Base):
         return filepath
 
     def render(self, filename=None, directory=None, view=False, cleanup=False,
-               format=None, renderer=None, formatter=None):
+               format=None, renderer=None, formatter=None, quiet=False):
         """Save the source to file and render with the Graphviz engine.
 
         Args:
@@ -173,6 +176,7 @@ class File(Base):
             format: The output format used for rendering (``'pdf'``, ``'png'``, etc.).
             renderer: The output renderer used for rendering (``'cairo'``, ``'gd'``, ...).
             formatter: The output formatter used for rendering (``'cairo'``, ``'gd'``, ...).
+            quiet (bool): Suppress ``stderr`` output from the layout subprocess.
         Returns:
             The (possibly relative) path of the rendered file.
         Raises:
@@ -188,7 +192,8 @@ class File(Base):
             format = self._format
 
         rendered = backend.render(self._engine, format, filepath,
-                                  renderer, formatter)
+                                  renderer=renderer, formatter=formatter,
+                                  quiet=quiet)
 
         if cleanup:
             os.remove(filepath)

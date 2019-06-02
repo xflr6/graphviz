@@ -5,6 +5,11 @@ Changelog
 Version 0.11 (in development)
 -----------------------------
 
+Add ``quiet`` argument to ``.render()`` and ``.pipe()`` methods of ``Graph``,
+``Digraph``, and ``Source`` objects, allowing to suppress ``stderr`` of the
+layout subprocess (parity with stand-alone ``render()`` and ``pipe()``
+functions).
+
 Drop Python 3.4 support.
 
 

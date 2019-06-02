@@ -169,7 +169,7 @@ def render(engine, format, filepath, renderer=None, formatter=None, quiet=False)
         filepath: Path to the DOT source file to render.
         renderer: The output renderer used for rendering (``'cairo'``, ``'gd'``, ...).
         formatter: The output formatter used for rendering (``'cairo'``, ``'gd'``, ...).
-        quiet (bool): Suppress ``stderr`` output.
+        quiet (bool): Suppress ``stderr`` output from the layout subprocess.
     Returns:
         The (possibly relative) path of the rendered file.
     Raises:
@@ -192,7 +192,7 @@ def pipe(engine, format, data, renderer=None, formatter=None, quiet=False):
         data: The binary (encoded) DOT source string to render.
         renderer: The output renderer used for rendering (``'cairo'``, ``'gd'``, ...).
         formatter: The output formatter used for rendering (``'cairo'``, ``'gd'``, ...).
-        quiet (bool): Suppress ``stderr`` output.
+        quiet (bool): Suppress ``stderr`` output from the layout subprocess.
     Returns:
         Binary (encoded) stdout of the layout command.
     Raises:

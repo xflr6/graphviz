@@ -76,14 +76,18 @@ def test_pipe_format(pipe, source, format_='svg'):
     assert source.pipe(format=format_) is pipe.return_value
 
     data = source.source.encode(source.encoding)
-    pipe.assert_called_once_with(source.engine, format_, data, None, None)
+    pipe.assert_called_once_with(source.engine, format_, data,
+                                 renderer=None, formatter=None,
+                                 quiet=False)
 
 
 def test_pipe(pipe, source):
     assert source.pipe() is pipe.return_value
 
     data = source.source.encode(source.encoding)
-    pipe.assert_called_once_with(source.engine, source.format, data, None, None)
+    pipe.assert_called_once_with(source.engine, source.format, data,
+                                 renderer=None, formatter=None,
+                                 quiet=False)
 
 
 def test_filepath(test_platform, source):
@@ -120,7 +124,9 @@ def test_render(mocker, render, source):
 
     save.assert_called_once_with(None, None)
     render.assert_called_once_with(source.engine, source.format,
-                                   save.return_value, None, None)
+                                   save.return_value,
+                                   renderer=None, formatter=None,
+                                   quiet=False)
     remove.assert_called_once_with(save.return_value)
     _view.assert_called_once_with(render.return_value, source.format)
 
