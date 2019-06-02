@@ -259,7 +259,7 @@ def test_view(platform, Popen, startfile):  # noqa: N803
         with pytest.raises(RuntimeError, match=r'platform'):
             view('nonfilepath')
     else:
-        view('nonfilepath')
+        assert view('nonfilepath') is None
         if platform == 'darwin':
             Popen.assert_called_once_with(['open', 'nonfilepath'])
         elif platform in ('linux', 'freebsd'):
