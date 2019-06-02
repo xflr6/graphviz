@@ -178,8 +178,14 @@ def render(engine, format, filepath, renderer=None, formatter=None, quiet=False)
         graphviz.ExecutableNotFound: If the Graphviz executable is not found.
         subprocess.CalledProcessError: If the exit status is non-zero.
     """
-    cmd, rendered = command(engine, format, filepath, renderer, formatter)
-    run(cmd, capture_output=True, check=True, quiet=quiet)
+    dirname, filename = os.path.split(filepath)
+    cmd, rendered = command(engine, format, filename, renderer, formatter)
+    if dirname:
+        cwd = dirname
+        rendered = os.path.join(dirname, rendered)
+    else:
+        cwd = None
+    run(cmd, capture_output=True, cwd=cwd, check=True, quiet=quiet)
     return rendered
 
 

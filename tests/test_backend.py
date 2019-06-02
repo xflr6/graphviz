@@ -119,7 +119,7 @@ def test_render_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
     Popen.assert_called_once_with(['dot', '-Tpdf', '-O', 'nonfilepath'],
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
-                                  startupinfo=mocker.ANY)
+                                  cwd=None, startupinfo=mocker.ANY)
     check_startupinfo(Popen)
     proc.communicate.assert_called_once_with(None)
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
