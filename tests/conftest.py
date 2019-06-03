@@ -33,11 +33,17 @@ def test_platform():
     return _platform.system().lower()
 
 
-@pytest.fixture(params=['nonplatform', 'darwin', 'freebsd', 'linux', 'windows'],
+@pytest.fixture(params=['darwin', 'freebsd', 'linux', 'windows'],
                 ids=lambda p: 'platform=%r' % p)
 def platform(monkeypatch, request):
     monkeypatch.setattr('graphviz.backend.PLATFORM', request.param)
     yield request.param
+
+
+@pytest.fixture
+def unknown_platform(monkeypatch, name='nonplatform'):
+    monkeypatch.setattr('graphviz.backend.PLATFORM', name)
+    yield name
 
 
 @pytest.fixture

@@ -141,17 +141,18 @@ def test_view(mocker, source):
     render.assert_called_once_with(view=True, **kwargs)
 
 
+def test__view_unknown_platform(unknown_platform):
+    with pytest.raises(RuntimeError, match=r'support'):
+        source._view('name', 'png')
+
+
 def test__view(mocker, platform, source):
-    if platform == 'nonplatform':
-        with pytest.raises(RuntimeError, match=r'support'):
-            source._view('name', 'png')
-    else:
-        _view_platform = mocker.patch.object(source, '_view_%s' % platform,
-                                             new_callable=mocker.Mock)
+    _view_platform = mocker.patch.object(source, '_view_%s' % platform,
+                                         new_callable=mocker.Mock)
 
-        assert source._view(mocker.sentinel.name, 'png') is None
+    assert source._view(mocker.sentinel.name, 'png') is None
 
-        _view_platform.assert_called_once_with(mocker.sentinel.name)
+    _view_platform.assert_called_once_with(mocker.sentinel.name)
 
 
 def test_copy(source):

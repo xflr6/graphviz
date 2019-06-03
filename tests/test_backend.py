@@ -254,17 +254,19 @@ def test_version_mocked(mocker, Popen):  # noqa: N803
     proc.communicate.assert_called_once_with(None)
 
 
+def test_view_unknown_platform(unknown_platform):
+    with pytest.raises(RuntimeError, match=r'platform'):
+        view('nonfilepath')
+
+
 def test_view(platform, Popen, startfile):  # noqa: N803
-    if platform == 'nonplatform':
-        with pytest.raises(RuntimeError, match=r'platform'):
-            view('nonfilepath')
+    assert view('nonfilepath') is None
+
+    if platform == 'darwin':
+        Popen.assert_called_once_with(['open', 'nonfilepath'])
+    elif platform in ('linux', 'freebsd'):
+        Popen.assert_called_once_with(['xdg-open', 'nonfilepath'])
+    elif platform == 'windows':
+        startfile.assert_called_once_with('nonfilepath')
     else:
-        assert view('nonfilepath') is None
-        if platform == 'darwin':
-            Popen.assert_called_once_with(['open', 'nonfilepath'])
-        elif platform in ('linux', 'freebsd'):
-            Popen.assert_called_once_with(['xdg-open', 'nonfilepath'])
-        elif platform == 'windows':
-            startfile.assert_called_once_with('nonfilepath')
-        else:
-            raise RuntimeError
+        raise RuntimeError
