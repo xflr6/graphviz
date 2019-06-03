@@ -141,7 +141,7 @@ def test_view(mocker, source):
     render.assert_called_once_with(view=True, **kwargs)
 
 
-def test__view_unknown_platform(unknown_platform):
+def test__view_unknown_platform(unknown_platform, source):
     with pytest.raises(RuntimeError, match=r'support'):
         source._view('name', 'png')
 
