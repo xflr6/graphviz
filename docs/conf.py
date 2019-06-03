@@ -21,11 +21,11 @@ import graphviz
 # -- Project information -----------------------------------------------------
 
 project = 'graphviz'
-copyright = '2013-2018, Sebastian Bank'
+copyright = '2013-2019, Sebastian Bank'
 author = 'Sebastian Bank'
 
 # The short X.Y version
-version = '0.10.2.dev0'
+version = '0.11'
 # The full version, including alpha/beta/rc tags
 release = version
 

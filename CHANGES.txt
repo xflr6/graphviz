@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.11 (in development)
------------------------------
+Version 0.11
+------------
 
 Add ``quiet`` argument to ``.render()`` and ``.pipe()`` methods of ``Graph``,
 ``Digraph``, and ``Source`` objects, allowing to suppress ``stderr`` of the
