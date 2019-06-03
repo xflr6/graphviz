@@ -79,7 +79,7 @@ Other
 
 .. autofunction:: graphviz.nohtml
 
-Manually maintained whitelists (see  https://graphviz.gitlab.io/_pages/pdf/dot.1.pdf,
+Manually maintained whitelists (see https://graphviz.gitlab.io/_pages/pdf/dot.1.pdf,
 http://www.graphviz.org/doc/info/output.html, and ``dot -T:`` output):
 
 .. autodata:: graphviz.ENGINES
