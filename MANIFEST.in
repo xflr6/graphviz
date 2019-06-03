@@ -2,7 +2,7 @@ include README.rst LICENSE.txt CHANGES.txt
 include requirements.txt
 include run-tests.py try-examples.py
 include tox.ini
-recursive-include tests *.py
+recursive-include tests *.py *.png
 recursive-include examples *.py *.ipynb
 recursive-include docs *.rst *.txt *.py *.png *.svg
 prune docs/_build
