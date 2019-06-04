@@ -17,7 +17,7 @@ layout subprocess (parity with stand-alone ``render()`` and ``pipe()``
 functions).
 
 The rendering process for ``render()`` methods and stand-alone function is now
-started from the directory of the renderred dot source file. This allows to
+started from the directory of the rendered dot source file. This allows to
 render graph descriptions that use relative paths inline (e.g. for referring to
 image files to be included) by using paths relative to the source file
 location. Previously, such relative paths would need to be given relative to
@@ -48,8 +48,8 @@ Version 0.9
 -----------
 
 Use ``sys.stderr`` to write stderr output from rendering process to stderr
-(instead of file descriptor inhertiance). Ensures stderr is passed in special
-enviroments such as IDLE.
+(instead of file descriptor inheritance). Ensures stderr is passed in special
+environments such as IDLE.
 
 Suppress rendering process ``stdout`` in ``render()``.
 
@@ -185,7 +185,7 @@ Version 0.4.9
 
 Add support for ``strict`` graphs and digraphs.
 
-Hide ``render/pipe()`` subrocess console window on Windows when invoked from
+Hide ``render/pipe()`` subprocess console window on Windows when invoked from
 non-console process (e.g. from IDLE).
 
 Improve documentation markup/wording.
@@ -277,7 +277,7 @@ Skip empty ``comment`` when creating DOT source.
 
 Document ``graph_attr``, ``node_attr``, and ``edge_attr`` in the README.
 
-More informative exception when Graphviz excutables cannot be called.
+More informative exception when Graphviz executables cannot be called.
 
 
 Version 0.3.4

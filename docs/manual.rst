@@ -213,7 +213,7 @@ After creation, they can be edited on the graph object:
 Attributes
 ----------
 
-To directly add attitbute statements (affecting all following graph, node, or
+To directly add attritbute statements (affecting all following graph, node, or
 edge items within the same (sub-)graph), use the :meth:`~.Graph.attr`-method
 with the target as first argument:
 
