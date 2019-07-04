@@ -139,13 +139,13 @@ def test_pipe_invalid_data(capsys, quiet, engine='dot', format_='svg'):
         pipe(engine, format_, b'nongraph', quiet=quiet)
 
     assert e.value.returncode == 1
-    assert 'syntax error' in str(e.value)
+    assert 'syntax error in line' in str(e.value)
     out, err = capsys.readouterr()
     assert out == ''
     if quiet:
         assert err == ''
     else:
-        assert 'syntax error' in err
+        assert 'syntax error in line' in err
 
 
 @pytest.exe
