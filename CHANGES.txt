@@ -5,7 +5,7 @@ Changelog
 Version 0.11.1 (in development)
 -------------------------------
 
-
+Include ``stderr`` in ``str()`` of raised ``subprocess.CalledProcessError``.
 
 
 Version 0.11

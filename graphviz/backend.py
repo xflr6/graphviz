@@ -96,6 +96,13 @@ class RequiredArgumentError(Exception):
     """Exception raised if a required argument is missing."""
 
 
+class CalledProcessError(_compat.CalledProcessError):
+
+    def __str__(self):
+        s = super(CalledProcessError, self).__str__()
+        return '%s [stderr: %r]' % (s, self.stderr)
+
+
 def command(engine, format_, filepath=None, renderer=None, formatter=None):
     """Return args list for ``subprocess.Popen`` and name of the rendered file."""
     if formatter is not None and renderer is None:
@@ -155,8 +162,8 @@ def run(cmd, input=None, capture_output=False, check=False, quiet=False, **kwarg
     if not quiet and err:
         _compat.stderr_write_bytes(err, flush=True)
     if check and proc.returncode:
-        raise _compat.CalledProcessError(proc.returncode, cmd,
-                                         output=out, stderr=err)
+        raise CalledProcessError(proc.returncode, cmd,
+                                 output=out, stderr=err)
 
     return out, err
 
