@@ -27,10 +27,10 @@ if PY2:
         if flush:
             sys.stderr.flush()
 
-    class CalledProcessError(subprocess.CalledProcessError):
+    class _CalledProcessError(subprocess.CalledProcessError):
 
         def __init__(self, returncode, cmd, output=None, stderr=None):
-            super(CalledProcessError, self).__init__(returncode, cmd, output)
+            super(_CalledProcessError, self).__init__(returncode, cmd, output)
             self.stderr = stderr
 
         @property
@@ -59,4 +59,11 @@ else:
         if flush:
             sys.stderr.flush()
 
-    CalledProcessError = subprocess.CalledProcessError
+    _CalledProcessError = subprocess.CalledProcessError
+
+
+class CalledProcessError(_CalledProcessError):
+
+    def __str__(self):
+        s = super(CalledProcessError, self).__str__()
+        return '%s [stderr: %r]' % (s, self.stderr)

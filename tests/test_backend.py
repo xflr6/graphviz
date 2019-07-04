@@ -139,6 +139,7 @@ def test_pipe_invalid_data(capsys, quiet, engine='dot', format_='svg'):
         pipe(engine, format_, b'nongraph', quiet=quiet)
 
     assert e.value.returncode == 1
+    assert 'syntax error' in str(e.value)
     out, err = capsys.readouterr()
     assert out == ''
     if quiet:
