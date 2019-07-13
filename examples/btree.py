@@ -3,7 +3,8 @@
 
 from graphviz import Digraph, nohtml
 
-g = Digraph('g', filename='btree.gv', node_attr={'shape': 'record', 'height': '.1'})
+g = Digraph('g', filename='btree.gv',
+            node_attr={'shape': 'record', 'height': '.1'})
 
 g.node('node0', nohtml('<f0> |<f1> G|<f2>'))
 g.node('node1', nohtml('<f0> |<f1> E|<f2>'))

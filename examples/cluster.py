@@ -16,7 +16,7 @@ with g.subgraph(name='cluster_0') as c:
     c.attr(label='process #1')
 
 with g.subgraph(name='cluster_1') as c:
-    c.node_attr.update(style='filled')
+    c.node_attr['style'] = 'filled'
     c.edges([('b0', 'b1'), ('b1', 'b2'), ('b2', 'b3')])
     c.attr(label='process #2')
     c.attr(color='blue')

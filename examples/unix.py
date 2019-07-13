@@ -3,9 +3,9 @@
 
 from graphviz import Digraph
 
-u = Digraph('unix', filename='unix.gv')
+u = Digraph('unix', filename='unix.gv',
+            node_attr={'color': 'lightblue2', 'style': 'filled'})
 u.attr(size='6,6')
-u.node_attr.update(color='lightblue2', style='filled')
 
 u.edge('5th Edition', '6th Edition')
 u.edge('5th Edition', 'PWB 1.0')

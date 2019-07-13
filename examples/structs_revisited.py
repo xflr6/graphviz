@@ -3,7 +3,8 @@
 
 from graphviz import Digraph
 
-s = Digraph('structs', filename='structs_revisited.gv', node_attr={'shape': 'record'})
+s = Digraph('structs', filename='structs_revisited.gv',
+            node_attr={'shape': 'record'})
 
 s.node('struct1', '<f0> left|<f1> middle|<f2> right')
 s.node('struct2', '<f0> one|<f1> two')
