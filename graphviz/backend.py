@@ -246,11 +246,13 @@ def version():
     return tuple(int(d) for d in ma.group(1).split('.'))
 
 
-def view(filepath):
+def view(filepath, quiet=False):
     """Open filepath with its default viewing application (platform-specific).
 
     Args:
         filepath: Path to the file to open in viewer.
+        quiet (bool): Suppress ``stderr`` output from the viewer process
+                      (ineffective on Windows).
     Raises:
         RuntimeError: If the current platform is not supported.
     """
@@ -258,23 +260,26 @@ def view(filepath):
         view_func = getattr(view, PLATFORM)
     except AttributeError:
         raise RuntimeError('platform %r not supported' % PLATFORM)
-    view_func(filepath)
+    view_func(filepath, quiet)
 
 
 @tools.attach(view, 'darwin')
-def view_darwin(filepath):
+def view_darwin(filepath, quiet):
     """Open filepath with its default application (mac)."""
-    subprocess.Popen(['open', filepath])
+    popen_func = _compat.Popen_stderr_devnull if quiet else subprocess.Popen
+    popen_func(['open', filepath])
 
 
 @tools.attach(view, 'linux')
 @tools.attach(view, 'freebsd')
-def view_unixoid(filepath):
+def view_unixoid(filepath, quiet):
     """Open filepath in the user's preferred application (linux, freebsd)."""
-    subprocess.Popen(['xdg-open', filepath])
+    popen_func = _compat.Popen_stderr_devnull if quiet else subprocess.Popen
+    popen_func(['xdg-open', filepath])
 
 
 @tools.attach(view, 'windows')
-def view_windows(filepath):
+def view_windows(filepath, quiet):
     """Start filepath with its associated application (windows)."""
+    # TODO: implement quiet=True
     os.startfile(os.path.normpath(filepath))

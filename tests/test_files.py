@@ -128,13 +128,13 @@ def test_render(mocker, render, source):
                                    renderer=None, formatter=None,
                                    quiet=False)
     remove.assert_called_once_with(save.return_value)
-    _view.assert_called_once_with(render.return_value, source.format)
+    _view.assert_called_once_with(render.return_value, source.format, False)
 
 
 def test_view(mocker, source):
     render = mocker.patch.object(source, 'render', new_callable=mocker.Mock)
     kwargs = {'filename': 'filename', 'directory': 'directory',
-              'cleanup': True, 'quiet': True}
+              'cleanup': True, 'quiet': True, 'quiet_view': True}
 
     assert source.view(**kwargs) is render.return_value
 
@@ -143,16 +143,16 @@ def test_view(mocker, source):
 
 def test__view_unknown_platform(unknown_platform, source):
     with pytest.raises(RuntimeError, match=r'support'):
-        source._view('name', 'png')
+        source._view('name', 'png', False)
 
 
 def test__view(mocker, platform, source):
     _view_platform = mocker.patch.object(source, '_view_%s' % platform,
                                          new_callable=mocker.Mock)
 
-    assert source._view(mocker.sentinel.name, 'png') is None
+    assert source._view(mocker.sentinel.name, 'png', False) is None
 
-    _view_platform.assert_called_once_with(mocker.sentinel.name)
+    _view_platform.assert_called_once_with(mocker.sentinel.name, False)
 
 
 def test_copy(source):

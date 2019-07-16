@@ -27,6 +27,10 @@ if PY2:
         if flush:
             sys.stderr.flush()
 
+    def Popen_stderr_devnull(*args, **kwargs):  # noqa: N802
+        with open(os.devnull, 'w') as f:
+            return subprocess.Popen(*args, stderr=f, **kwargs)
+
     class CalledProcessError(subprocess.CalledProcessError):
 
         def __init__(self, returncode, cmd, output=None, stderr=None):
@@ -58,5 +62,8 @@ else:
         sys.stderr.write(data.decode(encoding))
         if flush:
             sys.stderr.flush()
+
+    def Popen_stderr_devnull(*args, **kwargs):  # noqa: N802
+        return subprocess.Popen(*args, stderr=subprocess.DEVNULL, **kwargs)
 
     CalledProcessError = subprocess.CalledProcessError

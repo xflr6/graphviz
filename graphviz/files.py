@@ -166,7 +166,8 @@ class File(Base):
         return filepath
 
     def render(self, filename=None, directory=None, view=False, cleanup=False,
-               format=None, renderer=None, formatter=None, quiet=False):
+               format=None, renderer=None, formatter=None,
+               quiet=False, quiet_view=False):
         """Save the source to file and render with the Graphviz engine.
 
         Args:
@@ -178,6 +179,8 @@ class File(Base):
             renderer: The output renderer used for rendering (``'cairo'``, ``'gd'``, ...).
             formatter: The output formatter used for rendering (``'cairo'``, ``'gd'``, ...).
             quiet (bool): Suppress ``stderr`` output from the layout subprocess.
+            quiet_view (bool): Suppress ``stderr`` output from the viewer process
+                               (implies ``view=True``, ineffective on Windows).
         Returns:
             The (possibly relative) path of the rendered file.
         Raises:
@@ -203,12 +206,13 @@ class File(Base):
         if cleanup:
             os.remove(filepath)
 
-        if view:
-            self._view(rendered, self._format)
+        if quiet_view or view:
+            self._view(rendered, self._format, quiet_view)
 
         return rendered
 
-    def view(self, filename=None, directory=None, cleanup=False, quiet=False):
+    def view(self, filename=None, directory=None, cleanup=False,
+             quiet=False, quiet_view=False):
         """Save the source to file, open the rendered result in a viewer.
 
         Args:
@@ -216,6 +220,8 @@ class File(Base):
             directory: (Sub)directory for source saving and rendering.
             cleanup (bool): Delete the source file after rendering.
             quiet (bool): Suppress ``stderr`` output from the layout subprocess.
+            quiet_view (bool): Suppress ``stderr`` output from the viewer process
+                               (ineffective on Windows).
         Returns:
             The (possibly relative) path of the rendered file.
         Raises:
@@ -226,9 +232,10 @@ class File(Base):
         Short-cut method for calling :meth:`.render` with ``view=True``.
         """
         return self.render(filename=filename, directory=directory,
-                           view=True, cleanup=cleanup, quiet=quiet)
+                           view=True, cleanup=cleanup,
+                           quiet=quiet, quiet_view=quiet_view)
 
-    def _view(self, filepath, format):
+    def _view(self, filepath, format, quiet):
         """Start the right viewer based on file format and platform."""
         methodnames = [
             '_view_%s_%s' % (format, backend.PLATFORM),
@@ -242,7 +249,7 @@ class File(Base):
             raise RuntimeError('%r has no built-in viewer support for %r'
                                ' on %r platform' % (self.__class__, format,
                                                     backend.PLATFORM))
-        view_method(filepath)
+        view_method(filepath, quiet)
 
     _view_darwin = staticmethod(backend.view.darwin)
     _view_freebsd = staticmethod(backend.view.freebsd)
