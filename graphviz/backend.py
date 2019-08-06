@@ -83,7 +83,7 @@ FORMATTERS = {'cairo', 'core', 'gd', 'gdiplus', 'gdwbmp', 'xlib'}
 PLATFORM = platform.system().lower()
 
 
-log = logging.getLogger()
+log = logging.getLogger(__name__)
 
 
 class ExecutableNotFound(RuntimeError):
@@ -148,7 +148,7 @@ else:
 
 def run(cmd, input=None, capture_output=False, check=False, quiet=False, **kwargs):
     """Run the command described by cmd and return its (stdout, stderr) tuple."""
-    log.debug('run %r' % cmd)
+    log.debug('run %r', cmd)
     if input is not None:
         kwargs['stdin'] = subprocess.PIPE
     if capture_output:
@@ -271,9 +271,9 @@ def view(filepath, quiet=False):
 @tools.attach(view, 'darwin')
 def view_darwin(filepath, quiet):
     """Open filepath with its default application (mac)."""
-    popen_func = _compat.Popen_stderr_devnull if quiet else subprocess.Popen
     cmd = ['open', filepath]
-    log.debug('view: %r(%r)', popen_func, cmd)
+    log.debug('view: %r', cmd)
+    popen_func = _compat.Popen_stderr_devnull if quiet else subprocess.Popen
     popen_func(cmd)
 
 
@@ -281,9 +281,9 @@ def view_darwin(filepath, quiet):
 @tools.attach(view, 'freebsd')
 def view_unixoid(filepath, quiet):
     """Open filepath in the user's preferred application (linux, freebsd)."""
-    popen_func = _compat.Popen_stderr_devnull if quiet else subprocess.Popen
     cmd = ['xdg-open', filepath]
-    log.debug('view: %r(%r)', popen_func, cmd)
+    log.debug('view: %r', cmd)
+    popen_func = _compat.Popen_stderr_devnull if quiet else subprocess.Popen
     popen_func(cmd)
 
 
@@ -292,5 +292,5 @@ def view_windows(filepath, quiet):
     """Start filepath with its associated application (windows)."""
     # TODO: implement quiet=True
     filepath = os.path.normpath(filepath)
-    log.debug('view: %r(%r)', os.startfile, filepath) 
+    log.debug('view: %r', filepath) 
     os.startfile(filepath)

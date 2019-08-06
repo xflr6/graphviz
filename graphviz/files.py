@@ -6,6 +6,7 @@ import os
 import io
 import codecs
 import locale
+import logging
 
 from ._compat import text_type
 
@@ -15,6 +16,9 @@ from . import tools
 __all__ = ['File', 'Source']
 
 ENCODING = 'utf-8'
+
+
+log = logging.getLogger(__name__)
 
 
 class Base(object):
@@ -158,6 +162,7 @@ class File(Base):
 
         data = text_type(self.source)
 
+        log.debug('write %d bytes to %r', len(data), filepath)
         with io.open(filepath, 'w', encoding=self.encoding) as fd:
             fd.write(data)
             if not data.endswith(u'\n'):
@@ -204,6 +209,7 @@ class File(Base):
                                   quiet=quiet)
 
         if cleanup:
+            log.debug('delete %r', filepath)
             os.remove(filepath)
 
         if quiet_view or view:
@@ -288,6 +294,7 @@ class Source(File):
         filepath = os.path.join(directory or '', filename)
         if encoding is None:
             encoding = locale.getpreferredencoding()
+        log.debug('read %r with encoding %r', filepath, encoding)
         with io.open(filepath, encoding=encoding) as fd:
             source = fd.read()
         return cls(source, filename, directory, format, engine, encoding)

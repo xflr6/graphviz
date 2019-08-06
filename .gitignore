@@ -18,6 +18,7 @@ __pycache__/
 Thumbs.db
 
 /test-output/
+/test-log.txt
 
 /examples/*.gv
 /examples/*.pdf

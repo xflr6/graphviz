@@ -97,7 +97,7 @@ def test_filepath(test_platform, source):
         assert source.filepath == 'test-output/hello.gv'
 
 
-def test_save(mocker, py2, filename='filename', directory='directory'):
+def test_save(mocker, py2, filename='nonfilename', directory='nondirectory'):
     source = Source(**SOURCE)
     makedirs = mocker.patch('os.makedirs', new_callable=mocker.Mock)
     open_ = mocker.patch('io.open', mocker.mock_open())
@@ -116,7 +116,8 @@ def test_save(mocker, py2, filename='filename', directory='directory'):
 
 
 def test_render(mocker, render, source):
-    save = mocker.patch.object(source, 'save', new_callable=mocker.Mock)
+    save = mocker.patch.object(source, 'save', new_callable=mocker.Mock,
+                               **{'return_value': mocker.sentinel.nonfilepath})
     _view = mocker.patch.object(source, '_view', new_callable=mocker.Mock)
     remove = mocker.patch('os.remove', new_callable=mocker.Mock)
 
