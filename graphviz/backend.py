@@ -3,6 +3,7 @@
 import os
 import re
 import errno
+import logging
 import platform
 import subprocess
 
@@ -82,6 +83,9 @@ FORMATTERS = {'cairo', 'core', 'gd', 'gdiplus', 'gdwbmp', 'xlib'}
 PLATFORM = platform.system().lower()
 
 
+log = logging.getLogger()
+
+
 class ExecutableNotFound(RuntimeError):
     """Exception raised if the Graphviz executable is not found."""
 
@@ -144,6 +148,7 @@ else:
 
 def run(cmd, input=None, capture_output=False, check=False, quiet=False, **kwargs):
     """Run the command described by cmd and return its (stdout, stderr) tuple."""
+    log.debug('run %r' % cmd)
     if input is not None:
         kwargs['stdin'] = subprocess.PIPE
     if capture_output:
@@ -267,7 +272,9 @@ def view(filepath, quiet=False):
 def view_darwin(filepath, quiet):
     """Open filepath with its default application (mac)."""
     popen_func = _compat.Popen_stderr_devnull if quiet else subprocess.Popen
-    popen_func(['open', filepath])
+    cmd = ['open', filepath]
+    log.debug('view: %r(%r)', popen_func, cmd)
+    popen_func(cmd)
 
 
 @tools.attach(view, 'linux')
@@ -275,11 +282,15 @@ def view_darwin(filepath, quiet):
 def view_unixoid(filepath, quiet):
     """Open filepath in the user's preferred application (linux, freebsd)."""
     popen_func = _compat.Popen_stderr_devnull if quiet else subprocess.Popen
-    popen_func(['xdg-open', filepath])
+    cmd = ['xdg-open', filepath]
+    log.debug('view: %r(%r)', popen_func, cmd)
+    popen_func(cmd)
 
 
 @tools.attach(view, 'windows')
 def view_windows(filepath, quiet):
     """Start filepath with its associated application (windows)."""
     # TODO: implement quiet=True
-    os.startfile(os.path.normpath(filepath))
+    filepath = os.path.normpath(filepath)
+    log.debug('view: %r(%r)', os.startfile, filepath) 
+    os.startfile(filepath)
