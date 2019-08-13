@@ -59,8 +59,7 @@ def test_init_filename():
 
 
 def test__repr_svg_(mocker, source):
-    pipe = mocker.patch.object(source, 'pipe',
-                               new_callable=mocker.Mock,
+    pipe = mocker.patch.object(source, 'pipe', autospec=True,
                                **{'return_value.decode.return_value':
                                   mocker.sentinel.decoded})
 
@@ -116,9 +115,9 @@ def test_save(mocker, py2, filename='nonfilename', directory='nondirectory'):
 
 
 def test_render(mocker, render, source):
-    save = mocker.patch.object(source, 'save', new_callable=mocker.Mock,
+    save = mocker.patch.object(source, 'save', autospec=True,
                                **{'return_value': mocker.sentinel.nonfilepath})
-    _view = mocker.patch.object(source, '_view', new_callable=mocker.Mock)
+    _view = mocker.patch.object(source, '_view', autospec=True)
     remove = mocker.patch('os.remove', autospec=True)
 
     assert source.render(cleanup=True, view=True) is render.return_value
@@ -133,7 +132,7 @@ def test_render(mocker, render, source):
 
 
 def test_view(mocker, source):
-    render = mocker.patch.object(source, 'render', new_callable=mocker.Mock)
+    render = mocker.patch.object(source, 'render', autospec=True)
     kwargs = {'filename': 'filename', 'directory': 'directory',
               'cleanup': True, 'quiet': True, 'quiet_view': True}
 
@@ -149,7 +148,7 @@ def test__view_unknown_platform(unknown_platform, source):
 
 def test__view(mocker, platform, source):
     _view_platform = mocker.patch.object(source, '_view_%s' % platform,
-                                         new_callable=mocker.Mock)
+                                         autospec=True)
 
     assert source._view(mocker.sentinel.name, 'png', False) is None
 
