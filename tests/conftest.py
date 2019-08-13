@@ -1,7 +1,7 @@
 # conftest.py
 
 import sys
-import platform as _platform
+import platform as platform_
 
 import pytest
 
@@ -30,7 +30,7 @@ def filesdir(tmpdir_factory):
 
 @pytest.fixture(scope='session')
 def test_platform():
-    return _platform.system().lower()
+    return platform_.system().lower()
 
 
 @pytest.fixture(params=['darwin', 'freebsd', 'linux', 'windows'],
@@ -52,8 +52,12 @@ def Popen(mocker):  # noqa: N802
 
 
 @pytest.fixture
-def startfile(mocker):
-    yield mocker.patch('os.startfile', create=True, new_callable=mocker.Mock)
+def startfile(mocker, test_platform):
+    if test_platform == 'windows':
+        kwargs = {'autospec': True}
+    else:
+        kwargs = {'create': True, 'new_callable': mocker.Mock}
+    yield mocker.patch('os.startfile', **kwargs)
 
 
 @pytest.fixture

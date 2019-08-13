@@ -168,7 +168,7 @@ def test_pipe_pipe_invalid_data_mocked(mocker, py2, Popen, quiet):  # noqa: N803
     stderr = mocker.patch('sys.stderr', new_callable=mocker.NonCallableMock)
     proc = Popen.return_value
     proc.returncode = mocker.sentinel.returncode
-    err = mocker.NonCallableMock()
+    err = mocker.NonCallableMock(name='err')
     proc.communicate.return_value = (mocker.sentinel.out, err)
 
     with pytest.raises(subprocess.CalledProcessError) as e:
