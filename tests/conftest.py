@@ -48,12 +48,12 @@ def unknown_platform(monkeypatch, name='nonplatform'):
 
 @pytest.fixture
 def Popen(mocker):  # noqa: N802
-    yield mocker.patch('subprocess.Popen')
+    yield mocker.patch('subprocess.Popen', autospec=True)
 
 
 @pytest.fixture
 def startfile(mocker):
-    yield mocker.patch('os.startfile', create=True)
+    yield mocker.patch('os.startfile', create=True, autospec=True)
 
 
 @pytest.fixture
@@ -68,9 +68,9 @@ def quiet(request):
 
 @pytest.fixture
 def pipe(mocker):
-    yield mocker.patch('graphviz.backend.pipe')
+    yield mocker.patch('graphviz.backend.pipe', autospec=True)
 
 
 @pytest.fixture
 def render(mocker):
-    yield mocker.patch('graphviz.backend.render')
+    yield mocker.patch('graphviz.backend.render', autospec=True)

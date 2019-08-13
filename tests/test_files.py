@@ -99,7 +99,7 @@ def test_filepath(test_platform, source):
 
 def test_save(mocker, py2, filename='nonfilename', directory='nondirectory'):
     source = Source(**SOURCE)
-    makedirs = mocker.patch('os.makedirs', new_callable=mocker.Mock)
+    makedirs = mocker.patch('os.makedirs', autospec=True)
     open_ = mocker.patch('io.open', mocker.mock_open())
 
     assert source.save(filename, directory) == source.filepath
@@ -119,7 +119,7 @@ def test_render(mocker, render, source):
     save = mocker.patch.object(source, 'save', new_callable=mocker.Mock,
                                **{'return_value': mocker.sentinel.nonfilepath})
     _view = mocker.patch.object(source, '_view', new_callable=mocker.Mock)
-    remove = mocker.patch('os.remove', new_callable=mocker.Mock)
+    remove = mocker.patch('os.remove', autospec=True)
 
     assert source.render(cleanup=True, view=True) is render.return_value
 

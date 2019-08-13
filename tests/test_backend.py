@@ -165,10 +165,10 @@ def test_pipe(capsys, engine, format_, renderer, formatter, pattern,
 
 
 def test_pipe_pipe_invalid_data_mocked(mocker, py2, Popen, quiet):  # noqa: N803
-    stderr = mocker.patch('sys.stderr', new_callable=mocker.NonCallableMock)
+    stderr = mocker.patch('sys.stderr', autospec=True)
     proc = Popen.return_value
     proc.returncode = mocker.sentinel.returncode
-    err = mocker.Mock()
+    err = mocker.NonCallableMock()
     proc.communicate.return_value = (mocker.sentinel.out, err)
 
     with pytest.raises(subprocess.CalledProcessError) as e:
