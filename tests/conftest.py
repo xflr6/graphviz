@@ -53,7 +53,7 @@ def Popen(mocker):  # noqa: N802
 
 @pytest.fixture
 def startfile(mocker):
-    yield mocker.patch('os.startfile', create=True, autospec=True)
+    yield mocker.patch('os.startfile', create=True, new_callable=mocker.Mock)
 
 
 @pytest.fixture
