@@ -161,6 +161,19 @@ def test_subgraph():
 }'''
 
 
+def test_graph_with_escapes():
+    dot = Graph()
+    dot.node('A', label="\\")
+    dot.node('B', label=r'"\"')
+
+    assert str(dot) == (
+        "graph {\n"
+        "\tA " + r'[label="\\"]' + "\n"
+        "\tB " + r'[label="\"\\\""]' + "\n"
+        "}"
+    )
+
+
 def test_label_html():
     """http://www.graphviz.org/doc/info/shapes.html#html"""
     dot = Digraph('structs', node_attr={'shape': 'plaintext'})
