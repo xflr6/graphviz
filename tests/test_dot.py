@@ -85,6 +85,17 @@ def test_attr_kw_none(cls, expected):
 
 
 @pytest.mark.parametrize('cls, expected', [
+    (Graph, 'graph {\n\tA [label="%s"]\n\tB [label="%s"]\n}' % (r'\\', r'\"\\\"')),
+    (Digraph, 'digraph {\n\tA [label="%s"]\n\tB [label="%s"]\n}' % (r'\\', r'\"\\\"')),
+], ids=lambda p: getattr(p, '__name__', '...'))
+def test_escaped_quotes_and_escapes(cls, expected):
+    dot = cls()
+    dot.node('A', label='\\')
+    dot.node('B', label=r'"\"')
+    assert dot.source == expected 
+
+
+@pytest.mark.parametrize('cls, expected', [
     (Graph, 'graph {\n\t// comment\n\tsubgraph name {\n\t}\n}'),
     (Digraph, 'digraph {\n\t// comment\n\tsubgraph name {\n\t}\n}'),
 ], ids=lambda p: getattr(p, '__name__', '...'))

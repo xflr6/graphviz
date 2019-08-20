@@ -24,7 +24,7 @@ COMPASS = {'n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw', 'c', '_'}  # TODO
 
 def quote(identifier,
           html=HTML_STRING.match, valid_id=ID.match, dot_keywords=KEYWORDS):
-    """Return DOT identifier from string, quote if needed.
+    r"""Return DOT identifier from string, quote if needed.
 
     >>> quote('')
     '""'
@@ -46,11 +46,17 @@ def quote(identifier,
 
     >>> quote(nohtml('<>'))
     '"<>"'
+
+    >>> print(quote('"'))
+    "\""
+
+    >>> print(quote('\\"'))
+    "\\\""
     """
     if html(identifier) and not isinstance(identifier, NoHtml):
         pass
     elif not valid_id(identifier) or identifier.lower() in dot_keywords:
-        return '"%s"' % identifier.replace('"', '\\"')
+        return '"%s"' % identifier.replace('\\', '\\\\').replace('"', '\\"')
     return identifier
 
 
