@@ -5,7 +5,15 @@ Changelog
 Version 0.12 (in development)
 -----------------------------
 
+Fix missing escaping of backslashes, e.g. in labels (pull request DNGros).
 
+Add ``quiet`` argument to standalone ``view()`` function, and ``quiet_view``
+argument on ``.render()`` and ``.view()`` methods. Supresses the ``stderr``
+output of started viewer processes (unavailable on Windows).
+
+Add basic debug logging via the stdlib ``logging`` module.
+
+Reformatted some examples, improved tests by using autospec for mocks.
 
 
 Version 0.11.1
