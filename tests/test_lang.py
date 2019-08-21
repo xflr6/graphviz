@@ -9,10 +9,6 @@ def test_quote_quotes():
     assert quote('"spam"') == r'"\"spam\""'
 
 
-def test_escape_backslash():
-    assert quote('\\') == r'"\\"'
-
-
 def test_quote_keyword():
     assert quote('node') == '"node"'
     assert quote('EDGE') == '"EDGE"'
