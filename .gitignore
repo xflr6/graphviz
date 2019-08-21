@@ -17,9 +17,10 @@ __pycache__/
 
 Thumbs.db
 
+.ipynb_checkpoints/
+
 /test-output/
 /test-log.txt
 
 /examples/*.gv
 /examples/*.pdf
-/examples/.ipynb_checkpoints/
