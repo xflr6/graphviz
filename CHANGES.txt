@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.12 (in development)
------------------------------
+Version 0.12
+------------
 
 Fix missing escaping of backslashes, e.g. in labels (pull request DNGros).
 
