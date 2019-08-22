@@ -292,5 +292,5 @@ def view_windows(filepath, quiet):
     """Start filepath with its associated application (windows)."""
     # TODO: implement quiet=True
     filepath = os.path.normpath(filepath)
-    log.debug('view: %r', filepath) 
+    log.debug('view: %r', filepath)
     os.startfile(filepath)

@@ -92,7 +92,7 @@ def test_escaped_quotes_and_escapes(cls, expected):
     dot = cls()
     dot.node('A', label='\\')
     dot.node('B', label=r'"\"')
-    assert dot.source == expected 
+    assert dot.source == expected
 
 
 @pytest.mark.parametrize('cls, expected', [
