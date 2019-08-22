@@ -55,6 +55,7 @@ def test_render_formatter_unknown():
         render('dot', 'ps', 'nonfilepath', 'ps', '')
 
 
+@pytest.exe
 @pytest.mark.usefixtures('empty_path')
 def test_render_missing_executable():
     with pytest.raises(ExecutableNotFound, match=r'execute'):
@@ -126,6 +127,7 @@ def test_render_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
+@pytest.exe
 @pytest.mark.usefixtures('empty_path')
 def test_pipe_missing_executable():
     with pytest.raises(ExecutableNotFound, match=r'execute'):
@@ -212,6 +214,7 @@ def test_pipe_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
+@pytest.exe
 @pytest.mark.usefixtures('empty_path')
 def test_version_missing_executable():
     with pytest.raises(ExecutableNotFound, match=r'execute'):
