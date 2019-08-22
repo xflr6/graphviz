@@ -30,6 +30,18 @@ def test_run_oserror():
     assert e.value.errno in (errno.EACCES, errno.EINVAL)
 
 
+@pytest.exe
+@pytest.mark.usefixtures('empty_path')
+@pytest.mark.parametrize('func, args', [
+    (render, ['dot', 'pdf', 'nonfilepath']),
+    (pipe, ['dot', 'pdf', b'nongraph']),
+    (version, []),
+])
+def test_missing_executable(func, args):
+    with pytest.raises(ExecutableNotFound, match=r'execute'):
+        func(*args)
+
+
 def test_render_engine_unknown():
     with pytest.raises(ValueError, match=r'unknown engine'):
         render('', 'pdf', 'nonfilepath')
@@ -53,13 +65,6 @@ def test_render_renderer_missing():
 def test_render_formatter_unknown():
     with pytest.raises(ValueError, match=r'unknown formatter'):
         render('dot', 'ps', 'nonfilepath', 'ps', '')
-
-
-@pytest.exe
-@pytest.mark.usefixtures('empty_path')
-def test_render_missing_executable():
-    with pytest.raises(ExecutableNotFound, match=r'execute'):
-        render('dot', 'pdf', 'nonfilepath')
 
 
 @pytest.exe
@@ -125,13 +130,6 @@ def test_render_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
     check_startupinfo(Popen)
     proc.communicate.assert_called_once_with(None)
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
-
-
-@pytest.exe
-@pytest.mark.usefixtures('empty_path')
-def test_pipe_missing_executable():
-    with pytest.raises(ExecutableNotFound, match=r'execute'):
-        pipe('dot', 'pdf', b'nongraph')
 
 
 @pytest.exe
@@ -212,13 +210,6 @@ def test_pipe_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
     check_startupinfo(Popen)
     proc.communicate.assert_called_once_with(b'nongraph')
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
-
-
-@pytest.exe
-@pytest.mark.usefixtures('empty_path')
-def test_version_missing_executable():
-    with pytest.raises(ExecutableNotFound, match=r'execute'):
-        version()
 
 
 @pytest.exe
