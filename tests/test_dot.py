@@ -30,7 +30,7 @@ def test_copy(cls):
 def test__repr_svg_(mocker, cls):
     c = cls()
     kwargs = {'return_value.decode.return_value': mocker.sentinel.decoded}
-    pipe = mocker.patch.object(c, 'pipe', new_callable=mocker.Mock, **kwargs)
+    pipe = mocker.patch.object(c, 'pipe', autospec=True, **kwargs)
 
     assert c._repr_svg_() is mocker.sentinel.decoded
 
