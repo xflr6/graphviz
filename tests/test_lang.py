@@ -5,29 +5,29 @@ import pytest
 from graphviz.lang import quote, attr_list, nohtml
 
 
-def test_quote_quotes():
-    assert quote('"spam"') == r'"\"spam\""'
+@pytest.mark.parametrize('identifier, expected', [
+    ('"spam"', r'"\"spam\""'),
+    ('node', '"node"'),
+    ('EDGE', '"EDGE"'),
+    ('Graph', '"Graph"'),
+])
+def test_quote(identifier, expected):
+    assert quote(identifier) == expected
 
 
-def test_quote_keyword():
-    assert quote('node') == '"node"'
-    assert quote('EDGE') == '"EDGE"'
-    assert quote('Graph') == '"Graph"'
+@pytest.mark.parametrize('attributes, expected', [
+    ([('spam', 'eggs')], ' [spam=eggs]'),
+    ({'spam': 'eggs'}, ' [spam=eggs]'),
+])
+def test_attr_list(attributes, expected):
+    assert attr_list(attributes=attributes) == expected
 
 
-def test_attr_list_pairs():
-    assert attr_list(attributes=[('spam', 'eggs')]) == ' [spam=eggs]'
-
-
-def test_attr_list_map():
-    assert attr_list(attributes={'spam': 'eggs'}) == ' [spam=eggs]'
-
-
-def test_nohtml(py2):
-    assert nohtml('spam') == 'spam'
-    assert isinstance(nohtml('spam'), str)
-    assert nohtml(u'spam') == u'spam'
-    assert isinstance(nohtml(u'spam'), unicode if py2 else str)
+@pytest.mark.parametrize('string', ['spam', u'spam'])
+def test_nohtml(string):
+    result = nohtml(string)
+    assert result == string
+    assert isinstance(result, type(string))
 
 
 def test_nohtml_invalid(py2):
