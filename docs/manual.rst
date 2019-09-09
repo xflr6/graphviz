@@ -261,12 +261,54 @@ key-value pairs targeting the current (sub-)graph (e.g. for ``rankdir``,
     :align: center
 
 
+Backslash escapes
+-----------------
+
+The Graphviz layout engine supports a number of
+`escape sequences <escString_>`_ such as ``\n``, ``\l``, ``\r`` (for multi-line
+labels: centered, left-justified, right-justified) and ``\N``, ``\G``, ``\L``
+(expanded to the current node name, graph name, object label). To be able to
+use them from this library (e.g. for labels), strings with backslashes are
+passed on as is. This means that literal backslashes need to be escaped
+(doubled) by the user. As the backslash is also special in Python string
+literals, a second level of doubling is needed (e.g. ``label='\\\\'``). This
+kind of doubling can be avoided by using raw string literals instead (same
+solution as proposed for the stdlib :mod:`re` module):
+
+.. code:: python
+
+    >>> e = Digraph()
+    >>> e.node('backslash', label=r'\\')
+    >>> e.node('multi_line', label=r'centered\nleft\lright\r')
+    >>> print(e.source)  # doctest: +NORMALIZE_WHITESPACE
+    digraph {
+        backslash [label="\\"]
+        multi_line [label="centered\nleft\lright\r"]
+    }
+
+.. image:: _static/escapes.svg
+    :align: center
+
+To disable any special character meaning in a string (e.g. from an untrusted
+source), use the :func:`.escape` function (cf. the :func:`re.escape` function):
+
+.. code:: python
+
+    >>> from graphviz import escape
+    >>> bs = Digraph()
+    >>> bs.node(escape('\\'))
+    >>> print(bs.source)  # doctest: +NORMALIZE_WHITESPACE
+    digraph {
+        "\\"
+    }
+
+
 Quoting and HTML-like labels
 ----------------------------
 
 The graph-building methods of :class:`.Graph` and :class:`.Digraph` objects
-automatically take care of quoting/escaping strings `where required <DOT_>`_
-(whitespace, keywords, double quotes, etc.):
+automatically take care of quoting (and escaping quotes)
+`where needed <DOT_>`_ (whitespace, keywords, double quotes, etc.):
 
 .. code:: python
 
@@ -514,6 +556,7 @@ cycles.
 .. _DOT: https://www.graphviz.org/doc/info/lang.html
 .. _output file format: https://www.graphviz.org/doc/info/output.html
 .. _appearance: https://www.graphviz.org/doc/info/attrs.html
+.. _escString: https://www.graphviz.org/doc/info/attrs.html#k:escString
 .. _HTML-like labels: https://graphviz.gitlab.io/_pages/doc/info/shapes.html#html
 
 .. _Jupyter notebook: https://jupyter.org

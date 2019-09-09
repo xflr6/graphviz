@@ -10,6 +10,12 @@ from graphviz.lang import quote, attr_list, nohtml
     ('node', '"node"'),
     ('EDGE', '"EDGE"'),
     ('Graph', '"Graph"'),
+    ('\\G \\N \\E \\T \\H \\L', '"\\G \\N \\E \\T \\H \\L"'),
+    ('\G \E \T \H \L', '"\\G \\E \\T \\H \\L"'),  # noqa: W605
+    ('\\n \\l \\r', '"\\n \\l \\r"'),
+    ('\l', '"\\l"'),  # noqa: W605
+    ('\r\n', '"\r\n"'),
+    ('\\\\n', r'"\\n"'),
 ])
 def test_quote(identifier, expected):
     assert quote(identifier) == expected

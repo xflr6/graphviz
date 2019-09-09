@@ -4,14 +4,16 @@
 
 import re
 import collections
+import functools
 
 from . import _compat
 
 from . import tools
 
-__all__ = ['quote', 'quote_edge', 'a_list', 'attr_list']
+__all__ = ['quote', 'quote_edge', 'a_list', 'attr_list', 'escape', 'nohtml']
 
-# http://www.graphviz.org/doc/info/lang.html
+# https://www.graphviz.org/doc/info/lang.html
+# https://www.graphviz.org/doc/info/attrs.html#k:escString
 
 HTML_STRING = re.compile(r'<.*>$', re.DOTALL)
 
@@ -21,9 +23,13 @@ KEYWORDS = {'node', 'edge', 'graph', 'digraph', 'subgraph', 'strict'}
 
 COMPASS = {'n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw', 'c', '_'}  # TODO
 
+ESCAPE_UNESCAPED_QUOTES = functools.partial(re.compile(r'(?!\\)"').sub, r'\\"')
+
 
 def quote(identifier,
-          html=HTML_STRING.match, valid_id=ID.match, dot_keywords=KEYWORDS):
+          is_html_string=HTML_STRING.match,
+          is_valid_id=ID.match, dot_keywords=KEYWORDS,
+          escape_unescaped_quotes=ESCAPE_UNESCAPED_QUOTES):
     r"""Return DOT identifier from string, quote if needed.
 
     >>> quote('')
@@ -51,12 +57,12 @@ def quote(identifier,
     "\""
 
     >>> print(quote('\\"'))
-    "\\\""
+    "\\""
     """
-    if html(identifier) and not isinstance(identifier, NoHtml):
+    if is_html_string(identifier) and not isinstance(identifier, NoHtml):
         pass
-    elif not valid_id(identifier) or identifier.lower() in dot_keywords:
-        return '"%s"' % identifier.replace('\\', '\\\\').replace('"', '\\"')
+    elif not is_valid_id(identifier) or identifier.lower() in dot_keywords:
+        return '"%s"' % escape_unescaped_quotes(identifier)
     return identifier
 
 
@@ -121,6 +127,22 @@ def attr_list(label=None, kwargs=None, attributes=None):
     if not content:
         return ''
     return ' [%s]' % content
+
+
+def escape(s):
+    r"""Return ``s`` as literal disabling special meaning of backslashes and ``'<...>'``.
+
+    see also https://www.graphviz.org/doc/info/attrs.html#k:escString
+
+    Args:
+        s: String in which backslashes and ``'<...>'`` should be treated as literal.
+    Raises:
+        TypeError: If ``s`` is not a ``str`` on Python 3, or a ``str``/``unicode`` on Python 2.
+
+    >>> print(escape(r'\l'))
+    \\l
+    """
+    return nohtml(s.replace('\\', '\\\\'))
 
 
 class NoHtml(object):

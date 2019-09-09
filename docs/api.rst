@@ -77,6 +77,8 @@ Other
 
 .. autofunction:: graphviz.version
 
+.. autofunction:: graphviz.escape
+
 .. autofunction:: graphviz.nohtml
 
 Manually maintained whitelists (see https://graphviz.gitlab.io/_pages/pdf/dot.1.pdf,

@@ -90,8 +90,8 @@ def test_attr_kw_none(cls, expected):
 ], ids=lambda p: getattr(p, '__name__', '...'))
 def test_escaped_quotes_and_escapes(cls, expected):
     dot = cls()
-    dot.node('A', label='\\')
-    dot.node('B', label=r'"\"')
+    dot.node('A', label='\\\\')
+    dot.node('B', label=r'"\\"')
     assert dot.source == expected
 
 

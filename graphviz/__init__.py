@@ -26,7 +26,7 @@ digraph {
 
 from .dot import Graph, Digraph
 from .files import Source
-from .lang import nohtml
+from .lang import escape, nohtml
 from .backend import (render, pipe, version, view,
                       ENGINES, FORMATS, RENDERERS, FORMATTERS,
                       ExecutableNotFound, RequiredArgumentError)
@@ -34,7 +34,7 @@ from .backend import (render, pipe, version, view,
 __all__ = [
     'Graph', 'Digraph',
     'Source',
-    'nohtml',
+    'escape', 'nohtml',
     'render', 'pipe', 'version', 'view',
     'ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
     'ExecutableNotFound', 'RequiredArgumentError',
