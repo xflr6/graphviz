@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.13 (in development)
------------------------------
+Version 0.13
+------------
 
 Add explicit support for layout engine escape sequences such as ``\l`` and
 ``\N``. These already worked implicitly before but where broken by backslash
