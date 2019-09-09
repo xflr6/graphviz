@@ -5,7 +5,18 @@ Changelog
 Version 0.13 (in development)
 -----------------------------
 
+Add explicit support for layout engine escape sequences such as ``\l`` and
+``\N``. These already worked implicitly before but where broken by backslash
+escaping in ``0.12``, which is reverted by this release. Escaping now resembles
+the stdlib ``re`` module: literal backslashes need to be escaped (doubled),
+which is most conveniently done by using raw string literals for strings that
+use escape sequences (including escaped backslashes), e.g. ``label=r'\\'``.
 
+Add ``escape()`` function (resembling ``re.escape()``) for disabling all
+meta-characters in a string for rendering.
+
+Use ``logging`` in example notebook, add notebooks demonstrating layout engines
+and escape sequence usage, improve tests with parametrization.
 
 
 Version 0.12
