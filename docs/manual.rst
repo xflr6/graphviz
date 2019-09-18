@@ -272,8 +272,8 @@ use them from this library (e.g. for labels), strings with backslashes are
 passed on as is. This means that literal backslashes need to be escaped
 (doubled) by the user. As the backslash is also special in Python string
 literals, a second level of doubling is needed (e.g. ``label='\\\\'``). This
-kind of doubling can be avoided by using raw string literals instead (same
-solution as proposed for the stdlib :mod:`re` module):
+kind of doubling can be avoided by using `raw string literals`_ (``r'...'``)
+instead (same solution as proposed for the stdlib :mod:`re` module):
 
 .. code:: python
 
@@ -557,6 +557,7 @@ cycles.
 .. _output file format: https://www.graphviz.org/doc/info/output.html
 .. _appearance: https://www.graphviz.org/doc/info/attrs.html
 .. _escString: https://www.graphviz.org/doc/info/attrs.html#k:escString
+.. _raw string literals: https://docs.python.org/3/reference/lexical_analysis.html#string-and-bytes-literals
 .. _HTML-like labels: https://graphviz.gitlab.io/_pages/doc/info/shapes.html#html
 
 .. _Jupyter notebook: https://jupyter.org
