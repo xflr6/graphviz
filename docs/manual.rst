@@ -65,9 +65,9 @@ Add nodes and edges to the graph object using its :meth:`~.Graph.node` and
 
 The :meth:`~.Graph.node`-method takes a ``name`` identifier as first argument
 and an optional ``label``. The :meth:`~.Graph.edge`-method takes the names of
-start- and end-node, while :meth:`~.Graph.edges` takes iterable of name-pairs.
-Keyword arguments are turned into (node and edge) attributes (see `Graphviz
-docs <appearance_>`_).
+start node and end node, while :meth:`~.Graph.edges` takes an iterable of
+name pairs. Keyword arguments are turned into (node and edge) attributes (see
+`Graphviz docs <appearance_>`_ on available attributes).
 
 Check the generated source code:
 
@@ -162,8 +162,8 @@ Jupyter notebooks
 :meth:`~.Graph._repr_svg_`-method so they can be rendered and displayed
 directly inside a `Jupyter notebook`_. For an example, check the
 ``examples/notebook.ipynb`` file in the
-`source repository/distribution <notebook.ipynb_>`_ (or the same within
-nbviewer_).
+`source repository/distribution <notebook.ipynb_>`_ (or the same rendered
+within nbviewer_).
 
 This also allows direct displaying within the `Jupyter Qt Console`_ (e.g.
 `the one <spyderconsole_>`_ inside `Spyder IDE`_):
