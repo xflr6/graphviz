@@ -289,8 +289,9 @@ instead (same solution as proposed for the stdlib :mod:`re` module):
 .. image:: _static/escapes.svg
     :align: center
 
-To disable any special character meaning in a string (e.g. from an untrusted
-source), use the :func:`.escape` function (cf. the :func:`re.escape` function):
+To disable any special character meaning in a string (e.g. from user input to
+be rendered literally), use the :func:`.escape` function (cf. the
+:func:`re.escape` function):
 
 .. code:: python
 
