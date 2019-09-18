@@ -123,9 +123,10 @@ def command(engine, format_, filepath=None, renderer=None, formatter=None):
 
     output_format = [f for f in (format_, renderer, formatter) if f is not None]
     cmd = [engine, '-T%s' % ':'.join(output_format)]
-    rendered = None
 
-    if filepath is not None:
+    if filepath is None:
+        rendered = None
+    else:
         cmd.extend(['-O', filepath])
         suffix = '.'.join(reversed(output_format))
         rendered = '%s.%s' % (filepath, suffix)
