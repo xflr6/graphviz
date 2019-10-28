@@ -3,17 +3,14 @@ python:
   - "2.7"
   - "3.5"
   - "3.6"
-matrix:
-  include:
-    - python: "3.7"
-      dist: xenial
-      sudo: true
+  - "3.7"
+  - "3.8"
 cache: pip
 before_cache: rm -f $HOME/.cache/pip/log/debug.log
 addons:
   apt:
     packages:
-    - graphviz
+      - graphviz
 install: pip install .[test] codecov
 script: pytest
 after_success: codecov
