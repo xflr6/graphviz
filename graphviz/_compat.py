@@ -37,11 +37,11 @@ if PY2:
             super(CalledProcessError, self).__init__(returncode, cmd, output)
             self.stderr = stderr
 
-        @property
+        @property  # pragma: no cover
         def stdout(self):
             return self.output
 
-        @stdout.setter
+        @stdout.setter  # pragma: no cover
         def stdout(self, value):
             self.output = value
 
