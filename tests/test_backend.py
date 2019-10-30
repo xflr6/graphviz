@@ -177,8 +177,10 @@ def test_pipe_pipe_invalid_data_mocked(mocker, py2, Popen, quiet):  # noqa: N803
         pipe('dot', 'png', b'nongraph', quiet=quiet)
 
     assert e.value.returncode is mocker.sentinel.returncode
-    assert e.value.stdout is mocker.sentinel.out
     assert e.value.stderr is err
+    assert e.value.stdout is mocker.sentinel.out
+    e.value.stdout = mocker.sentinel.new_stdout
+    assert e.value.stdout is mocker.sentinel.new_stdout
     Popen.assert_called_once_with(['dot', '-Tpng'],
                                   stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE,

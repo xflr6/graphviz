@@ -42,7 +42,7 @@ if PY2:
             return self.output
 
         @stdout.setter
-        def stdout(self, value):  # pragma: no cover
+        def stdout(self, value):
             self.output = value
 
 
