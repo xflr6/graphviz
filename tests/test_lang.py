@@ -16,6 +16,7 @@ from graphviz.lang import quote, attr_list, nohtml
     ('\l', '"\\l"'),  # noqa: W605
     ('\r\n', '"\r\n"'),
     ('\\\\n', r'"\\n"'),
+    (u'\u0665.\u0660', u'"\u0665.\u0660"'),
 ])
 def test_quote(identifier, expected):
     assert quote(identifier) == expected
