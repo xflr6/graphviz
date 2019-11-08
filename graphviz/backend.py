@@ -234,7 +234,7 @@ def version():
     """Return the version number tuple from the ``stderr`` output of ``dot -V``.
 
     Returns:
-        Two or three ``int`` version ``tuple``.
+        Two, three, or four ``int`` version ``tuple``.
     Raises:
         graphviz.ExecutableNotFound: If the Graphviz executable is not found.
         subprocess.CalledProcessError: If the exit status is non-zero.
@@ -246,7 +246,7 @@ def version():
                  stderr=subprocess.STDOUT)
 
     info = out.decode('ascii')
-    ma = re.search(r'graphviz version (\d+\.\d+(?:\.\d+)?) ', info)
+    ma = re.search(r'graphviz version (\d+\.\d+(?:\.\d+){,2}) ', info)
     if ma is None:
         raise RuntimeError('cannot parse %r output: %r' % (cmd, info))
     return tuple(int(d) for d in ma.group(1).split('.'))
