@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.13.2 (in development)
--------------------------------
+Version 0.13.2
+--------------
 
 Fix missing support for four-part versions in ``graphviz.version()``.
 
