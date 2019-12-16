@@ -3,7 +3,7 @@
 
 import graphviz
 
-d = graphviz.Digraph()
+d = graphviz.Digraph(filename='rank_same.gv')
 
 with d.subgraph() as s:
     s.attr(rank='same')
