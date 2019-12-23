@@ -4,7 +4,6 @@ import os
 import re
 import errno
 import platform
-import functools
 import subprocess
 
 import pytest
@@ -32,11 +31,10 @@ def test_run_oserror():
 
 
 def test_run_encoding_mocked(mocker, Popen, input=u'sp\xe4m', encoding='utf-8'):
-    mock_bytes = functools.partial(mocker.create_autospec, bytes, instance=True)
-
     proc = Popen.return_value
-    proc.communicate.return_value = mocks = [mock_bytes(name=n)
-                                             for n in ('out', 'err')]
+    proc.returncode = 0
+    mocks = [mocker.create_autospec(bytes, instance=True, name=n) for n in ('out', 'err')]
+    proc.communicate.return_value = mocks
 
     result = run(mocker.sentinel.cmd,
                  input=input, capture_output=True, encoding=encoding)
