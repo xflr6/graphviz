@@ -147,11 +147,16 @@ else:
         return None
 
 
-def run(cmd, input=None, capture_output=False, check=False, quiet=False, **kwargs):
+def run(cmd, input=None, capture_output=False, check=False, encoding=None,
+        quiet=False, **kwargs):
     """Run the command described by cmd and return its (stdout, stderr) tuple."""
     log.debug('run %r', cmd)
+
     if input is not None:
         kwargs['stdin'] = subprocess.PIPE
+        if encoding is not None:
+            input = input.encode(encoding)
+
     if capture_output:
         kwargs['stdout'] = kwargs['stderr'] = subprocess.PIPE
 
@@ -167,6 +172,13 @@ def run(cmd, input=None, capture_output=False, check=False, quiet=False, **kwarg
 
     if not quiet and err:
         _compat.stderr_write_bytes(err, flush=True)
+
+    if encoding is not None:
+        if out is not None:
+            out = out.decode(encoding)
+        if err is not None:
+            err = err.decode(encoding)
+
     if check and proc.returncode:
         raise CalledProcessError(proc.returncode, cmd,
                                  output=out, stderr=err)
@@ -197,12 +209,15 @@ def render(engine, format, filepath, renderer=None, formatter=None, quiet=False)
     relative to the DOT source file.
     """
     dirname, filename = os.path.split(filepath)
+    del filepath
+
     cmd, rendered = command(engine, format, filename, renderer, formatter)
     if dirname:
         cwd = dirname
         rendered = os.path.join(dirname, rendered)
     else:
         cwd = None
+
     run(cmd, capture_output=True, cwd=cwd, check=True, quiet=quiet)
     return rendered
 
@@ -241,14 +256,14 @@ def version():
         RuntimmeError: If the output cannot be parsed into a version number.
     """
     cmd = ['dot', '-V']
-    out, _ = run(cmd, check=True,
+    out, _ = run(cmd, check=True, encoding='ascii',
                  stdout=subprocess.PIPE,
                  stderr=subprocess.STDOUT)
 
-    info = out.decode('ascii')
-    ma = re.search(r'graphviz version (\d+\.\d+(?:\.\d+){,2}) ', info)
+    ma = re.search(r'graphviz version (\d+\.\d+(?:\.\d+){,2}) ', out)
     if ma is None:
-        raise RuntimeError('cannot parse %r output: %r' % (cmd, info))
+        raise RuntimeError('cannot parse %r output: %r' % (cmd, out))
+
     return tuple(int(d) for d in ma.group(1).split('.'))
 
 
