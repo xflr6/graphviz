@@ -110,8 +110,8 @@ def test_save(mocker, py2, filename='nonfilename', directory='nondirectory'):
         makedirs.assert_called_once_with(source.directory, 0o777, exist_ok=True)
     open_.assert_called_once_with(source.filepath, 'w',
                                   encoding=source.encoding)
-    assert open_.return_value.write.call_args_list == [((source.source,),),
-                                                       ((u'\n',),)]
+    assert open_.return_value.write.call_args_list == [mocker.call(source.source),
+                                                       mocker.call(u'\n')]
 
 
 def test_render(mocker, render, source):

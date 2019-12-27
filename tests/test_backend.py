@@ -14,13 +14,13 @@ from graphviz.backend import (run, render, pipe, version, view,
 
 if platform.system().lower() == 'windows':
     def check_startupinfo(Popen):  # noqa: N803
-        startupinfo = Popen.call_args[1]['startupinfo']
+        startupinfo = Popen.call_args.kwargs['startupinfo']
         assert isinstance(startupinfo, subprocess.STARTUPINFO)
         assert startupinfo.dwFlags & subprocess.STARTF_USESHOWWINDOW
         assert startupinfo.wShowWindow == subprocess.SW_HIDE
 else:
     def check_startupinfo(Popen):  # noqa: N803
-        assert Popen.call_args[1]['startupinfo'] is None
+        assert Popen.call_args.kwargs.get('startupinfo') is None
 
 
 @pytest.exe
