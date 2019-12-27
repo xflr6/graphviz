@@ -13,14 +13,13 @@ from graphviz.backend import (run, render, pipe, version, view,
 
 
 if platform.system().lower() == 'windows':
-    def check_startupinfo(Popen):  # noqa: N803
-        startupinfo = Popen.call_args.kwargs['startupinfo']
+    def check_startupinfo(startupinfo):  # noqa: N803
         assert isinstance(startupinfo, subprocess.STARTUPINFO)
         assert startupinfo.dwFlags & subprocess.STARTF_USESHOWWINDOW
         assert startupinfo.wShowWindow == subprocess.SW_HIDE
 else:
-    def check_startupinfo(Popen):  # noqa: N803
-        assert Popen.call_args.kwargs.get('startupinfo') is None
+    def check_startupinfo(startupinfo):  # noqa: N803
+        assert startupinfo is None
 
 
 @pytest.exe
@@ -44,7 +43,7 @@ def test_run_encoding_mocked(mocker, Popen, input=u'sp\xe4m', encoding='utf-8'):
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
                                   startupinfo=mocker.ANY)
-    check_startupinfo(Popen)
+    check_startupinfo(Popen.call_args.kwargs['startupinfo'])
     proc.communicate.assert_called_once_with(input.encode(encoding))
     assert result == tuple(m.decode.return_value for m in mocks)
     for m in mocks:
@@ -148,7 +147,7 @@ def test_render_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
                                   cwd=None, startupinfo=mocker.ANY)
-    check_startupinfo(Popen)
+    check_startupinfo(Popen.call_args.kwargs['startupinfo'])
     proc.communicate.assert_called_once_with(None)
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
@@ -207,7 +206,7 @@ def test_pipe_pipe_invalid_data_mocked(mocker, py2, Popen, quiet):  # noqa: N803
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
                                   startupinfo=mocker.ANY)
-    check_startupinfo(Popen)
+    check_startupinfo(Popen.call_args.kwargs['startupinfo'])
     proc.communicate.assert_called_once_with(b'nongraph')
     if not quiet:
         if py2:
@@ -230,7 +229,7 @@ def test_pipe_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
                                   startupinfo=mocker.ANY)
-    check_startupinfo(Popen)
+    check_startupinfo(Popen.call_args.kwargs['startupinfo'])
     proc.communicate.assert_called_once_with(b'nongraph')
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
@@ -255,7 +254,7 @@ def test_version_parsefail_mocked(mocker, Popen):  # noqa: N803
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.STDOUT,
                                   startupinfo=mocker.ANY)
-    check_startupinfo(Popen)
+    check_startupinfo(Popen.call_args.kwargs['startupinfo'])
     proc.communicate.assert_called_once_with(None)
 
 
@@ -274,7 +273,7 @@ def test_version_mocked(mocker, Popen, stdout, expected):  # noqa: N803
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.STDOUT,
                                   startupinfo=mocker.ANY)
-    check_startupinfo(Popen)
+    check_startupinfo(Popen.call_args.kwargs['startupinfo'])
     proc.communicate.assert_called_once_with(None)
 
 
