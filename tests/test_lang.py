@@ -1,8 +1,28 @@
 # test_lang.py
 
+import sys
+import warnings
+
 import pytest
 
 from graphviz.lang import quote, attr_list, nohtml
+
+
+@pytest.mark.parametrize('char', ['G', 'E', 'T', 'H', 'L', 'l'])
+def test_deprecated_escape(recwarn, char):
+    warnings.simplefilter('always')
+
+    escape = eval(r'"\%s"' % char)
+
+    if sys.version_info < (3, 6):
+        assert not recwarn
+    else:
+        assert len(recwarn) == 1
+        w = recwarn.pop(DeprecationWarning)
+        assert str(w.message).startswith('invalid escape sequence')
+
+    assert escape == '\\%s' % char
+    assert quote(escape) == '"\\%s"' % char
 
 
 @pytest.mark.parametrize('identifier, expected', [
@@ -11,9 +31,7 @@ from graphviz.lang import quote, attr_list, nohtml
     ('EDGE', '"EDGE"'),
     ('Graph', '"Graph"'),
     ('\\G \\N \\E \\T \\H \\L', '"\\G \\N \\E \\T \\H \\L"'),
-    ('\G \E \T \H \L', '"\\G \\E \\T \\H \\L"'),  # noqa: W605
     ('\\n \\l \\r', '"\\n \\l \\r"'),
-    ('\l', '"\\l"'),  # noqa: W605
     ('\r\n', '"\r\n"'),
     ('\\\\n', r'"\\n"'),
     (u'\u0665.\u0660', u'"\u0665.\u0660"'),
