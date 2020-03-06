@@ -21,6 +21,15 @@ Examples
     examples
 
 
+Notebooks
+=========
+
+.. toctree::
+    :maxdepth: 2
+
+    notebooks
+
+
 API Reference
 =============
 
