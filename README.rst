@@ -1,9 +1,9 @@
 Graphviz
 ========
 
-|PyPI version| |License| |Supported Python| |Format| |Docs|
+|PyPI version| |License| |Supported Python| |Format|
 
-|Travis| |Codecov|
+|Travis| |Codecov| |Readthedocs-stable| |Readthedocs-latest|
 
 This package facilitates the creation and rendering of graph descriptions in
 the DOT_ language of the Graphviz_ graph drawing software (`master repo`_) from
@@ -144,12 +144,16 @@ This package is distributed under the `MIT license`_.
 .. |Format| image:: https://img.shields.io/pypi/format/graphviz.svg
     :target: https://pypi.org/project/graphviz/
     :alt: Format
-.. |Docs| image:: https://readthedocs.org/projects/graphviz/badge/?version=stable
-    :target: https://graphviz.readthedocs.io/en/stable/
-    :alt: Readthedocs
+
 .. |Travis| image:: https://img.shields.io/travis/xflr6/graphviz.svg
     :target: https://travis-ci.org/xflr6/graphviz
     :alt: Travis
 .. |Codecov| image:: https://codecov.io/gh/xflr6/graphviz/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/xflr6/graphviz
     :alt: Codecov
+.. |Readthedocs-stable| image:: https://readthedocs.org/projects/graphviz/badge/?version=stable
+    :target: https://graphviz.readthedocs.io/en/stable/?badge=stable
+    :alt: Readthedocs stable
+.. |Readthedocs-latest| image:: https://readthedocs.org/projects/graphviz/badge/?version=latest
+    :target: https://graphviz.readthedocs.io/en/latest/?badge=latest
+    :alt: Readthedocs latest
