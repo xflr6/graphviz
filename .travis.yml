@@ -1,16 +1,16 @@
+version: ~> 1.0
 language: python
+cache: pip
 python:
   - "2.7"
   - "3.5"
   - "3.6"
   - "3.7"
   - "3.8"
-cache: pip
-before_cache: rm -f $HOME/.cache/pip/log/debug.log
 addons:
-  apt:
-    packages:
-      - graphviz
+  apt_packages:
+    - graphviz
 install: pip install .[test] codecov
 script: pytest
+before_cache: rm -f $HOME/.cache/pip/log/debug.log
 after_success: codecov
