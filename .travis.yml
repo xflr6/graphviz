@@ -11,6 +11,6 @@ addons:
   apt_packages:
     - graphviz
 install: pip install .[test] codecov
-script: pytest
+script: ./run-tests.py
 before_cache: rm -f $HOME/.cache/pip/log/debug.log
 after_success: codecov

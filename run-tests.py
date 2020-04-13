@@ -1,18 +1,19 @@
 #!/usr/bin/env python
-# run-tests.py
 
+import platform
 import sys
 
 import pytest
 
 ARGS = [
-    #'--exitfirst',
     #'--pdb',
+    #'--exitfirst',
 ]
 
-if 'idlelib' in sys.modules:
-    ARGS.extend(['--capture=sys', '--color=no'])
-elif sys.version_info.major == 2 and 'win_unicode_console' in sys.modules:
-    ARGS.append('--capture=sys')
+if platform.system() == 'Windows':
+    if 'idlelib' in sys.modules:
+        ARGS.extend(['--capture=sys', '--color=no'])
+    elif sys.version_info.major == 2 and 'win_unicode_console' in sys.modules:
+        ARGS.append('--capture=sys')
 
-pytest.main(ARGS + sys.argv[1:])
+sys.exit(pytest.main(ARGS + sys.argv[1:]))
