@@ -5,7 +5,9 @@ Changelog
 Version 0.13.3 (in development)
 -------------------------------
 
-
+Add ``sphinx.ext.viewcode`` to docs (note that this currently lacks links for
+methods, so that not all of the code is linked; use the source repo for reading
+on).
 
 
 Version 0.13.2
