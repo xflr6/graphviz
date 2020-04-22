@@ -16,9 +16,13 @@ Before this change, use of ``'\\"'`` could break the quoting mechanism creating
 invalid or unintended DOT, possibly leading to syntax errors from the rendering
 process.
 
+Add notebook section to documentation.
+
 Add ``sphinx.ext.viewcode`` to docs (note that this currently lacks links for
 methods, so that not all of the code is linked; use the source repo for reading
 on).
+
+Improve test and doc building config.
 
 
 Version 0.13.2
