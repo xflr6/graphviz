@@ -303,6 +303,13 @@ be rendered literally), use the :func:`.escape` function (cf. the
         "\\"
     }
 
+.. note::
+
+    To prevent breaking the internal quoting mechanism, the special meaning of
+    ``\"`` as a backslash-escaped quote has been disabled since version
+    ``0.14``. E.g. both ``label='"'`` and ``label='\\"'`` now produce the same
+    DOT source ``[label="\""]`` (a label that renders as a literal quote).
+
 
 Quoting and HTML-like labels
 ----------------------------
