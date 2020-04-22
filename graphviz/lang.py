@@ -23,7 +23,11 @@ KEYWORDS = {'node', 'edge', 'graph', 'digraph', 'subgraph', 'strict'}
 
 COMPASS = {'n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw', 'c', '_'}  # TODO
 
-ESCAPE_UNESCAPED_QUOTES = functools.partial(re.compile(r'(?!\\)"').sub, r'\\"')
+QUOTE_OPTIONAL_BACKSLASHES = re.compile(r'(?P<bs>(?:\\\\)*)'
+                                        r'\\?(?P<quote>")')
+
+ESCAPE_UNESCAPED_QUOTES = functools.partial(QUOTE_OPTIONAL_BACKSLASHES.sub,
+                                            r'\g<bs>\\\g<quote>')
 
 
 def quote(identifier,
@@ -57,7 +61,13 @@ def quote(identifier,
     "\""
 
     >>> print(quote('\\"'))
-    "\\""
+    "\""
+
+    >>> print(quote('\\\\"'))
+    "\\\""
+
+    >>> print(quote('\\\\\\"'))
+    "\\\""
     """
     if is_html_string(identifier) and not isinstance(identifier, NoHtml):
         pass
