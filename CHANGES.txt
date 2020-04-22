@@ -9,7 +9,7 @@ Improve handling of escaped quotes (``\"``). Different from other layout engine
 escapes sequences such as ``\l`` and ``\N`` (which are passed on as is by
 default), there is no use case for backslash-escaping a literal quote character
 because escaping of quotes is done by this library. Therefore, a
-backslash-escaped quote (e.g. in ``label='\\"'`) is now treated the same as a
+backslash-escaped quote (e.g. in ``label='\\"'``) is now treated the same as a
 plain unescaped quote, i.e. both ``label='"'`` and ``label='\\"'`` produce
 the same DOT source ``[label="\""]`` (a label that renders as a literal quote).
 Before this change, use of ``'\\"'`` could break the quoting mechanism creating
