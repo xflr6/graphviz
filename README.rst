@@ -145,7 +145,7 @@ This package is distributed under the `MIT license`_.
     :target: https://pypi.org/project/graphviz/
     :alt: Format
 
-.. |Travis| image:: https://img.shields.io/travis/xflr6/graphviz.svg
+.. |Travis| image:: https://travis-ci.org/xflr6/graphviz.svg?branch=master
     :target: https://travis-ci.org/xflr6/graphviz
     :alt: Travis
 .. |Codecov| image:: https://codecov.io/gh/xflr6/graphviz/branch/master/graph/badge.svg
