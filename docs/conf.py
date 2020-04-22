@@ -21,7 +21,7 @@ import graphviz
 # -- Project information -----------------------------------------------------
 
 project = 'graphviz'
-copyright = '2013-2019, Sebastian Bank'
+copyright = '2013-2020, Sebastian Bank'
 author = 'Sebastian Bank'
 
 # The short X.Y version
