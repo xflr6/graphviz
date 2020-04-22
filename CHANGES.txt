@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.14 (in development)
------------------------------
+Version 0.14
+------------
 
 Improve handling of escaped quotes (``\"``). Different from other layout engine
 escapes sequences such as ``\l`` and ``\N`` (which are passed on as is by
