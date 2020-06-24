@@ -133,7 +133,8 @@ class Dot(files.File):
         self.body.append(line)
 
     def edge(self, tail_name, head_name, label=None, _attributes=None, **attrs):
-        """Create an edge between two nodes.
+        """Create an edge between two nodes. Accepts colon-separated strings
+        which are splitted into node, port and compass.
 
         Args:
             tail_name: Start node identifier.

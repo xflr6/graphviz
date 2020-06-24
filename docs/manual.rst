@@ -210,6 +210,27 @@ After creation, they can be edited on the graph object:
 
 .. _attributes:
 
+Port and Compass Points
+-----------------------
+
+:meth:`~.Graph.edge` accepts optional port and compass attributes which are
+separated with colons in the following form: ``node:port:nw``. When present,
+they are converted to native DOT equivalents and modify the edge placement
+between two nodes.
+
+.. code:: python
+
+    >>> dot.edge('node1:port1', 'node2:port5:nw')
+    >>> dot.edge('node3:port2:_', 'node4:port4:s')
+
+If you need to use a colon in a node's label, you can declare a node with
+:meth:`~.Graph.node` first:
+
+.. code:: python
+    >>> dot.node('A', 'node:with:colon')
+    >>> dot.node('B', 'another:node:with:colon')
+    >>> dot.edge('A', 'B')
+
 Attributes
 ----------
 
