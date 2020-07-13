@@ -5,7 +5,9 @@ Changelog
 Version 0.14.1 (in development)
 -------------------------------
 
-
+Document the colon-separated ``node[:port[:compass]]`` format used for ``tail``
+and ``head`` points in the ``edge()``- and ``edges()``-methods' (PR Michał
+Góral).
 
 
 Version 0.14

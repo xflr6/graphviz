@@ -133,14 +133,19 @@ class Dot(files.File):
         self.body.append(line)
 
     def edge(self, tail_name, head_name, label=None, _attributes=None, **attrs):
-        """Create an edge between two nodes. Accepts colon-separated strings
-        which are splitted into node, port and compass.
+        """Create an edge between two nodes. 
 
         Args:
-            tail_name: Start node identifier.
-            head_name: End node identifier.
+            tail_name: Start node identifier (format: ``node[:port[:compass]]``).
+            head_name: End node identifier (format: ``node[:port[:compass]]``).
             label: Caption to be displayed near the edge.
             attrs: Any additional edge attributes (must be strings).
+
+        Note:
+            The ``tail_name`` and ``head_name`` strings are separated by
+            (optional) colon(s) into ``node`` name, ``port`` name, and
+            ``compass`` (e.g. ``sw``).
+            See :ref:`details in the User Guide <ports>`.
         """
         tail_name = self._quote_edge(tail_name)
         head_name = self._quote_edge(head_name)
@@ -152,7 +157,14 @@ class Dot(files.File):
         """Create a bunch of edges.
 
         Args:
-            tail_head_iter: Iterable of ``(tail_name, head_name)`` pairs.
+            tail_head_iter: Iterable of ``(tail_name, head_name)`` pairs (format:``node[:port[:compass]]``).
+
+
+        Note:
+            The ``tail_name`` and ``head_name`` strings are separated by
+            (optional) colon(s) into ``node`` name, ``port`` name, and
+            ``compass`` (e.g. ``sw``).
+            See :ref:`details in the User Guide <ports>`.
         """
         edge = self._edge_plain
         quote = self._quote_edge
@@ -199,7 +211,7 @@ class Dot(files.File):
 
         See the :ref:`usage examples in the User Guide <subgraphs>`.
 
-        .. note::
+        Note:
             If the ``name`` of the subgraph begins with ``'cluster'`` (all lowercase)
             the layout engine will treat it as a special cluster subgraph.
         """
@@ -256,7 +268,7 @@ class Graph(Dot):
         strict (bool): Rendering should merge multi-edges.
 
     Note:
-        All parameters are optional and can be changed under their
+        All parameters are `optional` and can be changed under their
         corresponding attribute name after instance creation.
     """
 

@@ -52,7 +52,7 @@ Their constructors allow to set the graph's :attr:`~.Graph.name`, the
 :attr:`~.Graph.comment` for the first source code line, etc.
 
 Add nodes and edges to the graph object using its :meth:`~.Graph.node` and
-:meth:`~.Graph.edge` or :meth:`~.Graph.edges` methods:
+:meth:`~.Graph.edge`- or :meth:`~.Graph.edges`-methods:
 
 .. code:: python
 
@@ -210,27 +210,6 @@ After creation, they can be edited on the graph object:
 
 .. _attributes:
 
-Port and Compass Points
------------------------
-
-:meth:`~.Graph.edge` accepts optional port and compass attributes which are
-separated with colons in the following form: ``node:port:nw``. When present,
-they are converted to native DOT equivalents and modify the edge placement
-between two nodes.
-
-.. code:: python
-
-    >>> dot.edge('node1:port1', 'node2:port5:nw')
-    >>> dot.edge('node3:port2:_', 'node4:port4:s')
-
-If you need to use a colon in a node's label, you can declare a node with
-:meth:`~.Graph.node` first:
-
-.. code:: python
-    >>> dot.node('A', 'node:with:colon')
-    >>> dot.node('B', 'another:node:with:colon')
-    >>> dot.edge('A', 'B')
-
 Attributes
 ----------
 
@@ -280,6 +259,39 @@ key-value pairs targeting the current (sub-)graph (e.g. for ``rankdir``,
 
 .. image:: _static/ni.svg
     :align: center
+
+
+.. _ports:
+
+Node ports & compass
+--------------------
+
+The :meth:`~.Graph.edge`- and :meth:`~.Graph.edges`-methods use the
+colon-separated format ``node[:port[:compass]]`` for ``tail`` and ``head``
+nodes. This allows to specify an optional node ``port`` plus an optional
+``compass`` point the edge should aim at for the given tail or head node
+(:ref:`example <btree.py>`).
+
+As colons are used to indicate ``port`` and ``compass``, node names with
+literal colon(s) (``:``) are not supported. Note that there is no such
+restriction for the ``label`` argument, so you can work around by choosing a
+colon-free ``name`` together with the wanted ``label``:
+
+.. code:: python
+
+    >>> cpp = Digraph('C++')
+    
+    >>> cpp.node('A', 'std::string')
+    >>> cpp.node('B', '"spam"')
+    
+    >>> cpp.edge('A', 'B')
+    
+    >>> print(cpp.source)  # doctest: +NORMALIZE_WHITESPACE
+    digraph "C++" {
+        A [label="std::string"]
+        B [label="\"spam\""]
+        A -> B
+    }
 
 
 Backslash escapes
@@ -466,7 +478,7 @@ Custom DOT statements
 To add arbitrary statements to the created DOT_ source, use the
 :attr:`~.Graph.body` attribute of the :class:`.Graph` or :class:`.Digraph`
 object. It holds the verbatim list of lines to be written to the source file.
-Use its ``append()`` or ``extend()`` method:
+Use its ``append()``- or ``extend()``-method:
 
 .. code:: python
 
