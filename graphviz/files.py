@@ -236,6 +236,10 @@ class File(Base):
             RuntimeError: If opening the viewer is not supported.
 
         Short-cut method for calling :meth:`.render` with ``view=True``.
+
+        Note:
+            There is no option to wait for the application to close, and no way
+            to retrieve the application's exit status.
         """
         return self.render(filename=filename, directory=directory,
                            view=True, cleanup=cleanup,

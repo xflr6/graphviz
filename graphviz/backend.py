@@ -276,6 +276,10 @@ def view(filepath, quiet=False):
                       (ineffective on Windows).
     Raises:
         RuntimeError: If the current platform is not supported.
+
+    Note:
+        There is no option to wait for the application to close, and no way
+        to retrieve the application's exit status.
     """
     try:
         view_func = getattr(view, PLATFORM)
