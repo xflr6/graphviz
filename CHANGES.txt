@@ -5,7 +5,7 @@ Changelog
 Version 0.14.2 (in development)
 -------------------------------
 
-
+Drop Python 3.5 support.
 
 
 Version 0.14.1
