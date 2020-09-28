@@ -260,7 +260,7 @@ def version():
                  stdout=subprocess.PIPE,
                  stderr=subprocess.STDOUT)
 
-    ma = re.search(r'graphviz version (\d+\.\d+(?:\.\d+){,2}) ', out)
+    ma = re.search(r'graphviz version (\d+\.\d+(?:\.\d+){,2})', out)
     if ma is None:
         raise RuntimeError('cannot parse %r output: %r' % (cmd, out))
 
