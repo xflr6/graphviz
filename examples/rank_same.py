@@ -20,16 +20,16 @@ with d.subgraph() as s:
 
 d.edges(['AB', 'AC', 'CD', 'XY'])
 
-#you can define the graph first and add the rank info afterwards like this.
-#format is (id, display text)
-d.node("1","hello")
-d.node("2","world")
-d.node("3","there")
-d.edges(["13","32"])
+# you can define the graph first and add the rank info afterwards like this.
+# format is (id, display text)
+d.node("1", "hello")
+d.node("2", "world")
+d.node("3", "there")
+d.edges(["13", "32"])
 
 with d.subgraph() as s:
     s.attr(rank='same')
-    s.node("1")#refer to the id
+    s.node("1")  # refer to the id
     s.node("3")
 
 d.view()
