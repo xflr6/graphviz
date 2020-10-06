@@ -5,6 +5,9 @@ Changelog
 Version 0.14.2 (in development)
 -------------------------------
 
+Adapt `graphviz.version()` to support the Graphviz Release version entry format
+introduced with `2.44.2` (`version()` is needed to run the tests).
+
 Drop Python 3.5 support.
 
 

@@ -254,17 +254,33 @@ def version():
         graphviz.ExecutableNotFound: If the Graphviz executable is not found.
         subprocess.CalledProcessError: If the exit status is non-zero.
         RuntimmeError: If the output cannot be parsed into a version number.
+
+    Note:
+        Ignores the ``~dev.<YYYYmmdd.HHMM>`` portion of development versions.
+
+    See also Graphviz Release version entry format:
+    https://gitlab.com/graphviz/graphviz/-/blob/f94e91ba819cef51a4b9dcb2d76153684d06a913/gen_version.py#L17-20
     """
     cmd = ['dot', '-V']
     out, _ = run(cmd, check=True, encoding='ascii',
                  stdout=subprocess.PIPE,
                  stderr=subprocess.STDOUT)
 
-    ma = re.search(r'graphviz version (\d+\.\d+(?:\.\d+){,2})', out)
+    ma = re.search(r'graphviz version'
+                   r' '
+                   r'(\d+)\.(\d+)'
+                   r'(?:\.(\d+)'
+                       r'(?:'
+                           r'~dev\.\d{8}\.\d{4}'
+                           r'|'
+                           r'\.(\d+)'
+                       r')?'
+                   r')?'
+                   r' ', out)
     if ma is None:
         raise RuntimeError('cannot parse %r output: %r' % (cmd, out))
 
-    return tuple(int(d) for d in ma.group(1).split('.'))
+    return tuple(int(d) for d in ma.groups() if d is not None)
 
 
 def view(filepath, quiet=False):
