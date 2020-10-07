@@ -261,6 +261,7 @@ def test_version_parsefail_mocked(mocker, Popen):  # noqa: N803
 @pytest.mark.parametrize('stdout, expected', [
     (b'dot - graphviz version 1.2.3 (mocked)', (1, 2, 3)),
     (b'dot - graphviz version 2.43.20190912.0211 (20190912.0211)\n', (2, 43, 20190912, 211)),
+    (b'dot - graphviz version 2.44.2~dev.20200927.0217 (20200927.0217)\n', (2, 44, 2)),
 ])
 def test_version_mocked(mocker, Popen, stdout, expected):  # noqa: N803
     proc = Popen.return_value
