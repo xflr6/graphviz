@@ -133,7 +133,7 @@ class Dot(files.File):
         self.body.append(line)
 
     def edge(self, tail_name, head_name, label=None, _attributes=None, **attrs):
-        """Create an edge between two nodes. 
+        """Create an edge between two nodes.
 
         Args:
             tail_name: Start node identifier (format: ``node[:port[:compass]]``).
@@ -157,7 +157,8 @@ class Dot(files.File):
         """Create a bunch of edges.
 
         Args:
-            tail_head_iter: Iterable of ``(tail_name, head_name)`` pairs (format:``node[:port[:compass]]``).
+            tail_head_iter: Iterable of ``(tail_name, head_name)`` pairs
+            (format:``node[:port[:compass]]``).
 
 
         Note:
