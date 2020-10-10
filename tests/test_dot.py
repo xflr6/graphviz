@@ -73,13 +73,14 @@ def test_attr_invalid_kw(cls):
     with pytest.raises(ValueError, match=r'attr'):
         cls().attr('spam')
 
+
 def test_inherit_render_properties():
-    #non default values
-    d=Graph(format='svg',directory='..')
+    # non default values
+    d = Graph(format='svg', directory='..')
     with d.subgraph() as sub:
-        assert sub.format==d.format
-        assert sub.directory==d.directory
-        
+        assert sub.format == d.format
+        assert sub.directory == d.directory
+
 
 @pytest.mark.parametrize('cls, expected', [
     (Graph, 'graph {\n\tspam=eggs\n}'),

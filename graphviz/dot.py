@@ -67,8 +67,7 @@ class Dot(files.File):
         self.body = list(body) if body is not None else []
 
         self.strict = strict
-        self.enconding=encoding
-        
+        self.enconding = encoding
 
     def _kwargs(self):
         result = super(Dot, self)._kwargs()
@@ -135,7 +134,7 @@ class Dot(files.File):
         self.body.append(line)
 
     def edge(self, tail_name, head_name, label=None, _attributes=None, **attrs):
-        """Create an edge between two nodes. 
+        """Create an edge between two nodes.
 
         Args:
             tail_name: Start node identifier (format: ``node[:port[:compass]]``).
@@ -224,9 +223,9 @@ class Dot(files.File):
                                           'node_attr': node_attr,
                                           'edge_attr': edge_attr,
                                           'body': body,
-                                          'directory':self.directory,
-                                          'engine':self.engine,
-                                          'encoding':self.enconding,
+                                          'directory': self.directory,
+                                          'engine': self.engine,
+                                          'encoding': self.enconding,
                                           'format': self.format})
 
         args = [name, comment, graph_attr, node_attr, edge_attr, body]
