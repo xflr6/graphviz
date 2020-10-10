@@ -67,6 +67,8 @@ class Dot(files.File):
         self.body = list(body) if body is not None else []
 
         self.strict = strict
+        self.enconding=encoding
+        
 
     def _kwargs(self):
         result = super(Dot, self)._kwargs()
@@ -221,7 +223,11 @@ class Dot(files.File):
                                           'graph_attr': graph_attr,
                                           'node_attr': node_attr,
                                           'edge_attr': edge_attr,
-                                          'body': body})
+                                          'body': body,
+                                          'directory':self.directory,
+                                          'engine':self.engine,
+                                          'encoding':self.enconding,
+                                          'format': self.format})
 
         args = [name, comment, graph_attr, node_attr, edge_attr, body]
         if not all(a is None for a in args):
