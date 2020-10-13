@@ -453,19 +453,20 @@ Both produce the same result:
     (:ref:`example <cluster.py>`). Also see the `Subgraphs and Clusters`
     section of `the DOT language documentation <DOT_>`_.
 
-Subgraphs support rendering just like Graphs and will inherit the relevant attributes.
+When :meth:`~.Graph.subgraph` is used as a context manager, the new graph
+instance  is created with ``strict=None`` and the parent graph's values for
+``directory``, ``format``, ``engine``, and ``encoding``. Note that these
+attributes are only relevant when rendering the subgraph independently
+(i.e. as a stand-alone graph) from within the ``with``-block:
 
 .. code:: python
 
-    d = graphviz.Graph(format='svg', encoding='ascii', engine='neato')
-    d.node('1')
-    with d.subgraph(name='cluster_one') as sub:
-        sub.node('2')
-        sub.node('3')
-        sub.edge('2', '3')
-        sub.render()
-    d.edge('1', '2')
-    d.render()
+    >>> p = Graph(name='parent')
+    >>> with p.subgraph(name='child') as c:
+    ...    c.edge('bacon', 'eggs')
+    ...    c.render()  # doctest: +SKIP
+    'child.gv.pdf'
+
 
 Engines
 -------

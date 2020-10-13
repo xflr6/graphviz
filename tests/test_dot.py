@@ -74,15 +74,6 @@ def test_attr_invalid_kw(cls):
         cls().attr('spam')
 
 
-def test_inherit_render_properties():
-    # non default values
-    d = Graph(format='svg', directory='..', encoding='ascii', engine='neato' )
-    with d.subgraph() as sub:
-        assert sub.format == d.format
-        assert sub.directory == d.directory
-        assert sub.encoding == d.encoding
-        assert sub.engine == d.engine
-
 @pytest.mark.parametrize('cls, expected', [
     (Graph, 'graph {\n\tspam=eggs\n}'),
     (Digraph, 'digraph {\n\tspam=eggs\n}'),
@@ -109,9 +100,17 @@ def test_escaped_quotes_and_escapes(cls, expected):
     (Digraph, 'digraph {\n\t// comment\n\tsubgraph name {\n\t}\n}'),
 ], ids=lambda p: getattr(p, '__name__', '...'))
 def test_subgraph_graph_none(cls, expected):
-    dot = cls()
-    with dot.subgraph(name='name', comment='comment'):
-        pass
+    dot = cls(directory='nondirectory', format='png',
+              encoding='ascii', engine='neato')
+    assert dot.strict is False
+
+    with dot.subgraph(name='name', comment='comment') as child:
+        assert child.directory == dot.directory
+        assert child.format == dot.format
+        assert child.engine == dot.engine
+        assert child.encoding == dot.encoding
+        assert child.strict is None
+
     assert dot.source == expected
 
 
@@ -179,6 +178,27 @@ def test_subgraph():
 \tB -- E
 \tC -- F
 }'''
+
+
+@pytest.mark.parametrize('cls, expected',[
+    (Graph, 'graph {\n\tC\n}\n'),
+    (Digraph, 'digraph {\n\tC\n}\n'),
+], ids=lambda p: getattr(p, '__name__', '...'))
+@pytest.exe
+def test_subgraph_render(tmpdir, cls, expected):
+    lpath = tmpdir / 's1.gv'
+    rendered = lpath.new(ext='gv.pdf')
+
+    dot = cls()
+    dot.edge('A', 'B')
+
+    with dot.subgraph() as s1:
+        s1.node('C')
+        result = s1.render(str(lpath))
+
+    assert result == str(rendered)
+    assert lpath.read_text(encoding='ascii') == expected
+    assert rendered.size()
 
 
 def test_label_html():

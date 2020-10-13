@@ -5,6 +5,16 @@ Changelog
 Version 0.15 (in development)
 -----------------------------
 
+``Graph`` and ``Digraph`` instances created via the context-manager returned
+by ``subgraph()`` now (re)use ``directory``, ``format``, ``engine``, and
+``encoding`` from the parent instead of using defaults (behavioral change).
+Note that these attributes are only relevant when rendering the
+subgraph independently (i.e. as a stand-alone graph) from within the
+``with``-block, which was previously undocumented (PR BMaxV). To reflect that
+the DOT language does not allow subgraph statements to specify ``strict``
+(i.e. no way to override the setting of the containing graph), instances
+created via the context-manager are now ``strict=None`` instead of ``False``.
+
 Drop Python 3.5 support.
 
 
