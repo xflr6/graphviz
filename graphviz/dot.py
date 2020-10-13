@@ -67,7 +67,6 @@ class Dot(files.File):
         self.body = list(body) if body is not None else []
 
         self.strict = strict
-        self.enconding = encoding
 
     def _kwargs(self):
         result = super(Dot, self)._kwargs()
@@ -215,6 +214,9 @@ class Dot(files.File):
         Note:
             If the ``name`` of the subgraph begins with ``'cluster'`` (all lowercase)
             the layout engine will treat it as a special cluster subgraph.
+            
+            Instances created are always strict=None for rendering purposes.
+            See https://github.com/xflr6/graphviz/pull/116#issuecomment-706541609
         """
         if graph is None:
             return SubgraphContext(self, {'name': name,
@@ -225,7 +227,7 @@ class Dot(files.File):
                                           'body': body,
                                           'directory': self.directory,
                                           'engine': self.engine,
-                                          'encoding': self.enconding,
+                                          'encoding': self.encoding,
                                           'format': self.format})
 
         args = [name, comment, graph_attr, node_attr, edge_attr, body]

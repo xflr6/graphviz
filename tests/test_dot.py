@@ -76,11 +76,12 @@ def test_attr_invalid_kw(cls):
 
 def test_inherit_render_properties():
     # non default values
-    d = Graph(format='svg', directory='..')
+    d = Graph(format='svg', directory='..', encoding='ascii', engine='neato' )
     with d.subgraph() as sub:
         assert sub.format == d.format
         assert sub.directory == d.directory
-
+        assert sub.encoding == d.encoding
+        assert sub.engine == d.engine
 
 @pytest.mark.parametrize('cls, expected', [
     (Graph, 'graph {\n\tspam=eggs\n}'),
