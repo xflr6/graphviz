@@ -180,7 +180,7 @@ def test_subgraph():
 }'''
 
 
-@pytest.mark.parametrize('cls, expected',[
+@pytest.mark.parametrize('cls, expected', [
     (Graph, 'graph {\n\tC\n}\n'),
     (Digraph, 'digraph {\n\tC\n}\n'),
 ], ids=lambda p: getattr(p, '__name__', '...'))
