@@ -285,13 +285,13 @@ def test_view_unknown_platform(unknown_platform):
         view('nonfilepath')
 
 
-def test_view(mocker, py2, platform, Popen, startfile, quiet):  # noqa: N803
+def test_view(mocker, py2, mock_platform, Popen, startfile, quiet):  # noqa: N803
     if quiet and py2:
         open_ = mocker.patch('__builtin__.open', mocker.mock_open())
 
     assert view('nonfilepath', quiet=quiet) is None
 
-    if platform == 'windows':
+    if mock_platform == 'windows':
         startfile.assert_called_once_with('nonfilepath')
         return
 
@@ -303,9 +303,9 @@ def test_view(mocker, py2, platform, Popen, startfile, quiet):  # noqa: N803
     else:
         kwargs = {}
 
-    if platform == 'darwin':
+    if mock_platform == 'darwin':
         Popen.assert_called_once_with(['open', 'nonfilepath'], **kwargs)
-    elif platform in ('linux', 'freebsd'):
+    elif mock_platform in ('linux', 'freebsd'):
         Popen.assert_called_once_with(['xdg-open', 'nonfilepath'], **kwargs)
     else:
         raise RuntimeError

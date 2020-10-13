@@ -180,12 +180,12 @@ def test_subgraph():
 }'''
 
 
+@pytest.exe
 @pytest.mark.parametrize('cls, expected', [
     (Graph, 'graph {\n\tC\n}\n'),
     (Digraph, 'digraph {\n\tC\n}\n'),
 ], ids=lambda p: getattr(p, '__name__', '...'))
-@pytest.exe
-def test_subgraph_render(tmpdir, cls, expected):
+def test_subgraph_render(capsys, tmpdir, cls, expected):
     lpath = tmpdir / 's1.gv'
     rendered = lpath.new(ext='gv.pdf')
 
@@ -197,8 +197,11 @@ def test_subgraph_render(tmpdir, cls, expected):
         result = s1.render(str(lpath))
 
     assert result == str(rendered)
+
     assert lpath.read_text(encoding='ascii') == expected
+
     assert rendered.size()
+    assert capsys.readouterr() == ('', '')
 
 
 def test_label_html():

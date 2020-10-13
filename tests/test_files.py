@@ -89,8 +89,8 @@ def test_pipe(pipe, source):
                                  quiet=False)
 
 
-def test_filepath(test_platform, source):
-    if test_platform == 'windows':
+def test_filepath(platform, source):
+    if platform == 'windows':
         assert source.filepath == 'test-output\\hello.gv'
     else:
         assert source.filepath == 'test-output/hello.gv'
@@ -146,8 +146,8 @@ def test__view_unknown_platform(unknown_platform, source):
         source._view('name', 'png', False)
 
 
-def test__view(mocker, platform, source):
-    _view_platform = mocker.patch.object(source, '_view_%s' % platform,
+def test__view(mocker, mock_platform, source):
+    _view_platform = mocker.patch.object(source, '_view_%s' % mock_platform,
                                          autospec=True)
 
     assert source._view(mocker.sentinel.name, 'png', False) is None

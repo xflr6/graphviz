@@ -29,13 +29,13 @@ def filesdir(tmpdir_factory):
 
 
 @pytest.fixture(scope='session')
-def test_platform():
+def platform():
     return platform_.system().lower()
 
 
 @pytest.fixture(params=['darwin', 'freebsd', 'linux', 'windows'],
                 ids=lambda p: 'platform=%r' % p)
-def platform(monkeypatch, request):
+def mock_platform(monkeypatch, request):
     monkeypatch.setattr('graphviz.backend.PLATFORM', request.param)
     yield request.param
 
@@ -52,8 +52,8 @@ def Popen(mocker):  # noqa: N802
 
 
 @pytest.fixture
-def startfile(mocker, test_platform):
-    if test_platform == 'windows':
+def startfile(mocker, platform):
+    if platform == 'windows':
         kwargs = {'autospec': True}
     else:
         kwargs = {'create': True, 'new_callable': mocker.Mock}
