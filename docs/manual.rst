@@ -453,6 +453,19 @@ Both produce the same result:
     (:ref:`example <cluster.py>`). Also see the `Subgraphs and Clusters`
     section of `the DOT language documentation <DOT_>`_.
 
+Subgraphs support rendering just like Graphs and will inherit the relevant attributes.
+
+.. code:: python
+
+    d = graphviz.Graph(format='svg', encoding='ascii', engine='neato')
+    d.node('1')
+    with d.subgraph(name='cluster_one') as sub:
+        sub.node('2')
+        sub.node('3')
+        sub.edge('2', '3')
+        sub.render()
+    d.edge('1', '2')
+    d.render()
 
 Engines
 -------
