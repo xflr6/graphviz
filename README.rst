@@ -40,7 +40,7 @@ This package runs under Python 2.7, and 3.6+, use pip_ to install:
     $ pip install graphviz
 
 To render the generated DOT source code, you also need to install Graphviz
-(`download page`_).
+(`download page`_, `installation procedure for Windows`_).
 
 Make sure that the directory containing the ``dot`` executable is on your
 systems' path.
@@ -115,6 +115,7 @@ This package is distributed under the `MIT license`_.
 .. _Graphviz:  https://www.graphviz.org
 .. _master repo: https://gitlab.com/graphviz/graphviz/
 .. _download page: https://www.graphviz.org/download/
+.. _installation procedure for Windows: https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224
 .. _DOT: https://www.graphviz.org/doc/info/lang.html
 .. _Jupyter notebooks: https://jupyter.org
 .. _IPython notebooks: https://ipython.org/notebook.html

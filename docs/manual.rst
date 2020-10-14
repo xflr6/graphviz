@@ -19,7 +19,8 @@ For a system-wide install, this typically requires administrator access. For an
 isolated install, you can run the same inside a virtualenv_ or a
 :mod:`py3:venv` (Python 3 only).
 
-The only dependency is a working installation of Graphviz (`download page`_).
+The only dependency is a working installation of Graphviz (`download page`_,
+`installation procedure for Windows`_).
 
 After installing Graphviz, make sure that its ``bin/`` subdirectory containing
 the layout commands for rendering graph descriptions (``dot``, ``circo``,
@@ -607,6 +608,7 @@ cycles.
 .. _virtualenv: https://virtualenv.pypa.io
 
 .. _Graphviz: https://www.graphviz.org
+.. _installation procedure for Windows: https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224
 .. _download page: https://www.graphviz.org/download/
 .. _DOT: https://www.graphviz.org/doc/info/lang.html
 .. _output file format: https://www.graphviz.org/doc/info/output.html
