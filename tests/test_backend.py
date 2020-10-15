@@ -11,6 +11,8 @@ import pytest
 from graphviz.backend import (run, render, pipe, version, view,
                               ExecutableNotFound, RequiredArgumentError)
 
+SVG_PATTERN = r'(?s)^<\?xml .+</svg>\s*$'
+
 
 if platform.system().lower() == 'windows':
     def check_startupinfo(startupinfo):  # noqa: N803
@@ -170,11 +172,15 @@ def test_pipe_invalid_data(capsys, quiet, engine='dot', format_='svg'):
 
 
 @pytest.exe
-@pytest.mark.parametrize('format_, renderer, formatter, pattern', [
-    ('svg', None, None, r'(?s)^<\?xml .+</svg>\s*$'),
-    ('ps', 'ps', 'core', r'%!PS-'),
+@pytest.mark.parametrize('engine, format_, renderer, formatter, pattern', [
+    ('dot', 'svg', None, None, SVG_PATTERN),
+    ('dot', 'ps', 'ps', 'core', r'%!PS-'),
+    # Error: remove_overlap: Graphviz not built with triangulation library
+    pytest.param('sfdp', 'svg', None, None, SVG_PATTERN,
+        marks=pytest.mark.xfail('version() > (2, 38, 0)'
+                                " and platform.system().lower() == 'windows'",
+        reason='https://gitlab.com/graphviz/graphviz/-/issues/1269')),
 ])
-@pytest.mark.parametrize('engine', ['dot'])
 def test_pipe(capsys, engine, format_, renderer, formatter, pattern,
               data=b'graph { spam }'):
     out = pipe(engine, format_, data, renderer, formatter).decode('ascii')
