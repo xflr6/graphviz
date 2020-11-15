@@ -16,7 +16,7 @@ the DOT language does not allow subgraph statements to specify ``strict``
 created via the context-manager are now ``strict=None`` instead of ``False``
 (so they continue to render stand-alone as non-strict by default).
 
-Drop Python 3.5 support.
+Drop Python 3.5 support and tag Python 3.9 support.
 
 
 Version 0.14.2
