@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.15 (in development)
------------------------------
+Version 0.15
+------------
 
 ``Graph`` and ``Digraph`` instances created via the context-manager returned
 by ``subgraph()`` now (re)use ``directory``, ``format``, ``engine``, and
@@ -17,6 +17,8 @@ created via the context-manager are now ``strict=None`` instead of ``False``
 (so they continue to render stand-alone as non-strict by default).
 
 Drop Python 3.5 support and tag Python 3.9 support.
+
+Add documentation link to new upstream installation procedure for Windows.
 
 
 Version 0.14.2
