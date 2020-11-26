@@ -38,6 +38,17 @@ def test__repr_svg_(mocker, cls):
     pipe.return_value.decode.assert_called_once_with(c.encoding)
 
 
+def test__repr_html_(mocker, cls):
+    c = cls()
+    kwargs = {'return_value.decode.return_value': mocker.sentinel.decoded}
+    pipe = mocker.patch.object(c, 'pipe', autospec=True, **kwargs)
+
+    assert c._repr_html_() is mocker.sentinel.decoded
+
+    pipe.assert_called_once_with(format='svg')
+    pipe.return_value.decode.assert_called_once_with(c.encoding)
+
+
 @pytest.mark.parametrize('keep_attrs', [False, True])
 def test_clear(cls, keep_attrs):
     kwargs = {'%s_attr' % a: {a: a} for a in ('graph', 'node', 'edge')}

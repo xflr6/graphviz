@@ -69,6 +69,17 @@ def test__repr_svg_(mocker, source):
     pipe.return_value.decode.assert_called_once_with(source.encoding)
 
 
+def test__repr_html_(mocker, source):
+    pipe = mocker.patch.object(source, 'pipe', autospec=True,
+                               **{'return_value.decode.return_value':
+                                  mocker.sentinel.decoded})
+
+    assert source._repr_html_() is mocker.sentinel.decoded
+
+    pipe.assert_called_once_with(format='svg')
+    pipe.return_value.decode.assert_called_once_with(source.encoding)
+
+
 def test_pipe_format(pipe, source, format_='svg'):
     assert source.format != format_
 
