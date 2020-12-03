@@ -112,9 +112,8 @@ class File(Base):
     def _repr_svg_(self):
         return self.pipe(format='svg').decode(self._encoding)
 
-    def _repr_html_(self):
-        return self._repr_svg_()
-
+    _repr_html_ = _repr_svg_
+    
     def pipe(self, format=None, renderer=None, formatter=None, quiet=False):
         """Return the source piped through the Graphviz layout command.
 
