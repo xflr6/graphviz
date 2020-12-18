@@ -1,9 +1,9 @@
 # test_backend.py
 
-import os
-import re
 import errno
+import os
 import platform
+import re
 import subprocess
 
 import pytest

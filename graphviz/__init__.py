@@ -31,14 +31,12 @@ from .backend import (render, pipe, version, view,
                       ENGINES, FORMATS, RENDERERS, FORMATTERS,
                       ExecutableNotFound, RequiredArgumentError)
 
-__all__ = [
-    'Graph', 'Digraph',
-    'Source',
-    'escape', 'nohtml',
-    'render', 'pipe', 'version', 'view',
-    'ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
-    'ExecutableNotFound', 'RequiredArgumentError',
-]
+__all__ = ['Graph', 'Digraph',
+           'Source',
+           'escape', 'nohtml',
+           'render', 'pipe', 'version', 'view',
+           'ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
+           'ExecutableNotFound', 'RequiredArgumentError']
 
 __title__ = 'graphviz'
 __version__ = '0.15.1.dev0'

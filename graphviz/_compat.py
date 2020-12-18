@@ -1,9 +1,9 @@
 # _compat.py - Python 2/3 compatibility
 
-import os
-import sys
 import operator
+import os
 import subprocess
+import sys
 
 PY2 = (sys.version_info.major == 2)
 

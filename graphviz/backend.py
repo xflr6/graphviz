@@ -1,21 +1,19 @@
 # backend.py - execute rendering, open files in viewer
 
-import os
-import re
 import errno
 import logging
+import os
 import platform
+import re
 import subprocess
 
 from . import _compat
 
 from . import tools
 
-__all__ = [
-    'render', 'pipe', 'version', 'view',
-    'ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
-    'ExecutableNotFound', 'RequiredArgumentError',
-]
+__all__ = ['render', 'pipe', 'version', 'view',
+           'ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
+           'ExecutableNotFound', 'RequiredArgumentError']
 
 ENGINES = {  # http://www.graphviz.org/pdf/dot.1.pdf
     'dot', 'neato', 'twopi', 'circo', 'fdp', 'sfdp', 'patchwork', 'osage',

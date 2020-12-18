@@ -1,7 +1,7 @@
 # conftest.py
 
-import sys
 import platform as platform_
+import sys
 
 import pytest
 

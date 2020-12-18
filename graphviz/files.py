@@ -2,11 +2,11 @@
 
 """Save DOT code objects, render with Graphviz dot, and open in viewer."""
 
-import os
-import io
 import codecs
+import io
 import locale
 import logging
+import os
 
 from ._compat import text_type
 

@@ -1,7 +1,7 @@
 # test_tools.py
 
-import os
 import functools
+import os
 
 import pytest
 

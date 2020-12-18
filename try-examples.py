@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # try-examples.py - import graphviz here and run all scripts in the example dir
 
-import os
-import io
 import glob
+import io
+import os
 
 import graphviz  # noqa: F401
 

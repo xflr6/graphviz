@@ -2,9 +2,9 @@
 
 """Quote strings to be valid DOT identifiers, assemble attribute lists."""
 
-import re
 import collections
 import functools
+import re
 
 from . import _compat
 
