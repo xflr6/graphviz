@@ -109,6 +109,10 @@ class File(Base):
             result['directory'] = self.directory
         return result
 
+    def __str__(self):
+        """The DOT source code as string."""
+        return self.source
+
     def _repr_svg_(self):
         return self.pipe(format='svg').decode(self._encoding)
 

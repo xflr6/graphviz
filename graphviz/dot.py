@@ -113,11 +113,10 @@ class Dot(files.File):
 
         yield self._tail
 
-    def __str__(self):
+    @property
+    def source(self):
         """The DOT source code as string."""
         return '\n'.join(self)
-
-    source = property(__str__, doc=__str__.__doc__)
 
     def node(self, name, label=None, _attributes=None, **attrs):
         """Create a node.

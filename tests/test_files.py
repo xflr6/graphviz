@@ -58,6 +58,10 @@ def test_init_filename():
     assert type('Named', (Source,), {'name': 'name'})('').filename == 'name.gv'
 
 
+def test_str(source):
+    assert str(source) == source.source
+
+
 def test__repr_svg_(mocker, source):
     pipe = mocker.patch.object(source, 'pipe', autospec=True,
                                **{'return_value.decode.return_value':

@@ -27,6 +27,11 @@ def test_copy(cls):
     assert c.copy().__dict__ == c.__dict__ == c.copy().__dict__
 
 
+def test_str(cls):
+    c = cls()
+    assert str(c) == c.source
+
+
 def test__repr_svg_(mocker, cls):
     c = cls()
     kwargs = {'return_value.decode.return_value': mocker.sentinel.decoded}
