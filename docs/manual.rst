@@ -487,6 +487,46 @@ instance:
     >>> dot.engine = 'circo'
 
 
+Unflatten
+---------
+
+To prepocess the DOT_ source of a :class:`.Graph` or :class:`.Digraph` with
+the unflatten_ preprocessor (`PDF <unflatten_pdf_>`_), use the
+:meth:`~.Graph.unflatten`-method.
+
+.. code:: python
+
+    >>> w = Digraph()
+    >>> w.edges(('0', str(i)) for i in range(1, 10))
+    >>> w.view()  # doctest: +SKIP
+
+.. image:: _static/wide.svg
+    :align: center
+
+unflatten_ is used to improve the aspect ratio of graphs having many leaves or
+disconnected nodes.
+
+.. code:: python
+
+    >>> u = w.unflatten(stagger=3)
+    >>> u.view()  # doctest: +SKIP
+
+.. image:: _static/wide-unflatten-stagger-3.svg
+    :align: center
+
+The method returns a :class:`.Source` object that you can
+:meth:`~.Source.render`, :meth:`~.Source.view`, etc. with the same API
+(minus modification, see details `below <Using raw DOT_>`_).
+
+.. code:: python
+
+    >>> u = w.unflatten(stagger=2)
+    >>> u.view()  # doctest: +SKIP
+
+.. image:: _static/wide-unflatten-stagger-2.svg
+    :align: center
+
+
 Custom DOT statements
 ---------------------
 
@@ -616,7 +656,8 @@ cycles.
 .. _escString: https://www.graphviz.org/doc/info/attrs.html#k:escString
 .. _raw string literals: https://docs.python.org/3/reference/lexical_analysis.html#string-and-bytes-literals
 .. _HTML-like labels: https://graphviz.gitlab.io/_pages/doc/info/shapes.html#html
-
+.. _unflatten: https://linux.die.net/man/1/unflatten
+.. _unflatten_pdf: https://www.graphviz.org/pdf/unflatten.1.pdf
 .. _Jupyter notebook: https://jupyter.org
 .. _notebook.ipynb: https://github.com/xflr6/graphviz/blob/master/examples/notebook.ipynb
 .. _nbviewer: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb

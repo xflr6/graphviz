@@ -11,7 +11,7 @@ from . import _compat
 
 from . import tools
 
-__all__ = ['render', 'pipe', 'version', 'view',
+__all__ = ['render', 'pipe', 'unflatten', 'version', 'view',
            'ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
            'ExecutableNotFound', 'RequiredArgumentError']
 
@@ -240,6 +240,44 @@ def pipe(engine, format, data, renderer=None, formatter=None, quiet=False):
     """
     cmd, _ = command(engine, format, None, renderer, formatter)
     out, _ = run(cmd, input=data, capture_output=True, check=True, quiet=quiet)
+    return out
+
+
+def unflatten(source,
+              stagger=None, fanout=False, chain=None,
+              encoding='utf-8'):
+    """Return DOT ``source`` piped through Graphviz *unflatten* preprocessor.
+
+    Args:
+        source (str): The DOT source to process (improve layout aspect ratio).
+        stagger (int): Stagger the minimum length of leaf edges between 1 and this small integer.
+        fanout (bool): Fanout nodes with indegree = outdegree = 1 when staggering (requires ``stagger``).
+        chain (int): Form disconnected nodes into chains of up to this many nodes.
+        encoding: Encoding used to encode unflatten stdin and decode its stdout.
+
+    Returns:
+        str: Decoded stdout of the Graphviz unflatten command.
+
+    Raises:
+        graphviz.RequiredArgumentError: If ``fanout`` is given but ``stagger`` is None.
+        graphviz.ExecutableNotFound: If the Graphviz unflatten executable is not found.
+        subprocess.CalledProcessError: If the exit status is non-zero.
+
+    See also:
+        https://www.graphviz.org/pdf/unflatten.1.pdf
+    """
+    if fanout and stagger is None:
+        raise RequiredArgumentError('fanout given without stagger')
+
+    cmd = ['unflatten']
+    if stagger is not None:
+        cmd += ['-l', str(stagger)]
+    if fanout:
+        cmd.append('-f')
+    if chain is not None:
+        cmd += ['-c', str(chain)]
+
+    out, _ = run(cmd, input=source, capture_output=True, encoding=encoding)
     return out
 
 

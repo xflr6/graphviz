@@ -1,9 +1,11 @@
 # test_dot.py
 
 import itertools
+import re
 
 import pytest
 
+from graphviz.files import Source
 from graphviz.dot import Graph, Digraph
 
 
@@ -30,6 +32,16 @@ def test_copy(cls):
 def test_str(cls):
     c = cls()
     assert str(c) == c.source
+
+
+@pytest.exe
+def test_unflatten(cls):
+    c = cls()
+    result = c.unflatten()
+    assert isinstance(result, Source)
+
+    normalized = re.sub(r'\s+', ' ', result.source.strip())
+    assert normalized.startswith('digraph {' if c.directed else 'graph {')
 
 
 def test__repr_svg_(mocker, cls):

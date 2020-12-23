@@ -11,6 +11,7 @@ API Reference
     ~graphviz.Source
     graphviz.render
     graphviz.pipe
+    graphviz.unflatten
     graphviz.view
 
 .. note::
@@ -28,7 +29,7 @@ Graph
         source,
         node, edge, edges, attr, subgraph,
         format, engine, encoding,
-        clear, copy, pipe, save, render, view,
+        clear, copy, unflatten, pipe, save, render, view,
         directed
 
 
@@ -40,7 +41,7 @@ Digraph
         source,
         node, edge, edges, attr, subgraph,
         format, engine, encoding,
-        clear, copy, pipe, save, render, view,
+        clear, copy, unflatten, pipe, save, render, view,
         directed
 
 
@@ -49,9 +50,10 @@ Source
 
 .. autoclass:: graphviz.Source
     :members:
+        source,
         format, engine, encoding,
-        copy, pipe, save, render, view,
-        from_file, source
+        copy, unflatten, pipe, save, render, view,
+        from_file
 
 
 Low-level functions
@@ -63,6 +65,7 @@ documented above.
 
 .. autofunction:: graphviz.render
 .. autofunction:: graphviz.pipe
+.. autofunction:: graphviz.unflatten
 .. autofunction:: graphviz.view
 
 

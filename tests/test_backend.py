@@ -8,7 +8,7 @@ import subprocess
 
 import pytest
 
-from graphviz.backend import (run, render, pipe, version, view,
+from graphviz.backend import (run, render, pipe, unflatten, version, view,
                               ExecutableNotFound, RequiredArgumentError)
 
 SVG_PATTERN = r'(?s)^<\?xml .+</svg>\s*$'
@@ -57,6 +57,7 @@ def test_run_encoding_mocked(mocker, Popen, input=u'sp\xe4m', encoding='utf-8'):
 @pytest.mark.parametrize('func, args', [
     (render, ['dot', 'pdf', 'nonfilepath']),
     (pipe, ['dot', 'pdf', b'nongraph']),
+    (unflatten, ['graph {}']),
     (version, []),
 ])
 def test_missing_executable(func, args):
@@ -238,6 +239,39 @@ def test_pipe_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
     check_startupinfo(Popen.call_args.kwargs['startupinfo'])
     proc.communicate.assert_called_once_with(b'nongraph')
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
+
+
+@pytest.exe
+@pytest.mark.parametrize('source, kwargs, expected', [
+    ('digraph {1 -> 2; 1 -> 3; 1 -> 4}',
+     {'stagger': 3, 'fanout': True, 'chain': 42},
+     'digraph { 1 -> 2 [minlen=1]; 1 -> 3 [minlen=2]; 1 -> 4 [minlen=3]; }'),
+])
+def test_unflatten(source, kwargs, expected):
+    result = unflatten(source, **kwargs)
+    normalized = re.sub(r'\s+', ' ', result.strip())
+    assert normalized == expected
+
+
+def test_unflatten_mocked(capsys, mocker, Popen):
+    proc = Popen.return_value
+    proc.returncode = 0
+    proc.communicate.return_value = (b'nonresult', b'')
+
+    assert unflatten('nonsource') == 'nonresult'
+    Popen.assert_called_once_with(['unflatten'],
+                                  stdin=subprocess.PIPE,
+                                  stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE,
+                                  startupinfo=mocker.ANY)
+    check_startupinfo(Popen.call_args.kwargs['startupinfo'])
+    proc.communicate.assert_called_once_with(b'nonsource')
+    assert capsys.readouterr() == ('', '')
+
+
+def test_unflatten_stagger_missing():
+    with pytest.raises(RequiredArgumentError, match=r'without stagger'):
+        unflatten('graph {}', fanout=True)
 
 
 @pytest.exe

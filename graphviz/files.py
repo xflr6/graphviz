@@ -113,6 +113,33 @@ class File(Base):
         """The DOT source code as string."""
         return self.source
 
+    def unflatten(self, stagger=None, fanout=False, chain=None):
+        """Return a new :class:`.Source` instance with the source piped through the Graphviz *unflatten* preprocessor.
+
+        Args:
+            stagger (int): Stagger the minimum length of leaf edges between 1 and this small integer.
+            fanout (bool): Fanout nodes with indegree = outdegree = 1 when staggering (requires ``stagger``).
+            chain (int): Form disconnected nodes into chains of up to this many nodes.
+
+        Returns:
+            Source: Prepocessed DOT source code (improved layout aspect ratio).
+
+        Raises:
+            graphviz.RequiredArgumentError: If ``fanout`` is given but ``stagger`` is None.
+            graphviz.ExecutableNotFound: If the Graphviz unflatten executable is not found.
+            subprocess.CalledProcessError: If the exit status is non-zero.
+
+        See also:
+            https://www.graphviz.org/pdf/unflatten.1.pdf
+        """
+        out = backend.unflatten(self.source,
+                                stagger=stagger, fanout=fanout, chain=chain,
+                                encoding=self._encoding)
+        return Source(out,
+                      filename=self.filename, directory=self.directory,
+                      format=self._format, engine=self._engine,
+                      encoding=self._encoding)
+
     def _repr_svg_(self):
         return self.pipe(format='svg').decode(self._encoding)
 

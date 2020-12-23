@@ -1,6 +1,7 @@
 # test_files.py
 
 import locale
+import re
 
 import pytest
 
@@ -60,6 +61,15 @@ def test_init_filename():
 
 def test_str(source):
     assert str(source) == source.source
+
+
+@pytest.exe
+def test_unflatten(source):
+    result = source.unflatten()
+    assert isinstance(result, Source)
+
+    normalized = re.sub(r'\s+', ' ', result.source.strip())
+    assert normalized == 'digraph { hello -> world; }'
 
 
 def test__repr_svg_(mocker, source):
