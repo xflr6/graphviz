@@ -151,8 +151,10 @@ class File(Base):
             renderer: The output renderer used for rendering (``'cairo'``, ``'gd'``, ...).
             formatter: The output formatter used for rendering (``'cairo'``, ``'gd'``, ...).
             quiet (bool): Suppress ``stderr`` output from the layout subprocess.
+
         Returns:
             Binary (encoded) stdout of the layout command.
+
         Raises:
             ValueError: If ``format``, ``renderer``, or ``formatter`` are not known.
             graphviz.RequiredArgumentError: If ``formatter`` is given but ``renderer`` is None.
@@ -180,6 +182,7 @@ class File(Base):
         Args:
             filename: Filename for saving the source (defaults to ``name`` + ``'.gv'``)
             directory: (Sub)directory for source saving and rendering.
+
         Returns:
             The (possibly relative) path of the saved source file.
         """
@@ -217,8 +220,10 @@ class File(Base):
             quiet (bool): Suppress ``stderr`` output from the layout subprocess.
             quiet_view (bool): Suppress ``stderr`` output from the viewer process
                                (implies ``view=True``, ineffective on Windows).
+
         Returns:
             The (possibly relative) path of the rendered file.
+
         Raises:
             ValueError: If ``format``, ``renderer``, or ``formatter`` are not known.
             graphviz.RequiredArgumentError: If ``formatter`` is given but ``renderer`` is None.
@@ -259,8 +264,10 @@ class File(Base):
             quiet (bool): Suppress ``stderr`` output from the layout subprocess.
             quiet_view (bool): Suppress ``stderr`` output from the viewer process
                                (ineffective on Windows).
+
         Returns:
             The (possibly relative) path of the rendered file.
+
         Raises:
             graphviz.ExecutableNotFound: If the Graphviz executable is not found.
             subprocess.CalledProcessError: If the exit status is non-zero.

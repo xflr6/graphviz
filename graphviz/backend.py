@@ -194,8 +194,10 @@ def render(engine, format, filepath, renderer=None, formatter=None, quiet=False)
         renderer: The output renderer used for rendering (``'cairo'``, ``'gd'``, ...).
         formatter: The output formatter used for rendering (``'cairo'``, ``'gd'``, ...).
         quiet (bool): Suppress ``stderr`` output from the layout subprocess.
+
     Returns:
         The (possibly relative) path of the rendered file.
+
     Raises:
         ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter`` are not known.
         graphviz.RequiredArgumentError: If ``formatter`` is given but ``renderer`` is None.
@@ -230,8 +232,10 @@ def pipe(engine, format, data, renderer=None, formatter=None, quiet=False):
         renderer: The output renderer used for rendering (``'cairo'``, ``'gd'``, ...).
         formatter: The output formatter used for rendering (``'cairo'``, ``'gd'``, ...).
         quiet (bool): Suppress ``stderr`` output from the layout subprocess.
+
     Returns:
         Binary (encoded) stdout of the layout command.
+
     Raises:
         ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter`` are not known.
         graphviz.RequiredArgumentError: If ``formatter`` is given but ``renderer`` is None.
@@ -294,8 +298,9 @@ def version():
     Note:
         Ignores the ``~dev.<YYYYmmdd.HHMM>`` portion of development versions.
 
-    See also Graphviz Release version entry format:
-    https://gitlab.com/graphviz/graphviz/-/blob/f94e91ba819cef51a4b9dcb2d76153684d06a913/gen_version.py#L17-20
+    See also:
+        Graphviz Release version entry format
+        https://gitlab.com/graphviz/graphviz/-/blob/f94e91ba819cef51a4b9dcb2d76153684d06a913/gen_version.py#L17-20
     """
     cmd = ['dot', '-V']
     out, _ = run(cmd, check=True, encoding='ascii',
@@ -326,6 +331,7 @@ def view(filepath, quiet=False):
         filepath: Path to the file to open in viewer.
         quiet (bool): Suppress ``stderr`` output from the viewer process
                       (ineffective on Windows).
+
     Raises:
         RuntimeError: If the current platform is not supported.
 

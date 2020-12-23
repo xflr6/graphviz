@@ -146,6 +146,7 @@ def escape(s):
 
     Args:
         s: String in which backslashes and ``'<...>'`` should be treated as literal.
+
     Raises:
         TypeError: If ``s`` is not a ``str`` on Python 3, or a ``str``/``unicode`` on Python 2.
 
@@ -178,6 +179,7 @@ def nohtml(s):
 
     Args:
         s: String in which leading ``'<'`` and trailing ``'>'`` should be treated as literal.
+
     Raises:
         TypeError: If ``s`` is not a ``str`` on Python 3, or a ``str``/``unicode`` on Python 2.
 
