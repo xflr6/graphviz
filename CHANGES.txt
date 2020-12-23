@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.15.1 (in development)
--------------------------------
+Version 0.16 (in development)
+-----------------------------
 
 
 
