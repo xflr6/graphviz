@@ -5,7 +5,18 @@ Changelog
 Version 0.16 (in development)
 -----------------------------
 
+Add ``.unflatten()`` method to ``Graph``, ``Digraph``, and ``Source``. Add
+standalone ``unflatten()``.
 
+Make ``Source.__str__()`` return the ``.source`` instead of the ``repr()``
+(like ``Graph`` and ``Digraph``).
+
+Render with ``dot -K<engine> ...`` instead of ``<engine> ...`` internally
+(work around upstream https://gitlab.com/graphviz/graphviz/-/issues/1753).
+
+Add documentation hint to archived upstream version for Windows.
+
+Re-render most documentation graphs with Graphviz 2.44.1.
 
 
 Version 0.15
