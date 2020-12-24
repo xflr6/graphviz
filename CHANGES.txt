@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.16 (in development)
------------------------------
+Version 0.16
+------------
 
 Add ``.unflatten()`` method to ``Graph``, ``Digraph``, and ``Source``. Add
 standalone ``unflatten()``.
