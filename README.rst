@@ -119,7 +119,7 @@ This package is distributed under the `MIT license`_.
 .. _DOT: https://www.graphviz.org/doc/info/lang.html
 .. _Jupyter notebooks: https://jupyter.org
 .. _IPython notebooks: https://ipython.org/notebook.html
-.. _example: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
+.. _example: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
 .. _Jupyter Qt Console: https://qtconsole.readthedocs.io
 
 .. _pygraphviz: https://pypi.org/project/pygraphviz/
