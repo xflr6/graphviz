@@ -20,12 +20,23 @@ isolated install, you can run the same inside a virtualenv_ or a
 :mod:`py3:venv` (Python 3 only).
 
 The only dependency is a working installation of Graphviz (`download page`_,
-`installation procedure for Windows`_).
+`installation procedure for Windows`_, `archived versions`_).
 
 After installing Graphviz, make sure that its ``bin/`` subdirectory containing
 the layout commands for rendering graph descriptions (``dot``, ``circo``,
 ``neato``, etc.) is on your systems' path: On the command-line, ``dot -V``
 should print the version of your Graphiz installation.
+
+.. hint::
+
+    Windows users might want to check the status of known issues
+    (gvedit.exe__, sfdp__, commands__) and consider trying an older archived
+    version as a workaround (e.g. graphviz-2.38.msi__).
+
+    __ https://gitlab.com/graphviz/graphviz/-/issues/1816
+    __ https://gitlab.com/graphviz/graphviz/-/issues/1269
+    __ https://gitlab.com/graphviz/graphviz/-/issues/1753
+    __ https://www2.graphviz.org/Archive/stable/windows/graphviz-2.38.msi
 
 
 Basic usage
@@ -648,8 +659,9 @@ cycles.
 .. _virtualenv: https://virtualenv.pypa.io
 
 .. _Graphviz: https://www.graphviz.org
-.. _installation procedure for Windows: https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224
 .. _download page: https://www.graphviz.org/download/
+.. _installation procedure for Windows: https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224
+.. _archived versions: https://www2.graphviz.org/Archive/stable/
 .. _DOT: https://www.graphviz.org/doc/info/lang.html
 .. _output file format: https://www.graphviz.org/doc/info/output.html
 .. _appearance: https://www.graphviz.org/doc/info/attrs.html
