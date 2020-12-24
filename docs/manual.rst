@@ -672,7 +672,7 @@ cycles.
 .. _unflatten_pdf: https://www.graphviz.org/pdf/unflatten.1.pdf
 .. _Jupyter notebook: https://jupyter.org
 .. _graphviz-notebook.ipynb: https://github.com/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
-.. _nbviewer: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
+.. _nbviewer: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
 .. _Jupyter Qt Console: https://qtconsole.readthedocs.io
 .. _spyderconsole: https://docs.spyder-ide.org/ipythonconsole.html
 .. _Spyder IDE: https://github.com/spyder-ide/spyder

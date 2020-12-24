@@ -16,7 +16,7 @@ it with the Graphviz installation of your system.
 Use the ``view`` option/method to directly inspect the resulting (PDF, PNG,
 SVG, etc.) file with its default application. Graphs can also be rendered
 and displayed within `Jupyter notebooks`_ (formerly known as
-`IPython notebooks`_, example_) as well as the `Jupyter Qt Console`_.
+`IPython notebooks`_, example_, nbviewer_) as well as the `Jupyter Qt Console`_.
 
 
 Links
@@ -120,7 +120,8 @@ This package is distributed under the `MIT license`_.
 .. _DOT: https://www.graphviz.org/doc/info/lang.html
 .. _Jupyter notebooks: https://jupyter.org
 .. _IPython notebooks: https://ipython.org/notebook.html
-.. _example: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
+.. _example: https://github.com/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
+.. _nbviewer: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
 .. _Jupyter Qt Console: https://qtconsole.readthedocs.io
 
 .. _pygraphviz: https://pypi.org/project/pygraphviz/
