@@ -12,7 +12,8 @@ Make ``Source.__str__()`` return the ``.source`` instead of the ``repr()``
 (like ``Graph`` and ``Digraph``).
 
 Render with ``dot -K<engine> ...`` instead of ``<engine> ...`` internally
-(work around upstream https://gitlab.com/graphviz/graphviz/-/issues/1753).
+(work around `upstream issue
+<https://gitlab.com/graphviz/graphviz/-/issues/1753>`_).
 
 Add documentation hint to archived upstream version for Windows.
 
