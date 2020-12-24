@@ -122,7 +122,7 @@ def command(engine, format_, filepath=None, renderer=None, formatter=None):
         raise ValueError('unknown formatter: %r' % formatter)
 
     output_format = [f for f in (format_, renderer, formatter) if f is not None]
-    cmd = [engine, '-T%s' % ':'.join(output_format)]
+    cmd = ['dot', '-K%s' % engine, '-T%s' % ':'.join(output_format)]
 
     if filepath is None:
         rendered = None
