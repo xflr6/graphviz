@@ -78,6 +78,8 @@ RENDERERS = {  # $ dot -T:
 
 FORMATTERS = {'cairo', 'core', 'gd', 'gdiplus', 'gdwbmp', 'xlib'}
 
+ENCODING = 'utf-8'
+
 PLATFORM = platform.system().lower()
 
 
@@ -249,7 +251,7 @@ def pipe(engine, format, data, renderer=None, formatter=None, quiet=False):
 
 def unflatten(source,
               stagger=None, fanout=False, chain=None,
-              encoding='utf-8'):
+              encoding=ENCODING):
     """Return DOT ``source`` piped through Graphviz *unflatten* preprocessor.
 
     Args:

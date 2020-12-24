@@ -28,8 +28,9 @@ graph {
 'test-output/m00se.gv.pdf'
 """
 
-from . import lang
+from . import backend
 from . import files
+from . import lang
 
 __all__ = ['Graph', 'Digraph']
 
@@ -52,7 +53,7 @@ class Dot(files.File):
 
     def __init__(self, name=None, comment=None,
                  filename=None, directory=None,
-                 format=None, engine=None, encoding=files.ENCODING,
+                 format=None, engine=None, encoding=backend.ENCODING,
                  graph_attr=None, node_attr=None, edge_attr=None, body=None,
                  strict=False):
         self.name = name

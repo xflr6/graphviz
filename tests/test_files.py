@@ -19,20 +19,20 @@ def source():
     return Source(**SOURCE)
 
 
-def test_format(source):
-    assert not SOURCE['format'].islower()
-
-    assert source.format == SOURCE['format'].lower()
-    with pytest.raises(ValueError, match=r'format'):
-        source.format = ''
-
-
 def test_engine(source):
     assert not SOURCE['engine'].islower()
 
     assert source.engine == SOURCE['engine'].lower()
     with pytest.raises(ValueError, match=r'engine'):
         source.engine = ''
+
+
+def test_format(source):
+    assert not SOURCE['format'].islower()
+
+    assert source.format == SOURCE['format'].lower()
+    with pytest.raises(ValueError, match=r'format'):
+        source.format = ''
 
 
 def test_encoding(source):

@@ -15,29 +15,17 @@ from . import tools
 
 __all__ = ['File', 'Source']
 
-ENCODING = 'utf-8'
-
 
 log = logging.getLogger(__name__)
 
 
 class Base(object):
 
-    _format = 'pdf'
     _engine = 'dot'
-    _encoding = ENCODING
 
-    @property
-    def format(self):
-        """The output format used for rendering (``'pdf'``, ``'png'``, ...)."""
-        return self._format
+    _format = 'pdf'
 
-    @format.setter
-    def format(self, format):
-        format = format.lower()
-        if format not in backend.FORMATS:
-            raise ValueError('unknown format: %r' % format)
-        self._format = format
+    _encoding = backend.ENCODING
 
     @property
     def engine(self):
@@ -50,6 +38,18 @@ class Base(object):
         if engine not in backend.ENGINES:
             raise ValueError('unknown engine: %r' % engine)
         self._engine = engine
+
+    @property
+    def format(self):
+        """The output format used for rendering (``'pdf'``, ``'png'``, ...)."""
+        return self._format
+
+    @format.setter
+    def format(self, format):
+        format = format.lower()
+        if format not in backend.FORMATS:
+            raise ValueError('unknown format: %r' % format)
+        self._format = format
 
     @property
     def encoding(self):
@@ -85,7 +85,7 @@ class File(Base):
     _default_extension = 'gv'
 
     def __init__(self, filename=None, directory=None,
-                 format=None, engine=None, encoding=ENCODING):
+                 format=None, engine=None, encoding=backend.ENCODING):
         if filename is None:
             name = getattr(self, 'name', None) or self.__class__.__name__
             filename = '%s.%s' % (name, self._default_extension)
@@ -323,7 +323,7 @@ class Source(File):
 
     @classmethod
     def from_file(cls, filename, directory=None,
-                  format=None, engine=None, encoding=ENCODING):
+                  format=None, engine=None, encoding=backend.ENCODING):
         """Return an instance with the source string read from the given file.
 
         Args:
@@ -342,7 +342,7 @@ class Source(File):
         return cls(source, filename, directory, format, engine, encoding)
 
     def __init__(self, source, filename=None, directory=None,
-                 format=None, engine=None, encoding=ENCODING):
+                 format=None, engine=None, encoding=backend.ENCODING):
         super(Source, self).__init__(filename, directory,
                                      format, engine, encoding)
         self.source = source  #: The verbatim DOT source code string.
