@@ -24,12 +24,12 @@ digraph {
 }
 """
 
-from .dot import Graph, Digraph
-from .files import Source
-from .lang import escape, nohtml
 from .backend import (render, pipe, unflatten, version, view,
                       ENGINES, FORMATS, RENDERERS, FORMATTERS,
                       ExecutableNotFound, RequiredArgumentError)
+from .dot import Graph, Digraph
+from .files import Source
+from .lang import escape, nohtml
 
 __all__ = ['Graph', 'Digraph',
            'Source',

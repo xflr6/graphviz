@@ -5,8 +5,8 @@ import re
 
 import pytest
 
-from graphviz.files import Source
 from graphviz.dot import Graph, Digraph
+from graphviz.files import Source
 
 
 @pytest.fixture(params=[Graph, Digraph])

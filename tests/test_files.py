@@ -7,11 +7,9 @@ import pytest
 
 from graphviz.files import Source
 
-SOURCE = {
-    'source': 'digraph { hello -> world }',
-    'filename': 'hello.gv', 'directory': 'test-output',
-    'format': 'PNG', 'engine': 'NEATO', 'encoding': 'utf-8',
-}
+SOURCE = {'source': 'digraph { hello -> world }',
+          'filename': 'hello.gv', 'directory': 'test-output',
+          'format': 'PNG', 'engine': 'NEATO', 'encoding': 'utf-8'}
 
 
 @pytest.fixture(scope='module')
