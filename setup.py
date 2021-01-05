@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='graphviz',
-    version='0.16.1.dev0',
+    version='0.17.dev0',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Simple Python interface for Graphviz',
@@ -34,8 +34,6 @@ setup(
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',

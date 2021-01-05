@@ -2,10 +2,10 @@ Changelog
 =========
 
 
-Version 0.16.1 (in development)
--------------------------------
+Version 0.17 (in development)
+-----------------------------
 
-
+Drop Python 2 support.
 
 
 Version 0.16
