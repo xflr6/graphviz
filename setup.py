@@ -21,7 +21,7 @@ setup(
     },
     packages=find_packages(),
     platforms='any',
-    python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*',
+    python_requires='>=3.6',
     extras_require={
         'dev': ['tox>=3', 'flake8', 'pep8-naming', 'wheel', 'twine'],
         'test': ['mock>=3', 'pytest>=4', 'pytest-mock>=2', 'pytest-cov'],
