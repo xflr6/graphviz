@@ -88,11 +88,11 @@ log = logging.getLogger(__name__)
 class ExecutableNotFound(RuntimeError):
     """Exception raised if the Graphviz executable is not found."""
 
-    _msg = ('failed to execute %r, '
+    _msg = ('failed to execute {!r}, '
             'make sure the Graphviz executables are on your systems\' PATH')
 
     def __init__(self, args):
-        super().__init__(self._msg % args)
+        super().__init__(self._msg.format(*args))
 
 
 class RequiredArgumentError(Exception):
@@ -103,7 +103,7 @@ class CalledProcessError(subprocess.CalledProcessError):
 
     def __str__(self):
         s = super().__str__()
-        return '%s [stderr: %r]' % (s, self.stderr)
+        return f'{s} [stderr: {self.stderr!r}]'
 
 
 def command(engine, format_, filepath=None, renderer=None, formatter=None):
@@ -112,13 +112,13 @@ def command(engine, format_, filepath=None, renderer=None, formatter=None):
         raise RequiredArgumentError('formatter given without renderer')
 
     if engine not in ENGINES:
-        raise ValueError('unknown engine: %r' % engine)
+        raise ValueError(f'unknown engine: {engine!r}')
     if format_ not in FORMATS:
-        raise ValueError('unknown format: %r' % format_)
+        raise ValueError(f'unknown format: {format_!r}')
     if renderer is not None and renderer not in RENDERERS:
-        raise ValueError('unknown renderer: %r' % renderer)
+        raise ValueError(f'unknown renderer: {renderer!r}')
     if formatter is not None and formatter not in FORMATTERS:
-        raise ValueError('unknown formatter: %r' % formatter)
+        raise ValueError(f'unknown formatter: {formatter!r}')
 
     output_format = [f for f in (format_, renderer, formatter) if f is not None]
     cmd = ['dot', '-K%s' % engine, '-T%s' % ':'.join(output_format)]
@@ -128,7 +128,7 @@ def command(engine, format_, filepath=None, renderer=None, formatter=None):
     else:
         cmd.extend(['-O', filepath])
         suffix = '.'.join(reversed(output_format))
-        rendered = '%s.%s' % (filepath, suffix)
+        rendered = f'{filepath}.{suffix}'
 
     return cmd, rendered
 
@@ -322,7 +322,7 @@ def version():
                    r')?'
                    r' ', out)
     if ma is None:
-        raise RuntimeError('cannot parse %r output: %r' % (cmd, out))
+        raise RuntimeError(f'cannot parse {cmd!r} output: {out!r}')
 
     return tuple(int(d) for d in ma.groups() if d is not None)
 
@@ -345,7 +345,7 @@ def view(filepath, quiet=False):
     try:
         view_func = getattr(view, PLATFORM)
     except AttributeError:
-        raise RuntimeError('platform %r not supported' % PLATFORM)
+        raise RuntimeError(f'platform {PLATFORM!r} not supported')
     view_func(filepath, quiet)
 
 

@@ -156,7 +156,7 @@ def test__view_unknown_platform(unknown_platform, source):
 
 
 def test__view(mocker, mock_platform, source):
-    _view_platform = mocker.patch.object(source, '_view_%s' % mock_platform,
+    _view_platform = mocker.patch.object(source, f'_view_{mock_platform}',
                                          autospec=True)
 
     assert source._view(mocker.sentinel.name, 'png', False) is None

@@ -105,7 +105,7 @@ class Dot(files.File):
         yield head % (self._quote(self.name) + ' ' if self.name else '')
 
         for kw in ('graph', 'node', 'edge'):
-            attrs = getattr(self, '%s_attr' % kw)
+            attrs = getattr(self, f'{kw}_attr')
             if attrs:
                 yield self._attr % (kw, self._attr_list(None, attrs))
 
@@ -182,8 +182,8 @@ class Dot(files.File):
         See the :ref:`usage examples in the User Guide <attributes>`.
         """
         if kw is not None and kw.lower() not in ('graph', 'node', 'edge'):
-            raise ValueError('attr statement must target graph, node, or edge: '
-                '%r' % kw)
+            raise ValueError('attr statement must target graph, node, or edge:'
+                             f' {kw!r}')
         if attrs or _attributes:
             if kw is None:
                 a_list = self._a_list(None, attrs, _attributes)
@@ -238,8 +238,8 @@ class Dot(files.File):
             raise ValueError('graph must be sole argument of subgraph()')
 
         if graph.directed != self.directed:
-            raise ValueError('%r cannot add subgraph of different kind:'
-                             ' %r' % (self, graph))
+            raise ValueError(f'{self!r} cannot add subgraph of different kind:'
+                             f' {graph!r}')
 
         lines = ['\t' + line for line in graph.__iter__(subgraph=True)]
         self.body.extend(lines)

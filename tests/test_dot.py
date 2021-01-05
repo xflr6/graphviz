@@ -15,7 +15,7 @@ def cls(request):
 
 
 @pytest.fixture(params=list(itertools.permutations([Graph, Digraph], 2)),
-                ids=lambda c: '%s, %s' % (c[0].__name__, c[1].__name__))
+                ids=lambda c: f'{c[0].__name__}, {c[1].__name__}')
 def classes(request):
     return request.param
 
@@ -57,7 +57,7 @@ def test__repr_svg_(mocker, cls):
 
 @pytest.mark.parametrize('keep_attrs', [False, True])
 def test_clear(cls, keep_attrs):
-    kwargs = {'%s_attr' % a: {a: a} for a in ('graph', 'node', 'edge')}
+    kwargs = {f'{a}_attr': {a: a} for a in ('graph', 'node', 'edge')}
     c = cls(**kwargs)
     assert all(getattr(c, k) == v for k, v in kwargs.items())
     c.node('spam')

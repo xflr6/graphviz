@@ -28,7 +28,7 @@ def platform():
 
 
 @pytest.fixture(params=['darwin', 'freebsd', 'linux', 'windows'],
-                ids=lambda p: 'platform=%r' % p)
+                ids=lambda p: f'platform={p!r}')
 def mock_platform(monkeypatch, request):
     monkeypatch.setattr('graphviz.backend.PLATFORM', request.param)
     yield request.param
@@ -59,7 +59,7 @@ def empty_path(monkeypatch):
     monkeypatch.setenv('PATH', '')
 
 
-@pytest.fixture(params=[False, True], ids=lambda q: 'quiet=%r' % q)
+@pytest.fixture(params=[False, True], ids=lambda q: f'quiet={q!r}')
 def quiet(request):
     return request.param
 

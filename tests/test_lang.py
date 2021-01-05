@@ -11,14 +11,14 @@ from graphviz.lang import quote, attr_list, nohtml
 def test_deprecated_escape(recwarn, char):
     warnings.simplefilter('always')
 
-    escape = eval(r'"\%s"' % char)
+    escape = eval(rf'"\{char}"')
 
     assert len(recwarn) == 1
     w = recwarn.pop(DeprecationWarning)
     assert str(w.message).startswith('invalid escape sequence')
 
-    assert escape == '\\%s' % char
-    assert quote(escape) == '"\\%s"' % char
+    assert escape == f'\\{char}'
+    assert quote(escape) == f'"\\{char}"'
 
 
 @pytest.mark.parametrize('identifier, expected', [

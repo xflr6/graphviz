@@ -69,7 +69,7 @@ def quote(identifier,
     if is_html_string(identifier) and not isinstance(identifier, NoHtml):
         pass
     elif not is_valid_id(identifier) or identifier.lower() in dot_keywords:
-        return '"%s"' % escape_unescaped_quotes(identifier)
+        return f'"{escape_unescaped_quotes(identifier)}"'
     return identifier
 
 
@@ -101,15 +101,15 @@ def a_list(label=None, kwargs=None, attributes=None):
     >>> a_list('spam', {'spam': None, 'ham': 'ham ham', 'eggs': ''})
     'label=spam eggs="" ham="ham ham"'
     """
-    result = ['label=%s' % quote(label)] if label is not None else []
+    result = [f'label={quote(label)}'] if label is not None else []
     if kwargs:
-        items = ['%s=%s' % (quote(k), quote(v))
+        items = [f'{quote(k)}={quote(v)}'
                  for k, v in tools.mapping_items(kwargs) if v is not None]
         result.extend(items)
     if attributes:
         if hasattr(attributes, 'items'):
             attributes = tools.mapping_items(attributes)
-        items = ['%s=%s' % (quote(k), quote(v))
+        items = [f'{quote(k)}={quote(v)}'
                  for k, v in attributes if v is not None]
         result.extend(items)
     return ' '.join(result)
@@ -133,7 +133,7 @@ def attr_list(label=None, kwargs=None, attributes=None):
     content = a_list(label, kwargs, attributes)
     if not content:
         return ''
-    return ' [%s]' % content
+    return f' [{content}]'
 
 
 def escape(s):

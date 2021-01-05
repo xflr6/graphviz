@@ -33,7 +33,7 @@ class Base(object):
     def engine(self, engine):
         engine = engine.lower()
         if engine not in backend.ENGINES:
-            raise ValueError('unknown engine: %r' % engine)
+            raise ValueError(f'unknown engine: {engine!r}')
         self._engine = engine
 
     @property
@@ -45,7 +45,7 @@ class Base(object):
     def format(self, format):
         format = format.lower()
         if format not in backend.FORMATS:
-            raise ValueError('unknown format: %r' % format)
+            raise ValueError(f'unknown format: {format!r}')
         self._format = format
 
     @property
@@ -85,7 +85,7 @@ class File(Base):
                  format=None, engine=None, encoding=backend.ENCODING):
         if filename is None:
             name = getattr(self, 'name', None) or self.__class__.__name__
-            filename = '%s.%s' % (name, self._default_extension)
+            filename = f'{name}.{self._default_extension}'
         self.filename = filename
 
         if directory is not None:
@@ -281,17 +281,17 @@ class File(Base):
     def _view(self, filepath, format, quiet):
         """Start the right viewer based on file format and platform."""
         methodnames = [
-            '_view_%s_%s' % (format, backend.PLATFORM),
-            '_view_%s' % backend.PLATFORM,
+            f'_view_{format}_{backend.PLATFORM}',
+            f'_view_{backend.PLATFORM}',
         ]
         for name in methodnames:
             view_method = getattr(self, name, None)
             if view_method is not None:
                 break
         else:
-            raise RuntimeError('%r has no built-in viewer support for %r'
-                               ' on %r platform' % (self.__class__, format,
-                                                    backend.PLATFORM))
+            raise RuntimeError(f'{self.__class__!r} has no built-in viewer'
+                               f' support for {format!r}'
+                               f' on {backend.PLATFORM!r} platform')
         view_method(filepath, quiet)
 
     _view_darwin = staticmethod(backend.view.darwin)

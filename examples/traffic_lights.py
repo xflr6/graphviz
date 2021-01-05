@@ -7,26 +7,26 @@ t = Digraph('TrafficLights', filename='traffic_lights.gv', engine='neato')
 
 t.attr('node', shape='box')
 for i in (2, 1):
-    t.node('gy%d' % i)
-    t.node('yr%d' % i)
-    t.node('rg%d' % i)
+    t.node(f'gy{i:d}')
+    t.node(f'yr{i:d}')
+    t.node(f'rg{i:d}')
 
 t.attr('node', shape='circle', fixedsize='true', width='0.9')
 for i in (2, 1):
-    t.node('green%d' % i)
-    t.node('yellow%d' % i)
-    t.node('red%d' % i)
-    t.node('safe%d' % i)
+    t.node(f'green{i:d}')
+    t.node(f'yellow{i:d}')
+    t.node(f'red{i:d}')
+    t.node(f'safe{i:d}')
 
 for i, j in [(2, 1), (1, 2)]:
-    t.edge('gy%d' % i, 'yellow%d' % i)
-    t.edge('rg%d' % i, 'green%d' % i)
-    t.edge('yr%d' % i, 'safe%d' % j)
-    t.edge('yr%d' % i, 'red%d' % i)
-    t.edge('safe%d' % i, 'rg%d' % i)
-    t.edge('green%d' % i, 'gy%d' % i)
-    t.edge('yellow%d' % i, 'yr%d' % i)
-    t.edge('red%d' % i, 'rg%d' % i)
+    t.edge(f'gy{i:d}', f'yellow{i:d}')
+    t.edge(f'rg{i:d}', f'green{i:d}')
+    t.edge(f'yr{i:d}', f'safe{i:d}')
+    t.edge(f'yr{i:d}', f'red{i:d}')
+    t.edge(f'safe{i:d}', f'rg{i:d}')
+    t.edge(f'green{i:d}', f'gy{i:d}')
+    t.edge(f'yellow{i:d}', f'yr{i:d}')
+    t.edge(f'red{i:d}', f'rg{i:d}')
 
 t.attr(overlap='false')
 t.attr(label=r'PetriNet Model TrafficLights\n'

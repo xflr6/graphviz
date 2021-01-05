@@ -108,7 +108,7 @@ def test_render(capsys, tmpdir, engine, format_, renderer, formatter,
                 data=b'digraph { hello -> world }'):
     lpath = tmpdir / filename
     lpath.write_binary(data)
-    rendered = lpath.new(ext='%s.%s' % (lpath.ext, expected_suffix))
+    rendered = lpath.new(ext=f'{lpath.ext}.{expected_suffix}')
 
     assert render(engine, format_, str(lpath), renderer, formatter) == str(rendered)
 
@@ -126,10 +126,10 @@ def test_render_img(capsys, tmpdir, filesdir, engine='dot', format_='pdf'):
     assert img_path.size()
 
     gv_path = subdir / 'img.gv'
-    rendered = gv_path.new(ext='%s.%s' % (gv_path.ext, format_))
+    rendered = gv_path.new(ext=f'{gv_path.ext}.{format_}')
     gv_rel, rendered_rel = map(tmpdir.bestrelpath, (gv_path, rendered))
     assert all(s.startswith('subdir') for s in (gv_rel, rendered_rel))
-    gv_path.write_text('graph { red_dot [image="%s"] }' % img_path.basename,
+    gv_path.write_text(f'graph {{ red_dot [image="{img_path.basename}"] }}',
                        encoding='ascii')
 
     with tmpdir.as_cwd():
