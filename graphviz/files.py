@@ -3,12 +3,9 @@
 """Save DOT code objects, render with Graphviz dot, and open in viewer."""
 
 import codecs
-import io
 import locale
 import logging
 import os
-
-from ._compat import text_type
 
 from . import backend
 from . import tools
@@ -103,7 +100,7 @@ class File(Base):
         self.encoding = encoding
 
     def _kwargs(self):
-        result = super(File, self)._kwargs()
+        result = super()._kwargs()
         result['filename'] = self.filename
         if 'directory' in self.__dict__:
             result['directory'] = self.directory
@@ -164,7 +161,7 @@ class File(Base):
         if format is None:
             format = self._format
 
-        data = text_type(self.source).encode(self._encoding)
+        data = self.source.encode(self._encoding)
 
         out = backend.pipe(self._engine, format, data,
                            renderer=renderer, formatter=formatter,
@@ -194,13 +191,11 @@ class File(Base):
         filepath = self.filepath
         tools.mkdirs(filepath)
 
-        data = text_type(self.source)
-
-        log.debug('write %d bytes to %r', len(data), filepath)
-        with io.open(filepath, 'w', encoding=self.encoding) as fd:
-            fd.write(data)
-            if not data.endswith(u'\n'):
-                fd.write(u'\n')
+        log.debug('write %d bytes to %r', len(self.source), filepath)
+        with open(filepath, 'w', encoding=self.encoding) as fd:
+            fd.write(self.source)
+            if not self.source.endswith('\n'):
+                fd.write('\n')
 
         return filepath
 
@@ -337,17 +332,16 @@ class Source(File):
         if encoding is None:
             encoding = locale.getpreferredencoding()
         log.debug('read %r with encoding %r', filepath, encoding)
-        with io.open(filepath, encoding=encoding) as fd:
+        with open(filepath, encoding=encoding) as fd:
             source = fd.read()
         return cls(source, filename, directory, format, engine, encoding)
 
     def __init__(self, source, filename=None, directory=None,
                  format=None, engine=None, encoding=backend.ENCODING):
-        super(Source, self).__init__(filename, directory,
-                                     format, engine, encoding)
+        super().__init__(filename, directory, format, engine, encoding)
         self.source = source  #: The verbatim DOT source code string.
 
     def _kwargs(self):
-        result = super(Source, self)._kwargs()
+        result = super()._kwargs()
         result['source'] = self.source
         return result

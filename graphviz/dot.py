@@ -2,18 +2,18 @@
 
 r"""Assemble DOT source code objects.
 
->>> dot = Graph(comment=u'M\xf8nti Pyth\xf8n ik den H\xf8lie Grailen')
+>>> dot = Graph(comment='M\xf8nti Pyth\xf8n ik den H\xf8lie Grailen')
 
->>> dot.node(u'M\xf8\xf8se')
->>> dot.node('trained_by', u'trained by')
->>> dot.node('tutte', u'TUTTE HERMSGERVORDENBROTBORDA')
+>>> dot.node('M\xf8\xf8se')
+>>> dot.node('trained_by', 'trained by')
+>>> dot.node('tutte', 'TUTTE HERMSGERVORDENBROTBORDA')
 
->>> dot.edge(u'M\xf8\xf8se', 'trained_by')
+>>> dot.edge('M\xf8\xf8se', 'trained_by')
 >>> dot.edge('trained_by', 'tutte')
 
 >>> dot.node_attr['shape'] = 'rectangle'
 
->>> print(dot.source.replace(u'\xf8', '0'))  #doctest: +NORMALIZE_WHITESPACE
+>>> print(dot.source.replace('\xf8', '0'))  #doctest: +NORMALIZE_WHITESPACE
 // M0nti Pyth0n ik den H0lie Grailen
 graph {
     node [shape=rectangle]
@@ -59,7 +59,7 @@ class Dot(files.File):
         self.name = name
         self.comment = comment
 
-        super(Dot, self).__init__(filename, directory, format, engine, encoding)
+        super().__init__(filename, directory, format, engine, encoding)
 
         self.graph_attr = dict(graph_attr) if graph_attr is not None else {}
         self.node_attr = dict(node_attr) if node_attr is not None else {}
@@ -70,7 +70,7 @@ class Dot(files.File):
         self.strict = strict
 
     def _kwargs(self):
-        result = super(Dot, self)._kwargs()
+        result = super()._kwargs()
         result.update(name=self.name,
                       comment=self.comment,
                       graph_attr=dict(self.graph_attr),

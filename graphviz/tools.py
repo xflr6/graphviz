@@ -2,8 +2,6 @@
 
 import os
 
-from . import _compat
-
 __all__ = ['attach', 'mkdirs', 'mapping_items']
 
 
@@ -28,7 +26,7 @@ def mkdirs(filename, mode=0o777):
     dirname = os.path.dirname(filename)
     if not dirname:
         return
-    _compat.makedirs(dirname, mode=mode, exist_ok=True)
+    os.makedirs(dirname, mode=mode, exist_ok=True)
 
 
 def mapping_items(mapping):
@@ -41,7 +39,7 @@ def mapping_items(mapping):
     >>> list(mapping_items(OrderedDict(enumerate(['spam', 'ham', 'eggs']))))
     [(0, 'spam'), (1, 'ham'), (2, 'eggs')]
     """
-    result = _compat.iteritems(mapping)
+    result = iter(mapping.items())
     if type(mapping) is dict:
         result = iter(sorted(result))
     return result

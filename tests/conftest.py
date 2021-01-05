@@ -1,7 +1,6 @@
 # conftest.py
 
 import platform as platform_
-import sys
 
 import pytest
 
@@ -15,11 +14,6 @@ def pytest_addoption(parser):
 def pytest_configure(config):
     pytest.exe = pytest.mark.skipif(config.getoption('--skipexe'),
                                     reason='skipped by --skipexe option')
-
-
-@pytest.fixture(scope='session')
-def py2():
-    return sys.version_info.major == 2
 
 
 @pytest.fixture(scope='session')

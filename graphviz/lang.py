@@ -2,11 +2,8 @@
 
 """Quote strings to be valid DOT identifiers, assemble attribute lists."""
 
-import collections
 import functools
 import re
-
-from . import _compat
 
 from . import tools
 
@@ -156,22 +153,10 @@ def escape(s):
     return nohtml(s.replace('\\', '\\\\'))
 
 
-class NoHtml(object):
-    """Mixin for string subclasses disabling fall-through of ``'<...>'``."""
+class NoHtml(str):
+    """String subclass that does not treat ``'<...>'`` as DOT HTML string."""
 
     __slots__ = ()
-
-    _doc = "%s subclass that does not treat ``'<...>'`` as DOT HTML string."
-
-    @classmethod
-    def _subcls(cls, other):
-        name = '%s_%s' % (cls.__name__, other.__name__)
-        bases = (other, cls)
-        ns = {'__doc__': cls._doc % other.__name__}
-        return type(name, bases, ns)
-
-
-NOHTML = collections.OrderedDict((c, NoHtml._subcls(c)) for c in _compat.string_classes)
 
 
 def nohtml(s):
@@ -189,9 +174,4 @@ def nohtml(s):
     >>> quote(nohtml('<>-*-<>'))
     '"<>-*-<>"'
     """
-    try:
-        subcls = NOHTML[type(s)]
-    except KeyError:
-        raise TypeError('%r does not have one of the required types:'
-                        ' %r' % (s, list(NOHTML)))
-    return subcls(s)
+    return NoHtml(s)

@@ -108,22 +108,19 @@ def test_filepath(platform, source):
         assert source.filepath == 'test-output/hello.gv'
 
 
-def test_save(mocker, py2, filename='nonfilename', directory='nondirectory'):
+def test_save(mocker, filename='nonfilename', directory='nondirectory'):
     source = Source(**SOURCE)
     makedirs = mocker.patch('os.makedirs', autospec=True)
-    open_ = mocker.patch('io.open', mocker.mock_open())
+    open_ = mocker.patch('builtins.open', mocker.mock_open())
 
     assert source.save(filename, directory) == source.filepath
 
     assert source.filename == filename and source.directory == directory
-    if py2:
-        makedirs.assert_called_once_with(source.directory, 0o777)
-    else:
-        makedirs.assert_called_once_with(source.directory, 0o777, exist_ok=True)
+    makedirs.assert_called_once_with(source.directory, 0o777, exist_ok=True)
     open_.assert_called_once_with(source.filepath, 'w',
                                   encoding=source.encoding)
     assert open_.return_value.write.call_args_list == [mocker.call(source.source),
-                                                       mocker.call(u'\n')]
+                                                       mocker.call('\n')]
 
 
 def test_render(mocker, render, source):
@@ -175,7 +172,7 @@ def test_copy(source):
 
 
 def test_from_file(tmpdir, filename='hello.gv', directory='source_hello',
-                   data=u'digraph { hello -> world }', encoding='utf-8'):
+                   data='digraph { hello -> world }', encoding='utf-8'):
     lpath = tmpdir.mkdir(directory)
     (lpath / filename).write_text(data, encoding=encoding)
 

@@ -31,7 +31,7 @@ def test_run_oserror():
     assert e.value.errno in (errno.EACCES, errno.EINVAL)
 
 
-def test_run_encoding_mocked(mocker, Popen, input=u'sp\xe4m', encoding='utf-8'):
+def test_run_encoding_mocked(mocker, Popen, input='sp\xe4m', encoding='utf-8'):
     proc = Popen.return_value
     proc.returncode = 0
     mocks = [mocker.create_autospec(bytes, instance=True, name=n) for n in ('out', 'err')]
@@ -129,7 +129,7 @@ def test_render_img(capsys, tmpdir, filesdir, engine='dot', format_='pdf'):
     rendered = gv_path.new(ext='%s.%s' % (gv_path.ext, format_))
     gv_rel, rendered_rel = map(tmpdir.bestrelpath, (gv_path, rendered))
     assert all(s.startswith('subdir') for s in (gv_rel, rendered_rel))
-    gv_path.write_text(u'graph { red_dot [image="%s"] }' % img_path.basename,
+    gv_path.write_text('graph { red_dot [image="%s"] }' % img_path.basename,
                        encoding='ascii')
 
     with tmpdir.as_cwd():
@@ -191,21 +191,22 @@ def test_pipe(capsys, engine, format_, renderer, formatter, pattern,
     assert capsys.readouterr() == ('', '')
 
 
-def test_pipe_pipe_invalid_data_mocked(mocker, py2, Popen, quiet):  # noqa: N803
+def test_pipe_pipe_invalid_data_mocked(mocker, Popen, quiet):  # noqa: N803
     stderr = mocker.patch('sys.stderr', autospec=True,
                           **{'flush': mocker.Mock(), 'encoding': 'nonencoding'})
     proc = Popen.return_value
     proc.returncode = mocker.sentinel.returncode
     err = mocker.create_autospec(bytes, instance=True, name='err',
                                  **{'__len__.return_value': 23})
-    proc.communicate.return_value = (mocker.sentinel.out, err)
+    out = mocker.create_autospec(bytes, instance=True, name='out')
+    proc.communicate.return_value = (out, err)
 
     with pytest.raises(subprocess.CalledProcessError) as e:
         pipe('dot', 'png', b'nongraph', quiet=quiet)
 
     assert e.value.returncode is mocker.sentinel.returncode
     assert e.value.stderr is err
-    assert e.value.stdout is mocker.sentinel.out
+    assert e.value.stdout is out
     e.value.stdout = mocker.sentinel.new_stdout
     assert e.value.stdout is mocker.sentinel.new_stdout
     Popen.assert_called_once_with(['dot', '-Kdot', '-Tpng'],
@@ -216,20 +217,17 @@ def test_pipe_pipe_invalid_data_mocked(mocker, py2, Popen, quiet):  # noqa: N803
     check_startupinfo(Popen.call_args.kwargs['startupinfo'])
     proc.communicate.assert_called_once_with(b'nongraph')
     if not quiet:
-        if py2:
-            stderr.write.assert_called_once_with(err)
-        else:
-            err.decode.assert_called_once_with(stderr.encoding)
-            stderr.write.assert_called_once_with(err.decode.return_value)
+        err.decode.assert_called_once_with(stderr.encoding)
+        stderr.write.assert_called_once_with(err.decode.return_value)
         stderr.flush.assert_called_once_with()
 
 
 def test_pipe_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
     proc = Popen.return_value
     proc.returncode = 0
-    proc.communicate.return_value = (mocker.sentinel.out, b'stderr')
+    proc.communicate.return_value = (b'stdout', b'stderr')
 
-    assert pipe('dot', 'png', b'nongraph', quiet=quiet) is mocker.sentinel.out
+    assert pipe('dot', 'png', b'nongraph', quiet=quiet) == b'stdout'
 
     Popen.assert_called_once_with(['dot', '-Kdot', '-Tpng'],
                                   stdin=subprocess.PIPE,
@@ -325,20 +323,14 @@ def test_view_unknown_platform(unknown_platform):
         view('nonfilepath')
 
 
-def test_view(mocker, py2, mock_platform, Popen, startfile, quiet):  # noqa: N803
-    if quiet and py2:
-        open_ = mocker.patch('__builtin__.open', mocker.mock_open())
-
+def test_view(mocker, mock_platform, Popen, startfile, quiet):  # noqa: N803
     assert view('nonfilepath', quiet=quiet) is None
 
     if mock_platform == 'windows':
         startfile.assert_called_once_with('nonfilepath')
         return
 
-    if quiet and py2:
-        open_.assert_called_once_with(os.devnull, 'w')
-        kwargs = {'stderr': open_.return_value}
-    elif quiet:
+    if quiet:
         kwargs = {'stderr': subprocess.DEVNULL}
     else:
         kwargs = {}

@@ -1,6 +1,5 @@
 # test_lang.py
 
-import sys
 import warnings
 
 import pytest
@@ -14,12 +13,9 @@ def test_deprecated_escape(recwarn, char):
 
     escape = eval(r'"\%s"' % char)
 
-    if sys.version_info < (3, 6):
-        assert not recwarn
-    else:
-        assert len(recwarn) == 1
-        w = recwarn.pop(DeprecationWarning)
-        assert str(w.message).startswith('invalid escape sequence')
+    assert len(recwarn) == 1
+    w = recwarn.pop(DeprecationWarning)
+    assert str(w.message).startswith('invalid escape sequence')
 
     assert escape == '\\%s' % char
     assert quote(escape) == '"\\%s"' % char
@@ -34,7 +30,7 @@ def test_deprecated_escape(recwarn, char):
     ('\\n \\l \\r', '"\\n \\l \\r"'),
     ('\r\n', '"\r\n"'),
     ('\\\\n', r'"\\n"'),
-    (u'\u0665.\u0660', u'"\u0665.\u0660"'),
+    ('\u0665.\u0660', '"\u0665.\u0660"'),
     ('\\"spam', r'"\"spam"'),
     ('\\\\"spam', r'"\\\"spam"'),
     ('\\\\\\"spam', r'"\\\"spam"'),
@@ -52,16 +48,7 @@ def test_attr_list(attributes, expected):
     assert attr_list(attributes=attributes) == expected
 
 
-@pytest.mark.parametrize('string', ['spam', u'spam'])
-def test_nohtml(string):
+def test_nohtml(string='spam'):
     result = nohtml(string)
     assert result == string
-    assert isinstance(result, type(string))
-
-
-def test_nohtml_invalid(py2):
-    match = r"required types.+'str'"
-    if py2:
-        match += r".+'unicode'"
-    with pytest.raises(TypeError, match=match):
-        nohtml(True)
+    assert isinstance(result, str)

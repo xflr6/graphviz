@@ -6,8 +6,7 @@ import os
 import platform
 import re
 import subprocess
-
-from . import _compat
+import sys
 
 from . import tools
 
@@ -93,17 +92,17 @@ class ExecutableNotFound(RuntimeError):
             'make sure the Graphviz executables are on your systems\' PATH')
 
     def __init__(self, args):
-        super(ExecutableNotFound, self).__init__(self._msg % args)
+        super().__init__(self._msg % args)
 
 
 class RequiredArgumentError(Exception):
     """Exception raised if a required argument is missing."""
 
 
-class CalledProcessError(_compat.CalledProcessError):
+class CalledProcessError(subprocess.CalledProcessError):
 
     def __str__(self):
-        s = super(CalledProcessError, self).__str__()
+        s = super().__str__()
         return '%s [stderr: %r]' % (s, self.stderr)
 
 
@@ -171,7 +170,9 @@ def run(cmd, input=None, capture_output=False, check=False, encoding=None,
     out, err = proc.communicate(input)
 
     if not quiet and err:
-        _compat.stderr_write_bytes(err, flush=True)
+        err_encoding = sys.stderr.encoding or sys.getdefaultencoding()
+        sys.stderr.write(err.decode(err_encoding))
+        sys.stderr.flush()
 
     if encoding is not None:
         if out is not None:
@@ -353,8 +354,8 @@ def view_darwin(filepath, quiet):
     """Open filepath with its default application (mac)."""
     cmd = ['open', filepath]
     log.debug('view: %r', cmd)
-    popen_func = _compat.Popen_stderr_devnull if quiet else subprocess.Popen
-    popen_func(cmd)
+    kwargs = {'stderr': subprocess.DEVNULL} if quiet else {}
+    subprocess.Popen(cmd, **kwargs)
 
 
 @tools.attach(view, 'linux')
@@ -363,8 +364,8 @@ def view_unixoid(filepath, quiet):
     """Open filepath in the user's preferred application (linux, freebsd)."""
     cmd = ['xdg-open', filepath]
     log.debug('view: %r', cmd)
-    popen_func = _compat.Popen_stderr_devnull if quiet else subprocess.Popen
-    popen_func(cmd)
+    kwargs = {'stderr': subprocess.DEVNULL} if quiet else {}
+    subprocess.Popen(cmd, **kwargs)
 
 
 @tools.attach(view, 'windows')
