@@ -1,6 +1,7 @@
 # test_files.py
 
 import locale
+import pathlib
 import re
 
 import pytest
@@ -110,13 +111,14 @@ def test_filepath(platform, source):
 
 def test_save(mocker, filename='nonfilename', directory='nondirectory'):
     source = Source(**SOURCE)
-    makedirs = mocker.patch('os.makedirs', autospec=True)
+    makedirs = mocker.patch('pathlib.Path.mkdir', autospec=True)
     open_ = mocker.patch('builtins.open', mocker.mock_open())
 
     assert source.save(filename, directory) == source.filepath
 
     assert source.filename == filename and source.directory == directory
-    makedirs.assert_called_once_with(source.directory, 0o777, exist_ok=True)
+    makedirs.assert_called_once_with(pathlib.Path(source.directory).resolve(),
+                                     mode=0o777, parents=True, exist_ok=True)
     open_.assert_called_once_with(source.filepath, 'w',
                                   encoding=source.encoding)
     assert open_.return_value.write.call_args_list == [mocker.call(source.source),

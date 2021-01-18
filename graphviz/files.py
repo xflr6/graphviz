@@ -6,9 +6,9 @@ import codecs
 import locale
 import logging
 import os
+import pathlib
 
 from . import backend
-from . import tools
 
 __all__ = ['File', 'Source']
 
@@ -189,7 +189,8 @@ class File(Base):
             self.directory = directory
 
         filepath = self.filepath
-        tools.mkdirs(filepath)
+        pathlib.Path(filepath).resolve().parent.mkdir(mode=0o777, parents=True,
+                                                      exist_ok=True)
 
         log.debug('write %d bytes to %r', len(self.source), filepath)
         with open(filepath, 'w', encoding=self.encoding) as fd:

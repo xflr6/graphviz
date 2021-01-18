@@ -2,7 +2,7 @@
 
 import os
 
-__all__ = ['attach', 'mkdirs', 'mapping_items']
+__all__ = ['attach', 'mapping_items']
 
 
 def attach(object, name):
@@ -19,14 +19,6 @@ def attach(object, name):
         setattr(object, name, func)
         return func
     return decorator
-
-
-def mkdirs(filename, mode=0o777):
-    """Recursively create directories up to the path of ``filename`` as needed."""
-    dirname = os.path.dirname(filename)
-    if not dirname:
-        return
-    os.makedirs(dirname, mode=mode, exist_ok=True)
 
 
 def mapping_items(mapping):
