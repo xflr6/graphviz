@@ -7,6 +7,8 @@ import pytest
 
 from graphviz.tools import mkdirs
 
+import utils
+
 
 def itertree(root):
     for path, dirs, files in os.walk(root):
@@ -17,18 +19,18 @@ def itertree(root):
                 yield bool(is_file), rel_path(n).replace('\\', '/')
 
 
-def test_mkdirs_invalid(tmpdir):
-    with tmpdir.as_cwd():
-        (tmpdir / 'spam.eggs').write_binary(b'')
+def test_mkdirs_invalid(tmp_path):
+    with utils.as_cwd(tmp_path):
+        (tmp_path / 'spam.eggs').write_bytes(b'')
         with pytest.raises(OSError):
             mkdirs('spam.eggs/spam')
 
 
-def test_mkdirs(tmpdir):
-    with tmpdir.as_cwd():
+def test_mkdirs(tmp_path):
+    with utils.as_cwd(tmp_path):
         mkdirs('spam.eggs')
-        assert list(itertree(str(tmpdir))) == []
+        assert list(itertree(str(tmp_path))) == []
         for _ in range(2):
             mkdirs('spam/eggs/spam.eggs')
-            assert list(itertree(str(tmpdir))) == [(False, 'spam'),
-                                                   (False, 'spam/eggs')]
+            assert list(itertree(str(tmp_path))) == [(False, 'spam'),
+                                                     (False, 'spam/eggs')]

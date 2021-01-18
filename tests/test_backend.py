@@ -1,9 +1,10 @@
 # test_backend.py
 
 import errno
-import os
+import pathlib
 import platform
 import re
+import shutil
 import subprocess
 
 import pytest
@@ -11,8 +12,11 @@ import pytest
 from graphviz.backend import (run, render, pipe, unflatten, version, view,
                               ExecutableNotFound, RequiredArgumentError)
 
+import utils
+
 SVG_PATTERN = r'(?s)^<\?xml .+</svg>\s*$'
 
+TESTDATA = pathlib.Path(__file__).parent / 'testdata'
 
 if platform.system().lower() == 'windows':
     def check_startupinfo(startupinfo):  # noqa: N803
@@ -103,39 +107,39 @@ def test_render_missing_file(quiet, engine='dot', format_='pdf'):
     ('plain', 'dot', 'core', 'core.dot.plain'),
 ])
 @pytest.mark.parametrize('engine', ['dot'])
-def test_render(capsys, tmpdir, engine, format_, renderer, formatter,
+def test_render(capsys, tmp_path, engine, format_, renderer, formatter,
                 expected_suffix, filename='hello.gv',
                 data=b'digraph { hello -> world }'):
-    lpath = tmpdir / filename
-    lpath.write_binary(data)
-    rendered = lpath.new(ext=f'{lpath.ext}.{expected_suffix}')
+    lpath = tmp_path / filename
+    lpath.write_bytes(data)
+    rendered = lpath.with_suffix(f'{lpath.suffix}.{expected_suffix}')
 
     assert render(engine, format_, str(lpath), renderer, formatter) == str(rendered)
 
-    assert rendered.size()
+    assert rendered.stat().st_size
     assert capsys.readouterr() == ('', '')
 
 
 @pytest.exe
-def test_render_img(capsys, tmpdir, filesdir, engine='dot', format_='pdf'):
-    subdir = tmpdir / 'subdir'
-    subdir.ensure(dir=True)
+def test_render_img(capsys, tmp_path, engine='dot', format_='pdf'):
+    subdir = tmp_path / 'subdir'
+    subdir.mkdir()
 
     img_path = subdir / 'dot_red.png'
-    (filesdir / img_path.basename).copy(img_path)
-    assert img_path.size()
+    shutil.copy(TESTDATA / img_path.name, img_path)
+    assert img_path.stat().st_size
 
     gv_path = subdir / 'img.gv'
-    rendered = gv_path.new(ext=f'{gv_path.ext}.{format_}')
-    gv_rel, rendered_rel = map(tmpdir.bestrelpath, (gv_path, rendered))
-    assert all(s.startswith('subdir') for s in (gv_rel, rendered_rel))
-    gv_path.write_text(f'graph {{ red_dot [image="{img_path.basename}"] }}',
+    rendered = gv_path.with_suffix(f'{gv_path.suffix}.{format_}')
+    gv_rel, rendered_rel = (p.relative_to(tmp_path) for p in (gv_path, rendered))
+    assert all(str(s).startswith('subdir') for s in (gv_rel, rendered_rel))
+    gv_path.write_text(f'graph {{ red_dot [image="{img_path.name}"] }}',
                        encoding='ascii')
 
-    with tmpdir.as_cwd():
-        assert render(engine, format_, gv_rel) == rendered_rel
+    with utils.as_cwd(tmp_path):
+        assert render(engine, format_, gv_rel) == str(rendered_rel)
 
-    assert rendered.size()
+    assert rendered.stat().st_size
     assert capsys.readouterr() == ('', '')
 
 

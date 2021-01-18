@@ -171,9 +171,10 @@ def test_copy(source):
     assert source.copy().__dict__ == source.__dict__ == source.copy().__dict__
 
 
-def test_from_file(tmpdir, filename='hello.gv', directory='source_hello',
+def test_from_file(tmp_path, filename='hello.gv', directory='source_hello',
                    data='digraph { hello -> world }', encoding='utf-8'):
-    lpath = tmpdir.mkdir(directory)
+    lpath = tmp_path / directory
+    lpath.mkdir()
     (lpath / filename).write_text(data, encoding=encoding)
 
     source = Source.from_file(filename, str(lpath))

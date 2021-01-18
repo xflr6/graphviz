@@ -17,12 +17,6 @@ def pytest_configure(config):
 
 
 @pytest.fixture(scope='session')
-def filesdir(tmpdir_factory):
-    LocalPath = tmpdir_factory.getbasetemp().__class__  # noqa: N806
-    return LocalPath(__file__).new(basename='')
-
-
-@pytest.fixture(scope='session')
 def platform():
     return platform_.system().lower()
 

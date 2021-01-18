@@ -202,9 +202,9 @@ def test_subgraph():
     (Graph, 'graph {\n\tC\n}\n'),
     (Digraph, 'digraph {\n\tC\n}\n'),
 ], ids=lambda p: getattr(p, '__name__', '...'))
-def test_subgraph_render(capsys, tmpdir, cls, expected):
-    lpath = tmpdir / 's1.gv'
-    rendered = lpath.new(ext='gv.pdf')
+def test_subgraph_render(capsys, tmp_path, cls, expected):
+    lpath = tmp_path / 's1.gv'
+    rendered = lpath.with_suffix('.gv.pdf')
 
     dot = cls()
     dot.edge('A', 'B')
@@ -217,7 +217,7 @@ def test_subgraph_render(capsys, tmpdir, cls, expected):
 
     assert lpath.read_text(encoding='ascii') == expected
 
-    assert rendered.size()
+    assert rendered.stat().st_size
     assert capsys.readouterr() == ('', '')
 
 
