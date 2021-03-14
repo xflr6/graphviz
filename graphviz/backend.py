@@ -151,7 +151,7 @@ def run(cmd, input=None, capture_output=False, check=False, encoding=None,
     """Run the command described by cmd and return its (stdout, stderr) tuple."""
     log.debug('run %r', cmd)
 
-    if input is not None:
+    if input is not None:  # Python 3.6 compat
         kwargs['stdin'] = subprocess.PIPE
         if encoding is not None:
             input = input.encode(encoding)
