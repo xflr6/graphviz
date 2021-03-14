@@ -163,7 +163,7 @@ def run(cmd, input=None, capture_output=False, check=False, encoding=None,
         proc = subprocess.Popen(cmd, startupinfo=get_startupinfo(), **kwargs)
     except OSError as e:
         if e.errno == errno.ENOENT:
-            raise ExecutableNotFound(cmd)
+            raise ExecutableNotFound(cmd) from e
         else:
             raise
 
