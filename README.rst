@@ -6,8 +6,8 @@ Graphviz
 |Travis| |Codecov| |Readthedocs-stable| |Readthedocs-latest|
 
 This package facilitates the creation and rendering of graph descriptions in
-the DOT_ language of the Graphviz_ graph drawing software (`master repo`_) from
-Python.
+the DOT_ language of the Graphviz_ graph drawing software (`upstream repo`_)
+from Python.
 
 Create a graph object, assemble the graph by adding nodes and edges, and
 retrieve its DOT source code string. Save the source code to a file and render
@@ -16,7 +16,8 @@ it with the Graphviz installation of your system.
 Use the ``view`` option/method to directly inspect the resulting (PDF, PNG,
 SVG, etc.) file with its default application. Graphs can also be rendered
 and displayed within `Jupyter notebooks`_ (formerly known as
-`IPython notebooks`_, example_, nbviewer_) as well as the `Jupyter Qt Console`_.
+`IPython notebooks`_, `example <notebook_>`_, `nbviewer <notebook-nbviewer>`_)
+as well as the `Jupyter QtConsole`_.
 
 
 Links
@@ -39,8 +40,10 @@ This package runs under Python 3.6+, use pip_ to install:
 
     $ pip install graphviz
 
-To render the generated DOT source code, you also need to install Graphviz
-(`download page`_, `installation procedure for Windows`_, `archived versions`_).
+To render the generated DOT source code, you also need to install Graphviz_
+(`download page <upstream-download_>`_,
+`archived versions <upstream-archived_>`_,
+`installation procedure for Windows <upstream-windows_>`_).
 
 Make sure that the directory containing the ``dot`` executable is on your
 systems' path.
@@ -108,7 +111,8 @@ See also
 --------
 
 - pygraphviz_ |--| full-blown interface wrapping the Graphviz C library with SWIG
-- graphviz-python_ |--| official Python bindings (documentation_)
+- graphviz-python_ |--| official Python bindings
+  (`documentation <graphviz-python-docs_>`_)
 - pydot_ |--| stable pure-Python approach, requires pyparsing
 
 
@@ -118,18 +122,21 @@ License
 This package is distributed under the `MIT license`_.
 
 
-.. _pip: https://pip.readthedocs.io
 .. _Graphviz:  https://www.graphviz.org
-.. _master repo: https://gitlab.com/graphviz/graphviz/
-.. _download page: https://www.graphviz.org/download/
-.. _installation procedure for Windows: https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224
-.. _archived versions: https://www2.graphviz.org/Archive/stable/
 .. _DOT: https://www.graphviz.org/doc/info/lang.html
+.. _upstream repo: https://gitlab.com/graphviz/graphviz/
+.. _upstream-download: https://www.graphviz.org/download/
+.. _upstream-archived: https://www2.graphviz.org/Archive/stable/
+.. _upstream-windows: https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224
+
+.. _pip: https://pip.readthedocs.io
+
 .. _Jupyter notebooks: https://jupyter.org
 .. _IPython notebooks: https://ipython.org/notebook.html
-.. _example: https://github.com/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
-.. _nbviewer: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
-.. _Jupyter Qt Console: https://qtconsole.readthedocs.io
+.. _Jupyter QtConsole: https://qtconsole.readthedocs.io
+
+.. _notebook: https://github.com/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
+.. _notebook-nbviewer: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
 
 .. _Anaconda: https://docs.anaconda.com/anaconda/install/
 .. _conda-forge: https://conda-forge.org
@@ -140,7 +147,7 @@ This package is distributed under the `MIT license`_.
 
 .. _pygraphviz: https://pypi.org/project/pygraphviz/
 .. _graphviz-python: https://pypi.org/project/graphviz-python/
-.. _documentation: https://www.graphviz.org/pdf/gv.3python.pdf
+.. _graphviz-python-docs: https://www.graphviz.org/pdf/gv.3python.pdf
 .. _pydot: https://pypi.org/project/pydot/
 
 .. _MIT license: https://opensource.org/licenses/MIT

@@ -19,8 +19,10 @@ For a system-wide install, this typically requires administrator access. For an
 isolated install, you can run the same inside a :mod:`py3:venv` or a
 virtualenv_.
 
-The only dependency is a working installation of Graphviz (`download page`_,
-`installation procedure for Windows`_, `archived versions`_).
+The only dependency is a working installation of Graphviz_
+(`download page <upstream-download_>`_,
+`archived versions <upstream-archived_>`_,
+`installation procedure for Windows <upstream-windows_>`_).
 
 After installing Graphviz, make sure that its ``bin/`` subdirectory containing
 the layout commands for rendering graph descriptions (``dot``, ``circo``,
@@ -662,20 +664,24 @@ display the current version of the rendered graph in repeated add/render/view
 cycles.
 
 
+.. _Graphviz: https://www.graphviz.org
+.. _DOT: https://www.graphviz.org/doc/info/lang.html
+.. _DOT: https://www.graphviz.org/doc/info/lang.html
+.. _upstream repo: https://gitlab.com/graphviz/graphviz/
+.. _upstream-download: https://www.graphviz.org/download/
+.. _upstream-archived: https://www2.graphviz.org/Archive/stable/
+.. _upstream-windows: https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224
+
 .. _pip: https://pip.readthedocs.io
 .. _virtualenv: https://virtualenv.pypa.io
 
-.. _Graphviz: https://www.graphviz.org
-.. _download page: https://www.graphviz.org/download/
-.. _installation procedure for Windows: https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224
-.. _archived versions: https://www2.graphviz.org/Archive/stable/
 .. _Anaconda: https://docs.anaconda.com/anaconda/install/
 .. _conda-forge: https://conda-forge.org
 .. _conda-forge-python-graphviz: https://anaconda.org/conda-forge/python-graphviz
 .. _conda-forge-python-graphviz-feedstock: https://github.com/conda-forge/python-graphviz-feedstock
 .. _conda-forge-graphviz: https://anaconda.org/conda-forge/graphviz
 .. _conda-forge-graphviz-feedstock: https://github.com/conda-forge/graphviz-feedstock
-.. _DOT: https://www.graphviz.org/doc/info/lang.html
+
 .. _output file format: https://www.graphviz.org/doc/info/output.html
 .. _appearance: https://www.graphviz.org/doc/info/attrs.html
 .. _escString: https://www.graphviz.org/doc/info/attrs.html#k:escString
