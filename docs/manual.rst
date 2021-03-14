@@ -38,6 +38,13 @@ should print the version of your Graphiz installation.
     __ https://gitlab.com/graphviz/graphviz/-/issues/1753
     __ https://www2.graphviz.org/Archive/stable/windows/graphviz-2.38.msi
 
+Anaconda_: see the conda-forge_ package
+`conda-forge/python-graphviz <conda-forge-python-graphviz_>`_
+(`feedstock <conda-forge-python-graphviz-feedstock_>`_),
+which should automatically ``conda install``
+`conda-forge/graphviz <conda-forge-graphviz_>`_
+(`feedstock <conda-forge-graphviz-feedstock_>`_).
+
 
 Basic usage
 -----------
@@ -662,6 +669,12 @@ cycles.
 .. _download page: https://www.graphviz.org/download/
 .. _installation procedure for Windows: https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224
 .. _archived versions: https://www2.graphviz.org/Archive/stable/
+.. _Anaconda: https://docs.anaconda.com/anaconda/install/
+.. _conda-forge: https://conda-forge.org
+.. _conda-forge-python-graphviz: https://anaconda.org/conda-forge/python-graphviz
+.. _conda-forge-python-graphviz-feedstock: https://github.com/conda-forge/python-graphviz-feedstock
+.. _conda-forge-graphviz: https://anaconda.org/conda-forge/graphviz
+.. _conda-forge-graphviz-feedstock: https://github.com/conda-forge/graphviz-feedstock
 .. _DOT: https://www.graphviz.org/doc/info/lang.html
 .. _output file format: https://www.graphviz.org/doc/info/output.html
 .. _appearance: https://www.graphviz.org/doc/info/attrs.html

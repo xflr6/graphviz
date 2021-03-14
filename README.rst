@@ -45,6 +45,13 @@ To render the generated DOT source code, you also need to install Graphviz
 Make sure that the directory containing the ``dot`` executable is on your
 systems' path.
 
+Anaconda_: see the conda-forge_ package
+`conda-forge/python-graphviz <conda-forge-python-graphviz_>`_
+(`feedstock <conda-forge-python-graphviz-feedstock_>`_),
+which should automatically ``conda install``
+`conda-forge/graphviz <conda-forge-graphviz_>`_
+(`feedstock <conda-forge-graphviz-feedstock_>`_).
+
 
 Quickstart
 ----------
@@ -123,6 +130,13 @@ This package is distributed under the `MIT license`_.
 .. _example: https://github.com/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
 .. _nbviewer: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
 .. _Jupyter Qt Console: https://qtconsole.readthedocs.io
+
+.. _Anaconda: https://docs.anaconda.com/anaconda/install/
+.. _conda-forge: https://conda-forge.org
+.. _conda-forge-python-graphviz: https://anaconda.org/conda-forge/python-graphviz
+.. _conda-forge-python-graphviz-feedstock: https://github.com/conda-forge/python-graphviz-feedstock
+.. _conda-forge-graphviz: https://anaconda.org/conda-forge/graphviz
+.. _conda-forge-graphviz-feedstock: https://github.com/conda-forge/graphviz-feedstock
 
 .. _pygraphviz: https://pypi.org/project/pygraphviz/
 .. _graphviz-python: https://pypi.org/project/graphviz-python/
