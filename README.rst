@@ -53,7 +53,7 @@ Anaconda_: see the conda-forge_ package
 (`feedstock <conda-forge-python-graphviz-feedstock_>`_),
 which should automatically ``conda install``
 `conda-forge/graphviz <conda-forge-graphviz_>`_
-(`feedstock <conda-forge-graphviz-feedstock_>`_).
+(`feedstock <conda-forge-graphviz-feedstock_>`_) as dependency.
 
 
 Quickstart
