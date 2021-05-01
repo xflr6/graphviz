@@ -5,7 +5,8 @@ import sys
 
 import pytest
 
-ARGS = [#'--collect-only',
+ARGS = [#'--skip-exe',
+        #'--collect-only',
         #'--verbose',
         #'--pdb',
         #'--exitfirst',  # a.k.a. -x

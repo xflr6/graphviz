@@ -1,19 +1,27 @@
-# conftest.py
+"""pytest command line options and fixtures."""
 
+import pathlib
 import platform as platform_
 
 import pytest
 
+DIRECTORY = pathlib.Path(__file__).parent
+
 
 def pytest_addoption(parser):
-    parser.addoption('--skipexe', action='store_true',
+    parser.addoption('--skip-exe', action='store_true',
                      help='skip tests that run Graphviz executables'
-                          'or subprocesses')
+                          ' or subprocesses')
 
 
 def pytest_configure(config):
-    pytest.exe = pytest.mark.skipif(config.getoption('--skipexe'),
-                                    reason='skipped by --skipexe option')
+    pytest.exe = pytest.mark.skipif(config.getoption('--skip-exe'),
+                                    reason='skipped by --skip-exe option')
+
+
+@pytest.fixture(scope='session')
+def files_path():
+    return DIRECTORY / 'files'
 
 
 @pytest.fixture(scope='session')

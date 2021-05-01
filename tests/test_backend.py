@@ -1,7 +1,6 @@
 # test_backend.py
 
 import errno
-import pathlib
 import platform
 import re
 import shutil
@@ -16,7 +15,6 @@ import utils
 
 SVG_PATTERN = r'(?s)^<\?xml .+</svg>\s*$'
 
-TESTDATA = pathlib.Path(__file__).parent / 'testdata'
 
 if platform.system().lower() == 'windows':
     def check_startupinfo(startupinfo):  # noqa: N803
@@ -121,12 +119,12 @@ def test_render(capsys, tmp_path, engine, format_, renderer, formatter,
 
 
 @pytest.exe
-def test_render_img(capsys, tmp_path, engine='dot', format_='pdf'):
+def test_render_img(capsys, tmp_path, files_path, engine='dot', format_='pdf'):
     subdir = tmp_path / 'subdir'
     subdir.mkdir()
 
     img_path = subdir / 'dot_red.png'
-    shutil.copy(TESTDATA / img_path.name, img_path)
+    shutil.copy(files_path / img_path.name, img_path)
     assert img_path.stat().st_size
 
     gv_path = subdir / 'img.gv'
