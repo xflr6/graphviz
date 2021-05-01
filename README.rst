@@ -135,7 +135,7 @@ This package is distributed under the `MIT license`_.
 .. _Jupyter QtConsole: https://qtconsole.readthedocs.io
 
 .. _notebook: https://github.com/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
-.. _notebook-nbviewer: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/notebook.ipynb
+.. _notebook-nbviewer: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
 
 .. _Anaconda: https://docs.anaconda.com/anaconda/install/
 .. _conda-forge: https://conda-forge.org
