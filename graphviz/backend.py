@@ -97,7 +97,7 @@ class ExecutableNotFound(RuntimeError):
 
 
 class RequiredArgumentError(Exception):
-    """Exception raised if a required argument is missing."""
+    """Exception raised if a required argument is missing (i.e. ``None``)."""
 
 
 class CalledProcessError(subprocess.CalledProcessError):
@@ -155,7 +155,7 @@ def run(cmd, input=None,
         encoding: typing.Optional[str] = None,
         quiet: bool = False,
         **kwargs) -> typing.Tuple:
-    """Run the command described by cmd and return its (stdout, stderr) tuple."""
+    """Run the command described by cmd and return its ``(stdout, stderr)`` tuple."""
     log.debug('run %r', cmd)
 
     if input is not None:
@@ -201,11 +201,11 @@ def render(engine: str, format: str, filepath,
     """Render file with Graphviz ``engine`` into ``format``,  return result filename.
 
     Args:
-        engine: The layout commmand used for rendering (``'dot'``, ``'neato'``, ...).
-        format: The output format used for rendering (``'pdf'``, ``'png'``, ...).
+        engine: Layout commmand for rendering (``'dot'``, ``'neato'``, ...).
+        format: Output format for rendering (``'pdf'``, ``'png'``, ...).
         filepath: Path to the DOT source file to render.
-        renderer: The output renderer used for rendering (``'cairo'``, ``'gd'``, ...).
-        formatter: The output formatter used for rendering (``'cairo'``, ``'gd'``, ...).
+        renderer: Output renderer (``'cairo'``, ``'gd'``, ...).
+        formatter: Output formatter (``'cairo'``, ``'gd'``, ...).
         quiet: Suppress ``stderr`` output from the layout subprocess.
 
     Returns:
@@ -243,11 +243,11 @@ def pipe(engine: str, format: str, data: bytes,
     """Return ``data`` piped through Graphviz ``engine`` into ``format``.
 
     Args:
-        engine: The layout commmand used for rendering (``'dot'``, ``'neato'``, ...).
-        format: The output format used for rendering (``'pdf'``, ``'png'``, ...).
-        data: The binary (encoded) DOT source string to render.
-        renderer: The output renderer used for rendering (``'cairo'``, ``'gd'``, ...).
-        formatter: The output formatter used for rendering (``'cairo'``, ``'gd'``, ...).
+        engine: Layout commmand for rendering (``'dot'``, ``'neato'``, ...).
+        format: Output format for rendering (``'pdf'``, ``'png'``, ...).
+        data: Binary (encoded) DOT source string to render.
+        renderer: Output renderer (``'cairo'``, ``'gd'``, ...).
+        formatter: Output formatter (``'cairo'``, ``'gd'``, ...).
         quiet: Suppress ``stderr`` output from the layout subprocess.
 
     Returns:
@@ -255,7 +255,7 @@ def pipe(engine: str, format: str, data: bytes,
 
     Raises:
         ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter`` are not known.
-        graphviz.RequiredArgumentError: If ``formatter`` is given but ``renderer`` is None.
+        graphviz.RequiredArgumentError: If ``formatter`` is given but no ``renderer``.
         graphviz.ExecutableNotFound: If the Graphviz executable is not found.
         subprocess.CalledProcessError: If the exit status is non-zero.
 
@@ -277,17 +277,17 @@ def unflatten(source: str,
     """Return DOT ``source`` piped through Graphviz *unflatten* preprocessor.
 
     Args:
-        source: The DOT source to process (improve layout aspect ratio).
+        source: DOT source to process (improve layout aspect ratio).
         stagger: Stagger the minimum length of leaf edges between 1 and this small integer.
         fanout: Fanout nodes with indegree = outdegree = 1 when staggering (requires ``stagger``).
         chain: Form disconnected nodes into chains of up to this many nodes.
-        encoding: Encoding used to encode unflatten stdin and decode its stdout.
+        encoding: Encoding to encode unflatten stdin and decode its stdout.
 
     Returns:
         Decoded stdout of the Graphviz unflatten command.
 
     Raises:
-        graphviz.RequiredArgumentError: If ``fanout`` is given but ``stagger`` is None.
+        graphviz.RequiredArgumentError: If ``fanout`` is given but no ``stagger``.
         graphviz.ExecutableNotFound: If the Graphviz unflatten executable is not found.
         subprocess.CalledProcessError: If the exit status is non-zero.
 
