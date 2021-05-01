@@ -21,7 +21,7 @@ for i in (2, 1):
 for i, j in [(2, 1), (1, 2)]:
     t.edge(f'gy{i:d}', f'yellow{i:d}')
     t.edge(f'rg{i:d}', f'green{i:d}')
-    t.edge(f'yr{i:d}', f'safe{i:d}')
+    t.edge(f'yr{i:d}', f'safe{j:d}')
     t.edge(f'yr{i:d}', f'red{i:d}')
     t.edge(f'safe{i:d}', f'rg{i:d}')
     t.edge(f'green{i:d}', f'gy{i:d}')
