@@ -1,17 +1,22 @@
-# tools.py - generic helpers
+"""Generic re-useable self-contained helper functions."""
 
 import os
+import typing
 
-__all__ = ['attach', 'mkdirs', 'mapping_items']
+__all__ = ['attach',
+           'mkdirs',
+           'mapping_items']
 
 
-def attach(object, name):
+def attach(object: typing.Any, name: str) -> typing.Callable:
     """Return a decorator doing ``setattr(object, name)`` with its argument.
 
     >>> spam = type('Spam', (object,), {})()
+
     >>> @attach(spam, 'eggs')
     ... def func():
     ...     pass
+
     >>> spam.eggs  # doctest: +ELLIPSIS
     <function func at 0x...>
     """
@@ -21,7 +26,7 @@ def attach(object, name):
     return decorator
 
 
-def mkdirs(filename, mode=0o777):
+def mkdirs(filename, mode: int = 0o777) -> None:
     """Recursively create directories up to the path of ``filename`` as needed."""
     dirname = os.path.dirname(filename)
     if not dirname:

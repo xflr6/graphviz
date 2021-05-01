@@ -4,7 +4,7 @@ import warnings
 
 import pytest
 
-from graphviz.lang import quote, attr_list, nohtml
+from graphviz import lang
 
 
 @pytest.mark.parametrize('char', ['G', 'E', 'T', 'H', 'L', 'l'])
@@ -18,7 +18,7 @@ def test_deprecated_escape(recwarn, char):
     assert str(w.message).startswith('invalid escape sequence')
 
     assert escape == f'\\{char}'
-    assert quote(escape) == f'"\\{char}"'
+    assert lang.quote(escape) == f'"\\{char}"'
 
 
 @pytest.mark.parametrize('identifier, expected', [
@@ -37,7 +37,7 @@ def test_deprecated_escape(recwarn, char):
     ('\\\\\\\\"spam', r'"\\\\\"spam"'),
 ])
 def test_quote(identifier, expected):
-    assert quote(identifier) == expected
+    assert lang.quote(identifier) == expected
 
 
 @pytest.mark.parametrize('attributes, expected', [
@@ -45,10 +45,19 @@ def test_quote(identifier, expected):
     ({'spam': 'eggs'}, ' [spam=eggs]'),
 ])
 def test_attr_list(attributes, expected):
-    assert attr_list(attributes=attributes) == expected
+    assert lang.attr_list(attributes=attributes) == expected
 
 
-def test_nohtml(string='spam'):
-    result = nohtml(string)
-    assert result == string
+@pytest.mark.parametrize('string, expected, expected_quoted', [
+    ('spam', 'spam', 'spam'),
+    ('<>-*-<>', '<>-*-<>', '"<>-*-<>"'),
+])
+def test_nohtml(string, expected, expected_quoted):
+    result = lang.nohtml(string)
     assert isinstance(result, str)
+    assert isinstance(result, lang.NoHtml)
+    assert result == expected
+
+    quoted = lang.quote(result)
+    assert isinstance(quoted, str)
+    assert quoted == expected_quoted

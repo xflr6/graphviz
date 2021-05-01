@@ -44,6 +44,7 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',
+    'sphinx_autodoc_typehints',  # https://github.com/agronholm/sphinx-autodoc-typehints/issues/15
     'sphinx.ext.viewcode',
 ]
 

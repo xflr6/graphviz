@@ -64,10 +64,8 @@ Create a graph object:
 
 .. code:: python
 
-    >>> from graphviz import Digraph
-
-    >>> dot = Digraph(comment='The Round Table')
-
+    >>> import graphviz
+    >>> dot = graphviz.Digraph(comment='The Round Table')
     >>> dot  #doctest: +ELLIPSIS
     <graphviz.dot.Digraph object at 0x...>
 

@@ -292,7 +292,7 @@ class File(Base):
             raise RuntimeError(f'{self.__class__!r} has no built-in viewer'
                                f' support for {format!r}'
                                f' on {backend.PLATFORM!r} platform')
-        view_method(filepath, quiet)
+        view_method(filepath, quiet=quiet)
 
     _view_darwin = staticmethod(backend.view.darwin)
     _view_freebsd = staticmethod(backend.view.freebsd)

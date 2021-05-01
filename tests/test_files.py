@@ -159,9 +159,11 @@ def test__view(mocker, mock_platform, source):
     _view_platform = mocker.patch.object(source, f'_view_{mock_platform}',
                                          autospec=True)
 
-    assert source._view(mocker.sentinel.name, 'png', False) is None
+    kwargs = {'quiet': False}
 
-    _view_platform.assert_called_once_with(mocker.sentinel.name, False)
+    assert source._view(mocker.sentinel.name, 'png', **kwargs) is None
+
+    _view_platform.assert_called_once_with(mocker.sentinel.name, **kwargs)
 
 
 def test_copy(source):

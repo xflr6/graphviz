@@ -4,10 +4,13 @@
 
 import functools
 import re
+import typing
 
 from . import tools
 
-__all__ = ['quote', 'quote_edge', 'a_list', 'attr_list', 'escape', 'nohtml']
+__all__ = ['quote', 'quote_edge',
+           'a_list', 'attr_list',
+           'escape', 'nohtml']
 
 # https://www.graphviz.org/doc/info/lang.html
 # https://www.graphviz.org/doc/info/attrs.html#k:escString
@@ -27,10 +30,11 @@ ESCAPE_UNESCAPED_QUOTES = functools.partial(QUOTE_OPTIONAL_BACKSLASHES.sub,
                                             r'\g<bs>\\\g<quote>')
 
 
-def quote(identifier,
+def quote(identifier: str,
           is_html_string=HTML_STRING.match,
-          is_valid_id=ID.match, dot_keywords=KEYWORDS,
-          escape_unescaped_quotes=ESCAPE_UNESCAPED_QUOTES):
+          is_valid_id=ID.match,
+          dot_keywords=KEYWORDS,
+          escape_unescaped_quotes=ESCAPE_UNESCAPED_QUOTES) -> str:
     r"""Return DOT identifier from string, quote if needed.
 
     >>> quote('')
@@ -73,7 +77,7 @@ def quote(identifier,
     return identifier
 
 
-def quote_edge(identifier):
+def quote_edge(identifier: str) -> str:
     """Return DOT edge statement node_id from string, quote if needed.
 
     >>> quote_edge('spam')
@@ -95,7 +99,8 @@ def quote_edge(identifier):
     return ':'.join(parts)
 
 
-def a_list(label=None, kwargs=None, attributes=None):
+def a_list(label: typing.Optional[str] = None,
+           kwargs=None, attributes=None) -> str:
     """Return assembled DOT a_list string.
 
     >>> a_list('spam', {'spam': None, 'ham': 'ham ham', 'eggs': ''})
@@ -115,7 +120,8 @@ def a_list(label=None, kwargs=None, attributes=None):
     return ' '.join(result)
 
 
-def attr_list(label=None, kwargs=None, attributes=None):
+def attr_list(label: typing.Optional[str] = None,
+              kwargs=None, attributes=None) -> str:
     """Return assembled DOT attribute list string.
 
     Sorts ``kwargs`` and ``attributes`` if they are plain dicts (to avoid
@@ -136,7 +142,7 @@ def attr_list(label=None, kwargs=None, attributes=None):
     return f' [{content}]'
 
 
-def escape(s):
+def escape(s: str) -> 'NoHtml':
     r"""Return ``s`` as literal disabling special meaning of backslashes and ``'<...>'``.
 
     see also https://www.graphviz.org/doc/info/attrs.html#k:escString
@@ -144,11 +150,16 @@ def escape(s):
     Args:
         s: String in which backslashes and ``'<...>'`` should be treated as literal.
 
+    Returns:
+        Escaped string subclass instance.
+
     Raises:
         TypeError: If ``s`` is not a ``str`` on Python 3, or a ``str``/``unicode`` on Python 2.
 
-    >>> print(escape(r'\l'))
-    \\l
+    Example:
+        >>> import graphviz
+        >>> print(graphviz.escape(r'\l'))
+        \\l
     """
     return nohtml(s.replace('\\', '\\\\'))
 
@@ -159,19 +170,25 @@ class NoHtml(str):
     __slots__ = ()
 
 
-def nohtml(s):
+def nohtml(s: str) -> NoHtml:
     """Return copy of ``s`` that will not treat ``'<...>'`` as DOT HTML string in quoting.
 
     Args:
         s: String in which leading ``'<'`` and trailing ``'>'`` should be treated as literal.
 
+    Returns:
+        String subclass instance.
+
     Raises:
         TypeError: If ``s`` is not a ``str`` on Python 3, or a ``str``/``unicode`` on Python 2.
 
-    >>> quote('<>-*-<>')
-    '<>-*-<>'
-
-    >>> quote(nohtml('<>-*-<>'))
-    '"<>-*-<>"'
+    Example:
+        >>> import graphviz
+        >>> g = graphviz.Graph()
+        >>> g.node(graphviz.nohtml('<>-*-<>'))
+        >>> print(g.source)  # doctest: +NORMALIZE_WHITESPACE
+        graph {
+            "<>-*-<>"
+        }
     """
     return NoHtml(s)

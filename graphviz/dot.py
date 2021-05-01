@@ -2,7 +2,8 @@
 
 r"""Assemble DOT source code objects.
 
->>> dot = Graph(comment='M\xf8nti Pyth\xf8n ik den H\xf8lie Grailen')
+>>> import graphviz
+>>> dot = graphviz.Graph(comment='M\xf8nti Pyth\xf8n ik den H\xf8lie Grailen')
 
 >>> dot.node('M\xf8\xf8se')
 >>> dot.node('trained_by', 'trained by')
