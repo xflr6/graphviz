@@ -1,17 +1,19 @@
-#!/usr/bin/env python
-# try-examples.py - import graphviz here and run all scripts in the example dir
+#!/usr/bin/env python3
 
-import glob
+"""Import ``graphviz`` here and run all scripts in the ``examples/`` dir."""
+
 import os
+import pathlib
 import warnings
 
 import graphviz  # noqa: F401
 
-os.chdir('examples')
+EXAMPLES = pathlib.Path('examples')
 
-for filename in glob.iglob('*.py'):
-    with open(filename, encoding='utf-8') as fd:
-        code = fd.read()
+os.chdir(EXAMPLES)
+
+for path in pathlib.Path().glob('*.py'):
+    code = path.read_text(encoding='utf-8')
     try:
         exec(code)
     except Exception as e:

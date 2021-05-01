@@ -1,10 +1,11 @@
-#!/usr/bin/env python
-# unix.py - http://www.graphviz.org/content/unix
+#!/usr/bin/env python3
 
-from graphviz import Digraph
+"""http://www.graphviz.org/content/unix"""
 
-u = Digraph('unix', filename='unix.gv',
-            node_attr={'color': 'lightblue2', 'style': 'filled'})
+import graphviz
+
+u = graphviz.Digraph('unix', filename='unix.gv',
+                     node_attr={'color': 'lightblue2', 'style': 'filled'})
 u.attr(size='6,6')
 
 u.edge('5th Edition', '6th Edition')

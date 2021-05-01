@@ -16,7 +16,7 @@ hello.py
 --------
 
 .. literalinclude:: ../examples/hello.py
-    :lines: 2-
+    :lines: 3-
 
 .. image:: _static/hello.svg
     :align: center
@@ -26,7 +26,7 @@ process.py
 ----------
 
 .. literalinclude:: ../examples/process.py
-    :lines: 2-
+    :lines: 3-
 
 .. image:: _static/process.svg
     :align: center
@@ -36,7 +36,7 @@ fsm.py
 ------
 
 .. literalinclude:: ../examples/fsm.py
-    :lines: 2-
+    :lines: 3-
 
 .. image:: _static/fsm.svg
     :align: center
@@ -48,7 +48,7 @@ cluster.py
 ----------
 
 .. literalinclude:: ../examples/cluster.py
-    :lines: 2-
+    :lines: 3-
 
 .. image:: _static/cluster.svg
     :align: center
@@ -58,7 +58,7 @@ er.py
 -----
 
 .. literalinclude:: ../examples/er.py
-    :lines: 2-
+    :lines: 3-
 
 .. image:: _static/er.svg
     :align: center
@@ -68,7 +68,7 @@ unix.py
 -------
 
 .. literalinclude:: ../examples/unix.py
-    :lines: 2-
+    :lines: 3-
 
 .. image:: _static/unix.svg
     :align: center
@@ -78,7 +78,7 @@ structs.py
 ----------
 
 .. literalinclude:: ../examples/structs.py
-    :lines: 2-
+    :lines: 3-
 
 .. image:: _static/structs.svg
     :align: center
@@ -88,7 +88,7 @@ structs_revisited.py
 --------------------
 
 .. literalinclude:: ../examples/structs_revisited.py
-    :lines: 2-
+    :lines: 3-
 
 .. image:: _static/structs_revisited.svg
     :align: center
@@ -100,7 +100,7 @@ btree.py
 --------
 
 .. literalinclude:: ../examples/btree.py
-    :lines: 2-
+    :lines: 3-
 
 .. image:: _static/btree.svg
     :align: center
@@ -109,7 +109,7 @@ btree.py
 traffic_lights.py
 -----------------
 .. literalinclude:: ../examples/traffic_lights.py
-    :lines: 2-
+    :lines: 3-
 
 .. image:: _static/traffic_lights.svg
     :align: center
@@ -118,7 +118,7 @@ traffic_lights.py
 fdpclust.py
 -----------
 .. literalinclude:: ../examples/fdpclust.py
-    :lines: 2-
+    :lines: 3-
 
 .. image:: _static/fdpclust.svg
     :align: center
@@ -127,7 +127,7 @@ fdpclust.py
 cluster_edge.py
 ---------------
 .. literalinclude:: ../examples/cluster_edge.py
-    :lines: 2-
+    :lines: 3-
 
 .. image:: _static/cluster_edge.svg
     :align: center
@@ -136,7 +136,7 @@ cluster_edge.py
 g_c_n.py
 --------
 .. literalinclude:: ../examples/g_c_n.py
-    :lines: 2-
+    :lines: 3-
 
 .. image:: _static/g_c_n.svg
     :align: center
@@ -145,7 +145,7 @@ g_c_n.py
 angles.py
 ---------
 .. literalinclude:: ../examples/angles.py
-    :lines: 2-
+    :lines: 3-
 
 .. image:: _static/angles.svg
     :align: center
@@ -156,7 +156,7 @@ angles.py
 rank_same.py
 ------------
 .. literalinclude:: ../examples/rank_same.py
-    :lines: 2-
+    :lines: 3-
 
 .. image:: _static/rank_same.svg
     :align: center

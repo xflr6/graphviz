@@ -1,9 +1,10 @@
-#!/usr/bin/env python
-# fsm.py - http://www.graphviz.org/content/fsm
+#!/usr/bin/env python3
 
-from graphviz import Digraph
+"""http://www.graphviz.org/content/fsm"""
 
-f = Digraph('finite_state_machine', filename='fsm.gv')
+import graphviz
+
+f = graphviz.Digraph('finite_state_machine', filename='fsm.gv')
 f.attr(rankdir='LR', size='8,5')
 
 f.attr('node', shape='doublecircle')

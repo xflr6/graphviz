@@ -1,10 +1,11 @@
-#!/usr/bin/env python
-# structs_revisited.py - http://www.graphviz.org/pdf/dotguide.pdf Figure 12
+#!/usr/bin/env python3
 
-from graphviz import Digraph
+"""http://www.graphviz.org/pdf/dotguide.pdf, Figure 12"""
 
-s = Digraph('structs', filename='structs_revisited.gv',
-            node_attr={'shape': 'record'})
+import graphviz
+
+s = graphviz.Digraph('structs', filename='structs_revisited.gv',
+                     node_attr={'shape': 'record'})
 
 s.node('struct1', '<f0> left|<f1> middle|<f2> right')
 s.node('struct2', '<f0> one|<f1> two')

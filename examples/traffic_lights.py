@@ -1,9 +1,11 @@
-#!/usr/bin/env python
-# traffic_lights.py - http://www.graphviz.org/content/traffic_lights
+#!/usr/bin/env python3
 
-from graphviz import Digraph
+"""http://www.graphviz.org/content/traffic_lights"""
 
-t = Digraph('TrafficLights', filename='traffic_lights.gv', engine='neato')
+import graphviz
+
+t = graphviz.Digraph('TrafficLights', filename='traffic_lights.gv',
+                     engine='neato')
 
 t.attr('node', shape='box')
 for i in (2, 1):

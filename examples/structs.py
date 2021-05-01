@@ -1,9 +1,10 @@
-#!/usr/bin/env python
-# structs.py - http://www.graphviz.org/doc/info/shapes.html#html
+#!/usr/bin/env python3
 
-from graphviz import Digraph
+"""http://www.graphviz.org/doc/info/shapes.html#html"""
 
-s = Digraph('structs', node_attr={'shape': 'plaintext'})
+import graphviz
+
+s = graphviz.Digraph('structs', node_attr={'shape': 'plaintext'})
 
 s.node('struct1', '''<
 <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">

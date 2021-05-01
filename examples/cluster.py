@@ -1,5 +1,6 @@
-#!/usr/bin/env python
-# cluster.py - http://www.graphviz.org/content/cluster
+#!/usr/bin/env python3
+
+"""http://www.graphviz.org/content/cluster"""
 
 from graphviz import Digraph
 

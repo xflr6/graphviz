@@ -1,9 +1,10 @@
-#!/usr/bin/env python
-# angles.py - http://www.graphviz.org/Gallery/gradient/angles.html
+#!/usr/bin/env python3
 
-from graphviz import Digraph
+"""http://www.graphviz.org/Gallery/gradient/angles.html"""
 
-g = Digraph('G', filename='angles.gv')
+import graphviz
+
+g = graphviz.Digraph('G', filename='angles.gv')
 g.attr(bgcolor='blue')
 
 with g.subgraph(name='cluster_1') as c:

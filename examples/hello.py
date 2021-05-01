@@ -1,9 +1,10 @@
-#!/usr/bin/env python
-# hello.py - http://www.graphviz.org/content/hello
+#!/usr/bin/env python3
 
-from graphviz import Digraph
+"""http://www.graphviz.org/content/hello"""
 
-g = Digraph('G', filename='hello.gv')
+import graphviz
+
+g = graphviz.Digraph('G', filename='hello.gv')
 
 g.edge('Hello', 'World')
 

@@ -1,9 +1,10 @@
-#!/usr/bin/env python
-# process.py - http://www.graphviz.org/content/process
+#!/usr/bin/env python3
 
-from graphviz import Graph
+"""http://www.graphviz.org/content/process"""
 
-g = Graph('G', filename='process.gv', engine='sfdp')
+import graphviz
+
+g = graphviz.Graph('G', filename='process.gv', engine='sfdp')
 
 g.edge('run', 'intr')
 g.edge('intr', 'runbl')

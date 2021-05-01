@@ -1,9 +1,10 @@
-#!/usr/bin/env python
-# http://www.graphviz.org/Gallery/gradient/g_c_n.html
+#!/usr/bin/env python3
 
-from graphviz import Graph
+"""http://www.graphviz.org/Gallery/gradient/g_c_n.html"""
 
-g = Graph('G', filename='g_c_n.gv')
+import graphviz
+
+g = graphviz.Graph('G', filename='g_c_n.gv')
 g.attr(bgcolor='purple:pink', label='agraph', fontcolor='white')
 
 with g.subgraph(name='cluster1') as c:

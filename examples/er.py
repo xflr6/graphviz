@@ -1,9 +1,10 @@
-#!/usr/bin/env python
-# er.py - http://www.graphviz.org/content/ER
+#!/usr/bin/env python3
 
-from graphviz import Graph
+"""http://www.graphviz.org/content/ER"""
 
-e = Graph('ER', filename='er.gv', engine='neato')
+import graphviz
+
+e = graphviz.Graph('ER', filename='er.gv', engine='neato')
 
 e.attr('node', shape='box')
 e.node('course')

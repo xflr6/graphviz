@@ -1,5 +1,6 @@
-#!/usr/bin/env python
-# https://stackoverflow.com/questions/25734244/how-do-i-place-nodes-on-the-same-level-in-dot
+#!/usr/bin/env python3
+
+"""https://stackoverflow.com/questions/25734244/how-do-i-place-nodes-on-the-same-level-in-dot"""
 
 import graphviz
 

@@ -1,9 +1,10 @@
-#!/usr/bin/env python
-# cluster_edge.py - http://www.graphviz.org/pdf/dotguide.pdf Figure 20
+#!/usr/bin/env python3
 
-from graphviz import Digraph
+"""http://www.graphviz.org/pdf/dotguide.pdf, Figure 20"""
 
-g = Digraph('G', filename='cluster_edge.gv')
+import graphviz
+
+g = graphviz.Digraph('G', filename='cluster_edge.gv')
 g.attr(compound='true')
 
 with g.subgraph(name='cluster0') as c:

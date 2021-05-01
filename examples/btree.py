@@ -1,10 +1,12 @@
-#!/usr/bin/env python
-# btree.py - http://www.graphviz.org/pdf/dotguide.pdf Figure 13
+#!/usr/bin/env python3
 
-from graphviz import Digraph, nohtml
+"""http://www.graphviz.org/pdf/dotguide.pdf, Figure 13"""
 
-g = Digraph('g', filename='btree.gv',
-            node_attr={'shape': 'record', 'height': '.1'})
+import graphviz
+from graphviz import nohtml
+
+g = graphviz.Digraph('g', filename='btree.gv',
+                     node_attr={'shape': 'record', 'height': '.1'})
 
 g.node('node0', nohtml('<f0> |<f1> G|<f2>'))
 g.node('node1', nohtml('<f0> |<f1> E|<f2>'))

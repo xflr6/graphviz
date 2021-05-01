@@ -1,9 +1,10 @@
-#!/usr/bin/env python
-# fdpclust.py - http://www.graphviz.org/content/fdpclust
+#!/usr/bin/env python3
 
-from graphviz import Graph
+"""http://www.graphviz.org/content/fdpclust"""
 
-g = Graph('G', filename='fdpclust.gv', engine='fdp')
+import graphviz
+
+g = graphviz.Graph('G', filename='fdpclust.gv', engine='fdp')
 
 g.node('e')
 
