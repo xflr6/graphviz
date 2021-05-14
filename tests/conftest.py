@@ -7,16 +7,26 @@ import pytest
 
 DIRECTORY = pathlib.Path(__file__).parent
 
+SKIP_EXE = '--skip-exe'
+
 
 def pytest_addoption(parser):
-    parser.addoption('--skip-exe', action='store_true',
+    parser.addoption(SKIP_EXE, action='store_true',
                      help='skip tests that run Graphviz executables'
                           ' or subprocesses')
 
 
 def pytest_configure(config):
-    pytest.exe = pytest.mark.skipif(config.getoption('--skip-exe'),
-                                    reason='skipped by --skip-exe option')
+    config.addinivalue_line('markers',
+                            f'exe: skip if {SKIP_EXE} is given')
+
+
+def pytest_collection_modifyitems(config, items):
+    if config.getoption(SKIP_EXE):
+        for item in items:
+            if 'exe' in item.keywords:
+                marker = pytest.mark.skip(reason=f'skipped by {SKIP_EXE} flag')
+                item.add_marker(marker)
 
 
 @pytest.fixture(scope='session')

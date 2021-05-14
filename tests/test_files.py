@@ -61,7 +61,7 @@ def test_str(source):
     assert str(source) == source.source
 
 
-@pytest.exe
+@pytest.mark.exe
 def test_unflatten(source):
     result = source.unflatten()
     assert isinstance(result, Source)

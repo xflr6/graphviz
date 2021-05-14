@@ -34,7 +34,7 @@ def test_str(cls):
     assert str(c) == c.source
 
 
-@pytest.exe
+@pytest.mark.exe
 def test_unflatten(cls):
     c = cls()
     result = c.unflatten()
@@ -197,7 +197,7 @@ def test_subgraph():
 }'''
 
 
-@pytest.exe
+@pytest.mark.exe
 @pytest.mark.parametrize('cls, expected', [
     (Graph, 'graph {\n\tC\n}\n'),
     (Digraph, 'digraph {\n\tC\n}\n'),

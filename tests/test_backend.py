@@ -26,7 +26,7 @@ else:
         assert startupinfo is None
 
 
-@pytest.exe
+@pytest.mark.exe
 def test_run_oserror():
     with pytest.raises(OSError) as e:
         run([''])
@@ -54,7 +54,7 @@ def test_run_encoding_mocked(mocker, Popen, input='sp\xe4m', encoding='utf-8'):
         m.decode.assert_called_once_with(encoding)
 
 
-@pytest.exe
+@pytest.mark.exe
 @pytest.mark.usefixtures('empty_path')
 @pytest.mark.parametrize('func, args', [
     (render, ['dot', 'pdf', 'nonfilepath']),
@@ -92,14 +92,14 @@ def test_render_formatter_unknown():
         render('dot', 'ps', 'nonfilepath', 'ps', '')
 
 
-@pytest.exe
+@pytest.mark.exe
 def test_render_missing_file(quiet, engine='dot', format_='pdf'):
     with pytest.raises(subprocess.CalledProcessError) as e:
         render(engine, format_, '', quiet=quiet)
     assert e.value.returncode == 2
 
 
-@pytest.exe
+@pytest.mark.exe
 @pytest.mark.parametrize('format_, renderer, formatter, expected_suffix', [
     ('pdf', None, None, 'pdf'),
     ('plain', 'dot', 'core', 'core.dot.plain'),
@@ -118,7 +118,7 @@ def test_render(capsys, tmp_path, engine, format_, renderer, formatter,
     assert capsys.readouterr() == ('', '')
 
 
-@pytest.exe
+@pytest.mark.exe
 def test_render_img(capsys, tmp_path, files_path, engine='dot', format_='pdf'):
     subdir = tmp_path / 'subdir'
     subdir.mkdir()
@@ -157,7 +157,7 @@ def test_render_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
-@pytest.exe
+@pytest.mark.exe
 @pytest.mark.xfail('version() == (2, 36, 0)',
                    reason='https://bugs.launchpad.net/ubuntu/+source/graphviz/+bug/1694108')
 def test_pipe_invalid_data(capsys, quiet, engine='dot', format_='svg'):
@@ -174,7 +174,7 @@ def test_pipe_invalid_data(capsys, quiet, engine='dot', format_='svg'):
         assert 'syntax error in line' in err
 
 
-@pytest.exe
+@pytest.mark.exe
 @pytest.mark.parametrize('engine, format_, renderer, formatter, pattern', [
     ('dot', 'svg', None, None, SVG_PATTERN),
     ('dot', 'ps', 'ps', 'core', r'%!PS-'),
@@ -241,7 +241,7 @@ def test_pipe_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
-@pytest.exe
+@pytest.mark.exe
 @pytest.mark.parametrize('source, kwargs, expected', [
     ('digraph {1 -> 2; 1 -> 3; 1 -> 4}',
      {'stagger': 3, 'fanout': True, 'chain': 42},
@@ -274,7 +274,7 @@ def test_unflatten_stagger_missing():
         unflatten('graph {}', fanout=True)
 
 
-@pytest.exe
+@pytest.mark.exe
 def test_version(capsys):
     result = version()
     assert isinstance(result, tuple) and result
