@@ -17,4 +17,7 @@ if platform.system() == 'Windows':
     if 'idlelib' in sys.modules:
         ARGS += ['--capture=sys', '--color=no']
 
-sys.exit(pytest.main(ARGS + sys.argv[1:]))
+args = ARGS + sys.argv[1:]
+
+print(f'pytest.main({args!r})')
+sys.exit(pytest.main(args))
