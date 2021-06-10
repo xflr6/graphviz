@@ -140,6 +140,25 @@ def test_render(mocker, render, source):
     _view.assert_called_once_with(render.return_value, source.format, False)
 
 
+def test_render_cleans_up_source_file_when_cleanup_true_and_render_errors(mocker, render, source):
+    render.side_effect = Exception("error")
+    save = mocker.patch.object(source, 'save', autospec=True,
+                               **{'return_value': mocker.sentinel.nonfilepath})
+    _view = mocker.patch.object(source, '_view', autospec=True)
+    remove = mocker.patch('os.remove', autospec=True)
+
+    with pytest.raises(Exception):
+        assert source.render(cleanup=True, view=True) is render.return_value
+
+    save.assert_called_once_with(None, None)
+    render.assert_called_once_with(source.engine, source.format,
+                                   save.return_value,
+                                   renderer=None, formatter=None,
+                                   quiet=False)
+    remove.assert_called_once_with(save.return_value)
+    _view.assert_not_called()
+
+
 def test_view(mocker, source):
     render = mocker.patch.object(source, 'render', autospec=True)
     kwargs = {'filename': 'filename', 'directory': 'directory',

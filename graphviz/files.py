@@ -235,13 +235,14 @@ class File(Base):
         if format is None:
             format = self._format
 
-        rendered = backend.render(self._engine, format, filepath,
-                                  renderer=renderer, formatter=formatter,
-                                  quiet=quiet)
-
-        if cleanup:
-            log.debug('delete %r', filepath)
-            os.remove(filepath)
+        try:
+            rendered = backend.render(self._engine, format, filepath,
+                                    renderer=renderer, formatter=formatter,
+                                    quiet=quiet)
+        finally:
+            if cleanup:
+                log.debug('delete %r', filepath)
+                os.remove(filepath)
 
         if quiet_view or view:
             self._view(rendered, self._format, quiet_view)
