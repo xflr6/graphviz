@@ -16,6 +16,8 @@ jobs:
             os: ubuntu-latest
           - python-version: 3.6
             os: ubuntu-latest
+          - python-version: pypy3
+            os: ubuntu-latest
     steps:
       - name: Install system dependencies
         run: sudo apt install graphviz
@@ -29,7 +31,7 @@ jobs:
         run: python -m pip install --upgrade pip setuptools wheel
       - name: Install dependencies
         run: pip install .[test] codecov
-      - name: Run tests with
+      - name: Run tests
         run: python run-tests.py
       - name: Upload coverage
         uses: codecov/codecov-action@v1
