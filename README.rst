@@ -168,7 +168,7 @@ This package is distributed under the `MIT license`_.
     :target: https://pypi.org/project/graphviz/
     :alt: Format
 
-.. |Build| image:: https://github.com/xflr6/graphviz/actions/workflows/build.yaml/badge.svg
+.. |Build| image:: https://github.com/xflr6/graphviz/actions/workflows/build.yaml/badge.svg?branch=master
     :target: https://github.com/xflr6/graphviz/actions/workflows/build.yaml?query=branch%3Amaster
     :alt: Build
 .. |Codecov| image:: https://codecov.io/gh/xflr6/graphviz/branch/master/graph/badge.svg
