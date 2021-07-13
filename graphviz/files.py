@@ -208,7 +208,7 @@ class File(Base):
             filename: Filename for saving the source (defaults to ``name`` + ``'.gv'``)
             directory: (Sub)directory for source saving and rendering.
             view (bool): Open the rendered result with the default application.
-            cleanup (bool): Delete the source file after rendering.
+            cleanup (bool): Delete the source file after successful rendering.
             format: The output format used for rendering (``'pdf'``, ``'png'``, etc.).
             renderer: The output renderer used for rendering (``'cairo'``, ``'gd'``, ...).
             formatter: The output formatter used for rendering (``'cairo'``, ``'gd'``, ...).
@@ -255,7 +255,7 @@ class File(Base):
         Args:
             filename: Filename for saving the source (defaults to ``name`` + ``'.gv'``)
             directory: (Sub)directory for source saving and rendering.
-            cleanup (bool): Delete the source file after rendering.
+            cleanup (bool): Delete the source file after successful rendering.
             quiet (bool): Suppress ``stderr`` output from the layout subprocess.
             quiet_view (bool): Suppress ``stderr`` output from the viewer process
                                (ineffective on Windows).
