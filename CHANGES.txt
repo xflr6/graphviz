@@ -5,7 +5,7 @@ Changelog
 Version 0.17 (in development)
 -----------------------------
 
-Drop Python 2 support.
+Drop Python 2 support. Tag Python 3.10 support.
 
 Migrate CI to GitHub actions. Add ``pypy3`` to matrix.
 
