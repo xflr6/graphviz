@@ -7,6 +7,18 @@ Version 0.17 (in development)
 
 Drop Python 2 support.
 
+Migrate CI to GitHub actions. Add ``pypy3`` to matrix.
+
+Tests: implement ``--skip-exe`` via custom ``pytest`` marker.
+
+Documentation: point Anaconda users to ``conda-forge/python-graphviz``.
+
+Move type hints from docstrings to type annotations. Improve doctests.
+
+Examples: standardize import convention and modernize.
+
+Re-render example notebooks with Graphviz 2.46.1.
+
 
 Version 0.16
 ------------
