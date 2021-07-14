@@ -40,7 +40,7 @@ __all__ = ['Graph', 'Digraph',
            'ExecutableNotFound', 'RequiredArgumentError']
 
 __title__ = 'graphviz'
-__version__ = '0.17'
+__version__ = '0.17.1.dev0'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE.txt'
 __copyright__ = 'Copyright (c) 2013-2021 Sebastian Bank'
