@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.17 (in development)
------------------------------
+Version 0.17
+------------
 
 Drop Python 2 support. Tag Python 3.10 support.
 
