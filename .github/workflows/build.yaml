@@ -19,7 +19,9 @@ jobs:
             os: ubuntu-latest
           - python-version: 3.6
             os: ubuntu-latest
-          - python-version: pypy3
+          - python-version: pypy-3.7
+            os: ubuntu-latest
+          - python-version: pypy-3.6
             os: ubuntu-latest
     steps:
       - name: Install system dependencies
