@@ -9,19 +9,26 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - python-version: "3.10.0-beta - 3.10"
+          - name: linux-3.10
+            python-version: "3.10.0-beta - 3.10"
             os: ubuntu-latest
-          - python-version: 3.9
+          - name: linux-3.9
+            python-version: 3.9
             os: ubuntu-latest
-          - python-version: 3.8
+          - name: linux-3.8
+            python-version: 3.8
             os: ubuntu-latest
-          - python-version: 3.7
+          - name: linux-3.7
+            python-version: 3.7
             os: ubuntu-latest
-          - python-version: 3.6
+          - name: linux-3.6
+            python-version: 3.6
             os: ubuntu-latest
-          - python-version: pypy-3.7
+          - name: linux-pypy-3.7
+            python-version: pypy-3.7
             os: ubuntu-latest
-          - python-version: pypy-3.6
+          - name: linux-pypy-3.6
+            python-version: pypy-3.6
             os: ubuntu-latest
     steps:
       - name: Install system dependencies
@@ -40,3 +47,13 @@ jobs:
         run: python run-tests.py
       - name: Upload coverage
         uses: codecov/codecov-action@v1
+      - name: Render examples
+        run: python try-examples.py
+      - name: Upload artifacts ${{ matrix.name }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.name }}
+          path: |
+            test-log.txt
+            examples/*.gv
+            examples/*.pdf

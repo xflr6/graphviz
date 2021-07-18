@@ -13,6 +13,7 @@ EXAMPLES = pathlib.Path('examples')
 os.chdir(EXAMPLES)
 
 for path in pathlib.Path().glob('*.py'):
+    print(path)
     code = path.read_text(encoding='utf-8')
     try:
         exec(code)
