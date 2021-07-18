@@ -1,0 +1,1 @@
+digraph "the holy hand grenade" { rankdir=LR; 1 -> 2 -> 3 -> lob }
