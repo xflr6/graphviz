@@ -10,6 +10,8 @@ import graphviz  # noqa: F401
 
 EXAMPLES = pathlib.Path('examples')
 
+#graphviz.set_default_format('svg')
+
 os.chdir(EXAMPLES)
 
 for path in pathlib.Path().glob('*.py'):
