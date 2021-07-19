@@ -16,8 +16,7 @@ the following:
     $ pip install graphviz
 
 For a system-wide install, this typically requires administrator access. For an
-isolated install, you can run the same inside a :mod:`py3:venv` or a
-virtualenv_.
+isolated install, you can run the same inside a :mod:`venv` or a virtualenv_.
 
 The only dependency is a working installation of Graphviz_
 (`download page <upstream-download_>`_,
@@ -164,9 +163,8 @@ use the :meth:`~.Graph.pipe`-method of your :class:`.Graph` or
     </svg>
 
 Note that :meth:`~.Graph.pipe` returns the raw ``stdout`` from the rendering
-command (``str`` on Python 2, ``bytes`` on Python 3): When piping into
-plain-text formats like ``'svg'`` or ``'plain'``, you usually want to decode
-the return value as shown above.
+command (:class:`bytes`): When piping into plain-text formats like ``'svg'`` or
+``'plain'``, you usually want to decode the return value as shown above.
 
 .. note::
 
@@ -563,7 +561,7 @@ Custom DOT statements
 
 To add arbitrary statements to the created DOT_ source, use the
 :attr:`~.Graph.body` attribute of the :class:`.Graph` or :class:`.Digraph`
-object. It holds the verbatim list of lines to be written to the source file.
+object. It holds the verbatim :class:`list` of lines to be written to the source file.
 Use its ``append()``- or ``extend()``-method:
 
 .. code:: python

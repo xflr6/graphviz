@@ -172,8 +172,7 @@ texinfo_documents = [
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-    'py': ('https://docs.python.org/2', None),
-    'py3': ('https://docs.python.org/3', None),
+    'py': ('https://docs.python.org/3', None),
 }
 
 # monkey patch, see https://github.com/sphinx-doc/sphinx/issues/2044
