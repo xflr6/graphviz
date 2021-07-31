@@ -11,16 +11,16 @@ __pycache__/
 
 /.venv/
 /.pytest_cache/
-/.coverage
-/htmlcov/
 /.tox/
+/htmlcov/
+/.coverage
+/test-log.txt
 
 Thumbs.db
 
 .ipynb_checkpoints/
 
 /test-output/
-/test-log.txt
 
 /examples/*.gv
 /examples/*.pdf

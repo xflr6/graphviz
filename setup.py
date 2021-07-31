@@ -22,7 +22,7 @@ setup(
     python_requires='>=3.6',
     extras_require={
         'dev': ['tox>=3', 'flake8', 'pep8-naming', 'wheel', 'twine'],
-        'test': ['mock>=3', 'pytest>=5.2', 'pytest-mock>=2', 'pytest-cov'],
+        'test': ['mock>=3', 'pytest>=6', 'pytest-mock>=2', 'pytest-cov'],
         'docs': ['sphinx>=1.8', 'sphinx-autodoc-typehints', 'sphinx-rtd-theme'],
     },
     long_description=pathlib.Path('README.rst').read_text(encoding='utf-8'),
