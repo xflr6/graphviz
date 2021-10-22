@@ -113,13 +113,30 @@ Documentation
 - latest: https://graphviz.readthedocs.io/en/latest/
 - Read the Docs Project Home: https://readthedocs.org/projects/graphviz/
 
-Build
-"""""
+**Build the docmentation**
 
 .. code:: bash
 
     $ cd docs
     $ python -m sphinx . _build
+
+
+Tests
+-----
+
+- GitHub Actions: https://github.com/xflr6/graphviz/actions
+
+**Run the tests** (in the current environment)
+
+.. code:: bash
+
+    $ run-tests.py
+
+**Run the tests with** tox_ (in virtualenv_).
+
+.. code:: bash
+
+    $ python -m tox -r
 
 
 See also
@@ -159,6 +176,9 @@ This package is distributed under the `MIT license`_.
 .. _conda-forge-python-graphviz-feedstock: https://github.com/conda-forge/python-graphviz-feedstock
 .. _conda-forge-graphviz: https://anaconda.org/conda-forge/graphviz
 .. _conda-forge-graphviz-feedstock: https://github.com/conda-forge/graphviz-feedstock
+
+.. _tox: https://tox.wiki/en/latest/
+.. _virtualenv: https://virtualenv.pypa.io
 
 .. _pygraphviz: https://pypi.org/project/pygraphviz/
 .. _graphviz-python: https://pypi.org/project/graphviz-python/
