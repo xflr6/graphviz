@@ -98,3 +98,11 @@ http://www.graphviz.org/doc/info/output.html, and ``dot -T:`` output):
 
 .. autodata:: graphviz.FORMATTERS
    :annotation:
+
+Names of upstream binaries:
+
+.. autodata:: graphviz.backend.DOT_BINARY
+   :annotation:
+
+.. autodata:: graphviz.backend.UNFLATTEN_BINARY
+   :annotation:

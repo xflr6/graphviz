@@ -1,6 +1,7 @@
 # test_backend.py
 
 import errno
+import pathlib
 import platform
 import re
 import shutil
@@ -12,6 +13,10 @@ from graphviz.backend import (run, render, pipe, unflatten, version, view,
                               ExecutableNotFound, RequiredArgumentError)
 
 import utils
+
+DOT_BINARY = pathlib.Path('dot')
+
+UNFLATTEN_BINARY = pathlib.Path('unflatten')
 
 SVG_PATTERN = r'(?s)^<\?xml .+</svg>\s*$'
 
@@ -148,7 +153,7 @@ def test_render_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
 
     assert render('dot', 'pdf', 'nonfilepath', quiet=quiet) == 'nonfilepath.pdf'
 
-    Popen.assert_called_once_with(['dot', '-Kdot', '-Tpdf', '-O', 'nonfilepath'],
+    Popen.assert_called_once_with([DOT_BINARY, '-Kdot', '-Tpdf', '-O', 'nonfilepath'],
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
                                   cwd=None, startupinfo=mocker.ANY)
@@ -211,7 +216,7 @@ def test_pipe_pipe_invalid_data_mocked(mocker, Popen, quiet):  # noqa: N803
     assert e.value.stdout is out
     e.value.stdout = mocker.sentinel.new_stdout
     assert e.value.stdout is mocker.sentinel.new_stdout
-    Popen.assert_called_once_with(['dot', '-Kdot', '-Tpng'],
+    Popen.assert_called_once_with([DOT_BINARY, '-Kdot', '-Tpng'],
                                   stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
@@ -231,7 +236,7 @@ def test_pipe_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
 
     assert pipe('dot', 'png', b'nongraph', quiet=quiet) == b'stdout'
 
-    Popen.assert_called_once_with(['dot', '-Kdot', '-Tpng'],
+    Popen.assert_called_once_with([DOT_BINARY, '-Kdot', '-Tpng'],
                                   stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
@@ -259,7 +264,7 @@ def test_unflatten_mocked(capsys, mocker, Popen):
     proc.communicate.return_value = (b'nonresult', b'')
 
     assert unflatten('nonsource') == 'nonresult'
-    Popen.assert_called_once_with(['unflatten'],
+    Popen.assert_called_once_with([UNFLATTEN_BINARY],
                                   stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
@@ -290,7 +295,7 @@ def test_version_parsefail_mocked(mocker, Popen):  # noqa: N803
     with pytest.raises(RuntimeError, match=r'nonversioninfo'):
         version()
 
-    Popen.assert_called_once_with(['dot', '-V'],
+    Popen.assert_called_once_with([DOT_BINARY, '-V'],
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.STDOUT,
                                   startupinfo=mocker.ANY)
@@ -312,7 +317,7 @@ def test_version_mocked(mocker, Popen, stdout, expected):  # noqa: N803
 
     assert version() == expected
 
-    Popen.assert_called_once_with(['dot', '-V'],
+    Popen.assert_called_once_with([DOT_BINARY, '-V'],
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.STDOUT,
                                   startupinfo=mocker.ANY)

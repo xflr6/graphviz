@@ -4,6 +4,7 @@ import errno
 import logging
 import os
 import platform
+import pathlib
 import re
 import subprocess
 import sys
@@ -11,9 +12,16 @@ import typing
 
 from . import tools
 
-__all__ = ['render', 'pipe', 'unflatten', 'version', 'view',
+__all__ = ['DOT_BINARY', 'UNFLATTEN_BINARY',
            'ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
-           'ExecutableNotFound', 'RequiredArgumentError']
+           'ExecutableNotFound', 'RequiredArgumentError'
+           'render', 'pipe', 'unflatten', 'version', 'view']
+
+#: :class:`pathlib.Path` of layout command (``Path('dot')``).
+DOT_BINARY = pathlib.Path('dot')
+
+#: :class:`pathlib.Path` of unflatten command (``Path('unflatten')``).
+UNFLATTEN_BINARY = pathlib.Path('unflatten')
 
 ENGINES = {'dot', # http://www.graphviz.org/pdf/dot.1.pdf
            'neato',
@@ -131,7 +139,7 @@ def command(engine: str, format_: str, filepath=None,
         raise ValueError(f'unknown formatter: {formatter!r}')
 
     output_format = [f for f in (format_, renderer, formatter) if f is not None]
-    cmd = ['dot', '-K%s' % engine, '-T%s' % ':'.join(output_format)]
+    cmd = [DOT_BINARY, '-K%s' % engine, '-T%s' % ':'.join(output_format)]
 
     if filepath is None:
         rendered = None
@@ -315,7 +323,7 @@ def unflatten(source: str,
     if fanout and stagger is None:
         raise RequiredArgumentError('fanout given without stagger')
 
-    cmd = ['unflatten']
+    cmd = [UNFLATTEN_BINARY]
     if stagger is not None:
         cmd += ['-l', str(stagger)]
     if fanout:
@@ -350,7 +358,7 @@ def version() -> typing.Tuple[int, ...]:
         Graphviz Release version entry format:
         https://gitlab.com/graphviz/graphviz/-/blob/f94e91ba819cef51a4b9dcb2d76153684d06a913/gen_version.py#L17-20
     """
-    cmd = ['dot', '-V']
+    cmd = [DOT_BINARY, '-V']
     out, _ = run(cmd, check=True, encoding='ascii',
                  stdout=subprocess.PIPE,
                  stderr=subprocess.STDOUT)
