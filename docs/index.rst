@@ -47,3 +47,13 @@ Project Info
 
     changelog
     license
+
+
+Development
+===========
+
+.. toctree::
+    :maxdepth: 2
+
+    development
+    release_process
