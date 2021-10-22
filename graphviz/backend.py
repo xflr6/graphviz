@@ -208,7 +208,7 @@ def render(engine: str, format: str, filepath,
     """Render file with Graphviz ``engine`` into ``format``,  return result filename.
 
     Args:
-        engine: Layout commmand for rendering (``'dot'``, ``'neato'``, ...).
+        engine: Layout engine for rendering (``'dot'``, ``'neato'``, ...).
         format: Output format for rendering (``'pdf'``, ``'png'``, ...).
         filepath: Path to the DOT source file to render.
         renderer: Output renderer (``'cairo'``, ``'gd'``, ...).
@@ -219,15 +219,19 @@ def render(engine: str, format: str, filepath,
         The (possibly relative) path of the rendered file.
 
     Raises:
-        ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter`` are not known.
-        graphviz.RequiredArgumentError: If ``formatter`` is given but ``renderer`` is None.
-        graphviz.ExecutableNotFound: If the Graphviz executable is not found.
-        subprocess.CalledProcessError: If the exit status is non-zero.
+        ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
+            are not known.
+        graphviz.RequiredArgumentError: If ``formatter`` is given but
+            ``renderer`` is None.
+        graphviz.ExecutableNotFound: If the Graphviz 'dot' executable is not
+            found.
+        subprocess.CalledProcessError: If the returncode (exit status)
+            of the rendering 'dot' subprocess is non-zero.
 
     Note:
-        The layout command is started from the directory of ``filepath``, so that
-        references to external files (e.g. ``[image=...]``) can be given as paths
-        relative to the DOT source file.
+        The layout command is started from the directory of ``filepath``, so
+        that references to external files (e.g. ``[image=images/camelot.png]``)
+        can be given as paths relative to the DOT source file.
     """
     dirname, filename = os.path.split(filepath)
     del filepath
@@ -250,7 +254,7 @@ def pipe(engine: str, format: str, data: bytes,
     """Return ``data`` piped through Graphviz ``engine`` into ``format``.
 
     Args:
-        engine: Layout commmand for rendering (``'dot'``, ``'neato'``, ...).
+        engine: Layout engine for rendering (``'dot'``, ``'neato'``, ...).
         format: Output format for rendering (``'pdf'``, ``'png'``, ...).
         data: Binary (encoded) DOT source string to render.
         renderer: Output renderer (``'cairo'``, ``'gd'``, ...).
@@ -261,15 +265,22 @@ def pipe(engine: str, format: str, data: bytes,
         Binary (encoded) stdout of the layout command.
 
     Raises:
-        ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter`` are not known.
-        graphviz.RequiredArgumentError: If ``formatter`` is given but no ``renderer``.
-        graphviz.ExecutableNotFound: If the Graphviz executable is not found.
-        subprocess.CalledProcessError: If the exit status is non-zero.
+        ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
+            are not known.
+        graphviz.RequiredArgumentError: If ``formatter`` is given but
+            ``renderer`` is None.
+        graphviz.ExecutableNotFound: If the Graphviz 'dot' executable is not
+            found.
+        subprocess.CalledProcessError: If the returncode (exit status)
+            of the rendering 'dot' subprocess is non-zero.
 
     Example:
         >>> import graphviz
         >>> graphviz.pipe('dot', 'svg', b'graph { hello -- world }')
         b'<?xml version=...'
+
+    Note:
+        The layout command is started from the current directory.
     """
     cmd, _ = command(engine, format, None, renderer, formatter)
     out, _ = run(cmd, input=data, capture_output=True, check=True, quiet=quiet)
