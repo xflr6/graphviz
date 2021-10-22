@@ -114,7 +114,7 @@ Documentation
 - Read the Docs Project Home: https://readthedocs.org/projects/graphviz/
 
 Build
-^^^^^
+"""""
 
 .. code:: bash
 
