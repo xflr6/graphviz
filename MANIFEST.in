@@ -1,4 +1,4 @@
-include README.rst LICENSE.txt CHANGES.txt
+include README.rst LICENSE.txt CHANGES.rst
 include requirements.txt
 include run-tests.py try-examples.py
 include tox.ini

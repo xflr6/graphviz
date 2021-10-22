@@ -19,7 +19,7 @@ Set release version (remove ``.dev0`` from ``$MAJOR.$MINOR[.$BUGFIX]``):
 
 Document release:
 
-- remove ``in development`` from ``CHANGES.txt``
+- remove ``in development`` from ``CHANGES.rst``
 
 Run the tests:
 
@@ -84,7 +84,7 @@ Bump version to ``$MAJOR.$MINOR.[.$BUGFIX].dev0``:
 
 Document release:
 
-- edit ``CHANGES.txt`` (add ``Version $MAJOR.$MINOR[.$BUGFIX] (in development)``)
+- edit ``CHANGES.rst`` (add ``Version $MAJOR.$MINOR[.$BUGFIX] (in development)``)
 
 Commit to main branch and push:
 
