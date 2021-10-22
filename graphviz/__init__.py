@@ -46,16 +46,20 @@ __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE.txt'
 __copyright__ = 'Copyright (c) 2013-2021 Sebastian Bank'
 
-#: :class:`set` of known layout commands used for rendering (``'dot'``, ``'neato'``, ...)
+#: :class:`set` of known layout commands used for rendering
+#:      (``'dot'``, ``'neato'``, ...)
 ENGINES = ENGINES
 
-#: :class:`set` of known output formats for rendering (``'pdf'``, ``'png'``, ...)
+#: :class:`set` of known output formats for rendering
+#:      (``'pdf'``, ``'png'``, ...)
 FORMATS = FORMATS
 
-#: :class:`set` of known output formatters for rendering (``'cairo'``, ``'gd'``, ...)
+#: :class:`set` of known output formatters for rendering
+#:      (``'cairo'``, ``'gd'``, ...)
 FORMATTERS = FORMATTERS
 
-#: :class:`set` of known output renderers for rendering (``'cairo'``, ``'gd'``, ...)
+#: :class:`set` of known output renderers for rendering
+#:      (``'cairo'``, ``'gd'``, ...)
 RENDERERS = RENDERERS
 
 ExecutableNotFound = ExecutableNotFound

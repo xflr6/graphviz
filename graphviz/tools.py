@@ -27,7 +27,8 @@ def attach(object: typing.Any, name: str) -> typing.Callable:
 
 
 def mkdirs(filename, mode: int = 0o777) -> None:
-    """Recursively create directories up to the path of ``filename`` as needed."""
+    """Recursively create directories up to the path of ``filename``
+        as needed."""
     dirname = os.path.dirname(filename)
     if not dirname:
         return
@@ -35,7 +36,8 @@ def mkdirs(filename, mode: int = 0o777) -> None:
 
 
 def mapping_items(mapping):
-    """Return an iterator over the ``mapping`` items, sort if it's a plain dict.
+    """Return an iterator over the ``mapping`` items,
+        sort if it's a plain dict.
 
     >>> list(mapping_items({'spam': 0, 'ham': 1, 'eggs': 2}))
     [('eggs', 2), ('ham', 1), ('spam', 0)]

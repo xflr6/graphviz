@@ -137,15 +137,17 @@ class Dot(files.File):
         """Create an edge between two nodes.
 
         Args:
-            tail_name: Start node identifier (format: ``node[:port[:compass]]``).
-            head_name: End node identifier (format: ``node[:port[:compass]]``).
+            tail_name: Start node identifier
+                (format: ``node[:port[:compass]]``).
+            head_name: End node identifier
+                (format: ``node[:port[:compass]]``).
             label: Caption to be displayed near the edge.
             attrs: Any additional edge attributes (must be strings).
 
         Note:
-            The ``tail_name`` and ``head_name`` strings are separated by
-            (optional) colon(s) into ``node`` name, ``port`` name, and
-            ``compass`` (e.g. ``sw``).
+            The ``tail_name`` and ``head_name`` strings are separated
+            by (optional) colon(s) into ``node`` name, ``port`` name,
+            and ``compass`` (e.g. ``sw``).
             See :ref:`details in the User Guide <ports>`.
         """
         tail_name = self._quote_edge(tail_name)
@@ -159,13 +161,13 @@ class Dot(files.File):
 
         Args:
             tail_head_iter: Iterable of ``(tail_name, head_name)`` pairs
-            (format:``node[:port[:compass]]``).
+                (format:``node[:port[:compass]]``).
 
 
         Note:
-            The ``tail_name`` and ``head_name`` strings are separated by
-            (optional) colon(s) into ``node`` name, ``port`` name, and
-            ``compass`` (e.g. ``sw``).
+            The ``tail_name`` and ``head_name`` strings are separated
+            by (optional) colon(s) into ``node`` name, ``port`` name,
+            and ``compass`` (e.g. ``sw``).
             See :ref:`details in the User Guide <ports>`.
         """
         edge = self._edge_plain
@@ -177,7 +179,8 @@ class Dot(files.File):
         """Add a general or graph/node/edge attribute statement.
 
         Args:
-            kw: Attributes target (``None`` or ``'graph'``, ``'node'``, ``'edge'``).
+            kw: Attributes target
+                (``None`` or ``'graph'``, ``'node'``, ``'edge'``).
             attrs: Attributes to be set (must be strings, may be empty).
 
         See the :ref:`usage examples in the User Guide <attributes>`.
@@ -196,29 +199,37 @@ class Dot(files.File):
 
     def subgraph(self, graph=None, name=None, comment=None,
                  graph_attr=None, node_attr=None, edge_attr=None, body=None):
-        """Add the current content of the given sole ``graph`` argument as subgraph \
-           or return a context manager returning a new graph instance created \
-           with the given (``name``, ``comment``, etc.) arguments whose content is \
-           added as subgraph when leaving the context manager's ``with``-block.
+        """Add the current content of the given sole ``graph`` argument
+            as subgraph or return a context manager
+            returning a new graph instance
+            created with the given (``name``, ``comment``, etc.) arguments
+            whose content is added as subgraph
+            when leaving the context manager's ``with``-block.
 
         Args:
-            graph: An instance of the same kind (:class:`.Graph`, :class:`.Digraph`)
-                   as the current graph (sole argument in non-with-block use).
+            graph: An instance of the same kind
+                (:class:`.Graph`, :class:`.Digraph`) as the current graph
+                (sole argument in non-with-block use).
             name: Subgraph name (``with``-block use).
             comment: Subgraph comment (``with``-block use).
-            graph_attr: Subgraph-level attribute-value mapping (``with``-block use).
-            node_attr: Node-level attribute-value mapping (``with``-block use).
-            edge_attr: Edge-level attribute-value mapping (``with``-block use).
-            body: Verbatim lines to add to the subgraph ``body`` (``with``-block use).
+            graph_attr: Subgraph-level attribute-value mapping
+                (``with``-block use).
+            node_attr: Node-level attribute-value mapping
+                (``with``-block use).
+            edge_attr: Edge-level attribute-value mapping
+                (``with``-block use).
+            body: Verbatim lines to add to the subgraph ``body``
+                (``with``-block use).
 
         See the :ref:`usage examples in the User Guide <subgraphs>`.
 
-        When used as a context manager, the returned new graph instance uses
-        ``strict=None`` and the parent graph's values for ``directory``,
-        ``format``, ``engine``, and ``encoding`` by default.
+        When used as a context manager, the returned new graph instance
+        uses ``strict=None`` and the parent graph's values
+        for ``directory``, ``format``, ``engine``, and ``encoding`` by default.
 
         Note:
-            If the ``name`` of the subgraph begins with ``'cluster'`` (all lowercase)
+            If the ``name`` of the subgraph begins with
+            ``'cluster'`` (all lowercase)
             the layout engine will treat it as a special cluster subgraph.
         """
         if graph is None:
@@ -267,7 +278,8 @@ class Graph(Dot):
     Args:
         name: Graph name used in the source code.
         comment: Comment added to the first line of the source.
-        filename: Filename for saving the source (defaults to ``name`` + ``'.gv'``).
+        filename: Filename for saving the source
+            (defaults to ``name`` + ``'.gv'``).
         directory: (Sub)directory for source saving and rendering.
         format: Rendering output format (``'pdf'``, ``'png'``, ...).
         engine: Layout command used (``'dot'``, ``'neato'``, ...).

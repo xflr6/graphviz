@@ -26,7 +26,7 @@ class Base(object):
 
     @property
     def engine(self):
-        """The layout commmand used for rendering (``'dot'``, ``'neato'``, ...)."""
+        """The layout engine used for rendering (``'dot'``, ``'neato'``, ...)."""
         return self._engine
 
     @engine.setter
@@ -114,17 +114,23 @@ class File(Base):
         """Return a new :class:`.Source` instance with the source piped through the Graphviz *unflatten* preprocessor.
 
         Args:
-            stagger (int): Stagger the minimum length of leaf edges between 1 and this small integer.
-            fanout (bool): Fanout nodes with indegree = outdegree = 1 when staggering (requires ``stagger``).
-            chain (int): Form disconnected nodes into chains of up to this many nodes.
+            stagger (int): Stagger the minimum length
+                of leaf edges between 1 and this small integer.
+            fanout (bool): Fanout nodes with indegree = outdegree = 1
+                when staggering (requires ``stagger``).
+            chain (int): Form disconnected nodes into chains
+                of up to this many nodes.
 
         Returns:
             Source: Prepocessed DOT source code (improved layout aspect ratio).
 
         Raises:
-            graphviz.RequiredArgumentError: If ``fanout`` is given but ``stagger`` is None.
-            graphviz.ExecutableNotFound: If the Graphviz unflatten executable is not found.
-            subprocess.CalledProcessError: If the exit status is non-zero.
+            graphviz.RequiredArgumentError: If ``fanout`` is given
+                but ``stagger`` is None.
+            graphviz.ExecutableNotFound: If the Graphviz 'unflatten' executable
+                is not found.
+        subprocess.CalledProcessError: If the returncode (exit status)
+            of the unflattening 'unflatten' subprocess is non-zero.
 
         See also:
             https://www.graphviz.org/pdf/unflatten.1.pdf
@@ -144,19 +150,27 @@ class File(Base):
         """Return the source piped through the Graphviz layout command.
 
         Args:
-            format: The output format used for rendering (``'pdf'``, ``'png'``, etc.).
-            renderer: The output renderer used for rendering (``'cairo'``, ``'gd'``, ...).
-            formatter: The output formatter used for rendering (``'cairo'``, ``'gd'``, ...).
-            quiet (bool): Suppress ``stderr`` output from the layout subprocess.
+            format: The output format used for rendering
+                (``'pdf'``, ``'png'``, etc.).
+            renderer: The output renderer used for rendering
+                (``'cairo'``, ``'gd'``, ...).
+            formatter: The output formatter used for rendering
+                (``'cairo'``, ``'gd'``, ...).
+            quiet (bool): Suppress ``stderr`` output
+                from the layout subprocess.
 
         Returns:
             Binary (encoded) stdout of the layout command.
 
         Raises:
-            ValueError: If ``format``, ``renderer``, or ``formatter`` are not known.
-            graphviz.RequiredArgumentError: If ``formatter`` is given but ``renderer`` is None.
-            graphviz.ExecutableNotFound: If the Graphviz executable is not found.
-            subprocess.CalledProcessError: If the exit status is non-zero.
+            ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
+                are not known.
+            graphviz.RequiredArgumentError: If ``formatter`` is given
+                but ``renderer`` is None.
+            graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
+                is not found.
+            subprocess.CalledProcessError: If the returncode (exit status)
+                of the rendering 'dot' subprocess is non-zero.
         """
         if format is None:
             format = self._format
@@ -205,30 +219,44 @@ class File(Base):
         """Save the source to file and render with the Graphviz engine.
 
         Args:
-            filename: Filename for saving the source (defaults to ``name`` + ``'.gv'``)
+            filename: Filename for saving the source
+                (defaults to ``name`` + ``'.gv'``).s
             directory: (Sub)directory for source saving and rendering.
-            view (bool): Open the rendered result with the default application.
-            cleanup (bool): Delete the source file after successful rendering.
-            format: The output format used for rendering (``'pdf'``, ``'png'``, etc.).
-            renderer: The output renderer used for rendering (``'cairo'``, ``'gd'``, ...).
-            formatter: The output formatter used for rendering (``'cairo'``, ``'gd'``, ...).
-            quiet (bool): Suppress ``stderr`` output from the layout subprocess.
-            quiet_view (bool): Suppress ``stderr`` output from the viewer process
-                               (implies ``view=True``, ineffective on Windows).
+            view (bool): Open the rendered result
+                with the default application.
+            cleanup (bool): Delete the source file
+                after successful rendering.
+            format: The output format used for rendering
+                (``'pdf'``, ``'png'``, etc.).
+            renderer: The output renderer used for rendering
+                (``'cairo'``, ``'gd'``, ...).
+            formatter: The output formatter used for rendering
+                (``'cairo'``, ``'gd'``, ...).
+            quiet (bool): Suppress ``stderr`` output
+                from the layout subprocess.
+            quiet_view (bool): Suppress ``stderr`` output
+                from the viewer process
+                (implies ``view=True``, ineffective on Windows).
 
         Returns:
             The (possibly relative) path of the rendered file.
 
         Raises:
-            ValueError: If ``format``, ``renderer``, or ``formatter`` are not known.
-            graphviz.RequiredArgumentError: If ``formatter`` is given but ``renderer`` is None.
-            graphviz.ExecutableNotFound: If the Graphviz executable is not found.
-            subprocess.CalledProcessError: If the exit status is non-zero.
+            ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
+                are not known.
+            graphviz.RequiredArgumentError: If ``formatter`` is given
+                but ``renderer`` is None.
+            graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
+                is not found.
+            subprocess.CalledProcessError: If the returncode (exit status)
+                of the rendering 'dot' subprocess is non-zero.
             RuntimeError: If viewer opening is requested but not supported.
 
-        The layout command is started from the directory of ``filepath``, so that
-        references to external files (e.g. ``[image=...]``) can be given as paths
-        relative to the DOT source file.
+        Note:
+            The layout command is started from the directory of ``filepath``,
+            so that references to external files
+            (e.g. ``[image=images/camelot.png]``)
+            can be given as paths relative to the DOT source file.
         """
         filepath = self.save(filename, directory)
 
@@ -253,26 +281,28 @@ class File(Base):
         """Save the source to file, open the rendered result in a viewer.
 
         Args:
-            filename: Filename for saving the source (defaults to ``name`` + ``'.gv'``)
+            filename: Filename for saving the source
+                (defaults to ``name`` + ``'.gv'``).
             directory: (Sub)directory for source saving and rendering.
             cleanup (bool): Delete the source file after successful rendering.
             quiet (bool): Suppress ``stderr`` output from the layout subprocess.
-            quiet_view (bool): Suppress ``stderr`` output from the viewer process
-                               (ineffective on Windows).
+            quiet_view (bool): Suppress ``stderr`` output
+                from the viewer process (ineffective on Windows).
 
         Returns:
             The (possibly relative) path of the rendered file.
 
         Raises:
-            graphviz.ExecutableNotFound: If the Graphviz executable is not found.
+            graphviz.ExecutableNotFound: If the Graphviz executable
+                is not found.
             subprocess.CalledProcessError: If the exit status is non-zero.
             RuntimeError: If opening the viewer is not supported.
 
         Short-cut method for calling :meth:`.render` with ``view=True``.
 
         Note:
-            There is no option to wait for the application to close, and no way
-            to retrieve the application's exit status.
+            There is no option to wait for the application to close,
+            and no way to retrieve the application's exit status.
         """
         return self.render(filename=filename, directory=directory,
                            view=True, cleanup=cleanup,
@@ -312,8 +342,9 @@ class Source(File):
         encoding: Encoding for saving the source.
 
     Note:
-        All parameters except ``source`` are optional. All of them can be changed
-        under their corresponding attribute name after instance creation.
+        All parameters except ``source`` are optional. All of them
+        can be changed under their corresponding attribute name
+        after instance creation.
     """
 
     @classmethod

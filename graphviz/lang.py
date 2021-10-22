@@ -124,8 +124,8 @@ def attr_list(label: typing.Optional[str] = None,
               kwargs=None, attributes=None) -> str:
     """Return assembled DOT attribute list string.
 
-    Sorts ``kwargs`` and ``attributes`` if they are plain dicts (to avoid
-    unpredictable order from hash randomization in Python 3 versions).
+    Sorts ``kwargs`` and ``attributes`` if they are plain dicts
+    (to avoid unpredictable order from hash randomization in Python < 3.7).
 
     >>> attr_list()
     ''
@@ -143,18 +143,20 @@ def attr_list(label: typing.Optional[str] = None,
 
 
 def escape(s: str) -> 'NoHtml':
-    r"""Return ``s`` as literal disabling special meaning of backslashes and ``'<...>'``.
+    r"""Return ``s`` as literal disabling special meaning of backslashes
+        and ``'<...>'``.
 
     see also https://www.graphviz.org/doc/info/attrs.html#k:escString
 
     Args:
-        s: String in which backslashes and ``'<...>'`` should be treated as literal.
+        s: String in which backslashes and ``'<...>'``
+            should be treated as literal.
 
     Returns:
         Escaped string subclass instance.
 
     Raises:
-        TypeError: If ``s`` is not a ``str`` on Python 3, or a ``str``/``unicode`` on Python 2.
+        TypeError: If ``s`` is not a ``str``.
 
     Example:
         >>> import graphviz
@@ -171,16 +173,18 @@ class NoHtml(str):
 
 
 def nohtml(s: str) -> NoHtml:
-    """Return copy of ``s`` that will not treat ``'<...>'`` as DOT HTML string in quoting.
+    """Return copy of ``s`` that will not treat ``'<...>'``
+        as DOT HTML string in quoting.
 
     Args:
-        s: String in which leading ``'<'`` and trailing ``'>'`` should be treated as literal.
+        s: String in which leading ``'<'`` and trailing ``'>'``
+            should be treated as literal.
 
     Returns:
         String subclass instance.
 
     Raises:
-        TypeError: If ``s`` is not a ``str`` on Python 3, or a ``str``/``unicode`` on Python 2.
+        TypeError: If ``s`` is not a ``str``.
 
     Example:
         >>> import graphviz
