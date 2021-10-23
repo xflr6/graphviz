@@ -68,7 +68,7 @@ Switch to main branch and merge ``release``:
 .. code:: bash
 
     $ git switch master
-    $ git merge release
+    $ git merge --ff-only release
 
 Create annotated release tag:
 
