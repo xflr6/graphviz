@@ -53,6 +53,11 @@ def unknown_platform(monkeypatch, name='nonplatform'):
 
 
 @pytest.fixture
+def run(mocker):  # noqa: N802
+    yield mocker.patch('subprocess.run', autospec=True)
+
+
+@pytest.fixture
 def Popen(mocker):  # noqa: N802
     yield mocker.patch('subprocess.Popen', autospec=True)
 

@@ -286,42 +286,45 @@ def test_version(capsys):
     assert capsys.readouterr() == ('', '')
 
 
-def test_version_parsefail_mocked(mocker, Popen):  # noqa: N803
-    proc = Popen.return_value
-    proc.returncode = 0
-    proc.communicate.return_value = (b'nonversioninfo', None)
+def test_version_parsefail_mocked(mocker, run):  # noqa: N803
+    run.return_value = mocker.create_autospec(subprocess.CompletedProcess,
+                                              returncode=0,
+                                              stdout='nonversioninfo',
+                                              stderr=None)
 
     with pytest.raises(RuntimeError, match=r'nonversioninfo'):
         version()
 
-    Popen.assert_called_once_with([DOT_BINARY, '-V'],
-                                  stdout=subprocess.PIPE,
-                                  stderr=subprocess.STDOUT,
-                                  startupinfo=mocker.ANY)
-    check_startupinfo(Popen.call_args.kwargs['startupinfo'])
-    proc.communicate.assert_called_once_with(None)
+    run.assert_called_once_with([DOT_BINARY, '-V'],
+                                check=True,
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT,
+                                startupinfo=mocker.ANY,
+                                encoding='ascii')
+    check_startupinfo(run.call_args.kwargs['startupinfo'])
 
 
 @pytest.mark.parametrize('stdout, expected', [
-    (b'dot - graphviz version 1.2.3 (mocked)', (1, 2, 3)),
-    (b'dot - graphviz version 2.43.20190912.0211 (20190912.0211)\n', (2, 43, 20190912, 211)),
-    (b'dot - graphviz version 2.44.2~dev.20200927.0217 (20200927.0217)\n', (2, 44, 2)),
-    (b'dot - graphviz version 2.44.1 (mocked)\n', (2, 44, 1)),
-    (b'dot - graphviz version 2.44.2~dev.20200704.1652 (mocked)\n', (2, 44, 2)),
+    ('dot - graphviz version 1.2.3 (mocked)', (1, 2, 3)),
+    ('dot - graphviz version 2.43.20190912.0211 (20190912.0211)\n', (2, 43, 20190912, 211)),
+    ('dot - graphviz version 2.44.2~dev.20200927.0217 (20200927.0217)\n', (2, 44, 2)),
+    ('dot - graphviz version 2.44.1 (mocked)\n', (2, 44, 1)),
+    ('dot - graphviz version 2.44.2~dev.20200704.1652 (mocked)\n', (2, 44, 2)),
 ])
-def test_version_mocked(mocker, Popen, stdout, expected):  # noqa: N803
-    proc = Popen.return_value
-    proc.returncode = 0
-    proc.communicate.return_value = (stdout, None)
+def test_version_mocked(mocker, run, stdout, expected):  # noqa: N803
+    run.return_value = mocker.create_autospec(subprocess.CompletedProcess,
+                                              returncode=0,
+                                              stdout=stdout, stderr=None)
 
     assert version() == expected
 
-    Popen.assert_called_once_with([DOT_BINARY, '-V'],
-                                  stdout=subprocess.PIPE,
-                                  stderr=subprocess.STDOUT,
-                                  startupinfo=mocker.ANY)
-    check_startupinfo(Popen.call_args.kwargs['startupinfo'])
-    proc.communicate.assert_called_once_with(None)
+    run.assert_called_once_with([DOT_BINARY, '-V'],
+                                check=True,
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT,
+                                startupinfo=mocker.ANY,
+                                encoding='ascii')
+    check_startupinfo(run.call_args.kwargs['startupinfo'])
 
 
 def test_view_unknown_platform(unknown_platform):

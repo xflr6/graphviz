@@ -167,6 +167,18 @@ else:
         return None
 
 
+def subprocess_run(cmd, *args, **kwargs):
+    log.debug('run %r', cmd)
+    try:        
+        return subprocess.run(cmd, *args,
+                              startupinfo=get_startupinfo(), **kwargs)
+    except OSError as e:
+        if e.errno == errno.ENOENT:
+            raise ExecutableNotFound(cmd) from e
+        else:
+            raise
+
+
 def run(cmd, input: typing.Optional[bytes] = None,
         capture_output: bool = False,
         check: bool = False,
@@ -372,10 +384,11 @@ def version() -> typing.Tuple[int, ...]:
         https://gitlab.com/graphviz/graphviz/-/blob/f94e91ba819cef51a4b9dcb2d76153684d06a913/gen_version.py#L17-20
     """
     cmd = [DOT_BINARY, '-V']
-    raw, _ = run(cmd, check=True,
-                 stdout=subprocess.PIPE,
-                 stderr=subprocess.STDOUT)
-    out = raw.decode('ascii')
+    log.debug('run %r', cmd)
+    proc = subprocess_run(cmd, check=True,
+                          stdout=subprocess.PIPE,
+                          stderr=subprocess.STDOUT,
+                          encoding='ascii')
 
     ma = re.search(r'graphviz version'
                    r' '
@@ -387,9 +400,9 @@ def version() -> typing.Tuple[int, ...]:
                            r'\.(\d+)'
                        r')?'
                    r')?'
-                   r' ', out)
+                   r' ', proc.stdout)
     if ma is None:
-        raise RuntimeError(f'cannot parse {cmd!r} output: {out!r}')
+        raise RuntimeError(f'cannot parse {cmd!r} output: {proc.stdout!r}')
 
     return tuple(int(d) for d in ma.groups() if d is not None)
 
