@@ -10,19 +10,19 @@ jobs:
       matrix:
         include:
           - name: linux-3.10
-            python-version: "3.10.0-beta - 3.10"
+            python-version: "3.10"
             os: ubuntu-latest
           - name: linux-3.9
-            python-version: 3.9
+            python-version: "3.9"
             os: ubuntu-latest
           - name: linux-3.8
-            python-version: 3.8
+            python-version: "3.8"
             os: ubuntu-latest
           - name: linux-3.7
-            python-version: 3.7
+            python-version: "3.7"
             os: ubuntu-latest
           - name: linux-3.6
-            python-version: 3.6
+            python-version: "3.6"
             os: ubuntu-latest
           - name: linux-pypy-3.7
             python-version: pypy-3.7
