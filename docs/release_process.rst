@@ -51,7 +51,7 @@ If changes are needed (and go back to: Set release version):
 
 .. code:: bash
 
-    $ git commit --ammend --date=now
+    $ git commit --amend --date=now
 
 
 Publish
