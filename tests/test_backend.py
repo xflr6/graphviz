@@ -38,14 +38,13 @@ def test_run_oserror():
     assert e.value.errno in (errno.EACCES, errno.EINVAL)
 
 
-def test_run_encoding_mocked(mocker, Popen, input='sp\xe4m', encoding='utf-8'):
+def test_run_mocked(mocker, Popen, input= b'sp\xc3\xa4m'):
     proc = Popen.return_value
     proc.returncode = 0
     mocks = [mocker.create_autospec(bytes, instance=True, name=n) for n in ('out', 'err')]
     proc.communicate.return_value = mocks
 
-    result = run(mocker.sentinel.cmd,
-                 input=input, capture_output=True, encoding=encoding)
+    result = run(mocker.sentinel.cmd, input=input, capture_output=True)
 
     Popen.assert_called_once_with(mocker.sentinel.cmd,
                                   stdin=subprocess.PIPE,
@@ -53,10 +52,10 @@ def test_run_encoding_mocked(mocker, Popen, input='sp\xe4m', encoding='utf-8'):
                                   stderr=subprocess.PIPE,
                                   startupinfo=mocker.ANY)
     check_startupinfo(Popen.call_args.kwargs['startupinfo'])
-    proc.communicate.assert_called_once_with(input.encode(encoding))
-    assert result == tuple(m.decode.return_value for m in mocks)
+    proc.communicate.assert_called_once_with(input)
+    assert result == tuple(mocks)
     for m in mocks:
-        m.decode.assert_called_once_with(encoding)
+        m.decode.assert_not_called()
 
 
 @pytest.mark.exe

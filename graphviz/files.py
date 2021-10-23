@@ -16,7 +16,9 @@ __all__ = ['File', 'Source']
 log = logging.getLogger(__name__)
 
 
-class Base(object):
+class Base:
+
+    source: str
 
     _engine = 'dot'
 
@@ -324,10 +326,10 @@ class File(Base):
                                f' on {backend.PLATFORM!r} platform')
         view_method(filepath, quiet=quiet)
 
-    _view_darwin = staticmethod(backend.view.darwin)
-    _view_freebsd = staticmethod(backend.view.freebsd)
-    _view_linux = staticmethod(backend.view.linux)
-    _view_windows = staticmethod(backend.view.windows)
+    _view_darwin = staticmethod(backend.view_darwin)
+    _view_freebsd = staticmethod(backend.view_unixoid)
+    _view_linux = staticmethod(backend.view_unixoid)
+    _view_windows = staticmethod(backend.view_windows)
 
 
 class Source(File):

@@ -157,9 +157,9 @@ if PLATFORM == 'windows':  # pragma: no cover
     def get_startupinfo():
         """Return subprocess.STARTUPINFO instance
             hiding the console window."""
-        startupinfo = subprocess.STARTUPINFO()
-        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-        startupinfo.wShowWindow = subprocess.SW_HIDE
+        startupinfo = subprocess.STARTUPINFO()  # pytype: disable=module-attr
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW  # pytype: disable=module-attr
+        startupinfo.wShowWindow = subprocess.SW_HIDE  # pytype: disable=module-attr
         return startupinfo
 else:
     def get_startupinfo():
@@ -167,20 +167,17 @@ else:
         return None
 
 
-def run(cmd, input=None,
+def run(cmd, input: typing.Optional[bytes] = None,
         capture_output: bool = False,
         check: bool = False,
-        encoding: typing.Optional[str] = None,
         quiet: bool = False,
-        **kwargs) -> typing.Tuple:
+        **kwargs) -> typing.Tuple[bytes, bytes]:
     """Run the command described by cmd
             and return its ``(stdout, stderr)`` tuple."""
     log.debug('run %r', cmd)
 
     if input is not None:
         kwargs['stdin'] = subprocess.PIPE
-        if encoding is not None:
-            input = input.encode(encoding)
 
     if capture_output:  # Python 3.6 compat
         kwargs['stdout'] = kwargs['stderr'] = subprocess.PIPE
@@ -196,15 +193,10 @@ def run(cmd, input=None,
     out, err = proc.communicate(input)
 
     if not quiet and err:
-        err_encoding = sys.stderr.encoding or sys.getdefaultencoding()
+        err_encoding = (getattr(sys.stderr, 'encoding', None)
+                        or sys.getdefaultencoding())
         sys.stderr.write(err.decode(err_encoding))
         sys.stderr.flush()
-
-    if encoding is not None:
-        if out is not None:
-            out = out.decode(encoding)
-        if err is not None:
-            err = err.decode(encoding)
 
     if check and proc.returncode:
         raise CalledProcessError(proc.returncode, cmd,
@@ -271,7 +263,7 @@ def pipe(engine: str, format: str, data: bytes,
     Args:
         engine: Layout engine for rendering (``'dot'``, ``'neato'``, ...).
         format: Output format for rendering (``'pdf'``, ``'png'``, ...).
-        data: Binary (encoded) DOT source string to render.
+        data: Binary (encoded) DOT source bytes to render.
         renderer: Output renderer (``'cairo'``, ``'gd'``, ...).
         formatter: Output formatter (``'cairo'``, ``'gd'``, ...).
         quiet: Suppress ``stderr`` output from the layout subprocess.
@@ -344,8 +336,9 @@ def unflatten(source: str,
     if chain is not None:
         cmd += ['-c', str(chain)]
 
-    out, _ = run(cmd, input=source, capture_output=True, encoding=encoding)
-    return out
+    raw = source.encode(encoding)
+    out, _ = run(cmd, input=raw, capture_output=True)
+    return out.decode(encoding)
 
 
 def version() -> typing.Tuple[int, ...]:
@@ -373,9 +366,10 @@ def version() -> typing.Tuple[int, ...]:
         https://gitlab.com/graphviz/graphviz/-/blob/f94e91ba819cef51a4b9dcb2d76153684d06a913/gen_version.py#L17-20
     """
     cmd = [DOT_BINARY, '-V']
-    out, _ = run(cmd, check=True, encoding='ascii',
+    raw, _ = run(cmd, check=True,
                  stdout=subprocess.PIPE,
                  stderr=subprocess.STDOUT)
+    out = raw.decode('ascii')
 
     ma = re.search(r'graphviz version'
                    r' '
@@ -445,4 +439,4 @@ def view_windows(filepath, *, quiet: bool) -> None:
     # TODO: implement quiet=True
     filepath = os.path.normpath(filepath)
     log.debug('view: %r', filepath)
-    os.startfile(filepath)
+    os.startfile(filepath)  # pytype: disable=module-attr

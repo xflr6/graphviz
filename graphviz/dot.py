@@ -39,10 +39,16 @@ __all__ = ['Graph', 'Digraph']
 class Dot(files.File):
     """Assemble, save, and render DOT source code, open result in viewer."""
 
+    directed: bool
+
     _comment = '// %s'
+    _head: str
+    _head_strict: str
     _subgraph = 'subgraph %s{'
     _subgraph_plain = '%s{'
     _node = _attr = '\t%s%s'
+    _edge: str
+    _edge_plain: str
     _attr_plain = _attr % ('%s', '')
     _tail = '}'
 
@@ -257,7 +263,7 @@ class Dot(files.File):
         self.body.extend(lines)
 
 
-class SubgraphContext(object):
+class SubgraphContext:
     """Return a blank instance of the parent and add as subgraph on exit."""
 
     def __init__(self, parent, kwargs):
