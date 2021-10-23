@@ -11,6 +11,12 @@ Create ``release`` branch from main:
 
     $ git checkout -b release
 
+Cleanup:
+
+.. code:: bash
+
+    $ git clean -f -d -x  # remove all untracked files and directories
+
 Set release version (remove ``.dev0`` from ``$MAJOR.$MINOR[.$BUGFIX]``):
 
 - ``docs/conf.py``
@@ -21,11 +27,14 @@ Document release:
 
 - remove ``in development`` from ``CHANGES.rst``
 
-Run the tests:
+Run the tests and build the docs:
 
 .. code:: bash
 
-    $ python -m tox -r  # a.k.a --recreate
+    $ python -m tox -r -- -W error  # --recreate, raise error on warning
+    $ cd docs
+    $ python -m sphinx . _build
+    $ cd ..
 
 Commit to ``release`` branch and push to ``origin``:
 
@@ -47,7 +56,7 @@ Check the release:
 - ``dist/graphviz-$MAJOR.$MINOR[.$BUGFIX].zip``
 - ``dist/graphviz-$MAJOR.$MINOR[.$BUGFIX]-py3-none-any.whl``
 
-If changes are needed (and go back to: Set release version):
+If changes are needed (and go back to: **Cleanup**):
 
 .. code:: bash
 
