@@ -167,16 +167,28 @@ else:
         return None
 
 
-def subprocess_run(cmd, *args, **kwargs):
+def subprocess_run(cmd, *args, quiet: bool = False, **kwargs):
     log.debug('run %r', cmd)
     try:        
-        return subprocess.run(cmd, *args,
-                              startupinfo=get_startupinfo(), **kwargs)
+        proc = subprocess.run(cmd,
+                              *args,
+                              startupinfo=get_startupinfo(),
+                              **kwargs)
     except OSError as e:
         if e.errno == errno.ENOENT:
             raise ExecutableNotFound(cmd) from e
         else:
             raise
+
+    if not quiet and proc.stderr:
+        err_encoding = (getattr(sys.stderr, 'encoding', None)
+                        or sys.getdefaultencoding())
+        stderr = (proc.stderr.decode(err_encoding)
+                  if isinstance(proc.stderr, bytes) else proc.stderr)
+        sys.stderr.write(stderr)
+        sys.stderr.flush()
+
+    return proc
 
 
 def run(cmd, input: typing.Optional[bytes] = None,
@@ -268,7 +280,12 @@ def render(engine: str, format: str, filepath,
     else:
         cwd = None
 
-    run(cmd, capture_output=True, cwd=cwd, check=True, quiet=quiet)
+    subprocess_run(cmd,
+                   check=True,
+                   stdout=subprocess.PIPE,
+                   stderr=subprocess.PIPE,
+                   cwd=cwd,
+                   quiet=quiet)
     return rendered
 
 
@@ -354,9 +371,14 @@ def unflatten(source: str,
     if chain is not None:
         cmd += ['-c', str(chain)]
 
-    raw = source.encode(encoding)
-    out, _ = run(cmd, input=raw, capture_output=True)
-    return out.decode(encoding)
+    proc = subprocess_run(cmd,
+                          check=True,
+                          input=source,
+                          stdout=subprocess.PIPE,
+                          stderr=subprocess.PIPE,
+                          encoding=encoding)
+
+    return proc.stdout
 
 
 def version() -> typing.Tuple[int, ...]:
@@ -385,7 +407,8 @@ def version() -> typing.Tuple[int, ...]:
     """
     cmd = [DOT_BINARY, '-V']
     log.debug('run %r', cmd)
-    proc = subprocess_run(cmd, check=True,
+    proc = subprocess_run(cmd,
+                          check=True,
                           stdout=subprocess.PIPE,
                           stderr=subprocess.STDOUT,
                           encoding='ascii')

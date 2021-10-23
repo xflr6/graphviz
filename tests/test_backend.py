@@ -145,19 +145,21 @@ def test_render_img(capsys, tmp_path, files_path, engine='dot', format_='pdf'):
     assert capsys.readouterr() == ('', '')
 
 
-def test_render_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
-    proc = Popen.return_value
-    proc.returncode = 0
-    proc.communicate.return_value = (b'stdout', b'stderr')
+def test_render_mocked(capsys, mocker, run, quiet):  # noqa: N803
+    run.return_value = mocker.create_autospec(subprocess.CompletedProcess,
+                                              returncode=0,
+                                              stdout='stdout',
+                                              stderr='stderr')
 
     assert render('dot', 'pdf', 'nonfilepath', quiet=quiet) == 'nonfilepath.pdf'
 
-    Popen.assert_called_once_with([DOT_BINARY, '-Kdot', '-Tpdf', '-O', 'nonfilepath'],
-                                  stdout=subprocess.PIPE,
-                                  stderr=subprocess.PIPE,
-                                  cwd=None, startupinfo=mocker.ANY)
-    check_startupinfo(Popen.call_args.kwargs['startupinfo'])
-    proc.communicate.assert_called_once_with(None)
+    run.assert_called_once_with([DOT_BINARY, '-Kdot', '-Tpdf', '-O', 'nonfilepath'],
+                                check=True,
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE,
+                                cwd=None,
+                                startupinfo=mocker.ANY,)
+    check_startupinfo(run.call_args.kwargs['startupinfo'])
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
@@ -257,19 +259,21 @@ def test_unflatten(source, kwargs, expected):
     assert normalized == expected
 
 
-def test_unflatten_mocked(capsys, mocker, Popen):
-    proc = Popen.return_value
-    proc.returncode = 0
-    proc.communicate.return_value = (b'nonresult', b'')
+def test_unflatten_mocked(capsys, mocker, run):
+    run.return_value = mocker.create_autospec(subprocess.CompletedProcess,
+                                              returncode=0,
+                                              stdout='nonresult',
+                                              stderr='')
 
     assert unflatten('nonsource') == 'nonresult'
-    Popen.assert_called_once_with([UNFLATTEN_BINARY],
-                                  stdin=subprocess.PIPE,
-                                  stdout=subprocess.PIPE,
-                                  stderr=subprocess.PIPE,
-                                  startupinfo=mocker.ANY)
-    check_startupinfo(Popen.call_args.kwargs['startupinfo'])
-    proc.communicate.assert_called_once_with(b'nonsource')
+    run.assert_called_once_with([UNFLATTEN_BINARY],
+                                check=True,
+                                input='nonsource',
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE,
+                                startupinfo=mocker.ANY,
+                                encoding='utf-8')
+    check_startupinfo(run.call_args.kwargs['startupinfo'])
     assert capsys.readouterr() == ('', '')
 
 
