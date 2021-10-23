@@ -47,11 +47,11 @@ Check the release:
 - ``dist/graphviz-$MAJOR.$MINOR[.$BUGFIX].zip``
 - ``dist/graphviz-$MAJOR.$MINOR[.$BUGFIX]-py3-none-any.whl``
 
-If changes are needed (and go back to set version):
+If changes are needed (and go back to: Set release version):
 
 .. code:: bash
 
-    $ git commit --ammend
+    $ git commit --ammend --date=now
 
 
 Publish
@@ -91,7 +91,7 @@ Commit to main branch and push:
 .. code:: bash
 
     $ git commit -m "bump version for development"
-    $ git push --tags  # push all tags
+    $ git push --tags  # pushes all tags
 
 - Check main branch `build workflow <https://github.com/xflr6/graphviz/actions?query=branch%3Amaster>`_
 - Check `GitHub page <https://github.com/xflr6/graphviz>`_
