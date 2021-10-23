@@ -153,10 +153,20 @@ angles.py
 
 .. _rank_same.py:
 
+
 rank_same.py
 ------------
 .. literalinclude:: ../examples/rank_same.py
     :lines: 3-
 
 .. image:: _static/rank_same.svg
+    :align: center
+
+
+colors.py
+---------
+.. literalinclude:: ../examples/colors.py
+    :lines: 3-
+
+.. image:: _static/colors.svg
     :align: center
