@@ -41,16 +41,16 @@ class Dot(files.File):
 
     directed: bool
 
-    _comment = '// %s'
+    _comment = '// %s\n'
     _head: str
     _head_strict: str
-    _subgraph = 'subgraph %s{'
-    _subgraph_plain = '%s{'
-    _node = _attr = '\t%s%s'
+    _subgraph = 'subgraph %s{\n'
+    _subgraph_plain = '%s{\n'
+    _node = _attr = '\t%s%s\n'
     _edge: str
     _edge_plain: str
     _attr_plain = _attr % ('%s', '')
-    _tail = '}'
+    _tail = '}\n'
 
     _quote = staticmethod(lang.quote)
     _quote_edge = staticmethod(lang.quote_edge)
@@ -124,7 +124,7 @@ class Dot(files.File):
     @property
     def source(self):
         """The DOT source code as string."""
-        return '\n'.join(self)
+        return ''.join(self)
 
     def node(self, name, label=None, _attributes=None, **attrs):
         """Create a node.
@@ -301,9 +301,9 @@ class Graph(Dot):
         corresponding attribute name after instance creation.
     """
 
-    _head = 'graph %s{'
+    _head = 'graph %s{\n'
     _head_strict = 'strict %s' % _head
-    _edge = '\t%s -- %s%s'
+    _edge = '\t%s -- %s%s\n'
     _edge_plain = _edge % ('%s', '%s', '')
 
     @property
@@ -318,9 +318,9 @@ class Digraph(Dot):
     if Graph.__doc__ is not None:
         __doc__ += Graph.__doc__.partition('.')[2]
 
-    _head = 'digraph %s{'
+    _head = 'digraph %s{\n'
     _head_strict = 'strict %s' % _head
-    _edge = '\t%s -> %s%s'
+    _edge = '\t%s -> %s%s\n'
     _edge_plain = _edge % ('%s', '%s', '')
 
     @property

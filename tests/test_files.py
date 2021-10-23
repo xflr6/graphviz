@@ -7,7 +7,7 @@ import pytest
 
 from graphviz.files import Source
 
-SOURCE = {'source': 'digraph { hello -> world }',
+SOURCE = {'source': 'digraph { hello -> world }\n',
           'filename': 'hello.gv', 'directory': 'test-output',
           'format': 'PNG', 'engine': 'NEATO', 'encoding': 'utf-8'}
 
@@ -81,24 +81,30 @@ def test__repr_svg_(mocker, source):
     pipe.return_value.decode.assert_called_once_with(source.encoding)
 
 
-def test_pipe_format(pipe, source, format_='svg'):
+def test_pipe_format(mocker, pipe, source, format_='svg'):
     assert source.format != format_
 
     assert source.pipe(format=format_) is pipe.return_value
 
-    data = source.source.encode(source.encoding)
-    pipe.assert_called_once_with(source.engine, format_, data,
+    pipe.assert_called_once_with(source.engine, format_, mocker.ANY,
                                  renderer=None, formatter=None,
                                  quiet=False)
+    _, _, data = pipe.call_args.args
+    lines = [uline.encode(source.encoding)
+             for uline in source.source.splitlines(keepends=True)]
+    assert list(data) == lines
 
 
-def test_pipe(pipe, source):
+def test_pipe(mocker, pipe, source):
     assert source.pipe() is pipe.return_value
 
-    data = source.source.encode(source.encoding)
-    pipe.assert_called_once_with(source.engine, source.format, data,
+    pipe.assert_called_once_with(source.engine, source.format, mocker.ANY,
                                  renderer=None, formatter=None,
                                  quiet=False)
+    _, _, data = pipe.call_args.args
+    lines = [uline.encode(source.encoding)
+             for uline in source.source.splitlines(keepends=True)]
+    assert list(data) == lines
 
 
 def test_filepath(platform, source):
@@ -119,8 +125,7 @@ def test_save(mocker, filename='nonfilename', directory='nondirectory'):
     makedirs.assert_called_once_with(source.directory, 0o777, exist_ok=True)
     open_.assert_called_once_with(source.filepath, 'w',
                                   encoding=source.encoding)
-    assert open_.return_value.write.call_args_list == [mocker.call(source.source),
-                                                       mocker.call('\n')]
+    assert open_.return_value.write.call_args_list == [mocker.call(source.source)]
 
 
 def test_render(mocker, render, source):
@@ -190,3 +195,10 @@ def test_from_file(tmp_path, filename='hello.gv', directory='source_hello',
     assert source.filename == filename
     assert source.directory == str(lpath)
     assert source.encoding == encoding
+
+
+def test_source_iter(source):
+    source_without_newline = Source(source.source.rstrip())
+    lines = list(source_without_newline)
+
+    assert lines == list(source)

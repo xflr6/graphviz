@@ -20,6 +20,9 @@ class Base:
 
     source: str
 
+    def __iter__(self):
+        raise NotImplementedError('must be implemented by subclasses')
+
     _engine = 'dot'
 
     _format = 'pdf'
@@ -177,7 +180,7 @@ class File(Base):
         if format is None:
             format = self._format
 
-        data = self.source.encode(self._encoding)
+        data = (uline.encode(self._encoding) for uline in self)
 
         out = backend.pipe(self._engine, format, data,
                            renderer=renderer, formatter=formatter,
@@ -207,11 +210,10 @@ class File(Base):
         filepath = self.filepath
         tools.mkdirs(filepath)
 
-        log.debug('write %d bytes to %r', len(self.source), filepath)
+        log.debug('write lines to %r', filepath)
         with open(filepath, 'w', encoding=self.encoding) as fd:
-            fd.write(self.source)
-            if not self.source.endswith('\n'):
-                fd.write('\n')
+            for uline in self:
+                fd.write(uline)
 
         return filepath
 
@@ -378,3 +380,11 @@ class Source(File):
         result = super()._kwargs()
         result['source'] = self.source
         return result
+
+    def __iter__(self):
+        lines = self.source.splitlines(keepends=True)
+        for line in lines[:-1]:
+            yield line
+        for line in lines[-1:]:
+            suffix = '\n' if not line.endswith('\n') else ''
+            yield line + suffix
