@@ -6,13 +6,13 @@ Development
 Installation
 ------------
 
-Install in a venv_ in development mode (``pip install -e .[dev,test,docs]``):
+Install in a venv_ in development mode:
 
 .. code:: bash
 
     $ python -m venv .venv
     $ source .venv/bin/activate  # Windows: .venv\Script\activate.bat
-    $ python -m pip install -r requirements.txt
+    $ python -m pip install -r requirements.txt  # pip install -e .[dev,test,docs]
 
 Tests
 -----
