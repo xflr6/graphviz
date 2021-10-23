@@ -23,7 +23,7 @@ Tests
 
 .. code:: bash
 
-    $ run-tests.py
+    $ ./run-tests.py
 
 **Run the tests** with tox_ (in a virtualenv_):
 
