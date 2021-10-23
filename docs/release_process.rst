@@ -35,6 +35,7 @@ Run the tests and build the docs:
     $ cd docs
     $ python -m sphinx . _build
     $ cd ..
+    $ git clean -f -d -x  # remove all untracked files and directories
 
 Commit to ``release`` branch and push to ``origin``:
 
