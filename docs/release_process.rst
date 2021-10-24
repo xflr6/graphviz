@@ -44,8 +44,9 @@ Commit to ``release`` branch and push to ``origin``:
     $ git commit -m "release $MAJOR.$MINOR[.$BUGFIX]"
     $ git push
 
-- Check build `workflow release <https://github.com/xflr6/graphviz/actions?query=branch%3Arelease>`_
-- Check build `test coverage <https://app.codecov.io/gh/xflr6/graphviz/branch/release>`_
+- Check GitHub Actions ``relase`` `Build workflow 
+  <https://github.com/xflr6/graphviz/actions?query=branch%3Arelease>`_
+- Check ``release`` build `test coverage <https://app.codecov.io/gh/xflr6/graphviz/branch/release>`_
 
 Build the release:
 
