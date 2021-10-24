@@ -204,7 +204,7 @@ def test_from_file(tmp_path, filename='hello.gv', directory='source_hello',
 
 
 def test_source_iter(source):
-    source_without_newline = Source(source.source.rstrip())
+    source_without_newline = Source(source.source + source.source.rstrip())
     lines = list(source_without_newline)
 
-    assert lines == list(source)
+    assert lines == list(source) * 2
