@@ -10,7 +10,7 @@ import subprocess
 
 import pytest
 
-from graphviz.backend import (run, render, pipe, unflatten, version, view,
+from graphviz.backend import (run_check, render, pipe, unflatten, version, view,
                               ExecutableNotFound, RequiredArgumentError)
 
 import utils
@@ -34,17 +34,17 @@ else:
 
 def test_run_check_false_raises():
     with pytest.raises(NotImplementedError, match=r'must be True'):
-        run([], check=False)
+        run_check([], check=False)
 
 
 @pytest.mark.exe
-def test_run_oserror():
+def test_run_check_oserror():
     with pytest.raises(OSError) as e:
-        run([''])
+        run_check([''])
     assert e.value.errno in (errno.EACCES, errno.EINVAL)
 
 
-def test_run_input_lines_mocked(mocker, Popen, line=b'sp\xc3\xa4m'):  # noqa: N803
+def test_run_check_input_lines_mocked(mocker, Popen, line=b'sp\xc3\xa4m'):  # noqa: N803
     mock_sys_stderr = mocker.patch('sys.stderr', autospec=True,
                                    **{'flush': mocker.Mock(),
                                       'encoding': mocker.sentinel.encoding})
@@ -59,7 +59,7 @@ def test_run_input_lines_mocked(mocker, Popen, line=b'sp\xc3\xa4m'):  # noqa: N8
     popen.stdin = mocker.create_autospec(io.BytesIO, instance=True)
     popen.communicate.return_value = (mock_out, mock_err)
 
-    result = run(popen.args, input_lines=iter([line]), capture_output=True)
+    result = run_check(popen.args, input_lines=iter([line]), capture_output=True)
 
     # subprocess.CompletedProcess.__eq__() is not implemented
     assert isinstance(result, subprocess.CompletedProcess)

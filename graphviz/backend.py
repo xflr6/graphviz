@@ -179,7 +179,7 @@ def render(engine: str, format: str,
     else:
         cwd = None
 
-    run(cmd, capture_output=True, cwd=cwd, quiet=quiet)
+    run_check(cmd, capture_output=True, cwd=cwd, quiet=quiet)
     return rendered
 
 
@@ -220,7 +220,9 @@ def pipe(engine: str, format: str, data: bytes,
         The layout command is started from the current directory.
     """
     cmd = command(engine, format, renderer=renderer, formatter=formatter)
-    proc = run(cmd, input=data, capture_output=True, quiet=quiet)
+    kwargs = {'input': data}
+
+    proc = run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
     return proc.stdout
 
 
@@ -264,8 +266,9 @@ def pipe_string(engine: str, format: str, input_string: str,
         The layout command is started from the current directory.
     """
     cmd = command(engine, format, renderer=renderer, formatter=formatter)
-    proc = run(cmd, input=input_string, capture_output=True, quiet=quiet,
-               encoding=encoding)
+    kwargs = {'input': input_string, 'encoding': encoding}
+
+    proc = run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
     return proc.stdout
 
 
@@ -309,8 +312,9 @@ def pipe_lines(engine: str, format: str, input_lines: typing.Iterator[str],
         The layout command is started from the current directory.
     """
     cmd = command(engine, format, renderer=renderer, formatter=formatter)
-    input_lines = (line.encode(input_encoding) for line in input_lines)
-    proc = run(cmd, input_lines=input_lines, capture_output=True, quiet=quiet)
+    kwargs = {'input_lines': (line.encode(input_encoding) for line in input_lines)}
+
+    proc = run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
     return proc.stdout
 
 
@@ -354,8 +358,9 @@ def pipe_lines_string(engine: str, format: str, input_lines: typing.Iterator[str
         The layout command is started from the current directory.
     """
     cmd = command(engine, format, renderer=renderer, formatter=formatter)
-    proc = run(cmd, input_lines=input_lines, capture_output=True, quiet=quiet,
-               encoding=encoding)
+    kwargs = {'input_lines': input_lines, 'encoding': encoding}
+
+    proc = run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
     return proc.stdout
 
 
@@ -401,8 +406,7 @@ def unflatten(source: str,
     if chain is not None:
         cmd += ['-c', str(chain)]
 
-    proc = run(cmd, input=source, capture_output=True, encoding=encoding)
-
+    proc = run_check(cmd, input=source, capture_output=True, encoding=encoding)
     return proc.stdout
 
 
@@ -432,7 +436,7 @@ def version() -> typing.Tuple[int, ...]:
     """
     cmd = [DOT_BINARY, '-V']
     log.debug('run %r', cmd)
-    proc = run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding='ascii')
+    proc = run_check(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding='ascii')
 
     ma = re.search(r'graphviz version'
                    r' '
@@ -451,13 +455,16 @@ def version() -> typing.Tuple[int, ...]:
     return tuple(int(d) for d in ma.groups() if d is not None)
 
 
-def run(cmd: typing.Sequence[typing.Union[os.PathLike, str]],
-        *, input_lines:
-            typing.Optional[typing.Union[typing.Iterator[str],
-                                         typing.Iterator[bytes]]] = None,
+BytesOrStrIterator = typing.Union[typing.Iterator[str],
+                                  typing.Iterator[bytes]]
+
+
+def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]],
+              *, input_lines: typing.Optional[BytesOrStrIterator] = None,
         capture_output: bool = False,
         quiet: bool = False, **kwargs) -> subprocess.CompletedProcess:
-    """Run the command described by ``cmd`` and return its completed process.
+    """Run the command described by ``cmd``
+        with ``check=True`` and return its completed process.
 
     Raises:
         CalledProcessError: if the returncode of the subprocess is non-zero.
