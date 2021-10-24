@@ -146,10 +146,9 @@ def test_render_img(capsys, tmp_path, files_path, engine='dot', format_='pdf'):
 
 
 def test_render_mocked(capsys, mocker, run, quiet):  # noqa: N803
-    run.return_value = mocker.create_autospec(subprocess.CompletedProcess,
-                                              returncode=0,
-                                              stdout='stdout',
-                                              stderr='stderr')
+    run.return_value = subprocess.CompletedProcess(['mocked'], returncode=0,
+                                                   stdout='stdout',
+                                                   stderr='stderr')
 
     assert render('dot', 'pdf', 'nonfilepath', quiet=quiet) == 'nonfilepath.pdf'
 
@@ -260,10 +259,9 @@ def test_unflatten(source, kwargs, expected):
 
 
 def test_unflatten_mocked(capsys, mocker, run):
-    run.return_value = mocker.create_autospec(subprocess.CompletedProcess,
-                                              returncode=0,
-                                              stdout='nonresult',
-                                              stderr='')
+    run.return_value = subprocess.CompletedProcess(['mocked'], returncode=0,
+                                                   stdout='nonresult',
+                                                   stderr='')
 
     assert unflatten('nonsource') == 'nonresult'
     run.assert_called_once_with([UNFLATTEN_BINARY],
@@ -291,10 +289,9 @@ def test_version(capsys):
 
 
 def test_version_parsefail_mocked(mocker, run):  # noqa: N803
-    run.return_value = mocker.create_autospec(subprocess.CompletedProcess,
-                                              returncode=0,
-                                              stdout='nonversioninfo',
-                                              stderr=None)
+    run.return_value = subprocess.CompletedProcess(['mocked'], returncode=0,
+                                                   stdout='nonversioninfo',
+                                                   stderr=None)
 
     with pytest.raises(RuntimeError, match=r'nonversioninfo'):
         version()
@@ -316,9 +313,8 @@ def test_version_parsefail_mocked(mocker, run):  # noqa: N803
     ('dot - graphviz version 2.44.2~dev.20200704.1652 (mocked)\n', (2, 44, 2)),
 ])
 def test_version_mocked(mocker, run, stdout, expected):  # noqa: N803
-    run.return_value = mocker.create_autospec(subprocess.CompletedProcess,
-                                              returncode=0,
-                                              stdout=stdout, stderr=None)
+    run.return_value = subprocess.CompletedProcess(['mocked'], returncode=0,
+                                                   stdout=stdout, stderr=None)
 
     assert version() == expected
 
