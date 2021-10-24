@@ -106,8 +106,7 @@ def command(engine: str, format_: str,
             *, renderer: typing.Optional[str] = None,
             formatter: typing.Optional[str] = None
             ) -> typing.List[typing.Union[pathlib.Path, str]]:
-    """Return two-tuple of args list for ``subprocess.Popen``
-        and name of the rendered file (or None if ``filepath`` is None)."""
+    """Return ``subprocess.Popen`` args list for rendering."""
     if formatter is not None and renderer is None:
         raise RequiredArgumentError('formatter given without renderer')
 
