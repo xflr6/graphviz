@@ -115,11 +115,15 @@ Verify publication (install in default environment):
 
 - Check `PyPI files <https://pypi.org/project/graphviz/#files>`_
 - Check Read the Docs `builds <https://readthedocs.org/projects/graphviz/builds/>`_
+- Check `stable release notes <https://graphviz.readthedocs.io/en/stable/changelog.html>`_
+- Check `latest release notes <https://graphviz.readthedocs.io/en/latest/changelog.html>`_
 
 .. code:: bash
 
     $ pip install -U graphviz
     $ python -c "import graphviz; print((graphviz.__version__, graphviz.version()))"
+
+- Check downstream `conda-forge release <https://github.com/conda-forge/python-graphviz-feedstock>`_
 
 
 .. _twine: https://twine.readthedocs.io/en/latest/
