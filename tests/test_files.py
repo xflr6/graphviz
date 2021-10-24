@@ -5,7 +5,7 @@ import re
 
 import pytest
 
-from graphviz.files import Source
+from graphviz.files import Base, Source
 
 SOURCE = {'source': 'digraph { hello -> world }\n',
           'filename': 'hello.gv', 'directory': 'test-output',
@@ -15,6 +15,12 @@ SOURCE = {'source': 'digraph { hello -> world }\n',
 @pytest.fixture(scope='module')
 def source():
     return Source(**SOURCE)
+
+
+def test_base_iter():
+    base_inst = Base()
+    with pytest.raises(NotImplementedError, match=r'subclasses'):
+        iter(base_inst)
 
 
 def test_engine(source):
