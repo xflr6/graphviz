@@ -102,11 +102,12 @@ PLATFORM = platform.system().lower()
 log = logging.getLogger(__name__)
 
 
-def command(engine: str, format_: str, filepath=None,
-            renderer: typing.Optional[str] = None,
-            formatter: typing.Optional[str] = None):
-    """Return args list for ``subprocess.Popen``
-        and name of the rendered file."""
+def command(engine: str, format_: str,
+            *, renderer: typing.Optional[str] = None,
+            formatter: typing.Optional[str] = None
+            ) -> typing.List[typing.Union[pathlib.Path, str]]:
+    """Return two-tuple of args list for ``subprocess.Popen``
+        and name of the rendered file (or None if ``filepath`` is None)."""
     if formatter is not None and renderer is None:
         raise RequiredArgumentError('formatter given without renderer')
 
@@ -121,23 +122,15 @@ def command(engine: str, format_: str, filepath=None,
 
     output_format = [f for f in (format_, renderer, formatter) if f is not None]
     output_format_flag = ':'.join(output_format)
-    cmd = [DOT_BINARY, f'-K{engine}', f'-T{output_format_flag}']
-
-    if filepath is None:
-        rendered = None
-    else:
-        cmd.extend(['-O', filepath])
-        suffix = '.'.join(reversed(output_format))
-        rendered = f'{filepath}.{suffix}'
-
-    return cmd, rendered
+    return [DOT_BINARY, f'-K{engine}', f'-T{output_format_flag}']
 
 
 class RequiredArgumentError(Exception):
     """Exception raised if a required argument is missing (i.e. ``None``)."""
 
 
-def render(engine: str, format: str, filepath,
+def render(engine: str, format: str,
+           filepath: typing.Union[pathlib.Path, str],
            renderer: typing.Optional[str] = None,
            formatter: typing.Optional[str] = None,
            quiet: bool = False) -> str:
@@ -174,8 +167,12 @@ def render(engine: str, format: str, filepath,
     dirname, filename = os.path.split(filepath)
     del filepath
 
-    cmd, rendered = command(engine, format, filename, renderer, formatter)
-    assert rendered is not None, 'rendered is None only if filepath is as well'
+    cmd = command(engine, format, renderer=renderer, formatter=formatter)
+    cmd.extend(['-O', filename])
+
+    suffix = '.'.join(f for f in (formatter, renderer, format) if f is not None)
+    rendered = f'{filename}.{suffix}'
+
     if dirname:
         cwd = dirname
         rendered = os.path.join(dirname, rendered)
@@ -221,7 +218,7 @@ def pipe(engine: str, format: str, data: bytes,
     Note:
         The layout command is started from the current directory.
     """
-    cmd, _ = command(engine, format, None, renderer, formatter)
+    cmd = command(engine, format, renderer=renderer, formatter=formatter)
     proc = run(cmd, input=data, capture_output=True, quiet=quiet)
     return proc.stdout
 
