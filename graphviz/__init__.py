@@ -37,7 +37,7 @@ __all__ = ['Graph', 'Digraph',
            'escape', 'nohtml',
            'render', 'pipe', 'unflatten', 'version', 'view',
            'ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
-           'ExecutableNotFound', 'RequiredArgumentError',
+           'RequiredArgumentError', 'ExecutableNotFound',
            'set_default_engine', 'set_default_format']
 
 __title__ = 'graphviz'

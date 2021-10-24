@@ -14,8 +14,9 @@ from . import tools
 
 __all__ = ['DOT_BINARY', 'UNFLATTEN_BINARY',
            'ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
-           'ExecutableNotFound', 'RequiredArgumentError',
-           'render', 'pipe', 'unflatten', 'version', 'view']
+           'RequiredArgumentError',
+           'render', 'pipe', 'unflatten', 'version', 'view',
+           'ExecutableNotFound']
 
 #: :class:`pathlib.Path` of layout command (``Path('dot')``).
 DOT_BINARY = pathlib.Path('dot')
@@ -101,28 +102,6 @@ PLATFORM = platform.system().lower()
 log = logging.getLogger(__name__)
 
 
-class ExecutableNotFound(RuntimeError):
-    """Exception raised if the Graphviz executable is not found."""
-
-    _msg = ('failed to execute {!r}, '
-            'make sure the Graphviz executables are on your systems\' PATH')
-
-    def __init__(self, args):
-        super().__init__(self._msg.format(*args))
-
-
-class RequiredArgumentError(Exception):
-    """Exception raised if a required argument is missing (i.e. ``None``)."""
-
-
-class CalledProcessError(subprocess.CalledProcessError):
-    """Exception raised if the returncode of the subprocess is non-zero."""
-
-    def __str__(self) -> 'str':
-        s = super().__str__()
-        return f'{s} [stderr: {self.stderr!r}]'
-
-
 def command(engine: str, format_: str, filepath=None,
             renderer: typing.Optional[str] = None,
             formatter: typing.Optional[str] = None):
@@ -154,75 +133,8 @@ def command(engine: str, format_: str, filepath=None,
     return cmd, rendered
 
 
-if PLATFORM == 'windows':  # pragma: no cover
-    def get_startupinfo():
-        """Return subprocess.STARTUPINFO instance
-            hiding the console window."""
-        startupinfo = subprocess.STARTUPINFO()  # pytype: disable=module-attr
-        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW  # pytype: disable=module-attr
-        startupinfo.wShowWindow = subprocess.SW_HIDE  # pytype: disable=module-attr
-        return startupinfo
-else:
-    def get_startupinfo():
-        """Return None for startupinfo argument of ``subprocess.Popen``."""
-        return None
-
-
-def run(cmd: typing.Sequence[typing.Union[pathlib.Path, str]],
-        *, capture_output: bool = False,
-        quiet: bool = False, **kwargs) -> subprocess.CompletedProcess:
-    """Run the command described by ``cmd`` and return its completed process.
-
-    Raises:
-        CalledProcessError: if the returncode of the subprocess is non-zero.
-    """
-    log.debug('run %r', cmd)
-
-    if not kwargs.pop('check', True):
-        raise NotImplementedError('check must be True or omited')
-
-    input_lines = (kwargs.pop('input')
-                   if (kwargs.get('input') is not None
-                       and iter(kwargs['input']) is kwargs['input'])
-                   else None)
-
-    if capture_output:  # Python 3.6 compat
-        kwargs['stdout'] = kwargs['stderr'] = subprocess.PIPE
-
-    kwargs.setdefault('startupinfo', get_startupinfo())
-
-    try:
-        if input_lines is not None:
-            popen = subprocess.Popen(cmd, stdin=subprocess.PIPE, **kwargs)
-            stdin_write = popen.stdin.write
-            for line in input_lines:
-                stdin_write(line)
-            stdout, stderr = popen.communicate()
-            proc = subprocess.CompletedProcess(popen.args, popen.returncode,
-                                               stdout=stdout, stderr=stderr)
-        else:
-            proc = subprocess.run(cmd, **kwargs)
-    except OSError as e:
-        if e.errno == errno.ENOENT:
-            raise ExecutableNotFound(cmd) from e
-        else:
-            raise
-
-    if not quiet and proc.stderr:
-        stderr = proc.stderr
-        if isinstance(stderr, bytes):
-            stderr_encoding = (getattr(sys.stderr, 'encoding', None)
-                               or sys.getdefaultencoding())
-            stderr = stderr.decode(stderr_encoding)
-        sys.stderr.write(stderr)
-        sys.stderr.flush()
-
-    try:
-        proc.check_returncode()
-    except subprocess.CalledProcessError as e:
-        raise CalledProcessError(*e.args)
-
-    return proc
+class RequiredArgumentError(Exception):
+    """Exception raised if a required argument is missing (i.e. ``None``)."""
 
 
 def render(engine: str, format: str, filepath,
@@ -458,3 +370,92 @@ def view_windows(filepath, *, quiet: bool) -> None:
     filepath = os.path.normpath(filepath)
     log.debug('view: %r', filepath)
     os.startfile(filepath)  # pytype: disable=module-attr
+
+
+def run(cmd: typing.Sequence[typing.Union[pathlib.Path, str]],
+        *, capture_output: bool = False,
+        quiet: bool = False, **kwargs) -> subprocess.CompletedProcess:
+    """Run the command described by ``cmd`` and return its completed process.
+
+    Raises:
+        CalledProcessError: if the returncode of the subprocess is non-zero.
+    """
+    log.debug('run %r', cmd)
+
+    if not kwargs.pop('check', True):
+        raise NotImplementedError('check must be True or omited')
+
+    input_lines = (kwargs.pop('input')
+                   if (kwargs.get('input') is not None
+                       and iter(kwargs['input']) is kwargs['input'])
+                   else None)
+
+    if capture_output:  # Python 3.6 compat
+        kwargs['stdout'] = kwargs['stderr'] = subprocess.PIPE
+
+    kwargs.setdefault('startupinfo', get_startupinfo())
+
+    try:
+        if input_lines is not None:
+            popen = subprocess.Popen(cmd, stdin=subprocess.PIPE, **kwargs)
+            stdin_write = popen.stdin.write
+            for line in input_lines:
+                stdin_write(line)
+            stdout, stderr = popen.communicate()
+            proc = subprocess.CompletedProcess(popen.args, popen.returncode,
+                                               stdout=stdout, stderr=stderr)
+        else:
+            proc = subprocess.run(cmd, **kwargs)
+    except OSError as e:
+        if e.errno == errno.ENOENT:
+            raise ExecutableNotFound(cmd) from e
+        else:
+            raise
+
+    if not quiet and proc.stderr:
+        stderr = proc.stderr
+        if isinstance(stderr, bytes):
+            stderr_encoding = (getattr(sys.stderr, 'encoding', None)
+                               or sys.getdefaultencoding())
+            stderr = stderr.decode(stderr_encoding)
+        sys.stderr.write(stderr)
+        sys.stderr.flush()
+
+    try:
+        proc.check_returncode()
+    except subprocess.CalledProcessError as e:
+        raise CalledProcessError(*e.args)
+
+    return proc
+
+
+if PLATFORM == 'windows':  # pragma: no cover
+    def get_startupinfo():
+        """Return subprocess.STARTUPINFO instance
+            hiding the console window."""
+        startupinfo = subprocess.STARTUPINFO()  # pytype: disable=module-attr
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW  # pytype: disable=module-attr
+        startupinfo.wShowWindow = subprocess.SW_HIDE  # pytype: disable=module-attr
+        return startupinfo
+else:
+    def get_startupinfo() -> None:
+        """Return None for startupinfo argument of ``subprocess.Popen``."""
+        return None
+
+
+class ExecutableNotFound(RuntimeError):
+    """Exception raised if the Graphviz executable is not found."""
+
+    _msg = ('failed to execute {!r}, '
+            'make sure the Graphviz executables are on your systems\' PATH')
+
+    def __init__(self, args):
+        super().__init__(self._msg.format(*args))
+
+
+class CalledProcessError(subprocess.CalledProcessError):
+    """Exception raised if the returncode of the subprocess is non-zero."""
+
+    def __str__(self) -> 'str':
+        s = super().__str__()
+        return f'{s} [stderr: {self.stderr!r}]'
