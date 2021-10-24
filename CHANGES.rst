@@ -5,7 +5,33 @@ Changelog
 Version 0.18 (in development)
 -----------------------------
 
+(Mild) beavioural change: when iterating over a
+``Graph``, ``Digraph``, or ``Source`` instance,
+the yielded lines now include a final newline (``'\n'``).
+This follow iteration over ``file`` object lines in text mode.
+
+Add optional keyword-only ``encoding`` to ``pipe()``.
+Returns the decoded stdout from the rendering process
+(e.g. ``format='svg'``).
+Delegates encoding/decoding to ``subprocess`` in the common case
+(input and output encoding are the same, e.g. default ``encoding='utf-8'``).
+
+Add ``pipe_string()``, ``pipe_lines()``, and ``pipe_lines_string()``.
+Pipe ``input_string``, return ``string``.
+Pipe ``input_lines`` incrementally, return ``bytes``.
+Pipe ``input_lines`` incrementally, return ``string``.
+
+Add ``set_default_engine()`` and ``set_default_format()``
+
 Add ``backend.DOT_BINARY`` and ``backend.UNFLATTEN_BINARY``.
+
+Improve test separation.
+
+Add ``pytype`` checking to Build workflow. Extend type annotations.
+
+Improve documentation and examples.
+
+Add development docs. Document release process.
 
 
 Version 0.17
