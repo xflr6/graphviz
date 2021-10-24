@@ -14,7 +14,7 @@ from . import tools
 
 __all__ = ['DOT_BINARY', 'UNFLATTEN_BINARY',
            'ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
-           'ExecutableNotFound', 'RequiredArgumentError'
+           'ExecutableNotFound', 'RequiredArgumentError',
            'render', 'pipe', 'unflatten', 'version', 'view']
 
 #: :class:`pathlib.Path` of layout command (``Path('dot')``).
@@ -23,7 +23,7 @@ DOT_BINARY = pathlib.Path('dot')
 #: :class:`pathlib.Path` of unflatten command (``Path('unflatten')``).
 UNFLATTEN_BINARY = pathlib.Path('unflatten')
 
-ENGINES = {'dot', # http://www.graphviz.org/pdf/dot.1.pdf
+ENGINES = {'dot',  # http://www.graphviz.org/pdf/dot.1.pdf
            'neato',
            'twopi',
            'circo',
@@ -33,7 +33,7 @@ ENGINES = {'dot', # http://www.graphviz.org/pdf/dot.1.pdf
            'osage'}
 
 
-FORMATS = {'bmp', # http://www.graphviz.org/doc/info/output.html
+FORMATS = {'bmp',  # http://www.graphviz.org/doc/info/output.html
            'canon', 'dot', 'gv', 'xdot', 'xdot1.2', 'xdot1.4',
            'cgimage',
            'cmap',
@@ -202,7 +202,6 @@ def run(cmd: typing.Sequence[typing.Union[pathlib.Path, str]],
                                                stdout=stdout, stderr=stderr)
         else:
             proc = subprocess.run(cmd, **kwargs)
-
     except OSError as e:
         if e.errno == errno.ENOENT:
             raise ExecutableNotFound(cmd) from e
@@ -317,7 +316,7 @@ def pipe(engine: str, format: str, data: bytes,
 
 def unflatten(source: str,
               stagger: typing.Optional[int] = None,
-              fanout: bool  = False,
+              fanout: bool = False,
               chain: typing.Optional[int] = None,
               encoding: str = ENCODING) -> str:
     """Return DOT ``source`` piped through Graphviz *unflatten* preprocessor.
