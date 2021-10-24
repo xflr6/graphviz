@@ -145,7 +145,7 @@ def test_render_img(capsys, tmp_path, files_path, engine='dot', format_='pdf'):
     assert capsys.readouterr() == ('', '')
 
 
-def test_render_mocked(capsys, mocker, run, quiet):  # noqa: N803
+def test_render_mocked(capsys, mocker, run, quiet):
     run.return_value = subprocess.CompletedProcess(mocker.sentinel.cmd,
                                                    returncode=0,
                                                    stdout='stdout',
@@ -291,7 +291,7 @@ def test_version(capsys):
     assert capsys.readouterr() == ('', '')
 
 
-def test_version_parsefail_mocked(mocker, run):  # noqa: N803
+def test_version_parsefail_mocked(mocker, run):
     run.return_value = subprocess.CompletedProcess(mocker.sentinel.cmd,
                                                    returncode=0,
                                                    stdout='nonversioninfo',
@@ -316,7 +316,7 @@ def test_version_parsefail_mocked(mocker, run):  # noqa: N803
     ('dot - graphviz version 2.44.1 (mocked)\n', (2, 44, 1)),
     ('dot - graphviz version 2.44.2~dev.20200704.1652 (mocked)\n', (2, 44, 2)),
 ])
-def test_version_mocked(mocker, run, stdout, expected):  # noqa: N803
+def test_version_mocked(mocker, run, stdout, expected):
     run.return_value = subprocess.CompletedProcess(mocker.sentinel.cmd,
                                                    returncode=0,
                                                    stdout=stdout, stderr=None)
