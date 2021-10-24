@@ -117,7 +117,7 @@ class RequiredArgumentError(Exception):
 
 class CalledProcessError(subprocess.CalledProcessError):
 
-    def __str__(self):
+    def __str__(self) -> 'str':
         s = super().__str__()
         return f'{s} [stderr: {self.stderr!r}]'
 
@@ -167,11 +167,19 @@ else:
         return None
 
 
-def subprocess_run(cmd, *args, quiet: bool = False, **kwargs):
+def subprocess_run(cmd, *, capture_output: bool = False, quiet: bool = False, **kwargs):
+    """Run the command described by cmd and return its completed process."""
     log.debug('run %r', cmd)
-    try:        
+
+    if not kwargs.pop('check', True):
+        raise NotImplementedError('check must be True or omited')
+
+    if capture_output:  # Python 3.6 compat
+        kwargs['stdout'] = kwargs['stderr'] = subprocess.PIPE
+
+    try:
         proc = subprocess.run(cmd,
-                              *args,
+                              check=True,
                               startupinfo=get_startupinfo(),
                               **kwargs)
     except OSError as e:
@@ -280,12 +288,7 @@ def render(engine: str, format: str, filepath,
     else:
         cwd = None
 
-    subprocess_run(cmd,
-                   check=True,
-                   stdout=subprocess.PIPE,
-                   stderr=subprocess.PIPE,
-                   cwd=cwd,
-                   quiet=quiet)
+    subprocess_run(cmd, capture_output=True, cwd=cwd, quiet=quiet)
     return rendered
 
 
@@ -371,12 +374,7 @@ def unflatten(source: str,
     if chain is not None:
         cmd += ['-c', str(chain)]
 
-    proc = subprocess_run(cmd,
-                          check=True,
-                          input=source,
-                          stdout=subprocess.PIPE,
-                          stderr=subprocess.PIPE,
-                          encoding=encoding)
+    proc = subprocess_run(cmd, input=source, capture_output=True, encoding=encoding)
 
     return proc.stdout
 
@@ -407,11 +405,7 @@ def version() -> typing.Tuple[int, ...]:
     """
     cmd = [DOT_BINARY, '-V']
     log.debug('run %r', cmd)
-    proc = subprocess_run(cmd,
-                          check=True,
-                          stdout=subprocess.PIPE,
-                          stderr=subprocess.STDOUT,
-                          encoding='ascii')
+    proc = subprocess_run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding='ascii')
 
     ma = re.search(r'graphviz version'
                    r' '
