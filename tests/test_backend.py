@@ -146,7 +146,8 @@ def test_render_img(capsys, tmp_path, files_path, engine='dot', format_='pdf'):
 
 
 def test_render_mocked(capsys, mocker, run, quiet):  # noqa: N803
-    run.return_value = subprocess.CompletedProcess(['mocked'], returncode=0,
+    run.return_value = subprocess.CompletedProcess(mocker.sentinel.cmd,
+                                                   returncode=0,
                                                    stdout='stdout',
                                                    stderr='stderr')
 
@@ -259,11 +260,13 @@ def test_unflatten(source, kwargs, expected):
 
 
 def test_unflatten_mocked(capsys, mocker, run):
-    run.return_value = subprocess.CompletedProcess(['mocked'], returncode=0,
+    run.return_value = subprocess.CompletedProcess(mocker.sentinel.cmd,
+                                                   returncode=0,
                                                    stdout='nonresult',
                                                    stderr='')
 
     assert unflatten('nonsource') == 'nonresult'
+
     run.assert_called_once_with([UNFLATTEN_BINARY],
                                 check=True,
                                 input='nonsource',
@@ -289,7 +292,8 @@ def test_version(capsys):
 
 
 def test_version_parsefail_mocked(mocker, run):  # noqa: N803
-    run.return_value = subprocess.CompletedProcess(['mocked'], returncode=0,
+    run.return_value = subprocess.CompletedProcess(mocker.sentinel.cmd,
+                                                   returncode=0,
                                                    stdout='nonversioninfo',
                                                    stderr=None)
 
@@ -313,7 +317,8 @@ def test_version_parsefail_mocked(mocker, run):  # noqa: N803
     ('dot - graphviz version 2.44.2~dev.20200704.1652 (mocked)\n', (2, 44, 2)),
 ])
 def test_version_mocked(mocker, run, stdout, expected):  # noqa: N803
-    run.return_value = subprocess.CompletedProcess(['mocked'], returncode=0,
+    run.return_value = subprocess.CompletedProcess(mocker.sentinel.cmd,
+                                                   returncode=0,
                                                    stdout=stdout, stderr=None)
 
     assert version() == expected
