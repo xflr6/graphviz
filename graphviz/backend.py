@@ -167,21 +167,35 @@ else:
         return None
 
 
-def subprocess_run(cmd, *, capture_output: bool = False, quiet: bool = False, **kwargs):
+def run(cmd, *, capture_output: bool = False, quiet: bool = False, **kwargs):
     """Run the command described by cmd and return its completed process."""
     log.debug('run %r', cmd)
 
     if not kwargs.pop('check', True):
         raise NotImplementedError('check must be True or omited')
 
+    input_lines = (kwargs.pop('input')
+                   if (kwargs.get('input') is not None
+                       and iter(kwargs['input']) is kwargs['input'])
+                   else None)
+
     if capture_output:  # Python 3.6 compat
         kwargs['stdout'] = kwargs['stderr'] = subprocess.PIPE
 
+    kwargs.setdefault('startupinfo', get_startupinfo())
+
     try:
-        proc = subprocess.run(cmd,
-                              check=True,
-                              startupinfo=get_startupinfo(),
-                              **kwargs)
+        if input_lines is not None:
+            popen = subprocess.Popen(cmd, stdin=subprocess.PIPE, **kwargs)
+            stdin_write = popen.stdin.write
+            for line in input_lines:
+                stdin_write(line)
+            stdout, stderr = popen.communicate()
+            proc = subprocess.CompletedProcess(popen.args, popen.returncode,
+                                               stdout=stdout, stderr=stderr)
+        else:
+            proc = subprocess.run(cmd, **kwargs)
+
     except OSError as e:
         if e.errno == errno.ENOENT:
             raise ExecutableNotFound(cmd) from e
@@ -189,58 +203,20 @@ def subprocess_run(cmd, *, capture_output: bool = False, quiet: bool = False, **
             raise
 
     if not quiet and proc.stderr:
-        err_encoding = (getattr(sys.stderr, 'encoding', None)
-                        or sys.getdefaultencoding())
-        stderr = (proc.stderr.decode(err_encoding)
-                  if isinstance(proc.stderr, bytes) else proc.stderr)
+        stderr = proc.stderr
+        if isinstance(stderr, bytes):
+            stderr_encoding = (getattr(sys.stderr, 'encoding', None)
+                               or sys.getdefaultencoding())
+            stderr = stderr.decode(stderr_encoding)
         sys.stderr.write(stderr)
         sys.stderr.flush()
 
-    return proc
-
-
-def run(cmd, input: typing.Optional[bytes] = None,
-        capture_output: bool = False,
-        check: bool = False,
-        quiet: bool = False,
-        **kwargs) -> typing.Tuple[bytes, bytes]:
-    """Run the command described by cmd
-            and return its ``(stdout, stderr)`` tuple."""
-    log.debug('run %r', cmd)
-
-    if input is not None:
-        kwargs['stdin'] = subprocess.PIPE
-
-    if capture_output:  # Python 3.6 compat
-        kwargs['stdout'] = kwargs['stderr'] = subprocess.PIPE
-
     try:
-        proc = subprocess.Popen(cmd, startupinfo=get_startupinfo(), **kwargs)
-    except OSError as e:
-        if e.errno == errno.ENOENT:
-            raise ExecutableNotFound(cmd) from e
-        else:
-            raise
+        proc.check_returncode()
+    except subprocess.CalledProcessError as e:
+        raise CalledProcessError(*e.args)
 
-    if input is not None and iter(input) is input:
-        stdin_write = proc.stdin.write
-        for chunk in input:
-            stdin_write(chunk)
-        input = None
-
-    out, err = proc.communicate(input)
-
-    if not quiet and err:
-        err_encoding = (getattr(sys.stderr, 'encoding', None)
-                        or sys.getdefaultencoding())
-        sys.stderr.write(err.decode(err_encoding))
-        sys.stderr.flush()
-
-    if check and proc.returncode:
-        raise CalledProcessError(proc.returncode, cmd,
-                                 output=out, stderr=err)
-
-    return out, err
+    return proc
 
 
 def render(engine: str, format: str, filepath,
@@ -288,7 +264,7 @@ def render(engine: str, format: str, filepath,
     else:
         cwd = None
 
-    subprocess_run(cmd, capture_output=True, cwd=cwd, quiet=quiet)
+    run(cmd, capture_output=True, cwd=cwd, quiet=quiet)
     return rendered
 
 
@@ -328,8 +304,8 @@ def pipe(engine: str, format: str, data: bytes,
         The layout command is started from the current directory.
     """
     cmd, _ = command(engine, format, None, renderer, formatter)
-    out, _ = run(cmd, input=data, capture_output=True, check=True, quiet=quiet)
-    return out
+    proc = run(cmd, input=data, capture_output=True, quiet=quiet)
+    return proc.stdout
 
 
 def unflatten(source: str,
@@ -374,7 +350,7 @@ def unflatten(source: str,
     if chain is not None:
         cmd += ['-c', str(chain)]
 
-    proc = subprocess_run(cmd, input=source, capture_output=True, encoding=encoding)
+    proc = run(cmd, input=source, capture_output=True, encoding=encoding)
 
     return proc.stdout
 
@@ -405,7 +381,7 @@ def version() -> typing.Tuple[int, ...]:
     """
     cmd = [DOT_BINARY, '-V']
     log.debug('run %r', cmd)
-    proc = subprocess_run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding='ascii')
+    proc = run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding='ascii')
 
     ma = re.search(r'graphviz version'
                    r' '

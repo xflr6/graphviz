@@ -1,6 +1,7 @@
 # test_backend.py
 
 import errno
+import io
 import pathlib
 import platform
 import re
@@ -31,6 +32,11 @@ else:
         assert startupinfo is None
 
 
+def test_run_check_false_raises():
+    with pytest.raises(NotImplementedError, match=r'must be True'):
+        run([], check=False)
+
+
 @pytest.mark.exe
 def test_run_oserror():
     with pytest.raises(OSError) as e:
@@ -38,13 +44,29 @@ def test_run_oserror():
     assert e.value.errno in (errno.EACCES, errno.EINVAL)
 
 
-def test_run_mocked(mocker, Popen, input= b'sp\xc3\xa4m'):
-    proc = Popen.return_value
-    proc.returncode = 0
-    mocks = [mocker.create_autospec(bytes, instance=True, name=n) for n in ('out', 'err')]
-    proc.communicate.return_value = mocks
+def test_run_input_lines_mocked(mocker, Popen, line=b'sp\xc3\xa4m'):  # noqa: N803
+    mock_sys_stderr = mocker.patch('sys.stderr', autospec=True,
+                                   **{'flush': mocker.Mock(),
+                                      'encoding': mocker.sentinel.encoding})
 
-    result = run(mocker.sentinel.cmd, input=input, capture_output=True)
+    mock_out = mocker.create_autospec(bytes, instance=True, name='mock_out')
+    mock_err = mocker.create_autospec(bytes, instance=True, name='mock_err',
+                                      **{'__len__.return_value': 1})
+
+    popen = Popen.return_value
+    popen.returncode = 0
+    popen.args = mocker.sentinel.cmd
+    popen.stdin = mocker.create_autospec(io.BytesIO, instance=True)
+    popen.communicate.return_value = (mock_out, mock_err)
+
+    result = run(popen.args, input=iter([line]), capture_output=True)
+
+    # subprocess.CompletedProcess.__eq__() is not implemented
+    assert isinstance(result, subprocess.CompletedProcess)
+    assert result.args is popen.args
+    assert result.returncode == popen.returncode
+    assert result.stdout is mock_out
+    assert result.stderr is mock_err
 
     Popen.assert_called_once_with(mocker.sentinel.cmd,
                                   stdin=subprocess.PIPE,
@@ -52,10 +74,11 @@ def test_run_mocked(mocker, Popen, input= b'sp\xc3\xa4m'):
                                   stderr=subprocess.PIPE,
                                   startupinfo=mocker.ANY)
     check_startupinfo(Popen.call_args.kwargs['startupinfo'])
-    proc.communicate.assert_called_once_with(input)
-    assert result == tuple(mocks)
-    for m in mocks:
-        m.decode.assert_not_called()
+    popen.communicate.assert_called_once_with()
+    mock_out.decode.assert_not_called()
+    mock_err.decode.assert_called_once_with(mocker.sentinel.encoding)
+    mock_sys_stderr.write.assert_called_once_with(mock_err.decode.return_value)
+    mock_sys_stderr.flush.assert_called_once_with()
 
 
 @pytest.mark.exe
@@ -154,7 +177,6 @@ def test_render_mocked(capsys, mocker, run, quiet):
     assert render('dot', 'pdf', 'nonfilepath', quiet=quiet) == 'nonfilepath.pdf'
 
     run.assert_called_once_with([DOT_BINARY, '-Kdot', '-Tpdf', '-O', 'nonfilepath'],
-                                check=True,
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
                                 cwd=None,
@@ -199,51 +221,56 @@ def test_pipe(capsys, engine, format_, renderer, formatter, pattern,
     assert capsys.readouterr() == ('', '')
 
 
-def test_pipe_pipe_invalid_data_mocked(mocker, Popen, quiet):  # noqa: N803
-    stderr = mocker.patch('sys.stderr', autospec=True,
-                          **{'flush': mocker.Mock(), 'encoding': 'nonencoding'})
-    proc = Popen.return_value
-    proc.returncode = mocker.sentinel.returncode
-    err = mocker.create_autospec(bytes, instance=True, name='err',
-                                 **{'__len__.return_value': 23})
-    out = mocker.create_autospec(bytes, instance=True, name='out')
-    proc.communicate.return_value = (out, err)
+def test_pipe_pipe_invalid_data_mocked(mocker, run, quiet):
+    mock_sys_stderr = mocker.patch('sys.stderr', autospec=True,
+                               **{'flush': mocker.Mock(),
+                                  'encoding': mocker.sentinel.encoding})
+
+    mock_out = mocker.create_autospec(bytes, instance=True, name='mock_out')
+    mock_err = mocker.create_autospec(bytes, instance=True, name='mock_err',
+                                      **{'__len__.return_value': 1})
+
+    run.return_value = subprocess.CompletedProcess(mocker.sentinel.cmd,
+                                                   returncode=5,
+                                                   stdout=mock_out,
+                                                   stderr=mock_err)
 
     with pytest.raises(subprocess.CalledProcessError) as e:
         pipe('dot', 'png', b'nongraph', quiet=quiet)
 
-    assert e.value.returncode is mocker.sentinel.returncode
-    assert e.value.stderr is err
-    assert e.value.stdout is out
+    assert e.value.returncode == 5
+    assert e.value.cmd is mocker.sentinel.cmd
+    assert e.value.stdout is mock_out
+    assert e.value.stderr is mock_err
     e.value.stdout = mocker.sentinel.new_stdout
     assert e.value.stdout is mocker.sentinel.new_stdout
-    Popen.assert_called_once_with([DOT_BINARY, '-Kdot', '-Tpng'],
-                                  stdin=subprocess.PIPE,
-                                  stdout=subprocess.PIPE,
-                                  stderr=subprocess.PIPE,
-                                  startupinfo=mocker.ANY)
-    check_startupinfo(Popen.call_args.kwargs['startupinfo'])
-    proc.communicate.assert_called_once_with(b'nongraph')
+    run.assert_called_once_with([DOT_BINARY, '-Kdot', '-Tpng'],
+                                input=b'nongraph',
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE,
+                                startupinfo=mocker.ANY)
+    check_startupinfo(run.call_args.kwargs['startupinfo'])
     if not quiet:
-        err.decode.assert_called_once_with(stderr.encoding)
-        stderr.write.assert_called_once_with(err.decode.return_value)
-        stderr.flush.assert_called_once_with()
+        mock_out.decode.assert_not_called()
+        mock_err.decode.assert_called_once_with(mocker.sentinel.encoding)
+        mock_sys_stderr.write.assert_called_once_with(mock_err.decode.return_value)
+        mock_sys_stderr.flush.assert_called_once_with()
 
 
-def test_pipe_mocked(capsys, mocker, Popen, quiet):  # noqa: N803
-    proc = Popen.return_value
-    proc.returncode = 0
-    proc.communicate.return_value = (b'stdout', b'stderr')
+def test_pipe_mocked(capsys, mocker, run, quiet):
+    run.return_value = subprocess.CompletedProcess(mocker.sentinel.cmd,
+                                                   returncode=0,
+                                                   stdout=b'stdout',
+                                                   stderr=b'stderr')
 
     assert pipe('dot', 'png', b'nongraph', quiet=quiet) == b'stdout'
 
-    Popen.assert_called_once_with([DOT_BINARY, '-Kdot', '-Tpng'],
-                                  stdin=subprocess.PIPE,
-                                  stdout=subprocess.PIPE,
-                                  stderr=subprocess.PIPE,
-                                  startupinfo=mocker.ANY)
-    check_startupinfo(Popen.call_args.kwargs['startupinfo'])
-    proc.communicate.assert_called_once_with(b'nongraph')
+    run.assert_called_once_with([DOT_BINARY, '-Kdot', '-Tpng'],
+                                input=b'nongraph',
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE,
+                                startupinfo=mocker.ANY)
+    check_startupinfo(run.call_args.kwargs['startupinfo'])
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
@@ -268,7 +295,6 @@ def test_unflatten_mocked(capsys, mocker, run):
     assert unflatten('nonsource') == 'nonresult'
 
     run.assert_called_once_with([UNFLATTEN_BINARY],
-                                check=True,
                                 input='nonsource',
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
@@ -301,7 +327,6 @@ def test_version_parsefail_mocked(mocker, run):
         version()
 
     run.assert_called_once_with([DOT_BINARY, '-V'],
-                                check=True,
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT,
                                 startupinfo=mocker.ANY,
@@ -324,7 +349,6 @@ def test_version_mocked(mocker, run, stdout, expected):
     assert version() == expected
 
     run.assert_called_once_with([DOT_BINARY, '-V'],
-                                check=True,
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT,
                                 startupinfo=mocker.ANY,
