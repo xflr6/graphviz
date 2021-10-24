@@ -6,7 +6,7 @@ Development
 Installation
 ------------
 
-Install in a venv_ in development mode (includes all `extras_require`):
+Install in a venv_ in development mode (includes all ``extras_require``):
 
 .. code:: bash
 
