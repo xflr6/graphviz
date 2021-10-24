@@ -187,7 +187,8 @@ def pipe(engine: str, format: str, data: bytes,
          renderer: typing.Optional[str] = None,
          formatter: typing.Optional[str] = None,
          quiet: bool = False) -> bytes:
-    """Return ``data`` piped through Graphviz ``engine`` into ``format``.
+    """Return ``data`` (``bytes``) piped through Graphviz ``engine``
+        into ``format`` as ``bytes``.
 
     Args:
         engine: Layout engine for rendering (``'dot'``, ``'neato'``, ...).
@@ -228,7 +229,8 @@ def pipe_string(engine: str, format: str, input_string: str,
                 renderer: typing.Optional[str] = None,
                 formatter: typing.Optional[str] = None,
                 quiet: bool = False) -> str:
-    """Return ``data`` piped through Graphviz ``engine`` into ``format``.
+    """Return ``input_string`` piped through Graphviz ``engine``
+        into ``format`` as ``str``.
 
     Args:
         engine: Layout engine for rendering (``'dot'``, ``'neato'``, ...).
@@ -272,7 +274,8 @@ def pipe_lines(engine: str, format: str, input_lines: typing.Iterator[str],
                renderer: typing.Optional[str] = None,
                formatter: typing.Optional[str] = None,
                quiet: bool = False) -> bytes:
-    r"""Return ``data`` piped through Graphviz ``engine`` into ``format``.
+    r"""Return ``input_lines`` piped through Graphviz ``engine``
+        into ``format`` as ``bytes``.
 
     Args:
         engine: Layout engine for rendering (``'dot'``, ``'neato'``, ...).
@@ -316,7 +319,8 @@ def pipe_lines_string(engine: str, format: str, input_lines: typing.Iterator[str
                       renderer: typing.Optional[str] = None,
                       formatter: typing.Optional[str] = None,
                       quiet: bool = False) -> str:
-    r"""Return ``data`` piped through Graphviz ``engine`` into ``format``.
+    r"""Return ``input_lines`` piped through Graphviz ``engine``
+        into ``format`` as ``str``.
 
     Args:
         engine: Layout engine for rendering (``'dot'``, ``'neato'``, ...).
