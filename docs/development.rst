@@ -17,7 +17,7 @@ Install in a venv_ in development mode:
 Tests
 -----
 
-- GitHub Actions **`Build workflow <https://github.com/xflr6/graphviz/actions/workflows/build.yaml>`_**
+- GitHub Actions `Build workflow <https://github.com/xflr6/graphviz/actions/workflows/build.yaml>`_
   (Python 3.6 to 3.10, experimental: PyPy 3.8 to 3.8)
 
 **Run the tests** (in the current environment):
