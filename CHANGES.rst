@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.17.1 (in development)
--------------------------------
+Version 0.18 (in development)
+-----------------------------
 
 Add ``backend.DOT_BINARY`` and ``backend.UNFLATTEN_BINARY``.
 
