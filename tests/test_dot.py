@@ -46,13 +46,12 @@ def test_unflatten(cls):
 
 def test__repr_svg_(mocker, cls):
     c = cls()
-    kwargs = {'return_value.decode.return_value': mocker.sentinel.decoded}
-    pipe = mocker.patch.object(c, 'pipe', autospec=True, **kwargs)
+    pipe = mocker.patch.object(c, 'pipe', autospec=True,
+                               return_value=mocker.sentinel.string)
 
-    assert c._repr_svg_() is mocker.sentinel.decoded
+    assert c._repr_svg_() is mocker.sentinel.string
 
-    pipe.assert_called_once_with(format='svg')
-    pipe.return_value.decode.assert_called_once_with(c.encoding)
+    pipe.assert_called_once_with(format='svg', encoding=c.encoding)
 
 
 @pytest.mark.parametrize('keep_attrs', [False, True])

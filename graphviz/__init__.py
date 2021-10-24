@@ -25,7 +25,8 @@ digraph {
 }
 """
 
-from .backend import (render, pipe, unflatten, version, view,
+from .backend import (render, pipe, pipe_string, pipe_lines, pipe_lines_string,
+                      unflatten, version, view,
                       ENGINES, FORMATS, RENDERERS, FORMATTERS,
                       ExecutableNotFound, RequiredArgumentError)
 from .dot import Graph, Digraph
@@ -35,7 +36,8 @@ from .lang import escape, nohtml
 __all__ = ['Graph', 'Digraph',
            'Source',
            'escape', 'nohtml',
-           'render', 'pipe', 'unflatten', 'version', 'view',
+           'render', 'pipe', 'pipe_string', 'pipe_lines', 'pipe_lines_string',
+           'unflatten', 'version', 'view',
            'ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
            'RequiredArgumentError', 'ExecutableNotFound',
            'set_default_engine', 'set_default_format']

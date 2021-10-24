@@ -78,39 +78,37 @@ def test_unflatten(source):
 
 def test__repr_svg_(mocker, source):
     pipe = mocker.patch.object(source, 'pipe', autospec=True,
-                               **{'return_value.decode.return_value':
-                                  mocker.sentinel.decoded})
+                               return_value=mocker.sentinel.string)
 
-    assert source._repr_svg_() is mocker.sentinel.decoded
+    assert source._repr_svg_() is mocker.sentinel.string
 
-    pipe.assert_called_once_with(format='svg')
-    pipe.return_value.decode.assert_called_once_with(source.encoding)
+    pipe.assert_called_once_with(format='svg', encoding=source.encoding)
 
 
-def test_pipe_format(mocker, pipe, source, format_='svg'):
+def test_pipe_lines_format(mocker, pipe_lines, source, format_='svg'):
     assert source.format != format_
 
-    assert source.pipe(format=format_) is pipe.return_value
+    assert source.pipe(format=format_) is pipe_lines.return_value
 
-    pipe.assert_called_once_with(source.engine, format_, mocker.ANY,
-                                 renderer=None, formatter=None,
-                                 quiet=False)
-    _, _, data = pipe.call_args.args
-    lines = [uline.encode(source.encoding)
-             for uline in source.source.splitlines(keepends=True)]
-    assert list(data) == lines
+    pipe_lines.assert_called_once_with(source.engine, format_, mocker.ANY,
+                                       renderer=None, formatter=None,
+                                       input_encoding='utf-8',
+                                       quiet=False)
+    _, _, data = pipe_lines.call_args.args
+    expected_lines = source.source.splitlines(keepends=True)
+    assert list(data) == expected_lines
 
 
-def test_pipe(mocker, pipe, source):
-    assert source.pipe() is pipe.return_value
+def test_pipe_lines(mocker, pipe_lines, source):
+    assert source.pipe() is pipe_lines.return_value
 
-    pipe.assert_called_once_with(source.engine, source.format, mocker.ANY,
-                                 renderer=None, formatter=None,
-                                 quiet=False)
-    _, _, data = pipe.call_args.args
-    lines = [uline.encode(source.encoding)
-             for uline in source.source.splitlines(keepends=True)]
-    assert list(data) == lines
+    pipe_lines.assert_called_once_with(source.engine, source.format, mocker.ANY,
+                                       renderer=None, formatter=None,
+                                       input_encoding='utf-8',
+                                       quiet=False)
+    _, _, data = pipe_lines.call_args.args
+    expected_lines = source.source.splitlines(keepends=True)
+    assert list(data) == expected_lines
 
 
 def test_filepath(platform, source):

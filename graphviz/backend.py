@@ -15,7 +15,8 @@ from . import tools
 __all__ = ['DOT_BINARY', 'UNFLATTEN_BINARY',
            'ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
            'RequiredArgumentError',
-           'render', 'pipe', 'unflatten', 'version', 'view',
+           'render', 'pipe', 'pipe_string', 'pipe_lines', 'pipe_lines_string',
+           'unflatten', 'version', 'view',
            'ExecutableNotFound']
 
 #: :class:`pathlib.Path` of layout command (``Path('dot')``).
@@ -105,7 +106,7 @@ log = logging.getLogger(__name__)
 def command(engine: str, format_: str,
             *, renderer: typing.Optional[str] = None,
             formatter: typing.Optional[str] = None
-            ) -> typing.List[typing.Union[pathlib.Path, str]]:
+            ) -> typing.List[typing.Union[os.PathLike, str]]:
     """Return ``subprocess.Popen`` args list for rendering."""
     if formatter is not None and renderer is None:
         raise RequiredArgumentError('formatter given without renderer')
@@ -129,7 +130,7 @@ class RequiredArgumentError(Exception):
 
 
 def render(engine: str, format: str,
-           filepath: typing.Union[pathlib.Path, str],
+           filepath: typing.Union[os.PathLike, str],
            renderer: typing.Optional[str] = None,
            formatter: typing.Optional[str] = None,
            quiet: bool = False) -> str:
@@ -219,6 +220,138 @@ def pipe(engine: str, format: str, data: bytes,
     """
     cmd = command(engine, format, renderer=renderer, formatter=formatter)
     proc = run(cmd, input=data, capture_output=True, quiet=quiet)
+    return proc.stdout
+
+
+def pipe_string(engine: str, format: str, input_string: str,
+               *, encoding: str,
+                renderer: typing.Optional[str] = None,
+                formatter: typing.Optional[str] = None,
+                quiet: bool = False) -> str:
+    """Return ``data`` piped through Graphviz ``engine`` into ``format``.
+
+    Args:
+        engine: Layout engine for rendering (``'dot'``, ``'neato'``, ...).
+        format: Output format for rendering (``'pdf'``, ``'png'``, ...).
+        input_string: Binary (encoded) DOT source bytes to render.
+        encoding: Endcoding to en/decode subprocess stdin and stdout (required).
+        renderer: Output renderer (``'cairo'``, ``'gd'``, ...).
+        formatter: Output formatter (``'cairo'``, ``'gd'``, ...).
+        quiet: Suppress ``stderr`` output from the layout subprocess.
+
+    Returns:
+        Decoded stdout of the layout command.
+
+    Raises:
+        ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
+            are not known.
+        graphviz.RequiredArgumentError: If ``formatter`` is given
+            but ``renderer`` is None.
+        graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
+            is not found.
+        subprocess.CalledProcessError: If the returncode (exit status)
+            of the rendering 'dot' subprocess is non-zero.
+
+    Example:
+        >>> import graphviz
+        >>> graphviz.pipe_string('dot', 'svg', 'graph { spam }',
+        ...                      encoding='ascii')
+        '<?xml version=...'
+
+    Note:
+        The layout command is started from the current directory.
+    """
+    cmd = command(engine, format, renderer=renderer, formatter=formatter)
+    proc = run(cmd, input=input_string, capture_output=True, quiet=quiet,
+               encoding=encoding)
+    return proc.stdout
+
+
+def pipe_lines(engine: str, format: str, input_lines: typing.Iterator[str],
+               *, input_encoding: str,
+               renderer: typing.Optional[str] = None,
+               formatter: typing.Optional[str] = None,
+               quiet: bool = False) -> bytes:
+    r"""Return ``data`` piped through Graphviz ``engine`` into ``format``.
+
+    Args:
+        engine: Layout engine for rendering (``'dot'``, ``'neato'``, ...).
+        format: Output format for rendering (``'pdf'``, ``'png'``, ...).
+        input_lines: DOT source lines to render (including final newline).
+        input_encoding: Encode input_lines for subprocess stdin (required).
+        renderer: Output renderer (``'cairo'``, ``'gd'``, ...).
+        formatter: Output formatter (``'cairo'``, ``'gd'``, ...).
+        quiet: Suppress ``stderr`` output from the layout subprocess.
+
+    Returns:
+        Binary stdout of the layout command.
+
+    Raises:
+        ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
+            are not known.
+        graphviz.RequiredArgumentError: If ``formatter`` is given
+            but ``renderer`` is None.
+        graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
+            is not found.
+        subprocess.CalledProcessError: If the returncode (exit status)
+            of the rendering 'dot' subprocess is non-zero.
+
+    Example:
+        >>> import graphviz
+        >>> graphviz.pipe_lines('dot', 'svg', iter(['graph { spam }\n']),
+        ...                     input_encoding='ascii')
+        b'<?xml version=...'
+
+    Note:
+        The layout command is started from the current directory.
+    """
+    cmd = command(engine, format, renderer=renderer, formatter=formatter)
+    input_lines = (line.encode(input_encoding) for line in input_lines)
+    proc = run(cmd, input_lines=input_lines, capture_output=True, quiet=quiet)
+    return proc.stdout
+
+
+def pipe_lines_string(engine: str, format: str, input_lines: typing.Iterator[str],
+                      *, encoding: str,
+                      renderer: typing.Optional[str] = None,
+                      formatter: typing.Optional[str] = None,
+                      quiet: bool = False) -> str:
+    r"""Return ``data`` piped through Graphviz ``engine`` into ``format``.
+
+    Args:
+        engine: Layout engine for rendering (``'dot'``, ``'neato'``, ...).
+        format: Output format for rendering (``'pdf'``, ``'png'``, ...).
+        input_lines: DOT source lines to render (including final newline).
+        encoding: Endcoding to en/decode subprocess stdin and stdout (required).
+        renderer: Output renderer (``'cairo'``, ``'gd'``, ...).
+        formatter: Output formatter (``'cairo'``, ``'gd'``, ...).
+        quiet: Suppress ``stderr`` output from the layout subprocess.
+
+    Returns:
+        Decoded stdout of the layout command.
+
+    Raises:
+        ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
+            are not known.
+        graphviz.RequiredArgumentError: If ``formatter`` is given
+            but ``renderer`` is None.
+        graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
+            is not found.
+        subprocess.CalledProcessError: If the returncode (exit status)
+            of the rendering 'dot' subprocess is non-zero.
+
+    Example:
+        >>> import graphviz
+        >>> graphviz.pipe_lines_string('dot', 'svg', iter(['graph { spam }\n']),
+        ...                            encoding='ascii')
+        '<?xml version=...'
+
+    Note:
+        The layout command is started from the current directory.
+    """
+    cmd = command(engine, format, renderer=renderer, formatter=formatter)
+    proc = run(cmd, input_lines=input_lines, capture_output=True, quiet=quiet,
+               encoding=encoding)
     return proc.stdout
 
 
@@ -314,8 +447,11 @@ def version() -> typing.Tuple[int, ...]:
     return tuple(int(d) for d in ma.groups() if d is not None)
 
 
-def run(cmd: typing.Sequence[typing.Union[pathlib.Path, str]],
-        *, capture_output: bool = False,
+def run(cmd: typing.Sequence[typing.Union[os.PathLike, str]],
+        *, input_lines:
+            typing.Optional[typing.Union[typing.Iterator[str],
+                                         typing.Iterator[bytes]]] = None,
+        capture_output: bool = False,
         quiet: bool = False, **kwargs) -> subprocess.CompletedProcess:
     """Run the command described by ``cmd`` and return its completed process.
 
@@ -327,11 +463,6 @@ def run(cmd: typing.Sequence[typing.Union[pathlib.Path, str]],
     if not kwargs.pop('check', True):
         raise NotImplementedError('check must be True or omited')
 
-    input_lines = (kwargs.pop('input')
-                   if (kwargs.get('input') is not None
-                       and iter(kwargs['input']) is kwargs['input'])
-                   else None)
-
     if capture_output:  # Python 3.6 compat
         kwargs['stdout'] = kwargs['stderr'] = subprocess.PIPE
 
@@ -339,6 +470,8 @@ def run(cmd: typing.Sequence[typing.Union[pathlib.Path, str]],
 
     try:
         if input_lines is not None:
+            assert kwargs.get('input') is None
+            assert iter(input_lines) is input_lines
             popen = subprocess.Popen(cmd, stdin=subprocess.PIPE, **kwargs)
             stdin_write = popen.stdin.write
             for line in input_lines:

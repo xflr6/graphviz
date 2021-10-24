@@ -59,7 +59,7 @@ def test_run_input_lines_mocked(mocker, Popen, line=b'sp\xc3\xa4m'):  # noqa: N8
     popen.stdin = mocker.create_autospec(io.BytesIO, instance=True)
     popen.communicate.return_value = (mock_out, mock_err)
 
-    result = run(popen.args, input=iter([line]), capture_output=True)
+    result = run(popen.args, input_lines=iter([line]), capture_output=True)
 
     # subprocess.CompletedProcess.__eq__() is not implemented
     assert isinstance(result, subprocess.CompletedProcess)

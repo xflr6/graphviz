@@ -87,5 +87,10 @@ def pipe(mocker):
 
 
 @pytest.fixture
+def pipe_lines(mocker):
+    yield mocker.patch('graphviz.backend.pipe_lines', autospec=True)
+
+
+@pytest.fixture
 def render(mocker):
     yield mocker.patch('graphviz.backend.render', autospec=True)

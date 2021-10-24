@@ -11,6 +11,9 @@ API Reference
     ~graphviz.Source
     graphviz.render
     graphviz.pipe
+    graphviz.pipe_string
+    graphviz.pipe_lines
+    graphviz.pipe_lines_string
     graphviz.unflatten
     graphviz.view
 
@@ -65,6 +68,9 @@ documented above.
 
 .. autofunction:: graphviz.render
 .. autofunction:: graphviz.pipe
+.. autofunction:: graphviz.pipe_string
+.. autofunction:: graphviz.pipe_lines
+.. autofunction:: graphviz.pipe_lines_string
 .. autofunction:: graphviz.unflatten
 .. autofunction:: graphviz.view
 

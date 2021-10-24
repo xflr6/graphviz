@@ -6,7 +6,9 @@ import codecs
 import locale
 import logging
 import os
+import typing
 
+from . import _compat
 from . import backend
 from . import tools
 
@@ -149,9 +151,34 @@ class File(Base):
                       encoding=self._encoding)
 
     def _repr_svg_(self):
-        return self.pipe(format='svg').decode(self._encoding)
+        return self.pipe(format='svg', encoding=self._encoding)
 
-    def pipe(self, format=None, renderer=None, formatter=None, quiet=False):
+# FIXME: pytype
+##    @typing.overload
+##    def pipe(self,
+##             format: typing.Optional[str] = ...,
+##             renderer: typing.Optional[str] = ...,
+##             formatter: typing.Optional[str] = ...,
+##             quiet: bool = ...,
+##             *, encoding: _compat.Literal[None] = ...) -> bytes:
+##        ...
+##
+##    @typing.overload
+##    def pipe(self,
+##             format: typing.Optional[str] = ...,
+##             renderer: typing.Optional[str] = ...,
+##             formatter: typing.Optional[str] = ...,
+##             quiet: bool = ...,
+##             *, encoding: str = ...) -> str:
+##        ...
+
+    def pipe(self,
+             format: typing.Optional[str] = None,
+             renderer: typing.Optional[str] = None,
+             formatter: typing.Optional[str] = None,
+             quiet: bool = False,
+             *, encoding: typing.Optional[str] = None
+             ) -> typing.Union[bytes, str]:
         """Return the source piped through the Graphviz layout command.
 
         Args:
@@ -163,9 +190,11 @@ class File(Base):
                 (``'cairo'``, ``'gd'``, ...).
             quiet (bool): Suppress ``stderr`` output
                 from the layout subprocess.
+            encoding: Encoding for decoding the stdout.
 
         Returns:
-            Binary (encoded) stdout of the layout command.
+            Bytes or if encoding is given decoded string
+                (stdout of the layout command).
 
         Raises:
             ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
@@ -180,13 +209,16 @@ class File(Base):
         if format is None:
             format = self._format
 
-        data = (uline.encode(self._encoding) for uline in self)
+        args = [self._engine, format, iter(self)]
+        kwargs = {'renderer': renderer, 'formatter': formatter, 'quiet': quiet}
 
-        out = backend.pipe(self._engine, format, data,
-                           renderer=renderer, formatter=formatter,
-                           quiet=quiet)
-
-        return out
+        if encoding is not None:
+            if codecs.lookup(encoding) is codecs.lookup(self._encoding):
+                # common case: both stdin and stdout need the same encoding
+                return backend.pipe_lines_string(*args, encoding=encoding, **kwargs)
+            raw = backend.pipe_lines(*args, input_encoding=self._encoding, **kwargs)
+            return raw.decode(encoding)
+        return backend.pipe_lines(*args, input_encoding=self._encoding, **kwargs)
 
     @property
     def filepath(self):
