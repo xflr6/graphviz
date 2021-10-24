@@ -29,6 +29,8 @@ graph {
 'test-output/m00se.gv.pdf'
 """
 
+import typing
+
 from . import backend
 from . import files
 from . import lang
@@ -98,8 +100,11 @@ class Dot(files.File):
                 a.clear()
         del self.body[:]
 
-    def __iter__(self, subgraph=False):
-        """Yield the DOT source code line by line (as graph or subgraph)."""
+    def __iter__(self, subgraph=False) -> typing.Iterator[str]:
+        r"""Yield the DOT source code line by line (as graph or subgraph).
+
+        Yields: Line ending with a newline (``'\n'``).
+        """
         if self.comment:
             yield self._comment % self.comment
 

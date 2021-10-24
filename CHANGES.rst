@@ -5,11 +5,13 @@ Changelog
 Version 0.18 (in development)
 -----------------------------
 
-(Mild) beavioural change: when iterating over a
+(Mild) beavioural change:
+Line endings are normalized so that all outputs have a final newline.
+
+Undocumented beavioural change: when iterating over a
 ``Graph``, ``Digraph``, or ``Source`` instance,
 the yielded lines now include a final newline (``'\n'``).
 This mimics iteration over ``file`` object lines in text mode.
-Line endings are normalized so that all outputs have a final newline.
 
 Add optional keyword-only ``encoding`` to ``pipe()``.
 Returns the decoded stdout from the rendering process

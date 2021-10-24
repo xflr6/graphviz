@@ -428,6 +428,10 @@ class Source(File):
         return result
 
     def __iter__(self):
+        r"""Yield the DOT source code line by line.
+
+        Yields: Line ending with a newline (``'\n'``).
+        """
         lines = self.source.splitlines(keepends=True)
         for line in lines[:-1]:
             yield line

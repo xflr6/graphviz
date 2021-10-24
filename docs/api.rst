@@ -29,6 +29,7 @@ Graph
 
 .. autoclass:: graphviz.Graph
     :members:
+        __iter__,
         source,
         node, edge, edges, attr, subgraph,
         format, engine, encoding,
@@ -41,6 +42,7 @@ Digraph
 
 .. autoclass:: graphviz.Digraph
     :members:
+        __iter__,
         source,
         node, edge, edges, attr, subgraph,
         format, engine, encoding,
@@ -53,6 +55,7 @@ Source
 
 .. autoclass:: graphviz.Source
     :members:
+        __iter__,
         source,
         format, engine, encoding,
         copy, unflatten, pipe, save, render, view,
