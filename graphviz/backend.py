@@ -212,8 +212,8 @@ def pipe(engine: str, format: str, data: bytes,
 
     Example:
         >>> import graphviz
-        >>> graphviz.pipe('dot', 'svg', b'graph { hello -- world }')
-        b'<?xml version=...'
+        >>> graphviz.pipe('dot', 'svg', b'graph { hello -- world }')[:14]
+        b'<?xml version='
 
     Note:
         The layout command is started from the current directory.
@@ -255,8 +255,8 @@ def pipe_string(engine: str, format: str, input_string: str,
     Example:
         >>> import graphviz
         >>> graphviz.pipe_string('dot', 'svg', 'graph { spam }',
-        ...                      encoding='ascii')
-        '<?xml version=...'
+        ...                      encoding='ascii')[:14]
+        '<?xml version='
 
     Note:
         The layout command is started from the current directory.
@@ -299,8 +299,8 @@ def pipe_lines(engine: str, format: str, input_lines: typing.Iterator[str],
     Example:
         >>> import graphviz
         >>> graphviz.pipe_lines('dot', 'svg', iter(['graph { spam }\n']),
-        ...                     input_encoding='ascii')
-        b'<?xml version=...'
+        ...                     input_encoding='ascii')[:14]
+        b'<?xml version='
 
     Note:
         The layout command is started from the current directory.
@@ -343,8 +343,8 @@ def pipe_lines_string(engine: str, format: str, input_lines: typing.Iterator[str
     Example:
         >>> import graphviz
         >>> graphviz.pipe_lines_string('dot', 'svg', iter(['graph { spam }\n']),
-        ...                            encoding='ascii')
-        '<?xml version=...'
+        ...                            encoding='ascii')[:14]
+        '<?xml version='
 
     Note:
         The layout command is started from the current directory.
