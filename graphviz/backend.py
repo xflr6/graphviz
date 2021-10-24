@@ -116,6 +116,7 @@ class RequiredArgumentError(Exception):
 
 
 class CalledProcessError(subprocess.CalledProcessError):
+    """Exception raised if the returncode of the subprocess is non-zero."""
 
     def __str__(self) -> 'str':
         s = super().__str__()
@@ -167,8 +168,14 @@ else:
         return None
 
 
-def run(cmd, *, capture_output: bool = False, quiet: bool = False, **kwargs):
-    """Run the command described by cmd and return its completed process."""
+def run(cmd: typing.Sequence[typing.Union[pathlib.Path, str]],
+        *, capture_output: bool = False,
+        quiet: bool = False, **kwargs) -> subprocess.CompletedProcess:
+    """Run the command described by ``cmd`` and return its completed process.
+
+    Raises:
+        CalledProcessError: if the returncode of the subprocess is non-zero.
+    """
     log.debug('run %r', cmd)
 
     if not kwargs.pop('check', True):
