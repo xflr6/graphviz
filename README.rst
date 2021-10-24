@@ -120,6 +120,13 @@ License
 This package is distributed under the `MIT license`_.
 
 
+Development
+-----------
+
+- Development documentation: https://graphviz.readthedocs.io/en/latest/development.html
+- Release process: https://graphviz.readthedocs.io/en/latest/release_process.html
+
+
 .. _Graphviz:  https://www.graphviz.org
 .. _DOT: https://www.graphviz.org/doc/info/lang.html
 .. _upstream repo: https://gitlab.com/graphviz/graphviz/
