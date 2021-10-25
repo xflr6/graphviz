@@ -5,10 +5,10 @@ Changelog
 Version 0.18 (in development)
 -----------------------------
 
-(Mild) beavioural change:
+Beavioural change:
 Line endings are normalized so that all outputs have a final newline.
 
-Undocumented beavioural change: when iterating over a
+Change of undocumented beaviour: when iterating over a
 ``Graph``, ``Digraph``, or ``Source`` instance,
 the yielded lines now include a final newline (``'\n'``).
 This mimics iteration over ``file`` object lines in text mode.
