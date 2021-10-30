@@ -29,7 +29,7 @@ def attach(object: typing.Any, name: str) -> typing.Callable:
     return decorator
 
 
-def setattr_add(attributes: str, object: typing.Any) -> None:
+def setattr_add(attributes: str, object: typing.Any) -> typing.Callable:
     def decorator(func_or_cls):
         *attrnames, final_attrname = attributes.split('.')
         final_object = operator.attrgetter(*attrnames)(func_or_cls)

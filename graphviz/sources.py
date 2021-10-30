@@ -86,3 +86,25 @@ class Source(jupyter_integration.JupyterSvgIntegration,
     def source(self):
         """The DOT source code as string (read from file)."""
         return self._source
+
+    def save(self, filename=None, directory=None,
+             *, dry_run: typing.Optional[bool] = None):
+        """Save the DOT source to file. Ensure the file ends with a newline.
+
+        Args:
+            filename: Filename for saving the source (defaults to ``name`` + ``'.gv'``)
+            directory: (Sub)directory for source saving and rendering.
+            dry_run: Skip file write (default: ``None``).
+                By default skips if instance was loaded from the target path:
+                ``.from_file(self.filepath)``.
+
+        Returns:
+            The (possibly relative) path of the saved source file.
+        """
+        if (dry_run is None
+            and self._loaded_from_path
+            and os.path.samefile(self._loaded_from_path, self.filepath)):
+            dry_run = True
+
+        return super().save(filename=filename, directory=directory,
+                            dry_run=dry_run)
