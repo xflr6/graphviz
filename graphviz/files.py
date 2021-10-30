@@ -81,6 +81,22 @@ class Base:
         return {a[1:]: ns[a] for a in ('_format', '_engine', '_encoding')
                 if a in ns}
 
+    def __str__(self):
+        """The DOT source code as string."""
+        return self.source
+
+    @property
+    def source(self):
+        """The generated DOT source code as string."""
+        return ''.join(self)
+
+    def ____iter__(self):
+        r"""Yield the generated DOT source line by line.
+
+        Yields: Line ending with a newline (``'\n'``).
+        """
+        raise NotImplementedError('to be implemented by concrete subclasses')
+
 
 class File(Base):
 
@@ -112,10 +128,6 @@ class File(Base):
         if 'directory' in self.__dict__:
             result['directory'] = self.directory
         return result
-
-    def __str__(self):
-        """The DOT source code as string."""
-        return self.source
 
     def unflatten(self, stagger=None, fanout=False, chain=None):
         """Return a new :class:`.Source` instance with the source piped through the Graphviz *unflatten* preprocessor.
@@ -420,15 +432,15 @@ class Source(File):
     def __init__(self, source, filename=None, directory=None,
                  format=None, engine=None, encoding=backend.ENCODING):
         super().__init__(filename, directory, format, engine, encoding)
-        self.source = source  #: The verbatim DOT source code string.
+        self._source = source  #: The verbatim DOT source code string.
 
     def _kwargs(self):
         result = super()._kwargs()
-        result['source'] = self.source
+        result['source'] = self._source
         return result
 
     def __iter__(self):
-        r"""Yield the DOT source code line by line.
+        r"""Yield the DOT source code read from file line by line.
 
         Yields: Line ending with a newline (``'\n'``).
         """
@@ -438,3 +450,9 @@ class Source(File):
         for line in lines[-1:]:
             suffix = '\n' if not line.endswith('\n') else ''
             yield line + suffix
+
+    @property
+    def source(self):
+        """The DOT source code as string (read from file)."""
+        return self._source
+
