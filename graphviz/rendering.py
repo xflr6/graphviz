@@ -143,12 +143,6 @@ class Pipe(Output):
         return backend.pipe_lines(*args, input_encoding=self._encoding, **kwargs)
 
 
-class JupyterSvgIntegration(Pipe):
-
-    def _repr_svg_(self):
-        return self.pipe(format='svg', encoding=self._encoding)
-
-
 class RenderFile(Output):
 
     directory = ''
@@ -331,7 +325,6 @@ class RenderFileView(RenderFile):
 
 
 class Render(RenderFileView, RenderFile,
-             JupyterSvgIntegration,
              Pipe,
              Unflatten,
              Output):

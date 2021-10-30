@@ -1,4 +1,4 @@
-# dot.py - create dot code
+"""Create DOT code with method-calls."""
 
 import typing
 

@@ -28,12 +28,14 @@ graph {
 """
 
 from . import dot
+from . import jupyter_integration
 from . import rendering
 
 __all__ = ['Graph', 'Digraph']
 
 
-class BaseGraph(dot.Dot, rendering.Render):
+class BaseGraph(jupyter_integration.JupyterSvgIntegration,
+                dot.Dot, rendering.Render):
     """Dot language creation and source code rendering."""
 
 

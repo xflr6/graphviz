@@ -5,6 +5,7 @@ import logging
 import os
 
 from . import backend
+from . import jupyter_integration
 from . import rendering
 
 __all__ = ['Source']
@@ -13,7 +14,8 @@ __all__ = ['Source']
 log = logging.getLogger(__name__)
 
 
-class Source(rendering.Render):
+class Source(jupyter_integration.JupyterSvgIntegration,
+             rendering.Render):
     """Verbatim DOT source code string to be rendered by Graphviz.
 
     Args:
