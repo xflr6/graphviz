@@ -23,8 +23,8 @@ class SourceLineIterator:
         raise NotImplementedError('to be implemented by concrete subclasses')
 
 
-class Base (SourceLineIterator):
-    """Common interface for all classes in the exposed classes `.mro()`."""
+class Base(SourceLineIterator):
+    """Common base interface for all exposed classes."""
 
     def copy(self):
         """Return a copied instance of the object.
