@@ -326,10 +326,11 @@ class RenderFileView(RenderFile):
 
 class Render(RenderFileView, RenderFile,
              Pipe,
-             Unflatten,
-             Output):
+             Unflatten):
     """Render fules, pipe, unflatten."""
 
+
+Render.render.view = Render.view
 
 Render.render.file = Render.render
 
