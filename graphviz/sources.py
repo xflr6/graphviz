@@ -5,6 +5,7 @@ import logging
 import os
 
 from .encoding import DEFAULT_ENCODING as ENCODING
+from . import base
 from . import encoding
 from . import files
 from . import jupyter_integration
@@ -19,7 +20,8 @@ log = logging.getLogger(__name__)
 class Source(jupyter_integration.JupyterSvgIntegration,
              rendering.Render,
              files.File,
-             encoding.Encoding):
+             encoding.Encoding,
+             base.Base):
     """Verbatim DOT source code string to be rendered by Graphviz.
 
     Args:

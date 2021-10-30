@@ -1,9 +1,11 @@
 """Generic re-useable self-contained helper functions."""
 
 import os
+import operator
 import typing
 
 __all__ = ['attach',
+           'setattr',
            'mkdirs',
            'mapping_items']
 
@@ -23,6 +25,17 @@ def attach(object: typing.Any, name: str) -> typing.Callable:
     def decorator(func):
         setattr(object, name, func)
         return func
+
+    return decorator
+
+
+def setattr_add(attributes: str, object: typing.Any) -> None:
+    def decorator(func_or_cls):
+        *attrnames, final_attrname = attributes.split('.')
+        final_object = operator.attrgetter(*attrnames)(func_or_cls)
+        setattr(final_object, final_attrname, object)
+        return func_or_cls
+
     return decorator
 
 

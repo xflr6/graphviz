@@ -6,8 +6,10 @@ import os
 import typing
 
 from . import backend
+from . import base
 from . import encoding
 from . import files
+from . import tools
 
 __all__ = ['Render']
 
@@ -15,7 +17,7 @@ __all__ = ['Render']
 log = logging.getLogger(__name__)
 
 
-class Output(backend.Graphviz):
+class Output(backend.Graphviz, base.Base):
     """Graphiz default engine/format and the default encoding for output."""
 
 
@@ -267,16 +269,11 @@ class RenderFileView(RenderFile):
     _view_windows = staticmethod(backend.view_windows)
 
 
+@tools.setattr_add('render.pipe', Pipe.pipe)
+@tools.setattr_add('render.file', RenderFile.render)
+@tools.setattr_add('render.view', RenderFileView.view)
+@tools.setattr_add('render.unflatten', Unflatten.unflatten)
 class Render(RenderFileView, RenderFile,
              Pipe,
              Unflatten):
     """Render fules, pipe, unflatten."""
-
-
-Render.render.view = Render.view
-
-Render.render.file = Render.render
-
-Render.render.pipe = Render.pipe
-
-Render.render.unflatten = Render.unflatten

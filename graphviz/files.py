@@ -4,6 +4,7 @@ import logging
 import os
 
 from .encoding import DEFAULT_ENCODING as ENCODING
+from . import base
 from . import encoding
 from . import tools
 
@@ -12,7 +13,7 @@ __all__ = ['File']
 log = logging.getLogger(__name__)
 
 
-class File(encoding.Encoding):
+class File(encoding.Encoding, base.Base):
     """Save DOT source lines to file."""
 
     directory = ''

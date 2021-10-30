@@ -10,7 +10,6 @@ import subprocess
 import sys
 import typing
 
-from . import base
 from .encoding import DEFAULT_ENCODING as ENCODING
 from . import tools
 
@@ -103,7 +102,7 @@ PLATFORM = platform.system().lower()
 log = logging.getLogger(__name__)
 
 
-class Graphviz(base.Base):
+class Graphviz:
 
     _engine = 'dot'
 
