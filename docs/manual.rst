@@ -596,7 +596,7 @@ the higher-level interface of :class:`.Graph` or :class:`.Digraph`), create a
     >>> src = graphviz.Source('digraph "the holy hand grenade" { rankdir=LR; 1 -> 2 -> 3 -> lob }')
 
     >>> src  #doctest: +ELLIPSIS
-    <graphviz.files.Source object at 0x...>
+    <graphviz.sources.Source object at 0x...>
 
 Use the :meth:`~.Source.render`-method to save and render it:
 
