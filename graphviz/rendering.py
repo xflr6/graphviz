@@ -9,45 +9,22 @@ from . import base
 from . import backend
 from . import tools
 
-__all__ = ['File']
+__all__ = ['Render']
 
 
 log = logging.getLogger(__name__)
 
 
-class File(backend.Graphviz, base.Base):
+class Output(backend.Graphviz):
+    """Graphiz default engine/format and the default encoding for output."""
 
-    directory = ''
 
-    _default_extension = 'gv'
-
-    def __init__(self, filename=None, directory=None,
-                 format=None, engine=None, encoding=backend.ENCODING):
-        if filename is None:
-            name = getattr(self, 'name', None) or self.__class__.__name__
-            filename = f'{name}.{self._default_extension}'
-        self.filename = filename
-
-        if directory is not None:
-            self.directory = directory
-
-        if format is not None:
-            self.format = format
-
-        if engine is not None:
-            self.engine = engine
-
-        self.encoding = encoding
-
-    def _kwargs(self):
-        result = super()._kwargs()
-        result['filename'] = self.filename
-        if 'directory' in self.__dict__:
-            result['directory'] = self.directory
-        return result
+class Unflatten(Output):
+    """Pipe source through the Graphviz *unflatten* preprocessor."""
 
     def unflatten(self, stagger=None, fanout=False, chain=None):
-        """Return a new :class:`.Source` instance with the source piped through the Graphviz *unflatten* preprocessor.
+        """Return a new :class:`.Source` instance with the source
+            piped through the Graphviz *unflatten* preprocessor.
 
         Args:
             stagger (int): Stagger the minimum length
@@ -81,8 +58,9 @@ class File(backend.Graphviz, base.Base):
                       format=self._format, engine=self._engine,
                       encoding=self._encoding)
 
-    def _repr_svg_(self):
-        return self.pipe(format='svg', encoding=self._encoding)
+
+class Pipe(Output):
+    """Pipe source lines through the Graphviz layout command."""
 
 # FIXME: pytype
 ##    @typing.overload
@@ -102,7 +80,6 @@ class File(backend.Graphviz, base.Base):
 ##             quiet: bool = ...,
 ##             *, encoding: str = ...) -> str:
 ##        ...
-
     def pipe(self,
              format: typing.Optional[str] = None,
              renderer: typing.Optional[str] = None,
@@ -164,6 +141,44 @@ class File(backend.Graphviz, base.Base):
             raw = backend.pipe_lines(*args, input_encoding=self._encoding, **kwargs)
             return raw.decode(encoding)
         return backend.pipe_lines(*args, input_encoding=self._encoding, **kwargs)
+
+
+class JupyterSvgIntegration(Pipe):
+
+    def _repr_svg_(self):
+        return self.pipe(format='svg', encoding=self._encoding)
+
+
+class RenderFile(Output):
+
+    directory = ''
+
+    _default_extension = 'gv'
+
+    def __init__(self, filename=None, directory=None,
+                 format=None, engine=None, encoding=backend.ENCODING):
+        if filename is None:
+            name = getattr(self, 'name', None) or self.__class__.__name__
+            filename = f'{name}.{self._default_extension}'
+        self.filename = filename
+
+        if directory is not None:
+            self.directory = directory
+
+        if format is not None:
+            self.format = format
+
+        if engine is not None:
+            self.engine = engine
+
+        self.encoding = encoding
+
+    def _kwargs(self):
+        result = super()._kwargs()
+        result['filename'] = self.filename
+        if 'directory' in self.__dict__:
+            result['directory'] = self.directory
+        return result
 
     @property
     def filepath(self):
@@ -257,6 +272,10 @@ class File(backend.Graphviz, base.Base):
 
         return rendered
 
+
+class RenderFileView(RenderFile):
+    """Convenience short-cut for running ``.render(view=True)``."""
+
     def view(self, filename=None, directory=None, cleanup=False,
              quiet=False, quiet_view=False):
         """Save the source to file, open the rendered result in a viewer.
@@ -309,3 +328,18 @@ class File(backend.Graphviz, base.Base):
     _view_freebsd = staticmethod(backend.view_unixoid)
     _view_linux = staticmethod(backend.view_unixoid)
     _view_windows = staticmethod(backend.view_windows)
+
+
+class Render(RenderFileView, RenderFile,
+             JupyterSvgIntegration,
+             Pipe,
+             Unflatten,
+             Output):
+    """Render fules, pipe, unflatten."""
+
+
+Render.render.file = Render.render
+
+Render.render.pipe = Render.pipe
+
+Render.render.unflatten = Render.unflatten

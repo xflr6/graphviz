@@ -5,7 +5,7 @@ import logging
 import os
 
 from . import backend
-from . import files
+from . import rendering
 
 __all__ = ['Source']
 
@@ -13,7 +13,7 @@ __all__ = ['Source']
 log = logging.getLogger(__name__)
 
 
-class Source(files.File):
+class Source(rendering.Render):
     """Verbatim DOT source code string to be rendered by Graphviz.
 
     Args:

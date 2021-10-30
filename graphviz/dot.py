@@ -32,13 +32,13 @@ graph {
 import typing
 
 from . import backend
-from . import files
+from . import rendering
 from . import lang
 
 __all__ = ['Graph', 'Digraph']
 
 
-class Dot(files.File):
+class Dot(rendering.Render):
     """Assemble, save, and render DOT source code, open result in viewer."""
 
     directed: bool
