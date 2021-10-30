@@ -2,6 +2,7 @@
 
 import logging
 import os
+import typing
 
 from .encoding import DEFAULT_ENCODING as ENCODING
 from . import base
@@ -19,6 +20,8 @@ class File(encoding.Encoding, base.Base):
     directory = ''
 
     _default_extension = 'gv'
+
+    _loaded_from_path: typing.Optional[os.PathLike] = None
 
     def __init__(self, filename=None, directory=None,
                  format=None, engine=None, encoding=ENCODING):
@@ -51,12 +54,15 @@ class File(encoding.Encoding, base.Base):
     def filepath(self):
         return os.path.join(self.directory, self.filename)
 
-    def save(self, filename=None, directory=None):
+    def save(self, filename=None, directory=None,
+             *, dry_run: typing.Optional[bool] = None):
         """Save the DOT source to file. Ensure the file ends with a newline.
 
         Args:
             filename: Filename for saving the source (defaults to ``name`` + ``'.gv'``)
             directory: (Sub)directory for source saving and rendering.
+            dry_run: Skip file write.
+                If ``None`` defaults to ``bool(self_.loaded_from_path)``.
 
         Returns:
             The (possibly relative) path of the saved source file.
@@ -68,6 +74,13 @@ class File(encoding.Encoding, base.Base):
 
         filepath = self.filepath
         tools.mkdirs(filepath)
+
+        if ((dry_run is None and self._loaded_from_path
+            and os.path.samefile(self_loaded_from_patj, filepath))
+            or dry_run):
+            log.debug('dry_run=None resolved to True'
+                      ' loaded_from_file=%r', self._loaded_from_file)
+            return None
 
         log.debug('write lines to %r', filepath)
         with open(filepath, 'w', encoding=self.encoding) as fd:

@@ -3,6 +3,7 @@
 import locale
 import logging
 import os
+import typing
 
 from .encoding import DEFAULT_ENCODING as ENCODING
 from . import base
@@ -54,11 +55,14 @@ class Source(jupyter_integration.JupyterSvgIntegration,
         log.debug('read %r with encoding %r', filepath, encoding)
         with open(filepath, encoding=encoding) as fd:
             source = fd.read()
-        return cls(source, filename, directory, format, engine, encoding)
+        return cls(source, filename, directory, format, engine, encoding,
+                   loaded_from_path=filepath)
 
     def __init__(self, source, filename=None, directory=None,
-                 format=None, engine=None, encoding=ENCODING):
+                 format=None, engine=None, encoding=ENCODING, *,
+                 loaded_from_path: typing.Optional[os.PathLike] = None):
         super().__init__(filename, directory, format, engine, encoding)
+        self._loaded_from_path = loaded_from_path
         self._source = source  #: The verbatim DOT source code string.
 
     def _kwargs(self):
