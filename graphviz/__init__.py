@@ -29,7 +29,7 @@ from .backend import (render, pipe, pipe_string, pipe_lines, pipe_lines_string,
                       unflatten, version, view,
                       ENGINES, FORMATS, RENDERERS, FORMATTERS,
                       ExecutableNotFound, RequiredArgumentError)
-from .dot import Graph, Digraph
+from .graphs import Graph, Digraph
 from .sources import Source
 from .lang import escape, nohtml
 

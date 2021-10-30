@@ -5,7 +5,7 @@ import re
 
 import pytest
 
-from graphviz.dot import Graph, Digraph
+from graphviz.graphs import Graph, Digraph
 from graphviz.sources import Source
 
 

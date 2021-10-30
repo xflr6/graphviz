@@ -67,7 +67,7 @@ Create a graph object:
     >>> import graphviz
     >>> dot = graphviz.Digraph(comment='The Round Table')
     >>> dot  #doctest: +ELLIPSIS
-    <graphviz.dot.Digraph object at 0x...>
+    <graphviz.graphs.Digraph object at 0x...>
 
 Add nodes and edges:
 

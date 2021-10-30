@@ -65,7 +65,7 @@ Create a graph by instantiating a new :class:`.Graph` or
     >>> dot = graphviz.Digraph(comment='The Round Table')
 
     >>> dot  #doctest: +ELLIPSIS
-    <graphviz.dot.Digraph object at 0x...>
+    <graphviz.graphs.Digraph object at 0x...>
 
 Their constructors allow to set the graph's :attr:`~.Graph.name`, the
 :attr:`~.Graph.filename` for the DOT source and the rendered graph, a

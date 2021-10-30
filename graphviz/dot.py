@@ -1,44 +1,16 @@
 # dot.py - create dot code
 
-r"""Assemble DOT source code objects.
-
->>> import graphviz
->>> dot = graphviz.Graph(comment='M\xf8nti Pyth\xf8n ik den H\xf8lie Grailen')
-
->>> dot.node('M\xf8\xf8se')
->>> dot.node('trained_by', 'trained by')
->>> dot.node('tutte', 'TUTTE HERMSGERVORDENBROTBORDA')
-
->>> dot.edge('M\xf8\xf8se', 'trained_by')
->>> dot.edge('trained_by', 'tutte')
-
->>> dot.node_attr['shape'] = 'rectangle'
-
->>> print(dot.source.replace('\xf8', '0'))  #doctest: +NORMALIZE_WHITESPACE
-// M0nti Pyth0n ik den H0lie Grailen
-graph {
-    node [shape=rectangle]
-    "M00se"
-    trained_by [label="trained by"]
-    tutte [label="TUTTE HERMSGERVORDENBROTBORDA"]
-    "M00se" -- trained_by
-    trained_by -- tutte
-}
-
->>> dot.view('test-output/m00se.gv')  # doctest: +SKIP
-'test-output/m00se.gv.pdf'
-"""
-
 import typing
 
+from . import base
 from . import backend
 from . import rendering
 from . import lang
 
-__all__ = ['Graph', 'Digraph']
+__all__ = ['Dot']
 
 
-class Dot(rendering.Render):
+class Dot(base.Base):
     """Assemble, save, and render DOT source code, open result in viewer."""
 
     directed: bool
@@ -276,54 +248,3 @@ class SubgraphContext:
     def __exit__(self, type_, value, traceback):
         if type_ is None:
             self.parent.subgraph(self.graph)
-
-
-class Graph(Dot):
-    """Graph source code in the DOT language.
-
-    Args:
-        name: Graph name used in the source code.
-        comment: Comment added to the first line of the source.
-        filename: Filename for saving the source
-            (defaults to ``name`` + ``'.gv'``).
-        directory: (Sub)directory for source saving and rendering.
-        format: Rendering output format (``'pdf'``, ``'png'``, ...).
-        engine: Layout command used (``'dot'``, ``'neato'``, ...).
-        encoding: Encoding for saving the source.
-        graph_attr: Mapping of ``(attribute, value)`` pairs for the graph.
-        node_attr: Mapping of ``(attribute, value)`` pairs set for all nodes.
-        edge_attr: Mapping of ``(attribute, value)`` pairs set for all edges.
-        body: Iterable of verbatim lines to add to the graph ``body``.
-        strict (bool): Rendering should merge multi-edges.
-
-    Note:
-        All parameters are `optional` and can be changed under their
-        corresponding attribute name after instance creation.
-    """
-
-    _head = 'graph %s{\n'
-    _head_strict = 'strict %s' % _head
-    _edge = '\t%s -- %s%s\n'
-    _edge_plain = _edge % ('%s', '%s', '')
-
-    @property
-    def directed(self):
-        """``False``"""
-        return False
-
-
-class Digraph(Dot):
-    """Directed graph source code in the DOT language."""
-
-    if Graph.__doc__ is not None:
-        __doc__ += Graph.__doc__.partition('.')[2]
-
-    _head = 'digraph %s{\n'
-    _head_strict = 'strict %s' % _head
-    _edge = '\t%s -> %s%s\n'
-    _edge_plain = _edge % ('%s', '%s', '')
-
-    @property
-    def directed(self):
-        """``True``"""
-        return True
