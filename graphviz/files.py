@@ -15,40 +15,7 @@ __all__ = ['File']
 log = logging.getLogger(__name__)
 
 
-class Graphviz:
-
-    _engine = 'dot'
-
-    _format = 'pdf'
-
-    _encoding = backend.ENCODING
-
-    @property
-    def engine(self):
-        """The layout engine used for rendering (``'dot'``, ``'neato'``, ...)."""
-        return self._engine
-
-    @engine.setter
-    def engine(self, engine):
-        engine = engine.lower()
-        if engine not in backend.ENGINES:
-            raise ValueError(f'unknown engine: {engine!r}')
-        self._engine = engine
-
-    @property
-    def format(self):
-        """The output format used for rendering (``'pdf'``, ``'png'``, ...)."""
-        return self._format
-
-    @format.setter
-    def format(self, format):
-        format = format.lower()
-        if format not in backend.FORMATS:
-            raise ValueError(f'unknown format: {format!r}')
-        self._format = format
-
-
-class File(Graphviz, base.Base):
+class File(backend.Graphviz, base.Base):
 
     directory = ''
 

@@ -103,6 +103,39 @@ PLATFORM = platform.system().lower()
 log = logging.getLogger(__name__)
 
 
+class Graphviz:
+
+    _engine = 'dot'
+
+    _format = 'pdf'
+
+    _encoding = ENCODING
+
+    @property
+    def engine(self) -> str:
+        """The layout engine used for rendering (``'dot'``, ``'neato'``, ...)."""
+        return self._engine
+
+    @engine.setter
+    def engine(self, engine) -> None:
+        engine = engine.lower()
+        if engine not in ENGINES:
+            raise ValueError(f'unknown engine: {engine!r}')
+        self._engine = engine
+
+    @property
+    def format(self)-> str:
+        """The output format used for rendering (``'pdf'``, ``'png'``, ...)."""
+        return self._format
+
+    @format.setter
+    def format(self, format)-> None:
+        format = format.lower()
+        if format not in FORMATS:
+            raise ValueError(f'unknown format: {format!r}')
+        self._format = format
+
+
 def command(engine: str, format_: str,
             *, renderer: typing.Optional[str] = None,
             formatter: typing.Optional[str] = None
