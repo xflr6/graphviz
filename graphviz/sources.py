@@ -4,7 +4,9 @@ import locale
 import logging
 import os
 
-from . import backend
+from .encoding import DEFAULT_ENCODING as ENCODING
+
+from . import encoding
 from . import jupyter_integration
 from . import rendering
 
@@ -15,7 +17,8 @@ log = logging.getLogger(__name__)
 
 
 class Source(jupyter_integration.JupyterSvgIntegration,
-             rendering.Render):
+             rendering.Render,
+             encoding.Encoding):
     """Verbatim DOT source code string to be rendered by Graphviz.
 
     Args:
@@ -34,7 +37,7 @@ class Source(jupyter_integration.JupyterSvgIntegration,
 
     @classmethod
     def from_file(cls, filename, directory=None,
-                  format=None, engine=None, encoding=backend.ENCODING):
+                  format=None, engine=None, encoding=ENCODING):
         """Return an instance with the source string read from the given file.
 
         Args:
@@ -53,7 +56,7 @@ class Source(jupyter_integration.JupyterSvgIntegration,
         return cls(source, filename, directory, format, engine, encoding)
 
     def __init__(self, source, filename=None, directory=None,
-                 format=None, engine=None, encoding=backend.ENCODING):
+                 format=None, engine=None, encoding=ENCODING):
         super().__init__(filename, directory, format, engine, encoding)
         self._source = source  #: The verbatim DOT source code string.
 

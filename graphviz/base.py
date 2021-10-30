@@ -1,19 +1,10 @@
 """Iterables of DOT source code lines (including final newline)."""
 
-import codecs
-import locale
-
 __all__ = ['Base']
-
-ENCODING = 'utf-8'
 
 
 class Base:
-
-    def _kwargs(self):
-        ns = self.__dict__
-        return {a[1:]: ns[a] for a in ('_format', '_engine', '_encoding')
-                if a in ns}
+    """Iterable of DOT Source code lines."""
 
     def __str__(self):
         """The DOT source code as string."""
@@ -40,14 +31,7 @@ class Base:
         kwargs = self._kwargs()
         return self.__class__(**kwargs)
 
-    @property
-    def encoding(self):
-        """The encoding for the saved source file."""
-        return self._encoding
-
-    @encoding.setter
-    def encoding(self, encoding):
-        if encoding is None:
-            encoding = locale.getpreferredencoding()
-        codecs.lookup(encoding)  # raise early
-        self._encoding = encoding
+    def _kwargs(self):
+        ns = self.__dict__
+        return {a[1:]: ns[a] for a in ('_format', '_engine', '_encoding')
+                if a in ns}

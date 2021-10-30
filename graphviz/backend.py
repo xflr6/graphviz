@@ -11,7 +11,7 @@ import sys
 import typing
 
 from . import base
-from .base import ENCODING
+from .encoding import DEFAULT_ENCODING as ENCODING
 from . import tools
 
 __all__ = ['DOT_BINARY', 'UNFLATTEN_BINARY',

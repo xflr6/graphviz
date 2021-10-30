@@ -55,6 +55,7 @@ jobs:
           pip install pytype
           pytype graphviz
         if: ${{ endsWith(matrix.name, '-pytype') }}
+        continue-on-error: true
       - name: Render examples
         run: python try-examples.py
       - name: Upload artifacts ${{ matrix.name }}
