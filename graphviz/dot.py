@@ -3,7 +3,6 @@
 import typing
 
 from . import base
-from . import backend
 from . import lang
 
 __all__ = ['Dot']

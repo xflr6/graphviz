@@ -8,7 +8,6 @@ import typing
 from . import backend
 from . import encoding
 from . import files
-from . import tools
 
 __all__ = ['Render']
 
