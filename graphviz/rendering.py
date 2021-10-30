@@ -5,8 +5,8 @@ import logging
 import os
 import typing
 
-from . import base
 from . import backend
+from . import files
 from . import tools
 
 __all__ = ['Render']
@@ -143,65 +143,8 @@ class Pipe(Output):
         return backend.pipe_lines(*args, input_encoding=self._encoding, **kwargs)
 
 
-class RenderFile(Output):
-
-    directory = ''
-
-    _default_extension = 'gv'
-
-    def __init__(self, filename=None, directory=None,
-                 format=None, engine=None, encoding=backend.ENCODING):
-        if filename is None:
-            name = getattr(self, 'name', None) or self.__class__.__name__
-            filename = f'{name}.{self._default_extension}'
-        self.filename = filename
-
-        if directory is not None:
-            self.directory = directory
-
-        if format is not None:
-            self.format = format
-
-        if engine is not None:
-            self.engine = engine
-
-        self.encoding = encoding
-
-    def _kwargs(self):
-        result = super()._kwargs()
-        result['filename'] = self.filename
-        if 'directory' in self.__dict__:
-            result['directory'] = self.directory
-        return result
-
-    @property
-    def filepath(self):
-        return os.path.join(self.directory, self.filename)
-
-    def save(self, filename=None, directory=None):
-        """Save the DOT source to file. Ensure the file ends with a newline.
-
-        Args:
-            filename: Filename for saving the source (defaults to ``name`` + ``'.gv'``)
-            directory: (Sub)directory for source saving and rendering.
-
-        Returns:
-            The (possibly relative) path of the saved source file.
-        """
-        if filename is not None:
-            self.filename = filename
-        if directory is not None:
-            self.directory = directory
-
-        filepath = self.filepath
-        tools.mkdirs(filepath)
-
-        log.debug('write lines to %r', filepath)
-        with open(filepath, 'w', encoding=self.encoding) as fd:
-            for uline in self:
-                fd.write(uline)
-
-        return filepath
+class RenderFile(files.File, Output):
+    """Write source lines to file and render with Graphviz."""
 
     def render(self, filename=None, directory=None, view=False, cleanup=False,
                format=None, renderer=None, formatter=None,
