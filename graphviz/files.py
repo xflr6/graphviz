@@ -20,11 +20,6 @@ log = logging.getLogger(__name__)
 
 class Base:
 
-    source: str
-
-    def __iter__(self):
-        raise NotImplementedError('must be implemented by subclasses')
-
     _engine = 'dot'
 
     _format = 'pdf'
@@ -86,11 +81,11 @@ class Base:
         return self.source
 
     @property
-    def source(self):
+    def source(self) -> str:
         """The generated DOT source code as string."""
         return ''.join(self)
 
-    def ____iter__(self):
+    def __iter__(self):
         r"""Yield the generated DOT source line by line.
 
         Yields: Line ending with a newline (``'\n'``).
