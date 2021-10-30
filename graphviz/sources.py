@@ -71,7 +71,7 @@ class Source(jupyter_integration.JupyterSvgIntegration,
 
         Yields: Line ending with a newline (``'\n'``).
         """
-        lines = self.source.splitlines(keepends=True)
+        lines = self._source.splitlines(keepends=True)
         for line in lines[:-1]:
             yield line
         for line in lines[-1:]:

@@ -3,7 +3,7 @@
 __all__ = ['Base']
 
 
-class Base:
+class SourceLineIterator:
     """Iterable of DOT Source code lines."""
 
     def __str__(self):
@@ -21,6 +21,10 @@ class Base:
         Yields: Line ending with a newline (``'\n'``).
         """
         raise NotImplementedError('to be implemented by concrete subclasses')
+
+
+class Base (SourceLineIterator):
+    """Common interface for all classes in the exposed classes `.mro()`."""
 
     def copy(self):
         """Return a copied instance of the object.

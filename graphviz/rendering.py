@@ -6,6 +6,7 @@ import os
 import typing
 
 from . import backend
+from . import encoding
 from . import files
 from . import tools
 
@@ -19,7 +20,7 @@ class Output(backend.Graphviz):
     """Graphiz default engine/format and the default encoding for output."""
 
 
-class Unflatten(Output):
+class Unflatten(encoding.Encoding, Output):
     """Pipe source through the Graphviz *unflatten* preprocessor."""
 
     def unflatten(self, stagger=None, fanout=False, chain=None):
@@ -59,7 +60,7 @@ class Unflatten(Output):
                       encoding=self._encoding)
 
 
-class Pipe(Output):
+class Pipe(encoding.Encoding, Output):
     """Pipe source lines through the Graphviz layout command."""
 
 # FIXME: pytype
