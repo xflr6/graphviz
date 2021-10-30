@@ -9,6 +9,7 @@ DEFAULT_ENCODING = 'utf-8'
 
 
 class Encoding:
+    """the default encoding for input and output."""
 
     @property
     def encoding(self):

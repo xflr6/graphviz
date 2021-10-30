@@ -10,6 +10,7 @@ from . import base
 from . import encoding
 from . import files
 from . import tools
+from . import unflattening
 
 __all__ = ['Render']
 
@@ -17,51 +18,7 @@ __all__ = ['Render']
 log = logging.getLogger(__name__)
 
 
-class Output(backend.Graphviz, base.Base):
-    """Graphiz default engine/format and the default encoding for output."""
-
-
-class Unflatten(encoding.Encoding, Output):
-    """Pipe source through the Graphviz *unflatten* preprocessor."""
-
-    def unflatten(self, stagger=None, fanout=False, chain=None):
-        """Return a new :class:`.Source` instance with the source
-            piped through the Graphviz *unflatten* preprocessor.
-
-        Args:
-            stagger (int): Stagger the minimum length
-                of leaf edges between 1 and this small integer.
-            fanout (bool): Fanout nodes with indegree = outdegree = 1
-                when staggering (requires ``stagger``).
-            chain (int): Form disconnected nodes into chains
-                of up to this many nodes.
-
-        Returns:
-            Source: Prepocessed DOT source code (improved layout aspect ratio).
-
-        Raises:
-            graphviz.RequiredArgumentError: If ``fanout`` is given
-                but ``stagger`` is None.
-            graphviz.ExecutableNotFound: If the Graphviz 'unflatten' executable
-                is not found.
-        subprocess.CalledProcessError: If the returncode (exit status)
-            of the unflattening 'unflatten' subprocess is non-zero.
-
-        See also:
-            https://www.graphviz.org/pdf/unflatten.1.pdf
-        """
-        from . import Source
-
-        out = backend.unflatten(self.source,
-                                stagger=stagger, fanout=fanout, chain=chain,
-                                encoding=self._encoding)
-        return Source(out,
-                      filename=self.filename, directory=self.directory,
-                      format=self._format, engine=self._engine,
-                      encoding=self._encoding)
-
-
-class Pipe(encoding.Encoding, Output):
+class Pipe(encoding.Encoding, backend.Graphviz, base.Base):
     """Pipe source lines through the Graphviz layout command."""
 
 # FIXME: pytype
@@ -145,7 +102,7 @@ class Pipe(encoding.Encoding, Output):
         return backend.pipe_lines(*args, input_encoding=self._encoding, **kwargs)
 
 
-class RenderFile(files.File, Output):
+class RenderFile(files.File, backend.Graphviz, base.Base):
     """Write source lines to file and render with Graphviz."""
 
     def render(self, filename=None, directory=None, view=False, cleanup=False,
@@ -272,8 +229,6 @@ class RenderFileView(RenderFile):
 @tools.setattr_add('render.pipe', Pipe.pipe)
 @tools.setattr_add('render.file', RenderFile.render)
 @tools.setattr_add('render.view', RenderFileView.view)
-@tools.setattr_add('render.unflatten', Unflatten.unflatten)
-class Render(RenderFileView, RenderFile,
-             Pipe,
-             Unflatten):
+@tools.setattr_add('render.unflatten', unflattening.Unflatten.unflatten)
+class Render(RenderFileView, RenderFile, Pipe, unflattening.Unflatten):
     """Render fules, pipe, unflatten."""

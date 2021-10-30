@@ -103,6 +103,7 @@ log = logging.getLogger(__name__)
 
 
 class Graphviz:
+    """Graphiz default engine/format."""
 
     _engine = 'dot'
 
