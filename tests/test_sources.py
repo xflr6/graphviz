@@ -3,7 +3,6 @@ import re
 
 import pytest
 
-from graphviz.files import Base
 from graphviz.sources import Source
 
 SOURCE = {'source': 'digraph { hello -> world }\n',
@@ -14,12 +13,6 @@ SOURCE = {'source': 'digraph { hello -> world }\n',
 @pytest.fixture(scope='module')
 def source():
     return Source(**SOURCE)
-
-
-def test_base_iter():
-    base_inst = Base()
-    with pytest.raises(NotImplementedError, match=r'subclasses'):
-        iter(base_inst)
 
 
 def test_engine(source):

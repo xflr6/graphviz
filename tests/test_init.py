@@ -15,11 +15,11 @@ def test_set_default_engine_invalid():
 def test_set_default_engine(monkeypatch, *, engine='neato', explicit_engine='sfdp'):
     assert len({ENGINE, engine, explicit_engine}) == 3
 
-    from graphviz.files import Base
-    assert Base._engine == ENGINE
+    from graphviz.files import Graphviz
+    assert Graphviz._engine == ENGINE
     # isolate the test
-    monkeypatch.setattr('graphviz.files.Base._engine', ENGINE)
-    assert Base._engine == ENGINE
+    monkeypatch.setattr('graphviz.files.Graphviz._engine', ENGINE)
+    assert Graphviz._engine == ENGINE
 
     g1 = Graph()
     assert g1.engine == ENGINE
@@ -56,11 +56,11 @@ def test_set_default_format_invalid():
 def test_set_default_format(monkeypatch, *, format='png', explicit_format='jpeg'):
     assert len({FORMAT, format, explicit_format}) == 3
 
-    from graphviz.files import Base
-    assert Base._format == FORMAT
+    from graphviz.files import Graphviz
+    assert Graphviz._format == FORMAT
     # isolate the test
-    monkeypatch.setattr('graphviz.files.Base._format', FORMAT)
-    assert Base._format == FORMAT
+    monkeypatch.setattr('graphviz.files.Graphviz._format', FORMAT)
+    assert Graphviz._format == FORMAT
 
     g1 = Graph()
     assert g1.format == FORMAT

@@ -1,6 +1,6 @@
 import pytest
 
-from graphviz.files import Base
+from graphviz.base import Base
 
 
 def test_base_iter():

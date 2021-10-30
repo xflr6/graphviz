@@ -73,10 +73,10 @@ def set_default_engine(engine):
     if engine not in ENGINES:
         raise ValueError(f'unknown engine: {engine!r}')
 
-    from .files import Base
+    from .files import Graphviz
 
-    old_default_engine = Base._engine
-    Base._engine = engine
+    old_default_engine = Graphviz._engine
+    Graphviz._engine = engine
     return old_default_engine
 
 
@@ -84,8 +84,8 @@ def set_default_format(format):
     if format not in FORMATS:
         raise ValueError(f'unknown format: {format!r}')
 
-    from .files import Base
+    from .files import Graphviz
 
-    old_default_format = Base._format
-    Base._format = format
+    old_default_format = Graphviz._format
+    Graphviz._format = format
     return old_default_format
