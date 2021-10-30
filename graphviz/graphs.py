@@ -27,6 +27,7 @@ graph {
 'test-output/m00se.gv.pdf'
 """
 
+from .encoding import DEFAULT_ENCODING as ENCODING
 from . import dot
 from . import jupyter_integration
 from . import rendering
@@ -37,6 +38,20 @@ __all__ = ['Graph', 'Digraph']
 class BaseGraph(jupyter_integration.JupyterSvgIntegration,
                 dot.Dot, rendering.Render):
     """Dot language creation and source code rendering."""
+
+    def __init__(self, name=None, comment=None,
+                 filename=None, directory=None,
+                 format=None, engine=None, encoding=ENCODING,
+                 graph_attr=None, node_attr=None, edge_attr=None, body=None,
+                 strict=False):
+        dot.Dot.__init__(self, name=name, comment=comment,
+                         graph_attr=graph_attr,
+                         node_attr=node_attr, edge_attr=edge_attr,
+                         body=body, strict=strict)
+
+        rendering.Render.__init__(self, filename=filename, directory=directory,
+                                  format=format, engine=engine,
+                                  encoding=encoding)
 
 
 class Graph(BaseGraph):

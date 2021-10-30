@@ -32,14 +32,12 @@ class Dot(base.Base):
     _attr_list = staticmethod(lang.attr_list)
 
     def __init__(self, name=None, comment=None,
-                 filename=None, directory=None,
-                 format=None, engine=None, encoding=backend.ENCODING,
                  graph_attr=None, node_attr=None, edge_attr=None, body=None,
                  strict=False):
+        super().__init__()
+
         self.name = name
         self.comment = comment
-
-        super().__init__(filename, directory, format, engine, encoding)
 
         self.graph_attr = dict(graph_attr) if graph_attr is not None else {}
         self.node_attr = dict(node_attr) if node_attr is not None else {}

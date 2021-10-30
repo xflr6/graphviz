@@ -3,6 +3,7 @@
 import logging
 import os
 
+from .encoding import DEFAULT_ENCODING as ENCODING
 from . import encoding
 from . import tools
 
@@ -19,7 +20,9 @@ class File(encoding.Encoding):
     _default_extension = 'gv'
 
     def __init__(self, filename=None, directory=None,
-                 format=None, engine=None, encoding=encoding.DEFAULT_ENCODING):
+                 format=None, engine=None, encoding=ENCODING):
+        super().__init__()
+
         if filename is None:
             name = getattr(self, 'name', None) or self.__class__.__name__
             filename = f'{name}.{self._default_extension}'

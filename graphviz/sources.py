@@ -5,7 +5,6 @@ import logging
 import os
 
 from .encoding import DEFAULT_ENCODING as ENCODING
-
 from . import encoding
 from . import files
 from . import jupyter_integration
