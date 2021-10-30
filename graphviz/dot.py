@@ -3,7 +3,7 @@
 import typing
 
 from . import base
-from . import lang
+from . import quoting
 
 __all__ = ['Dot']
 
@@ -24,11 +24,11 @@ class Dot(base.Base):
     _attr_plain = _attr % ('%s', '')
     _tail = '}\n'
 
-    _quote = staticmethod(lang.quote)
-    _quote_edge = staticmethod(lang.quote_edge)
+    _quote = staticmethod(quoting.quote)
+    _quote_edge = staticmethod(quoting.quote_edge)
 
-    _a_list = staticmethod(lang.a_list)
-    _attr_list = staticmethod(lang.attr_list)
+    _a_list = staticmethod(quoting.a_list)
+    _attr_list = staticmethod(quoting.attr_list)
 
     def __init__(self, name=None, comment=None,
                  graph_attr=None, node_attr=None, edge_attr=None, body=None,

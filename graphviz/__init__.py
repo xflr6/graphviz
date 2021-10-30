@@ -31,7 +31,7 @@ from .backend import (render, pipe, pipe_string, pipe_lines, pipe_lines_string,
                       ExecutableNotFound, RequiredArgumentError)
 from .graphs import Graph, Digraph
 from .sources import Source
-from .lang import escape, nohtml
+from .quoting import escape, nohtml
 
 __all__ = ['Graph', 'Digraph',
            'Source',
