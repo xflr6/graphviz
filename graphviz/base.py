@@ -3,9 +3,9 @@
 import codecs
 import locale
 
-from . import backend
-
 __all__ = ['Base']
+
+ENCODING = 'utf-8'
 
 
 class Base:

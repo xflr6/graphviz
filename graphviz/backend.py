@@ -10,6 +10,7 @@ import subprocess
 import sys
 import typing
 
+from .base import ENCODING
 from . import tools
 
 __all__ = ['DOT_BINARY', 'UNFLATTEN_BINARY',
@@ -94,8 +95,6 @@ FORMATTERS = {'cairo',
               'gdiplus',
               'gdwbmp',
               'xlib'}
-
-ENCODING = 'utf-8'
 
 PLATFORM = platform.system().lower()
 
