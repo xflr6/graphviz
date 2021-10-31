@@ -26,7 +26,7 @@ Tests
 
     $ ./run-tests.py
 
-**Run the tests** with tox_ (in a virtualenv_):
+**Run the tests** with tox_ (in a virtualenv_ or more of them):
 
 .. code:: bash
 
