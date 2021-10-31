@@ -36,7 +36,7 @@ __all__ = ['Graph', 'Digraph']
 
 
 class BaseGraph(dot.Dot,
-                rendering.Render,
+                rendering.Rendering,
                 jupyter_integration.JupyterSvgIntegration):
     """Dot language creation and source code rendering."""
 

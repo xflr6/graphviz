@@ -102,7 +102,9 @@ class Pipe(base.Base, backend.Graphviz, encoding.Encoding):
         return self._pipe_lines(*args, input_encoding=self._encoding, **kwargs)
 
 
-class RenderFile(files.File, base.Base, backend.Graphviz, encoding.Encoding):
+class Render(files.File, base.Base,
+             backend.Graphviz, encoding.Encoding,
+             backend.View):
     """Write source lines to file and render with Graphviz."""
 
     def render(self, filename=None, directory=None, view=False, cleanup=False,
@@ -168,13 +170,27 @@ class RenderFile(files.File, base.Base, backend.Graphviz, encoding.Encoding):
 
         return rendered
 
-
-class RenderFileView(RenderFile, backend.View):
-    """Convenience short-cut for running ``.render(view=True)``."""
+    def _view(self, filepath, format, quiet):
+        """Start the right viewer based on file format and platform."""
+        methodnames = [
+            f'_view_{format}_{backend.PLATFORM}',
+            f'_view_{backend.PLATFORM}',
+        ]
+        for name in methodnames:
+            view_method = getattr(self, name, None)
+            if view_method is not None:
+                break
+        else:
+            raise RuntimeError(f'{self.__class__!r} has no built-in viewer'
+                               f' support for {format!r}'
+                               f' on {backend.PLATFORM!r} platform')
+        view_method(filepath, quiet=quiet)
 
     def view(self, filename=None, directory=None, cleanup=False,
              quiet=False, quiet_view=False):
         """Save the source to file, open the rendered result in a viewer.
+
+        Convenience short-cut for running ``.render(view=True)``.
 
         Args:
             filename: Filename for saving the source
@@ -204,26 +220,11 @@ class RenderFileView(RenderFile, backend.View):
                            view=True, cleanup=cleanup,
                            quiet=quiet, quiet_view=quiet_view)
 
-    def _view(self, filepath, format, quiet):
-        """Start the right viewer based on file format and platform."""
-        methodnames = [
-            f'_view_{format}_{backend.PLATFORM}',
-            f'_view_{backend.PLATFORM}',
-        ]
-        for name in methodnames:
-            view_method = getattr(self, name, None)
-            if view_method is not None:
-                break
-        else:
-            raise RuntimeError(f'{self.__class__!r} has no built-in viewer'
-                               f' support for {format!r}'
-                               f' on {backend.PLATFORM!r} platform')
-        view_method(filepath, quiet=quiet)
 
 
 @tools.setattr_add('render.pipe', Pipe.pipe)
-@tools.setattr_add('render.file', RenderFile.render)
-@tools.setattr_add('render.view', RenderFileView.view)
+@tools.setattr_add('render.file', Render.render)
+@tools.setattr_add('render.view', Render.view)
 @tools.setattr_add('render.unflatten', unflattening.Unflatten.unflatten)
-class Render(RenderFileView, RenderFile, Pipe, unflattening.Unflatten):
+class Rendering(Render, Pipe, unflattening.Unflatten):
     """Render fules, pipe, unflatten."""
