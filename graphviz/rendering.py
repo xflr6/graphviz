@@ -11,7 +11,7 @@ from . import encoding
 from . import files
 from . import unflattening
 
-__all__ = ['Render']
+__all__ = ['Rendering']
 
 
 log = logging.getLogger(__name__)

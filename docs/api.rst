@@ -187,7 +187,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      graphviz.rendering.Pipe
      |      graphviz.unflattening.Unflatten
      |      graphviz.base.Base
-     |      graphviz.base.SourceLineIterator
+     |      graphviz.base.BaseSource
+     |      graphviz.base.LineIterator
      |      graphviz.backend.Graphviz
      |      graphviz.encoding.Encoding
      |      graphviz.backend.View
@@ -508,19 +509,19 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          An independent copy of the current object.
      |
      |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.base.SourceLineIterator:
-     |
-     |  __str__(self)
-     |      The DOT source code as string.
-     |
-     |  ----------------------------------------------------------------------
-     |  Readonly properties inherited from graphviz.base.SourceLineIterator:
+     |  Readonly properties inherited from graphviz.base.Base:
      |
      |  source
      |      The generated DOT source code as string.
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.base.SourceLineIterator:
+     |  Methods inherited from graphviz.base.BaseSource:
+     |
+     |  __str__(self)
+     |      The DOT source code as string.
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.base.LineIterator:
      |
      |  __dict__
      |      dictionary for instance variables (if defined)
@@ -598,7 +599,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      graphviz.rendering.Pipe
      |      graphviz.unflattening.Unflatten
      |      graphviz.base.Base
-     |      graphviz.base.SourceLineIterator
+     |      graphviz.base.BaseSource
+     |      graphviz.base.LineIterator
      |      graphviz.backend.Graphviz
      |      graphviz.encoding.Encoding
      |      graphviz.backend.View
@@ -918,19 +920,19 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          An independent copy of the current object.
      |
      |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.base.SourceLineIterator:
-     |
-     |  __str__(self)
-     |      The DOT source code as string.
-     |
-     |  ----------------------------------------------------------------------
-     |  Readonly properties inherited from graphviz.base.SourceLineIterator:
+     |  Readonly properties inherited from graphviz.base.Base:
      |
      |  source
      |      The generated DOT source code as string.
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.base.SourceLineIterator:
+     |  Methods inherited from graphviz.base.BaseSource:
+     |
+     |  __str__(self)
+     |      The DOT source code as string.
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.base.LineIterator:
      |
      |  __dict__
      |      dictionary for instance variables (if defined)
@@ -969,7 +971,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
     <BLANKLINE>
     class Source(graphviz.rendering.Rendering, graphviz.files.File,
                  graphviz.jupyter_integration.JupyterSvgIntegration,
-                 graphviz.base.Base)
+                 graphviz.base.BaseSource)
      |  Source(source,
                filename=None, directory=None,
                format=None, engine=None,
@@ -1000,7 +1002,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      graphviz.rendering.Pipe
      |      graphviz.unflattening.Unflatten
      |      graphviz.base.Base
-     |      graphviz.base.SourceLineIterator
+     |      graphviz.base.BaseSource
+     |      graphviz.base.LineIterator
      |      graphviz.backend.Graphviz
      |      graphviz.encoding.Encoding
      |      graphviz.backend.View
@@ -1232,13 +1235,13 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |          An independent copy of the current object.
      |
      |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.base.SourceLineIterator:
+     |  Methods inherited from graphviz.base.BaseSource:
      |
      |  __str__(self)
      |      The DOT source code as string.
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.base.SourceLineIterator:
+     |  Data descriptors inherited from graphviz.base.LineIterator:
      |
      |  __dict__
      |      dictionary for instance variables (if defined)
