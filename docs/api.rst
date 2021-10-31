@@ -134,13 +134,6 @@ and :class:`.Source` for reference.
     First shalt thou take out the Holy Pin.
     Then shalt thou count to three, no more, no less.
 
-.. note::
-
-    Below, cooperative multiplie inheritance classes reveal their MRO structure
-    and methods are shown in **method resolution order** (MRO),
-    which should be an extension of their dependency structure.
-    TLDR; you might prefer this order to follow the implementation.
-
 Graph
 """""
 

@@ -65,6 +65,14 @@ Use ``help()`` in the REPL to shows/structure methods and attributes in depdende
 - ``Digraph``: https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
 - ``Source``: https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
 
+.. note::
+
+    In the above, cooperative multiplie inheritance classes reveal their MRO structure
+    and methods are shown in **method resolution order** (MRO),
+    which should be an extension of their dependency relation...
+    
+    TLDR; you might find this presentation helps to follow the implementation.
+
 
 .. _venv: https://docs.python.org/3/library/venv.html#creating-virtual-environments
 .. _tox: https://tox.wiki/en/latest/
