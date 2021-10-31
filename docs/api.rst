@@ -123,7 +123,7 @@ Online ``help()`` (internal)
 Results of :func:`help` for :class:`.Graph`, :class:`.Digraph`,
 and :class:`.Source` for reference.
 
-.. warning::
+.. important::
 
     The outputs in this section contains some **internals** (implementation details).
     They serve to record some current implementation details and their changes.
