@@ -424,14 +424,18 @@ class Graphviz:
         """Simplify mocking ``pipe_lines``."""
         return pipe_lines(*args, **kwargs)
 
-    _pipe_lines_string = staticmethod(pipe_lines_string)
+    @staticmethod
+    def _pipe_lines_string(*args, **kwargs):
+        return pipe_lines_string(*args, **kwargs)
 
     @staticmethod
     def _render(*args, **kwargs):
         """Simplify mocking ``render``."""
         return render(*args, **kwargs)
 
-    _unflatten = staticmethod(unflatten)
+    @staticmethod
+    def _unflatten(*args, **kwargs):
+        return unflatten(*args, **kwargs)
 
     def __init__(self, format=None, engine=None, **kwargs):
         super().__init__(**kwargs)
