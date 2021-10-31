@@ -47,7 +47,13 @@ Tests
 
     $ ./run-tests.py
 
-**Run the tests** with tox_ (in a virtualenv_ or many of them):
+Run only tests that work **without Graphviz** executables:
+
+.. code:: bash
+
+    $ ./run-tests.py --skip-exe
+
+**Run the tests** with tox_ (**installed** in a virtualenv_ or many of them):
 
 .. code:: bash
 
