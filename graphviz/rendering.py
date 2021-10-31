@@ -150,7 +150,7 @@ class RenderFile(files.File, backend.Graphviz, base.Base):
             (e.g. ``[image=images/camelot.png]``)
             can be given as paths relative to the DOT source file.
         """
-        filepath = self.save(filename, directory, dry_run=None)
+        filepath = self.save(filename, directory, skip_existing=None)
 
         if format is None:
             format = self._format

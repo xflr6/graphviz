@@ -132,7 +132,7 @@ def test_render(mocker, render, source):
 
     assert source.render(cleanup=True, view=True) is render.return_value
 
-    save.assert_called_once_with(None, None, dry_run=None)
+    save.assert_called_once_with(None, None, skip_existing=None)
     render.assert_called_once_with(source.engine, source.format,
                                    save.return_value,
                                    renderer=None, formatter=None,

@@ -1,5 +1,6 @@
 """Generic re-useable self-contained helper functions."""
 
+import logging
 import os
 import operator
 import typing
@@ -8,6 +9,9 @@ __all__ = ['attach',
            'setattr',
            'mkdirs',
            'mapping_items']
+
+
+log = logging.getLogger(__name__)
 
 
 def attach(object: typing.Any, name: str) -> typing.Callable:
@@ -45,6 +49,7 @@ def mkdirs(filename, mode: int = 0o777) -> None:
     dirname = os.path.dirname(filename)
     if not dirname:
         return
+    log.debug('os.makedirs(%r)', dirname)
     os.makedirs(dirname, mode=mode, exist_ok=True)
 
 

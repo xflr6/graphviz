@@ -52,13 +52,13 @@ class File(encoding.Encoding, base.Base):
         return os.path.join(self.directory, self.filename)
 
     def save(self, filename=None, directory=None,
-             *, dry_run: bool = False):
+             *, skip_existing: bool = False):
         """Save the DOT source to file. Ensure the file ends with a newline.
 
         Args:
             filename: Filename for saving the source (defaults to ``name`` + ``'.gv'``)
             directory: (Sub)directory for source saving and rendering.
-            dry_run: Skip file write (default: ``False``).
+            skip_existing: Skip write if file exists (default: ``False``).
 
         Returns:
             The (possibly relative) path of the saved source file.
@@ -69,10 +69,10 @@ class File(encoding.Encoding, base.Base):
             self.directory = directory
 
         filepath = self.filepath
-        tools.mkdirs(filepath)
+        if skip_existing and os.path.exists(filepath):
+            return filepath
 
-        if dry_run:
-            return None
+        tools.mkdirs(filepath)
 
         log.debug('write lines to %r', filepath)
         with open(filepath, 'w', encoding=self.encoding) as fd:
