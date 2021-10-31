@@ -124,12 +124,12 @@ class Graphviz:
         self._engine = engine
 
     @property
-    def format(self)-> str:
+    def format(self) -> str:
         """The output format used for rendering (``'pdf'``, ``'png'``, ...)."""
         return self._format
 
     @format.setter
-    def format(self, format)-> None:
+    def format(self, format) -> None:
         format = format.lower()
         if format not in FORMATS:
             raise ValueError(f'unknown format: {format!r}')

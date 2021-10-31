@@ -1,3 +1,5 @@
+"""Pipe source through the Graphviz *unflatten* preprocessor."""
+
 from . import base
 from . import backend
 from . import encoding

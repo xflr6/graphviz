@@ -13,4 +13,3 @@ def test_save_source_from_files():
     source.save()
 
     assert os.stat(dot.filepath).st_mtime == old_stat.st_mtime
-

@@ -1,4 +1,4 @@
-# _compat.py - Python 3.6 to 3.8 compatibility
+"""Python 3.6 to 3.8 compatibility."""
 
 import sys
 import typing
