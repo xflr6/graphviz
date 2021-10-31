@@ -2,6 +2,7 @@
 
 import logging
 import os
+import typing
 
 from .encoding import DEFAULT_ENCODING as ENCODING
 from . import base
@@ -52,7 +53,7 @@ class File(encoding.Encoding, base.Base):
         return os.path.join(self.directory, self.filename)
 
     def save(self, filename=None, directory=None,
-             *, skip_existing: bool = False):
+             *, skip_existing: typing.Optional[bool] = False):
         """Save the DOT source to file. Ensure the file ends with a newline.
 
         Args:
