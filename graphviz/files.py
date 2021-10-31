@@ -4,7 +4,6 @@ import logging
 import os
 import typing
 
-from .encoding import DEFAULT_ENCODING as ENCODING
 from . import base
 from . import encoding
 from . import tools
@@ -21,8 +20,7 @@ class File(encoding.Encoding, base.Base):
 
     _default_extension = 'gv'
 
-    def __init__(self, filename=None, directory=None,
-                 format=None, engine=None, encoding=ENCODING, **kwargs):
+    def __init__(self, filename=None, directory=None, **kwargs):
         super().__init__(**kwargs)
 
         if filename is None:
@@ -32,14 +30,6 @@ class File(encoding.Encoding, base.Base):
 
         if directory is not None:
             self.directory = directory
-
-        if format is not None:
-            self.format = format
-
-        if engine is not None:
-            self.engine = engine
-
-        self.encoding = encoding
 
     def _kwargs(self):
         result = super()._kwargs()

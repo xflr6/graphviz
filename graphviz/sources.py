@@ -61,7 +61,9 @@ class Source(jupyter_integration.JupyterSvgIntegration,
     def __init__(self, source, filename=None, directory=None,
                  format=None, engine=None, encoding=ENCODING, *,
                  loaded_from_path: typing.Optional[os.PathLike] = None):
-        super().__init__(filename, directory, format, engine, encoding)
+        super().__init__(filename=filename, directory=directory,
+                         format=format, engine=engine,
+                         encoding=encoding)
         self._loaded_from_path = loaded_from_path
         self._source = source  #: The verbatim DOT source code string.
 

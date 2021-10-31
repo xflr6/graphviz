@@ -109,7 +109,14 @@ class Graphviz:
 
     _format = 'pdf'
 
-    _encoding = ENCODING
+    def __init__(self, format=None, engine=None, **kwargs):
+        super().__init__(**kwargs)
+
+        if format is not None:
+            self.format = format
+
+        if engine is not None:
+            self.engine = engine
 
     @property
     def engine(self) -> str:
