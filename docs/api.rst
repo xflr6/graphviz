@@ -117,16 +117,34 @@ Names of upstream binaries:
    :annotation:
 
 
-Online ``help()``
------------------
+Online ``help()`` (internal)
+----------------------------
 
 Results of :func:`help` for :class:`.Graph`, :class:`.Digraph`,
-and :class:`.Source` for reference:
+and :class:`.Source` for reference.
 
+.. warning::
+
+    The outputs in this section contains some **internals** (implementation details).
+    They serve to record some current implementation details and their changes.
+    They mainly serve the development process.
+    They might be outdated.
+    They **may change at any point** in time.
+    See above for the public API.
+    First shalt thou take out the Holy Pin.
+    Then shalt thou count to three, no more, no less.
+
+.. note::
+
+    Below, cooperative multiplie inheritance classes reveal their MRO structure
+    and methods are shown in **method resolution order** (MRO),
+    which should be an extension of their dependency structure.
+    TLDR; you might prefer this order to follow the implementation.
 
 Graph
 """""
 
+Partially syntax-highlighted:
 https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
 
 .. code:: python
@@ -537,6 +555,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
 Digraph
 """""""
 
+Partially symntax-highlighed:
 https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
 
 .. code:: python
@@ -946,6 +965,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
 Source
 """"""
 
+Partially syntax-highlighted:
 https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
 
 .. code:: python

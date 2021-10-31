@@ -55,6 +55,16 @@ Documentation
     $ cd docs
     $ python -m sphinx . _build
 
+Overview
+--------
+
+Use ``help()`` in the REPL to shows/structure methods and attributes in depdendency order:
+
+- Introduction: https://graphviz.readthedocs.io/en/latest/api.html#online-help-internal
+- ``Graph``: https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
+- ``Digraph``: https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
+- ``Source``: https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
+
 
 .. _venv: https://docs.python.org/3/library/venv.html#creating-virtual-environments
 .. _tox: https://tox.wiki/en/latest/
