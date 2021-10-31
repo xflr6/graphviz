@@ -39,12 +39,14 @@ should print the version of your Graphiz installation.
     __ https://gitlab.com/graphviz/graphviz/-/issues/1753
     __ https://www2.graphviz.org/Archive/stable/windows/graphviz-2.38.msi
 
-Anaconda_: see the conda-forge_ package
-`conda-forge/python-graphviz <conda-forge-python-graphviz_>`_
-(`feedstock <conda-forge-python-graphviz-feedstock_>`_),
-which should automatically ``conda install``
-`conda-forge/graphviz <conda-forge-graphviz_>`_
-(`feedstock <conda-forge-graphviz-feedstock_>`_) as dependency.
+.. admonition:: Platform: Anaconda
+
+    See the conda-forge_ package
+    `conda-forge/python-graphviz <conda-forge-python-graphviz_>`_
+    (`feedstock <conda-forge-python-graphviz-feedstock_>`_),
+    which should automatically ``conda install``
+    `conda-forge/graphviz <conda-forge-graphviz_>`_
+    (`feedstock <conda-forge-graphviz-feedstock_>`_) as dependency.
 
 
 Basic usage
@@ -357,7 +359,7 @@ be rendered literally), use the :func:`.escape` function (cf. the
         "\\"
     }
 
-.. admonition:: History
+.. admonition:: Version history
 
     To prevent breaking the internal quoting mechanism, the special meaning of
     ``\"`` as a backslash-escaped quote has been disabled since version

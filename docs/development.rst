@@ -34,8 +34,12 @@ Tests
 
 |Build| |Codecov|
 
-- GitHub Actions `Build workflow <https://github.com/xflr6/graphviz/actions/workflows/build.yaml>`_
+- GitHub Actions
+  `Build workflow <https://github.com/xflr6/graphviz/actions/workflows/build.yaml>`_
   (Python 3.6 to 3.10, experimental: PyPy 3.8 to 3.8)
+- Codecov
+  `test coverage <https://app.codecov.io/gh/xflr6/graphviz>`_
+  (`main branch <https://app.codecov.io/gh/xflr6/graphviz/branch/master>`_)
 
 **Run the tests** (in the current environment):
 
