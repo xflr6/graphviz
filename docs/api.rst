@@ -127,6 +127,8 @@ and :class:`.Source` for reference:
 Graph
 """""
 
+https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
+
 .. code:: python
 
     >>> import graphviz
@@ -535,6 +537,8 @@ Graph
 Digraph
 """""""
 
+https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
+
 .. code:: python
 
     >>> import graphviz
@@ -941,6 +945,8 @@ Digraph
 
 Source
 """"""
+
+https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
 
 .. code:: python
 
