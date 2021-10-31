@@ -551,7 +551,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
 .. code:: python
 
     >>> import graphviz
-    >>> help(graphviz.Digraph)  # doctest: +NORMALIZE_WHITESPACE
+    >>> help(graphviz.Digraph)  # doctest: +NORMALIZE_WHITESPACE +SKIP
     Help on class Digraph in module graphviz.graphs:
     <BLANKLINE>
     class Digraph(BaseGraph)
@@ -958,7 +958,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
 .. code:: python
 
     >>> import graphviz
-    >>> help(graphviz.Source)  # doctest: +NORMALIZE_WHITESPACE
+    >>> help(graphviz.Source)  # doctest: +NORMALIZE_WHITESPACE +SKIP
     Help on class Source in module graphviz.sources:
     <BLANKLINE>
     class Source(graphviz.rendering.Rendering, graphviz.files.File,
