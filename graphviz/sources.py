@@ -17,10 +17,8 @@ __all__ = ['Source']
 log = logging.getLogger(__name__)
 
 
-class Source(jupyter_integration.JupyterSvgIntegration,
-             rendering.Render,
-             files.File,
-             base.Base):
+class Source(rendering.Render, files.File,
+             jupyter_integration.JupyterSvgIntegration, base.Base):
     """Verbatim DOT source code string to be rendered by Graphviz.
 
     Args:
