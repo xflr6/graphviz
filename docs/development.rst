@@ -47,7 +47,7 @@ Tests
 
     $ ./run-tests.py
 
-Run only tests that are expected to work **without Graphviz** executables:
+Run **only tests** that are expected to work **without Graphviz** executables:
 
 .. code:: bash
 
