@@ -3,9 +3,15 @@
 Examples
 ========
 
-The following code examples are included in the ``examples/`` directory of the
-`source repository/distribution`__. Most of them recreate examples from the
-`graphviz.org gallery`__ or the `graphviz.org documentation`__.
+.. tip::
+
+    The following code examples are included in the ``examples/`` directory of the
+    `source repository/distribution`__. 
+
+.. note::
+
+    Most of them recreate examples from the
+    `graphviz.org gallery`__ or the `graphviz.org documentation`__.
 
 .. __: https://github.com/xflr6/graphviz/tree/master/examples/
 .. __: http://www.graphviz.org/gallery/

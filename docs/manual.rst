@@ -28,7 +28,7 @@ the layout commands for rendering graph descriptions (``dot``, ``circo``,
 ``neato``, etc.) is on your systems' path: On the command-line, ``dot -V``
 should print the version of your Graphiz installation.
 
-.. hint::
+.. admonition:: Platform: Windows
 
     Windows users might want to check the status of known issues
     (gvedit.exe__, sfdp__, commands__) and consider trying an older archived
@@ -166,7 +166,7 @@ Note that :meth:`~.Graph.pipe` returns the raw ``stdout`` from the rendering
 command (:class:`bytes`): When piping into plain-text formats like ``'svg'`` or
 ``'plain'``, you usually want to decode the return value as shown above.
 
-.. note::
+.. warning::
 
     The output for :meth:`~.Graph.pipe` is buffered in memory, so do not use
     this method if the data size is large.
@@ -357,7 +357,7 @@ be rendered literally), use the :func:`.escape` function (cf. the
         "\\"
     }
 
-.. note::
+.. admonition:: History
 
     To prevent breaking the internal quoting mechanism, the special meaning of
     ``\"`` as a backslash-escaped quote has been disabled since version
@@ -471,7 +471,7 @@ Both produce the same result:
         }
     }
 
-.. note::
+.. important::
 
     If the ``name`` of a subgraph begins with ``'cluster'`` (all lowercase) the
     layout engine will treat it as a special cluster subgraph

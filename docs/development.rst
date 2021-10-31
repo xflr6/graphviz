@@ -16,8 +16,18 @@ Install in a venv_ in development mode (includes all ``extras_require``):
 .. code:: bash
 
     $ python -m venv .venv
-    $ source .venv/bin/activate  # Windows: .venv\Script\activate.bat
-    $ python -m pip install -r requirements.txt  # alteratively: pip install -e .[dev,test,docs]
+    $ source .venv/bin/activate
+    $ python -m pip install -r requirements.txt
+
+.. admonition:: Platform: Windows
+
+    ``C:\>.venv\Script\activate.bat``
+    to replace ``source .venv/bin/activate``
+
+.. hint::
+
+    alteratively: ``pip install -e .[dev,test,docs]``
+    (same as ``pip install -r requirements.txt``)
 
 Tests
 -----
@@ -33,7 +43,7 @@ Tests
 
     $ ./run-tests.py
 
-**Run the tests** with tox_ (in a virtualenv_ or more of them):
+**Run the tests** with tox_ (in a virtualenv_ or many of them):
 
 .. code:: bash
 
@@ -65,7 +75,7 @@ Use ``help()`` in the REPL to shows/structure methods and attributes in depdende
 - ``Digraph``: https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
 - ``Source``: https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
 
-.. note::
+.. tip::
 
     In the above, cooperative multiplie inheritance classes reveal their MRO structure
     and methods are shown in **method resolution order** (MRO),
