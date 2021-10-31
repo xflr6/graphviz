@@ -87,7 +87,7 @@ Use ``help()`` in the REPL to shows/structure methods and attributes in depdende
 
 .. tip::
 
-    In the above, cooperative multiplie inheritance classes reveal their MRO structure
+    In the above, cooperative multiple inheritance classes reveal their MRO structure
     and methods are shown in **method resolution order** (MRO),
     which should be an extension of their dependency relation...
     
