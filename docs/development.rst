@@ -3,6 +3,11 @@
 Development
 ===========
 
+|PyPI version| |License| |Supported Python| |Format|
+
+- Changelog: https://graphviz.readthedocs.io/en/latest/changelog.html
+- Issue Tracker: https://github.com/xflr6/graphviz/issues
+
 Installation
 ------------
 
@@ -12,10 +17,12 @@ Install in a venv_ in development mode (includes all ``extras_require``):
 
     $ python -m venv .venv
     $ source .venv/bin/activate  # Windows: .venv\Script\activate.bat
-    $ python -m pip install -r requirements.txt  # pip install -e .[dev,test,docs]
+    $ python -m pip install -r requirements.txt  # alteratively: pip install -e .[dev,test,docs]
 
 Tests
 -----
+
+|Build| |Codecov|
 
 - GitHub Actions `Build workflow <https://github.com/xflr6/graphviz/actions/workflows/build.yaml>`_
   (Python 3.6 to 3.10, experimental: PyPy 3.8 to 3.8)
@@ -35,6 +42,8 @@ Tests
 Documentation
 -------------
 
+|Readthedocs-stable| |Readthedocs-latest|
+
 - Read the Docs Project Home: https://readthedocs.org/projects/graphviz/
 - stable: https://graphviz.readthedocs.io
 - latest: https://graphviz.readthedocs.io/en/latest/
@@ -52,3 +61,31 @@ Documentation
 .. _virtualenv: https://virtualenv.pypa.io
 .. _sphinx: https://www.sphinx-doc.org
 .. _sphinx-rtd-theme: https://sphinx-rtd-theme.readthedocs.io
+
+
+.. |PyPI version| image:: https://img.shields.io/pypi/v/graphviz.svg
+    :target: https://pypi.org/project/graphviz/
+    :alt: Latest PyPI Version
+.. |License| image:: https://img.shields.io/pypi/l/graphviz.svg
+    :target: https://pypi.org/project/graphviz/
+    :alt: License
+.. |Supported Python| image:: https://img.shields.io/pypi/pyversions/graphviz.svg
+    :target: https://pypi.org/project/graphviz/
+    :alt: Supported Python Versions
+.. |Format| image:: https://img.shields.io/pypi/format/graphviz.svg
+    :target: https://pypi.org/project/graphviz/
+    :alt: Format
+
+
+.. |Build| image:: https://github.com/xflr6/graphviz/actions/workflows/build.yaml/badge.svg?branch=master
+    :target: https://github.com/xflr6/graphviz/actions/workflows/build.yaml?query=branch%3Amaster
+    :alt: Build
+.. |Codecov| image:: https://codecov.io/gh/xflr6/graphviz/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/xflr6/graphviz
+    :alt: Codecov
+.. |Readthedocs-stable| image:: https://readthedocs.org/projects/graphviz/badge/?version=stable
+    :target: https://graphviz.readthedocs.io/en/stable/?badge=stable
+    :alt: Readthedocs stable
+.. |Readthedocs-latest| image:: https://readthedocs.org/projects/graphviz/badge/?version=latest
+    :target: https://graphviz.readthedocs.io/en/latest/?badge=latest
+    :alt: Readthedocs latest
