@@ -44,14 +44,13 @@ class BaseGraph(jupyter_integration.JupyterSvgIntegration,
                  format=None, engine=None, encoding=ENCODING,
                  graph_attr=None, node_attr=None, edge_attr=None, body=None,
                  strict=False):
-        dot.Dot.__init__(self, name=name, comment=comment,
+        super().__init__(name=name, comment=comment,
                          graph_attr=graph_attr,
                          node_attr=node_attr, edge_attr=edge_attr,
-                         body=body, strict=strict)
-
-        rendering.Render.__init__(self, filename=filename, directory=directory,
-                                  format=format, engine=engine,
-                                  encoding=encoding)
+                         body=body, strict=strict,
+                         filename=filename, directory=directory,
+                         encoding=encoding,
+                         format=format, engine=engine)
 
 
 class Graph(BaseGraph):

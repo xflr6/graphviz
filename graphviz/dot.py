@@ -32,8 +32,8 @@ class Dot(base.Base):
 
     def __init__(self, name=None, comment=None,
                  graph_attr=None, node_attr=None, edge_attr=None, body=None,
-                 strict=False):
-        super().__init__()
+                 strict=False, **kwargs):
+        super().__init__(**kwargs)
 
         self.name = name
         self.comment = comment

@@ -22,8 +22,8 @@ class File(encoding.Encoding, base.Base):
     _default_extension = 'gv'
 
     def __init__(self, filename=None, directory=None,
-                 format=None, engine=None, encoding=ENCODING):
-        super().__init__()
+                 format=None, engine=None, encoding=ENCODING, **kwargs):
+        super().__init__(**kwargs)
 
         if filename is None:
             name = getattr(self, 'name', None) or self.__class__.__name__
