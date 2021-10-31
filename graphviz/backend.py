@@ -17,7 +17,10 @@ __all__ = ['DOT_BINARY', 'UNFLATTEN_BINARY',
            'ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
            'RequiredArgumentError',
            'render', 'pipe', 'pipe_string', 'pipe_lines', 'pipe_lines_string',
-           'unflatten', 'version', 'view',
+           'unflatten',
+           'Graphviz',
+           'version', 'view',
+           'View',
            'ExecutableNotFound']
 
 #: :class:`pathlib.Path` of layout command (``Path('dot')``).
@@ -100,47 +103,6 @@ PLATFORM = platform.system().lower()
 
 
 log = logging.getLogger(__name__)
-
-
-class Graphviz:
-    """Graphiz default engine/format."""
-
-    _engine = 'dot'
-
-    _format = 'pdf'
-
-    def __init__(self, format=None, engine=None, **kwargs):
-        super().__init__(**kwargs)
-
-        if format is not None:
-            self.format = format
-
-        if engine is not None:
-            self.engine = engine
-
-    @property
-    def engine(self) -> str:
-        """The layout engine used for rendering (``'dot'``, ``'neato'``, ...)."""
-        return self._engine
-
-    @engine.setter
-    def engine(self, engine) -> None:
-        engine = engine.lower()
-        if engine not in ENGINES:
-            raise ValueError(f'unknown engine: {engine!r}')
-        self._engine = engine
-
-    @property
-    def format(self) -> str:
-        """The output format used for rendering (``'pdf'``, ``'png'``, ...)."""
-        return self._format
-
-    @format.setter
-    def format(self, format) -> None:
-        format = format.lower()
-        if format not in FORMATS:
-            raise ValueError(f'unknown format: {format!r}')
-        self._format = format
 
 
 def command(engine: str, format_: str,
@@ -450,6 +412,61 @@ def unflatten(source: str,
     return proc.stdout
 
 
+class Graphviz:
+    """Graphiz default engine/format."""
+
+    _engine = 'dot'
+
+    _format = 'pdf'
+
+    @staticmethod
+    def _pipe_lines(*args, **kwargs):
+        """Simplify mocking ``pipe_lines``."""
+        return pipe_lines(*args, **kwargs)
+
+    _pipe_lines_string = staticmethod(pipe_lines_string)
+
+    @staticmethod
+    def _render(*args, **kwargs):
+        """Simplify mocking ``render``."""
+        return render(*args, **kwargs)
+
+    _unflatten = staticmethod(unflatten)
+
+    def __init__(self, format=None, engine=None, **kwargs):
+        super().__init__(**kwargs)
+
+        if format is not None:
+            self.format = format
+
+        if engine is not None:
+            self.engine = engine
+
+    @property
+    def engine(self) -> str:
+        """The layout engine used for rendering (``'dot'``, ``'neato'``, ...)."""
+        return self._engine
+
+    @engine.setter
+    def engine(self, engine) -> None:
+        engine = engine.lower()
+        if engine not in ENGINES:
+            raise ValueError(f'unknown engine: {engine!r}')
+        self._engine = engine
+
+    @property
+    def format(self) -> str:
+        """The output format used for rendering (``'pdf'``, ``'png'``, ...)."""
+        return self._format
+
+    @format.setter
+    def format(self, format) -> None:
+        format = format.lower()
+        if format not in FORMATS:
+            raise ValueError(f'unknown format: {format!r}')
+        self._format = format
+
+
 def version() -> typing.Tuple[int, ...]:
     """Return the version number tuple
         from the ``stderr`` output of ``dot -V``.
@@ -639,3 +656,16 @@ def view_windows(filepath, *, quiet: bool) -> None:
     filepath = os.path.normpath(filepath)
     log.debug('view: %r', filepath)
     os.startfile(filepath)  # pytype: disable=module-attr
+
+
+class View:
+    """Open filepath with its default viewing application
+        (platform-specific)."""
+
+    _view_darwin = staticmethod(view_darwin)
+
+    _view_freebsd = staticmethod(view_unixoid)
+
+    _view_linux = staticmethod(view_unixoid)
+
+    _view_windows = staticmethod(view_windows)

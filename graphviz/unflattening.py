@@ -38,9 +38,10 @@ class Unflatten(base.Base, backend.Graphviz, encoding.Encoding):
         """
         from . import sources
 
-        out = backend.unflatten(self.source,
-                                stagger=stagger, fanout=fanout, chain=chain,
-                                encoding=self._encoding)
+        out = self._unflatten(self.source,
+                               stagger=stagger, fanout=fanout, chain=chain,
+                               encoding=self._encoding)
+
         return sources.Source(out,
                               filename=self.filename, directory=self.directory,
                               format=self._format, engine=self._engine,

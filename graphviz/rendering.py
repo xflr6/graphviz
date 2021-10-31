@@ -96,10 +96,10 @@ class Pipe(base.Base, backend.Graphviz, encoding.Encoding):
         if encoding is not None:
             if codecs.lookup(encoding) is codecs.lookup(self._encoding):
                 # common case: both stdin and stdout need the same encoding
-                return backend.pipe_lines_string(*args, encoding=encoding, **kwargs)
-            raw = backend.pipe_lines(*args, input_encoding=self._encoding, **kwargs)
+                return self._pipe_lines_string(*args, encoding=encoding, **kwargs)
+            raw = self._pipe_lines(*args, input_encoding=self._encoding, **kwargs)
             return raw.decode(encoding)
-        return backend.pipe_lines(*args, input_encoding=self._encoding, **kwargs)
+        return self._pipe_lines(*args, input_encoding=self._encoding, **kwargs)
 
 
 class RenderFile(files.File, base.Base, backend.Graphviz, encoding.Encoding):
@@ -155,9 +155,9 @@ class RenderFile(files.File, base.Base, backend.Graphviz, encoding.Encoding):
         if format is None:
             format = self._format
 
-        rendered = backend.render(self._engine, format, filepath,
-                                  renderer=renderer, formatter=formatter,
-                                  quiet=quiet)
+        rendered = self._render(self._engine, format, filepath,
+                                renderer=renderer, formatter=formatter,
+                                quiet=quiet)
 
         if cleanup:
             log.debug('delete %r', filepath)
@@ -169,7 +169,7 @@ class RenderFile(files.File, base.Base, backend.Graphviz, encoding.Encoding):
         return rendered
 
 
-class RenderFileView(RenderFile):
+class RenderFileView(RenderFile, backend.View):
     """Convenience short-cut for running ``.render(view=True)``."""
 
     def view(self, filename=None, directory=None, cleanup=False,
@@ -219,11 +219,6 @@ class RenderFileView(RenderFile):
                                f' support for {format!r}'
                                f' on {backend.PLATFORM!r} platform')
         view_method(filepath, quiet=quiet)
-
-    _view_darwin = staticmethod(backend.view_darwin)
-    _view_freebsd = staticmethod(backend.view_unixoid)
-    _view_linux = staticmethod(backend.view_unixoid)
-    _view_windows = staticmethod(backend.view_windows)
 
 
 @tools.setattr_add('render.pipe', Pipe.pipe)
