@@ -125,12 +125,12 @@ and :class:`.Source` for reference.
 
 .. important::
 
-    The outputs in this section contains some **internals** (implementation details).
+    The outputs in this section may contain some **internals** (implementation details).
     They serve to record some current implementation details and their changes.
-    They mainly serve the development process.
-    They might be outdated.
+    They mainly serve the development process (e.g. checking the MRO).
+    They might be outdated (``TODO:`` automate reindent).
     They **may change at any point** in time.
-    See above for the public API.
+    See above for the full (publib) API.
     First shalt thou take out the Holy Pin.
     Then shalt thou count to three, no more, no less.
 
