@@ -130,7 +130,7 @@ Graph
 .. code:: python
 
     >>> import graphviz
-    >>> help(graphviz.Graph)  # doctest: +NORMALIZE_WHITESPACE
+    >>> help(graphviz.Graph)  # doctest: +NORMALIZE_WHITESPACE +SKIP
     Help on class Graph in module graphviz.graphs:
     <BLANKLINE>
     class Graph(BaseGraph)
@@ -538,7 +538,7 @@ Digraph
 .. code:: python
 
     >>> import graphviz
-    >>> help(graphviz.Graph)  # doctest: +NORMALIZE_WHITESPACE
+    >>> help(graphviz.Graph)  # doctest: +NORMALIZE_WHITESPACE +SKIP
     Help on class Graph in module graphviz.graphs:
     <BLANKLINE>
     class Graph(BaseGraph)
@@ -945,7 +945,7 @@ Source
 .. code:: python
 
     >>> import graphviz
-    >>> help(graphviz.Source)  # doctest: +NORMALIZE_WHITESPACE
+    >>> help(graphviz.Source)  # doctest: +NORMALIZE_WHITESPACE +SKIP
     Help on class Source in module graphviz.sources:
     <BLANKLINE>
     class Source(graphviz.rendering.Rendering, graphviz.files.File,
