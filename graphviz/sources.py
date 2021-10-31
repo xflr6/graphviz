@@ -104,6 +104,8 @@ class Source(jupyter_integration.JupyterSvgIntegration,
         if (dry_run is None
             and self._loaded_from_path
             and os.path.samefile(self._loaded_from_path, self.filepath)):
+            log.debug('.save(dry_run=None) skip writing Source.from_file(%r)',
+                      self.filepath)
             dry_run = True
 
         return super().save(filename=filename, directory=directory,

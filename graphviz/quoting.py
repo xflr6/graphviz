@@ -1,5 +1,3 @@
-# lang.py - dot language creation helpers
-
 """Quote strings to be valid DOT identifiers, assemble attribute lists."""
 
 import functools

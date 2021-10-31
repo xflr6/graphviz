@@ -30,8 +30,8 @@ from .backend import (render, pipe, pipe_string, pipe_lines, pipe_lines_string,
                       ENGINES, FORMATS, RENDERERS, FORMATTERS,
                       ExecutableNotFound, RequiredArgumentError)
 from .graphs import Graph, Digraph
-from .sources import Source
 from .quoting import escape, nohtml
+from .sources import Source
 
 __all__ = ['Graph', 'Digraph',
            'Source',

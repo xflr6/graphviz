@@ -632,11 +632,12 @@ you can use the :meth:`.Source.from_file`-classmethod (alternate constructor):
 .. image:: _static/qtconsole-source.png
     :align: center
 
-Note that :meth:`~.Source.save`, :meth:`~.Source.render` and :meth:`~.Source.view`
-on the :class:`.Source` returned by `.Source.from_file` resolve default
-``.save(dry_run=None)`` ``to `dry_run=True`` to skip writing the read
-:attr:`~.Source.source` back into the same file (spefically to the same path
-that it was loaded from).
+Note that :meth:`~.Source.render` and :meth:`~.Source.view` on the :class:`.Source`
+returned by ``.Source.from_file`` skip writing the loaded file back. The same
+holds for :meth:`~.Source.save` (resolve default ``.save(dry_run=None)`` to
+``dry_run=True`` to skip writing the read :attr:`~.Source.source`
+back into the same file (spefically to the same path that it was loaded from).
+Call ``.save(dry_run=False)`` if you want to re-write the loaded source.
 
 
 Integration with viewers
