@@ -9,7 +9,6 @@ from . import backend
 from . import base
 from . import encoding
 from . import files
-from . import tools
 from . import unflattening
 
 __all__ = ['Render']
@@ -221,10 +220,5 @@ class Render(files.File, base.Base,
                            quiet=quiet, quiet_view=quiet_view)
 
 
-
-@tools.setattr_add('render.pipe', Pipe.pipe)
-@tools.setattr_add('render.file', Render.render)
-@tools.setattr_add('render.view', Render.view)
-@tools.setattr_add('render.unflatten', unflattening.Unflatten.unflatten)
 class Rendering(Render, Pipe, unflattening.Unflatten):
     """Render files and open in viewer, pipe, unflatten."""
