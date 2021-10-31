@@ -227,4 +227,4 @@ class Render(files.File, base.Base,
 @tools.setattr_add('render.view', Render.view)
 @tools.setattr_add('render.unflatten', unflattening.Unflatten.unflatten)
 class Rendering(Render, Pipe, unflattening.Unflatten):
-    """Render fules, pipe, unflatten."""
+    """Render files and open in viewer, pipe, unflatten."""
