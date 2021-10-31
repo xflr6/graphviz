@@ -53,6 +53,11 @@ class BaseGraph(dot.Dot,
                          encoding=encoding,
                          format=format, engine=engine)
 
+    @property
+    def source(self) -> str:
+        """The generated DOT source code as string."""
+        return ''.join(self)
+
 
 class Graph(BaseGraph):
     """Graph source code in the DOT language.

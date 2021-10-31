@@ -187,7 +187,6 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      graphviz.rendering.Pipe
      |      graphviz.unflattening.Unflatten
      |      graphviz.base.Base
-     |      graphviz.base.BaseSource
      |      graphviz.base.LineIterator
      |      graphviz.backend.Graphviz
      |      graphviz.encoding.Encoding
@@ -210,6 +209,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
                  body=None,
                  strict=False)
      |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  ----------------------------------------------------------------------
+     |  Readonly properties inherited from BaseGraph:
+     |
+     |  source
+     |      The generated DOT source code as string.
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.dot.Dot:
@@ -502,23 +507,14 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.base.Base:
      |
+     |  __str__(self)
+     |      The DOT source code as string.
+     |
      |  copy(self)
      |      Return a copied instance of the object.
      |
      |      Returns:
      |          An independent copy of the current object.
-     |
-     |  ----------------------------------------------------------------------
-     |  Readonly properties inherited from graphviz.base.Base:
-     |
-     |  source
-     |      The generated DOT source code as string.
-     |
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.base.BaseSource:
-     |
-     |  __str__(self)
-     |      The DOT source code as string.
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from graphviz.base.LineIterator:
@@ -555,19 +551,19 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
 .. code:: python
 
     >>> import graphviz
-    >>> help(graphviz.Graph)  # doctest: +NORMALIZE_WHITESPACE +SKIP
-    Help on class Graph in module graphviz.graphs:
+    >>> help(graphviz.Digraph)  # doctest: +NORMALIZE_WHITESPACE
+    Help on class Digraph in module graphviz.graphs:
     <BLANKLINE>
-    class Graph(BaseGraph)
-     |  Graph(name=None, comment=None,
-              filename=None, directory=None,
-              format=None, engine=None,
-              encoding='utf-8',
-              graph_attr=None, node_attr=None, edge_attr=None,
-              body=None,
-              strict=False)
+    class Digraph(BaseGraph)
+     |  Digraph(name=None, comment=None,
+                filename=None, directory=None,
+                format=None, engine=None,
+                encoding='utf-8',
+                graph_attr=None, node_attr=None, edge_attr=None,
+                body=None,
+                strict=False)
      |
-     |  Graph source code in the DOT language.
+     |  Directed graph source code in the DOT language.
      |
      |  Args:
      |      name: Graph name used in the source code.
@@ -589,7 +585,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      corresponding attribute name after instance creation.
      |
      |  Method resolution order:
-     |      Graph
+     |      Digraph
      |      BaseGraph
      |      graphviz.dot.Dot
      |      graphviz.rendering.Rendering
@@ -599,7 +595,6 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      graphviz.rendering.Pipe
      |      graphviz.unflattening.Unflatten
      |      graphviz.base.Base
-     |      graphviz.base.BaseSource
      |      graphviz.base.LineIterator
      |      graphviz.backend.Graphviz
      |      graphviz.encoding.Encoding
@@ -609,7 +604,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  Readonly properties defined here:
      |
      |  directed
-     |      ``False``
+     |      ``True``
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from BaseGraph:
@@ -622,6 +617,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
                  body=None,
                  strict=False)
      |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  ----------------------------------------------------------------------
+     |  Readonly properties inherited from BaseGraph:
+     |
+     |  source
+     |      The generated DOT source code as string.
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.dot.Dot:
@@ -913,23 +914,14 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.base.Base:
      |
+     |  __str__(self)
+     |      The DOT source code as string.
+     |
      |  copy(self)
      |      Return a copied instance of the object.
      |
      |      Returns:
      |          An independent copy of the current object.
-     |
-     |  ----------------------------------------------------------------------
-     |  Readonly properties inherited from graphviz.base.Base:
-     |
-     |  source
-     |      The generated DOT source code as string.
-     |
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.base.BaseSource:
-     |
-     |  __str__(self)
-     |      The DOT source code as string.
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from graphviz.base.LineIterator:
@@ -966,12 +958,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
 .. code:: python
 
     >>> import graphviz
-    >>> help(graphviz.Source)  # doctest: +NORMALIZE_WHITESPACE +SKIP
+    >>> help(graphviz.Source)  # doctest: +NORMALIZE_WHITESPACE
     Help on class Source in module graphviz.sources:
     <BLANKLINE>
     class Source(graphviz.rendering.Rendering, graphviz.files.File,
                  graphviz.jupyter_integration.JupyterSvgIntegration,
-                 graphviz.base.BaseSource)
+                 graphviz.base.Base)
      |  Source(source,
                filename=None, directory=None,
                format=None, engine=None,
@@ -1002,7 +994,6 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      graphviz.rendering.Pipe
      |      graphviz.unflattening.Unflatten
      |      graphviz.base.Base
-     |      graphviz.base.BaseSource
      |      graphviz.base.LineIterator
      |      graphviz.backend.Graphviz
      |      graphviz.encoding.Encoding
@@ -1228,17 +1219,14 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.base.Base:
      |
+     |  __str__(self)
+     |      The DOT source code as string.
+     |
      |  copy(self)
      |      Return a copied instance of the object.
      |
      |      Returns:
      |          An independent copy of the current object.
-     |
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.base.BaseSource:
-     |
-     |  __str__(self)
-     |      The DOT source code as string.
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from graphviz.base.LineIterator:
