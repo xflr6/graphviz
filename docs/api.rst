@@ -130,7 +130,7 @@ and :class:`.Source` for reference.
     They mainly serve the development process (e.g. checking the MRO).
     They might be outdated (``TODO:`` automate reindent).
     They **may change at any point** in time.
-    See above for the full (publib) API.
+    See above for the full (public) API.
     First shalt thou take out the Holy Pin.
     Then shalt thou count to three, no more, no less.
 
