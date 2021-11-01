@@ -20,6 +20,8 @@ class Save(base.Base, encoding.Encoding):
 
     _default_extension = 'gv'
 
+    _mkdirs = staticmethod(tools.mkdirs)
+
     def __init__(self, filename=None, directory=None, **kwargs):
         super().__init__(**kwargs)
 
@@ -63,7 +65,7 @@ class Save(base.Base, encoding.Encoding):
         if skip_existing and os.path.exists(filepath):
             return filepath
 
-        tools.mkdirs(filepath)
+        self._mkdirs(filepath)
 
         log.debug('write lines to %r', filepath)
         with open(filepath, 'w', encoding=self.encoding) as fd:
