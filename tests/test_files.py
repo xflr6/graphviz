@@ -1,8 +1,11 @@
 import os
 
+import pytest
+
 import graphviz
 
 
+@pytest.mark.exe
 def test_save_source_from_files(tmp_path):
     dot = graphviz.Digraph(directory=tmp_path)
     dot.edge('hello', 'world')
