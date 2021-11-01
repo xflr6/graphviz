@@ -187,7 +187,6 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      Graph
      |      BaseGraph
      |      graphviz.dot.Dot
-     |      graphviz.rendering.Rendering
      |      graphviz.rendering.Render
      |      graphviz.files.File
      |      graphviz.jupyter_integration.JupyterSvgIntegration
@@ -599,7 +598,6 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      Digraph
      |      BaseGraph
      |      graphviz.dot.Dot
-     |      graphviz.rendering.Rendering
      |      graphviz.rendering.Render
      |      graphviz.files.File
      |      graphviz.jupyter_integration.JupyterSvgIntegration
@@ -976,9 +974,9 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
     >>> help(graphviz.Source)  # doctest: +NORMALIZE_WHITESPACE +SKIP
     Help on class Source in module graphviz.sources:
     <BLANKLINE>
-    class Source(graphviz.rendering.Rendering, graphviz.files.File,
-                 graphviz.jupyter_integration.JupyterSvgIntegration,
-                 graphviz.base.Base)
+    class Source(graphviz.rendering.Render, graphviz.files.File,
+                 graphviz.jupyter_integration.JupyterSvgIntegration, graphviz.rendering.Pipe,
+                 graphviz.unflattening.Unflatten)
      |  Source(source,
                filename=None, directory=None,
                format=None, engine=None,
@@ -1002,7 +1000,6 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |
      |  Method resolution order:
      |      Source
-     |      graphviz.rendering.Rendering
      |      graphviz.rendering.Render
      |      graphviz.files.File
      |      graphviz.jupyter_integration.JupyterSvgIntegration

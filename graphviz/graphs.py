@@ -31,13 +31,15 @@ from .encoding import DEFAULT_ENCODING as ENCODING
 from . import dot
 from . import jupyter_integration
 from . import rendering
+from . import unflattening
 
 __all__ = ['Graph', 'Digraph']
 
 
 class BaseGraph(dot.Dot,
-                rendering.Rendering,
-                jupyter_integration.JupyterSvgIntegration):
+                rendering.Render,
+                jupyter_integration.JupyterSvgIntegration, rendering.Pipe,
+                unflattening.Unflatten):
     """Dot language creation and source code rendering."""
 
     def __init__(self, name=None, comment=None,

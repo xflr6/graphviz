@@ -9,9 +9,8 @@ from . import backend
 from . import base
 from . import encoding
 from . import files
-from . import unflattening
 
-__all__ = ['Rendering']
+__all__ = ['Pipe', 'Render']
 
 
 log = logging.getLogger(__name__)
@@ -216,7 +215,3 @@ class Render(files.File, backend.Graphviz, encoding.Encoding, backend.View):
         return self.render(filename=filename, directory=directory,
                            view=True, cleanup=cleanup,
                            quiet=quiet, quiet_view=quiet_view)
-
-
-class Rendering(Render, Pipe, unflattening.Unflatten):
-    """Render files and open in viewer, pipe, unflatten."""
