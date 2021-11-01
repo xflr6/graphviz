@@ -189,7 +189,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      graphviz.dot.Dot
      |      graphviz.quoting.Quote
      |      graphviz.rendering.Render
-     |      graphviz.files.File
+     |      graphviz.saving.Save
      |      graphviz.jupyter_integration.JupyterSvgIntegration
      |      graphviz.rendering.Pipe
      |      graphviz.unflattening.Unflatten
@@ -418,7 +418,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          and no way to retrieve the application's exit status.
      |
      |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.files.File:
+     |  Methods inherited from graphviz.saving.Save:
      |
      |  save(self, filename=None, directory=None, *,
              skip_existing: Optional[bool] = False)
@@ -433,12 +433,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          The (possibly relative) path of the saved source file.
      |
      |  ----------------------------------------------------------------------
-     |  Readonly properties inherited from graphviz.files.File:
+     |  Readonly properties inherited from graphviz.saving.Save:
      |
      |  filepath
      |
      |  ----------------------------------------------------------------------
-     |  Data and other attributes inherited from graphviz.files.File:
+     |  Data and other attributes inherited from graphviz.saving.Save:
      |
      |  directory = ''
      |
@@ -601,7 +601,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      graphviz.dot.Dot
      |      graphviz.quoting.Quote
      |      graphviz.rendering.Render
-     |      graphviz.files.File
+     |      graphviz.saving.Save
      |      graphviz.jupyter_integration.JupyterSvgIntegration
      |      graphviz.rendering.Pipe
      |      graphviz.unflattening.Unflatten
@@ -830,7 +830,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          and no way to retrieve the application's exit status.
      |
      |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.files.File:
+     |  Methods inherited from graphviz.saving.Save:
      |
      |  save(self, filename=None, directory=None, *, skip_existing: Optional[bool] = False)
      |      Save the DOT source to file. Ensure the file ends with a newline.
@@ -844,12 +844,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          The (possibly relative) path of the saved source file.
      |
      |  ----------------------------------------------------------------------
-     |  Readonly properties inherited from graphviz.files.File:
+     |  Readonly properties inherited from graphviz.saving.Save:
      |
      |  filepath
      |
      |  ----------------------------------------------------------------------
-     |  Data and other attributes inherited from graphviz.files.File:
+     |  Data and other attributes inherited from graphviz.saving.Save:
      |
      |  directory = ''
      |
@@ -976,7 +976,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
     >>> help(graphviz.Source)  # doctest: +NORMALIZE_WHITESPACE +SKIP
     Help on class Source in module graphviz.sources:
     <BLANKLINE>
-    class Source(graphviz.rendering.Render, graphviz.files.File,
+    class Source(graphviz.rendering.Render, graphviz.saving.Save,
                  graphviz.jupyter_integration.JupyterSvgIntegration, graphviz.rendering.Pipe,
                  graphviz.unflattening.Unflatten)
      |  Source(source,
@@ -1003,7 +1003,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  Method resolution order:
      |      Source
      |      graphviz.rendering.Render
-     |      graphviz.files.File
+     |      graphviz.saving.Save
      |      graphviz.jupyter_integration.JupyterSvgIntegration
      |      graphviz.rendering.Pipe
      |      graphviz.unflattening.Unflatten
@@ -1143,12 +1143,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |          and no way to retrieve the application's exit status.
      |
      |  ----------------------------------------------------------------------
-     |  Readonly properties inherited from graphviz.files.File:
+     |  Readonly properties inherited from graphviz.saving.Save:
      |
      |  filepath
      |
      |  ----------------------------------------------------------------------
-     |  Data and other attributes inherited from graphviz.files.File:
+     |  Data and other attributes inherited from graphviz.saving.Save:
      |
      |  directory = ''
      |

@@ -8,12 +8,12 @@ from . import base
 from . import encoding
 from . import tools
 
-__all__ = ['File']
+__all__ = ['Save']
 
 log = logging.getLogger(__name__)
 
 
-class File(base.Base, encoding.Encoding):
+class Save(base.Base, encoding.Encoding):
     """Save DOT source lines to file."""
 
     directory = ''
