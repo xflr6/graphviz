@@ -1,4 +1,4 @@
-"""Quote strings to be valid DOT identifiers, assemble attribute lists."""
+"""Quote strings to be valid DOT identifiers, assemble quoted attribute lists."""
 
 import functools
 import re
@@ -138,6 +138,16 @@ def attr_list(label: typing.Optional[str] = None,
     if not content:
         return ''
     return f' [{content}]'
+
+
+class Quote:
+    """Quote strings to be valid DOT identifiers, assemble quoted attribute lists."""
+
+    _quote = staticmethod(quote)
+    _quote_edge = staticmethod(quote_edge)
+
+    _a_list = staticmethod(a_list)
+    _attr_list = staticmethod(attr_list)
 
 
 def escape(s: str) -> 'NoHtml':

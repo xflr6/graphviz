@@ -8,7 +8,7 @@ from . import quoting
 __all__ = ['Dot']
 
 
-class Dot(base.Base):
+class Dot(quoting.Quote, base.Base):
     """Assemble, save, and render DOT source code, open result in viewer."""
 
     directed: bool
@@ -23,12 +23,6 @@ class Dot(base.Base):
     _edge_plain: str
     _attr_plain = _attr % ('%s', '')
     _tail = '}\n'
-
-    _quote = staticmethod(quoting.quote)
-    _quote_edge = staticmethod(quoting.quote_edge)
-
-    _a_list = staticmethod(quoting.a_list)
-    _attr_list = staticmethod(quoting.attr_list)
 
     def __init__(self, name=None, comment=None,
                  graph_attr=None, node_attr=None, edge_attr=None, body=None,

@@ -187,6 +187,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      Graph
      |      BaseGraph
      |      graphviz.dot.Dot
+     |      graphviz.quoting.Quote
      |      graphviz.rendering.Render
      |      graphviz.files.File
      |      graphviz.jupyter_integration.JupyterSvgIntegration
@@ -327,6 +328,15 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  Data and other attributes inherited from graphviz.dot.Dot:
      |
      |  __annotations__ = {'_edge': <class 'str'>, '_edge_plain': <class 'str'...
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.quoting.Quote:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.rendering.Render:
@@ -518,15 +528,6 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      The DOT source code as string.
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.base.LineIterator:
-     |
-     |  __dict__
-     |      dictionary for instance variables (if defined)
-     |
-     |  __weakref__
-     |      list of weak references to the object (if defined)
-     |
-     |  ----------------------------------------------------------------------
      |  Data descriptors inherited from graphviz.backend.Graphviz:
      |
      |  engine
@@ -598,6 +599,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      Digraph
      |      BaseGraph
      |      graphviz.dot.Dot
+     |      graphviz.quoting.Quote
      |      graphviz.rendering.Render
      |      graphviz.files.File
      |      graphviz.jupyter_integration.JupyterSvgIntegration
@@ -738,6 +740,15 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  Data and other attributes inherited from graphviz.dot.Dot:
      |
      |  __annotations__ = {'_edge': <class 'str'>, '_edge_plain': <class 'str'...
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.quoting.Quote:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.rendering.Render:
@@ -926,15 +937,6 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |
      |  __str__(self)
      |      The DOT source code as string.
-     |
-     |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.base.LineIterator:
-     |
-     |  __dict__
-     |      dictionary for instance variables (if defined)
-     |
-     |  __weakref__
-     |      list of weak references to the object (if defined)
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from graphviz.backend.Graphviz:
