@@ -31,12 +31,12 @@ class File(base.Base, encoding.Encoding):
         if directory is not None:
             self.directory = directory
 
-    def _kwargs(self):
-        result = super()._kwargs()
-        result['filename'] = self.filename
+    def _copy_kwargs(self, **kwargs):
+        """Return the kwargs to create a copy of the instance."""
+        assert 'directory' not in kwargs
         if 'directory' in self.__dict__:
-            result['directory'] = self.directory
-        return result
+            kwargs['directory'] = self.directory
+        return super()._copy_kwargs(filename=self.filename, **kwargs)
 
     @property
     def filepath(self):

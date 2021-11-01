@@ -3,12 +3,14 @@
 import codecs
 import locale
 
-__all__ = ['Encoding']
+from . import copying
+
+__all__ = ['DEFAULT_ENCODING', 'Encoding']
 
 DEFAULT_ENCODING = 'utf-8'
 
 
-class Encoding:
+class Encoding(copying.Copy):
     """the default encoding for input and output."""
 
     _encoding = DEFAULT_ENCODING
@@ -17,6 +19,10 @@ class Encoding:
         super().__init__(**kwargs)
 
         self.encoding = encoding
+
+    def _copy_kwargs(self, **kwargs):
+        """Return the kwargs to create a copy of the instance."""
+        return super()._copy_kwargs(encoding=self._encoding, **kwargs)
 
     @property
     def encoding(self):

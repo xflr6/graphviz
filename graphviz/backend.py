@@ -11,6 +11,7 @@ import sys
 import typing
 
 from .encoding import DEFAULT_ENCODING as ENCODING
+from . import copying
 from . import tools
 
 __all__ = ['DOT_BINARY', 'UNFLATTEN_BINARY',
@@ -412,7 +413,7 @@ def unflatten(source: str,
     return proc.stdout
 
 
-class Graphviz:
+class Graphviz(copying.Copy):
     """Graphiz default engine/format."""
 
     _engine = 'dot'
@@ -445,6 +446,15 @@ class Graphviz:
 
         if engine is not None:
             self.engine = engine
+
+    def _copy_kwargs(self, **kwargs):
+        """Return the kwargs to create a copy of the instance."""
+        ns = self.__dict__
+        for attr, kw in {'_engine': 'engine', '_format': 'format'}.items():
+            assert kw not in kwargs
+            if attr in ns:
+                kwargs[kw] = ns[attr]
+        return super()._copy_kwargs(**kwargs)
 
     @property
     def engine(self) -> str:

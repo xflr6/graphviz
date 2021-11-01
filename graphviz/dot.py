@@ -46,16 +46,15 @@ class Dot(base.Base):
 
         self.strict = strict
 
-    def _kwargs(self):
-        result = super()._kwargs()
-        result.update(name=self.name,
-                      comment=self.comment,
-                      graph_attr=dict(self.graph_attr),
-                      node_attr=dict(self.node_attr),
-                      edge_attr=dict(self.edge_attr),
-                      body=list(self.body),
-                      strict=self.strict)
-        return result
+    def _copy_kwargs(self, **kwargs):
+        """Return the kwargs to create a copy of the instance."""
+        return super()._copy_kwargs(name=self.name,
+                                    comment=self.comment,
+                                    graph_attr=dict(self.graph_attr),
+                                    node_attr=dict(self.node_attr),
+                                    edge_attr=dict(self.edge_attr),
+                                    body=list(self.body),
+                                    strict=self.strict)
 
     def clear(self, keep_attrs=False):
         """Reset content to an empty body, clear graph/node/egde_attr mappings.

@@ -1,6 +1,8 @@
 """Iterables of DOT source code lines (including final newline)."""
 
-__all__ = ['LineIterator', 'Base']
+from . import copying
+
+__all__ = ['Base']
 
 
 class LineIterator:
@@ -14,26 +16,14 @@ class LineIterator:
         raise NotImplementedError('to be implemented by concrete subclasses')
 
 
-class Base(LineIterator):  # Common base interface for all exposed classes
+# Common base interface for all exposed classes
+class Base(LineIterator, copying.Copy):
     """LineIterator with ``.source`` attribute, that it returns for ``str()``."""
 
     @property
     def source(self) -> str:
         raise NotImplementedError('to be implemented by concrete subclasses')
 
-    def copy(self):
-        """Return a copied instance of the object.
-
-        Returns:
-            An independent copy of the current object.
-        """
-        kwargs = self._kwargs()
-        return self.__class__(**kwargs)
-
-    def _kwargs(self):
-        ns = self.__dict__
-        return {a[1:]: ns[a] for a in ('_format', '_engine', '_encoding')
-                if a in ns}
 
     def __str__(self):
         """The DOT source code as string."""

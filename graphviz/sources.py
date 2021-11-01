@@ -65,10 +65,11 @@ class Source(rendering.Rendering, files.File,
         self._loaded_from_path = loaded_from_path
         self._source = source  #: The verbatim DOT source code string.
 
-    def _kwargs(self):
-        result = super()._kwargs()
-        result['source'] = self._source
-        return result
+    def _copy_kwargs(self, **kwargs):
+        """Return the kwargs to create a copy of the instance."""
+        return super()._copy_kwargs(source=self._source,
+                                    loaded_from_path=self._loaded_from_path,
+                                    **kwargs)
 
     def __iter__(self):
         r"""Yield the DOT source code read from file line by line.
