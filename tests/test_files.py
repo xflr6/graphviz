@@ -3,7 +3,7 @@ import os
 import graphviz
 
 
-def test_save_source_from_files():
+def test_save_source_from_files(tmp_path):
     dot = graphviz.Digraph()
     dot.edge('hello', 'world')
     dot.render()
