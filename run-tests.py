@@ -11,6 +11,8 @@ ARGS = [#'--skip-exe',
         #'--pdb',
         #'--exitfirst',  # a.k.a. -x
         #'-W', 'error',
+        #'--doctest-report none',
+        #'--doctest-continue-on-failure',
         ]
 
 if platform.system() == 'Windows':

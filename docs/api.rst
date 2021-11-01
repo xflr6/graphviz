@@ -134,6 +134,13 @@ and :class:`.Source` for reference.
     First shalt thou take out the Holy Pin.
     Then shalt thou count to three, no more, no less.
 
+To update: remove ``+SKIP`` flags below and copy output(s) from ``Got:``.
+
+.. code:: bash
+
+    $ ./run-tests.py docs --doctest-report none --doctest-continue-on-failure
+
+
 Graph
 """""
 
@@ -143,7 +150,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
 .. code:: python
 
     >>> import graphviz
-    >>> help(graphviz.Graph)  # doctest: +NORMALIZE_WHITESPACE +SKIP
+    >>> help(graphviz.Graph)  # doctest: +NORMALIZE_WHITESPACE
     Help on class Graph in module graphviz.graphs:
     <BLANKLINE>
     class Graph(BaseGraph)
@@ -190,6 +197,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      graphviz.base.LineIterator
      |      graphviz.backend.Graphviz
      |      graphviz.encoding.Encoding
+     |      graphviz.copying.Copy
      |      graphviz.backend.View
      |      builtins.object
      |
@@ -510,12 +518,6 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  __str__(self)
      |      The DOT source code as string.
      |
-     |  copy(self)
-     |      Return a copied instance of the object.
-     |
-     |      Returns:
-     |          An independent copy of the current object.
-     |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from graphviz.base.LineIterator:
      |
@@ -539,6 +541,15 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |
      |  encoding
      |      The encoding for the saved source file.
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from graphviz.copying.Copy:
+     |
+     |  copy(self)
+     |      Return a copied instance of the object.
+     |
+     |      Returns:
+     |          An independent copy of the current object.
     <BLANKLINE>
 
 
@@ -551,7 +562,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
 .. code:: python
 
     >>> import graphviz
-    >>> help(graphviz.Digraph)  # doctest: +NORMALIZE_WHITESPACE +SKIP
+    >>> help(graphviz.Digraph)  # doctest: +NORMALIZE_WHITESPACE
     Help on class Digraph in module graphviz.graphs:
     <BLANKLINE>
     class Digraph(BaseGraph)
@@ -598,6 +609,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      graphviz.base.LineIterator
      |      graphviz.backend.Graphviz
      |      graphviz.encoding.Encoding
+     |      graphviz.copying.Copy
      |      graphviz.backend.View
      |      builtins.object
      |
@@ -917,12 +929,6 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  __str__(self)
      |      The DOT source code as string.
      |
-     |  copy(self)
-     |      Return a copied instance of the object.
-     |
-     |      Returns:
-     |          An independent copy of the current object.
-     |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from graphviz.base.LineIterator:
      |
@@ -946,6 +952,15 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |
      |  encoding
      |      The encoding for the saved source file.
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from graphviz.copying.Copy:
+     |
+     |  copy(self)
+     |      Return a copied instance of the object.
+     |
+     |      Returns:
+     |          An independent copy of the current object.
     <BLANKLINE>
 
 
@@ -958,7 +973,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
 .. code:: python
 
     >>> import graphviz
-    >>> help(graphviz.Source)  # doctest: +NORMALIZE_WHITESPACE +SKIP
+    >>> help(graphviz.Source)  # doctest: +NORMALIZE_WHITESPACE
     Help on class Source in module graphviz.sources:
     <BLANKLINE>
     class Source(graphviz.rendering.Rendering, graphviz.files.File,
@@ -997,6 +1012,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      graphviz.base.LineIterator
      |      graphviz.backend.Graphviz
      |      graphviz.encoding.Encoding
+     |      graphviz.copying.Copy
      |      graphviz.backend.View
      |      builtins.object
      |
@@ -1222,12 +1238,6 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  __str__(self)
      |      The DOT source code as string.
      |
-     |  copy(self)
-     |      Return a copied instance of the object.
-     |
-     |      Returns:
-     |          An independent copy of the current object.
-     |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from graphviz.base.LineIterator:
      |
@@ -1251,4 +1261,13 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |
      |  encoding
      |      The encoding for the saved source file.
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from graphviz.copying.Copy:
+     |
+     |  copy(self)
+     |      Return a copied instance of the object.
+     |
+     |      Returns:
+     |          An independent copy of the current object.
     <BLANKLINE>

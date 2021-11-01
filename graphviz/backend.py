@@ -495,7 +495,7 @@ def version() -> typing.Tuple[int, ...]:
 
     Example:
         >>> import graphviz
-        >>> graphviz.version()
+        >>> graphviz.version()  # doctest: +ELLIPSIS
         (...)
 
     Note:
