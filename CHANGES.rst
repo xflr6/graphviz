@@ -7,6 +7,13 @@ Version 0.18 (in development)
 
 Beavioural change:
 Line endings are normalized so that all outputs have a final newline.
+(Unix convention, simplifies postprocessing)
+
+Behavioural change:
+``Source`` instances created by ``Source.from_file()``
+no nonger write the content read into ``.source`` back into the file.
+Use ``.save(skip_existing=False)`` before calling ``.render()``
+or ``.view()`` if you want to overwrite the file to keep the previous behaviour.
 
 Change of undocumented beaviour: when iterating over a
 ``Graph``, ``Digraph``, or ``Source`` instance,

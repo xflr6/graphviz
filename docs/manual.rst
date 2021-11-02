@@ -359,7 +359,7 @@ be rendered literally), use the :func:`.escape` function (cf. the
         "\\"
     }
 
-.. admonition:: Version history
+.. admonition:: Historical note
 
     To prevent breaking the internal quoting mechanism, the special meaning of
     ``\"`` as a backslash-escaped quote has been disabled since version
@@ -640,6 +640,13 @@ holds for :meth:`~.Source.save` (resolve default ``.save(skip_existing=None)`` t
 ``skip_existing_run=True`` to skip writing the read :attr:`~.Source.source`
 back into the same file (spefically to the same path that it was loaded from).
 Call ``.save(skip_existing=False)`` if you want to re-write the loaded source.
+
+.. admonition:: Historical note
+
+    Before version ``0.18``, ``.render()``, ``.view()``, and ``.save()``
+    wrote the content read into source back into the file.
+    It was advised to use ``graphviz.render()`` and ``graphiz.view()``
+    to directly work on files in case this was needed to avoid.
 
 
 Integration with viewers
