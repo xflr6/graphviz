@@ -46,7 +46,7 @@ diamond with cooperative ``super()`` calling:
 ``Graph`` now inherits both from ``Dot`` and from ``Render``,
 and both of them inherit from ``Base`` which defines their common interface:
 Lines of DOT source code that ``Dot`` generates (also ``Source``)
-and rendering consumes.
+and rendering iterates over.
 This might break some undocumented use of subclassing (e.g. if the
 methods don't follow cooperative ``super()`` calling
 or if the MRO has conflicts, supposedly rare).
