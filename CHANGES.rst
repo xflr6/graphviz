@@ -45,7 +45,7 @@ Restructured the internal class hierarchy to a multiple-inheritance
 diamond with cooperative ``super()`` calling:
 ``Graph`` now inherits both from ``Dot`` and from ``Render``,
 and both of them inherit from ``Base`` which defines their common interface:
-Lines of DOT source code that ``Dot`` generates (also `` Source``)
+Lines of DOT source code that ``Dot`` generates (also ``Source``)
 and rendering consumes.
 This might break some undocumented use of subclassing (e.g. if the
 methods don't follow cooperative ``super()`` calling
