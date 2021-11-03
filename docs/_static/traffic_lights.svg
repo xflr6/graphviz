@@ -10,7 +10,7 @@
 <title>TrafficLights</title>
 <polygon fill="white" stroke="transparent" points="-4,4 -4,-461.64 363.63,-461.64 363.63,4 -4,4"/>
 <text text-anchor="middle" x="179.81" y="-20.4" font-family="Times New Roman,serif" font-size="12.00">PetriNet Model TrafficLights</text>
-<text text-anchor="middle" x="179.81" y="-7.4" font-family="Times New Roman,serif" font-size="12.00">Extracted from ConceptBase and laid out by Graphviz</text>
+<text text-anchor="middle" x="179.81" y="-7.4" font-family="Times New Roman,serif" font-size="12.00">Extracted from ConceptBase and layed out by Graphviz</text>
 <!-- gy2 -->
 <g id="node1" class="node">
 <title>gy2</title>
