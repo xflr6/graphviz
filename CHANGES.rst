@@ -5,15 +5,17 @@ Changelog
 Version 0.18 (in development)
 -----------------------------
 
-Beavioural change:
-Line endings are normalized so that all outputs have a final newline.
-(Unix convention, simplifies postprocessing)
+Change of beaviour:
+File endings are now normalized so that all DOT source outputs
+end with a final newline (Unix convention, simplifies postprocessing).
+This includes DOT source files written by `.render()`, `.view()`, or `.save()`
+as well was `.source` generated or loaded from `Source` or `Source.from_file()`.
 
-Behavioural change:
+Change of behaviour:
 ``Source`` instances created by ``Source.from_file()``
 no nonger write the content read into ``.source`` back into the file.
-Use ``.save(skip_existing=False)`` before calling ``.render()``
-or ``.view()`` if you want to overwrite the file to keep the previous behaviour.
+Use ``.save(skip_existing=False)`` before calling ``.render()`` or ``.view()``
+if you want to overwrite the file to produce the previous (less safe) behaviour.
 
 Change of undocumented behaviour: when iterating over a
 ``Graph``, ``Digraph``, or ``Source`` instance,
@@ -41,17 +43,19 @@ Add ``pytype`` checking to Build workflow. Extend type annotations.
 
 Improve documentation and examples.
 
-Restructured the internal class hierarchy to a multiple-inheritance
-diamond with cooperative ``super()`` calling:
+Restructured the internal class hierarchy using multiple-inheritance
+with cooperative ``super()`` calling:
 ``Graph`` now inherits both from ``Dot`` and from ``Render``,
 and both of them inherit from ``Base`` which defines their common interface:
 Lines of DOT source code that ``Dot`` generates (also ``Source``)
 and rendering iterates over.
-This might break some undocumented use of subclassing (e.g. if the
-methods don't follow cooperative ``super()`` calling
+This might break some undocumented use of subclassing and require adatation
+(e.g. if the methods don't use cooperative ``super()`` calling convention
 or if the MRO has conflicts, supposedly rare).
 
-Add development docs. Document release process.
+Add development docs.
+
+Document release process.
 
 
 Version 0.17
