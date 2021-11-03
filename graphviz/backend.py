@@ -420,6 +420,10 @@ class Graphviz(copying.Copy):
 
     _format = 'pdf'
 
+    _renderer = None
+
+    _formatter = None
+
     @staticmethod
     def _pipe_lines(*args, **kwargs):
         """Simplify mocking ``pipe_lines``."""
@@ -438,7 +442,10 @@ class Graphviz(copying.Copy):
     def _unflatten(*args, **kwargs):
         return unflatten(*args, **kwargs)
 
-    def __init__(self, format=None, engine=None, **kwargs):
+    def __init__(self, format=None, engine=None, *,
+                 renderer: typing.Optional[str] = None,
+                 formatter: typing.Optional[str] = None,
+                 **kwargs):
         super().__init__(**kwargs)
 
         if format is not None:
@@ -446,6 +453,10 @@ class Graphviz(copying.Copy):
 
         if engine is not None:
             self.engine = engine
+
+        self.renderer = renderer
+
+        self.formatter = formatter
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
@@ -458,11 +469,12 @@ class Graphviz(copying.Copy):
 
     @property
     def engine(self) -> str:
-        """The layout engine used for rendering (``'dot'``, ``'neato'``, ...)."""
+        """The layout engine used for rendering
+            (``'dot'``, ``'neato'``, ...)."""
         return self._engine
 
     @engine.setter
-    def engine(self, engine) -> None:
+    def engine(self, engine: str) -> None:
         engine = engine.lower()
         if engine not in ENGINES:
             raise ValueError(f'unknown engine: {engine!r}')
@@ -470,15 +482,68 @@ class Graphviz(copying.Copy):
 
     @property
     def format(self) -> str:
-        """The output format used for rendering (``'pdf'``, ``'png'``, ...)."""
+        """The output format used for rendering
+            (``'pdf'``, ``'png'``, ...)."""
         return self._format
 
     @format.setter
-    def format(self, format) -> None:
+    def format(self, format: str) -> None:
         format = format.lower()
         if format not in FORMATS:
             raise ValueError(f'unknown format: {format!r}')
         self._format = format
+
+    @property
+    def renderer(self) -> typing.Optional[str]:
+        """The output renderer used for rendering
+            (``'cairo'``, ``'gd'``, ...)."""
+        return self._renderer
+
+    @format.setter
+    def renderer(self, renderer: typing.Optional[str]) -> None:
+        if renderer is None:
+            self.__dict__.pop('_renderer', None)
+        else:
+           renderer = renderer.lower()
+           if renderer not in RENDERERS:
+               raise ValueError(f'unknown renderer: {renderer!r}')
+           self._renderer = renderer
+
+    @property
+    def formatter(self) -> typing.Optional[str]:
+        """The output formatter used for rendering
+            (``'cairo'``, ``'gd'``, ...)."""
+        return self._formatter
+
+    @format.setter
+    def formatter(self, formatter: typing.Optional[str]) -> None:
+        if formatter is None:
+            self.__dict__.pop('_formatter', None)
+        else:
+            formatter = formatter.lower()
+            if formatter not in FORMATTERS:
+                 raise ValueError(f'unknown formatter: {formatter!r}')
+            self._formatter = formatter
+
+    def _get_backend_kwargs(self, *,
+                            format: typing.Optional[str] = None,
+                            renderer: typing.Optional[str] = None,
+                            formatter: typing.Optional[str] = None,
+                            **kwargs):
+        if format is None:
+            format = self._format
+
+        if renderer is None:
+            renderer = self._renderer
+
+        if formatter is None:
+            formatter = self._formatter
+
+        kwargs.update(format=format, renderer=renderer, formatter=formatter)
+
+        return kwargs
+
+    _get_pipe_kwargs = _get_render_kwargs = _get_backend_kwargs
 
 
 def version() -> typing.Tuple[int, ...]:

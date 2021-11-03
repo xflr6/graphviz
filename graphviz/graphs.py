@@ -27,6 +27,8 @@ graph {
 'test-output/m00se.gv.pdf'
 """
 
+import typing
+
 from .encoding import DEFAULT_ENCODING as ENCODING
 from . import dot
 from . import jupyter_integration
@@ -46,14 +48,17 @@ class BaseGraph(dot.Dot,
                  filename=None, directory=None,
                  format=None, engine=None, encoding=ENCODING,
                  graph_attr=None, node_attr=None, edge_attr=None, body=None,
-                 strict=False):
+                 strict=False, *,
+                 renderer: typing.Optional[str] = None,
+                 formatter: typing.Optional[str] = None):
         super().__init__(name=name, comment=comment,
                          graph_attr=graph_attr,
                          node_attr=node_attr, edge_attr=edge_attr,
                          body=body, strict=strict,
                          filename=filename, directory=directory,
                          encoding=encoding,
-                         format=format, engine=engine)
+                         format=format, engine=engine,
+                         renderer=renderer, formatter=formatter)
 
     @property
     def source(self) -> str:

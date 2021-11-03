@@ -85,11 +85,13 @@ class Pipe(base.Base, backend.Graphviz, encoding.Encoding):
             >>> graphviz.Source(source, format='svg').pipe(encoding='utf-8')[:14]
             '<?xml version='
         """
-        if format is None:
-            format = self._format
+        kwargs = self._get_pipe_kwargs(format=format,
+                                       renderer=renderer,
+                                       formatter=formatter,
+                                       quiet=quiet)
+        format = kwargs.pop('format')
 
         args = [self._engine, format, iter(self)]
-        kwargs = {'renderer': renderer, 'formatter': formatter, 'quiet': quiet}
 
         if encoding is not None:
             if codecs.lookup(encoding) is codecs.lookup(self._encoding):
@@ -148,14 +150,15 @@ class Render(saving.Save, backend.Graphviz, encoding.Encoding, backend.View):
             (e.g. ``[image=images/camelot.png]``)
             can be given as paths relative to the DOT source file.
         """
+        kwargs = self._get_render_kwargs(format=format,
+                                         renderer=renderer,
+                                         formatter=formatter,
+                                         quiet=quiet)
+        format = kwargs.pop('format')
+
         filepath = self.save(filename, directory, skip_existing=None)
 
-        if format is None:
-            format = self._format
-
-        rendered = self._render(self._engine, format, filepath,
-                                renderer=renderer, formatter=formatter,
-                                quiet=quiet)
+        rendered = self._render(self._engine, format, filepath, **kwargs)
 
         if cleanup:
             log.debug('delete %r', filepath)
