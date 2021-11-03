@@ -78,7 +78,7 @@ Documentation
 Overview
 --------
 
-Use ``help()`` in the REPL to shows/structure methods and attributes in depdendency order:
+Use ``help()`` in the REPL to shows/structure methods and attributes in dependency order:
 
 - Introduction: https://graphviz.readthedocs.io/en/latest/api.html#online-help-internal
 - ``Graph``: https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
@@ -88,7 +88,7 @@ Use ``help()`` in the REPL to shows/structure methods and attributes in depdende
 .. tip::
 
     In the above, cooperative multiple inheritance classes reveal their
-    (diamon) MRO structure and methods are shown in **method resolution order** (MRO),
+    (diamond) MRO structure and methods are shown in **method resolution order** (MRO),
     which should be an extension of their dependency relation...
     
     TLDR; you might find this presentation helps to follow the implementation.

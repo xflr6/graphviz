@@ -638,7 +638,7 @@ Note that :meth:`~.Source.render` and :meth:`~.Source.view` on the :class:`.Sour
 returned by ``.Source.from_file`` skip writing the loaded file back. The same
 holds for :meth:`~.Source.save` (resolve default ``.save(skip_existing=None)`` to
 ``skip_existing_run=True`` to skip writing the read :attr:`~.Source.source`
-back into the same file (spefically to the same path that it was loaded from).
+back into the same file (specifically to the same path that it was loaded from).
 Call ``.save(skip_existing=False)`` if you want to re-write the loaded source.
 
 .. admonition:: Historical note
