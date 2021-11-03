@@ -482,8 +482,8 @@ Both produce the same result:
 
 When :meth:`~.Graph.subgraph` is used as a context manager, the new graph
 instance  is created with ``strict=None`` and the parent graph's values for
-``directory``, ``format``, ``engine``, and ``encoding``. Note that these
-attributes are only relevant when rendering the subgraph independently
+``directory``, ``engine``, ``format``,``renderer``, ``formatter``, and ``encoding``.
+Note that these attributes are only relevant when rendering the subgraph independently
 (i.e. as a stand-alone graph) from within the ``with``-block:
 
 .. code:: python
