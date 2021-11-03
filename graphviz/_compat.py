@@ -10,15 +10,22 @@ PY38 = (sys.version_info < (3, 9))
 Literal: typing.Any
 
 
-if PY38:
+if PY38:  # pytype not supported
     import unittest.mock
-
-    # pytype not supported
-    Literal = unittest.mock.MagicMock(name='Literal')
+    
+    Literal = unittest.mock.MagicMock(name='Literal') 
 else:
     from typing import Literal
 
     Literal = Literal
+
+
+def get_startupinfo() -> None:
+    """Return None for startupinfo argument of ``subprocess.Popen``."""
+    return None
+
+
+assert get_startupinfo() is None, 'get_startupinfo() defaults to a no-op'
 
 
 if platform.system() == 'Windows':  # pragma: no cover
@@ -31,7 +38,3 @@ if platform.system() == 'Windows':  # pragma: no cover
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW  # pytype: disable=module-attr
         startupinfo.wShowWindow = subprocess.SW_HIDE  # pytype: disable=module-attr
         return startupinfo
-else:
-    def get_startupinfo() -> None:
-        """Return None for startupinfo argument of ``subprocess.Popen``."""
-        return None
