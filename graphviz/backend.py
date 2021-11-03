@@ -10,6 +10,7 @@ import subprocess
 import sys
 import typing
 
+from . import _compat
 from .encoding import DEFAULT_ENCODING as ENCODING
 from . import copying
 from . import tools
@@ -613,7 +614,7 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]],
     if capture_output:  # Python 3.6 compat
         kwargs['stdout'] = kwargs['stderr'] = subprocess.PIPE
 
-    kwargs.setdefault('startupinfo', get_startupinfo())
+    kwargs.setdefault('startupinfo', _compat.get_startupinfo())
 
     try:
         if input_lines is not None:
@@ -649,20 +650,6 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]],
         raise CalledProcessError(*e.args)
 
     return proc
-
-
-if PLATFORM == 'windows':  # pragma: no cover
-    def get_startupinfo():
-        """Return subprocess.STARTUPINFO instance
-            hiding the console window."""
-        startupinfo = subprocess.STARTUPINFO()  # pytype: disable=module-attr
-        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW  # pytype: disable=module-attr
-        startupinfo.wShowWindow = subprocess.SW_HIDE  # pytype: disable=module-attr
-        return startupinfo
-else:
-    def get_startupinfo() -> None:
-        """Return None for startupinfo argument of ``subprocess.Popen``."""
-        return None
 
 
 class ExecutableNotFound(RuntimeError):
