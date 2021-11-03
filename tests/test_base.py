@@ -3,7 +3,16 @@ import pytest
 from graphviz.base import Base
 
 
-def test_base_iter():
-    base_inst = Base()
+@pytest.fixture(scope='module')
+def base():
+    return Base()
+
+
+def test_base_iter_raises_notimplementederror(base):
     with pytest.raises(NotImplementedError, match=r'subclasses'):
-        iter(base_inst)
+        iter(base)
+
+
+def test_base_source_raises_notimplementederror(base):
+    with pytest.raises(NotImplementedError, match=r'subclasses'):
+        base.source
