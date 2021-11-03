@@ -205,6 +205,8 @@ class Dot(quoting.Quote, base.Base):
                                           'directory': self.directory,
                                           'format': self.format,
                                           'engine': self.engine,
+                                          'renderer': self.renderer,
+                                          'formatter': self.formatter,
                                           'encoding': self.encoding,
                                           'graph_attr': graph_attr,
                                           'node_attr': node_attr,

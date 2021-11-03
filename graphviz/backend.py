@@ -461,8 +461,10 @@ class Graphviz(copying.Copy):
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
+        attr_kw = [('_engine', 'engine'), ('_format', 'format'),
+                   ('_renderer', 'renderer'), ('_formatter', 'formatter')]
         ns = self.__dict__
-        for attr, kw in {'_engine': 'engine', '_format': 'format'}.items():
+        for attr, kw in attr_kw:
             assert kw not in kwargs
             if attr in ns:
                 kwargs[kw] = ns[attr]
