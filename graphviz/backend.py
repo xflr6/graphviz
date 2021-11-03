@@ -513,8 +513,8 @@ def version() -> typing.Tuple[int, ...]:
                    r' '
                    r'(\d+)\.(\d+)'
                    r'(?:\.(\d+)'
-                       r'(?:'
-                           r'~dev\.\d{8}\.\d{4}'
+                       r'(?:'  # noqa: E127
+                           r'~dev\.\d{8}\.\d{4}'  # noqa: E127
                            r'|'
                            r'\.(\d+)'
                        r')?'
