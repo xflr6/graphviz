@@ -15,7 +15,7 @@ no nonger write the content read into ``.source`` back into the file.
 Use ``.save(skip_existing=False)`` before calling ``.render()``
 or ``.view()`` if you want to overwrite the file to keep the previous behaviour.
 
-Change of undocumented beaviour: when iterating over a
+Change of undocumented behaviour: when iterating over a
 ``Graph``, ``Digraph``, or ``Source`` instance,
 the yielded lines now include a final newline (``'\n'``).
 This mimics iteration over ``file`` object lines in text mode.
@@ -185,7 +185,7 @@ Version 0.12
 Fix missing escaping of backslashes, e.g. in labels (pull request DNGros).
 
 Add ``quiet`` argument to standalone ``view()`` function, and ``quiet_view``
-argument on ``.render()`` and ``.view()`` methods. Supresses the ``stderr``
+argument on ``.render()`` and ``.view()`` methods. Suppresses the ``stderr``
 output of started viewer processes (unavailable on Windows).
 
 Add basic debug logging via the stdlib ``logging`` module.

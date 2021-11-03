@@ -32,7 +32,7 @@ for i, j in [(2, 1), (1, 2)]:
 
 t.attr(overlap='false')
 t.attr(label=r'PetriNet Model TrafficLights\n'
-             r'Extracted from ConceptBase and layed out by Graphviz')
+             r'Extracted from ConceptBase and laid out by Graphviz')
 t.attr(fontsize='12')
 
 t.view()

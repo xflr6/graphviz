@@ -241,7 +241,7 @@ def pipe_string(engine: str, format: str, input_string: str,
         engine: Layout engine for rendering (``'dot'``, ``'neato'``, ...).
         format: Output format for rendering (``'pdf'``, ``'png'``, ...).
         input_string: Binary (encoded) DOT source bytes to render.
-        encoding: Endcoding to en/decode subprocess stdin and stdout (required).
+        encoding: Encoding to en/decode subprocess stdin and stdout (required).
         renderer: Output renderer (``'cairo'``, ``'gd'``, ...).
         formatter: Output formatter (``'cairo'``, ``'gd'``, ...).
         quiet: Suppress ``stderr`` output from the layout subprocess.
@@ -333,7 +333,7 @@ def pipe_lines_string(engine: str, format: str, input_lines: typing.Iterator[str
         engine: Layout engine for rendering (``'dot'``, ``'neato'``, ...).
         format: Output format for rendering (``'pdf'``, ``'png'``, ...).
         input_lines: DOT source lines to render (including final newline).
-        encoding: Endcoding to en/decode subprocess stdin and stdout (required).
+        encoding: Encoding to en/decode subprocess stdin and stdout (required).
         renderer: Output renderer (``'cairo'``, ``'gd'``, ...).
         formatter: Output formatter (``'cairo'``, ``'gd'``, ...).
         quiet: Suppress ``stderr`` output from the layout subprocess.
