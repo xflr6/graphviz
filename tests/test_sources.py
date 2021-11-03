@@ -126,7 +126,7 @@ def test_save(mocker, filename='nonfilename', directory='nondirectory'):
 
 def test_render(mocker, render, source):
     save = mocker.patch.object(source, 'save', autospec=True,
-                               **{'return_value': mocker.sentinel.nonfilepath})
+                               return_value=mocker.sentinel.nonfilepath)
     _view = mocker.patch.object(source, '_view', autospec=True)
     remove = mocker.patch('os.remove', autospec=True)
 

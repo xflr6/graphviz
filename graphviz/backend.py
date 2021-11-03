@@ -499,7 +499,7 @@ class Graphviz(copying.Copy):
             (``'cairo'``, ``'gd'``, ...)."""
         return self._renderer
 
-    @format.setter
+    @renderer.setter
     def renderer(self, renderer: typing.Optional[str]) -> None:
         if renderer is None:
             self.__dict__.pop('_renderer', None)
@@ -515,7 +515,7 @@ class Graphviz(copying.Copy):
             (``'cairo'``, ``'gd'``, ...)."""
         return self._formatter
 
-    @format.setter
+    @formatter.setter
     def formatter(self, formatter: typing.Optional[str]) -> None:
         if formatter is None:
             self.__dict__.pop('_formatter', None)

@@ -34,6 +34,39 @@ def test_str(cls):
     assert str(c) == c.source
 
 
+def test_format_renderer_formatter(mocker, render, quiet, cls,
+                                   filename='format.gv', format='jpg',
+                                   renderer='cairo', formatter='core'):
+
+    dot = cls(filename=filename, format=format,
+              renderer=renderer, formatter=formatter)
+    save = mocker.patch.object(dot, 'save', autospec=True,
+                               return_value=mocker.sentinel.nonfilepath)
+
+    assert dot.format == format
+    assert dot.renderer == renderer
+    assert dot.formatter == formatter
+
+    assert dot.render(quiet=quiet) is render.return_value
+
+    save.assert_called_once_with(None, None, skip_existing=None)
+    render.assert_called_once_with('dot', format, save.return_value,
+                                   renderer=renderer, formatter=formatter,
+                                   quiet=quiet)
+
+
+def test_invalid_renderer_raises_valueerror(cls):
+    dot = cls()
+    with pytest.raises(ValueError, match=r'unknown renderer'):
+        dot.renderer = 'invalid_renderer'
+
+
+def test_invalid_formatter_raises_valueerror(cls):
+    dot = cls()
+    with pytest.raises(ValueError, match=r'unknown formatter'):
+        dot.formatter = 'invalid_formatter'
+
+
 @pytest.mark.exe
 def test_unflatten(cls):
     c = cls()
