@@ -7,9 +7,10 @@ Version 0.18 (in development)
 
 Change of beaviour:
 File endings are now normalized so that all DOT source outputs
-end with a final newline (Unix convention, simplifies postprocessing).
-This includes DOT source files written by `.render()`, `.view()`, or `.save()`
-as well was `.source` generated or loaded from `Source` or `Source.from_file()`.
+end with a final newline (Unix convention, simplifies concatenation).
+This includes DOT source files written by ``.render()``, ``.view()``,
+or ``.save()`` as well was ``.source`` generated or loaded from ``Source``
+(or ``Source.from_file()``).
 
 Change of behaviour:
 ``Source`` instances created by ``Source.from_file()``
