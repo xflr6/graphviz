@@ -10,10 +10,10 @@ import subprocess
 import sys
 import typing
 
-from . import _compat
-from .encoding import DEFAULT_ENCODING as ENCODING
-from . import copying
-from . import tools
+from .. import _compat
+from ..encoding import DEFAULT_ENCODING as ENCODING
+from .. import copying
+from .. import tools
 
 __all__ = ['DOT_BINARY', 'UNFLATTEN_BINARY',
            'ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
