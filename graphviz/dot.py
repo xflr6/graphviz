@@ -13,15 +13,44 @@ class Dot(quoting.Quote, base.Base):
 
     directed: bool
 
-    _comment = '// %s\n'
-    _head: str
-    _head_strict: str
-    _subgraph = 'subgraph %s{\n'
-    _subgraph_plain = '%s{\n'
-    _node = _attr = '\t%s%s\n'
-    _edge: str
-    _edge_plain: str
-    _attr_plain = _attr % ('%s', '')
+    @staticmethod
+    def _comment(line: str):
+        return f'// {line}\n'
+
+    @staticmethod
+    def _head(name: str) -> str:
+        raise NotImplementedError('must be implemented by concrete subclasses')
+
+    @classmethod
+    def _head_strict(cls, name: str) -> str:
+        return f'strict {cls._head(name)}'
+
+    @staticmethod
+    def _subgraph(name: str) -> str:
+        return f'subgraph {name}{{\n'
+
+    @staticmethod
+    def _subgraph_plain(name: str) -> str:
+        return f'{name}{{\n'
+
+    @staticmethod
+    def _node(left: str, right: str) -> str:
+        return f'\t{left}{right}\n'
+
+    _attr = _node
+
+    @classmethod
+    def _attr_plain(cls, left: str) -> str:
+        return cls._attr(left, '')
+
+    @staticmethod
+    def _edge(*, tail: str, head: str, attr: str) -> str:
+        raise NotImplementedError('must be implemented by concrete subclasses')
+
+    @classmethod
+    def _edge_plain(cls, *, tail: str, head: str) -> str:
+        return cls._edge(tail=tail, head=head, attr='')
+
     _tail = '}\n'
 
     def __init__(self, name=None, comment=None,
@@ -67,7 +96,7 @@ class Dot(quoting.Quote, base.Base):
         Yields: Line ending with a newline (``'\n'``).
         """
         if self.comment:
-            yield self._comment % self.comment
+            yield self._comment(self.comment)
 
         if subgraph:
             if self.strict:
@@ -75,12 +104,12 @@ class Dot(quoting.Quote, base.Base):
             head = self._subgraph if self.name else self._subgraph_plain
         else:
             head = self._head_strict if self.strict else self._head
-        yield head % (self._quote(self.name) + ' ' if self.name else '')
+        yield head(self._quote(self.name) + ' ' if self.name else '')
 
         for kw in ('graph', 'node', 'edge'):
             attrs = getattr(self, f'{kw}_attr')
             if attrs:
-                yield self._attr % (kw, self._attr_list(None, attrs))
+                yield self._attr(kw, self._attr_list(None, attrs))
 
         for line in self.body:
             yield line
@@ -97,7 +126,7 @@ class Dot(quoting.Quote, base.Base):
         """
         name = self._quote(name)
         attr_list = self._attr_list(label, attrs, _attributes)
-        line = self._node % (name, attr_list)
+        line = self._node(name, attr_list)
         self.body.append(line)
 
     def edge(self, tail_name, head_name, label=None, _attributes=None, **attrs):
@@ -120,7 +149,7 @@ class Dot(quoting.Quote, base.Base):
         tail_name = self._quote_edge(tail_name)
         head_name = self._quote_edge(head_name)
         attr_list = self._attr_list(label, attrs, _attributes)
-        line = self._edge % (tail_name, head_name, attr_list)
+        line = self._edge(tail=tail_name, head=head_name, attr=attr_list)
         self.body.append(line)
 
     def edges(self, tail_head_iter):
@@ -139,7 +168,7 @@ class Dot(quoting.Quote, base.Base):
         """
         edge = self._edge_plain
         quote = self._quote_edge
-        lines = (edge % (quote(t), quote(h)) for t, h in tail_head_iter)
+        lines = (edge(tail=quote(t), head=quote(h)) for t, h in tail_head_iter)
         self.body.extend(lines)
 
     def attr(self, kw=None, _attributes=None, **attrs):
@@ -158,10 +187,10 @@ class Dot(quoting.Quote, base.Base):
         if attrs or _attributes:
             if kw is None:
                 a_list = self._a_list(None, attrs, _attributes)
-                line = self._attr_plain % a_list
+                line = self._attr_plain(a_list)
             else:
                 attr_list = self._attr_list(None, attrs, _attributes)
-                line = self._attr % (kw, attr_list)
+                line = self._attr(kw, attr_list)
             self.body.append(line)
 
     def subgraph(self, graph=None, name=None, comment=None,

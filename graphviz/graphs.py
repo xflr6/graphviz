@@ -91,10 +91,13 @@ class Graph(BaseGraph):
         corresponding attribute name after instance creation.
     """
 
-    _head = 'graph %s{\n'
-    _head_strict = 'strict %s' % _head
-    _edge = '\t%s -- %s%s\n'
-    _edge_plain = _edge % ('%s', '%s', '')
+    @staticmethod
+    def _head(name: str) -> str:
+        return f'graph {name}{{\n'
+
+    @staticmethod
+    def _edge(*, tail: str, head: str, attr: str) -> str:
+        return f'\t{tail} -- {head}{attr}\n'
 
     @property
     def directed(self):
@@ -108,10 +111,13 @@ class Digraph(BaseGraph):
     if Graph.__doc__ is not None:
         __doc__ += Graph.__doc__.partition('.')[2]
 
-    _head = 'digraph %s{\n'
-    _head_strict = 'strict %s' % _head
-    _edge = '\t%s -> %s%s\n'
-    _edge_plain = _edge % ('%s', '%s', '')
+    @staticmethod
+    def _head(name: str) -> str:
+        return f'digraph {name}{{\n'
+
+    @staticmethod
+    def _edge(*, tail: str, head: str, attr: str) -> str:
+        return f'\t{tail} -> {head}{attr}\n'
 
     @property
     def directed(self):
