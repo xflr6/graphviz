@@ -8,14 +8,28 @@ from . import quoting
 __all__ = ['Dot']
 
 
+def comment(line: str):
+    return f'// {line}\n'
+
+
+def subgraph(name: str) -> str:
+    return f'subgraph {name}{{\n'
+
+
+def subgraph_plain(name: str) -> str:
+    return f'{name}{{\n'
+
+
+def node(left: str, right: str) -> str:
+    return f'\t{left}{right}\n'
+
+
 class Dot(quoting.Quote, base.Base):
     """Assemble, save, and render DOT source code, open result in viewer."""
 
     directed: bool
 
-    @staticmethod
-    def _comment(line: str):
-        return f'// {line}\n'
+    _comment = staticmethod(comment)
 
     @staticmethod
     def _head(name: str) -> str:
@@ -25,19 +39,13 @@ class Dot(quoting.Quote, base.Base):
     def _head_strict(cls, name: str) -> str:
         return f'strict {cls._head(name)}'
 
-    @staticmethod
-    def _subgraph(name: str) -> str:
-        return f'subgraph {name}{{\n'
+    _tail = '}\n'
 
-    @staticmethod
-    def _subgraph_plain(name: str) -> str:
-        return f'{name}{{\n'
+    _subgraph = staticmethod(subgraph)
 
-    @staticmethod
-    def _node(left: str, right: str) -> str:
-        return f'\t{left}{right}\n'
+    _subgraph_plain = staticmethod(subgraph_plain)
 
-    _attr = _node
+    _node = _attr = staticmethod(node)
 
     @classmethod
     def _attr_plain(cls, left: str) -> str:
@@ -50,8 +58,6 @@ class Dot(quoting.Quote, base.Base):
     @classmethod
     def _edge_plain(cls, *, tail: str, head: str) -> str:
         return cls._edge(tail=tail, head=head, attr='')
-
-    _tail = '}\n'
 
     def __init__(self, name=None, comment=None,
                  graph_attr=None, node_attr=None, edge_attr=None, body=None,

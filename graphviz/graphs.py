@@ -66,6 +66,22 @@ class BaseGraph(dot.Dot,
         return ''.join(self)
 
 
+def graph_head(name: str) -> str:
+    return f'graph {name}{{\n'
+
+
+def digraph_head(name: str) -> str:
+    return f'digraph {name}{{\n'
+
+
+def graph_edge(*, tail: str, head: str, attr: str) -> str:
+    return f'\t{tail} -- {head}{attr}\n'
+
+
+def digraph_edge(*, tail: str, head: str, attr: str) -> str:
+    return f'\t{tail} -> {head}{attr}\n'
+
+
 class Graph(BaseGraph):
     """Graph source code in the DOT language.
 
@@ -91,13 +107,9 @@ class Graph(BaseGraph):
         corresponding attribute name after instance creation.
     """
 
-    @staticmethod
-    def _head(name: str) -> str:
-        return f'graph {name}{{\n'
+    _head = staticmethod(graph_head)
 
-    @staticmethod
-    def _edge(*, tail: str, head: str, attr: str) -> str:
-        return f'\t{tail} -- {head}{attr}\n'
+    _edge = staticmethod(graph_edge)
 
     @property
     def directed(self):
@@ -111,13 +123,9 @@ class Digraph(BaseGraph):
     if Graph.__doc__ is not None:
         __doc__ += Graph.__doc__.partition('.')[2]
 
-    @staticmethod
-    def _head(name: str) -> str:
-        return f'digraph {name}{{\n'
+    _head = staticmethod(digraph_head)
 
-    @staticmethod
-    def _edge(*, tail: str, head: str, attr: str) -> str:
-        return f'\t{tail} -> {head}{attr}\n'
+    _edge = staticmethod(digraph_edge)
 
     @property
     def directed(self):
