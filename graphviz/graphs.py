@@ -77,6 +77,8 @@ class Graph(BaseGraph):
         directory: (Sub)directory for source saving and rendering.
         format: Rendering output format (``'pdf'``, ``'png'``, ...).
         engine: Layout command used (``'dot'``, ``'neato'``, ...).
+        renderer: Output renderer used (``'cairo'``, ``'gd'``, ...).
+        formatter: Output formatter used (``'cairo'``, ``'gd'``, ...).
         encoding: Encoding for saving the source.
         graph_attr: Mapping of ``(attribute, value)`` pairs for the graph.
         node_attr: Mapping of ``(attribute, value)`` pairs set for all nodes.
