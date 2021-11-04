@@ -79,10 +79,10 @@ class View:
     """Open filepath with its default viewing application
         (platform-specific)."""
 
-    _view_darwin = staticmethod(viewing.view_darwin)
+    _view_darwin = staticmethod(viewing.view.darwin)
 
-    _view_freebsd = staticmethod(viewing.view_unixoid)
+    _view_freebsd = staticmethod(viewing.view.freebsd)
 
-    _view_linux = staticmethod(viewing.view_unixoid)
+    _view_linux = staticmethod(viewing.view.linux)
 
-    _view_windows = staticmethod(viewing.view_windows)
+    _view_windows = staticmethod(viewing.view.windows)
