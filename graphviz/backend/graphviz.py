@@ -5,16 +5,15 @@ from .. import copying
 from .common import ENGINES, FORMATS, RENDERERS, FORMATTERS
 from . import engine
 from . import format_
+from . import renderer
 from .import rendering
 from .import unflattening
 
 
 class Graphviz(copying.Copy,
-               engine.Engine, format_.Format,
+               engine.Engine, format_.Format, renderer.Renderer,
                unflattening.Unflatten):
-    """Graphiz default engine/format."""
-
-    _renderer = None
+    """Graphiz defaults."""
 
     _formatter = None
 
@@ -33,41 +32,22 @@ class Graphviz(copying.Copy,
         return rendering.render(*args, **kwargs)
 
     def __init__(self, format=None, engine=None, *,
-                 renderer: typing.Optional[str] = None,
                  formatter: typing.Optional[str] = None,
                  **kwargs):
         super().__init__(format=format, engine=engine, **kwargs)
-
-        self.renderer = renderer
 
         self.formatter = formatter
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
         attr_kw = [('_engine', 'engine'), ('_format', 'format'),
-                   ('_renderer', 'renderer'), ('_formatter', 'formatter')]
+                   ('_formatter', 'formatter')]
         ns = self.__dict__
         for attr, kw in attr_kw:
             assert kw not in kwargs
             if attr in ns:
                 kwargs[kw] = ns[attr]
         return super()._copy_kwargs(**kwargs)
-
-    @property
-    def renderer(self) -> typing.Optional[str]:
-        """The output renderer used for rendering
-            (``'cairo'``, ``'gd'``, ...)."""
-        return self._renderer
-
-    @renderer.setter
-    def renderer(self, renderer: typing.Optional[str]) -> None:
-        if renderer is None:
-            self.__dict__.pop('_renderer', None)
-        else:
-           renderer = renderer.lower()
-           if renderer not in RENDERERS:
-               raise ValueError(f'unknown renderer: {renderer!r}')
-           self._renderer = renderer
 
     @property
     def formatter(self) -> typing.Optional[str]:

@@ -1,7 +1,10 @@
+import typing
 
 from .. import copying
 
 from .common import FORMATS
+
+__all__ = ['Format']
 
 
 class Format:
