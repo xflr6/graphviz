@@ -3,14 +3,13 @@ import typing
 from .. import copying
 
 from .common import ENGINES, FORMATS, RENDERERS, FORMATTERS
+from . import engine
 from .import rendering
 from .import unflattening
 
 
-class Graphviz(copying.Copy, unflattening.Unflatten):
+class Graphviz(copying.Copy, engine.Engine, unflattening.Unflatten):
     """Graphiz default engine/format."""
-
-    _engine = 'dot'
 
     _format = 'pdf'
 
@@ -36,13 +35,10 @@ class Graphviz(copying.Copy, unflattening.Unflatten):
                  renderer: typing.Optional[str] = None,
                  formatter: typing.Optional[str] = None,
                  **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(engine=engine, **kwargs)
 
         if format is not None:
             self.format = format
-
-        if engine is not None:
-            self.engine = engine
 
         self.renderer = renderer
 
@@ -58,19 +54,6 @@ class Graphviz(copying.Copy, unflattening.Unflatten):
             if attr in ns:
                 kwargs[kw] = ns[attr]
         return super()._copy_kwargs(**kwargs)
-
-    @property
-    def engine(self) -> str:
-        """The layout engine used for rendering
-            (``'dot'``, ``'neato'``, ...)."""
-        return self._engine
-
-    @engine.setter
-    def engine(self, engine: str) -> None:
-        engine = engine.lower()
-        if engine not in ENGINES:
-            raise ValueError(f'unknown engine: {engine!r}')
-        self._engine = engine
 
     @property
     def format(self) -> str:
