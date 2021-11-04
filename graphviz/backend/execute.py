@@ -55,8 +55,7 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]],
     except OSError as e:
         if e.errno == errno.ENOENT:
             raise ExecutableNotFound(cmd) from e
-        else:
-            raise
+        raise
 
     if not quiet and proc.stderr:
         stderr = proc.stderr
