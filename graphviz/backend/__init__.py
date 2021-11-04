@@ -7,7 +7,7 @@ from .formats import FORMATS
 from .formatters import FORMATTERS
 from .renderers import RENDERERS
 
-from .dot_command import DOT_BINARY 
+from .dot_command import DOT_BINARY
 from .execute import run_check, ExecutableNotFound
 from .piping import pipe, pipe_string, pipe_lines, pipe_lines_string
 from .rendering import render
