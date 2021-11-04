@@ -83,7 +83,7 @@ def render(engine: str, format: str,
     del filepath
 
     cmd = command(engine, format, renderer=renderer, formatter=formatter)
-    cmd.extend(['-O', filename])
+    cmd += ['-O', filename]
 
     suffix = '.'.join(f for f in (formatter, renderer, format) if f is not None)
     rendered = f'{filename}.{suffix}'
