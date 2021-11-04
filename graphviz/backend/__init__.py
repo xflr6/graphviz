@@ -7,7 +7,7 @@ from .formats import FORMATS
 from .formatters import FORMATTERS
 from .renderers import RENDERERS
 
-from .bases import Graphviz, View
+from .bases import Render, Pipe, Unflatten, View
 from .execute import run_check, ExecutableNotFound
 from .graphviz_version import version
 from .rendering import (DOT_BINARY, render, pipe, pipe_string,
@@ -24,4 +24,4 @@ __all__ = ['DOT_BINARY', 'UNFLATTEN_BINARY',
            'unflatten',
            'view',
            'RequiredArgumentError', 'ExecutableNotFound',
-           'Graphviz', 'View']
+           'Render', 'Pipe', 'Unflatten', 'View']

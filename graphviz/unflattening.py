@@ -7,7 +7,7 @@ from . import encoding
 __all__ = ['Unflatten']
 
 
-class Unflatten(encoding.Encoding, base.Base, backend.Graphviz):
+class Unflatten(encoding.Encoding, base.Base, backend.Unflatten):
     """Pipe source through the Graphviz *unflatten* preprocessor."""
 
     def unflatten(self, stagger=None, fanout=False, chain=None):
