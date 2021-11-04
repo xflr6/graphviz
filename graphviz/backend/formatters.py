@@ -2,9 +2,15 @@ import typing
 
 from .. import copying
 
-from .common import FORMATTERS
+__all__ = ['FORMATTERS', 'Formatter']
 
-__all__ = ['Formatter']
+FORMATTERS = {'cairo',
+              'core',
+              'gd',
+              'gdiplus',
+              'gdwbmp',
+              'xlib'}
+
 
 class Formatter:
 

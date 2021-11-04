@@ -2,18 +2,17 @@ import typing
 
 from .. import copying
 
-from .common import ENGINES, FORMATS, RENDERERS, FORMATTERS
-from . import engine
-from . import format_
-from . import renderer
-from . import formatter
+from . import engines
+from . import formats
+from . import renderers
+from . import formatters
 from .import rendering
 from .import unflattening
 
 
 class Graphviz(copying.Copy,
-               engine.Engine, format_.Format,
-               renderer.Renderer, formatter.Formatter,
+               engines.Engine, formats.Format,
+               renderers.Renderer, formatters.Formatter,
                unflattening.Unflatten):
     """Graphiz defaults."""
 

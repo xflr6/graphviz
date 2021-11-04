@@ -1,9 +1,13 @@
 """Execute rendering subprocesses and open files in viewer."""
 
 from ._version import version
-from .common import ENGINES, FORMATS, RENDERERS, FORMATTERS, RequiredArgumentError
+from .common import RequiredArgumentError
+from .engines import ENGINES
 from .execute import run_check, ExecutableNotFound
+from .formats import FORMATS
+from .formatters import FORMATTERS
 from .graphviz import Graphviz
+from .renderers import RENDERERS
 from .rendering import (DOT_BINARY,
                         render,
                         pipe, pipe_string, pipe_lines, pipe_lines_string)

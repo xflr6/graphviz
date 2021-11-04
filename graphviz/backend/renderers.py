@@ -2,9 +2,22 @@ import typing
 
 from .. import copying
 
-from .common import RENDERERS
+__all__ = ['RENDERERS', 'Renderer']
 
-__all__ = ['Renderer']
+RENDERERS = {'cairo',  # $ dot -T:
+             'dot',
+             'fig',
+             'gd',
+             'gdiplus',
+             'map',
+             'pic',
+             'pov',
+             'ps',
+             'svg',
+             'tk',
+             'vml',
+             'vrml',
+             'xdot'}
 
 
 class Renderer:

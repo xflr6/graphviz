@@ -2,9 +2,16 @@
 
 from .. import copying
 
-from .common import ENGINES
+__all__ = ['ENGINES', 'Engine']
 
-__all__ = ['Engine']
+ENGINES = {'dot',  # http://www.graphviz.org/pdf/dot.1.pdf
+           'neato',
+           'twopi',
+           'circo',
+           'fdp',
+           'sfdp',
+           'patchwork',
+           'osage'}
 
 
 class Engine:
