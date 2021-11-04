@@ -6,16 +6,16 @@ from .common import ENGINES, FORMATS, RENDERERS, FORMATTERS
 from . import engine
 from . import format_
 from . import renderer
+from . import formatter
 from .import rendering
 from .import unflattening
 
 
 class Graphviz(copying.Copy,
-               engine.Engine, format_.Format, renderer.Renderer,
+               engine.Engine, format_.Format,
+               renderer.Renderer, formatter.Formatter,
                unflattening.Unflatten):
     """Graphiz defaults."""
-
-    _formatter = None
 
     @staticmethod
     def _pipe_lines(*args, **kwargs):
@@ -31,12 +31,8 @@ class Graphviz(copying.Copy,
         """Simplify mocking ``render``."""
         return rendering.render(*args, **kwargs)
 
-    def __init__(self, format=None, engine=None, *,
-                 formatter: typing.Optional[str] = None,
-                 **kwargs):
+    def __init__(self, format=None, engine=None, **kwargs):
         super().__init__(format=format, engine=engine, **kwargs)
-
-        self.formatter = formatter
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
@@ -48,22 +44,6 @@ class Graphviz(copying.Copy,
             if attr in ns:
                 kwargs[kw] = ns[attr]
         return super()._copy_kwargs(**kwargs)
-
-    @property
-    def formatter(self) -> typing.Optional[str]:
-        """The output formatter used for rendering
-            (``'cairo'``, ``'gd'``, ...)."""
-        return self._formatter
-
-    @formatter.setter
-    def formatter(self, formatter: typing.Optional[str]) -> None:
-        if formatter is None:
-            self.__dict__.pop('_formatter', None)
-        else:
-            formatter = formatter.lower()
-            if formatter not in FORMATTERS:
-                 raise ValueError(f'unknown formatter: {formatter!r}')
-            self._formatter = formatter
 
     def _get_backend_kwargs(self, *,
                             format: typing.Optional[str] = None,
