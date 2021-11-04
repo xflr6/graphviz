@@ -172,8 +172,8 @@ class Render(saving.Save, backend.Graphviz, encoding.Encoding, backend.View):
     def _view(self, filepath, format, quiet):
         """Start the right viewer based on file format and platform."""
         methodnames = [
-            f'_view_{format}_{backend.PLATFORM}',
-            f'_view_{backend.PLATFORM}',
+            f'_view_{format}_{backend.viewing.PLATFORM}',
+            f'_view_{backend.viewing.PLATFORM}',
         ]
         for name in methodnames:
             view_method = getattr(self, name, None)
@@ -182,7 +182,7 @@ class Render(saving.Save, backend.Graphviz, encoding.Encoding, backend.View):
         else:
             raise RuntimeError(f'{self.__class__!r} has no built-in viewer'
                                f' support for {format!r}'
-                               f' on {backend.PLATFORM!r} platform')
+                               f' on {backend.viewing.PLATFORM!r} platform')
         view_method(filepath, quiet=quiet)
 
     def view(self, filename=None, directory=None, cleanup=False,
