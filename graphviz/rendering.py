@@ -16,7 +16,7 @@ __all__ = ['Pipe', 'Render']
 log = logging.getLogger(__name__)
 
 
-class Pipe(base.Base, backend.Graphviz, encoding.Encoding):
+class Pipe(encoding.Encoding, base.Base, backend.Graphviz):
     """Pipe source lines through the Graphviz layout command."""
 
 # FIXME: pytype
@@ -102,7 +102,7 @@ class Pipe(base.Base, backend.Graphviz, encoding.Encoding):
         return self._pipe_lines(*args, input_encoding=self._encoding, **kwargs)
 
 
-class Render(saving.Save, backend.Graphviz, encoding.Encoding, backend.View):
+class Render(saving.Save, backend.Graphviz, backend.View):
     """Write source lines to file and render with Graphviz."""
 
     def render(self, filename=None, directory=None, view=False, cleanup=False,

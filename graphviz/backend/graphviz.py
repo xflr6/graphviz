@@ -1,7 +1,5 @@
 import typing
 
-from .. import copying
-
 from . import engines
 from . import formats
 from . import renderers
@@ -10,8 +8,7 @@ from .import rendering
 from .import unflattening
 
 
-class Graphviz(copying.Copy,
-               engines.Engine, formats.Format,
+class Graphviz(engines.Engine, formats.Format,
                renderers.Renderer, formatters.Formatter,
                unflattening.Unflatten):
     """Graphiz defaults."""
@@ -32,17 +29,6 @@ class Graphviz(copying.Copy,
 
     def __init__(self, format=None, engine=None, **kwargs):
         super().__init__(format=format, engine=engine, **kwargs)
-
-    def _copy_kwargs(self, **kwargs):
-        """Return the kwargs to create a copy of the instance."""
-        attr_kw = [('_engine', 'engine'), ('_format', 'format'),
-                   ('_formatter', 'formatter')]
-        ns = self.__dict__
-        for attr, kw in attr_kw:
-            assert kw not in kwargs
-            if attr in ns:
-                kwargs[kw] = ns[attr]
-        return super()._copy_kwargs(**kwargs)
 
     def _get_backend_kwargs(self, *,
                             format: typing.Optional[str] = None,

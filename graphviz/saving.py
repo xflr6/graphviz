@@ -13,7 +13,7 @@ __all__ = ['Save']
 log = logging.getLogger(__name__)
 
 
-class Save(base.Base, encoding.Encoding):
+class Save(encoding.Encoding, base.Base):
     """Save DOT source lines to file."""
 
     directory = ''

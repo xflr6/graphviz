@@ -12,7 +12,7 @@ FORMATTERS = {'cairo',
               'xlib'}
 
 
-class Formatter:
+class Formatter(copying.Copy):
 
     _formatter = None
 
@@ -23,12 +23,8 @@ class Formatter:
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
-        attr_kw = [('_formatter', 'formatter')]
-        ns = self.__dict__
-        for attr, kw in attr_kw:
-            assert kw not in kwargs
-            if attr in ns:
-                kwargs[kw] = ns[attr]
+        if '_formatter' in self.__dict__:
+            kwargs['formatter'] = self._formatter
         return super()._copy_kwargs(**kwargs)
 
     @property

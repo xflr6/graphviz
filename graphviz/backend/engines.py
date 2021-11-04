@@ -14,7 +14,7 @@ ENGINES = {'dot',  # http://www.graphviz.org/pdf/dot.1.pdf
            'osage'}
 
 
-class Engine:
+class Engine(copying.Copy):
     """Graphiz default engine."""
 
     _engine = 'dot'
@@ -27,12 +27,8 @@ class Engine:
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
-        attr_kw = [('_engine', 'engine')]
-        ns = self.__dict__
-        for attr, kw in attr_kw:
-            assert kw not in kwargs
-            if attr in ns:
-                kwargs[kw] = ns[attr]
+        if '_engine' in self.__dict__:
+            kwargs['engine'] = self._engine
         return super()._copy_kwargs(**kwargs)
 
     @property

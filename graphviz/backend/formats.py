@@ -43,7 +43,7 @@ FORMATS = {'bmp',  # http://www.graphviz.org/doc/info/output.html
            'x11'}
 
 
-class Format:
+class Format(copying.Copy):
     """Graphiz default format."""
 
     _format = 'pdf'
@@ -56,12 +56,8 @@ class Format:
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
-        attr_kw = [('_format', 'format')]
-        ns = self.__dict__
-        for attr, kw in attr_kw:
-            assert kw not in kwargs
-            if attr in ns:
-                kwargs[kw] = ns[attr]
+        if '_format' in self.__dict__:
+            kwargs['format'] = self._format
         return super()._copy_kwargs(**kwargs)
 
     @property

@@ -20,7 +20,7 @@ RENDERERS = {'cairo',  # $ dot -T:
              'xdot'}
 
 
-class Renderer:
+class Renderer(copying.Copy):
 
     _renderer = None
 
@@ -31,12 +31,8 @@ class Renderer:
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
-        attr_kw = [('_renderer', 'renderer')]
-        ns = self.__dict__
-        for attr, kw in attr_kw:
-            assert kw not in kwargs
-            if attr in ns:
-                kwargs[kw] = ns[attr]
+        if '_renderer' in self.__dict__:
+            kwargs['renderer'] = self._renderer
         return super()._copy_kwargs(**kwargs)
 
     @property
