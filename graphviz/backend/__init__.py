@@ -8,10 +8,10 @@ from .formatters import FORMATTERS
 from .renderers import RENDERERS
 
 from .execute import run_check, ExecutableNotFound
-from .graphviz_version import version
 from .rendering import (DOT_BINARY, render, pipe, pipe_string,
                         pipe_lines, pipe_lines_string)
 from .unflattening import UNFLATTEN_BINARY, unflatten
+from .upstream_version import version
 from .viewing import view
 
 from .mixins import Render, Pipe, Unflatten, View
