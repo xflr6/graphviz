@@ -1,18 +1,15 @@
 """Execute rendering subprocesses and open files in viewer."""
 
-import errno
 import logging
 import os
 import pathlib
 import re
 import subprocess
-import sys
 import typing
 
-from .. import _compat
 from ..encoding import DEFAULT_ENCODING as ENCODING
 from .. import copying
-from .. import tools
+from .running import run_check, ExecutableNotFound
 from .viewing import view, View
 
 __all__ = ['DOT_BINARY', 'UNFLATTEN_BINARY',
@@ -590,81 +587,3 @@ def version() -> typing.Tuple[int, ...]:
         raise RuntimeError(f'cannot parse {cmd!r} output: {proc.stdout!r}')
 
     return tuple(int(d) for d in ma.groups() if d is not None)
-
-
-BytesOrStrIterator = typing.Union[typing.Iterator[str],
-                                  typing.Iterator[bytes]]
-
-
-def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]],
-              *, input_lines: typing.Optional[BytesOrStrIterator] = None,
-        capture_output: bool = False,
-        quiet: bool = False, **kwargs) -> subprocess.CompletedProcess:
-    """Run the command described by ``cmd``
-        with ``check=True`` and return its completed process.
-
-    Raises:
-        CalledProcessError: if the returncode of the subprocess is non-zero.
-    """
-    log.debug('run %r', cmd)
-
-    if not kwargs.pop('check', True):
-        raise NotImplementedError('check must be True or omited')
-
-    if capture_output:  # Python 3.6 compat
-        kwargs['stdout'] = kwargs['stderr'] = subprocess.PIPE
-
-    kwargs.setdefault('startupinfo', _compat.get_startupinfo())
-
-    try:
-        if input_lines is not None:
-            assert kwargs.get('input') is None
-            assert iter(input_lines) is input_lines
-            popen = subprocess.Popen(cmd, stdin=subprocess.PIPE, **kwargs)
-            stdin_write = popen.stdin.write
-            for line in input_lines:
-                stdin_write(line)
-            stdout, stderr = popen.communicate()
-            proc = subprocess.CompletedProcess(popen.args, popen.returncode,
-                                               stdout=stdout, stderr=stderr)
-        else:
-            proc = subprocess.run(cmd, **kwargs)
-    except OSError as e:
-        if e.errno == errno.ENOENT:
-            raise ExecutableNotFound(cmd) from e
-        else:
-            raise
-
-    if not quiet and proc.stderr:
-        stderr = proc.stderr
-        if isinstance(stderr, bytes):
-            stderr_encoding = (getattr(sys.stderr, 'encoding', None)
-                               or sys.getdefaultencoding())
-            stderr = stderr.decode(stderr_encoding)
-        sys.stderr.write(stderr)
-        sys.stderr.flush()
-
-    try:
-        proc.check_returncode()
-    except subprocess.CalledProcessError as e:
-        raise CalledProcessError(*e.args)
-
-    return proc
-
-
-class ExecutableNotFound(RuntimeError):
-    """Exception raised if the Graphviz executable is not found."""
-
-    _msg = ('failed to execute {!r}, '
-            'make sure the Graphviz executables are on your systems\' PATH')
-
-    def __init__(self, args):
-        super().__init__(self._msg.format(*args))
-
-
-class CalledProcessError(subprocess.CalledProcessError):
-    """Exception raised if the returncode of the subprocess is non-zero."""
-
-    def __str__(self) -> 'str':
-        s = super().__str__()
-        return f'{s} [stderr: {self.stderr!r}]'
