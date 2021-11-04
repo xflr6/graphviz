@@ -3,9 +3,9 @@
 import typing
 
 from .. import copying
+from ._version import version
 from .common import ENGINES, FORMATS, RENDERERS, FORMATTERS, RequiredArgumentError
 from .execute import run_check, ExecutableNotFound
-from .graphviz import version
 from .rendering import (DOT_BINARY,
                         render,
                         pipe, pipe_string, pipe_lines, pipe_lines_string)
