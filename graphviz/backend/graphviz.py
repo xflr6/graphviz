@@ -4,14 +4,15 @@ from .. import copying
 
 from .common import ENGINES, FORMATS, RENDERERS, FORMATTERS
 from . import engine
+from . import format_
 from .import rendering
 from .import unflattening
 
 
-class Graphviz(copying.Copy, engine.Engine, unflattening.Unflatten):
+class Graphviz(copying.Copy,
+               engine.Engine, format_.Format,
+               unflattening.Unflatten):
     """Graphiz default engine/format."""
-
-    _format = 'pdf'
 
     _renderer = None
 
@@ -35,10 +36,7 @@ class Graphviz(copying.Copy, engine.Engine, unflattening.Unflatten):
                  renderer: typing.Optional[str] = None,
                  formatter: typing.Optional[str] = None,
                  **kwargs):
-        super().__init__(engine=engine, **kwargs)
-
-        if format is not None:
-            self.format = format
+        super().__init__(format=format, engine=engine, **kwargs)
 
         self.renderer = renderer
 
@@ -54,19 +52,6 @@ class Graphviz(copying.Copy, engine.Engine, unflattening.Unflatten):
             if attr in ns:
                 kwargs[kw] = ns[attr]
         return super()._copy_kwargs(**kwargs)
-
-    @property
-    def format(self) -> str:
-        """The output format used for rendering
-            (``'pdf'``, ``'png'``, ...)."""
-        return self._format
-
-    @format.setter
-    def format(self, format: str) -> None:
-        format = format.lower()
-        if format not in FORMATS:
-            raise ValueError(f'unknown format: {format!r}')
-        self._format = format
 
     @property
     def renderer(self) -> typing.Optional[str]:
