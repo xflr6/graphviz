@@ -83,14 +83,14 @@ def quiet(request):
 
 @pytest.fixture
 def pipe(mocker):
-    yield mocker.patch('graphviz.backend.pipe', autospec=True)
+    yield mocker.patch('graphviz.backend.rendering.pipe', autospec=True)
 
 
 @pytest.fixture
 def pipe_lines(mocker):
-    yield mocker.patch('graphviz.backend.pipe_lines', autospec=True)
+    yield mocker.patch('graphviz.backend.rendering.pipe_lines', autospec=True)
 
 
 @pytest.fixture
 def render(mocker):
-    yield mocker.patch('graphviz.backend.render', autospec=True)
+    yield mocker.patch('graphviz.backend.rendering.render', autospec=True)
