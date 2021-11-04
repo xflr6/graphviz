@@ -12,8 +12,8 @@ Literal: typing.Any
 
 if PY38:  # pytype not supported
     import unittest.mock
-    
-    Literal = unittest.mock.MagicMock(name='Literal') 
+
+    Literal = unittest.mock.MagicMock(name='Literal')
 else:
     from typing import Literal
 
