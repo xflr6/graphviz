@@ -6,6 +6,8 @@ from ..encoding import DEFAULT_ENCODING as ENCODING
 from . import common
 from . import execute
 
+__all__ = ['unflatten', 'Unflatten']
+
 #: :class:`pathlib.Path` of unflatten command (``Path('unflatten')``).
 UNFLATTEN_BINARY = pathlib.Path('unflatten')
 
@@ -55,3 +57,10 @@ def unflatten(source: str,
     proc = execute.run_check(cmd, input=source, encoding=encoding,
                              capture_output=True)
     return proc.stdout
+
+
+class Unflatten:
+
+    @staticmethod
+    def _unflatten(*args, **kwargs):
+        return unflatten(*args, **kwargs)

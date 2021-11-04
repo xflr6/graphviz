@@ -7,7 +7,7 @@ from .import rendering
 from .import unflattening
 
 
-class Graphviz(copying.Copy):
+class Graphviz(copying.Copy, unflattening.Unflatten):
     """Graphiz default engine/format."""
 
     _engine = 'dot'
@@ -31,10 +31,6 @@ class Graphviz(copying.Copy):
     def _render(*args, **kwargs):
         """Simplify mocking ``render``."""
         return rendering.render(*args, **kwargs)
-
-    @staticmethod
-    def _unflatten(*args, **kwargs):
-        return unflattening.unflatten(*args, **kwargs)
 
     def __init__(self, format=None, engine=None, *,
                  renderer: typing.Optional[str] = None,
