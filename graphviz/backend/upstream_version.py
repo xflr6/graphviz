@@ -8,6 +8,19 @@ import typing
 from . import execute
 from . import rendering
 
+VERSION_PATTERN = re.compile(r'''
+                             graphviz[ ]version
+                             [ ]
+                             (\d+)\.(\d+)
+                             (?:\.(\d+)
+                               (?:
+                                 ~dev\.\d{8}\.\d{4}
+                                 |
+                                 \.(\d+)
+                               )?
+                             )?
+                             [ ]''', re.VERBOSE)
+
 
 log = logging.getLogger(__name__)
 
@@ -42,17 +55,7 @@ def version() -> typing.Tuple[int, ...]:
                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                              encoding='ascii')
 
-    ma = re.search(r'graphviz version'
-                   r' '
-                   r'(\d+)\.(\d+)'
-                   r'(?:\.(\d+)'
-                       r'(?:'  # noqa: E127
-                           r'~dev\.\d{8}\.\d{4}'  # noqa: E127
-                           r'|'
-                           r'\.(\d+)'
-                       r')?'
-                   r')?'
-                   r' ', proc.stdout)
+    ma = VERSION_PATTERN.search(proc.stdout)
     if ma is None:
         raise RuntimeError(f'cannot parse {cmd!r} output: {proc.stdout!r}')
 
