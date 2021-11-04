@@ -21,8 +21,8 @@ BytesOrStrIterator = typing.Union[typing.Iterator[str],
 
 def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]],
               *, input_lines: typing.Optional[BytesOrStrIterator] = None,
-        capture_output: bool = False,
-        quiet: bool = False, **kwargs) -> subprocess.CompletedProcess:
+              capture_output: bool = False,
+              quiet: bool = False, **kwargs) -> subprocess.CompletedProcess:
     """Run the command described by ``cmd``
         with ``check=True`` and return its completed process.
 
