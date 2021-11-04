@@ -128,7 +128,7 @@ and :class:`.Source` for reference.
     The outputs in this section may contain some **internals** (implementation details).
     They serve to record some current implementation details and their changes.
     They mainly serve the development process (e.g. checking the MRO).
-    They might be outdated (``TODO:`` automate reindent).
+    They might be outdated.
     They **may change at any point** in time.
     See above for the full (public) API.
     First shalt thou take out the Holy Pin.
@@ -139,6 +139,8 @@ To update: remove ``+SKIP`` flags below and copy output(s) from ``Got:``.
 .. code:: bash
 
     $ ./run-tests.py docs --doctest-report none --doctest-continue-on-failure
+
+``TODO:`` automate reindent
 
 
 Graph
@@ -160,8 +162,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
               encoding='utf-8',
               graph_attr=None, node_attr=None, edge_attr=None,
               body=None,
-              strict=False)
-     | 
+              strict=False, *,
+              renderer: Optional[str] = None,
+              formatter: Optional[str] = None)
+     |
      |  Graph source code in the DOT language.
      |
      |  Args:
@@ -172,6 +176,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      directory: (Sub)directory for source saving and rendering.
      |      format: Rendering output format (``'pdf'``, ``'png'``, ...).
      |      engine: Layout command used (``'dot'``, ``'neato'``, ...).
+     |      renderer: Output renderer used (``'cairo'``, ``'gd'``, ...).
+     |      formatter: Output formatter used (``'cairo'``, ``'gd'``, ...).
      |      encoding: Encoding for saving the source.
      |      graph_attr: Mapping of ``(attribute, value)`` pairs for the graph.
      |      node_attr: Mapping of ``(attribute, value)`` pairs set for all nodes.
@@ -193,12 +199,19 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      graphviz.jupyter_integration.JupyterSvgIntegration
      |      graphviz.rendering.Pipe
      |      graphviz.unflattening.Unflatten
+     |      graphviz.encoding.Encoding
      |      graphviz.base.Base
      |      graphviz.base.LineIterator
-     |      graphviz.backend.Graphviz
-     |      graphviz.encoding.Encoding
+     |      graphviz.backend.mixins.Render
+     |      graphviz.backend.mixins.Pipe
+     |      graphviz.backend.mixins.Graphviz
+     |      graphviz.backend.engines.Engine
+     |      graphviz.backend.formats.Format
+     |      graphviz.backend.renderers.Renderer
+     |      graphviz.backend.formatters.Formatter
      |      graphviz.copying.Copy
-     |      graphviz.backend.View
+     |      graphviz.backend.mixins.View
+     |      graphviz.backend.mixins.Unflatten
      |      builtins.object
      |
      |  Readonly properties defined here:
@@ -215,7 +228,9 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
                  encoding='utf-8',
                  graph_attr=None, node_attr=None, edge_attr=None,
                  body=None,
-                 strict=False)
+                 strict=False, *,
+                 renderer: Optional[str] = None,
+                 formatter: Optional[str] = None)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  ----------------------------------------------------------------------
@@ -327,7 +342,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  ----------------------------------------------------------------------
      |  Data and other attributes inherited from graphviz.dot.Dot:
      |
-     |  __annotations__ = {'_edge': <class 'str'>, '_edge_plain': <class 'str'...
+     |  __annotations__ = {'directed': <class 'bool'>}
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from graphviz.quoting.Quote:
@@ -522,25 +537,44 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          https://www.graphviz.org/pdf/unflatten.1.pdf
      |
      |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.encoding.Encoding:
+     |
+     |  encoding
+     |      The encoding for the saved source file.
+     |
+     |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.base.Base:
      |
      |  __str__(self)
      |      The DOT source code as string.
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.Graphviz:
+     |  Data descriptors inherited from graphviz.backend.engines.Engine:
      |
      |  engine
-     |      The layout engine used for rendering (``'dot'``, ``'neato'``, ...).
-     |
-     |  format
-     |      The output format used for rendering (``'pdf'``, ``'png'``, ...).
+     |      The layout engine used for rendering
+     |      (``'dot'``, ``'neato'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.encoding.Encoding:
+     |  Data descriptors inherited from graphviz.backend.formats.Format:
      |
-     |  encoding
-     |      The encoding for the saved source file.
+     |  format
+     |      The output format used for rendering
+     |      (``'pdf'``, ``'png'``, ...).
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.backend.renderers.Renderer:
+     |
+     |  renderer
+     |      The output renderer used for rendering
+     |      (``'cairo'``, ``'gd'``, ...).
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.backend.formatters.Formatter:
+     |
+     |  formatter
+     |      The output formatter used for rendering
+     |      (``'cairo'``, ``'gd'``, ...).
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.copying.Copy:
@@ -572,7 +606,9 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
                 encoding='utf-8',
                 graph_attr=None, node_attr=None, edge_attr=None,
                 body=None,
-                strict=False)
+                strict=False, *,
+                renderer: Optional[str] = None,
+                formatter: Optional[str] = None)
      |
      |  Directed graph source code in the DOT language.
      |
@@ -584,6 +620,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      directory: (Sub)directory for source saving and rendering.
      |      format: Rendering output format (``'pdf'``, ``'png'``, ...).
      |      engine: Layout command used (``'dot'``, ``'neato'``, ...).
+     |      renderer: Output renderer used (``'cairo'``, ``'gd'``, ...).
+     |      formatter: Output formatter used (``'cairo'``, ``'gd'``, ...).
      |      encoding: Encoding for saving the source.
      |      graph_attr: Mapping of ``(attribute, value)`` pairs for the graph.
      |      node_attr: Mapping of ``(attribute, value)`` pairs set for all nodes.
@@ -605,12 +643,19 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      graphviz.jupyter_integration.JupyterSvgIntegration
      |      graphviz.rendering.Pipe
      |      graphviz.unflattening.Unflatten
+     |      graphviz.encoding.Encoding
      |      graphviz.base.Base
      |      graphviz.base.LineIterator
-     |      graphviz.backend.Graphviz
-     |      graphviz.encoding.Encoding
+     |      graphviz.backend.mixins.Render
+     |      graphviz.backend.mixins.Pipe
+     |      graphviz.backend.mixins.Graphviz
+     |      graphviz.backend.engines.Engine
+     |      graphviz.backend.formats.Format
+     |      graphviz.backend.renderers.Renderer
+     |      graphviz.backend.formatters.Formatter
      |      graphviz.copying.Copy
-     |      graphviz.backend.View
+     |      graphviz.backend.mixins.View
+     |      graphviz.backend.mixins.Unflatten
      |      builtins.object
      |
      |  Readonly properties defined here:
@@ -627,7 +672,9 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
                  encoding='utf-8',
                  graph_attr=None, node_attr=None, edge_attr=None,
                  body=None,
-                 strict=False)
+                 strict=False, *,
+                 renderer: Optional[str] = None,
+                 formatter: Optional[str] = None)
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  ----------------------------------------------------------------------
@@ -739,7 +786,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  ----------------------------------------------------------------------
      |  Data and other attributes inherited from graphviz.dot.Dot:
      |
-     |  __annotations__ = {'_edge': <class 'str'>, '_edge_plain': <class 'str'...
+     |  __annotations__ = {'directed': <class 'bool'>}
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from graphviz.quoting.Quote:
@@ -933,25 +980,44 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          https://www.graphviz.org/pdf/unflatten.1.pdf
      |
      |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.encoding.Encoding:
+     |
+     |  encoding
+     |      The encoding for the saved source file.
+     |
+     |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.base.Base:
      |
      |  __str__(self)
      |      The DOT source code as string.
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.Graphviz:
+     |  Data descriptors inherited from graphviz.backend.engines.Engine:
      |
      |  engine
-     |      The layout engine used for rendering (``'dot'``, ``'neato'``, ...).
-     |
-     |  format
-     |      The output format used for rendering (``'pdf'``, ``'png'``, ...).
+     |      The layout engine used for rendering
+     |      (``'dot'``, ``'neato'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.encoding.Encoding:
+     |  Data descriptors inherited from graphviz.backend.formats.Format:
      |
-     |  encoding
-     |      The encoding for the saved source file.
+     |  format
+     |      The output format used for rendering
+     |      (``'pdf'``, ``'png'``, ...).
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.backend.renderers.Renderer:
+     |
+     |  renderer
+     |      The output renderer used for rendering
+     |      (``'cairo'``, ``'gd'``, ...).
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.backend.formatters.Formatter:
+     |
+     |  formatter
+     |      The output formatter used for rendering
+     |      (``'cairo'``, ``'gd'``, ...).
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.copying.Copy:
@@ -1007,12 +1073,19 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      graphviz.jupyter_integration.JupyterSvgIntegration
      |      graphviz.rendering.Pipe
      |      graphviz.unflattening.Unflatten
+     |      graphviz.encoding.Encoding
      |      graphviz.base.Base
      |      graphviz.base.LineIterator
-     |      graphviz.backend.Graphviz
-     |      graphviz.encoding.Encoding
+     |      graphviz.backend.mixins.Render
+     |      graphviz.backend.mixins.Pipe
+     |      graphviz.backend.mixins.Graphviz
+     |      graphviz.backend.engines.Engine
+     |      graphviz.backend.formats.Format
+     |      graphviz.backend.renderers.Renderer
+     |      graphviz.backend.formatters.Formatter
      |      graphviz.copying.Copy
-     |      graphviz.backend.View
+     |      graphviz.backend.mixins.View
+     |      graphviz.backend.mixins.Unflatten
      |      builtins.object
      |
      |  Methods defined here:
@@ -1232,6 +1305,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |          https://www.graphviz.org/pdf/unflatten.1.pdf
      |
      |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.encoding.Encoding:
+     |
+     |  encoding
+     |      The encoding for the saved source file.
+     |
+     |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.base.Base:
      |
      |  __str__(self)
@@ -1247,19 +1326,32 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      list of weak references to the object (if defined)
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.Graphviz:
+     |  Data descriptors inherited from graphviz.backend.engines.Engine:
      |
      |  engine
-     |      The layout engine used for rendering (``'dot'``, ``'neato'``, ...).
-     |
-     |  format
-     |      The output format used for rendering (``'pdf'``, ``'png'``, ...).
+     |      The layout engine used for rendering
+     |      (``'dot'``, ``'neato'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.encoding.Encoding:
+     |  Data descriptors inherited from graphviz.backend.formats.Format:
      |
-     |  encoding
-     |      The encoding for the saved source file.
+     |  format
+     |      The output format used for rendering
+     |      (``'pdf'``, ``'png'``, ...).
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.backend.renderers.Renderer:
+     |
+     |  renderer
+     |      The output renderer used for rendering
+     |      (``'cairo'``, ``'gd'``, ...).
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.backend.formatters.Formatter:
+     |
+     |  formatter
+     |      The output formatter used for rendering
+     |      (``'cairo'``, ``'gd'``, ...).
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.copying.Copy:
