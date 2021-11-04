@@ -1,5 +1,3 @@
-import typing
-
 from .. import copying
 
 __all__ = ['FORMATS', 'Format']

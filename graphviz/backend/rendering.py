@@ -2,13 +2,16 @@ import pathlib
 import os
 import typing
 
-from .common import RequiredArgumentError
-from .engines import ENGINES
-from .formats import FORMATS
-from .formatters import FORMATTERS
-from .renderers import RENDERERS
-
+from . import _common
+from . import engines
 from . import execute
+from . import formats
+from . import formatters
+from . import renderers
+
+__all__ = ['render',
+           'pipe', 'pipe_string',
+           'pipe_lines', 'pipe_lines_string']
 
 #: :class:`pathlib.Path` of layout command (``Path('dot')``).
 DOT_BINARY = pathlib.Path('dot')
@@ -20,15 +23,18 @@ def command(engine: str, format_: str,
             ) -> typing.List[typing.Union[os.PathLike, str]]:
     """Return ``subprocess.Popen`` args list for rendering."""
     if formatter is not None and renderer is None:
-        raise RequiredArgumentError('formatter given without renderer')
+        raise _common.RequiredArgumentError('formatter given without renderer')
 
-    if engine not in ENGINES:
+    if engine not in engines.ENGINES:
         raise ValueError(f'unknown engine: {engine!r}')
-    if format_ not in FORMATS:
+
+    if format_ not in formats.FORMATS:
         raise ValueError(f'unknown format: {format_!r}')
-    if renderer is not None and renderer not in RENDERERS:
+
+    if renderer is not None and renderer not in renderers.RENDERERS:
         raise ValueError(f'unknown renderer: {renderer!r}')
-    if formatter is not None and formatter not in FORMATTERS:
+
+    if formatter is not None and formatter not in formatters.FORMATTERS:
         raise ValueError(f'unknown formatter: {formatter!r}')
 
     output_format = [f for f in (format_, renderer, formatter) if f is not None]

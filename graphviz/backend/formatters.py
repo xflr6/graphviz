@@ -40,5 +40,5 @@ class Formatter(copying.Copy):
         else:
             formatter = formatter.lower()
             if formatter not in FORMATTERS:
-                 raise ValueError(f'unknown formatter: {formatter!r}')
+                raise ValueError(f'unknown formatter: {formatter!r}')
             self._formatter = formatter

@@ -46,7 +46,7 @@ class Renderer(copying.Copy):
         if renderer is None:
             self.__dict__.pop('_renderer', None)
         else:
-           renderer = renderer.lower()
-           if renderer not in RENDERERS:
-               raise ValueError(f'unknown renderer: {renderer!r}')
-           self._renderer = renderer
+            renderer = renderer.lower()
+            if renderer not in RENDERERS:
+                raise ValueError(f'unknown renderer: {renderer!r}')
+            self._renderer = renderer

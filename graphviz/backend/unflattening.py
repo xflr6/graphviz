@@ -3,10 +3,10 @@ import typing
 
 from ..encoding import DEFAULT_ENCODING as ENCODING
 
-from . import common
+from . import _common
 from . import execute
 
-__all__ = ['unflatten', 'Unflatten']
+__all__ = ['unflatten']
 
 #: :class:`pathlib.Path` of unflatten command (``Path('unflatten')``).
 UNFLATTEN_BINARY = pathlib.Path('unflatten')
@@ -44,7 +44,7 @@ def unflatten(source: str,
         https://www.graphviz.org/pdf/unflatten.1.pdf
     """
     if fanout and stagger is None:
-        raise common.RequiredArgumentError('fanout given without stagger')
+        raise _common.RequiredArgumentError('fanout given without stagger')
 
     cmd = [UNFLATTEN_BINARY]
     if stagger is not None:
@@ -57,10 +57,3 @@ def unflatten(source: str,
     proc = execute.run_check(cmd, input=source, encoding=encoding,
                              capture_output=True)
     return proc.stdout
-
-
-class Unflatten:
-
-    @staticmethod
-    def _unflatten(*args, **kwargs):
-        return unflatten(*args, **kwargs)

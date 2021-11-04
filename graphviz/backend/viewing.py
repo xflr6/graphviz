@@ -5,7 +5,7 @@ import subprocess
 
 from .. import tools
 
-__all__ = ['view', 'View']
+__all__ = ['view']
 
 PLATFORM = platform.system().lower()
 
@@ -65,16 +65,3 @@ def view_windows(filepath, *, quiet: bool) -> None:
     filepath = os.path.normpath(filepath)
     log.debug('view: %r', filepath)
     os.startfile(filepath)  # pytype: disable=module-attr
-
-
-class View:
-    """Open filepath with its default viewing application
-        (platform-specific)."""
-
-    _view_darwin = staticmethod(view_darwin)
-
-    _view_freebsd = staticmethod(view_unixoid)
-
-    _view_linux = staticmethod(view_unixoid)
-
-    _view_windows = staticmethod(view_windows)
