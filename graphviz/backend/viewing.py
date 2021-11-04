@@ -5,6 +5,8 @@ import subprocess
 
 from .. import tools
 
+__all__ = ['view', 'View']
+
 PLATFORM = platform.system().lower()
 
 
