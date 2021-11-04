@@ -32,6 +32,7 @@ import typing
 from .encoding import DEFAULT_ENCODING as ENCODING
 from . import dot
 from . import jupyter_integration
+from . import piping
 from . import rendering
 from . import unflattening
 
@@ -40,7 +41,7 @@ __all__ = ['Graph', 'Digraph']
 
 class BaseGraph(dot.Dot,
                 rendering.Render,
-                jupyter_integration.JupyterSvgIntegration, rendering.Pipe,
+                jupyter_integration.JupyterSvgIntegration, piping.Pipe,
                 unflattening.Unflatten):
     """Dot language creation and source code rendering."""
 

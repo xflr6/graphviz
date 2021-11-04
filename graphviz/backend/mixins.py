@@ -9,6 +9,7 @@ from . import formatters
 from . import renderers
 
 #  Call backend functions.
+from . import piping
 from . import rendering
 from . import unflattening
 from . import viewing
@@ -65,9 +66,9 @@ class Pipe(Graphviz):
     @property
     def _pipe_lines(_):
         """Simplify rendering.pipe_lines mocking."""
-        return rendering.pipe_lines
+        return piping.pipe_lines
 
-    _pipe_lines_string = staticmethod(rendering.pipe_lines_string)
+    _pipe_lines_string = staticmethod(piping.pipe_lines_string)
 
 
 class Unflatten:

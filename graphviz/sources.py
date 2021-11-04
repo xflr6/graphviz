@@ -8,6 +8,7 @@ import typing
 from .encoding import DEFAULT_ENCODING as ENCODING
 from . import saving
 from . import jupyter_integration
+from . import piping
 from . import rendering
 from . import unflattening
 
@@ -18,7 +19,7 @@ log = logging.getLogger(__name__)
 
 
 class Source(rendering.Render, saving.Save,
-             jupyter_integration.JupyterSvgIntegration, rendering.Pipe,
+             jupyter_integration.JupyterSvgIntegration, piping.Pipe,
              unflattening.Unflatten):
     """Verbatim DOT source code string to be rendered by Graphviz.
 

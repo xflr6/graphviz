@@ -9,8 +9,8 @@ from .renderers import RENDERERS
 
 from .dot_command import DOT_BINARY 
 from .execute import run_check, ExecutableNotFound
-from .rendering import (render, pipe, pipe_string,
-                        pipe_lines, pipe_lines_string)
+from .piping import pipe, pipe_string, pipe_lines, pipe_lines_string
+from .rendering import render
 from .unflattening import UNFLATTEN_BINARY, unflatten
 from .upstream_version import version
 from .viewing import view
