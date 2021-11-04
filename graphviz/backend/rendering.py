@@ -3,7 +3,7 @@ import os
 import typing
 
 from .common import ENGINES, FORMATS, RENDERERS, FORMATTERS, RequiredArgumentError
-from .running import run_check
+from . import execute
 
 #: :class:`pathlib.Path` of layout command (``Path('dot')``).
 DOT_BINARY = pathlib.Path('dot')
@@ -81,7 +81,7 @@ def render(engine: str, format: str,
     else:
         cwd = None
 
-    run_check(cmd, capture_output=True, cwd=cwd, quiet=quiet)
+    execute.run_check(cmd, capture_output=True, cwd=cwd, quiet=quiet)
     return rendered
 
 
@@ -124,7 +124,7 @@ def pipe(engine: str, format: str, data: bytes,
     cmd = command(engine, format, renderer=renderer, formatter=formatter)
     kwargs = {'input': data}
 
-    proc = run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
+    proc = execute.run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
     return proc.stdout
 
 
@@ -170,7 +170,7 @@ def pipe_string(engine: str, format: str, input_string: str,
     cmd = command(engine, format, renderer=renderer, formatter=formatter)
     kwargs = {'input': input_string, 'encoding': encoding}
 
-    proc = run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
+    proc = execute.run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
     return proc.stdout
 
 
@@ -216,7 +216,7 @@ def pipe_lines(engine: str, format: str, input_lines: typing.Iterator[str],
     cmd = command(engine, format, renderer=renderer, formatter=formatter)
     kwargs = {'input_lines': (line.encode(input_encoding) for line in input_lines)}
 
-    proc = run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
+    proc = execute.run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
     return proc.stdout
 
 
@@ -262,5 +262,5 @@ def pipe_lines_string(engine: str, format: str, input_lines: typing.Iterator[str
     cmd = command(engine, format, renderer=renderer, formatter=formatter)
     kwargs = {'input_lines': input_lines, 'encoding': encoding}
 
-    proc = run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
+    proc = execute.run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
     return proc.stdout

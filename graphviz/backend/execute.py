@@ -7,6 +7,9 @@ import typing
 
 from .. import _compat
 
+__all__ = ['run_check', 'ExecutableNotFound']
+
+
 log = logging.getLogger(__name__)
 
 

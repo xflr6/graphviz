@@ -4,7 +4,7 @@ import typing
 from ..encoding import DEFAULT_ENCODING as ENCODING
 
 from . import common
-from . import running
+from . import execute
 
 #: :class:`pathlib.Path` of unflatten command (``Path('unflatten')``).
 UNFLATTEN_BINARY = pathlib.Path('unflatten')
@@ -52,6 +52,6 @@ def unflatten(source: str,
     if chain is not None:
         cmd += ['-c', str(chain)]
 
-    proc = running.run_check(cmd, input=source, encoding=encoding,
+    proc = execute.run_check(cmd, input=source, encoding=encoding,
                              capture_output=True)
     return proc.stdout

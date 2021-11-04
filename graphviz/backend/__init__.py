@@ -4,11 +4,11 @@ import typing
 
 from .. import copying
 from .common import ENGINES, FORMATS, RENDERERS, FORMATTERS, RequiredArgumentError
+from .execute import run_check, ExecutableNotFound
 from .graphviz import version
 from .rendering import (DOT_BINARY,
                         render,
                         pipe, pipe_string, pipe_lines, pipe_lines_string)
-from .running import run_check, ExecutableNotFound
 from .unflattening import unflatten
 from .viewing import view, View
 

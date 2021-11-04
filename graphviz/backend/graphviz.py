@@ -3,7 +3,7 @@ import re
 import subprocess
 import typing
 
-from . import running
+from . import execute
 from . import rendering
 
 
@@ -36,7 +36,7 @@ def version() -> typing.Tuple[int, ...]:
     """
     cmd = [rendering.DOT_BINARY, '-V']
     log.debug('run %r', cmd)
-    proc = running.run_check(cmd,
+    proc = execute.run_check(cmd,
                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                              encoding='ascii')
 
