@@ -1,6 +1,5 @@
 """Display rendered graph as SVG in Jupyter Notebooks and QtConsole."""
 
-from . import encoding
 from . import rendering
 
 __all__ = ['JupyterSvgIntegration']
