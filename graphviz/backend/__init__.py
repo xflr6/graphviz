@@ -7,8 +7,9 @@ from .formats import FORMATS
 from .formatters import FORMATTERS
 from .renderers import RENDERERS
 
+from .dot_command import DOT_BINARY 
 from .execute import run_check, ExecutableNotFound
-from .rendering import (DOT_BINARY, render, pipe, pipe_string,
+from .rendering import (render, pipe, pipe_string,
                         pipe_lines, pipe_lines_string)
 from .unflattening import UNFLATTEN_BINARY, unflatten
 from .upstream_version import version

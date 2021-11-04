@@ -1,47 +1,14 @@
 """Run rendering commands."""
 
-import pathlib
 import os
 import typing
 
-from . import _common
-from . import engines
+from . import dot_command
 from . import execute
-from . import formats
-from . import formatters
-from . import renderers
 
 __all__ = ['render',
            'pipe', 'pipe_string',
            'pipe_lines', 'pipe_lines_string']
-
-#: :class:`pathlib.Path` of layout command (``Path('dot')``).
-DOT_BINARY = pathlib.Path('dot')
-
-
-def command(engine: str, format_: str,
-            *, renderer: typing.Optional[str] = None,
-            formatter: typing.Optional[str] = None
-            ) -> typing.List[typing.Union[os.PathLike, str]]:
-    """Return ``subprocess.Popen`` args list for rendering."""
-    if formatter is not None and renderer is None:
-        raise _common.RequiredArgumentError('formatter given without renderer')
-
-    if engine not in engines.ENGINES:
-        raise ValueError(f'unknown engine: {engine!r}')
-
-    if format_ not in formats.FORMATS:
-        raise ValueError(f'unknown format: {format_!r}')
-
-    if renderer is not None and renderer not in renderers.RENDERERS:
-        raise ValueError(f'unknown renderer: {renderer!r}')
-
-    if formatter is not None and formatter not in formatters.FORMATTERS:
-        raise ValueError(f'unknown formatter: {formatter!r}')
-
-    output_format = [f for f in (format_, renderer, formatter) if f is not None]
-    output_format_flag = ':'.join(output_format)
-    return [DOT_BINARY, f'-K{engine}', f'-T{output_format_flag}']
 
 
 def render(engine: str, format: str,
@@ -82,7 +49,8 @@ def render(engine: str, format: str,
     dirname, filename = os.path.split(filepath)
     del filepath
 
-    cmd = command(engine, format, renderer=renderer, formatter=formatter)
+    cmd = dot_command.command(engine, format,
+                              renderer=renderer, formatter=formatter)
     cmd += ['-O', filename]
 
     suffix = '.'.join(f for f in (formatter, renderer, format) if f is not None)
@@ -134,7 +102,8 @@ def pipe(engine: str, format: str, data: bytes,
     Note:
         The layout command is started from the current directory.
     """
-    cmd = command(engine, format, renderer=renderer, formatter=formatter)
+    cmd = dot_command.command(engine, format,
+                              renderer=renderer, formatter=formatter)
     kwargs = {'input': data}
 
     proc = execute.run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
@@ -180,7 +149,8 @@ def pipe_string(engine: str, format: str, input_string: str,
     Note:
         The layout command is started from the current directory.
     """
-    cmd = command(engine, format, renderer=renderer, formatter=formatter)
+    cmd = dot_command.command(engine, format,
+                              renderer=renderer, formatter=formatter)
     kwargs = {'input': input_string, 'encoding': encoding}
 
     proc = execute.run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
@@ -226,7 +196,8 @@ def pipe_lines(engine: str, format: str, input_lines: typing.Iterator[str],
     Note:
         The layout command is started from the current directory.
     """
-    cmd = command(engine, format, renderer=renderer, formatter=formatter)
+    cmd = dot_command.command(engine, format,
+                             renderer=renderer, formatter=formatter)
     kwargs = {'input_lines': (line.encode(input_encoding) for line in input_lines)}
 
     proc = execute.run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
@@ -272,7 +243,8 @@ def pipe_lines_string(engine: str, format: str, input_lines: typing.Iterator[str
     Note:
         The layout command is started from the current directory.
     """
-    cmd = command(engine, format, renderer=renderer, formatter=formatter)
+    cmd = dot_command.command(engine, format,
+                              renderer=renderer, formatter=formatter)
     kwargs = {'input_lines': input_lines, 'encoding': encoding}
 
     proc = execute.run_check(cmd, capture_output=True, quiet=quiet, **kwargs)

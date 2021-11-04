@@ -5,8 +5,8 @@ import re
 import subprocess
 import typing
 
+from . import dot_command
 from . import execute
-from . import rendering
 
 VERSION_PATTERN = re.compile(r'''
                              graphviz[ ]version
@@ -50,7 +50,7 @@ def version() -> typing.Tuple[int, ...]:
         Graphviz Release version entry format:
         https://gitlab.com/graphviz/graphviz/-/blob/f94e91ba819cef51a4b9dcb2d76153684d06a913/gen_version.py#L17-20
     """
-    cmd = [rendering.DOT_BINARY, '-V']
+    cmd = [dot_command.DOT_BINARY, '-V']
     log.debug('run %r', cmd)
     proc = execute.run_check(cmd,
                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
