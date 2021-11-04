@@ -19,7 +19,8 @@ VERSION_PATTERN = re.compile(r'''
                                  \.(\d+)
                                )?
                              )?
-                             [ ]''', re.VERBOSE)
+                             [ ]
+                             ''', re.VERBOSE)
 
 
 log = logging.getLogger(__name__)
