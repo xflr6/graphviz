@@ -52,20 +52,20 @@ class Render(Graphviz):
 
     _get_render_parameters = Graphviz._get_rendering_parameters
 
-    @staticmethod
-    def _render(*args, **kwargs):
+    @property
+    def _render(_):
         """Simplify rendering.render mocking."""
-        return rendering.render(*args, **kwargs)
+        return rendering.render
 
 
 class Pipe(Graphviz):
 
     _get_pipe_parameters = Graphviz._get_rendering_parameters
 
-    @staticmethod
-    def _pipe_lines(*args, **kwargs):
+    @property
+    def _pipe_lines(_):
         """Simplify rendering.pipe_lines mocking."""
-        return rendering.pipe_lines(*args, **kwargs)
+        return rendering.pipe_lines
 
     _pipe_lines_string = staticmethod(rendering.pipe_lines_string)
 
