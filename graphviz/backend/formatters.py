@@ -1,3 +1,5 @@
+"""Rendering formatter parameter handling."""
+
 import typing
 
 from .. import copying
@@ -13,6 +15,7 @@ FORMATTERS = {'cairo',
 
 
 class Formatter(copying.Copy):
+    """Rendering engine parameter (no default)."""
 
     _formatter = None
 

@@ -1,3 +1,5 @@
+"""Rendering renderer parameter handling."""
+
 import typing
 
 from .. import copying
@@ -21,6 +23,7 @@ RENDERERS = {'cairo',  # $ dot -T:
 
 
 class Renderer(copying.Copy):
+    """Rendering renderer parameter (no default)."""
 
     _renderer = None
 

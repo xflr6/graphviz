@@ -1,3 +1,5 @@
+"""Return the version number from running ``dot -V``."""
+
 import logging
 import re
 import subprocess

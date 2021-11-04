@@ -1,3 +1,5 @@
+"""Run subprocesses with ``subprocess.run()`` and ``subprocess.Popen()``."""
+
 import errno
 import logging
 import os

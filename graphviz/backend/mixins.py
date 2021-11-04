@@ -1,9 +1,14 @@
+"""Mixin classes used by Base subclasses to inherit backend functionality."""
+
 import typing
 
+# Hold and verify parameters.
 from . import engines
 from . import formats
 from . import formatters
 from . import renderers
+
+#  Call backend functions.
 from . import rendering
 from . import unflattening
 from . import viewing

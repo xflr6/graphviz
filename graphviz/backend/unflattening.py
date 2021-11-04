@@ -1,3 +1,5 @@
+"""Pipe DOT source code through ``unflatten``."""
+
 import pathlib
 import typing
 

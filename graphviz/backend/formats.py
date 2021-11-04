@@ -1,3 +1,5 @@
+"""Rendering format parameter handling."""
+
 from .. import copying
 
 __all__ = ['FORMATS', 'Format']
@@ -42,7 +44,7 @@ FORMATS = {'bmp',  # http://www.graphviz.org/doc/info/output.html
 
 
 class Format(copying.Copy):
-    """Graphiz default format."""
+    """Rendering format parameter with default."""
 
     _format = 'pdf'
 

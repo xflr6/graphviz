@@ -1,3 +1,5 @@
+"""Run rendering commands."""
+
 import pathlib
 import os
 import typing

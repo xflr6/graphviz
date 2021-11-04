@@ -1,3 +1,5 @@
+"""Open files in platform-specific default viewing application."""
+
 import logging
 import os
 import platform

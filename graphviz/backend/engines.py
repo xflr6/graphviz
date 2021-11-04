@@ -1,4 +1,4 @@
-"""Execute rendering subprocesses and open files in viewer."""
+"""Rendering engine parameter handling."""
 
 from .. import copying
 
@@ -15,7 +15,7 @@ ENGINES = {'dot',  # http://www.graphviz.org/pdf/dot.1.pdf
 
 
 class Engine(copying.Copy):
-    """Graphiz default engine."""
+    """Rendering engine parameter with default."""
 
     _engine = 'dot'
 
