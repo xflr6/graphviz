@@ -9,7 +9,9 @@ import typing
 
 from ..encoding import DEFAULT_ENCODING as ENCODING
 from .. import copying
+from .common import RequiredArgumentError
 from .running import run_check, ExecutableNotFound
+from .unflattening import unflatten
 from .viewing import view, View
 
 __all__ = ['DOT_BINARY', 'UNFLATTEN_BINARY',
@@ -25,8 +27,7 @@ __all__ = ['DOT_BINARY', 'UNFLATTEN_BINARY',
 #: :class:`pathlib.Path` of layout command (``Path('dot')``).
 DOT_BINARY = pathlib.Path('dot')
 
-#: :class:`pathlib.Path` of unflatten command (``Path('unflatten')``).
-UNFLATTEN_BINARY = pathlib.Path('unflatten')
+
 
 ENGINES = {'dot',  # http://www.graphviz.org/pdf/dot.1.pdf
            'neato',
@@ -122,10 +123,6 @@ def command(engine: str, format_: str,
     output_format = [f for f in (format_, renderer, formatter) if f is not None]
     output_format_flag = ':'.join(output_format)
     return [DOT_BINARY, f'-K{engine}', f'-T{output_format_flag}']
-
-
-class RequiredArgumentError(Exception):
-    """Exception raised if a required argument is missing (i.e. ``None``)."""
 
 
 def render(engine: str, format: str,
@@ -360,52 +357,6 @@ def pipe_lines_string(engine: str, format: str, input_lines: typing.Iterator[str
     kwargs = {'input_lines': input_lines, 'encoding': encoding}
 
     proc = run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
-    return proc.stdout
-
-
-def unflatten(source: str,
-              stagger: typing.Optional[int] = None,
-              fanout: bool = False,
-              chain: typing.Optional[int] = None,
-              encoding: str = ENCODING) -> str:
-    """Return DOT ``source`` piped through Graphviz *unflatten* preprocessor.
-
-    Args:
-        source: DOT source to process
-            (improve layout aspect ratio).
-        stagger: Stagger the minimum length of leaf edges
-            between 1 and this small integer.
-        fanout: Fanout nodes with indegree = outdegree = 1
-            when staggering (requires ``stagger``).
-        chain: Form disconnected nodes into chains of up to this many nodes.
-        encoding: Encoding to encode unflatten stdin and decode its stdout.
-
-    Returns:
-        Decoded stdout of the Graphviz unflatten command.
-
-    Raises:
-        graphviz.RequiredArgumentError: If ``fanout`` is given
-            but no ``stagger``.
-        graphviz.ExecutableNotFound: If the Graphviz 'unflatten' executable
-            is not found.
-        subprocess.CalledProcessError: If the returncode (exit status)
-            of the unflattening 'unflatten' subprocess is non-zero.
-
-    See also:
-        https://www.graphviz.org/pdf/unflatten.1.pdf
-    """
-    if fanout and stagger is None:
-        raise RequiredArgumentError('fanout given without stagger')
-
-    cmd = [UNFLATTEN_BINARY]
-    if stagger is not None:
-        cmd += ['-l', str(stagger)]
-    if fanout:
-        cmd.append('-f')
-    if chain is not None:
-        cmd += ['-c', str(chain)]
-
-    proc = run_check(cmd, input=source, capture_output=True, encoding=encoding)
     return proc.stdout
 
 
