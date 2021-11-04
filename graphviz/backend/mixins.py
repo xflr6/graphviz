@@ -18,17 +18,24 @@ __all__ = ['Render', 'Pipe', 'Unflatten', 'View']
 
 class Graphviz(engines.Engine, formats.Format,
                renderers.Renderer, formatters.Formatter):
+    """Parameters for calling ``backend.render()`` and ``backend.pipe``."""
 
     def __init__(self, format=None, engine=None, **kwargs):
         super().__init__(format=format, engine=engine, **kwargs)
 
-    def _get_rendering_kwargs(self, *,
-                              format: typing.Optional[str] = None,
-                              renderer: typing.Optional[str] = None,
-                              formatter: typing.Optional[str] = None,
-                              **kwargs):
+    def _get_rendering_parameters(self, *,
+                                  engine: typing.Optional[str] = None,
+                                  format: typing.Optional[str] = None,
+                                  renderer: typing.Optional[str] = None,
+                                  formatter: typing.Optional[str] = None,
+                                  **kwargs):
+        if engine is None:
+            engine = self._engine
+
         if format is None:
             format = self._format
+
+        args = [engine, format]
 
         if renderer is None:
             renderer = self._renderer
@@ -36,21 +43,24 @@ class Graphviz(engines.Engine, formats.Format,
         if formatter is None:
             formatter = self._formatter
 
-        kwargs.update(format=format, renderer=renderer, formatter=formatter)
-        return kwargs
+        kwargs.update(renderer=renderer, formatter=formatter)
+
+        return args, kwargs
 
 
 class Render(Graphviz):
+
+    _get_render_parameters = Graphviz._get_rendering_parameters
 
     @staticmethod
     def _render(*args, **kwargs):
         """Simplify rendering.render mocking."""
         return rendering.render(*args, **kwargs)
 
-    _get_render_kwargs = Graphviz._get_rendering_kwargs
-
 
 class Pipe(Graphviz):
+
+    _get_pipe_parameters = Graphviz._get_rendering_parameters
 
     @staticmethod
     def _pipe_lines(*args, **kwargs):
@@ -58,8 +68,6 @@ class Pipe(Graphviz):
         return rendering.pipe_lines(*args, **kwargs)
 
     _pipe_lines_string = staticmethod(rendering.pipe_lines_string)
-
-    _get_pipe_kwargs = Graphviz._get_rendering_kwargs
 
 
 class Unflatten:
