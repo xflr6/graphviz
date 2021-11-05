@@ -1,0 +1,2 @@
+# binder environment: install in development mode (see project root requirements.txt)
+-r requirements.txt
