@@ -56,15 +56,17 @@ ENGINES = ENGINES
 #:      (``'pdf'``, ``'png'``, ...)
 FORMATS = FORMATS
 
-#: :class:`set` of known output formatters for rendering
-#:      (``'cairo'``, ``'gd'``, ...)
-FORMATTERS = FORMATTERS
-
 #: :class:`set` of known output renderers for rendering
 #:      (``'cairo'``, ``'gd'``, ...)
 RENDERERS = RENDERERS
 
+#: :class:`set` of known output formatters for rendering
+#:      (``'cairo'``, ``'gd'``, ...)
+FORMATTERS = FORMATTERS
+
+
 ExecutableNotFound = ExecutableNotFound
+
 
 RequiredArgumentError = RequiredArgumentError
 
