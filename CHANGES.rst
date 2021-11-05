@@ -49,6 +49,8 @@ Add ``pytype`` checking to Build workflow. Extend type annotations.
 
 Improve documentation and examples.
 
+Add https://mybinder.org config and launch badge to code repository.
+
 Restructured the internal class hierarchy using multiple-inheritance
 with cooperative ``super()`` calling:
 ``Graph`` now inherits both from ``Dot`` and from ``Render``,
