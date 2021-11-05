@@ -31,7 +31,7 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
     """
     log.debug('run %r', cmd)
 
-    if not kwargs.pop('check', True):
+    if not kwargs.pop('check', True):  # pragma: no cover
         raise NotImplementedError('check must be True or omited')
 
     if capture_output:  # Python 3.6 compat

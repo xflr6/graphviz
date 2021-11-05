@@ -32,7 +32,7 @@ class Dot(quoting.Quote, base.Base):
     _comment = staticmethod(comment)
 
     @staticmethod
-    def _head(name: str) -> str:
+    def _head(name: str) -> str:  # pragma: no cover
         raise NotImplementedError('must be implemented by concrete subclasses')
 
     @classmethod
@@ -52,7 +52,7 @@ class Dot(quoting.Quote, base.Base):
         return cls._attr(left, '')
 
     @staticmethod
-    def _edge(*, tail: str, head: str, attr: str) -> str:
+    def _edge(*, tail: str, head: str, attr: str) -> str:  # pragma: no cover
         raise NotImplementedError('must be implemented by concrete subclasses')
 
     @classmethod
