@@ -1,0 +1,2 @@
+# binder environment: install upstream Graphviz dependency (https://www.graphviz.org/)
+graphviz
