@@ -82,8 +82,8 @@ class View:
 
     _view_darwin = staticmethod(viewing.view_darwin)
 
-    _view_freebsd = staticmethod(viewing.view_freebsd)
+    _view_freebsd = staticmethod(viewing.view_unixoid)
 
-    _view_linux = staticmethod(viewing.view_linux)
+    _view_linux = staticmethod(viewing.view_unixoid)
 
     _view_windows = staticmethod(viewing.view_windows)
