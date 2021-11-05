@@ -31,7 +31,7 @@ def pytest_collection_modifyitems(config, items):
 
 @pytest.fixture(scope='session')
 def files_path():
-    return DIRECTORY / 'files'
+    return DIRECTORY
 
 
 @pytest.fixture(scope='session')
