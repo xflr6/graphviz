@@ -7,8 +7,9 @@ from . import copying
 __all__ = ['Base']
 
 
-class LineIterator:
-    """Iterable of DOT Source code lines."""
+class LineIterable:
+    """Iterable of DOT Source code lines
+        (mimics ``file`` objects in text mode)."""
 
     def __iter__(self) -> typing.Iterator[str]:
         r"""Yield the generated DOT source line by line.
@@ -19,7 +20,7 @@ class LineIterator:
 
 
 # Common base interface for all exposed classes
-class Base(LineIterator, copying.Copy):
+class Base(LineIterable, copying.Copy):
     """LineIterator with ``.source`` attribute, that it returns for ``str()``."""
 
     @property
