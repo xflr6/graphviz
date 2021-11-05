@@ -44,7 +44,7 @@ class Render(saving.Save, backend.Render, backend.View):
                 from the layout subprocess.
             quiet_view (bool): Suppress ``stderr`` output
                 from the viewer process
-                (implies ``view=True``, ineffective on Windows).
+                (implies ``view=True``, ineffective on Windows platform).
 
         Returns:
             The (possibly relative) path of the rendered file.
