@@ -81,7 +81,7 @@ def test_run_check_input_lines_mocked(mocker, Popen, line=b'sp\xc3\xa4m'):  # no
     mock_sys_stderr.flush.assert_called_once_with()
 
 
-@pytest.mark.exe
+@pytest.mark.exe(xfail=True)
 @pytest.mark.usefixtures('empty_path')
 @pytest.mark.parametrize('func, args', [
     (render, ['dot', 'pdf', 'nonfilepath']),
@@ -309,7 +309,7 @@ def test_unflatten_stagger_missing():
         unflatten('graph {}', fanout=True)
 
 
-@pytest.mark.exe
+@pytest.mark.exe(xfail=True)
 def test_version(capsys):
     result = version()
     assert isinstance(result, tuple) and result

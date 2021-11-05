@@ -12,20 +12,32 @@ SKIP_EXE = '--skip-exe'
 
 def pytest_addoption(parser):
     parser.addoption(SKIP_EXE, action='store_true',
-                     help='skip tests that run Graphviz executables'
-                          ' or subprocesses')
+                     help='skip tests with pytest.mark.exe;'
+                          ' xfail tests with pytest.mark.exe(xfail=True)'
+                          ' (tests that run Graphviz executables'
+                          '  or subprocesses)')
 
 
 def pytest_configure(config):
     config.addinivalue_line('markers',
-                            f'exe: skip if {SKIP_EXE} is given')
+                            f'exe(xfail): skip/xfail if {SKIP_EXE} is given')
 
 
 def pytest_collection_modifyitems(config, items):
     if config.getoption(SKIP_EXE):
+        def get_xfail(*, xfail: bool = False) -> bool:
+            return xfail
+
         for item in items:
-            if 'exe' in item.keywords:
-                marker = pytest.mark.skip(reason=f'skipped by {SKIP_EXE} flag')
+            exe_values = [get_xfail(*m.args, **m.kwargs)
+                          for m in item.iter_markers(name='exe')]
+            if exe_values:
+                assert len(exe_values) == 1
+                xfail, = exe_values
+                if xfail:
+                    marker = pytest.mark.xfail(reason=f'xfail by {SKIP_EXE} flag')
+                else:
+                    marker = pytest.mark.skip(reason=f'skipped by {SKIP_EXE} flag')
                 item.add_marker(marker)
 
 
