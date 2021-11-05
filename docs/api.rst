@@ -156,15 +156,17 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
     Help on class Graph in module graphviz.graphs:
     <BLANKLINE>
     class Graph(BaseGraph)
-     |  Graph(name=None, comment=None,
+     |  Graph(name: Optional[str] = None,
+              comment: Optional[str] = None,
               filename=None, directory=None,
-              format=None, engine=None,
-              encoding='utf-8',
+              format: Optional[str] = None,
+              engine: Optional[str] = None,
+              encoding: Optional[str] = 'utf-8',
               graph_attr=None, node_attr=None, edge_attr=None,
               body=None,
-              strict=False, *,
+              strict: bool = False, *,
               renderer: Optional[str] = None,
-              formatter: Optional[str] = None)
+              formatter: Optional[str] = None) -> None
      |
      |  Graph source code in the DOT language.
      |
@@ -197,11 +199,11 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      graphviz.rendering.Render
      |      graphviz.saving.Save
      |      graphviz.jupyter_integration.JupyterSvgIntegration
-     |      graphviz.rendering.Pipe
+     |      graphviz.piping.Pipe
      |      graphviz.unflattening.Unflatten
      |      graphviz.encoding.Encoding
      |      graphviz.base.Base
-     |      graphviz.base.LineIterator
+     |      graphviz.base.LineIterable
      |      graphviz.backend.mixins.Render
      |      graphviz.backend.mixins.Pipe
      |      graphviz.backend.mixins.Graphviz
@@ -222,15 +224,17 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from BaseGraph:
      |
-     |  __init__(self, name=None, comment=None,
+     |  __init__(self, name: Optional[str] = None,
+                 comment: Optional[str] = None,
                  filename=None, directory=None,
-                 format=None, engine=None,
-                 encoding='utf-8',
+                 format: Optional[str] = None,
+                 engine: Optional[str] = None,
+                 encoding: Optional[str] = 'utf-8',
                  graph_attr=None, node_attr=None, edge_attr=None,
                  body=None,
-                 strict=False, *,
+                 strict: bool = False, *,
                  renderer: Optional[str] = None,
-                 formatter: Optional[str] = None)
+                 formatter: Optional[str] = None) -> None
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  ----------------------------------------------------------------------
@@ -242,12 +246,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.dot.Dot:
      |
-     |  __iter__(self, subgraph=False) -> Iterator[str]
+     |  __iter__(self, subgraph: bool = False) -> Iterator[str]
      |      Yield the DOT source code line by line (as graph or subgraph).
      |
      |      Yields: Line ending with a newline (``'\n'``).
      |
-     |  attr(self, kw=None, _attributes=None, **attrs)
+     |  attr(self, kw: Optional[str] = None, _attributes=None, **attrs) -> None
      |      Add a general or graph/node/edge attribute statement.
      |
      |      Args:
@@ -257,13 +261,13 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |
      |      See the :ref:`usage examples in the User Guide <attributes>`.
      |
-     |  clear(self, keep_attrs=False)
+     |  clear(self, keep_attrs: bool = False) -> None
      |      Reset content to an empty body, clear graph/node/egde_attr mappings.
      |
      |      Args:
      |          keep_attrs (bool): preserve graph/node/egde_attr mappings
      |
-     |  edge(self, tail_name, head_name, label=None, _attributes=None, **attrs)
+     |  edge(self, tail_name: str, head_name: str, label: Optional[str] = None, _attributes=None, **attrs) -> None
      |      Create an edge between two nodes.
      |
      |      Args:
@@ -280,7 +284,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          and ``compass`` (e.g. ``sw``).
      |          See :ref:`details in the User Guide <ports>`.
      |
-     |  edges(self, tail_head_iter)
+     |  edges(self, tail_head_iter) -> None
      |      Create a bunch of edges.
      |
      |      Args:
@@ -294,7 +298,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          and ``compass`` (e.g. ``sw``).
      |          See :ref:`details in the User Guide <ports>`.
      |
-     |  node(self, name, label=None, _attributes=None, **attrs)
+     |  node(self, name: str, label: Optional[str] = None, _attributes=None, **attrs) -> None
      |      Create a node.
      |
      |      Args:
@@ -303,7 +307,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          attrs: Any additional node attributes (must be strings).
      |
      |  subgraph(self, graph=None,
-                 name=None, comment=None,
+                 name: Optional[str] = None,
+                 comment: Optional[str] = None,
                  graph_attr=None, node_attr=None, edge_attr=None,
                  body=None)
      |      Add the current content of the given sole ``graph`` argument
@@ -357,9 +362,11 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  Methods inherited from graphviz.rendering.Render:
      |
      |  render(self, filename=None, directory=None,
-               view=False, cleanup=False,
-               format=None, renderer=None, formatter=None,
-               quiet=False, quiet_view=False)
+               view: bool = False, cleanup: bool = False,
+               format: Optional[str] = None,
+               renderer: Optional[str] = None,
+               formatter: Optional[str] = None,
+               quiet: bool = False, quiet_view: bool = False) -> str
      |      Save the source to file and render with the Graphviz engine.
      |
      |      Args:
@@ -380,7 +387,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |              from the layout subprocess.
      |          quiet_view (bool): Suppress ``stderr`` output
      |              from the viewer process
-     |              (implies ``view=True``, ineffective on Windows).
+     |              (implies ``view=True``, ineffective on Windows platform).
      |
      |      Returns:
      |          The (possibly relative) path of the rendered file.
@@ -390,10 +397,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |              are not known.
      |          graphviz.RequiredArgumentError: If ``formatter`` is given
      |              but ``renderer`` is None.
-     |          graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
+     |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
      |              is not found.
      |          subprocess.CalledProcessError: If the returncode (exit status)
-     |              of the rendering 'dot' subprocess is non-zero.
+     |              of the rendering ``dot`` subprocess is non-zero.
      |          RuntimeError: If viewer opening is requested but not supported.
      |
      |      Note:
@@ -403,7 +410,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          can be given as paths relative to the DOT source file.
      |
      |  view(self, filename=None, directory=None,
-             cleanup=False, quiet=False, quiet_view=False)
+             cleanup: bool = False, quiet: bool = False, quiet_view: bool = False) -> str
      |      Save the source to file, open the rendered result in a viewer.
      |
      |      Convenience short-cut for running ``.render(view=True)``.
@@ -436,7 +443,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  Methods inherited from graphviz.saving.Save:
      |
      |  save(self, filename=None, directory=None, *,
-             skip_existing: Optional[bool] = False)
+             skip_existing: Optional[bool] = False) -> str
      |      Save the DOT source to file. Ensure the file ends with a newline.
      |
      |      Args:
@@ -458,7 +465,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  directory = ''
      |
      |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.rendering.Pipe:
+     |  Methods inherited from graphviz.piping.Pipe:
      |
      |  pipe(self,
              format: Optional[str] = None,
@@ -488,10 +495,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |              are not known.
      |          graphviz.RequiredArgumentError: If ``formatter`` is given
      |              but ``renderer`` is None.
-     |          graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
+     |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
      |              is not found.
      |          subprocess.CalledProcessError: If the returncode (exit status)
-     |              of the rendering 'dot' subprocess is non-zero.
+     |              of the rendering ``dot`` subprocess is non-zero.
      |
      |      Example:
      |          >>> import graphviz
@@ -510,16 +517,16 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.unflattening.Unflatten:
      |
-     |  unflatten(self, stagger=None, fanout=False, chain=None)
+     |  unflatten(self, stagger: Optional[int] = None, fanout: bool = False, chain: Optional[int] = None)
      |      Return a new :class:`.Source` instance with the source
      |          piped through the Graphviz *unflatten* preprocessor.
      |
      |      Args:
-     |          stagger (int): Stagger the minimum length
+     |          stagger: Stagger the minimum length
      |              of leaf edges between 1 and this small integer.
-     |          fanout (bool): Fanout nodes with indegree = outdegree = 1
+     |          fanout: Fanout nodes with indegree = outdegree = 1
      |              when staggering (requires ``stagger``).
-     |          chain (int): Form disconnected nodes into chains
+     |          chain: Form disconnected nodes into chains
      |              of up to this many nodes.
      |
      |      Returns:
@@ -528,10 +535,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      Raises:
      |          graphviz.RequiredArgumentError: If ``fanout`` is given
      |              but ``stagger`` is None.
-     |          graphviz.ExecutableNotFound: If the Graphviz 'unflatten' executable
+     |          graphviz.ExecutableNotFound: If the Graphviz ``unflatten`` executable
      |              is not found.
-     |      subprocess.CalledProcessError: If the returncode (exit status)
-     |          of the unflattening 'unflatten' subprocess is non-zero.
+     |          subprocess.CalledProcessError: If the returncode (exit status)
+     |              of the unflattening 'unflatten' subprocess is non-zero.
      |
      |      See also:
      |          https://www.graphviz.org/pdf/unflatten.1.pdf
@@ -600,15 +607,17 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
     Help on class Digraph in module graphviz.graphs:
     <BLANKLINE>
     class Digraph(BaseGraph)
-     |  Digraph(name=None, comment=None,
+     |  Digraph(name: Optional[str] = None,
+                comment: Optional[str] = None,
                 filename=None, directory=None,
-                format=None, engine=None,
-                encoding='utf-8',
+                format: Optional[str] = None,
+                engine: Optional[str] = None,
+                encoding: Optional[str] = 'utf-8',
                 graph_attr=None, node_attr=None, edge_attr=None,
                 body=None,
-                strict=False, *,
+                strict: bool = False, *,
                 renderer: Optional[str] = None,
-                formatter: Optional[str] = None)
+                formatter: Optional[str] = None) -> None
      |
      |  Directed graph source code in the DOT language.
      |
@@ -641,11 +650,11 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      graphviz.rendering.Render
      |      graphviz.saving.Save
      |      graphviz.jupyter_integration.JupyterSvgIntegration
-     |      graphviz.rendering.Pipe
+     |      graphviz.piping.Pipe
      |      graphviz.unflattening.Unflatten
      |      graphviz.encoding.Encoding
      |      graphviz.base.Base
-     |      graphviz.base.LineIterator
+     |      graphviz.base.LineIterable
      |      graphviz.backend.mixins.Render
      |      graphviz.backend.mixins.Pipe
      |      graphviz.backend.mixins.Graphviz
@@ -666,15 +675,17 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from BaseGraph:
      |
-     |  __init__(self, name=None, comment=None,
+     |  __init__(self, name: Optional[str] = None,
+                 comment: Optional[str] = None,
                  filename=None, directory=None,
-                 format=None, engine=None,
-                 encoding='utf-8',
+                 format: Optional[str] = None,
+                 engine: Optional[str] = None,
+                 encoding: Optional[str] = 'utf-8',
                  graph_attr=None, node_attr=None, edge_attr=None,
                  body=None,
-                 strict=False, *,
+                 strict: bool = False, *,
                  renderer: Optional[str] = None,
-                 formatter: Optional[str] = None)
+                 formatter: Optional[str] = None) -> None
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  ----------------------------------------------------------------------
@@ -686,12 +697,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.dot.Dot:
      |
-     |  __iter__(self, subgraph=False) -> Iterator[str]
+     |  __iter__(self, subgraph: bool = False) -> Iterator[str]
      |      Yield the DOT source code line by line (as graph or subgraph).
      |
      |      Yields: Line ending with a newline (``'\n'``).
      |
-     |  attr(self, kw=None, _attributes=None, **attrs)
+     |  attr(self, kw: Optional[str] = None, _attributes=None, **attrs) -> None
      |      Add a general or graph/node/edge attribute statement.
      |
      |      Args:
@@ -701,13 +712,13 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |
      |      See the :ref:`usage examples in the User Guide <attributes>`.
      |
-     |  clear(self, keep_attrs=False)
+     |  clear(self, keep_attrs: bool = False) -> None
      |      Reset content to an empty body, clear graph/node/egde_attr mappings.
      |
      |      Args:
      |          keep_attrs (bool): preserve graph/node/egde_attr mappings
      |
-     |  edge(self, tail_name, head_name, label=None, _attributes=None, **attrs)
+     |  edge(self, tail_name: str, head_name: str, label: Optional[str] = None, _attributes=None, **attrs) -> None
      |      Create an edge between two nodes.
      |
      |      Args:
@@ -724,7 +735,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          and ``compass`` (e.g. ``sw``).
      |          See :ref:`details in the User Guide <ports>`.
      |
-     |  edges(self, tail_head_iter)
+     |  edges(self, tail_head_iter) -> None
      |      Create a bunch of edges.
      |
      |      Args:
@@ -738,7 +749,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          and ``compass`` (e.g. ``sw``).
      |          See :ref:`details in the User Guide <ports>`.
      |
-     |  node(self, name, label=None, _attributes=None, **attrs)
+     |  node(self, name: str, label: Optional[str] = None, _attributes=None, **attrs) -> None
      |      Create a node.
      |
      |      Args:
@@ -747,7 +758,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          attrs: Any additional node attributes (must be strings).
      |
      |  subgraph(self, graph=None,
-                 name=None, comment=None,
+                 name: Optional[str] = None,
+                 comment: Optional[str] = None,
                  graph_attr=None, node_attr=None, edge_attr=None,
                  body=None)
      |      Add the current content of the given sole ``graph`` argument
@@ -801,9 +813,11 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  Methods inherited from graphviz.rendering.Render:
      |
      |  render(self, filename=None, directory=None,
-               view=False, cleanup=False,
-               format=None, renderer=None, formatter=None,
-               quiet=False, quiet_view=False)
+               view: bool = False, cleanup: bool = False,
+               format: Optional[str] = None,
+               renderer: Optional[str] = None,
+               formatter: Optional[str] = None,
+               quiet: bool = False, quiet_view: bool = False) -> str
      |      Save the source to file and render with the Graphviz engine.
      |
      |      Args:
@@ -824,7 +838,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |              from the layout subprocess.
      |          quiet_view (bool): Suppress ``stderr`` output
      |              from the viewer process
-     |              (implies ``view=True``, ineffective on Windows).
+     |              (implies ``view=True``, ineffective on Windows platform).
      |
      |      Returns:
      |          The (possibly relative) path of the rendered file.
@@ -834,10 +848,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |              are not known.
      |          graphviz.RequiredArgumentError: If ``formatter`` is given
      |              but ``renderer`` is None.
-     |          graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
+     |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
      |              is not found.
      |          subprocess.CalledProcessError: If the returncode (exit status)
-     |              of the rendering 'dot' subprocess is non-zero.
+     |              of the rendering ``dot`` subprocess is non-zero.
      |          RuntimeError: If viewer opening is requested but not supported.
      |
      |      Note:
@@ -847,7 +861,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          can be given as paths relative to the DOT source file.
      |
      |  view(self, filename=None, directory=None,
-             cleanup=False, quiet=False, quiet_view=False)
+             cleanup: bool = False, quiet: bool = False, quiet_view: bool = False) -> str
      |      Save the source to file, open the rendered result in a viewer.
      |
      |      Convenience short-cut for running ``.render(view=True)``.
@@ -879,7 +893,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.saving.Save:
      |
-     |  save(self, filename=None, directory=None, *, skip_existing: Optional[bool] = False)
+     |  save(self, filename=None, directory=None, *, skip_existing: Optional[bool] = False) -> str
      |      Save the DOT source to file. Ensure the file ends with a newline.
      |
      |      Args:
@@ -901,7 +915,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  directory = ''
      |
      |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.rendering.Pipe:
+     |  Methods inherited from graphviz.piping.Pipe:
      |
      |  pipe(self,
              format: Optional[str] = None,
@@ -931,10 +945,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |              are not known.
      |          graphviz.RequiredArgumentError: If ``formatter`` is given
      |              but ``renderer`` is None.
-     |          graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
+     |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
      |              is not found.
      |          subprocess.CalledProcessError: If the returncode (exit status)
-     |              of the rendering 'dot' subprocess is non-zero.
+     |              of the rendering ``dot`` subprocess is non-zero.
      |
      |      Example:
      |          >>> import graphviz
@@ -953,16 +967,16 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.unflattening.Unflatten:
      |
-     |  unflatten(self, stagger=None, fanout=False, chain=None)
+     |  unflatten(self, stagger: Optional[int] = None, fanout: bool = False, chain: Optional[int] = None)
      |      Return a new :class:`.Source` instance with the source
      |          piped through the Graphviz *unflatten* preprocessor.
      |
      |      Args:
-     |          stagger (int): Stagger the minimum length
+     |          stagger: Stagger the minimum length
      |              of leaf edges between 1 and this small integer.
-     |          fanout (bool): Fanout nodes with indegree = outdegree = 1
+     |          fanout: Fanout nodes with indegree = outdegree = 1
      |              when staggering (requires ``stagger``).
-     |          chain (int): Form disconnected nodes into chains
+     |          chain: Form disconnected nodes into chains
      |              of up to this many nodes.
      |
      |      Returns:
@@ -971,10 +985,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      Raises:
      |          graphviz.RequiredArgumentError: If ``fanout`` is given
      |              but ``stagger`` is None.
-     |          graphviz.ExecutableNotFound: If the Graphviz 'unflatten' executable
+     |          graphviz.ExecutableNotFound: If the Graphviz ``unflatten`` executable
      |              is not found.
-     |      subprocess.CalledProcessError: If the returncode (exit status)
-     |          of the unflattening 'unflatten' subprocess is non-zero.
+     |          subprocess.CalledProcessError: If the returncode (exit status)
+     |              of the unflattening 'unflatten' subprocess is non-zero.
      |
      |      See also:
      |          https://www.graphviz.org/pdf/unflatten.1.pdf
@@ -1043,13 +1057,14 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
     Help on class Source in module graphviz.sources:
     <BLANKLINE>
     class Source(graphviz.rendering.Render, graphviz.saving.Save,
-                 graphviz.jupyter_integration.JupyterSvgIntegration, graphviz.rendering.Pipe,
+                 graphviz.jupyter_integration.JupyterSvgIntegration, graphviz.piping.Pipe,
                  graphviz.unflattening.Unflatten)
-     |  Source(source,
+     |  Source(source: str,
                filename=None, directory=None,
-               format=None, engine=None,
-               encoding='utf-8', *,
-               loaded_from_path: Optional[os.PathLike] = None)
+               format: Optional[str] = None,
+               engine: Optional[str] = None,
+               encoding: Optional[str] = 'utf-8', *,
+               loaded_from_path: Optional[os.PathLike] = None) -> None
      |
      |  Verbatim DOT source code string to be rendered by Graphviz.
      |
@@ -1071,11 +1086,11 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      graphviz.rendering.Render
      |      graphviz.saving.Save
      |      graphviz.jupyter_integration.JupyterSvgIntegration
-     |      graphviz.rendering.Pipe
+     |      graphviz.piping.Pipe
      |      graphviz.unflattening.Unflatten
      |      graphviz.encoding.Encoding
      |      graphviz.base.Base
-     |      graphviz.base.LineIterator
+     |      graphviz.base.LineIterable
      |      graphviz.backend.mixins.Render
      |      graphviz.backend.mixins.Pipe
      |      graphviz.backend.mixins.Graphviz
@@ -1090,19 +1105,20 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |
      |  Methods defined here:
      |
-     |  __init__(self, source,
+     |  __init__(self, source: str,
                  filename=None, directory=None,
-                 format=None, engine=None,
-                 encoding='utf-8', *,
-                 loaded_from_path: Optional[os.PathLike] = None)
+                 format: Optional[str] = None,
+                 engine: Optional[str] = None,
+                 encoding: Optional[str] = 'utf-8', *,
+                 loaded_from_path: Optional[os.PathLike] = None) -> None
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
-     |  __iter__(self)
+     |  __iter__(self) -> Iterator[str]
      |      Yield the DOT source code read from file line by line.
      |
      |      Yields: Line ending with a newline (``'\n'``).
      |
-     |  save(self, filename=None, directory=None, *, skip_existing: Optional[bool] = None)
+     |  save(self, filename=None, directory=None, *, skip_existing: Optional[bool] = None) -> str
      |      Save the DOT source to file. Ensure the file ends with a newline.
      |
      |      Args:
@@ -1119,8 +1135,9 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  Class methods defined here:
      |
      |  from_file(filename, directory=None,
-                  format=None, engine=None,
-                  encoding='utf-8') from builtins.type
+                  format: Optional[str] = None,
+                  engine: Optional[str] = None,
+                  encoding: Optional[str] = 'utf-8') from builtins.type
      |      Return an instance with the source string read from the given file.
      |
      |      Args:
@@ -1140,9 +1157,11 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  Methods inherited from graphviz.rendering.Render:
      |
      |  render(self, filename=None, directory=None,
-               view=False, cleanup=False,
-               format=None, renderer=None, formatter=None,
-               quiet=False, quiet_view=False)
+               view: bool = False, cleanup: bool = False,
+               format: Optional[str] = None,
+               renderer: Optional[str] = None,
+               formatter: Optional[str] = None,
+               quiet: bool = False, quiet_view: bool = False) -> str
      |      Save the source to file and render with the Graphviz engine.
      |
      |      Args:
@@ -1163,7 +1182,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |              from the layout subprocess.
      |          quiet_view (bool): Suppress ``stderr`` output
      |              from the viewer process
-     |              (implies ``view=True``, ineffective on Windows).
+     |              (implies ``view=True``, ineffective on Windows platform).
      |
      |      Returns:
      |          The (possibly relative) path of the rendered file.
@@ -1173,10 +1192,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |              are not known.
      |          graphviz.RequiredArgumentError: If ``formatter`` is given
      |              but ``renderer`` is None.
-     |          graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
+     |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
      |              is not found.
      |          subprocess.CalledProcessError: If the returncode (exit status)
-     |              of the rendering 'dot' subprocess is non-zero.
+     |              of the rendering ``dot`` subprocess is non-zero.
      |          RuntimeError: If viewer opening is requested but not supported.
      |
      |      Note:
@@ -1186,7 +1205,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |          can be given as paths relative to the DOT source file.
      |
      |  view(self, filename=None, directory=None,
-             cleanup=False, quiet=False, quiet_view=False)
+             cleanup: bool = False, quiet: bool = False, quiet_view: bool = False) -> str
      |      Save the source to file, open the rendered result in a viewer.
      |
      |      Convenience short-cut for running ``.render(view=True)``.
@@ -1226,7 +1245,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  directory = ''
      |
      |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.rendering.Pipe:
+     |  Methods inherited from graphviz.piping.Pipe:
      |
      |  pipe(self,
              format: Optional[str] = None,
@@ -1256,10 +1275,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |              are not known.
      |          graphviz.RequiredArgumentError: If ``formatter`` is given
      |              but ``renderer`` is None.
-     |          graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
+     |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
      |              is not found.
      |          subprocess.CalledProcessError: If the returncode (exit status)
-     |              of the rendering 'dot' subprocess is non-zero.
+     |              of the rendering ``dot`` subprocess is non-zero.
      |
      |      Example:
      |          >>> import graphviz
@@ -1278,16 +1297,16 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.unflattening.Unflatten:
      |
-     |  unflatten(self, stagger=None, fanout=False, chain=None)
+     |  unflatten(self, stagger: Optional[int] = None, fanout: bool = False, chain: Optional[int] = None)
      |      Return a new :class:`.Source` instance with the source
      |          piped through the Graphviz *unflatten* preprocessor.
      |
      |      Args:
-     |          stagger (int): Stagger the minimum length
+     |          stagger: Stagger the minimum length
      |              of leaf edges between 1 and this small integer.
-     |          fanout (bool): Fanout nodes with indegree = outdegree = 1
+     |          fanout: Fanout nodes with indegree = outdegree = 1
      |              when staggering (requires ``stagger``).
-     |          chain (int): Form disconnected nodes into chains
+     |          chain: Form disconnected nodes into chains
      |              of up to this many nodes.
      |
      |      Returns:
@@ -1296,10 +1315,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      Raises:
      |          graphviz.RequiredArgumentError: If ``fanout`` is given
      |              but ``stagger`` is None.
-     |          graphviz.ExecutableNotFound: If the Graphviz 'unflatten' executable
+     |          graphviz.ExecutableNotFound: If the Graphviz ``unflatten`` executable
      |              is not found.
-     |      subprocess.CalledProcessError: If the returncode (exit status)
-     |          of the unflattening 'unflatten' subprocess is non-zero.
+     |          subprocess.CalledProcessError: If the returncode (exit status)
+     |              of the unflattening 'unflatten' subprocess is non-zero.
      |
      |      See also:
      |          https://www.graphviz.org/pdf/unflatten.1.pdf
@@ -1317,7 +1336,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      The DOT source code as string.
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.base.LineIterator:
+     |  Data descriptors inherited from graphviz.base.LineIterable:
      |
      |  __dict__
      |      dictionary for instance variables (if defined)
