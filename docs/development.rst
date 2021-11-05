@@ -22,6 +22,8 @@ Install in a venv_ in development mode (includes all ``extras_require``):
 
 .. code:: bash
 
+    $ git clone https://github.com/xflr6/graphviz.git
+    $ cd graphviz
     $ python -m venv .venv
     $ source .venv/bin/activate
     $ python -m pip install -r requirements.txt
