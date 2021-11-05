@@ -30,7 +30,7 @@ Install in a venv_ in development mode (includes all ``extras_require``):
 
 .. admonition:: Platform: Windows
 
-    ``C:\>.venv\Script\activate.bat``
+    ``.venv\Script\activate.bat``
     to replace ``source .venv/bin/activate``
 
 .. hint::
