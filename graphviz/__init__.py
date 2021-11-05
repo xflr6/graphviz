@@ -25,20 +25,20 @@ digraph {
 }
 """
 
-from .backend import (render, pipe, pipe_string, pipe_lines, pipe_lines_string,
+from .backend import (ENGINES, FORMATS, RENDERERS, FORMATTERS,
+                      render, pipe, pipe_string, pipe_lines, pipe_lines_string,
                       unflatten, version, view,
-                      ENGINES, FORMATS, RENDERERS, FORMATTERS,
-                      ExecutableNotFound, RequiredArgumentError)
+                      RequiredArgumentError, ExecutableNotFound)
 from .graphs import Graph, Digraph
 from .quoting import escape, nohtml
 from .sources import Source
 
-__all__ = ['Graph', 'Digraph',
+__all__ = ['ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
+           'Graph', 'Digraph',
            'Source',
            'escape', 'nohtml',
            'render', 'pipe', 'pipe_string', 'pipe_lines', 'pipe_lines_string',
            'unflatten', 'version', 'view',
-           'ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
            'RequiredArgumentError', 'ExecutableNotFound',
            'set_default_engine', 'set_default_format']
 
