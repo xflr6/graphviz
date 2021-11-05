@@ -59,9 +59,10 @@ class Dot(quoting.Quote, base.Base):
     def _edge_plain(cls, *, tail: str, head: str) -> str:
         return cls._edge(tail=tail, head=head, attr='')
 
-    def __init__(self, name=None, comment=None,
+    def __init__(self, name: typing.Optional[str] = None,
+                 comment: typing.Optional[str] = None,
                  graph_attr=None, node_attr=None, edge_attr=None, body=None,
-                 strict=False, **kwargs):
+                 strict: bool = False, **kwargs) -> None:
         super().__init__(**kwargs)
 
         self.name = name
@@ -85,7 +86,7 @@ class Dot(quoting.Quote, base.Base):
                                     body=list(self.body),
                                     strict=self.strict)
 
-    def clear(self, keep_attrs=False):
+    def clear(self, keep_attrs: bool = False) -> None:
         """Reset content to an empty body, clear graph/node/egde_attr mappings.
 
         Args:
@@ -96,7 +97,7 @@ class Dot(quoting.Quote, base.Base):
                 a.clear()
         del self.body[:]
 
-    def __iter__(self, subgraph=False) -> typing.Iterator[str]:
+    def __iter__(self, subgraph: bool = False) -> typing.Iterator[str]:
         r"""Yield the DOT source code line by line (as graph or subgraph).
 
         Yields: Line ending with a newline (``'\n'``).
@@ -122,7 +123,9 @@ class Dot(quoting.Quote, base.Base):
 
         yield self._tail
 
-    def node(self, name, label=None, _attributes=None, **attrs):
+    def node(self, name: str,
+             label: typing.Optional[str] = None,
+             _attributes=None, **attrs) -> None:
         """Create a node.
 
         Args:
@@ -135,7 +138,9 @@ class Dot(quoting.Quote, base.Base):
         line = self._node(name, attr_list)
         self.body.append(line)
 
-    def edge(self, tail_name, head_name, label=None, _attributes=None, **attrs):
+    def edge(self, tail_name: str, head_name: str,
+             label: typing.Optional[str] = None,
+             _attributes=None, **attrs) -> None:
         """Create an edge between two nodes.
 
         Args:
@@ -158,7 +163,7 @@ class Dot(quoting.Quote, base.Base):
         line = self._edge(tail=tail_name, head=head_name, attr=attr_list)
         self.body.append(line)
 
-    def edges(self, tail_head_iter):
+    def edges(self, tail_head_iter) -> None:
         """Create a bunch of edges.
 
         Args:
@@ -177,7 +182,8 @@ class Dot(quoting.Quote, base.Base):
         lines = (edge(tail=quote(t), head=quote(h)) for t, h in tail_head_iter)
         self.body.extend(lines)
 
-    def attr(self, kw=None, _attributes=None, **attrs):
+    def attr(self, kw: typing.Optional[str] = None,
+             _attributes=None, **attrs) -> None:
         """Add a general or graph/node/edge attribute statement.
 
         Args:
@@ -199,8 +205,11 @@ class Dot(quoting.Quote, base.Base):
                 line = self._attr(kw, attr_list)
             self.body.append(line)
 
-    def subgraph(self, graph=None, name=None, comment=None,
-                 graph_attr=None, node_attr=None, edge_attr=None, body=None):
+    def subgraph(self, graph=None,
+                 name: typing.Optional[str] = None,
+                 comment: typing.Optional[str] = None,
+                 graph_attr=None, node_attr=None, edge_attr=None,
+                 body=None):
         """Add the current content of the given sole ``graph`` argument
             as subgraph or return a context manager
             returning a new graph instance

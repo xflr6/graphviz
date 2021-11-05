@@ -1,4 +1,4 @@
-"""Save DOT source lines."""
+"""Save DOT source lines to a file."""
 
 import logging
 import os
@@ -22,7 +22,7 @@ class Save(encoding.Encoding, base.Base):
 
     _mkdirs = staticmethod(tools.mkdirs)
 
-    def __init__(self, filename=None, directory=None, **kwargs):
+    def __init__(self, filename=None, directory=None, **kwargs) -> None:
         super().__init__(**kwargs)
 
         if filename is None:
@@ -41,11 +41,11 @@ class Save(encoding.Encoding, base.Base):
         return super()._copy_kwargs(filename=self.filename, **kwargs)
 
     @property
-    def filepath(self):
+    def filepath(self) -> str:
         return os.path.join(self.directory, self.filename)
 
-    def save(self, filename=None, directory=None,
-             *, skip_existing: typing.Optional[bool] = False):
+    def save(self, filename=None, directory=None, *,
+             skip_existing: typing.Optional[bool] = False) -> str:
         """Save the DOT source to file. Ensure the file ends with a newline.
 
         Args:

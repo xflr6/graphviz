@@ -1,4 +1,4 @@
-"""Pipe DOT code objects through Graphviz dot."""
+"""Pipe DOT code objects through Graphviz ``dot``."""
 
 import codecs
 import logging
@@ -23,8 +23,8 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
 ##             format: typing.Optional[str] = ...,
 ##             renderer: typing.Optional[str] = ...,
 ##             formatter: typing.Optional[str] = ...,
-##             quiet: bool = ...,
-##             *, encoding: _compat.Literal[None] = ...) -> bytes:
+##             quiet: bool = ..., *,
+##             encoding: _compat.Literal[None] = ...) -> bytes:
 ##        ...
 ##
 ##    @typing.overload
@@ -32,16 +32,15 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
 ##             format: typing.Optional[str] = ...,
 ##             renderer: typing.Optional[str] = ...,
 ##             formatter: typing.Optional[str] = ...,
-##             quiet: bool = ...,
-##             *, encoding: str = ...) -> str:
+##             quiet: bool = ..., *,
+##             encoding: str = ...) -> str:
 ##        ...
     def pipe(self,
              format: typing.Optional[str] = None,
              renderer: typing.Optional[str] = None,
              formatter: typing.Optional[str] = None,
-             quiet: bool = False,
-             *, encoding: typing.Optional[str] = None
-             ) -> typing.Union[bytes, str]:
+             quiet: bool = False, *,
+             encoding: typing.Optional[str] = None) -> typing.Union[bytes, str]:
         """Return the source piped through the Graphviz layout command.
 
         Args:
@@ -64,10 +63,10 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                 are not known.
             graphviz.RequiredArgumentError: If ``formatter`` is given
                 but ``renderer`` is None.
-            graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
+            graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
                 is not found.
             subprocess.CalledProcessError: If the returncode (exit status)
-                of the rendering 'dot' subprocess is non-zero.
+                of the rendering ``dot`` subprocess is non-zero.
 
         Example:
             >>> import graphviz

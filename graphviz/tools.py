@@ -31,7 +31,7 @@ def attach(object: typing.Any, name: str) -> typing.Callable:
     return decorator
 
 
-def mkdirs(filename, mode: int = 0o777) -> None:
+def mkdirs(filename, *, mode: int = 0o777) -> None:
     """Recursively create directories up to the path of ``filename``
         as needed."""
     dirname = os.path.dirname(filename)

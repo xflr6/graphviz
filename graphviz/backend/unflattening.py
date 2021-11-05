@@ -3,7 +3,7 @@
 import pathlib
 import typing
 
-from ..encoding import DEFAULT_ENCODING as ENCODING
+from ..encoding import DEFAULT_ENCODING
 
 from . import _common
 from . import execute
@@ -18,7 +18,7 @@ def unflatten(source: str,
               stagger: typing.Optional[int] = None,
               fanout: bool = False,
               chain: typing.Optional[int] = None,
-              encoding: str = ENCODING) -> str:
+              encoding: str = DEFAULT_ENCODING) -> str:
     """Return DOT ``source`` piped through Graphviz *unflatten* preprocessor.
 
     Args:

@@ -1,7 +1,8 @@
-"""Save DOT code objects, render with Graphviz dot, and open in viewer."""
+"""Save DOT code objects, render with Graphviz ``dot``, and open in viewer."""
 
 import logging
 import os
+import typing
 
 from . import backend
 from . import saving
@@ -15,9 +16,14 @@ log = logging.getLogger(__name__)
 class Render(saving.Save, backend.Render, backend.View):
     """Write source lines to file and render with Graphviz."""
 
-    def render(self, filename=None, directory=None, view=False, cleanup=False,
-               format=None, renderer=None, formatter=None,
-               quiet=False, quiet_view=False):
+    def render(self, filename=None, directory=None,
+               view: bool = False,
+               cleanup: bool = False,
+               format: typing.Optional[str] = None,
+               renderer: typing.Optional[str] = None,
+               formatter: typing.Optional[str] = None,
+               quiet: bool = False,
+               quiet_view: bool = False) -> str:
         """Save the source to file and render with the Graphviz engine.
 
         Args:
@@ -48,10 +54,10 @@ class Render(saving.Save, backend.Render, backend.View):
                 are not known.
             graphviz.RequiredArgumentError: If ``formatter`` is given
                 but ``renderer`` is None.
-            graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
+            graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
                 is not found.
             subprocess.CalledProcessError: If the returncode (exit status)
-                of the rendering 'dot' subprocess is non-zero.
+                of the rendering ``dot`` subprocess is non-zero.
             RuntimeError: If viewer opening is requested but not supported.
 
         Note:
@@ -80,7 +86,7 @@ class Render(saving.Save, backend.Render, backend.View):
 
         return rendered
 
-    def _view(self, filepath, format, quiet):
+    def _view(self, filepath: str, format: str, quiet: bool) -> None:
         """Start the right viewer based on file format and platform."""
         methodnames = [
             f'_view_{format}_{backend.viewing.PLATFORM}',
@@ -96,8 +102,10 @@ class Render(saving.Save, backend.Render, backend.View):
                                f' on {backend.viewing.PLATFORM!r} platform')
         view_method(filepath, quiet=quiet)
 
-    def view(self, filename=None, directory=None, cleanup=False,
-             quiet=False, quiet_view=False):
+    def view(self, filename=None, directory=None,
+             cleanup: bool = False,
+             quiet: bool = False,
+             quiet_view: bool = False) -> str:
         """Save the source to file, open the rendered result in a viewer.
 
         Convenience short-cut for running ``.render(view=True)``.

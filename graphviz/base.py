@@ -1,5 +1,7 @@
 """Iterables of DOT source code lines (including final newline)."""
 
+import typing
+
 from . import copying
 
 __all__ = ['Base']
@@ -8,7 +10,7 @@ __all__ = ['Base']
 class LineIterator:
     """Iterable of DOT Source code lines."""
 
-    def __iter__(self):
+    def __iter__(self) -> typing.Iterator[str]:
         r"""Yield the generated DOT source line by line.
 
         Yields: Line ending with a newline (``'\n'``).

@@ -1,4 +1,6 @@
-"""Default endoding: 'utf-8'."""
+"""Encoding parameter handling and default."""
+
+import typing
 
 import codecs
 import locale
@@ -11,11 +13,12 @@ DEFAULT_ENCODING = 'utf-8'
 
 
 class Encoding(copying.Copy):
-    """the default encoding for input and output."""
+    """Encoding used for input and output with ``'utf-8'`` default."""
 
     _encoding = DEFAULT_ENCODING
 
-    def __init__(self, encoding=DEFAULT_ENCODING, **kwargs):
+    def __init__(self, encoding: typing.Optional[str] = DEFAULT_ENCODING,
+                 **kwargs) -> None:
         super().__init__(**kwargs)
 
         self.encoding = encoding
@@ -25,13 +28,14 @@ class Encoding(copying.Copy):
         return super()._copy_kwargs(encoding=self._encoding, **kwargs)
 
     @property
-    def encoding(self):
+    def encoding(self) -> str:
         """The encoding for the saved source file."""
         return self._encoding
 
     @encoding.setter
-    def encoding(self, encoding):
+    def encoding(self, encoding: typing.Optional[str]) -> None:
         if encoding is None:
             encoding = locale.getpreferredencoding()
+
         codecs.lookup(encoding)  # raise early
         self._encoding = encoding

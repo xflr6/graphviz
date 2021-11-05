@@ -1,4 +1,4 @@
-r"""Assemble and render DOT source code objects.
+r"""Assemble DOT source code objects.
 
 >>> import graphviz
 >>> dot = graphviz.Graph(comment='M\xf8nti Pyth\xf8n ik den H\xf8lie Grailen')
@@ -29,7 +29,7 @@ graph {
 
 import typing
 
-from .encoding import DEFAULT_ENCODING as ENCODING
+from .encoding import DEFAULT_ENCODING
 from . import dot
 from . import jupyter_integration
 from . import piping
@@ -45,13 +45,17 @@ class BaseGraph(dot.Dot,
                 unflattening.Unflatten):
     """Dot language creation and source code rendering."""
 
-    def __init__(self, name=None, comment=None,
+    def __init__(self, name: typing.Optional[str] = None,
+                 comment: typing.Optional[str] = None,
                  filename=None, directory=None,
-                 format=None, engine=None, encoding=ENCODING,
-                 graph_attr=None, node_attr=None, edge_attr=None, body=None,
-                 strict=False, *,
+                 format: typing.Optional[str] = None,
+                 engine: typing.Optional[str] = None,
+                 encoding: typing.Optional[str] = DEFAULT_ENCODING,
+                 graph_attr=None, node_attr=None, edge_attr=None,
+                 body=None,
+                 strict: bool = False, *,
                  renderer: typing.Optional[str] = None,
-                 formatter: typing.Optional[str] = None):
+                 formatter: typing.Optional[str] = None) -> None:
         super().__init__(name=name, comment=comment,
                          graph_attr=graph_attr,
                          node_attr=node_attr, edge_attr=edge_attr,
@@ -113,7 +117,7 @@ class Graph(BaseGraph):
     _edge = staticmethod(graph_edge)
 
     @property
-    def directed(self):
+    def directed(self) -> bool:
         """``False``"""
         return False
 
@@ -129,6 +133,6 @@ class Digraph(BaseGraph):
     _edge = staticmethod(digraph_edge)
 
     @property
-    def directed(self):
+    def directed(self) -> bool:
         """``True``"""
         return True

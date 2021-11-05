@@ -1,5 +1,7 @@
 """Rendering format parameter handling."""
 
+import typing
+
 from .. import copying
 
 __all__ = ['FORMATS', 'Format']
@@ -44,11 +46,11 @@ FORMATS = {'bmp',  # http://www.graphviz.org/doc/info/output.html
 
 
 class Format(copying.Copy):
-    """Rendering format parameter with default."""
+    """Rendering format parameter with ``'pdf'`` default."""
 
     _format = 'pdf'
 
-    def __init__(self, format=None, **kwargs):
+    def __init__(self, format: typing.Optional[str] = None, **kwargs) -> None:
         super().__init__(**kwargs)
 
         if format is not None:

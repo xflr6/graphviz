@@ -69,7 +69,8 @@ ExecutableNotFound = ExecutableNotFound
 RequiredArgumentError = RequiredArgumentError
 
 
-def set_default_engine(engine):
+def set_default_engine(engine: str) -> str:
+    """Change the default engine, return the old default value."""
     if engine not in ENGINES:
         raise ValueError(f'unknown engine: {engine!r}')
 
@@ -80,7 +81,8 @@ def set_default_engine(engine):
     return old_default_engine
 
 
-def set_default_format(format):
+def set_default_format(format: str) -> str:
+    """Change the default format, return the old default value."""
     if format not in FORMATS:
         raise ValueError(f'unknown format: {format!r}')
 

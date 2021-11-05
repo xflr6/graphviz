@@ -1,4 +1,4 @@
-"""Execute rendering subprocesses and open files in viewer."""
+"""Execute rendering and unflattening subprocesses, open files in viewer."""
 
 from ._common import RequiredArgumentError
 

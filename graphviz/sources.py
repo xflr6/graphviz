@@ -5,7 +5,7 @@ import logging
 import os
 import typing
 
-from .encoding import DEFAULT_ENCODING as ENCODING
+from .encoding import DEFAULT_ENCODING
 from . import saving
 from . import jupyter_integration
 from . import piping
@@ -39,7 +39,9 @@ class Source(rendering.Render, saving.Save,
 
     @classmethod
     def from_file(cls, filename, directory=None,
-                  format=None, engine=None, encoding=ENCODING):
+                  format: typing.Optional[str] = None,
+                  engine: typing.Optional[str] = None,
+                  encoding: typing.Optional[str] = DEFAULT_ENCODING):
         """Return an instance with the source string read from the given file.
 
         Args:
@@ -58,9 +60,11 @@ class Source(rendering.Render, saving.Save,
         return cls(source, filename, directory, format, engine, encoding,
                    loaded_from_path=filepath)
 
-    def __init__(self, source, filename=None, directory=None,
-                 format=None, engine=None, encoding=ENCODING, *,
-                 loaded_from_path: typing.Optional[os.PathLike] = None):
+    def __init__(self, source: str, filename=None, directory=None,
+                 format: typing.Optional[str] = None,
+                 engine: typing.Optional[str] = None,
+                 encoding: typing.Optional[str] = DEFAULT_ENCODING, *,
+                 loaded_from_path: typing.Optional[os.PathLike] = None) -> None:
         super().__init__(filename=filename, directory=directory,
                          format=format, engine=engine,
                          encoding=encoding)
@@ -73,7 +77,7 @@ class Source(rendering.Render, saving.Save,
                                     loaded_from_path=self._loaded_from_path,
                                     **kwargs)
 
-    def __iter__(self):
+    def __iter__(self) -> typing.Iterator[str]:
         r"""Yield the DOT source code read from file line by line.
 
         Yields: Line ending with a newline (``'\n'``).
@@ -86,12 +90,12 @@ class Source(rendering.Render, saving.Save,
             yield line + suffix
 
     @property
-    def source(self):
+    def source(self) -> str:
         """The DOT source code as string (read from file)."""
         return self._source
 
-    def save(self, filename=None, directory=None,
-             *, skip_existing: typing.Optional[bool] = None):
+    def save(self, filename=None, directory=None, *,
+             skip_existing: typing.Optional[bool] = None) -> str:
         """Save the DOT source to file. Ensure the file ends with a newline.
 
         Args:

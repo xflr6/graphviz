@@ -1,4 +1,4 @@
-"""Run rendering commands."""
+"""Render DOT source files with Graphviz ``dot``."""
 
 import os
 import typing
@@ -9,8 +9,7 @@ from . import execute
 __all__ = ['render']
 
 
-def render(engine: str, format: str,
-           filepath: typing.Union[os.PathLike, str],
+def render(engine: str, format: str, filepath: typing.Union[os.PathLike, str],
            renderer: typing.Optional[str] = None,
            formatter: typing.Optional[str] = None,
            quiet: bool = False) -> str:

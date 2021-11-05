@@ -19,8 +19,8 @@ BytesOrStrIterator = typing.Union[typing.Iterator[str],
                                   typing.Iterator[bytes]]
 
 
-def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]],
-              *, input_lines: typing.Optional[BytesOrStrIterator] = None,
+def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
+              input_lines: typing.Optional[BytesOrStrIterator] = None,
               capture_output: bool = False,
               quiet: bool = False, **kwargs) -> subprocess.CompletedProcess:
     """Run the command described by ``cmd``
@@ -80,7 +80,7 @@ class ExecutableNotFound(RuntimeError):
     _msg = ('failed to execute {!r}, '
             'make sure the Graphviz executables are on your systems\' PATH')
 
-    def __init__(self, args):
+    def __init__(self, args) -> None:
         super().__init__(self._msg.format(*args))
 
 

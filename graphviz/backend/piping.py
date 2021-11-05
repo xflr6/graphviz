@@ -1,4 +1,4 @@
-"""Pipe through rendering commands."""
+"""Pipe bytes, strings, or string iterators through Graphviz ``dot``."""
 
 import typing
 
@@ -53,8 +53,8 @@ def pipe(engine: str, format: str, data: bytes,
     return proc.stdout
 
 
-def pipe_string(engine: str, format: str, input_string: str,
-               *, encoding: str,
+def pipe_string(engine: str, format: str, input_string: str, *,
+                encoding: str,
                 renderer: typing.Optional[str] = None,
                 formatter: typing.Optional[str] = None,
                 quiet: bool = False) -> str:
@@ -100,8 +100,8 @@ def pipe_string(engine: str, format: str, input_string: str,
     return proc.stdout
 
 
-def pipe_lines(engine: str, format: str, input_lines: typing.Iterator[str],
-               *, input_encoding: str,
+def pipe_lines(engine: str, format: str, input_lines: typing.Iterator[str], *,
+               input_encoding: str,
                renderer: typing.Optional[str] = None,
                formatter: typing.Optional[str] = None,
                quiet: bool = False) -> bytes:
@@ -147,8 +147,8 @@ def pipe_lines(engine: str, format: str, input_lines: typing.Iterator[str],
     return proc.stdout
 
 
-def pipe_lines_string(engine: str, format: str, input_lines: typing.Iterator[str],
-                      *, encoding: str,
+def pipe_lines_string(engine: str, format: str, input_lines: typing.Iterator[str], *,
+                      encoding: str,
                       renderer: typing.Optional[str] = None,
                       formatter: typing.Optional[str] = None,
                       quiet: bool = False) -> str:
