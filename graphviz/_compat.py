@@ -31,7 +31,7 @@ assert get_startupinfo() is None, 'get_startupinfo() defaults to a no-op'
 if platform.system() == 'Windows':  # pragma: no cover
     import subprocess
 
-    def get_startupinfo() -> subprocess.STARTUPINFO:
+    def get_startupinfo() -> subprocess.STARTUPINFO:  # pytype: disable=module-attr
         """Return subprocess.STARTUPINFO instance hiding the console window."""
         startupinfo = subprocess.STARTUPINFO()  # pytype: disable=module-attr
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW  # pytype: disable=module-attr
