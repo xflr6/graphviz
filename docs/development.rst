@@ -13,6 +13,11 @@ Installation
 
 |Binder|
 
+Development installation **binder** : https://mybinder.org/v2/gh/xflr6/graphviz/HEAD
+
+Local installation
+^^^^^^^^^^^^^^^^^^
+
 Install in a venv_ in development mode (includes all ``extras_require``):
 
 .. code:: bash
