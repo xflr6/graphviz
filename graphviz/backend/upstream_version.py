@@ -9,8 +9,8 @@ from . import dot_command
 from . import execute
 
 VERSION_PATTERN = re.compile(r'''
-                             graphviz[ ]version
-                             [ ]
+                             graphviz[ ]
+                             version[ ]
                              (\d+)\.(\d+)
                              (?:\.(\d+)
                                (?:
