@@ -10,7 +10,8 @@ PY38 = (sys.version_info < (3, 9))
 Literal: typing.Any
 
 
-if PY38:  # pytype not supported
+if PY38:  # pragma: no cover
+    # pytype not supported
     import unittest.mock
 
     Literal = unittest.mock.MagicMock(name='Literal')
