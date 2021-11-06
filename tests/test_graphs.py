@@ -102,7 +102,37 @@ def test_unflatten_mocked(sentinel, mock_unflatten, cls):
                                            **kwargs)
 
 
-def test__repr_svg_(mocker, sentinel, cls):
+@pytest.mark.parametrize(
+    'encoding', [None, 'ascii', 'utf-8'])
+def test_pipe_mocked(mocker, pipe_lines, pipe_lines_string, quiet, cls, encoding):
+    input_encoding = 'utf-8'
+    dot = cls(encoding=input_encoding)
+
+    result = dot.pipe(encoding=encoding, quiet=quiet)
+
+    expected_args = ['dot', 'pdf', mocker.ANY]
+    expected_kwargs = {'quiet': quiet,
+                       'renderer': None,
+                       'formatter': None}
+
+    if encoding == input_encoding:
+        assert result is pipe_lines_string.return_value
+        pipe_lines_string.assert_called_once_with(*expected_args,
+                                                  encoding=encoding,
+                                                  **expected_kwargs)
+        return
+
+    if encoding is None:
+        assert result is pipe_lines.return_value
+    else:
+        assert result is pipe_lines.return_value.decode.return_value
+        pipe_lines.return_value.decode.assert_called_once_with(encoding)
+    pipe_lines.assert_called_once_with(*expected_args,
+                                       input_encoding=input_encoding,
+                                       **expected_kwargs)
+
+
+def test_repr_svg_mocked(mocker, sentinel, cls):
     c = cls()
     pipe = mocker.patch.object(c, 'pipe', autospec=True,
                                return_value=sentinel.string)

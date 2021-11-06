@@ -135,6 +135,11 @@ def pipe_lines(mocker):
 
 
 @pytest.fixture
+def pipe_lines_string(mocker):
+    yield mocker.patch('graphviz.backend.piping.pipe_lines_string', autospec=True)
+
+
+@pytest.fixture
 def render(mocker):
     yield mocker.patch('graphviz.backend.rendering.render', autospec=True)
 

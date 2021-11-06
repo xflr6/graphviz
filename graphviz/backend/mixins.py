@@ -62,7 +62,10 @@ class Pipe(Parameters):
         """Simplify ``._pipe_lines()`` mocking."""
         return piping.pipe_lines
 
-    _pipe_lines_string = staticmethod(piping.pipe_lines_string)
+    @property
+    def _pipe_lines_string(_):
+        """Simplify ``._pipe_lines_string()`` mocking."""
+        return piping.pipe_lines_string
 
 
 class Unflatten:
