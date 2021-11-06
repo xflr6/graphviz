@@ -559,7 +559,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.base.Base:
      |
-     |  __str__(self)
+     |  __str__(self) -> str
      |      The DOT source code as string.
      |
      |  ----------------------------------------------------------------------
@@ -1016,7 +1016,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.base.Base:
      |
-     |  __str__(self)
+     |  __str__(self) -> str
      |      The DOT source code as string.
      |
      |  ----------------------------------------------------------------------
@@ -1157,7 +1157,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
                   engine: Optional[str] = None,
                   encoding: Optional[str] = 'utf-8',
                   renderer: Optional[str] = None,
-                  formatter: Optional[str] = None) from builtins.type
+                  formatter: Optional[str] = None) -> 'Source' from builtins.type
      |      Return an instance with the source string read from the given file.
      |
      |      Args:
@@ -1172,6 +1172,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |
      |  source
      |      The DOT source code as string (read from file).
+     |
+     |      Normalizes so that the string always ends in a final newline.
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.rendering.Render:
@@ -1358,7 +1360,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.base.Base:
      |
-     |  __str__(self)
+     |  __str__(self) -> str
      |      The DOT source code as string.
      |
      |  ----------------------------------------------------------------------

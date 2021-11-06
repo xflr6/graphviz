@@ -23,6 +23,8 @@ Set release version (remove ``.dev0`` from ``$MAJOR.$MINOR[.$BUGFIX]``):
 - ``graphviz/__init__.py``
 - ``setup.py``
 
+Update `help output <online-help-internal>`_ if needed.
+
 Document release:
 
 - remove ``in development`` from ``CHANGES.rst``
@@ -42,12 +44,14 @@ Commit to ``release`` branch and push to ``origin``:
 
 .. code:: bash
 
+    $ git add *
     $ git commit -m "release $MAJOR.$MINOR[.$BUGFIX]"
-    $ git push
+    $ git push --set-upstream origin release
 
-- Check GitHub Actions ``relase`` `Build workflow 
+- Check GitHub Actions ``relase`` `Build workflow
   <https://github.com/xflr6/graphviz/actions?query=branch%3Arelease>`_
-- Check Codecov ``release`` build `test coverage <https://app.codecov.io/gh/xflr6/graphviz/branch/release>`_
+- Check Codecov ``release`` build `test coverage
+  <https://app.codecov.io/gh/xflr6/graphviz/branch/release>`_
 
 Build the release:
 
@@ -106,7 +110,7 @@ Commit to main branch and push:
     $ git commit -m "bump version for development"
     $ git push --tags  # pushes all tags
 
-- Check GitHub Actions main branch `Build workflow 
+- Check GitHub Actions `main branch Build workflow
   <https://github.com/xflr6/graphviz/actions?query=branch%3Amaster>`_
 - Check GitHub `Main page <https://github.com/xflr6/graphviz>`_
 
