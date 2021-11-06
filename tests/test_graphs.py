@@ -3,16 +3,17 @@ import re
 
 import pytest
 
-from graphviz.graphs import Graph, Digraph
-from graphviz.sources import Source
+import graphviz
+
+BASE_GRAPHS = [graphviz.Graph, graphviz.Digraph]
 
 
-@pytest.fixture(params=[Graph, Digraph])
+@pytest.fixture(params=BASE_GRAPHS)
 def cls(request):
     return request.param
 
 
-@pytest.fixture(params=list(itertools.permutations([Graph, Digraph], 2)),
+@pytest.fixture(params=list(itertools.permutations(BASE_GRAPHS, 2)),
                 ids=lambda c: f'{c[0].__name__}, {c[1].__name__}')
 def classes(request):
     return request.param
@@ -69,7 +70,7 @@ def test_invalid_formatter_raises_valueerror(cls):
 def test_unflatten(cls):
     c = cls()
     result = c.unflatten()
-    assert isinstance(result, Source)
+    assert isinstance(result, graphviz.Source)
 
     normalized = re.sub(r'\s+', ' ', result.source.strip())
     assert normalized.startswith('digraph {' if c.directed else 'graph {')
@@ -111,8 +112,8 @@ def test_iter_subgraph_strict(cls):
 
 @pytest.mark.parametrize(
     'cls, expected',
-    [(Graph, 'strict graph {\n}\n'),
-     (Digraph, 'strict digraph {\n}\n')],
+    [(graphviz.Graph, 'strict graph {\n}\n'),
+     (graphviz.Digraph, 'strict digraph {\n}\n')],
     ids=lambda p: getattr(p, '__name__', '...'))
 def test_iter_strict(cls, expected):
     assert cls(strict=True).source == expected
@@ -125,8 +126,8 @@ def test_attr_invalid_kw(cls):
 
 @pytest.mark.parametrize(
     'cls, expected',
-    [(Graph, 'graph {\n\tspam=eggs\n}\n'),
-     (Digraph, 'digraph {\n\tspam=eggs\n}\n')],
+    [(graphviz.Graph, 'graph {\n\tspam=eggs\n}\n'),
+     (graphviz.Digraph, 'digraph {\n\tspam=eggs\n}\n')],
     ids=lambda p: getattr(p, '__name__', '...'))
 def test_attr_kw_none(cls, expected):
     dot = cls()
@@ -136,8 +137,10 @@ def test_attr_kw_none(cls, expected):
 
 @pytest.mark.parametrize(
     'cls, expected',
-    [(Graph, 'graph {\n\tA [label="%s"]\n\tB [label="%s"]\n}\n' % (r'\\', r'\"\\\"')),
-     (Digraph, 'digraph {\n\tA [label="%s"]\n\tB [label="%s"]\n}\n' % (r'\\', r'\"\\\"'))],
+    [(graphviz.Graph,
+      'graph {\n\tA [label="%s"]\n\tB [label="%s"]\n}\n' % (r'\\', r'\"\\\"')),
+     (graphviz.Digraph,
+      'digraph {\n\tA [label="%s"]\n\tB [label="%s"]\n}\n' % (r'\\', r'\"\\\"'))],
     ids=lambda p: getattr(p, '__name__', '...'))
 def test_escaped_quotes_and_escapes(cls, expected):
     dot = cls()
@@ -148,8 +151,8 @@ def test_escaped_quotes_and_escapes(cls, expected):
 
 @pytest.mark.parametrize(
     'cls, expected',
-    [(Graph, 'graph {\n\t// comment\n\tsubgraph name {\n\t}\n}\n'),
-     (Digraph, 'digraph {\n\t// comment\n\tsubgraph name {\n\t}\n}\n')],
+    [(graphviz.Graph, 'graph {\n\t// comment\n\tsubgraph name {\n\t}\n}\n'),
+     (graphviz.Digraph, 'digraph {\n\t// comment\n\tsubgraph name {\n\t}\n}\n')],
     ids=lambda p: getattr(p, '__name__', '...'))
 def test_subgraph_graph_none(cls, expected):
     dot = cls(directory='nondirectory', format='png',
@@ -179,8 +182,8 @@ def test_subgraph_mixed(classes):
 
 @pytest.mark.parametrize(
     'cls, expected',
-    [(Graph, 'graph {\n\t{\n\t}\n}\n'),
-     (Digraph, 'digraph {\n\t{\n\t}\n}\n')],
+    [(graphviz.Graph, 'graph {\n\t{\n\t}\n}\n'),
+     (graphviz.Digraph, 'digraph {\n\t{\n\t}\n}\n')],
     ids=lambda p: getattr(p, '__name__', '...'))
 def test_subgraph_reflexive(cls, expected):  # guard against potential infinite loop
     dot = cls()
@@ -189,21 +192,21 @@ def test_subgraph_reflexive(cls, expected):  # guard against potential infinite 
 
 
 def test_subgraph():
-    s1 = Graph()
+    s1 = graphviz.Graph()
     s1.node('A')
     s1.node('B')
     s1.node('C')
     s1.edge('A', 'B', constraint='false')
     s1.edges(['AC', 'BC'])
 
-    s2 = Graph()
+    s2 = graphviz.Graph()
     s2.node('D')
     s2.node('E')
     s2.node('F')
     s2.edge('D', 'E', constraint='false')
     s2.edges(['DF', 'EF'])
 
-    dot = Graph()
+    dot = graphviz.Graph()
     dot.subgraph(s1)
     dot.subgraph(s2)
     dot.attr('edge', style='dashed')
@@ -237,8 +240,8 @@ def test_subgraph():
 @pytest.mark.exe
 @pytest.mark.parametrize(
     'cls, expected',
-    [(Graph, 'graph {\n\tC\n}\n'),
-     (Digraph, 'digraph {\n\tC\n}\n')],
+    [(graphviz.Graph, 'graph {\n\tC\n}\n'),
+     (graphviz.Digraph, 'digraph {\n\tC\n}\n')],
     ids=lambda p: getattr(p, '__name__', '...'))
 def test_subgraph_render(capsys, tmp_path, cls, expected):
     lpath = tmp_path / 's1.gv'
@@ -261,7 +264,7 @@ def test_subgraph_render(capsys, tmp_path, cls, expected):
 
 def test_label_html():
     """http://www.graphviz.org/doc/info/shapes.html#html"""
-    dot = Digraph('structs', node_attr={'shape': 'plaintext'})
+    dot = graphviz.Digraph('structs', node_attr={'shape': 'plaintext'})
     dot.node('struct1', '''<
 <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
   <TR>

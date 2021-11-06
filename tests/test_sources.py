@@ -3,7 +3,7 @@ import re
 
 import pytest
 
-from graphviz.sources import Source
+import graphviz
 
 SOURCE = {'source': 'digraph { hello -> world }\n',
           'filename': 'hello.gv', 'directory': 'test-output',
@@ -12,7 +12,7 @@ SOURCE = {'source': 'digraph { hello -> world }\n',
 
 @pytest.fixture(scope='module')
 def source():
-    return Source(**SOURCE)
+    return graphviz.Source(**SOURCE)
 
 
 def test_engine(source):
@@ -51,8 +51,9 @@ def test_init(source):
 
 
 def test_init_filename():
-    assert Source('').filename == 'Source.gv'
-    assert type('Named', (Source,), {'name': 'name'})('').filename == 'name.gv'
+    assert graphviz.Source('').filename == 'Source.gv'
+    assert type('Named', (graphviz.Source,),
+                {'name': 'name'})('').filename == 'name.gv'
 
 
 def test_str(source):
@@ -62,7 +63,7 @@ def test_str(source):
 @pytest.mark.exe
 def test_unflatten(source):
     result = source.unflatten()
-    assert isinstance(result, Source)
+    assert isinstance(result, graphviz.Source)
 
     normalized = re.sub(r'\s+', ' ', result.source.strip())
     assert normalized == 'digraph { hello -> world; }'
@@ -111,7 +112,7 @@ def test_filepath(platform, source):
 
 
 def test_save(mocker, filename='nonfilename', directory='nondirectory'):
-    source = Source(**SOURCE)
+    source = graphviz.Source(**SOURCE)
     makedirs = mocker.patch('os.makedirs', autospec=True)
     open_ = mocker.patch('builtins.open', mocker.mock_open())
 
@@ -180,16 +181,16 @@ def test_from_file(tmp_path, filename='hello.gv', directory='source_hello',
     lpath.mkdir()
     (lpath / filename).write_text(data, encoding=encoding)
 
-    source = Source.from_file(filename, str(lpath))
+    source = graphviz.Source.from_file(filename, str(lpath))
     assert source.encoding == 'utf-8'
 
-    source = Source.from_file(filename, str(lpath), encoding=None)
+    source = graphviz.Source.from_file(filename, str(lpath), encoding=None)
     assert source.encoding == locale.getpreferredencoding()
 
     renderer = 'xdot'
     formatter = 'core'
-    source = Source.from_file(filename, str(lpath), encoding=encoding,
-                              renderer=renderer, formatter=formatter)
+    source = graphviz.Source.from_file(filename, str(lpath), encoding=encoding,
+                                       renderer=renderer, formatter=formatter)
     assert source.source == data
     assert source.filename == filename
     assert source.directory == str(lpath)
@@ -199,7 +200,7 @@ def test_from_file(tmp_path, filename='hello.gv', directory='source_hello',
 
 
 def test_source_iter(source):
-    source_without_newline = Source(source.source + source.source.rstrip())
+    source_without_newline = graphviz.Source(source.source + source.source.rstrip())
     lines = list(source_without_newline)
 
     assert lines == list(source) * 2

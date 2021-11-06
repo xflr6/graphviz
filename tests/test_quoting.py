@@ -2,6 +2,7 @@ import warnings
 
 import pytest
 
+import graphviz
 from graphviz import quoting
 
 
@@ -52,7 +53,7 @@ def test_attr_list(attributes, expected):
     [('spam', 'spam', 'spam'),
      ('<>-*-<>', '<>-*-<>', '"<>-*-<>"')])
 def test_nohtml(string, expected, expected_quoted):
-    result = quoting.nohtml(string)
+    result = graphviz.nohtml(string)
     assert isinstance(result, str)
     assert isinstance(result, quoting.NoHtml)
     assert result == expected

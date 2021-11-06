@@ -1,6 +1,6 @@
 import pytest
 
-from graphviz import Graph, set_default_engine, set_default_format
+import graphviz
 
 DEFAULT_ENGINE = 'dot'
 
@@ -9,7 +9,7 @@ DEFAULT_FORMAT = 'pdf'
 
 def test_set_default_engine_invalid():
     with pytest.raises(ValueError, match=r'unknown engine'):
-        set_default_engine('nonengine')
+        graphviz.set_default_engine('nonengine')
 
 
 def test_set_default_engine(monkeypatch, *, engine='neato', explicit_engine='sfdp'):
@@ -21,25 +21,25 @@ def test_set_default_engine(monkeypatch, *, engine='neato', explicit_engine='sfd
     monkeypatch.setattr('graphviz.backend.mixins.Parameters._engine', DEFAULT_ENGINE)
     assert Parameters._engine == DEFAULT_ENGINE
 
-    g1 = Graph()
+    g1 = graphviz.Graph()
     assert g1.engine == DEFAULT_ENGINE
 
-    g2 = Graph(engine=explicit_engine)
+    g2 = graphviz.Graph(engine=explicit_engine)
     assert g2.engine == explicit_engine
 
-    old = set_default_engine(engine)
+    old = graphviz.set_default_engine(engine)
     assert old == DEFAULT_ENGINE
 
     assert g1.engine == engine
     assert g2.engine == explicit_engine
 
-    g3 = Graph()
+    g3 = graphviz.Graph()
     assert g3.engine == engine
 
-    g4 = Graph(engine=explicit_engine)
+    g4 = graphviz.Graph(engine=explicit_engine)
     assert g4.engine == explicit_engine
 
-    old = set_default_engine(DEFAULT_ENGINE)
+    old = graphviz.set_default_engine(DEFAULT_ENGINE)
     assert old == engine
 
     assert g1.engine == DEFAULT_ENGINE
@@ -50,7 +50,7 @@ def test_set_default_engine(monkeypatch, *, engine='neato', explicit_engine='sfd
 
 def test_set_default_format_invalid():
     with pytest.raises(ValueError, match=r'unknown format'):
-        set_default_format('nonformat')
+        graphviz.set_default_format('nonformat')
 
 
 def test_set_default_format(monkeypatch, *, format='png', explicit_format='jpeg'):
@@ -62,25 +62,25 @@ def test_set_default_format(monkeypatch, *, format='png', explicit_format='jpeg'
     monkeypatch.setattr('graphviz.backend.mixins.Parameters._format', DEFAULT_FORMAT)
     assert Parameters._format == DEFAULT_FORMAT
 
-    g1 = Graph()
+    g1 = graphviz.Graph()
     assert g1.format == DEFAULT_FORMAT
 
-    g2 = Graph(format=explicit_format)
+    g2 = graphviz.Graph(format=explicit_format)
     assert g2.format == explicit_format
 
-    old = set_default_format(format)
+    old = graphviz.set_default_format(format)
     assert old == DEFAULT_FORMAT
 
     assert g1.format == format
     assert g2.format == explicit_format
 
-    g3 = Graph()
+    g3 = graphviz.Graph()
     assert g3.format == format
 
-    g4 = Graph(format=explicit_format)
+    g4 = graphviz.Graph(format=explicit_format)
     assert g4.format == explicit_format
 
-    old = set_default_format(DEFAULT_FORMAT)
+    old = graphviz.set_default_format(DEFAULT_FORMAT)
     assert old == format
 
     assert g1.format == DEFAULT_FORMAT
