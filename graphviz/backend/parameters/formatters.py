@@ -15,7 +15,7 @@ FORMATTERS = {'cairo',
 
 
 def verify_formatter(formatter: typing.Optional[str]) -> None:
-    if formatter.lower() not in FORMATTERS:
+    if formatter is not None and formatter.lower() not in FORMATTERS:
         raise ValueError(f'unknown formatter: {formatter!r}')
 
 

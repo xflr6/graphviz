@@ -23,7 +23,7 @@ RENDERERS = {'cairo',  # $ dot -T:
 
 
 def verify_renderer(renderer: typing.Optional[str]) -> None:
-    if renderer.lower() not in RENDERERS:
+    if renderer is not None and renderer.lower() not in RENDERERS:
         raise ValueError(f'unknown renderer: {renderer!r}')
 
 
