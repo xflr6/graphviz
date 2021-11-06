@@ -76,7 +76,7 @@ def test_unflatten(cls):
     assert normalized.startswith('digraph {' if c.directed else 'graph {')
 
 
-def test_unflatten_mocked(mocker, sentinel, mock_unflatten, cls):
+def test_unflatten_mocked(sentinel, mock_unflatten, cls):
     dot = cls()
     kwargs = {'stagger': sentinel.stagger,
               'fanout': sentinel.fanout,
