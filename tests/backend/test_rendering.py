@@ -79,7 +79,8 @@ def test_render_mocked(capsys, mocker, run, quiet):
 
     assert graphviz.render('dot', 'pdf', 'nonfilepath', quiet=quiet) == 'nonfilepath.pdf'
 
-    run.assert_called_once_with([_utils.DOT_BINARY, '-Kdot', '-Tpdf', '-O', 'nonfilepath'],
+    run.assert_called_once_with([_utils.EXPECTED_DOT_BINARY,
+                                 '-Kdot', '-Tpdf', '-O', 'nonfilepath'],
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
                                 cwd=None,

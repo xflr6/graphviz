@@ -8,7 +8,7 @@ import graphviz
 
 import _utils
 
-UNFLATTEN_BINARY = pathlib.Path('unflatten')
+EXPECTED_UNFLATTEN_BINARY = pathlib.Path('unflatten')
 
 
 @pytest.mark.exe
@@ -31,7 +31,7 @@ def test_unflatten_mocked(capsys, mocker, run):
 
     assert graphviz.unflatten('nonsource') == 'nonresult'
 
-    run.assert_called_once_with([UNFLATTEN_BINARY],
+    run.assert_called_once_with([EXPECTED_UNFLATTEN_BINARY],
                                 input='nonsource',
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,

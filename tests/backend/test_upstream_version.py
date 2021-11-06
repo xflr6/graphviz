@@ -24,7 +24,7 @@ def test_version_parsefail_mocked(mocker, run):
     with pytest.raises(RuntimeError, match=r'nonversioninfo'):
         graphviz.version()
 
-    run.assert_called_once_with([_utils.DOT_BINARY, '-V'],
+    run.assert_called_once_with([_utils.EXPECTED_DOT_BINARY, '-V'],
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT,
                                 startupinfo=mocker.ANY,
@@ -46,7 +46,7 @@ def test_version_mocked(mocker, run, stdout, expected):
 
     assert graphviz.version() == expected
 
-    run.assert_called_once_with([_utils.DOT_BINARY, '-V'],
+    run.assert_called_once_with([_utils.EXPECTED_DOT_BINARY, '-V'],
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT,
                                 startupinfo=mocker.ANY,
