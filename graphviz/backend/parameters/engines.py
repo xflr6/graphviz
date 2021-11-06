@@ -28,7 +28,7 @@ class Engine(copying.Copy):
 
     _engine = DEFAULT_ENGINE
 
-    verify_engine = staticmethod(verify_engine)
+    _verify_engine = staticmethod(verify_engine)
 
     def __init__(self, engine: typing.Optional[str] = None, **kwargs) -> None:
         super().__init__(**kwargs)
@@ -51,5 +51,5 @@ class Engine(copying.Copy):
     @engine.setter
     def engine(self, engine: str) -> None:
         engine = engine.lower()
-        self.verify_engine(engine)
+        self._verify_engine(engine)
         self._engine = engine

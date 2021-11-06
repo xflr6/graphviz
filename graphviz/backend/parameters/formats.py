@@ -57,7 +57,7 @@ class Format(copying.Copy):
 
     _format = DEFAULT_FORMAT
 
-    verify_format = staticmethod(verify_format)
+    _verify_format = staticmethod(verify_format)
 
     def __init__(self, format: typing.Optional[str] = None, **kwargs) -> None:
         super().__init__(**kwargs)
@@ -80,5 +80,5 @@ class Format(copying.Copy):
     @format.setter
     def format(self, format: str) -> None:
         format = format.lower()
-        self.verify_format(format)
+        self._verify_format(format)
         self._format = format

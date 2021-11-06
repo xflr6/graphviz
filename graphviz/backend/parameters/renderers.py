@@ -32,7 +32,7 @@ class Renderer(copying.Copy):
 
     _renderer = None
 
-    verify_renderer = staticmethod(verify_renderer)
+    _verify_renderer = staticmethod(verify_renderer)
 
     def __init__(self, *, renderer: typing.Optional[str] = None, **kwargs):
         super().__init__(**kwargs)
@@ -57,5 +57,5 @@ class Renderer(copying.Copy):
             self.__dict__.pop('_renderer', None)
         else:
             renderer = renderer.lower()
-            self.verify_renderer(renderer)
+            self._verify_renderer(renderer)
             self._renderer = renderer

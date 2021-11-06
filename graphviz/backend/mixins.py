@@ -28,24 +28,24 @@ class Parameters(parameters.Engine, parameters.Format,
         if engine is None:
             engine = self._engine
         elif verify:
-            self.verify_engine(engine)
+            self._verify_engine(engine)
 
         if format is None:
             format = self._format
         elif verify:
-            self.verify_format(format)
+            self._verify_format(format)
 
         args = [engine, format]
 
         if renderer is None:
             renderer = self._renderer
         elif verify:
-            self.verify_renderer(renderer)
+            self._verify_renderer(renderer)
 
         if formatter is None:
             formatter = self._formatter
         elif verify:
-            self.verify_formatter(formatter)
+            self._verify_formatter(formatter)
 
         kwargs.update(renderer=renderer, formatter=formatter)
 

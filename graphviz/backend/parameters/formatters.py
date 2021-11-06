@@ -24,7 +24,7 @@ class Formatter(copying.Copy):
 
     _formatter = None
 
-    verify_formatter = staticmethod(verify_formatter)
+    _verify_formatter = staticmethod(verify_formatter)
 
     def __init__(self, *, formatter: typing.Optional[str] = None, **kwargs):
         super().__init__(**kwargs)
@@ -49,5 +49,5 @@ class Formatter(copying.Copy):
             self.__dict__.pop('_formatter', None)
         else:
             formatter = formatter.lower()
-            self.verify_formatter(formatter)
+            self._verify_formatter(formatter)
             self._formatter = formatter
