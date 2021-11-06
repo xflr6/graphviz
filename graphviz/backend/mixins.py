@@ -18,12 +18,12 @@ class Parameters(parameters.Engine, parameters.Format,
     def __init__(self, format=None, engine=None, **kwargs):
         super().__init__(format=format, engine=engine, **kwargs)
 
-    def _get_rendering_parameters(self, *,
-                                  engine: typing.Optional[str] = None,
-                                  format: typing.Optional[str] = None,
-                                  renderer: typing.Optional[str] = None,
-                                  formatter: typing.Optional[str] = None,
-                                  **kwargs):
+    def _get_parameters(self, *,
+                        engine: typing.Optional[str] = None,
+                        format: typing.Optional[str] = None,
+                        renderer: typing.Optional[str] = None,
+                        formatter: typing.Optional[str] = None,
+                        **kwargs):
         if engine is None:
             engine = self._engine
 
@@ -45,7 +45,7 @@ class Parameters(parameters.Engine, parameters.Format,
 
 class Render(Parameters):
 
-    _get_render_parameters = Parameters._get_rendering_parameters
+    _get_render_parameters = Parameters._get_parameters
 
     @property
     def _render(_):
@@ -55,7 +55,7 @@ class Render(Parameters):
 
 class Pipe(Parameters):
 
-    _get_pipe_parameters = Parameters._get_rendering_parameters
+    _get_pipe_parameters = Parameters._get_parameters
 
     @property
     def _pipe_lines(_):
