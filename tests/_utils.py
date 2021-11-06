@@ -6,8 +6,11 @@ import pathlib
 import platform
 import subprocess
 
-__all__ = ['as_cwd',
+__all__ = ['DOT_BINARY',
+           'as_cwd',
            'check_startupinfo']
+
+DOT_BINARY = pathlib.Path('dot')
 
 
 @contextlib.contextmanager

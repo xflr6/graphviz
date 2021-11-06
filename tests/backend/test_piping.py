@@ -1,4 +1,3 @@
-import pathlib
 import re
 import subprocess
 
@@ -7,8 +6,6 @@ import pytest
 import graphviz
 
 import _utils
-
-DOT_BINARY = pathlib.Path('dot')
 
 SVG_PATTERN = r'(?s)^<\?xml .+</svg>\s*$'
 
@@ -72,7 +69,7 @@ def test_pipe_pipe_invalid_data_mocked(mocker, run, quiet):
     assert e.value.stderr is mock_err
     e.value.stdout = mocker.sentinel.new_stdout
     assert e.value.stdout is mocker.sentinel.new_stdout
-    run.assert_called_once_with([DOT_BINARY, '-Kdot', '-Tpng'],
+    run.assert_called_once_with([_utils.DOT_BINARY, '-Kdot', '-Tpng'],
                                 input=b'nongraph',
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
@@ -93,7 +90,7 @@ def test_pipe_mocked(capsys, mocker, run, quiet):
 
     assert graphviz.pipe('dot', 'png', b'nongraph', quiet=quiet) == b'stdout'
 
-    run.assert_called_once_with([DOT_BINARY, '-Kdot', '-Tpng'],
+    run.assert_called_once_with([_utils.DOT_BINARY, '-Kdot', '-Tpng'],
                                 input=b'nongraph',
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
