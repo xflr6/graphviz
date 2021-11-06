@@ -49,7 +49,7 @@ class Render(Parameters):
 
     @property
     def _render(_):
-        """Simplify rendering.render mocking."""
+        """Simplify ``._render()`` mocking."""
         return rendering.render
 
 
@@ -59,7 +59,7 @@ class Pipe(Parameters):
 
     @property
     def _pipe_lines(_):
-        """Simplify rendering.pipe_lines mocking."""
+        """Simplify ``._pipe_lines()`` mocking."""
         return piping.pipe_lines
 
     _pipe_lines_string = staticmethod(piping.pipe_lines_string)
@@ -67,7 +67,10 @@ class Pipe(Parameters):
 
 class Unflatten:
 
-    _unflatten = staticmethod(unflattening.unflatten)
+    @property
+    def _unflatten(_):
+        """Simplify ``._unflatten mocking."""
+        return unflattening.unflatten
 
 
 class View:

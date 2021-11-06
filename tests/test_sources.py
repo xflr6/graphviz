@@ -69,11 +69,11 @@ def test_unflatten(source):
     assert normalized == 'digraph { hello -> world; }'
 
 
-def test__repr_svg_(mocker, source):
+def test__repr_svg_(mocker, sentinel, source):
     pipe = mocker.patch.object(source, 'pipe', autospec=True,
-                               return_value=mocker.sentinel.string)
+                               return_value=sentinel.string)
 
-    assert source._repr_svg_() is mocker.sentinel.string
+    assert source._repr_svg_() is sentinel.string
 
     pipe.assert_called_once_with(format='svg', encoding=source.encoding)
 
@@ -125,9 +125,9 @@ def test_save(mocker, filename='nonfilename', directory='nondirectory'):
     assert open_.return_value.write.call_args_list == [mocker.call(source.source)]
 
 
-def test_render(mocker, render, source):
+def test_render(mocker, sentinel, render, source):
     save = mocker.patch.object(source, 'save', autospec=True,
-                               return_value=mocker.sentinel.nonfilepath)
+                               return_value=sentinel.nonfilepath)
     _view = mocker.patch.object(source, '_view', autospec=True)
     remove = mocker.patch('os.remove', autospec=True)
 
@@ -157,15 +157,15 @@ def test__view_unknown_platform(unknown_platform, source):
         source._view('name', 'png', False)
 
 
-def test__view(mocker, mock_platform, source):
+def test__view(mocker, sentinel, mock_platform, source):
     _view_platform = mocker.patch.object(source, f'_view_{mock_platform}',
                                          autospec=True)
 
     kwargs = {'quiet': False}
 
-    assert source._view(mocker.sentinel.name, 'png', **kwargs) is None
+    assert source._view(sentinel.name, 'png', **kwargs) is None
 
-    _view_platform.assert_called_once_with(mocker.sentinel.name, **kwargs)
+    _view_platform.assert_called_once_with(sentinel.name, **kwargs)
 
 
 def test_copy(source):

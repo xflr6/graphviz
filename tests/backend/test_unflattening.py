@@ -23,8 +23,8 @@ def test_unflatten(source, kwargs, expected):
     assert normalized == expected
 
 
-def test_unflatten_mocked(capsys, mocker, run):
-    run.return_value = subprocess.CompletedProcess(mocker.sentinel.cmd,
+def test_unflatten_mocked(capsys, mocker, sentinel, run):
+    run.return_value = subprocess.CompletedProcess(sentinel.cmd,
                                                    returncode=0,
                                                    stdout='nonresult',
                                                    stderr='')

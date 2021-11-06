@@ -71,8 +71,8 @@ def test_render_img(capsys, tmp_path, files_path, engine='dot', format_='pdf'):
     assert capsys.readouterr() == ('', '')
 
 
-def test_render_mocked(capsys, mocker, run, quiet):
-    run.return_value = subprocess.CompletedProcess(mocker.sentinel.cmd,
+def test_render_mocked(capsys, mocker, sentinel, run, quiet):
+    run.return_value = subprocess.CompletedProcess(sentinel.cmd,
                                                    returncode=0,
                                                    stdout='stdout',
                                                    stderr='stderr')

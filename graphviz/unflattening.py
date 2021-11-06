@@ -56,4 +56,4 @@ class Unflatten(encoding.Encoding, base.Base, backend.Unflatten):
                               encoding=kwargs.get('encoding'),
                               renderer=kwargs.get('renderer'),
                               formatter=kwargs.get('formatter'),
-                              loaded_from_path=kwargs.get('loaded_from_path'))
+                              loaded_from_path=None)

@@ -46,16 +46,16 @@ def test_pipe(capsys, engine, format_, renderer, formatter, pattern,
     assert capsys.readouterr() == ('', '')
 
 
-def test_pipe_pipe_invalid_data_mocked(mocker, run, quiet):
+def test_pipe_pipe_invalid_data_mocked(mocker, sentinel, run, quiet):
     mock_sys_stderr = mocker.patch('sys.stderr', autospec=True,
                                **{'flush': mocker.Mock(),
-                                  'encoding': mocker.sentinel.encoding})
+                                  'encoding': sentinel.encoding})
 
     mock_out = mocker.create_autospec(bytes, instance=True, name='mock_out')
     mock_err = mocker.create_autospec(bytes, instance=True, name='mock_err',
                                       **{'__len__.return_value': 1})
 
-    run.return_value = subprocess.CompletedProcess(mocker.sentinel.cmd,
+    run.return_value = subprocess.CompletedProcess(sentinel.cmd,
                                                    returncode=5,
                                                    stdout=mock_out,
                                                    stderr=mock_err)
@@ -64,11 +64,11 @@ def test_pipe_pipe_invalid_data_mocked(mocker, run, quiet):
         graphviz.pipe('dot', 'png', b'nongraph', quiet=quiet)
 
     assert e.value.returncode == 5
-    assert e.value.cmd is mocker.sentinel.cmd
+    assert e.value.cmd is sentinel.cmd
     assert e.value.stdout is mock_out
     assert e.value.stderr is mock_err
-    e.value.stdout = mocker.sentinel.new_stdout
-    assert e.value.stdout is mocker.sentinel.new_stdout
+    e.value.stdout = sentinel.new_stdout
+    assert e.value.stdout is sentinel.new_stdout
     run.assert_called_once_with([_utils.EXPECTED_DOT_BINARY, '-Kdot', '-Tpng'],
                                 input=b'nongraph',
                                 stdout=subprocess.PIPE,
@@ -77,13 +77,13 @@ def test_pipe_pipe_invalid_data_mocked(mocker, run, quiet):
     _utils.check_startupinfo(run.call_args.kwargs['startupinfo'])
     if not quiet:
         mock_out.decode.assert_not_called()
-        mock_err.decode.assert_called_once_with(mocker.sentinel.encoding)
+        mock_err.decode.assert_called_once_with(sentinel.encoding)
         mock_sys_stderr.write.assert_called_once_with(mock_err.decode.return_value)
         mock_sys_stderr.flush.assert_called_once_with()
 
 
-def test_pipe_mocked(capsys, mocker, run, quiet):
-    run.return_value = subprocess.CompletedProcess(mocker.sentinel.cmd,
+def test_pipe_mocked(capsys, mocker, sentinel, run, quiet):
+    run.return_value = subprocess.CompletedProcess(sentinel.cmd,
                                                    returncode=0,
                                                    stdout=b'stdout',
                                                    stderr=b'stderr')

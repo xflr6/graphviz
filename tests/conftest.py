@@ -91,6 +91,11 @@ def unknown_platform(monkeypatch, name='nonplatform'):
 
 
 @pytest.fixture
+def sentinel(mocker):
+    return mocker.sentinel
+
+
+@pytest.fixture
 def run(mocker):  # noqa: N802
     yield mocker.patch('subprocess.run', autospec=True)
 
@@ -132,3 +137,8 @@ def pipe_lines(mocker):
 @pytest.fixture
 def render(mocker):
     yield mocker.patch('graphviz.backend.rendering.render', autospec=True)
+
+
+@pytest.fixture
+def mock_unflatten(mocker):
+    yield mocker.patch('graphviz.backend.unflattening.unflatten', autospec=True)

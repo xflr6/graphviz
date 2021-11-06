@@ -33,14 +33,14 @@ def test_str(cls):
     assert str(c) == c.source
 
 
-def test_format_renderer_formatter(mocker, render, quiet, cls,
+def test_format_renderer_formatter(mocker, sentinel, render, quiet, cls,
                                    filename='format.gv', format='jpg',
                                    renderer='cairo', formatter='core'):
 
     dot = cls(filename=filename, format=format,
               renderer=renderer, formatter=formatter)
     save = mocker.patch.object(dot, 'save', autospec=True,
-                               return_value=mocker.sentinel.nonfilepath)
+                               return_value=sentinel.nonfilepath)
 
     assert dot.format == format
     assert dot.renderer == renderer
@@ -76,12 +76,38 @@ def test_unflatten(cls):
     assert normalized.startswith('digraph {' if c.directed else 'graph {')
 
 
-def test__repr_svg_(mocker, cls):
+def test_unflatten_mocked(mocker, sentinel, mock_unflatten, cls):
+    dot = cls()
+    kwargs = {'stagger': sentinel.stagger,
+              'fanout': sentinel.fanout,
+              'chain': sentinel.chain}
+    result = dot.unflatten(**kwargs)
+
+    assert result is not None
+    assert isinstance(result, graphviz.Source)
+    assert type(result) is graphviz.Source
+    assert result.source is mock_unflatten.return_value
+
+    assert result.filename == dot.filename
+    assert result.directory == dot.directory
+    assert result.engine == dot.engine
+    assert result.format == dot.format
+    assert result.renderer == dot.renderer
+    assert result.formatter == dot.formatter
+    assert result.encoding == dot.encoding
+    assert result._loaded_from_path is None
+
+    mock_unflatten.assert_called_once_with(dot.source,
+                                           encoding=dot.encoding,
+                                           **kwargs)
+
+
+def test__repr_svg_(mocker, sentinel, cls):
     c = cls()
     pipe = mocker.patch.object(c, 'pipe', autospec=True,
-                               return_value=mocker.sentinel.string)
+                               return_value=sentinel.string)
 
-    assert c._repr_svg_() is mocker.sentinel.string
+    assert c._repr_svg_() is sentinel.string
 
     pipe.assert_called_once_with(format='svg', encoding=c.encoding)
 

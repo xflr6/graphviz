@@ -16,10 +16,11 @@ def test_run_check_oserror():
     assert e.value.errno in (errno.EACCES, errno.EINVAL)
 
 
-def test_run_check_input_lines_mocked(mocker, Popen, line=b'sp\xc3\xa4m'):  # noqa: N803
+def test_run_check_input_lines_mocked(mocker, sentinel, Popen,
+                                      line=b'sp\xc3\xa4m'):  # noqa: N803
     mock_sys_stderr = mocker.patch('sys.stderr', autospec=True,
                                    **{'flush': mocker.Mock(),
-                                      'encoding': mocker.sentinel.encoding})
+                                      'encoding': sentinel.encoding})
 
     mock_out = mocker.create_autospec(bytes, instance=True, name='mock_out')
     mock_err = mocker.create_autospec(bytes, instance=True, name='mock_err',
@@ -27,7 +28,7 @@ def test_run_check_input_lines_mocked(mocker, Popen, line=b'sp\xc3\xa4m'):  # no
 
     popen = Popen.return_value
     popen.returncode = 0
-    popen.args = mocker.sentinel.cmd
+    popen.args = sentinel.cmd
     popen.stdin = mocker.create_autospec(io.BytesIO, instance=True)
     popen.communicate.return_value = (mock_out, mock_err)
 
@@ -40,7 +41,7 @@ def test_run_check_input_lines_mocked(mocker, Popen, line=b'sp\xc3\xa4m'):  # no
     assert result.stdout is mock_out
     assert result.stderr is mock_err
 
-    Popen.assert_called_once_with(mocker.sentinel.cmd,
+    Popen.assert_called_once_with(sentinel.cmd,
                                   stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
@@ -48,7 +49,7 @@ def test_run_check_input_lines_mocked(mocker, Popen, line=b'sp\xc3\xa4m'):  # no
     _utils.check_startupinfo(Popen.call_args.kwargs['startupinfo'])
     popen.communicate.assert_called_once_with()
     mock_out.decode.assert_not_called()
-    mock_err.decode.assert_called_once_with(mocker.sentinel.encoding)
+    mock_err.decode.assert_called_once_with(sentinel.encoding)
     mock_sys_stderr.write.assert_called_once_with(mock_err.decode.return_value)
     mock_sys_stderr.flush.assert_called_once_with()
 
