@@ -39,9 +39,8 @@ def version() -> typing.Tuple[int, ...]:
         RuntimeError: If the output cannot be parsed into a version number.
 
     Example:
-        >>> doctest_mark_exe(xfail=True)
         >>> import graphviz
-        >>> graphviz.version()  # doctest: +ELLIPSIS
+        >>> graphviz.version()  # doctest: +ELLIPSIS +SKIP
         (...)
 
     Note:
