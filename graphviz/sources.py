@@ -76,9 +76,9 @@ class Source(rendering.Render, saving.Save,
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
-        return super()._copy_kwargs(source=self._source,
-                                    loaded_from_path=self._loaded_from_path,
-                                    **kwargs)
+        kwargs.setdefault('source', self._source)
+        kwargs.setdefault('loaded_from_path', self._loaded_from_path)
+        return super()._copy_kwargs(**kwargs)
 
     def __iter__(self) -> typing.Iterator[str]:
         r"""Yield the DOT source code read from file line by line.

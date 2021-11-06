@@ -47,7 +47,13 @@ class Unflatten(encoding.Encoding, base.Base, backend.Unflatten):
                               stagger=stagger, fanout=fanout, chain=chain,
                               encoding=self._encoding)
 
+        kwargs = self._copy_kwargs()
         return sources.Source(out,
-                              filename=self.filename, directory=self.directory,
-                              format=self._format, engine=self._engine,
-                              encoding=self._encoding)
+                              filename=kwargs.get('filename'),
+                              directory=kwargs.get('directory'),
+                              format=kwargs.get('format'),
+                              engine=kwargs.get('engine'),
+                              encoding=kwargs.get('encoding'),
+                              renderer=kwargs.get('renderer'),
+                              formatter=kwargs.get('formatter'),
+                              loaded_from_path=kwargs.get('loaded_from_path'))
