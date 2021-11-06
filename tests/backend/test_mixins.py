@@ -9,13 +9,18 @@ def cls(request):
     return request.param
 
 
-def test_renderer_formatter(cls, renderer='map', formatter='core'):
+def test_parameters(cls, engine='patchwork',format='tiff',
+                    renderer='map', formatter='core'):
     args = [''] if cls is graphviz.Source else []
-    dot = cls(*args, renderer=renderer, formatter=formatter)
+    dot = cls(*args,
+              engine=engine, format=format,
+              renderer=renderer, formatter=formatter)
 
     assert isinstance(dot, cls)
     assert type(dot) is cls
 
+    assert dot.engine == engine
+    assert dot.format == format
     assert dot.renderer == renderer
     assert dot.formatter == formatter
 
@@ -25,5 +30,7 @@ def test_renderer_formatter(cls, renderer='map', formatter='core'):
     assert isinstance(dot_copy, cls)
     assert type(dot_copy) is cls
 
+    assert dot.engine == engine
+    assert dot.format == format
     assert dot_copy.renderer == renderer
     assert dot_copy.formatter == formatter
