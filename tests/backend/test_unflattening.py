@@ -23,7 +23,7 @@ def test_unflatten(source, kwargs, expected):
     assert normalized == expected
 
 
-def test_unflatten_mocked(capsys, mocker, sentinel, run,
+def test_unflatten_mocked(capsys, sentinel, run,
                           stagger=10, fanout=True, chain=23):
     run.return_value = subprocess.CompletedProcess(sentinel.cmd,
                                                    returncode=0,
@@ -39,9 +39,8 @@ def test_unflatten_mocked(capsys, mocker, sentinel, run,
                                 input='nonsource',
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
-                                startupinfo=mocker.ANY,
+                                startupinfo=_utils.StartupinfoMatcher(),
                                 encoding='utf-8')
-    _utils.check_startupinfo(run.call_args.kwargs['startupinfo'])
     assert capsys.readouterr() == ('', '')
 
 

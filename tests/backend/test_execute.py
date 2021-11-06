@@ -49,8 +49,7 @@ def test_run_check_input_lines_mocked(mocker, sentinel, Popen,
                                   stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
-                                  startupinfo=mocker.ANY)
-    _utils.check_startupinfo(Popen.call_args.kwargs['startupinfo'])
+                                  startupinfo=_utils.StartupinfoMatcher())
     popen.communicate.assert_called_once_with()
     mock_out.decode.assert_not_called()
     mock_err.decode.assert_called_once_with(sentinel.encoding)

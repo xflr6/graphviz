@@ -8,7 +8,7 @@ import subprocess
 
 __all__ = ['EXPECTED_DOT_BINARY', 'EXPECTED_DEFAULT_ENCODING',
            'as_cwd',
-           'check_startupinfo']
+           'check_startupinfo', 'StarupinfoMatcher']
 
 EXPECTED_DOT_BINARY = pathlib.Path('dot')
 
@@ -27,12 +27,19 @@ def as_cwd(path):
     os.chdir(cwd)
 
 
-def check_startupinfo(startupinfo):  # noqa: N803
-    assert startupinfo is None
+def check_startupinfo(startupinfo) -> bool:  # noqa: N803
+    return startupinfo is None
 
 
 if platform.system().lower() == 'windows':
-    def check_startupinfo(startupinfo):  # noqa: N803,F811
-        assert isinstance(startupinfo, subprocess.STARTUPINFO)
-        assert startupinfo.dwFlags & subprocess.STARTF_USESHOWWINDOW
-        assert startupinfo.wShowWindow == subprocess.SW_HIDE
+    def check_startupinfo(startupinfo) -> bool:  # noqa: N803,F811
+        return (isinstance(startupinfo, subprocess.STARTUPINFO)
+                and startupinfo.dwFlags & subprocess.STARTF_USESHOWWINDOW
+                and startupinfo.wShowWindow == subprocess.SW_HIDE)
+
+
+class StartupinfoMatcher:
+    """Verify the given startupinfo argument is as expected for the plaform."""
+
+    def __eq__(self, startupinfo) -> bool:
+        return check_startupinfo(startupinfo)

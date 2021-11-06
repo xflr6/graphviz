@@ -15,7 +15,7 @@ def test_version(capsys):
     assert capsys.readouterr() == ('', '')
 
 
-def test_version_parsefail_mocked(mocker, sentinel, run):
+def test_version_parsefail_mocked(sentinel, run):
     run.return_value = subprocess.CompletedProcess(sentinel.cmd,
                                                    returncode=0,
                                                    stdout='nonversioninfo',
@@ -27,9 +27,8 @@ def test_version_parsefail_mocked(mocker, sentinel, run):
     run.assert_called_once_with([_utils.EXPECTED_DOT_BINARY, '-V'],
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT,
-                                startupinfo=mocker.ANY,
+                                startupinfo=_utils.StartupinfoMatcher(),
                                 encoding='ascii')
-    _utils.check_startupinfo(run.call_args.kwargs['startupinfo'])
 
 
 @pytest.mark.parametrize(
@@ -39,7 +38,7 @@ def test_version_parsefail_mocked(mocker, sentinel, run):
      ('dot - graphviz version 2.44.2~dev.20200927.0217 (20200927.0217)\n', (2, 44, 2)),
      ('dot - graphviz version 2.44.1 (mocked)\n', (2, 44, 1)),
      ('dot - graphviz version 2.44.2~dev.20200704.1652 (mocked)\n', (2, 44, 2))])
-def test_version_mocked(mocker, sentinel, run, stdout, expected):
+def test_version_mocked(sentinel, run, stdout, expected):
     run.return_value = subprocess.CompletedProcess(sentinel.cmd,
                                                    returncode=0,
                                                    stdout=stdout, stderr=None)
@@ -49,6 +48,5 @@ def test_version_mocked(mocker, sentinel, run, stdout, expected):
     run.assert_called_once_with([_utils.EXPECTED_DOT_BINARY, '-V'],
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT,
-                                startupinfo=mocker.ANY,
+                                startupinfo=_utils.StartupinfoMatcher(),
                                 encoding='ascii')
-    _utils.check_startupinfo(run.call_args.kwargs['startupinfo'])

@@ -74,8 +74,7 @@ def test_pipe_pipe_invalid_data_mocked(mocker, sentinel, run, quiet):
                                 input=b'nongraph',
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
-                                startupinfo=mocker.ANY)
-    _utils.check_startupinfo(run.call_args.kwargs['startupinfo'])
+                                startupinfo=_utils.StartupinfoMatcher())
     if not quiet:
         mock_out.decode.assert_not_called()
         mock_err.decode.assert_called_once_with(sentinel.encoding)
@@ -83,7 +82,7 @@ def test_pipe_pipe_invalid_data_mocked(mocker, sentinel, run, quiet):
         mock_sys_stderr.flush.assert_called_once_with()
 
 
-def test_pipe_mocked(capsys, mocker, sentinel, run, quiet):
+def test_pipe_mocked(capsys, sentinel, run, quiet):
     run.return_value = subprocess.CompletedProcess(sentinel.cmd,
                                                    returncode=0,
                                                    stdout=b'stdout',
@@ -96,12 +95,11 @@ def test_pipe_mocked(capsys, mocker, sentinel, run, quiet):
                                 input=b'nongraph',
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
-                                startupinfo=mocker.ANY)
-    _utils.check_startupinfo(run.call_args.kwargs['startupinfo'])
+                                startupinfo=_utils.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
-def test_pipe_string_mocked(capsys, mocker, sentinel, run, quiet,
+def test_pipe_string_mocked(capsys, sentinel, run, quiet,
                             encoding='ascii'):
     run.return_value = subprocess.CompletedProcess(sentinel.cmd,
                                                    returncode=0,
@@ -116,12 +114,11 @@ def test_pipe_string_mocked(capsys, mocker, sentinel, run, quiet,
                                 encoding=encoding,
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
-                                startupinfo=mocker.ANY)
-    _utils.check_startupinfo(run.call_args.kwargs['startupinfo'])
+                                startupinfo=_utils.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
-def test_pipe_lines_mocked(capsys, mocker, sentinel, Popen, quiet,
+def test_pipe_lines_mocked(capsys, sentinel, Popen, quiet,
                            input_encoding='ascii'):
     proc = Popen.return_value
     proc.configure_mock(args=sentinel.cmd,
@@ -141,12 +138,11 @@ def test_pipe_lines_mocked(capsys, mocker, sentinel, Popen, quiet,
                                   stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
-                                  startupinfo=mocker.ANY)
-    _utils.check_startupinfo(Popen.call_args.kwargs['startupinfo'])
+                                  startupinfo=_utils.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
-def test_pipe_lines_string_mocked(capsys, mocker, sentinel, Popen, quiet,
+def test_pipe_lines_string_mocked(capsys, sentinel, Popen, quiet,
                                   encoding='ascii'):
     proc = Popen.return_value
     proc.configure_mock(args=sentinel.cmd,
@@ -167,6 +163,5 @@ def test_pipe_lines_string_mocked(capsys, mocker, sentinel, Popen, quiet,
                                   stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
-                                  startupinfo=mocker.ANY)
-    _utils.check_startupinfo(Popen.call_args.kwargs['startupinfo'])
+                                  startupinfo=_utils.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
