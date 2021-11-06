@@ -35,7 +35,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
              quiet: bool = ..., *,
              engine: typing.Optional[str] = ...,
              encoding: str) -> str:
-        """Return str with given encoding."""
+        """Return string when given encoding."""
 
     @typing.overload
     def pipe(self,

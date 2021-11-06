@@ -15,14 +15,46 @@ __all__ = ['run_check', 'ExecutableNotFound']
 log = logging.getLogger(__name__)
 
 
-BytesOrStrIterator = typing.Union[typing.Iterator[str],
-                                  typing.Iterator[bytes]]
+BytesOrStrIterator = typing.Union[typing.Iterator[bytes],
+                                  typing.Iterator[str]]
+
+
+@typing.overload
+def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
+              input_lines: typing.Optional[typing.Iterator[bytes]] = ...,
+              encoding: None = ...,
+              capture_output: bool = ...,
+              quiet: bool = ...,
+              **kwargs) -> subprocess.CompletedProcess:
+    """Accept bytes input_lines with default ``encoding=None```."""
+
+
+@typing.overload
+def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
+              input_lines: typing.Optional[typing.Iterator[str]] = ...,
+              encoding: str,
+              capture_output: bool = ...,
+              quiet: bool = ...,
+              **kwargs) -> subprocess.CompletedProcess:
+    """Accept string input_lines when given ``encoding``."""
+
+
+@typing.overload
+def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
+              input_lines: typing.Optional[BytesOrStrIterator] = ...,
+              encoding: typing.Optional[str] = ...,
+              capture_output: bool = ...,
+              quiet: bool = ...,
+              **kwargs) -> subprocess.CompletedProcess:
+    """Accept bytes or string input_lines depending on ``encoding``."""
 
 
 def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
               input_lines: typing.Optional[BytesOrStrIterator] = None,
+              encoding: typing.Optional[str] = None,
               capture_output: bool = False,
-              quiet: bool = False, **kwargs) -> subprocess.CompletedProcess:
+              quiet: bool = False,
+              **kwargs) -> subprocess.CompletedProcess:
     """Run the command described by ``cmd``
         with ``check=True`` and return its completed process.
 
@@ -37,6 +69,8 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
     if capture_output:  # Python 3.6 compat
         kwargs['stdout'] = kwargs['stderr'] = subprocess.PIPE
 
+    if encoding is not None:
+        kwargs['encoding'] = encoding
     kwargs.setdefault('startupinfo', _compat.get_startupinfo())
 
     try:
