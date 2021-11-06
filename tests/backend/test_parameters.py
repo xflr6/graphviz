@@ -3,12 +3,8 @@ import pytest
 import graphviz
 
 
-@pytest.fixture(params=[graphviz.Graph, graphviz.Digraph, graphviz.Source],
-                scope='module')
-def cls(request):
-    return request.param
-
-
+@pytest.mark.parametrize(
+    'cls', [graphviz.Graph, graphviz.Digraph, graphviz.Source])
 def test_parameters(cls, engine='patchwork', format='tiff',
                     renderer='map', formatter='core'):
     args = [''] if cls is graphviz.Source else []
