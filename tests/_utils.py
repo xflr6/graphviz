@@ -6,11 +6,13 @@ import pathlib
 import platform
 import subprocess
 
-__all__ = ['EXPECTED_DOT_BINARY',
+__all__ = ['EXPECTED_DOT_BINARY', 'EXPECTED_DEFAULT_ENCODING',
            'as_cwd',
            'check_startupinfo']
 
 EXPECTED_DOT_BINARY = pathlib.Path('dot')
+
+EXPECTED_DEFAULT_ENCODING = 'utf-8'
 
 
 @contextlib.contextmanager
