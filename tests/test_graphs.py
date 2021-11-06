@@ -102,6 +102,7 @@ def test_unflatten_mocked(sentinel, mock_unflatten, cls):
                                            **kwargs)
 
 
+@pytest.mark.exe
 @pytest.mark.parametrize(
     'encoding', [None, 'ascii', 'utf-8'])
 def test_pipe_mocked(mocker, pipe_lines, pipe_lines_string, quiet, cls, encoding):
