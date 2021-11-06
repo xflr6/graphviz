@@ -47,7 +47,9 @@ Add ``backend.DOT_BINARY`` and ``backend.UNFLATTEN_BINARY``.
 
 Improve test separation.
 
-Add ``pytype`` checking to Build workflow. Extend type annotations.
+Add ``pytype`` checking and ``flake8`` to build workflow.
+
+Extend type annotations.
 
 Improve documentation and examples.
 
