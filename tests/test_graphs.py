@@ -1,5 +1,3 @@
-# test_dot.py
-
 import itertools
 import re
 

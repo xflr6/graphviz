@@ -2,9 +2,9 @@ import pytest
 
 from graphviz import Graph, set_default_engine, set_default_format
 
-ENGINE = 'dot'
+DEFAULT_ENGINE = 'dot'
 
-FORMAT = 'pdf'
+DEFAULT_FORMAT = 'pdf'
 
 
 def test_set_default_engine_invalid():
@@ -13,22 +13,22 @@ def test_set_default_engine_invalid():
 
 
 def test_set_default_engine(monkeypatch, *, engine='neato', explicit_engine='sfdp'):
-    assert len({ENGINE, engine, explicit_engine}) == 3
+    assert len({DEFAULT_ENGINE, engine, explicit_engine}) == 3
 
     from graphviz.backend.mixins import Graphviz
-    assert Graphviz._engine == ENGINE
+    assert Graphviz._engine == DEFAULT_ENGINE
     # isolate the test
-    monkeypatch.setattr('graphviz.backend.mixins.Graphviz._engine', ENGINE)
-    assert Graphviz._engine == ENGINE
+    monkeypatch.setattr('graphviz.backend.mixins.Graphviz._engine', DEFAULT_ENGINE)
+    assert Graphviz._engine == DEFAULT_ENGINE
 
     g1 = Graph()
-    assert g1.engine == ENGINE
+    assert g1.engine == DEFAULT_ENGINE
 
     g2 = Graph(engine=explicit_engine)
     assert g2.engine == explicit_engine
 
     old = set_default_engine(engine)
-    assert old == ENGINE
+    assert old == DEFAULT_ENGINE
 
     assert g1.engine == engine
     assert g2.engine == explicit_engine
@@ -39,12 +39,12 @@ def test_set_default_engine(monkeypatch, *, engine='neato', explicit_engine='sfd
     g4 = Graph(engine=explicit_engine)
     assert g4.engine == explicit_engine
 
-    old = set_default_engine(ENGINE)
+    old = set_default_engine(DEFAULT_ENGINE)
     assert old == engine
 
-    assert g1.engine == ENGINE
+    assert g1.engine == DEFAULT_ENGINE
     assert g2.engine == explicit_engine
-    assert g3.engine == ENGINE
+    assert g3.engine == DEFAULT_ENGINE
     assert g4.engine == explicit_engine
 
 
@@ -54,22 +54,22 @@ def test_set_default_format_invalid():
 
 
 def test_set_default_format(monkeypatch, *, format='png', explicit_format='jpeg'):
-    assert len({FORMAT, format, explicit_format}) == 3
+    assert len({DEFAULT_FORMAT, format, explicit_format}) == 3
 
     from graphviz.backend.mixins import Graphviz
-    assert Graphviz._format == FORMAT
+    assert Graphviz._format == DEFAULT_FORMAT
     # isolate the test
-    monkeypatch.setattr('graphviz.backend.mixins.Graphviz._format', FORMAT)
-    assert Graphviz._format == FORMAT
+    monkeypatch.setattr('graphviz.backend.mixins.Graphviz._format', DEFAULT_FORMAT)
+    assert Graphviz._format == DEFAULT_FORMAT
 
     g1 = Graph()
-    assert g1.format == FORMAT
+    assert g1.format == DEFAULT_FORMAT
 
     g2 = Graph(format=explicit_format)
     assert g2.format == explicit_format
 
     old = set_default_format(format)
-    assert old == FORMAT
+    assert old == DEFAULT_FORMAT
 
     assert g1.format == format
     assert g2.format == explicit_format
@@ -80,10 +80,10 @@ def test_set_default_format(monkeypatch, *, format='png', explicit_format='jpeg'
     g4 = Graph(format=explicit_format)
     assert g4.format == explicit_format
 
-    old = set_default_format(FORMAT)
+    old = set_default_format(DEFAULT_FORMAT)
     assert old == format
 
-    assert g1.format == FORMAT
+    assert g1.format == DEFAULT_FORMAT
     assert g2.format == explicit_format
-    assert g3.format == FORMAT
+    assert g3.format == DEFAULT_FORMAT
     assert g4.format == explicit_format

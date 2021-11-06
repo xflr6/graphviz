@@ -1,5 +1,3 @@
-# test_tools.py
-
 import functools
 import os
 

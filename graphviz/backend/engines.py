@@ -15,11 +15,13 @@ ENGINES = {'dot',  # http://www.graphviz.org/pdf/dot.1.pdf
            'patchwork',
            'osage'}
 
+DEFAULT_ENGINE = 'dot'
+
 
 class Engine(copying.Copy):
     """Rendering engine parameter with ``'dot''`` default."""
 
-    _engine = 'dot'
+    _engine = DEFAULT_ENGINE
 
     def __init__(self, engine: typing.Optional[str] = None, **kwargs) -> None:
         super().__init__(**kwargs)

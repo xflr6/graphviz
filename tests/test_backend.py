@@ -1,5 +1,3 @@
-# test_backend.py
-
 import errno
 import io
 import pathlib
@@ -30,11 +28,6 @@ if platform.system().lower() == 'windows':
 else:
     def check_startupinfo(startupinfo):  # noqa: N803
         assert startupinfo is None
-
-
-def test_run_check_false_raises():
-    with pytest.raises(NotImplementedError, match=r'must be True'):
-        run_check([], check=False)
 
 
 @pytest.mark.exe

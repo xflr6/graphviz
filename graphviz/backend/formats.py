@@ -44,11 +44,13 @@ FORMATS = {'bmp',  # http://www.graphviz.org/doc/info/output.html
            'xlib',
            'x11'}
 
+DEFAULT_FORMAT = 'pdf'
+
 
 class Format(copying.Copy):
     """Rendering format parameter with ``'pdf'`` default."""
 
-    _format = 'pdf'
+    _format = DEFAULT_FORMAT
 
     def __init__(self, format: typing.Optional[str] = None, **kwargs) -> None:
         super().__init__(**kwargs)
