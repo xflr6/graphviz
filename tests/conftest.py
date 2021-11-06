@@ -25,23 +25,42 @@ def pytest_configure(config):
 
 def pytest_collection_modifyitems(config, items):
     if config.getoption(SKIP_EXE):
-        def get_xfail(*, xfail: bool = False, **kwargs) -> bool:
-            kwargs['xfail'] = xfail
-            return kwargs
-
         for item in items:
-            exe_values = [get_xfail(*m.args, **m.kwargs)
-                          for m in item.iter_markers(name='exe')]
-            if exe_values:
-                assert len(exe_values) == 1
-                kwargs, = exe_values
-                if kwargs['xfail']:
-                    kwargs.setdefault('reason', f'xfail by {SKIP_EXE} flag')
-                    marker = pytest.mark.xfail(**kwargs)
-                else:
-                    kwargs.setdefault('reason', f'skipped by {SKIP_EXE} flag')
-                    marker = pytest.mark.skip(**kwargs)
-                item.add_marker(marker)
+            exe_marker = _make_exe_marker(item)
+            if exe_marker is not None:
+                item.add_marker(exe_marker)
+
+
+def _make_exe_marker(item):
+    def make_kwargs(**kwargs):
+        return kwargs
+
+    exe_values = [make_kwargs(*m.args, **m.kwargs)
+                  for m in item.iter_markers(name='exe')]
+
+    if exe_values:
+        assert len(exe_values) == 1
+        kwargs, = exe_values
+
+        if kwargs.pop('xfail', None):
+            kwargs.setdefault('reason', f'xfail by {SKIP_EXE} flag')
+            return pytest.mark.xfail(**kwargs)
+        else:
+            kwargs.setdefault('reason', f'skipped by {SKIP_EXE} flag')
+            return pytest.mark.skip(**kwargs)
+    return None
+
+
+@pytest.fixture(autouse=True)
+def doctests(pytestconfig, doctest_namespace):
+    def doctest_mark_exe(**kwargs):
+        return None
+
+    if pytestconfig.getoption(SKIP_EXE):
+        def doctest_mark_exe(*, xfail: bool = False, **kwargs):
+            return pytest.xfail(**kwargs) if xfail else pytest.skip(**kwargs)
+
+    doctest_namespace['doctest_mark_exe'] = doctest_mark_exe
 
 
 @pytest.fixture(scope='session')

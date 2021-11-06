@@ -158,6 +158,7 @@ use the :meth:`~.Graph.pipe`-method of your :class:`.Graph` or
 
     >>> h.edge('Hello', 'World')
 
+    >>> doctest_mark_exe()
     >>> print(h.pipe().decode('utf-8'))  # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
     <?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <!DOCTYPE svg

@@ -38,6 +38,7 @@ def pipe(engine: str, format: str, data: bytes,
             of the rendering 'dot' subprocess is non-zero.
 
     Example:
+        >>> doctest_mark_exe()
         >>> import graphviz
         >>> graphviz.pipe('dot', 'svg', b'graph { hello -- world }')[:14]
         b'<?xml version='
@@ -84,6 +85,7 @@ def pipe_string(engine: str, format: str, input_string: str, *,
             of the rendering 'dot' subprocess is non-zero.
 
     Example:
+        >>> doctest_mark_exe()
         >>> import graphviz
         >>> graphviz.pipe_string('dot', 'svg', 'graph { spam }',
         ...                      encoding='ascii')[:14]
@@ -131,6 +133,7 @@ def pipe_lines(engine: str, format: str, input_lines: typing.Iterator[str], *,
             of the rendering 'dot' subprocess is non-zero.
 
     Example:
+        >>> doctest_mark_exe()
         >>> import graphviz
         >>> graphviz.pipe_lines('dot', 'svg', iter(['graph { spam }\n']),
         ...                     input_encoding='ascii')[:14]
@@ -178,6 +181,7 @@ def pipe_lines_string(engine: str, format: str, input_lines: typing.Iterator[str
             of the rendering 'dot' subprocess is non-zero.
 
     Example:
+        >>> doctest_mark_exe()
         >>> import graphviz
         >>> graphviz.pipe_lines_string('dot', 'svg', iter(['graph { spam }\n']),
         ...                            encoding='ascii')[:14]

@@ -73,6 +73,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
 
             >>> source = 'graph { spam }'
 
+            >>> doctest_mark_exe()
             >>> graphviz.Source(source, format='svg').pipe()[:14]
             b'<?xml version='
 

@@ -309,7 +309,7 @@ def test_unflatten_stagger_missing():
         unflatten('graph {}', fanout=True)
 
 
-@pytest.mark.exe(xfail=True)
+@pytest.mark.exe(xfail=True, raises=ExecutableNotFound)
 def test_version(capsys):
     result = version()
     assert isinstance(result, tuple) and result
