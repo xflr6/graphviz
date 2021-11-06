@@ -1,35 +1,17 @@
-import pathlib
 import subprocess
 
 import pytest
 
-from graphviz.backend import (render, pipe, unflatten, version, view,
-                              ExecutableNotFound)
-
-import _utils
-
-DOT_BINARY = pathlib.Path('dot')
-
-
-@pytest.mark.usefixtures('empty_path')
-@pytest.mark.parametrize('func, args', [
-    (render, ['dot', 'pdf', 'nonfilepath']),
-    (pipe, ['dot', 'pdf', b'nongraph']),
-    (unflatten, ['graph {}']),
-    (version, []),
-])
-def test_missing_executable(func, args):
-    with pytest.raises(ExecutableNotFound, match=r'execute'):
-        func(*args)
+import graphviz
 
 
 def test_view_unknown_platform(unknown_platform):
     with pytest.raises(RuntimeError, match=r'platform'):
-        view('nonfilepath')
+        graphviz.view('nonfilepath')
 
 
 def test_view(mocker, mock_platform, Popen, startfile, quiet):  # noqa: N803
-    assert view('nonfilepath', quiet=quiet) is None
+    assert graphviz.view('nonfilepath', quiet=quiet) is None
 
     if mock_platform == 'windows':
         startfile.assert_called_once_with('nonfilepath')
