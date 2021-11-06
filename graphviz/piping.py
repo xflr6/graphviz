@@ -4,7 +4,6 @@ import codecs
 import logging
 import typing
 
-from . import _compat
 from . import backend
 from . import base
 from . import encoding
