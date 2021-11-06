@@ -11,11 +11,14 @@ SKIP_EXE = '--skip-exe'
 
 
 def pytest_addoption(parser):
-    parser.addoption(SKIP_EXE, action='store_true',
-                     help='skip tests with pytest.mark.exe;'
-                          ' xfail tests with pytest.mark.exe(xfail=True)'
-                          ' (tests that run Graphviz executables'
-                          '  or subprocesses)')
+    try:
+        parser.addoption(SKIP_EXE, action='store_true',
+                         help='skip tests with pytest.mark.exe;'
+                              ' xfail tests with pytest.mark.exe(xfail=True)'
+                              ' (tests that run Graphviz executables'
+                              '  or subprocesses)')
+    except ValueError:  # pragma: no cover
+        pass
 
 
 def pytest_configure(config):

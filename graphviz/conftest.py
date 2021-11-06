@@ -1,8 +1,19 @@
-"""pytest command line options and fixtures."""
+"""pytest doctest command line options and fixtures."""
 
 import pytest
 
 SKIP_EXE = '--skip-exe'
+
+
+def pytest_addoption(parser):
+    try:
+        parser.addoption(SKIP_EXE, action='store_true',
+                         help='skip tests with pytest.mark.exe;'
+                              ' xfail tests with pytest.mark.exe(xfail=True)'
+                              ' (tests that run Graphviz executables'
+                              '  or subprocesses)')
+    except ValueError:  # pragma: no cover
+        pass
 
 
 @pytest.fixture(autouse=True)
