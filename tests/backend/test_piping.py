@@ -28,15 +28,15 @@ def test_pipe_invalid_data(capsys, quiet, engine='dot', format_='svg'):
 
 
 @pytest.mark.exe
-@pytest.mark.parametrize('engine, format_, renderer, formatter, pattern', [
-    ('dot', 'svg', None, None, SVG_PATTERN),
-    ('dot', 'ps', 'ps', 'core', r'%!PS-'),
-    # Error: remove_overlap: Graphviz not built with triangulation library
-    pytest.param('sfdp', 'svg', None, None, SVG_PATTERN,
-        marks=pytest.mark.xfail('graphviz.version() > (2, 38, 0)'
+@pytest.mark.parametrize(
+    'engine, format_, renderer, formatter, pattern',
+    [('dot', 'svg', None, None, SVG_PATTERN),
+     ('dot', 'ps', 'ps', 'core', r'%!PS-'),
+     # Error: remove_overlap: Graphviz not built with triangulation library
+     pytest.param('sfdp', 'svg', None, None, SVG_PATTERN,
+         marks=pytest.mark.xfail('graphviz.version() > (2, 38, 0)'
                                 " and platform.system().lower() == 'windows'",
-        reason='https://gitlab.com/graphviz/graphviz/-/issues/1269')),
-])
+         reason='https://gitlab.com/graphviz/graphviz/-/issues/1269'))])
 def test_pipe(capsys, engine, format_, renderer, formatter, pattern,
               data=b'graph { spam }'):
     out = graphviz.pipe(engine, format_, data, renderer, formatter).decode('ascii')

@@ -55,12 +55,12 @@ def test_run_check_input_lines_mocked(mocker, Popen, line=b'sp\xc3\xa4m'):  # no
 
 
 @pytest.mark.usefixtures('empty_path')
-@pytest.mark.parametrize('func, args', [
-    (graphviz.render, ['dot', 'pdf', 'nonfilepath']),
-    (graphviz.pipe, ['dot', 'pdf', b'nongraph']),
-    (graphviz.unflatten, ['graph {}']),
-    (graphviz.version, []),
-])
+@pytest.mark.parametrize(
+    'func, args',
+    [(graphviz.render, ['dot', 'pdf', 'nonfilepath']),
+     (graphviz.pipe, ['dot', 'pdf', b'nongraph']),
+     (graphviz.unflatten, ['graph {}']),
+     (graphviz.version, [])])
 def test_missing_executable(func, args):
     with pytest.raises(graphviz.ExecutableNotFound, match=r'execute'):
         func(*args)

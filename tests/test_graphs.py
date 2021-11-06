@@ -85,7 +85,8 @@ def test__repr_svg_(mocker, cls):
     pipe.assert_called_once_with(format='svg', encoding=c.encoding)
 
 
-@pytest.mark.parametrize('keep_attrs', [False, True])
+@pytest.mark.parametrize(
+    'keep_attrs', [False, True])
 def test_clear(cls, keep_attrs):
     kwargs = {f'{a}_attr': {a: a} for a in ('graph', 'node', 'edge')}
     c = cls(**kwargs)
@@ -108,10 +109,11 @@ def test_iter_subgraph_strict(cls):
         cls().subgraph(cls(strict=True))
 
 
-@pytest.mark.parametrize('cls, expected', [
-    (Graph, 'strict graph {\n}\n'),
-    (Digraph, 'strict digraph {\n}\n'),
-], ids=lambda p: getattr(p, '__name__', '...'))
+@pytest.mark.parametrize(
+    'cls, expected',
+    [(Graph, 'strict graph {\n}\n'),
+     (Digraph, 'strict digraph {\n}\n')],
+    ids=lambda p: getattr(p, '__name__', '...'))
 def test_iter_strict(cls, expected):
     assert cls(strict=True).source == expected
 
@@ -121,20 +123,22 @@ def test_attr_invalid_kw(cls):
         cls().attr('spam')
 
 
-@pytest.mark.parametrize('cls, expected', [
-    (Graph, 'graph {\n\tspam=eggs\n}\n'),
-    (Digraph, 'digraph {\n\tspam=eggs\n}\n'),
-], ids=lambda p: getattr(p, '__name__', '...'))
+@pytest.mark.parametrize(
+    'cls, expected',
+    [(Graph, 'graph {\n\tspam=eggs\n}\n'),
+     (Digraph, 'digraph {\n\tspam=eggs\n}\n')],
+    ids=lambda p: getattr(p, '__name__', '...'))
 def test_attr_kw_none(cls, expected):
     dot = cls()
     dot.attr(spam='eggs')
     assert dot.source == expected
 
 
-@pytest.mark.parametrize('cls, expected', [
-    (Graph, 'graph {\n\tA [label="%s"]\n\tB [label="%s"]\n}\n' % (r'\\', r'\"\\\"')),
-    (Digraph, 'digraph {\n\tA [label="%s"]\n\tB [label="%s"]\n}\n' % (r'\\', r'\"\\\"')),
-], ids=lambda p: getattr(p, '__name__', '...'))
+@pytest.mark.parametrize(
+    'cls, expected',
+    [(Graph, 'graph {\n\tA [label="%s"]\n\tB [label="%s"]\n}\n' % (r'\\', r'\"\\\"')),
+     (Digraph, 'digraph {\n\tA [label="%s"]\n\tB [label="%s"]\n}\n' % (r'\\', r'\"\\\"'))],
+    ids=lambda p: getattr(p, '__name__', '...'))
 def test_escaped_quotes_and_escapes(cls, expected):
     dot = cls()
     dot.node('A', label='\\\\')
@@ -142,10 +146,11 @@ def test_escaped_quotes_and_escapes(cls, expected):
     assert dot.source == expected
 
 
-@pytest.mark.parametrize('cls, expected', [
-    (Graph, 'graph {\n\t// comment\n\tsubgraph name {\n\t}\n}\n'),
-    (Digraph, 'digraph {\n\t// comment\n\tsubgraph name {\n\t}\n}\n'),
-], ids=lambda p: getattr(p, '__name__', '...'))
+@pytest.mark.parametrize(
+    'cls, expected',
+    [(Graph, 'graph {\n\t// comment\n\tsubgraph name {\n\t}\n}\n'),
+     (Digraph, 'digraph {\n\t// comment\n\tsubgraph name {\n\t}\n}\n')],
+    ids=lambda p: getattr(p, '__name__', '...'))
 def test_subgraph_graph_none(cls, expected):
     dot = cls(directory='nondirectory', format='png',
               encoding='ascii', engine='neato')
@@ -172,10 +177,11 @@ def test_subgraph_mixed(classes):
         cls1().subgraph(cls2())
 
 
-@pytest.mark.parametrize('cls, expected', [
-    (Graph, 'graph {\n\t{\n\t}\n}\n'),
-    (Digraph, 'digraph {\n\t{\n\t}\n}\n'),
-], ids=lambda p: getattr(p, '__name__', '...'))
+@pytest.mark.parametrize(
+    'cls, expected',
+    [(Graph, 'graph {\n\t{\n\t}\n}\n'),
+     (Digraph, 'digraph {\n\t{\n\t}\n}\n')],
+    ids=lambda p: getattr(p, '__name__', '...'))
 def test_subgraph_reflexive(cls, expected):  # guard against potential infinite loop
     dot = cls()
     dot.subgraph(dot)
@@ -229,10 +235,11 @@ def test_subgraph():
 
 
 @pytest.mark.exe
-@pytest.mark.parametrize('cls, expected', [
-    (Graph, 'graph {\n\tC\n}\n'),
-    (Digraph, 'digraph {\n\tC\n}\n'),
-], ids=lambda p: getattr(p, '__name__', '...'))
+@pytest.mark.parametrize(
+    'cls, expected',
+    [(Graph, 'graph {\n\tC\n}\n'),
+     (Digraph, 'digraph {\n\tC\n}\n')],
+    ids=lambda p: getattr(p, '__name__', '...'))
 def test_subgraph_render(capsys, tmp_path, cls, expected):
     lpath = tmp_path / 's1.gv'
     rendered = lpath.with_suffix('.gv.pdf')
