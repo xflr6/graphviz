@@ -21,17 +21,15 @@ def command(engine: str, format_: str, *,
     if formatter is not None and renderer is None:
         raise _common.RequiredArgumentError('formatter given without renderer')
 
-    if engine not in parameters.ENGINES:
-        raise ValueError(f'unknown engine: {engine!r}')
+    parameters.verify_engine(engine)
 
-    if format_ not in parameters.FORMATS:
-        raise ValueError(f'unknown format: {format_!r}')
+    parameters.verify_format(format_)
 
-    if renderer is not None and renderer not in parameters.RENDERERS:
-        raise ValueError(f'unknown renderer: {renderer!r}')
+    if renderer is not None:
+        parameters.verify_renderer(renderer)
 
-    if formatter is not None and formatter not in parameters.FORMATTERS:
-        raise ValueError(f'unknown formatter: {formatter!r}')
+    if formatter is not None:
+        parameters.verify_formatter(formatter)
 
     output_format = [f for f in (format_, renderer, formatter) if f is not None]
     output_format_flag = ':'.join(output_format)

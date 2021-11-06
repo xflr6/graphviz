@@ -4,7 +4,7 @@ import typing
 
 from ... import copying
 
-__all__ = ['FORMATTERS', 'Formatter']
+__all__ = ['FORMATTERS', 'verify_formatter', 'Formatter']
 
 FORMATTERS = {'cairo',
               'core',

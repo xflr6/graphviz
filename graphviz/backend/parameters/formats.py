@@ -4,7 +4,7 @@ import typing
 
 from ... import copying
 
-__all__ = ['FORMATS', 'Format']
+__all__ = ['FORMATS', 'verify_format', 'Format']
 
 FORMATS = {'bmp',  # http://www.graphviz.org/doc/info/output.html
            'canon', 'dot', 'gv', 'xdot', 'xdot1.2', 'xdot1.4',

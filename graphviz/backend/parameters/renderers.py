@@ -4,7 +4,7 @@ import typing
 
 from ... import copying
 
-__all__ = ['RENDERERS', 'Renderer']
+__all__ = ['RENDERERS', 'verify_renderer', 'Renderer']
 
 RENDERERS = {'cairo',  # $ dot -T:
              'dot',

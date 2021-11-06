@@ -73,8 +73,9 @@ RequiredArgumentError = RequiredArgumentError
 
 def set_default_engine(engine: str) -> str:
     """Change the default engine, return the old default value."""
-    if engine not in ENGINES:
-        raise ValueError(f'unknown engine: {engine!r}')
+    from .backend import parameters
+
+    parameters.verify_engine(engine)
 
     from .backend.mixins import Parameters
 
@@ -85,8 +86,9 @@ def set_default_engine(engine: str) -> str:
 
 def set_default_format(format: str) -> str:
     """Change the default format, return the old default value."""
-    if format not in FORMATS:
-        raise ValueError(f'unknown format: {format!r}')
+    from .backend import parameters
+
+    parameters.verify_format(format)
 
     from .backend.mixins import Parameters
 

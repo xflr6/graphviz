@@ -4,7 +4,7 @@ import typing
 
 from ... import copying
 
-__all__ = ['ENGINES', 'Engine']
+__all__ = ['ENGINES', 'verify_engine', 'Engine']
 
 ENGINES = {'dot',  # http://www.graphviz.org/pdf/dot.1.pdf
            'neato',
