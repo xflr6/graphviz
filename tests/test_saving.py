@@ -5,14 +5,14 @@ import pytest
 import graphviz
 
 
-@pytest.mark.exe
-def test_save_source_from_files(tmp_path):
-    dot = graphviz.Digraph(directory=tmp_path)
-    dot.edge('hello', 'world')
-    dot.render()
-    old_stat = os.stat(dot.filepath)
+def test_saves_source_from_file(tmp_path, src='graph spam { spam }'):
+    path = tmp_path / 'spam.gv'
+    path.write_text(src)
+    stat_before = path.stat()
 
-    source = graphviz.Source.from_file(dot.filepath)
+    source = graphviz.Source.from_file(path)
     source.save()
 
-    assert os.stat(dot.filepath).st_mtime == old_stat.st_mtime
+    assert path.stat().st_mtime == stat_before.st_mtime, 'file not overwritten'
+    assert path.read_text() == src, 'file contents unchanged'
+    assert ''.join(source) == f'{src}\n', 'src with final newline'
