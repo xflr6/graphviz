@@ -11,9 +11,9 @@ from . import viewing
 __all__ = ['Render', 'Pipe', 'Unflatten', 'View']
 
 
-class Graphviz(parameters.Engine, parameters.Format,
-               parameters.Renderer, parameters.Formatter):
-    """Parameters for calling ``backend.render()`` and ``backend.pipe``."""
+class Parameters(parameters.Engine, parameters.Format,
+                 parameters.Renderer, parameters.Formatter):
+    """Parameters for calling ``graphviz.render()`` and ``graphviz.pipe()``."""
 
     def __init__(self, format=None, engine=None, **kwargs):
         super().__init__(format=format, engine=engine, **kwargs)
@@ -43,9 +43,9 @@ class Graphviz(parameters.Engine, parameters.Format,
         return args, kwargs
 
 
-class Render(Graphviz):
+class Render(Parameters):
 
-    _get_render_parameters = Graphviz._get_rendering_parameters
+    _get_render_parameters = Parameters._get_rendering_parameters
 
     @property
     def _render(_):
@@ -53,9 +53,9 @@ class Render(Graphviz):
         return rendering.render
 
 
-class Pipe(Graphviz):
+class Pipe(Parameters):
 
-    _get_pipe_parameters = Graphviz._get_rendering_parameters
+    _get_pipe_parameters = Parameters._get_rendering_parameters
 
     @property
     def _pipe_lines(_):

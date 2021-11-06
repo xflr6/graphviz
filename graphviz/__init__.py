@@ -76,10 +76,10 @@ def set_default_engine(engine: str) -> str:
     if engine not in ENGINES:
         raise ValueError(f'unknown engine: {engine!r}')
 
-    from .backend.mixins import Graphviz
+    from .backend.mixins import Parameters
 
-    old_default_engine = Graphviz._engine
-    Graphviz._engine = engine
+    old_default_engine = Parameters._engine
+    Parameters._engine = engine
     return old_default_engine
 
 
@@ -88,8 +88,8 @@ def set_default_format(format: str) -> str:
     if format not in FORMATS:
         raise ValueError(f'unknown format: {format!r}')
 
-    from .backend.mixins import Graphviz
+    from .backend.mixins import Parameters
 
-    old_default_format = Graphviz._format
-    Graphviz._format = format
+    old_default_format = Parameters._format
+    Parameters._format = format
     return old_default_format
