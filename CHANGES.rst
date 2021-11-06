@@ -18,27 +18,28 @@ no nonger write the content read into ``.source`` back into the file.
 Use ``.save(skip_existing=False)`` before calling ``.render()`` or ``.view()``
 if you want to overwrite the file to produce the previous (less safe) behaviour.
 
-Change of undocumented behaviour: when iterating over a
-``Graph``, ``Digraph``, or ``Source`` instance,
+Change of undocumented behaviour:
+When iterating over a ``Graph``, ``Digraph``, or ``Source`` instance,
 the yielded lines now include a final newline (``'\n'``).
 This mimics iteration over ``file`` object lines in text mode.
 
-When giving invalid parameters such as unknown ``engine``, ``format``, etc.,
-``.render()`` now raises early before writing the file. Call `` .save()`` explicitly
-to produce the previous (less safe) behaiour.
-
-Add optional keyword-only ``renderer`` and ``formatter`` arguments to ``Graph()``,
-``Digraph()``, ``Source()`` and ``Source.from_file()``
-to set default renderers and formatters (similar to ``format``).
-Used by ``.pipe()``, ``.render()``, and ``.view()`` if not given as method-argument.
-
-Add optional keyword-only ``engine`` argument to ``.pipe()`` and ``.render()``.
+When passing invalid parameters such as unknown ``engine``, ``format``, etc.,
+``.render()`` now raises early before writing the file.
+Call ``.save()`` explicitly to produce the previous (less safe) behaiour.
 
 Add optional keyword-only ``encoding`` argument to ``pipe()``.
 Returns the decoded stdout from the rendering process
 (e.g. ``format='svg'``).
 Delegates encoding/decoding to ``subprocess`` in the common case
 (input and output encoding are the same, e.g. default ``encoding='utf-8'``).
+Used by the jupyter integration.
+
+Add optional keyword-only ``engine`` argument to ``.pipe()`` and ``.render()``.
+
+Add optional keyword-only ``renderer`` and ``formatter`` arguments to ``Graph()``,
+``Digraph()``, ``Source()`` and ``Source.from_file()``
+to set default renderers and formatters (similar to ``format``).
+Used by ``.pipe()``, ``.render()``, and ``.view()`` if not given as method-argument.
 
 Add ``pipe_string()``, ``pipe_lines()``, and ``pipe_lines_string()``.
 Pipe ``input_string``, return ``string``.
@@ -49,17 +50,7 @@ Add ``set_default_engine()`` and ``set_default_format()``
 
 Add ``backend.DOT_BINARY`` and ``backend.UNFLATTEN_BINARY``.
 
-Improve test separation.
-
-Add ``pytype`` checking and ``flake8`` to build workflow.
-
-Extend type annotations.
-
-Improve documentation and examples.
-
-Add https://mybinder.org config and launch badge to code repository.
-
-Restructured the internal class hierarchy using multiple-inheritance
+Restructure the internal class hierarchy using multiple-inheritance
 with cooperative ``super()`` calling:
 ``Graph`` now inherits both from ``Dot`` and from ``Render``,
 and both of them inherit from ``Base`` which defines their common interface:
@@ -69,11 +60,19 @@ This might break some undocumented use of subclassing and require adatation
 (e.g. if the methods don't use cooperative ``super()`` calling convention
 or if the MRO has conflicts, supposedly rare).
 
+Improve test separation. Improve test coverage of --skip-exe.
+
+Add ``pytype`` checking and ``flake8`` to build workflow.
+
+Extend type annotations.
+
+Add https://mybinder.org config and launch badge to code repository.
+
+Improve documentation and examples.
+
 Add development docs.
 
 Document release process.
-
-Adulthood in many countries. Maybe 21?
 
 
 Version 0.17
