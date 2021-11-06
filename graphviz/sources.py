@@ -28,7 +28,7 @@ class Source(rendering.Render, saving.Save,
         filename: Filename for saving the source (defaults to ``'Source.gv'``).
         directory: (Sub)directory for source saving and rendering.
         format: Rendering output format (``'pdf'``, ``'png'``, ...).
-        engine: Layout command used (``'dot'``, ``'neato'``, ...).
+        engine: Layout engine used (``'dot'``, ``'neato'``, ...).
         encoding: Encoding for saving the source.
 
     Note:

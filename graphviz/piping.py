@@ -40,6 +40,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
              renderer: typing.Optional[str] = None,
              formatter: typing.Optional[str] = None,
              quiet: bool = False, *,
+             engine: typing.Optional[str] = None,
              encoding: typing.Optional[str] = None) -> typing.Union[bytes, str]:
         """Return the source piped through the Graphviz layout command.
 
@@ -52,6 +53,8 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                 (``'cairo'``, ``'gd'``, ...).
             quiet (bool): Suppress ``stderr`` output
                 from the layout subprocess.
+            engine: Layout engine for rendering
+                (``'dot'``, ``'neato'``, ...).
             encoding: Encoding for decoding the stdout.
 
         Returns:
@@ -83,7 +86,8 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
             >>> graphviz.Source(source, format='svg').pipe(encoding='utf-8')[:14]
             '<?xml version='
         """
-        args, kwargs = self._get_pipe_parameters(format=format,
+        args, kwargs = self._get_pipe_parameters(engine=engine,
+                                                 format=format,
                                                  renderer=renderer,
                                                  formatter=formatter,
                                                  quiet=quiet)

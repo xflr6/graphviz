@@ -23,7 +23,8 @@ class Render(saving.Save, backend.Render, backend.View):
                renderer: typing.Optional[str] = None,
                formatter: typing.Optional[str] = None,
                quiet: bool = False,
-               quiet_view: bool = False) -> str:
+               quiet_view: bool = False, *,
+               engine: typing.Optional[str] = None) -> str:
         """Save the source to file and render with the Graphviz engine.
 
         Args:
@@ -45,6 +46,8 @@ class Render(saving.Save, backend.Render, backend.View):
             quiet_view (bool): Suppress ``stderr`` output
                 from the viewer process
                 (implies ``view=True``, ineffective on Windows platform).
+            engine: Layout engine for rendering
+                (``'dot'``, ``'neato'``, ...).
 
         Returns:
             The (possibly relative) path of the rendered file.
@@ -66,7 +69,8 @@ class Render(saving.Save, backend.Render, backend.View):
             (e.g. ``[image=images/camelot.png]``)
             can be given as paths relative to the DOT source file.
         """
-        args, kwargs = self._get_render_parameters(format=format,
+        args, kwargs = self._get_render_parameters(engine=engine,
+                                                   format=format,
                                                    renderer=renderer,
                                                    formatter=formatter,
                                                    quiet=quiet)
