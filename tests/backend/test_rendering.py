@@ -5,7 +5,6 @@ import subprocess
 import pytest
 
 import graphviz
-from graphviz.backend import render
 
 import _utils
 
@@ -14,33 +13,33 @@ DOT_BINARY = pathlib.Path('dot')
 
 def test_render_engine_unknown():
     with pytest.raises(ValueError, match=r'unknown engine'):
-        render('', 'pdf', 'nonfilepath')
+        graphviz.render('', 'pdf', 'nonfilepath')
 
 
 def test_render_format_unknown():
     with pytest.raises(ValueError, match=r'unknown format'):
-        render('dot', '', 'nonfilepath')
+        graphviz.render('dot', '', 'nonfilepath')
 
 
 def test_render_renderer_unknown():
     with pytest.raises(ValueError, match=r'unknown renderer'):
-        render('dot', 'ps', 'nonfilepath', '', None)
+        graphviz.render('dot', 'ps', 'nonfilepath', '', None)
 
 
 def test_render_renderer_missing():
     with pytest.raises(graphviz.RequiredArgumentError, match=r'without renderer'):
-        render('dot', 'ps', 'nonfilepath', None, 'core')
+        graphviz.render('dot', 'ps', 'nonfilepath', None, 'core')
 
 
 def test_render_formatter_unknown():
     with pytest.raises(ValueError, match=r'unknown formatter'):
-        render('dot', 'ps', 'nonfilepath', 'ps', '')
+        graphviz.render('dot', 'ps', 'nonfilepath', 'ps', '')
 
 
 @pytest.mark.exe
 def test_render_missing_file(quiet, engine='dot', format_='pdf'):
     with pytest.raises(subprocess.CalledProcessError) as e:
-        render(engine, format_, '', quiet=quiet)
+        graphviz.render(engine, format_, '', quiet=quiet)
     assert e.value.returncode == 2
 
 
@@ -57,7 +56,7 @@ def test_render(capsys, tmp_path, engine, format_, renderer, formatter,
     lpath.write_bytes(data)
     rendered = lpath.with_suffix(f'{lpath.suffix}.{expected_suffix}')
 
-    assert render(engine, format_, str(lpath), renderer, formatter) == str(rendered)
+    assert graphviz.render(engine, format_, str(lpath), renderer, formatter) == str(rendered)
 
     assert rendered.stat().st_size
     assert capsys.readouterr() == ('', '')
@@ -80,7 +79,7 @@ def test_render_img(capsys, tmp_path, files_path, engine='dot', format_='pdf'):
                        encoding='ascii')
 
     with _utils.as_cwd(tmp_path):
-        assert render(engine, format_, gv_rel) == str(rendered_rel)
+        assert graphviz.render(engine, format_, gv_rel) == str(rendered_rel)
 
     assert rendered.stat().st_size
     assert capsys.readouterr() == ('', '')
@@ -92,7 +91,7 @@ def test_render_mocked(capsys, mocker, run, quiet):
                                                    stdout='stdout',
                                                    stderr='stderr')
 
-    assert render('dot', 'pdf', 'nonfilepath', quiet=quiet) == 'nonfilepath.pdf'
+    assert graphviz.render('dot', 'pdf', 'nonfilepath', quiet=quiet) == 'nonfilepath.pdf'
 
     run.assert_called_once_with([DOT_BINARY, '-Kdot', '-Tpdf', '-O', 'nonfilepath'],
                                 stdout=subprocess.PIPE,
