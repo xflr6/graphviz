@@ -70,12 +70,13 @@ def test_missing_executable(func, args):
         func(*args)
 
 
-def test_run_check_called_process_error_mocked(capsys, sentinel, run,
+def test_run_check_called_process_error_mocked(capsys, sentinel, run, quiet,
                                                stdout='I am the messiah',
                                                stderr='I am not the messiah!'):
     run.return_value = subprocess.CompletedProcess(INVALID_CMD, returncode=500,
                                                    stdout=stdout, stderr=stderr)
     with pytest.raises(execute.CalledProcessError, match=stderr):
-        execute.run_check(INVALID_CMD, capture_output=True)
+        execute.run_check(INVALID_CMD, capture_output=True,
+                          quiet=quiet)
 
-    assert capsys.readouterr() == ('', stderr)
+    assert capsys.readouterr() == ('', '' if quiet else stderr)
