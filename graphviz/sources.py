@@ -98,8 +98,14 @@ class Source(rendering.Render, saving.Save,
 
     @property
     def source(self) -> str:
-        """The DOT source code as string (read from file)."""
-        return self._source
+        """The DOT source code as string (read from file).
+
+        Normalizes so that the string always ends in a final newline.
+        """
+        source = self._source
+        if not source.endswith('\n'):
+            source += '\n'
+        return source
 
     def save(self, filename=None, directory=None, *,
              skip_existing: typing.Optional[bool] = None) -> str:

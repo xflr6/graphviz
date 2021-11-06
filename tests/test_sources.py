@@ -192,7 +192,7 @@ def test_from_file(tmp_path, filename='hello.gv', directory='source_hello',
     formatter = 'core'
     source = graphviz.Source.from_file(filename, str(lpath), encoding=encoding,
                                        renderer=renderer, formatter=formatter)
-    assert source.source == data
+    assert source.source == data + '\n'
     assert source.filename == filename
     assert source.directory == str(lpath)
     assert source.encoding == encoding
