@@ -5,10 +5,7 @@ import pathlib
 import typing
 
 from . import _common
-from . import engines
-from . import formats
-from . import formatters
-from . import renderers
+from . import parameters
 
 __all__ = ['command']
 
@@ -24,16 +21,16 @@ def command(engine: str, format_: str, *,
     if formatter is not None and renderer is None:
         raise _common.RequiredArgumentError('formatter given without renderer')
 
-    if engine not in engines.ENGINES:
+    if engine not in parameters.ENGINES:
         raise ValueError(f'unknown engine: {engine!r}')
 
-    if format_ not in formats.FORMATS:
+    if format_ not in parameters.FORMATS:
         raise ValueError(f'unknown format: {format_!r}')
 
-    if renderer is not None and renderer not in renderers.RENDERERS:
+    if renderer is not None and renderer not in parameters.RENDERERS:
         raise ValueError(f'unknown renderer: {renderer!r}')
 
-    if formatter is not None and formatter not in formatters.FORMATTERS:
+    if formatter is not None and formatter not in parameters.FORMATTERS:
         raise ValueError(f'unknown formatter: {formatter!r}')
 
     output_format = [f for f in (format_, renderer, formatter) if f is not None]

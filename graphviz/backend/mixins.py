@@ -2,13 +2,7 @@
 
 import typing
 
-# Hold and verify parameters.
-from . import engines
-from . import formats
-from . import formatters
-from . import renderers
-
-#  Call backend functions.
+from . import parameters
 from . import piping
 from . import rendering
 from . import unflattening
@@ -17,8 +11,8 @@ from . import viewing
 __all__ = ['Render', 'Pipe', 'Unflatten', 'View']
 
 
-class Graphviz(engines.Engine, formats.Format,
-               renderers.Renderer, formatters.Formatter):
+class Graphviz(parameters.Engine, parameters.Format,
+               parameters.Renderer, parameters.Formatter):
     """Parameters for calling ``backend.render()`` and ``backend.pipe``."""
 
     def __init__(self, format=None, engine=None, **kwargs):
