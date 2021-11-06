@@ -23,15 +23,19 @@ def test_unflatten(source, kwargs, expected):
     assert normalized == expected
 
 
-def test_unflatten_mocked(capsys, mocker, sentinel, run):
+def test_unflatten_mocked(capsys, mocker, sentinel, run,
+                          stagger=10, fanout=True, chain=23):
     run.return_value = subprocess.CompletedProcess(sentinel.cmd,
                                                    returncode=0,
-                                                   stdout='nonresult',
+                                                   stdout=sentinel.stdout,
                                                    stderr='')
 
-    assert graphviz.unflatten('nonsource') == 'nonresult'
+    result = graphviz.unflatten('nonsource',
+                                stagger=stagger, fanout=fanout, chain=chain)
+    assert result is sentinel.stdout
 
-    run.assert_called_once_with([EXPECTED_UNFLATTEN_BINARY],
+    run.assert_called_once_with([EXPECTED_UNFLATTEN_BINARY,
+                                 '-l', '10', '-f', '-c', '23'],
                                 input='nonsource',
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,

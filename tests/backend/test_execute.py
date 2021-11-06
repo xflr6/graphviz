@@ -5,14 +5,17 @@ import subprocess
 import pytest
 
 import graphviz
-from graphviz.backend.execute import run_check
+from graphviz.backend import execute
 
 import _utils
+
+INVALID_CMD = ['']
 
 
 def test_run_check_oserror():
     with pytest.raises(OSError) as e:
-        run_check([''])
+        execute.run_check(INVALID_CMD)
+
     assert e.value.errno in (errno.EACCES, errno.EINVAL)
 
 
@@ -32,7 +35,8 @@ def test_run_check_input_lines_mocked(mocker, sentinel, Popen,
     popen.stdin = mocker.create_autospec(io.BytesIO, instance=True)
     popen.communicate.return_value = (mock_out, mock_err)
 
-    result = run_check(popen.args, input_lines=iter([line]), capture_output=True)
+    result = execute.run_check(popen.args, input_lines=iter([line]),
+                               capture_output=True)
 
     # subprocess.CompletedProcess.__eq__() is not implemented
     assert isinstance(result, subprocess.CompletedProcess)
@@ -64,3 +68,12 @@ def test_run_check_input_lines_mocked(mocker, sentinel, Popen,
 def test_missing_executable(func, args):
     with pytest.raises(graphviz.ExecutableNotFound, match=r'execute'):
         func(*args)
+
+
+def test_run_check_called_process_error_mocked(sentinel, run):
+    run.return_value = subprocess.CompletedProcess(INVALID_CMD,
+                                                   returncode=99,
+                                                   stdout='stdout',
+                                                   stderr='stderr')
+    with pytest.raises(execute.CalledProcessError, match=r'stderr') as e:
+        execute.run_check(INVALID_CMD, capture_output=True)
