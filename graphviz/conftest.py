@@ -6,7 +6,7 @@ SKIP_EXE = '--skip-exe'
 
 
 @pytest.fixture(autouse=True)
-def doctests(pytestconfig, doctest_namespace):
+def doctests(pytestconfig, doctest_namespace):  # pragma: no cover
     def doctest_mark_exe(**kwargs):
         return None
 
