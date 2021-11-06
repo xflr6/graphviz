@@ -23,6 +23,10 @@ Change of undocumented behaviour: when iterating over a
 the yielded lines now include a final newline (``'\n'``).
 This mimics iteration over ``file`` object lines in text mode.
 
+When giving invalid parameters such as unknown ``engine``, ``format``, etc.,
+``.render()`` now raises early before writing the file. Call `` .save()`` explicitly
+to produce the previous (less safe) behaiour.
+
 Add optional keyword-only ``renderer`` and ``formatter`` arguments to ``Graph()``,
 ``Digraph()``, ``Source()`` and ``Source.from_file()``
 to set default renderers and formatters (similar to ``format``).
