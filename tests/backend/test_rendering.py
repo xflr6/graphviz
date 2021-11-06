@@ -1,3 +1,4 @@
+import os
 import shutil
 import subprocess
 
@@ -71,18 +72,26 @@ def test_render_img(capsys, tmp_path, files_path, engine='dot', format_='pdf'):
     assert capsys.readouterr() == ('', '')
 
 
-def test_render_mocked(capsys, sentinel, run, quiet):
+@pytest.mark.parametrize(
+    'directory', [None, 'dot_sources'])
+def test_render_mocked(capsys, sentinel, run, quiet, directory,
+                       filepath = 'nonfilepath'):
     run.return_value = subprocess.CompletedProcess(sentinel.cmd,
                                                    returncode=0,
                                                    stdout='stdout',
                                                    stderr='stderr')
 
-    assert graphviz.render('dot', 'pdf', 'nonfilepath', quiet=quiet) == 'nonfilepath.pdf'
+    if directory is not None:
+        filepath = os.path.join(directory, filepath)
+
+    result = graphviz.render('dot', 'pdf', filepath, quiet=quiet)
+
+    assert result == f'{filepath}.pdf'
 
     run.assert_called_once_with([_utils.EXPECTED_DOT_BINARY,
                                  '-Kdot', '-Tpdf', '-O', 'nonfilepath'],
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
-                                cwd=None,
+                                cwd=directory,
                                 startupinfo=_utils.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
