@@ -4,7 +4,7 @@ import subprocess
 
 import pytest
 
-from graphviz.backend import run_check
+from graphviz.backend.execute import run_check
 
 import _utils
 
