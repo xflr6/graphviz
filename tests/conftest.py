@@ -72,9 +72,30 @@ def files_path():
     return DIRECTORY
 
 
+@pytest.fixture
+def empty_path(monkeypatch):
+    monkeypatch.setenv('PATH', '')
+
+
 @pytest.fixture(scope='session')
 def platform():
     return platform_.system().lower()
+
+
+@pytest.fixture
+def unknown_platform(monkeypatch, name='nonplatform'):
+    monkeypatch.setattr('graphviz.backend.viewing.PLATFORM', name)
+    yield name
+
+
+@pytest.fixture(params=[False, True], ids=lambda q: f'quiet={q!r}')
+def quiet(request):
+    return request.param
+
+
+@pytest.fixture
+def sentinel(mocker):
+    return mocker.sentinel
 
 
 @pytest.fixture(params=['darwin', 'freebsd', 'linux', 'windows'],
@@ -85,23 +106,12 @@ def mock_platform(monkeypatch, request):
 
 
 @pytest.fixture
-def unknown_platform(monkeypatch, name='nonplatform'):
-    monkeypatch.setattr('graphviz.backend.viewing.PLATFORM', name)
-    yield name
-
-
-@pytest.fixture
-def sentinel(mocker):
-    return mocker.sentinel
-
-
-@pytest.fixture
-def mock_run(mocker):  # noqa: N802
+def mock_run(mocker):
     yield mocker.patch('subprocess.run', autospec=True)
 
 
 @pytest.fixture
-def mock_popen(mocker):  # noqa: N802
+def mock_popen(mocker):
     yield mocker.patch('subprocess.Popen', autospec=True)
 
 
@@ -112,16 +122,6 @@ def mock_startfile(mocker, platform):
     else:
         kwargs = {'create': True, 'new_callable': mocker.Mock}
     yield mocker.patch('os.startfile', **kwargs)
-
-
-@pytest.fixture
-def empty_path(monkeypatch):
-    monkeypatch.setenv('PATH', '')
-
-
-@pytest.fixture(params=[False, True], ids=lambda q: f'quiet={q!r}')
-def quiet(request):
-    return request.param
 
 
 @pytest.fixture
