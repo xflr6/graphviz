@@ -27,11 +27,12 @@ Document release:
 
 - remove ``in development`` from ``CHANGES.rst``
 
-Run the tests and build the docs:
+Run the tests, run the linter, and build the docs:
 
 .. code:: bash
 
     $ python -m tox -r -- -W error  # --recreate, raise error on warning
+    $ python -m flake8 --disable-noqa
     $ cd docs
     $ python -m sphinx . _build
     $ cd ..
@@ -128,4 +129,5 @@ Verify publication (install in default environment):
 - Check downstream `conda-forge release <https://github.com/conda-forge/python-graphviz-feedstock>`_
 
 
+.. flake8: https://flake8.pycqa.org/en/latest/
 .. _twine: https://twine.readthedocs.io/en/latest/

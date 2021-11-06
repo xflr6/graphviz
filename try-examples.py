@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# flake8: noqa
 
 """Import ``graphviz`` here and run all scripts in the ``examples/`` dir."""
 

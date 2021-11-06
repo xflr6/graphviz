@@ -9,7 +9,7 @@ def cls(request):
     return request.param
 
 
-def test_parameters(cls, engine='patchwork',format='tiff',
+def test_parameters(cls, engine='patchwork', format='tiff',
                     renderer='map', formatter='core'):
     args = [''] if cls is graphviz.Source else []
     dot = cls(*args,

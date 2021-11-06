@@ -1,77 +1,20 @@
-import errno
-import io
 import pathlib
-import platform
 import re
 import shutil
 import subprocess
 
 import pytest
 
-from graphviz.backend import (run_check, render, pipe, unflatten, version, view,
+from graphviz.backend import (render, pipe, unflatten, version, view,
                               ExecutableNotFound, RequiredArgumentError)
 
-import utils
+import _utils
 
 DOT_BINARY = pathlib.Path('dot')
 
 UNFLATTEN_BINARY = pathlib.Path('unflatten')
 
 SVG_PATTERN = r'(?s)^<\?xml .+</svg>\s*$'
-
-
-if platform.system().lower() == 'windows':
-    def check_startupinfo(startupinfo):  # noqa: N803
-        assert isinstance(startupinfo, subprocess.STARTUPINFO)
-        assert startupinfo.dwFlags & subprocess.STARTF_USESHOWWINDOW
-        assert startupinfo.wShowWindow == subprocess.SW_HIDE
-else:
-    def check_startupinfo(startupinfo):  # noqa: N803
-        assert startupinfo is None
-
-
-@pytest.mark.exe
-def test_run_check_oserror():
-    with pytest.raises(OSError) as e:
-        run_check([''])
-    assert e.value.errno in (errno.EACCES, errno.EINVAL)
-
-
-def test_run_check_input_lines_mocked(mocker, Popen, line=b'sp\xc3\xa4m'):  # noqa: N803
-    mock_sys_stderr = mocker.patch('sys.stderr', autospec=True,
-                                   **{'flush': mocker.Mock(),
-                                      'encoding': mocker.sentinel.encoding})
-
-    mock_out = mocker.create_autospec(bytes, instance=True, name='mock_out')
-    mock_err = mocker.create_autospec(bytes, instance=True, name='mock_err',
-                                      **{'__len__.return_value': 1})
-
-    popen = Popen.return_value
-    popen.returncode = 0
-    popen.args = mocker.sentinel.cmd
-    popen.stdin = mocker.create_autospec(io.BytesIO, instance=True)
-    popen.communicate.return_value = (mock_out, mock_err)
-
-    result = run_check(popen.args, input_lines=iter([line]), capture_output=True)
-
-    # subprocess.CompletedProcess.__eq__() is not implemented
-    assert isinstance(result, subprocess.CompletedProcess)
-    assert result.args is popen.args
-    assert result.returncode == popen.returncode
-    assert result.stdout is mock_out
-    assert result.stderr is mock_err
-
-    Popen.assert_called_once_with(mocker.sentinel.cmd,
-                                  stdin=subprocess.PIPE,
-                                  stdout=subprocess.PIPE,
-                                  stderr=subprocess.PIPE,
-                                  startupinfo=mocker.ANY)
-    check_startupinfo(Popen.call_args.kwargs['startupinfo'])
-    popen.communicate.assert_called_once_with()
-    mock_out.decode.assert_not_called()
-    mock_err.decode.assert_called_once_with(mocker.sentinel.encoding)
-    mock_sys_stderr.write.assert_called_once_with(mock_err.decode.return_value)
-    mock_sys_stderr.flush.assert_called_once_with()
 
 
 @pytest.mark.usefixtures('empty_path')
@@ -153,7 +96,7 @@ def test_render_img(capsys, tmp_path, files_path, engine='dot', format_='pdf'):
     gv_path.write_text(f'graph {{ red_dot [image="{img_path.name}"] }}',
                        encoding='ascii')
 
-    with utils.as_cwd(tmp_path):
+    with _utils.as_cwd(tmp_path):
         assert render(engine, format_, gv_rel) == str(rendered_rel)
 
     assert rendered.stat().st_size
@@ -173,7 +116,7 @@ def test_render_mocked(capsys, mocker, run, quiet):
                                 stderr=subprocess.PIPE,
                                 cwd=None,
                                 startupinfo=mocker.ANY,)
-    check_startupinfo(run.call_args.kwargs['startupinfo'])
+    _utils.check_startupinfo(run.call_args.kwargs['startupinfo'])
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
@@ -241,7 +184,7 @@ def test_pipe_pipe_invalid_data_mocked(mocker, run, quiet):
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
                                 startupinfo=mocker.ANY)
-    check_startupinfo(run.call_args.kwargs['startupinfo'])
+    _utils.check_startupinfo(run.call_args.kwargs['startupinfo'])
     if not quiet:
         mock_out.decode.assert_not_called()
         mock_err.decode.assert_called_once_with(mocker.sentinel.encoding)
@@ -262,7 +205,7 @@ def test_pipe_mocked(capsys, mocker, run, quiet):
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
                                 startupinfo=mocker.ANY)
-    check_startupinfo(run.call_args.kwargs['startupinfo'])
+    _utils.check_startupinfo(run.call_args.kwargs['startupinfo'])
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
@@ -292,7 +235,7 @@ def test_unflatten_mocked(capsys, mocker, run):
                                 stderr=subprocess.PIPE,
                                 startupinfo=mocker.ANY,
                                 encoding='utf-8')
-    check_startupinfo(run.call_args.kwargs['startupinfo'])
+    _utils.check_startupinfo(run.call_args.kwargs['startupinfo'])
     assert capsys.readouterr() == ('', '')
 
 
@@ -323,7 +266,7 @@ def test_version_parsefail_mocked(mocker, run):
                                 stderr=subprocess.STDOUT,
                                 startupinfo=mocker.ANY,
                                 encoding='ascii')
-    check_startupinfo(run.call_args.kwargs['startupinfo'])
+    _utils.check_startupinfo(run.call_args.kwargs['startupinfo'])
 
 
 @pytest.mark.parametrize('stdout, expected', [
@@ -345,7 +288,7 @@ def test_version_mocked(mocker, run, stdout, expected):
                                 stderr=subprocess.STDOUT,
                                 startupinfo=mocker.ANY,
                                 encoding='ascii')
-    check_startupinfo(run.call_args.kwargs['startupinfo'])
+    _utils.check_startupinfo(run.call_args.kwargs['startupinfo'])
 
 
 def test_view_unknown_platform(unknown_platform):

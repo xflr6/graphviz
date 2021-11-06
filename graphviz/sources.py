@@ -115,12 +115,11 @@ class Source(rendering.Render, saving.Save,
         Returns:
             The (possibly relative) path of the saved source file.
         """
-        if (skip_existing is None
-            and self._loaded_from_path
-            and os.path.samefile(self._loaded_from_path, self.filepath)):
+        skip = (skip_existing is None
+                and self._loaded_from_path
+                and os.path.samefile(self._loaded_from_path, self.filepath))
+        if skip:
             log.debug('.save(skip_existing=None) skip writing Source.from_file(%r)',
                       self.filepath)
-            skip_existing = True
-
         return super().save(filename=filename, directory=directory,
-                            skip_existing=skip_existing)
+                            skip_existing=skip)
