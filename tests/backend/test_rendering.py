@@ -6,7 +6,7 @@ import pytest
 
 import graphviz
 
-import _utils
+import _common
 
 
 @pytest.mark.parametrize(
@@ -65,7 +65,7 @@ def test_render_img(capsys, tmp_path, files_path, engine='dot', format_='pdf'):
     gv_path.write_text(f'graph {{ red_dot [image="{img_path.name}"] }}',
                        encoding='ascii')
 
-    with _utils.as_cwd(tmp_path):
+    with _common.as_cwd(tmp_path):
         assert graphviz.render(engine, format_, gv_rel) == str(rendered_rel)
 
     assert rendered.stat().st_size
@@ -88,10 +88,10 @@ def test_render_mocked(capsys, sentinel, run, quiet, directory,
 
     assert result == f'{filepath}.pdf'
 
-    run.assert_called_once_with([_utils.EXPECTED_DOT_BINARY,
+    run.assert_called_once_with([_common.EXPECTED_DOT_BINARY,
                                  '-Kdot', '-Tpdf', '-O', 'nonfilepath'],
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
                                 cwd=directory,
-                                startupinfo=_utils.StartupinfoMatcher())
+                                startupinfo=_common.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')

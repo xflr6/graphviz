@@ -6,7 +6,7 @@ import pytest
 
 import graphviz
 
-import _utils
+import _common
 
 SVG_PATTERN = r'(?s)^<\?xml .+</svg>\s*$'
 
@@ -70,11 +70,11 @@ def test_pipe_pipe_invalid_data_mocked(mocker, sentinel, run, quiet):
     assert e.value.stderr is mock_err
     e.value.stdout = sentinel.new_stdout
     assert e.value.stdout is sentinel.new_stdout
-    run.assert_called_once_with([_utils.EXPECTED_DOT_BINARY, '-Kdot', '-Tpng'],
+    run.assert_called_once_with([_common.EXPECTED_DOT_BINARY, '-Kdot', '-Tpng'],
                                 input=b'nongraph',
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
-                                startupinfo=_utils.StartupinfoMatcher())
+                                startupinfo=_common.StartupinfoMatcher())
     if not quiet:
         mock_out.decode.assert_not_called()
         mock_err.decode.assert_called_once_with(sentinel.encoding)
@@ -91,11 +91,11 @@ def test_pipe_mocked(capsys, sentinel, run, quiet):
     assert graphviz.pipe('dot', 'png', b'nongraph',
                          quiet=quiet) == b'stdout'
 
-    run.assert_called_once_with([_utils.EXPECTED_DOT_BINARY, '-Kdot', '-Tpng'],
+    run.assert_called_once_with([_common.EXPECTED_DOT_BINARY, '-Kdot', '-Tpng'],
                                 input=b'nongraph',
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
-                                startupinfo=_utils.StartupinfoMatcher())
+                                startupinfo=_common.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
@@ -109,12 +109,12 @@ def test_pipe_string_mocked(capsys, sentinel, run, quiet,
     assert graphviz.pipe_string('dot', 'png', 'nongraph',
                                 encoding=encoding, quiet=quiet) == 'stdout'
 
-    run.assert_called_once_with([_utils.EXPECTED_DOT_BINARY, '-Kdot', '-Tpng'],
+    run.assert_called_once_with([_common.EXPECTED_DOT_BINARY, '-Kdot', '-Tpng'],
                                 input='nongraph',
                                 encoding=encoding,
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
-                                startupinfo=_utils.StartupinfoMatcher())
+                                startupinfo=_common.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
@@ -134,11 +134,11 @@ def test_pipe_lines_mocked(capsys, sentinel, Popen, quiet,
 
     assert proc.stdin.getvalue() == b'nongraph\n'
 
-    Popen.assert_called_once_with([_utils.EXPECTED_DOT_BINARY, '-Kdot', '-Tpng'],
+    Popen.assert_called_once_with([_common.EXPECTED_DOT_BINARY, '-Kdot', '-Tpng'],
                                   stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
-                                  startupinfo=_utils.StartupinfoMatcher())
+                                  startupinfo=_common.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
@@ -158,10 +158,10 @@ def test_pipe_lines_string_mocked(capsys, sentinel, Popen, quiet,
 
     assert proc.stdin.getvalue() == 'nongraph\n'
 
-    Popen.assert_called_once_with([_utils.EXPECTED_DOT_BINARY, '-Kdot', '-Tpng'],
+    Popen.assert_called_once_with([_common.EXPECTED_DOT_BINARY, '-Kdot', '-Tpng'],
                                   encoding=encoding,
                                   stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
-                                  startupinfo=_utils.StartupinfoMatcher())
+                                  startupinfo=_common.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')

@@ -6,7 +6,7 @@ import pytest
 
 import graphviz
 
-import _utils
+import _common
 
 EXPECTED_UNFLATTEN_BINARY = pathlib.Path('unflatten')
 
@@ -39,7 +39,7 @@ def test_unflatten_mocked(capsys, sentinel, run,
                                 input='nonsource',
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
-                                startupinfo=_utils.StartupinfoMatcher(),
+                                startupinfo=_common.StartupinfoMatcher(),
                                 encoding='utf-8')
     assert capsys.readouterr() == ('', '')
 

@@ -1,4 +1,4 @@
-"""Test helpers."""
+"""Test helpers and test globals."""
 
 import contextlib
 import os

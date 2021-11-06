@@ -4,7 +4,7 @@ import pytest
 
 import graphviz
 
-import _utils
+import _common
 
 
 @pytest.mark.exe(xfail=True, raises=graphviz.ExecutableNotFound)
@@ -24,10 +24,10 @@ def test_version_parsefail_mocked(sentinel, run):
     with pytest.raises(RuntimeError, match=r'nonversioninfo'):
         graphviz.version()
 
-    run.assert_called_once_with([_utils.EXPECTED_DOT_BINARY, '-V'],
+    run.assert_called_once_with([_common.EXPECTED_DOT_BINARY, '-V'],
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT,
-                                startupinfo=_utils.StartupinfoMatcher(),
+                                startupinfo=_common.StartupinfoMatcher(),
                                 encoding='ascii')
 
 
@@ -45,8 +45,8 @@ def test_version_mocked(sentinel, run, stdout, expected):
 
     assert graphviz.version() == expected
 
-    run.assert_called_once_with([_utils.EXPECTED_DOT_BINARY, '-V'],
+    run.assert_called_once_with([_common.EXPECTED_DOT_BINARY, '-V'],
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT,
-                                startupinfo=_utils.StartupinfoMatcher(),
+                                startupinfo=_common.StartupinfoMatcher(),
                                 encoding='ascii')
