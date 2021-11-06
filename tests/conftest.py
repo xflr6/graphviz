@@ -25,19 +25,22 @@ def pytest_configure(config):
 
 def pytest_collection_modifyitems(config, items):
     if config.getoption(SKIP_EXE):
-        def get_xfail(*, xfail: bool = False) -> bool:
-            return xfail
+        def get_xfail(*, xfail: bool = False, **kwargs) -> bool:
+            kwargs['xfail'] = xfail
+            return kwargs
 
         for item in items:
             exe_values = [get_xfail(*m.args, **m.kwargs)
                           for m in item.iter_markers(name='exe')]
             if exe_values:
                 assert len(exe_values) == 1
-                xfail, = exe_values
-                if xfail:
-                    marker = pytest.mark.xfail(reason=f'xfail by {SKIP_EXE} flag')
+                kwargs, = exe_values
+                if kwargs['xfail']:
+                    kwargs.setdefault('reason', f'xfail by {SKIP_EXE} flag')
+                    marker = pytest.mark.xfail(**kwargs)
                 else:
-                    marker = pytest.mark.skip(reason=f'skipped by {SKIP_EXE} flag')
+                    kwargs.setdefault('reason', f'skipped by {SKIP_EXE} flag')
+                    marker = pytest.mark.skip(**kwargs)
                 item.add_marker(marker)
 
 
