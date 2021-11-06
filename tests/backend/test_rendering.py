@@ -8,29 +8,18 @@ import graphviz
 import _utils
 
 
-def test_render_engine_unknown():
-    with pytest.raises(ValueError, match=r'unknown engine'):
-        graphviz.render('', 'pdf', 'nonfilepath')
-
-
-def test_render_format_unknown():
-    with pytest.raises(ValueError, match=r'unknown format'):
-        graphviz.render('dot', '', 'nonfilepath')
-
-
-def test_render_renderer_unknown():
-    with pytest.raises(ValueError, match=r'unknown renderer'):
-        graphviz.render('dot', 'ps', 'nonfilepath', '', None)
-
-
-def test_render_renderer_missing():
-    with pytest.raises(graphviz.RequiredArgumentError, match=r'without renderer'):
-        graphviz.render('dot', 'ps', 'nonfilepath', None, 'core')
-
-
-def test_render_formatter_unknown():
-    with pytest.raises(ValueError, match=r'unknown formatter'):
-        graphviz.render('dot', 'ps', 'nonfilepath', 'ps', '')
+@pytest.mark.parametrize(
+    'args, expected_exception, match',
+    [(['', 'pdf', 'nonfilepath'], ValueError, r'unknown engine'),
+     (['dot', '', 'nonfilepath'], ValueError, r'unknown format'),
+     (['dot', 'ps', 'nonfilepath', '', None], ValueError, r'unknown renderer'),
+     (['dot', 'ps', 'nonfilepath', None, 'core'],
+      graphviz.RequiredArgumentError, r'without renderer'),
+     (['dot', 'ps', 'nonfilepath', 'ps', ''], ValueError, r'unknown formatter')],
+    ids=lambda x: getattr(x, '__name__', x))
+def test_render_unknown_parameter_raises(args, expected_exception, match):
+    with pytest.raises(expected_exception, match=match):
+        graphviz.render(*args)
 
 
 @pytest.mark.exe
@@ -41,10 +30,10 @@ def test_render_missing_file(quiet, engine='dot', format_='pdf'):
 
 
 @pytest.mark.exe
-@pytest.mark.parametrize('format_, renderer, formatter, expected_suffix', [
-    ('pdf', None, None, 'pdf'),
-    ('plain', 'dot', 'core', 'core.dot.plain'),
-])
+@pytest.mark.parametrize(
+    'format_, renderer, formatter, expected_suffix',
+    [('pdf', None, None, 'pdf'),
+     ('plain', 'dot', 'core', 'core.dot.plain')])
 @pytest.mark.parametrize('engine', ['dot'])
 def test_render(capsys, tmp_path, engine, format_, renderer, formatter,
                 expected_suffix, filename='hello.gv',
