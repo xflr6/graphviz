@@ -17,7 +17,7 @@ API Reference
     graphviz.unflatten
     graphviz.view
 
-.. note::
+.. hint::
 
     The two main classes :class:`.Graph` and :class:`.Digraph` (for creating
     `undirected` vs. `directed` graphs) have exactly the same API.
