@@ -143,6 +143,42 @@ def test_repr_svg_mocked(mocker, sentinel, cls):
 
 
 @pytest.mark.parametrize(
+    'kwargs', [{'engine': 'spam'}])
+def test_render_raises_before_save(tmp_path, cls, kwargs, filename = 'dot.gv'):
+    dot = cls(filename=filename, directory=tmp_path)
+    expected_source = tmp_path / filename
+    assert not expected_source.exists()
+
+    with pytest.raises(ValueError, match=r''):
+        dot.render(**kwargs)
+
+    assert not expected_source.exists()
+
+    pdf = dot.render(engine='dot')
+
+    assert pdf == f'{expected_source}.pdf'
+    assert expected_source.exists()
+    assert expected_source.stat().st_size
+
+
+@pytest.mark.parametrize(
+    'kwargs',
+    [{'engine': 'spam'}, {'format': 'spam'},
+     {'renderer': 'spam'}, {'formatter': 'spam'}])
+def test_render_raises_before_save_mocked(tmp_path, mocker, render, cls, kwargs, filename = 'dot.gv'):
+    dot = cls(filename=filename, directory=tmp_path)
+    mock_save = mocker.patch.object(dot, 'save', autospec=True)
+
+    expected_source = tmp_path / filename
+    assert not expected_source.exists()
+
+    with pytest.raises(ValueError, match=r''):
+        dot.render(**kwargs)
+
+    assert not expected_source.exists()
+
+
+@pytest.mark.parametrize(
     'keep_attrs', [False, True])
 def test_clear(cls, keep_attrs):
     kwargs = {f'{a}_attr': {a: a} for a in ('graph', 'node', 'edge')}
