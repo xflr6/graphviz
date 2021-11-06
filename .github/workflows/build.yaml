@@ -15,7 +15,7 @@ jobs:
           - name: linux-3.10-skip-exe
             python-version: "3.10"
             os: ubuntu-latest
-          - name: linux-3.9-pytype
+          - name: linux-3.9-pytype-skip-exe
             python-version: "3.9"
             os: ubuntu-latest
           - name: linux-3.8-skip-exe
@@ -39,7 +39,7 @@ jobs:
     steps:
       - name: Install system dependencies (if not -skip-exe)
         run: sudo apt install graphviz
-        if: ${{ !endsWith(matrix.name, '-skip-exe') }}
+        if: ${{ !contains(matrix.name, '-skip-exe') }}
       - name: Checkout repo
         uses: actions/checkout@v2
       - name: Setup Python ${{ matrix.python-version }}
@@ -52,21 +52,21 @@ jobs:
         run: pip install .[test] codecov
       - name: Run full tests
         run: python run-tests.py
-        if: ${{ !endsWith(matrix.name, '-skip-exe') }}
+        if: ${{ !contains(matrix.name, '-skip-exe') }}
       - name: Run tests with --skip-exe (if -skip-exe)
         run: python run-tests.py --skip-exe
-        if: ${{ endsWith(matrix.name, '-skip-exe') }}
+        if: ${{ contains(matrix.name, '-skip-exe') }}
       - name: Upload coverage
         uses: codecov/codecov-action@v1
       - name: Run pytype (if enabled)
         run: |
           pip install pytype
           pytype graphviz
-        if: ${{ endsWith(matrix.name, '-pytype') }}
+        if: ${{ contains(matrix.name, '-pytype') }}
         continue-on-error: true
       - name: Render examples (if not -skip-exe)
         run: python try-examples.py
-        if: ${{ !endsWith(matrix.name, '-skip-exe') }}
+        if: ${{ !contains(matrix.name, '-skip-exe') }}
       - name: Upload artifacts ${{ matrix.name }}
         uses: actions/upload-artifact@v2
         with:
