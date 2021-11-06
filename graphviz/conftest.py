@@ -8,12 +8,13 @@ SKIP_EXE = '--skip-exe'
 def pytest_addoption(parser):
     try:
         parser.addoption(SKIP_EXE, action='store_true',
-                         help='skip tests with pytest.mark.exe;'
-                              ' xfail tests with pytest.mark.exe(xfail=True)'
-                              ' (tests that run Graphviz executables'
-                              '  or subprocesses)')
-    except ValueError:  # pragma: no cover
-        pass
+                         help='Skip tests with pytest.mark.exe.'
+                              ' Xfail tests with pytest.mark.exe(xfail=True).'
+                              ' Skip doctests with doctest_mark_exe().'
+                              ' Xfail doctests with doctest_mark_exe(xfail=True).'
+                              ' exe marks tests requiring backend.DOT_BINARY.')
+    except ValueError as e:  # pragma: no cover
+        assert SKIP_EXE in str(e), f'fails because {SKIP_EXE!r} is already added'
 
 
 @pytest.fixture(autouse=True)

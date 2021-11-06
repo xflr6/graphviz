@@ -10,7 +10,6 @@ from graphviz.backend.execute import run_check
 import _utils
 
 
-@pytest.mark.exe
 def test_run_check_oserror():
     with pytest.raises(OSError) as e:
         run_check([''])
