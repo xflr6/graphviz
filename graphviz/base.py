@@ -27,6 +27,6 @@ class Base(LineIterable, copying.Copy):
     def source(self) -> str:  # pragma: no cover
         raise NotImplementedError('to be implemented by concrete subclasses')
 
-    def __str__(self):
+    def __str__(self) -> str:
         """The DOT source code as string."""
         return self.source
