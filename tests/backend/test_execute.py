@@ -75,7 +75,7 @@ def test_run_check_called_process_error_mocked(capsys, sentinel, run,
                                                stderr='I am not the messiah!'):
     run.return_value = subprocess.CompletedProcess(INVALID_CMD, returncode=500,
                                                    stdout=stdout, stderr=stderr)
-    with pytest.raises(execute.CalledProcessError, match=stderr) as e:
+    with pytest.raises(execute.CalledProcessError, match=stderr):
         execute.run_check(INVALID_CMD, capture_output=True)
 
     assert capsys.readouterr() == ('', stderr)
