@@ -8,7 +8,7 @@ import subprocess
 
 __all__ = ['EXPECTED_DOT_BINARY', 'EXPECTED_DEFAULT_ENCODING',
            'as_cwd',
-           'check_startupinfo', 'StarupinfoMatcher']
+           'check_startupinfo', 'StartupinfoMatcher']
 
 EXPECTED_DOT_BINARY = pathlib.Path('dot')
 
