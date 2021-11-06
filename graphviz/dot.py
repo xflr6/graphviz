@@ -244,19 +244,11 @@ class Dot(quoting.Quote, base.Base):
             the layout engine will treat it as a special cluster subgraph.
         """
         if graph is None:
-            return SubgraphContext(self, {'name': name,
-                                          'comment': comment,
-                                          'directory': self.directory,
-                                          'format': self.format,
-                                          'engine': self.engine,
-                                          'renderer': self.renderer,
-                                          'formatter': self.formatter,
-                                          'encoding': self.encoding,
-                                          'graph_attr': graph_attr,
-                                          'node_attr': node_attr,
-                                          'edge_attr': edge_attr,
-                                          'body': body,
-                                          'strict': None})
+            kwargs = self._copy_kwargs()
+            kwargs.update(name=name, comment=comment,
+                          graph_attr=graph_attr, node_attr=node_attr, edge_attr=edge_attr,
+                          body=body, strict=None)
+            return SubgraphContext(self, kwargs)
 
         args = [name, comment, graph_attr, node_attr, edge_attr, body]
         if not all(a is None for a in args):
