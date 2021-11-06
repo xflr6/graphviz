@@ -32,7 +32,7 @@ Returns the decoded stdout from the rendering process
 (e.g. ``format='svg'``).
 Delegates encoding/decoding to ``subprocess`` in the common case
 (input and output encoding are the same, e.g. default ``encoding='utf-8'``).
-Used by the jupyter integration.
+Used by the Jupyter notebook integration.
 
 Add optional keyword-only ``engine`` argument to ``.pipe()`` and ``.render()``.
 
@@ -60,13 +60,14 @@ This might break some undocumented use of subclassing and require adatation
 (e.g. if the methods don't use cooperative ``super()`` calling convention
 or if the MRO has conflicts, supposedly rare).
 
-Improve test separation. Improve test coverage of --skip-exe.
+Improve test separation. Improve test coverage of running the tests with ``--skip-exe``.
 
 Add ``pytype`` checking and ``flake8`` to build workflow.
 
 Extend type annotations.
 
-Add https://mybinder.org config and launch badge to code repository.
+Add https://mybinder.org config with head development environment.
+Add launch badge to code repository.
 
 Improve documentation and examples.
 

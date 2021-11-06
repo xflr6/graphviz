@@ -13,7 +13,7 @@ Installation
 
 |Binder|
 
-Development installation **binder** : https://mybinder.org/v2/gh/xflr6/graphviz/HEAD
+Development environment **binder** : https://mybinder.org/v2/gh/xflr6/graphviz/HEAD
 
 Local installation
 ^^^^^^^^^^^^^^^^^^
