@@ -145,7 +145,7 @@ def test_repr_svg_mocked(mocker, sentinel, cls):
 @pytest.mark.exe
 @pytest.mark.parametrize(
     'kwargs', [{'engine': 'spam'}])
-def test_render_raises_before_save(tmp_path, cls, kwargs, filename = 'dot.gv'):
+def test_render_raises_before_save(tmp_path, cls, kwargs, filename='dot.gv'):
     dot = cls(filename=filename, directory=tmp_path)
     expected_source = tmp_path / filename
     assert not expected_source.exists()
@@ -167,7 +167,7 @@ def test_render_raises_before_save(tmp_path, cls, kwargs, filename = 'dot.gv'):
     [{'engine': 'spam'}, {'format': 'spam'},
      {'renderer': 'spam'}, {'formatter': 'spam'}])
 def test_render_raises_before_save_mocked(tmp_path, render, cls, kwargs,
-                                          filename = 'dot.gv'):
+                                          filename='dot.gv'):
     dot = cls(filename=filename, directory=tmp_path)
 
     expected_source = tmp_path / filename

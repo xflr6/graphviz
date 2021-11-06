@@ -19,8 +19,8 @@ DEFAULT_ENGINE = 'dot'
 
 
 def verify_engine(engine: str) -> None:
-        if engine.lower() not in ENGINES:
-            raise ValueError(f'unknown engine: {engine!r}')
+    if engine.lower() not in ENGINES:
+        raise ValueError(f'unknown engine: {engine!r}')
 
 
 class Engine(copying.Copy):

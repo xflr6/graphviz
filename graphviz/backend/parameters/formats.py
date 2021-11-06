@@ -48,8 +48,8 @@ DEFAULT_FORMAT = 'pdf'
 
 
 def verify_format(format: str) -> None:
-        if format.lower() not in FORMATS:
-            raise ValueError(f'unknown format: {format!r}')
+    if format.lower() not in FORMATS:
+        raise ValueError(f'unknown format: {format!r}')
 
 
 class Format(copying.Copy):

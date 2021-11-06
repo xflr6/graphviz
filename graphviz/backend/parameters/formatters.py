@@ -15,8 +15,8 @@ FORMATTERS = {'cairo',
 
 
 def verify_formatter(formatter: typing.Optional[str]) -> None:
-        if formatter.lower() not in FORMATTERS:
-            raise ValueError(f'unknown formatter: {formatter!r}')
+    if formatter.lower() not in FORMATTERS:
+        raise ValueError(f'unknown formatter: {formatter!r}')
 
 
 class Formatter(copying.Copy):
