@@ -265,7 +265,7 @@ class Dot(quoting.Quote, base.Base):
 class SubgraphContext:
     """Return a blank instance of the parent and add as subgraph on exit."""
 
-    def __init__(self, parent, kwargs):
+    def __init__(self, parent, kwargs) -> None:
         self.parent = parent
         self.graph = parent.__class__(**kwargs)
 

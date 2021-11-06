@@ -43,7 +43,7 @@ class Source(rendering.Render, saving.Save,
                   engine: typing.Optional[str] = None,
                   encoding: typing.Optional[str] = DEFAULT_ENCODING,
                   renderer: typing.Optional[str] = None,
-                  formatter: typing.Optional[str] = None):
+                  formatter: typing.Optional[str] = None) -> 'Source':
         """Return an instance with the source string read from the given file.
 
         Args:
