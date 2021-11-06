@@ -206,11 +206,11 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      graphviz.base.LineIterable
      |      graphviz.backend.mixins.Render
      |      graphviz.backend.mixins.Pipe
-     |      graphviz.backend.mixins.Graphviz
-     |      graphviz.backend.engines.Engine
-     |      graphviz.backend.formats.Format
-     |      graphviz.backend.renderers.Renderer
-     |      graphviz.backend.formatters.Formatter
+     |      graphviz.backend.mixins.Parameters
+     |      graphviz.backend.parameters.engines.Engine
+     |      graphviz.backend.parameters.formats.Format
+     |      graphviz.backend.parameters.renderers.Renderer
+     |      graphviz.backend.parameters.formatters.Formatter
      |      graphviz.copying.Copy
      |      graphviz.backend.mixins.View
      |      graphviz.backend.mixins.Unflatten
@@ -366,7 +366,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
                format: Optional[str] = None,
                renderer: Optional[str] = None,
                formatter: Optional[str] = None,
-               quiet: bool = False, quiet_view: bool = False) -> str
+               quiet: bool = False, quiet_view: bool = False, *,
+               engine: Optional[str] = None) -> str
      |      Save the source to file and render with the Graphviz engine.
      |
      |      Args:
@@ -388,6 +389,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          quiet_view (bool): Suppress ``stderr`` output
      |              from the viewer process
      |              (implies ``view=True``, ineffective on Windows platform).
+     |          engine: Layout engine for rendering
+     |              (``'dot'``, ``'neato'``, ...).
      |
      |      Returns:
      |          The (possibly relative) path of the rendered file.
@@ -472,6 +475,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
              renderer: Optional[str] = None,
              formatter: Optional[str] = None,
              quiet: bool = False, *,
+             engine: Optional[str] = None,
              encoding: Optional[str] = None) -> Union[bytes, str]
      |      Return the source piped through the Graphviz layout command.
      |
@@ -484,6 +488,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |              (``'cairo'``, ``'gd'``, ...).
      |          quiet (bool): Suppress ``stderr`` output
      |              from the layout subprocess.
+     |          engine: Layout engine for rendering
+     |              (``'dot'``, ``'neato'``, ...).
      |          encoding: Encoding for decoding the stdout.
      |
      |      Returns:
@@ -505,6 +511,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |
      |          >>> source = 'graph { spam }'
      |
+     |          >>> doctest_mark_exe()
      |          >>> graphviz.Source(source, format='svg').pipe()[:14]
      |          b'<?xml version='
      |
@@ -556,28 +563,28 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      The DOT source code as string.
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.engines.Engine:
+     |  Data descriptors inherited from graphviz.backend.parameters.engines.Engine:
      |
      |  engine
      |      The layout engine used for rendering
      |      (``'dot'``, ``'neato'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.formats.Format:
+     |  Data descriptors inherited from graphviz.backend.parameters.formats.Format:
      |
      |  format
      |      The output format used for rendering
      |      (``'pdf'``, ``'png'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.renderers.Renderer:
+     |  Data descriptors inherited from graphviz.backend.parameters.renderers.Renderer:
      |
      |  renderer
      |      The output renderer used for rendering
      |      (``'cairo'``, ``'gd'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.formatters.Formatter:
+     |  Data descriptors inherited from graphviz.backend.parameters.formatters.Formatter:
      |
      |  formatter
      |      The output formatter used for rendering
@@ -657,11 +664,11 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      graphviz.base.LineIterable
      |      graphviz.backend.mixins.Render
      |      graphviz.backend.mixins.Pipe
-     |      graphviz.backend.mixins.Graphviz
-     |      graphviz.backend.engines.Engine
-     |      graphviz.backend.formats.Format
-     |      graphviz.backend.renderers.Renderer
-     |      graphviz.backend.formatters.Formatter
+     |      graphviz.backend.mixins.Parameters
+     |      graphviz.backend.parameters.engines.Engine
+     |      graphviz.backend.parameters.formats.Format
+     |      graphviz.backend.parameters.renderers.Renderer
+     |      graphviz.backend.parameters.formatters.Formatter
      |      graphviz.copying.Copy
      |      graphviz.backend.mixins.View
      |      graphviz.backend.mixins.Unflatten
@@ -817,7 +824,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
                format: Optional[str] = None,
                renderer: Optional[str] = None,
                formatter: Optional[str] = None,
-               quiet: bool = False, quiet_view: bool = False) -> str
+               quiet: bool = False, quiet_view: bool = False, *,
+               engine: Optional[str] = None) -> str
      |      Save the source to file and render with the Graphviz engine.
      |
      |      Args:
@@ -839,6 +847,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          quiet_view (bool): Suppress ``stderr`` output
      |              from the viewer process
      |              (implies ``view=True``, ineffective on Windows platform).
+     |          engine: Layout engine for rendering
+     |              (``'dot'``, ``'neato'``, ...).
      |
      |      Returns:
      |          The (possibly relative) path of the rendered file.
@@ -922,6 +932,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
              renderer: Optional[str] = None,
              formatter: Optional[str] = None,
              quiet: bool = False, *,
+             engine: Optional[str] = None,
              encoding: Optional[str] = None) -> Union[bytes, str]
      |      Return the source piped through the Graphviz layout command.
      |
@@ -934,6 +945,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |              (``'cairo'``, ``'gd'``, ...).
      |          quiet (bool): Suppress ``stderr`` output
      |              from the layout subprocess.
+     |          engine: Layout engine for rendering
+     |              (``'dot'``, ``'neato'``, ...).
      |          encoding: Encoding for decoding the stdout.
      |
      |      Returns:
@@ -955,6 +968,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |
      |          >>> source = 'graph { spam }'
      |
+     |          >>> doctest_mark_exe()
      |          >>> graphviz.Source(source, format='svg').pipe()[:14]
      |          b'<?xml version='
      |
@@ -1006,28 +1020,28 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      The DOT source code as string.
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.engines.Engine:
+     |  Data descriptors inherited from graphviz.backend.parameters.engines.Engine:
      |
      |  engine
      |      The layout engine used for rendering
      |      (``'dot'``, ``'neato'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.formats.Format:
+     |  Data descriptors inherited from graphviz.backend.parameters.formats.Format:
      |
      |  format
      |      The output format used for rendering
      |      (``'pdf'``, ``'png'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.renderers.Renderer:
+     |  Data descriptors inherited from graphviz.backend.parameters.renderers.Renderer:
      |
      |  renderer
      |      The output renderer used for rendering
      |      (``'cairo'``, ``'gd'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.formatters.Formatter:
+     |  Data descriptors inherited from graphviz.backend.parameters.formatters.Formatter:
      |
      |  formatter
      |      The output formatter used for rendering
@@ -1064,6 +1078,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
                format: Optional[str] = None,
                engine: Optional[str] = None,
                encoding: Optional[str] = 'utf-8', *,
+               renderer: Optional[str] = None,
+               formatter: Optional[str] = None,
                loaded_from_path: Optional[os.PathLike] = None) -> None
      |
      |  Verbatim DOT source code string to be rendered by Graphviz.
@@ -1073,7 +1089,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      filename: Filename for saving the source (defaults to ``'Source.gv'``).
      |      directory: (Sub)directory for source saving and rendering.
      |      format: Rendering output format (``'pdf'``, ``'png'``, ...).
-     |      engine: Layout command used (``'dot'``, ``'neato'``, ...).
+     |      engine: Layout engine used (``'dot'``, ``'neato'``, ...).
      |      encoding: Encoding for saving the source.
      |
      |  Note:
@@ -1093,11 +1109,11 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      graphviz.base.LineIterable
      |      graphviz.backend.mixins.Render
      |      graphviz.backend.mixins.Pipe
-     |      graphviz.backend.mixins.Graphviz
-     |      graphviz.backend.engines.Engine
-     |      graphviz.backend.formats.Format
-     |      graphviz.backend.renderers.Renderer
-     |      graphviz.backend.formatters.Formatter
+     |      graphviz.backend.mixins.Parameters
+     |      graphviz.backend.parameters.engines.Engine
+     |      graphviz.backend.parameters.formats.Format
+     |      graphviz.backend.parameters.renderers.Renderer
+     |      graphviz.backend.parameters.formatters.Formatter
      |      graphviz.copying.Copy
      |      graphviz.backend.mixins.View
      |      graphviz.backend.mixins.Unflatten
@@ -1110,6 +1126,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
                  format: Optional[str] = None,
                  engine: Optional[str] = None,
                  encoding: Optional[str] = 'utf-8', *,
+                 renderer: Optional[str] = None,
+                 formatter: Optional[str] = None,
                  loaded_from_path: Optional[os.PathLike] = None) -> None
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
@@ -1137,7 +1155,9 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  from_file(filename, directory=None,
                   format: Optional[str] = None,
                   engine: Optional[str] = None,
-                  encoding: Optional[str] = 'utf-8') from builtins.type
+                  encoding: Optional[str] = 'utf-8',
+                  renderer: Optional[str] = None,
+                  formatter: Optional[str] = None) from builtins.type
      |      Return an instance with the source string read from the given file.
      |
      |      Args:
@@ -1161,7 +1181,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
                format: Optional[str] = None,
                renderer: Optional[str] = None,
                formatter: Optional[str] = None,
-               quiet: bool = False, quiet_view: bool = False) -> str
+               quiet: bool = False, quiet_view: bool = False, *,
+               engine: Optional[str] = None) -> str
      |      Save the source to file and render with the Graphviz engine.
      |
      |      Args:
@@ -1183,6 +1204,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |          quiet_view (bool): Suppress ``stderr`` output
      |              from the viewer process
      |              (implies ``view=True``, ineffective on Windows platform).
+     |          engine: Layout engine for rendering
+     |              (``'dot'``, ``'neato'``, ...).
      |
      |      Returns:
      |          The (possibly relative) path of the rendered file.
@@ -1250,8 +1273,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  pipe(self,
              format: Optional[str] = None,
              renderer: Optional[str] = None,
-             formatter: Optional[str] = None,
-             quiet: bool = False, *,
+             formatter: Optional[str] = None, quiet: bool = False, *,
+             engine: Optional[str] = None,
              encoding: Optional[str] = None) -> Union[bytes, str]
      |      Return the source piped through the Graphviz layout command.
      |
@@ -1264,6 +1287,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |              (``'cairo'``, ``'gd'``, ...).
      |          quiet (bool): Suppress ``stderr`` output
      |              from the layout subprocess.
+     |          engine: Layout engine for rendering
+     |              (``'dot'``, ``'neato'``, ...).
      |          encoding: Encoding for decoding the stdout.
      |
      |      Returns:
@@ -1285,6 +1310,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |
      |          >>> source = 'graph { spam }'
      |
+     |          >>> doctest_mark_exe()
      |          >>> graphviz.Source(source, format='svg').pipe()[:14]
      |          b'<?xml version='
      |
@@ -1345,28 +1371,28 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      list of weak references to the object (if defined)
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.engines.Engine:
+     |  Data descriptors inherited from graphviz.backend.parameters.engines.Engine:
      |
      |  engine
      |      The layout engine used for rendering
      |      (``'dot'``, ``'neato'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.formats.Format:
+     |  Data descriptors inherited from graphviz.backend.parameters.formats.Format:
      |
      |  format
      |      The output format used for rendering
      |      (``'pdf'``, ``'png'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.renderers.Renderer:
+     |  Data descriptors inherited from graphviz.backend.parameters.renderers.Renderer:
      |
      |  renderer
      |      The output renderer used for rendering
      |      (``'cairo'``, ``'gd'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.formatters.Formatter:
+     |  Data descriptors inherited from graphviz.backend.parameters.formatters.Formatter:
      |
      |  formatter
      |      The output formatter used for rendering
