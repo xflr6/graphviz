@@ -33,7 +33,7 @@ def test_str(cls):
     assert str(c) == c.source
 
 
-def test_format_renderer_formatter(mocker, sentinel, render, quiet, cls,
+def test_format_renderer_formatter(mocker, sentinel, mock_render, quiet, cls,
                                    filename='format.gv', format='jpg',
                                    renderer='cairo', formatter='core'):
 
@@ -46,12 +46,12 @@ def test_format_renderer_formatter(mocker, sentinel, render, quiet, cls,
     assert dot.renderer == renderer
     assert dot.formatter == formatter
 
-    assert dot.render(quiet=quiet) is render.return_value
+    assert dot.render(quiet=quiet) is mock_render.return_value
 
     save.assert_called_once_with(None, None, skip_existing=None)
-    render.assert_called_once_with('dot', format, save.return_value,
-                                   renderer=renderer, formatter=formatter,
-                                   quiet=quiet)
+    mock_render.assert_called_once_with('dot', format, save.return_value,
+                                        renderer=renderer, formatter=formatter,
+                                        quiet=quiet)
 
 
 def test_invalid_renderer_raises_valueerror(cls):
@@ -104,7 +104,7 @@ def test_unflatten_mocked(sentinel, mock_unflatten, cls):
 
 @pytest.mark.parametrize(
     'encoding', [None, 'ascii', 'utf-8'])
-def test_pipe_mocked(mocker, pipe_lines, pipe_lines_string, quiet, cls, encoding):
+def test_pipe_mocked(mocker, mock_pipe_lines, mock_pipe_lines_string, quiet, cls, encoding):
     input_encoding = 'utf-8'
     dot = cls(encoding=input_encoding)
 
@@ -116,30 +116,30 @@ def test_pipe_mocked(mocker, pipe_lines, pipe_lines_string, quiet, cls, encoding
                        'formatter': None}
 
     if encoding == input_encoding:
-        assert result is pipe_lines_string.return_value
-        pipe_lines_string.assert_called_once_with(*expected_args,
-                                                  encoding=encoding,
-                                                  **expected_kwargs)
+        assert result is mock_pipe_lines_string.return_value
+        mock_pipe_lines_string.assert_called_once_with(*expected_args,
+                                                       encoding=encoding,
+                                                       **expected_kwargs)
         return
 
     if encoding is None:
-        assert result is pipe_lines.return_value
+        assert result is mock_pipe_lines.return_value
     else:
-        assert result is pipe_lines.return_value.decode.return_value
-        pipe_lines.return_value.decode.assert_called_once_with(encoding)
-    pipe_lines.assert_called_once_with(*expected_args,
-                                       input_encoding=input_encoding,
-                                       **expected_kwargs)
+        assert result is mock_pipe_lines.return_value.decode.return_value
+        mock_pipe_lines.return_value.decode.assert_called_once_with(encoding)
+    mock_pipe_lines.assert_called_once_with(*expected_args,
+                                            input_encoding=input_encoding,
+                                            **expected_kwargs)
 
 
 def test_repr_svg_mocked(mocker, sentinel, cls):
     c = cls()
-    pipe = mocker.patch.object(c, 'pipe', autospec=True,
-                               return_value=sentinel.string)
+    mock_pipe = mocker.patch.object(c, 'pipe', autospec=True,
+                                    return_value=sentinel.string)
 
     assert c._repr_svg_() is sentinel.string
 
-    pipe.assert_called_once_with(format='svg', encoding=c.encoding)
+    mock_pipe.assert_called_once_with(format='svg', encoding=c.encoding)
 
 
 @pytest.mark.exe
@@ -166,7 +166,7 @@ def test_render_raises_before_save(tmp_path, cls, kwargs, filename='dot.gv'):
     'kwargs',
     [{'engine': 'spam'}, {'format': 'spam'},
      {'renderer': 'spam'}, {'formatter': 'spam'}])
-def test_render_raises_before_save_mocked(tmp_path, render, cls, kwargs,
+def test_render_raises_before_save_mocked(tmp_path, mock_render, cls, kwargs,
                                           filename='dot.gv'):
     dot = cls(filename=filename, directory=tmp_path)
 

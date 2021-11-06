@@ -96,17 +96,17 @@ def sentinel(mocker):
 
 
 @pytest.fixture
-def run(mocker):  # noqa: N802
+def mock_run(mocker):  # noqa: N802
     yield mocker.patch('subprocess.run', autospec=True)
 
 
 @pytest.fixture
-def Popen(mocker):  # noqa: N802
+def mock_popen(mocker):  # noqa: N802
     yield mocker.patch('subprocess.Popen', autospec=True)
 
 
 @pytest.fixture
-def startfile(mocker, platform):
+def mock_startfile(mocker, platform):
     if platform == 'windows':
         kwargs = {'autospec': True}
     else:
@@ -125,22 +125,22 @@ def quiet(request):
 
 
 @pytest.fixture
-def pipe(mocker):
+def mock_pipe(mocker):
     yield mocker.patch('graphviz.backend.piping.pipe', autospec=True)
 
 
 @pytest.fixture
-def pipe_lines(mocker):
+def mock_pipe_lines(mocker):
     yield mocker.patch('graphviz.backend.piping.pipe_lines', autospec=True)
 
 
 @pytest.fixture
-def pipe_lines_string(mocker):
+def mock_pipe_lines_string(mocker):
     yield mocker.patch('graphviz.backend.piping.pipe_lines_string', autospec=True)
 
 
 @pytest.fixture
-def render(mocker):
+def mock_render(mocker):
     yield mocker.patch('graphviz.backend.rendering.render', autospec=True)
 
 

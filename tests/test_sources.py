@@ -70,36 +70,37 @@ def test_unflatten(source):
 
 
 def test__repr_svg_(mocker, sentinel, source):
-    pipe = mocker.patch.object(source, 'pipe', autospec=True,
-                               return_value=sentinel.string)
+    mock_pipe = mocker.patch.object(source, 'pipe', autospec=True,
+                                    return_value=sentinel.string)
 
     assert source._repr_svg_() is sentinel.string
 
-    pipe.assert_called_once_with(format='svg', encoding=source.encoding)
+    mock_pipe.assert_called_once_with(format='svg', encoding=source.encoding)
 
 
-def test_pipe_lines_format(mocker, pipe_lines, source, format_='svg'):
+def test_pipe_lines_format(mocker, mock_pipe_lines, source, format_='svg'):
     assert source.format != format_
 
-    assert source.pipe(format=format_) is pipe_lines.return_value
+    assert source.pipe(format=format_) is mock_pipe_lines.return_value
 
-    pipe_lines.assert_called_once_with(source.engine, format_, mocker.ANY,
-                                       renderer=None, formatter=None,
-                                       input_encoding='utf-8',
-                                       quiet=False)
-    _, _, data = pipe_lines.call_args.args
+    mock_pipe_lines.assert_called_once_with(source.engine, format_, mocker.ANY,
+                                            renderer=None, formatter=None,
+                                            input_encoding='utf-8',
+                                            quiet=False)
+    _, _, data = mock_pipe_lines.call_args.args
     expected_lines = source.source.splitlines(keepends=True)
     assert list(data) == expected_lines
 
 
-def test_pipe_lines(mocker, pipe_lines, source):
-    assert source.pipe() is pipe_lines.return_value
+def test_pipe_lines(mocker, mock_pipe_lines, source):
+    assert source.pipe() is mock_pipe_lines.return_value
 
-    pipe_lines.assert_called_once_with(source.engine, source.format, mocker.ANY,
-                                       renderer=None, formatter=None,
-                                       input_encoding='utf-8',
-                                       quiet=False)
-    _, _, data = pipe_lines.call_args.args
+    mock_pipe_lines.assert_called_once_with(source.engine, source.format,
+                                            mocker.ANY,
+                                            renderer=None, formatter=None,
+                                            input_encoding='utf-8',
+                                            quiet=False)
+    _, _, data = mock_pipe_lines.call_args.args
     expected_lines = source.source.splitlines(keepends=True)
     assert list(data) == expected_lines
 
@@ -125,31 +126,31 @@ def test_save(mocker, filename='nonfilename', directory='nondirectory'):
     assert open_.return_value.write.call_args_list == [mocker.call(source.source)]
 
 
-def test_render(mocker, sentinel, render, source):
+def test_render(mocker, sentinel, mock_render, source):
     save = mocker.patch.object(source, 'save', autospec=True,
                                return_value=sentinel.nonfilepath)
     _view = mocker.patch.object(source, '_view', autospec=True)
     remove = mocker.patch('os.remove', autospec=True)
 
-    assert source.render(cleanup=True, view=True) is render.return_value
+    assert source.render(cleanup=True, view=True) is mock_render.return_value
 
     save.assert_called_once_with(None, None, skip_existing=None)
-    render.assert_called_once_with(source.engine, source.format,
-                                   save.return_value,
-                                   renderer=None, formatter=None,
-                                   quiet=False)
+    mock_render.assert_called_once_with(source.engine, source.format,
+                                        save.return_value,
+                                        renderer=None, formatter=None,
+                                        quiet=False)
     remove.assert_called_once_with(save.return_value)
-    _view.assert_called_once_with(render.return_value, source.format, False)
+    _view.assert_called_once_with(mock_render.return_value, source.format, False)
 
 
 def test_view(mocker, source):
-    render = mocker.patch.object(source, 'render', autospec=True)
+    mock_render = mocker.patch.object(source, 'render', autospec=True)
     kwargs = {'filename': 'filename', 'directory': 'directory',
               'cleanup': True, 'quiet': True, 'quiet_view': True}
 
-    assert source.view(**kwargs) is render.return_value
+    assert source.view(**kwargs) is mock_render.return_value
 
-    render.assert_called_once_with(view=True, **kwargs)
+    mock_render.assert_called_once_with(view=True, **kwargs)
 
 
 def test__view_unknown_platform(unknown_platform, source):

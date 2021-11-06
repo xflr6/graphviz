@@ -74,12 +74,12 @@ def test_render_img(capsys, tmp_path, files_path, engine='dot', format_='pdf'):
 
 @pytest.mark.parametrize(
     'directory', [None, 'dot_sources'])
-def test_render_mocked(capsys, sentinel, run, quiet, directory,
+def test_render_mocked(capsys, sentinel, mock_run, quiet, directory,
                        filepath='nonfilepath'):
-    run.return_value = subprocess.CompletedProcess(sentinel.cmd,
-                                                   returncode=0,
-                                                   stdout='stdout',
-                                                   stderr='stderr')
+    mock_run.return_value = subprocess.CompletedProcess(sentinel.cmd,
+                                                        returncode=0,
+                                                        stdout='stdout',
+                                                        stderr='stderr')
 
     if directory is not None:
         filepath = os.path.join(directory, filepath)
@@ -88,10 +88,10 @@ def test_render_mocked(capsys, sentinel, run, quiet, directory,
 
     assert result == f'{filepath}.pdf'
 
-    run.assert_called_once_with([_common.EXPECTED_DOT_BINARY,
-                                 '-Kdot', '-Tpdf', '-O', 'nonfilepath'],
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE,
-                                cwd=directory,
-                                startupinfo=_common.StartupinfoMatcher())
+    mock_run.assert_called_once_with([_common.EXPECTED_DOT_BINARY,
+                                      '-Kdot', '-Tpdf', '-O', 'nonfilepath'],
+                                     stdout=subprocess.PIPE,
+                                     stderr=subprocess.PIPE,
+                                     cwd=directory,
+                                     startupinfo=_common.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')

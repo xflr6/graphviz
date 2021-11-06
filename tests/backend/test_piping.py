@@ -47,7 +47,7 @@ def test_pipe(capsys, engine, format_, renderer, formatter, pattern,
     assert capsys.readouterr() == ('', '')
 
 
-def test_pipe_pipe_invalid_data_mocked(mocker, sentinel, run, quiet):
+def test_pipe_pipe_invalid_data_mocked(mocker, sentinel, mock_run, quiet):
     mock_sys_stderr = mocker.patch('sys.stderr', autospec=True,
                                **{'flush': mocker.Mock(),
                                   'encoding': sentinel.encoding})
@@ -56,10 +56,10 @@ def test_pipe_pipe_invalid_data_mocked(mocker, sentinel, run, quiet):
     mock_err = mocker.create_autospec(bytes, instance=True, name='mock_err',
                                       **{'__len__.return_value': 1})
 
-    run.return_value = subprocess.CompletedProcess(sentinel.cmd,
-                                                   returncode=5,
-                                                   stdout=mock_out,
-                                                   stderr=mock_err)
+    mock_run.return_value = subprocess.CompletedProcess(sentinel.cmd,
+                                                        returncode=5,
+                                                        stdout=mock_out,
+                                                        stderr=mock_err)
 
     with pytest.raises(subprocess.CalledProcessError) as e:
         graphviz.pipe('dot', 'png', b'nongraph', quiet=quiet)
@@ -70,11 +70,12 @@ def test_pipe_pipe_invalid_data_mocked(mocker, sentinel, run, quiet):
     assert e.value.stderr is mock_err
     e.value.stdout = sentinel.new_stdout
     assert e.value.stdout is sentinel.new_stdout
-    run.assert_called_once_with([_common.EXPECTED_DOT_BINARY, '-Kdot', '-Tpng'],
-                                input=b'nongraph',
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE,
-                                startupinfo=_common.StartupinfoMatcher())
+    mock_run.assert_called_once_with([_common.EXPECTED_DOT_BINARY,
+                                      '-Kdot', '-Tpng'],
+                                     input=b'nongraph',
+                                     stdout=subprocess.PIPE,
+                                     stderr=subprocess.PIPE,
+                                     startupinfo=_common.StartupinfoMatcher())
     if not quiet:
         mock_out.decode.assert_not_called()
         mock_err.decode.assert_called_once_with(sentinel.encoding)
@@ -82,45 +83,46 @@ def test_pipe_pipe_invalid_data_mocked(mocker, sentinel, run, quiet):
         mock_sys_stderr.flush.assert_called_once_with()
 
 
-def test_pipe_mocked(capsys, sentinel, run, quiet):
-    run.return_value = subprocess.CompletedProcess(sentinel.cmd,
-                                                   returncode=0,
-                                                   stdout=b'stdout',
-                                                   stderr=b'stderr')
+def test_pipe_mocked(capsys, sentinel, mock_run, quiet):
+    mock_run.return_value = subprocess.CompletedProcess(sentinel.cmd,
+                                                        returncode=0,
+                                                        stdout=b'stdout',
+                                                        stderr=b'stderr')
 
     assert graphviz.pipe('dot', 'png', b'nongraph',
                          quiet=quiet) == b'stdout'
 
-    run.assert_called_once_with([_common.EXPECTED_DOT_BINARY, '-Kdot', '-Tpng'],
-                                input=b'nongraph',
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE,
-                                startupinfo=_common.StartupinfoMatcher())
+    mock_run.assert_called_once_with([_common.EXPECTED_DOT_BINARY,
+                                      '-Kdot', '-Tpng'],
+                                     input=b'nongraph',
+                                     stdout=subprocess.PIPE,
+                                     stderr=subprocess.PIPE,
+                                     startupinfo=_common.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
-def test_pipe_string_mocked(capsys, sentinel, run, quiet,
+def test_pipe_string_mocked(capsys, sentinel, mock_run, quiet,
                             encoding='ascii'):
-    run.return_value = subprocess.CompletedProcess(sentinel.cmd,
-                                                   returncode=0,
-                                                   stdout='stdout',
-                                                   stderr='stderr')
+    mock_run.return_value = subprocess.CompletedProcess(sentinel.cmd,
+                                                        returncode=0,
+                                                        stdout='stdout',
+                                                        stderr='stderr')
 
     assert graphviz.pipe_string('dot', 'png', 'nongraph',
                                 encoding=encoding, quiet=quiet) == 'stdout'
 
-    run.assert_called_once_with([_common.EXPECTED_DOT_BINARY, '-Kdot', '-Tpng'],
-                                input='nongraph',
-                                encoding=encoding,
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE,
-                                startupinfo=_common.StartupinfoMatcher())
+    mock_run.assert_called_once_with([_common.EXPECTED_DOT_BINARY, '-Kdot', '-Tpng'],
+                                     input='nongraph',
+                                     encoding=encoding,
+                                     stdout=subprocess.PIPE,
+                                     stderr=subprocess.PIPE,
+                                     startupinfo=_common.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
-def test_pipe_lines_mocked(capsys, sentinel, Popen, quiet,
+def test_pipe_lines_mocked(capsys, sentinel, mock_popen, quiet,
                            input_encoding='ascii'):
-    proc = Popen.return_value
+    proc = mock_popen.return_value
     proc.configure_mock(args=sentinel.cmd,
                         returncode=0,
                         stdin=io.BytesIO(),
@@ -134,17 +136,18 @@ def test_pipe_lines_mocked(capsys, sentinel, Popen, quiet,
 
     assert proc.stdin.getvalue() == b'nongraph\n'
 
-    Popen.assert_called_once_with([_common.EXPECTED_DOT_BINARY, '-Kdot', '-Tpng'],
-                                  stdin=subprocess.PIPE,
-                                  stdout=subprocess.PIPE,
-                                  stderr=subprocess.PIPE,
-                                  startupinfo=_common.StartupinfoMatcher())
+    mock_popen.assert_called_once_with([_common.EXPECTED_DOT_BINARY,
+                                        '-Kdot', '-Tpng'],
+                                       stdin=subprocess.PIPE,
+                                       stdout=subprocess.PIPE,
+                                       stderr=subprocess.PIPE,
+                                       startupinfo=_common.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
-def test_pipe_lines_string_mocked(capsys, sentinel, Popen, quiet,
+def test_pipe_lines_string_mocked(capsys, sentinel, mock_popen, quiet,
                                   encoding='ascii'):
-    proc = Popen.return_value
+    proc = mock_popen.return_value
     proc.configure_mock(args=sentinel.cmd,
                         returncode=0,
                         stdin=io.StringIO(),
@@ -158,10 +161,11 @@ def test_pipe_lines_string_mocked(capsys, sentinel, Popen, quiet,
 
     assert proc.stdin.getvalue() == 'nongraph\n'
 
-    Popen.assert_called_once_with([_common.EXPECTED_DOT_BINARY, '-Kdot', '-Tpng'],
-                                  encoding=encoding,
-                                  stdin=subprocess.PIPE,
-                                  stdout=subprocess.PIPE,
-                                  stderr=subprocess.PIPE,
-                                  startupinfo=_common.StartupinfoMatcher())
+    mock_popen.assert_called_once_with([_common.EXPECTED_DOT_BINARY,
+                                        '-Kdot', '-Tpng'],
+                                       encoding=encoding,
+                                       stdin=subprocess.PIPE,
+                                       stdout=subprocess.PIPE,
+                                       stderr=subprocess.PIPE,
+                                       startupinfo=_common.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
