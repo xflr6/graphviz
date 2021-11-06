@@ -24,8 +24,8 @@ the yielded lines now include a final newline (``'\n'``).
 This mimics iteration over ``file`` object lines in text mode.
 
 Add optional keyword-only ``renderer`` and ``formatter`` arguments to ``Graph()``,
-``Digraph()`` and ``Source()`` to set default renderers and formatters
-(similar to ``format``).
+``Digraph()``, ``Source()`` and ``Source.from_file()``
+to set default renderers and formatters (similar to ``format``).
 Used by ``.pipe()``, ``.render()``, and ``.view()`` if not given as method-argument.
 
 Add optional keyword-only ``encoding`` argument to ``pipe()``.

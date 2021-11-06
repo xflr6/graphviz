@@ -186,11 +186,16 @@ def test_from_file(tmp_path, filename='hello.gv', directory='source_hello',
     source = Source.from_file(filename, str(lpath), encoding=None)
     assert source.encoding == locale.getpreferredencoding()
 
-    source = Source.from_file(filename, str(lpath), encoding=encoding)
+    renderer = 'xdot'
+    formatter = 'core'
+    source = Source.from_file(filename, str(lpath), encoding=encoding,
+                              renderer=renderer, formatter=formatter)
     assert source.source == data
     assert source.filename == filename
     assert source.directory == str(lpath)
     assert source.encoding == encoding
+    assert source.renderer == renderer
+    assert source.formatter == formatter
 
 
 def test_source_iter(source):

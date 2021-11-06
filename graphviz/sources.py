@@ -41,7 +41,9 @@ class Source(rendering.Render, saving.Save,
     def from_file(cls, filename, directory=None,
                   format: typing.Optional[str] = None,
                   engine: typing.Optional[str] = None,
-                  encoding: typing.Optional[str] = DEFAULT_ENCODING):
+                  encoding: typing.Optional[str] = DEFAULT_ENCODING,
+                  renderer: typing.Optional[str] = None,
+                  formatter: typing.Optional[str] = None):
         """Return an instance with the source string read from the given file.
 
         Args:
@@ -57,7 +59,9 @@ class Source(rendering.Render, saving.Save,
         log.debug('read %r with encoding %r', filepath, encoding)
         with open(filepath, encoding=encoding) as fd:
             source = fd.read()
-        return cls(source, filename, directory, format, engine, encoding,
+        return cls(source, filename, directory,
+                   format, engine, encoding,
+                   renderer=renderer, formatter=formatter,
                    loaded_from_path=filepath)
 
     def __init__(self, source: str, filename=None, directory=None,
