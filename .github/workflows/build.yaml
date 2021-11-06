@@ -66,6 +66,7 @@ jobs:
           pip install pytype
           pytype graphviz
         if: ${{ contains(matrix.name, '-pytype') }}
+        continue-on-error: true
       - name: Run flake8 (if -flake8)
         run: python -m flake8
         if: ${{ contains(matrix.name, '-flake8') }}

@@ -18,7 +18,7 @@ if PY38:  # pragma: no cover
 else:
     from typing import Literal
 
-    Literal = Literal
+    Literal = Literal  # CAVEAT: use None instead of Literal[None]
 
 
 def get_startupinfo() -> None:

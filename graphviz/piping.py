@@ -4,6 +4,7 @@ import codecs
 import logging
 import typing
 
+from . import _compat
 from . import backend
 from . import base
 from . import encoding
@@ -17,24 +18,36 @@ log = logging.getLogger(__name__)
 class Pipe(encoding.Encoding, base.Base, backend.Pipe):
     """Pipe source lines through the Graphviz layout command."""
 
-# FIXME: pytype
-##    @typing.overload
-##    def pipe(self,
-##             format: typing.Optional[str] = ...,
-##             renderer: typing.Optional[str] = ...,
-##             formatter: typing.Optional[str] = ...,
-##             quiet: bool = ..., *,
-##             encoding: _compat.Literal[None] = ...) -> bytes:
-##        ...
-##
-##    @typing.overload
-##    def pipe(self,
-##             format: typing.Optional[str] = ...,
-##             renderer: typing.Optional[str] = ...,
-##             formatter: typing.Optional[str] = ...,
-##             quiet: bool = ..., *,
-##             encoding: str = ...) -> str:
-##        ...
+    @typing.overload
+    def pipe(self,
+             format: typing.Optional[str] = ...,
+             renderer: typing.Optional[str] = ...,
+             formatter: typing.Optional[str] = ...,
+             quiet: bool = ..., *,
+             engine: typing.Optional[str] = ...,
+             encoding: None = ...) -> bytes:
+        """Return bytes with default ``encoding=None``."""
+
+    @typing.overload
+    def pipe(self,
+             format: typing.Optional[str] = ...,
+             renderer: typing.Optional[str] = ...,
+             formatter: typing.Optional[str] = ...,
+             quiet: bool = ..., *,
+             engine: typing.Optional[str] = ...,
+             encoding: str) -> str:
+        """Return str with given encoding."""
+
+    @typing.overload
+    def pipe(self,
+             format: typing.Optional[str] = ...,
+             renderer: typing.Optional[str] = ...,
+             formatter: typing.Optional[str] = ...,
+             quiet: bool = ..., *,
+             engine: typing.Optional[str] = ...,
+             encoding: typing.Optional[str] = ...) -> typing.Union[bytes, str]:
+        """Return bytes or string depending on encoding argument."""
+
     def pipe(self,
              format: typing.Optional[str] = None,
              renderer: typing.Optional[str] = None,
