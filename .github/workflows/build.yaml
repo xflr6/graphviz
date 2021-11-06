@@ -27,7 +27,7 @@ jobs:
           - name: linux-3.6-skip-exe
             python-version: "3.6"
             os: ubuntu-latest
-          - name: linux-pypy-3.8
+          - name: linux-pypy-3.8-skip-exe
             python-version: pypy-3.8
             os: ubuntu-latest
           - name: linux-pypy-3.7-skip-exe
