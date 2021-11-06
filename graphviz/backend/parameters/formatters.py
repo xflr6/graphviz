@@ -14,10 +14,17 @@ FORMATTERS = {'cairo',
               'xlib'}
 
 
+def verify_formatter(formatter: typing.Optional[str]) -> None:
+        if formatter.lower() not in FORMATTERS:
+            raise ValueError(f'unknown formatter: {formatter!r}')
+
+
 class Formatter(copying.Copy):
     """Rendering engine parameter (no default)."""
 
     _formatter = None
+
+    verify_formatter = staticmethod(verify_formatter)
 
     def __init__(self, *, formatter: typing.Optional[str] = None, **kwargs):
         super().__init__(**kwargs)
@@ -42,6 +49,5 @@ class Formatter(copying.Copy):
             self.__dict__.pop('_formatter', None)
         else:
             formatter = formatter.lower()
-            if formatter not in FORMATTERS:
-                raise ValueError(f'unknown formatter: {formatter!r}')
+            self.verify_formatter(formatter)
             self._formatter = formatter

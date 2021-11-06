@@ -18,10 +18,17 @@ ENGINES = {'dot',  # http://www.graphviz.org/pdf/dot.1.pdf
 DEFAULT_ENGINE = 'dot'
 
 
+def verify_engine(engine: str) -> None:
+        if engine.lower() not in ENGINES:
+            raise ValueError(f'unknown engine: {engine!r}')
+
+
 class Engine(copying.Copy):
     """Rendering engine parameter with ``'dot''`` default."""
 
     _engine = DEFAULT_ENGINE
+
+    verify_engine = staticmethod(verify_engine)
 
     def __init__(self, engine: typing.Optional[str] = None, **kwargs) -> None:
         super().__init__(**kwargs)
@@ -44,6 +51,5 @@ class Engine(copying.Copy):
     @engine.setter
     def engine(self, engine: str) -> None:
         engine = engine.lower()
-        if engine not in ENGINES:
-            raise ValueError(f'unknown engine: {engine!r}')
+        self.verify_engine(engine)
         self._engine = engine

@@ -102,7 +102,8 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                                                  format=format,
                                                  renderer=renderer,
                                                  formatter=formatter,
-                                                 quiet=quiet)
+                                                 quiet=quiet,
+                                                 verify=True)
 
         args.append(iter(self))
 

@@ -22,10 +22,17 @@ RENDERERS = {'cairo',  # $ dot -T:
              'xdot'}
 
 
+def verify_renderer(renderer: typing.Optional[str]) -> None:
+        if renderer.lower() not in RENDERERS:
+            raise ValueError(f'unknown renderer: {renderer!r}')
+
+
 class Renderer(copying.Copy):
     """Rendering renderer parameter (no default)."""
 
     _renderer = None
+
+    verify_renderer = staticmethod(verify_renderer)
 
     def __init__(self, *, renderer: typing.Optional[str] = None, **kwargs):
         super().__init__(**kwargs)
@@ -50,6 +57,5 @@ class Renderer(copying.Copy):
             self.__dict__.pop('_renderer', None)
         else:
             renderer = renderer.lower()
-            if renderer not in RENDERERS:
-                raise ValueError(f'unknown renderer: {renderer!r}')
+            self.verify_renderer(renderer)
             self._renderer = renderer

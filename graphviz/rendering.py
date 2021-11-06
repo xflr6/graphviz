@@ -73,7 +73,8 @@ class Render(saving.Save, backend.Render, backend.View):
                                                    format=format,
                                                    renderer=renderer,
                                                    formatter=formatter,
-                                                   quiet=quiet)
+                                                   quiet=quiet,
+                                                   verify=True)
 
         filepath = self.save(filename, directory, skip_existing=None)
 

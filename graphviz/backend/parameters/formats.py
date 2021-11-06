@@ -47,10 +47,17 @@ FORMATS = {'bmp',  # http://www.graphviz.org/doc/info/output.html
 DEFAULT_FORMAT = 'pdf'
 
 
+def verify_format(format: str) -> None:
+        if format.lower() not in FORMATS:
+            raise ValueError(f'unknown format: {format!r}')
+
+
 class Format(copying.Copy):
     """Rendering format parameter with ``'pdf'`` default."""
 
     _format = DEFAULT_FORMAT
+
+    verify_format = staticmethod(verify_format)
 
     def __init__(self, format: typing.Optional[str] = None, **kwargs) -> None:
         super().__init__(**kwargs)
@@ -73,6 +80,5 @@ class Format(copying.Copy):
     @format.setter
     def format(self, format: str) -> None:
         format = format.lower()
-        if format not in FORMATS:
-            raise ValueError(f'unknown format: {format!r}')
+        self.verify_format(format)
         self._format = format
