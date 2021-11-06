@@ -28,6 +28,7 @@ Update `help output <online-help-internal>`_ if needed.
 Document release:
 
 - remove ``in development`` from ``CHANGES.rst``
+- add bump stable ``$MAJOR.$MINOR[.$BUGFIX]`` tag of binder badge in ``README.rst``
 
 Run the tests, run the linter, and build the docs:
 
