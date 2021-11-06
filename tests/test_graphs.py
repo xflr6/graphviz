@@ -102,7 +102,6 @@ def test_unflatten_mocked(sentinel, mock_unflatten, cls):
                                            **kwargs)
 
 
-@pytest.mark.exe
 @pytest.mark.parametrize(
     'encoding', [None, 'ascii', 'utf-8'])
 def test_pipe_mocked(mocker, pipe_lines, pipe_lines_string, quiet, cls, encoding):
@@ -143,6 +142,7 @@ def test_repr_svg_mocked(mocker, sentinel, cls):
     pipe.assert_called_once_with(format='svg', encoding=c.encoding)
 
 
+@pytest.mark.exe
 @pytest.mark.parametrize(
     'kwargs', [{'engine': 'spam'}])
 def test_render_raises_before_save(tmp_path, cls, kwargs, filename = 'dot.gv'):
@@ -166,14 +166,15 @@ def test_render_raises_before_save(tmp_path, cls, kwargs, filename = 'dot.gv'):
     'kwargs',
     [{'engine': 'spam'}, {'format': 'spam'},
      {'renderer': 'spam'}, {'formatter': 'spam'}])
-def test_render_raises_before_save_mocked(tmp_path, mocker, render, cls, kwargs, filename = 'dot.gv'):
+def test_render_raises_before_save_mocked(tmp_path, render, cls, kwargs,
+                                          filename = 'dot.gv'):
     dot = cls(filename=filename, directory=tmp_path)
-    mock_save = mocker.patch.object(dot, 'save', autospec=True)
 
     expected_source = tmp_path / filename
     assert not expected_source.exists()
 
-    with pytest.raises(ValueError, match=r''):
+    first_arg = next(iter(kwargs))
+    with pytest.raises(ValueError, match=f'unknown {first_arg}'):
         dot.render(**kwargs)
 
     assert not expected_source.exists()
