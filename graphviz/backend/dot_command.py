@@ -22,15 +22,10 @@ def command(engine: str, format_: str, *,
     if formatter is not None and renderer is None:
         raise _common.RequiredArgumentError('formatter given without renderer')
 
-    parameters.verify_engine(engine)
-
-    parameters.verify_format(format_)
-
-    if renderer is not None:
-        parameters.verify_renderer(renderer)
-
-    if formatter is not None:
-        parameters.verify_formatter(formatter)
+    parameters.verify_engine(engine, required=True)
+    parameters.verify_format(format_, required=True)
+    parameters.verify_renderer(renderer, required=False)
+    parameters.verify_formatter(formatter, required=False)
 
     output_format = [f for f in (format_, renderer, formatter) if f is not None]
     output_format_flag = ':'.join(output_format)

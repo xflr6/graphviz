@@ -22,8 +22,15 @@ RENDERERS = {'cairo',  # $ dot -T:
              'xdot'}
 
 
-def verify_renderer(renderer: typing.Optional[str]) -> None:
-    if renderer is not None and renderer.lower() not in RENDERERS:
+REQUIRED = False
+
+
+def verify_renderer(renderer: typing.Optional[str], *,
+                    required: bool = REQUIRED) -> None:
+    if renderer is None:
+        if required:
+            raise ValueError('missing renderer')
+    elif renderer.lower() not in RENDERERS:
         raise ValueError(f'unknown renderer: {renderer!r}')
 
 

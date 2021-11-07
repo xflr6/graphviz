@@ -17,9 +17,14 @@ ENGINES = {'dot',  # http://www.graphviz.org/pdf/dot.1.pdf
 
 DEFAULT_ENGINE = 'dot'
 
+REQUIRED = True
 
-def verify_engine(engine: str) -> None:
-    if engine.lower() not in ENGINES:
+
+def verify_engine(engine: str, *, required: bool = REQUIRED) -> None:
+    if engine is None:
+        if required:
+            raise ValueError('missing engine')
+    elif engine.lower() not in ENGINES:
         raise ValueError(f'unknown engine: {engine!r}')
 
 

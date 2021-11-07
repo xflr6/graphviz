@@ -13,9 +13,15 @@ FORMATTERS = {'cairo',
               'gdwbmp',
               'xlib'}
 
+REQUIRED = False
 
-def verify_formatter(formatter: typing.Optional[str]) -> None:
-    if formatter is not None and formatter.lower() not in FORMATTERS:
+
+def verify_formatter(formatter: typing.Optional[str], *,
+                     required: bool = REQUIRED) -> None:
+    if formatter is None:
+        if required:
+            raise ValueError('missing formatter')
+    elif formatter.lower() not in FORMATTERS:
         raise ValueError(f'unknown formatter: {formatter!r}')
 
 
