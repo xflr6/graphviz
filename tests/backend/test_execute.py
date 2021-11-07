@@ -53,8 +53,8 @@ def test_run_check_called_process_error_mocked(capsys, sentinel, mock_run, quiet
 def test_run_check_input_lines_mocked(mocker, sentinel, mock_popen,
                                       line=b'sp\xc3\xa4m'):  # noqa: N803
     mock_sys_stderr = mocker.patch('sys.stderr', autospec=True,
-                                   **{'flush': mocker.Mock(),
-                                      'encoding': sentinel.encoding})
+                                   flush=mocker.Mock(),
+                                   encoding=sentinel.encoding)
 
     mock_out = mocker.create_autospec(bytes, instance=True, name='mock_out')
     mock_err = mocker.create_autospec(bytes, instance=True, name='mock_err',
