@@ -1,3 +1,4 @@
+import pathlib
 import os
 import shutil
 import subprocess
@@ -7,6 +8,13 @@ import pytest
 import graphviz
 
 import _common
+
+TEST_FILES_DIRECTORY = pathlib.Path(__file__).parent.parent
+
+
+@pytest.fixture(scope='module')
+def files_path():
+    return TEST_FILES_DIRECTORY
 
 
 @pytest.mark.parametrize(

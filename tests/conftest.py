@@ -1,11 +1,6 @@
 """pytest command line options and fixtures."""
 
-import pathlib
-import platform as platform_
-
 import pytest
-
-DIRECTORY = pathlib.Path(__file__).parent
 
 SKIP_EXE = '--skip-exe'
 
@@ -55,37 +50,10 @@ def _make_exe_marker(item):
     return None
 
 
-@pytest.fixture(autouse=True)
-def doctests(pytestconfig, doctest_namespace):
-    def doctest_mark_exe(**kwargs):
-        return None
-
-    if pytestconfig.getoption(SKIP_EXE):
-        def doctest_mark_exe(*, xfail: bool = False, **kwargs):  # noqa: F811
-            return pytest.xfail(**kwargs) if xfail else pytest.skip(**kwargs)
-
-    doctest_namespace['doctest_mark_exe'] = doctest_mark_exe
-
-
-@pytest.fixture(scope='session')
-def files_path():
-    return DIRECTORY
-
-
-@pytest.fixture
-def empty_path(monkeypatch):
-    monkeypatch.setenv('PATH', '')
-
-
 @pytest.fixture(scope='session')
 def platform():
-    return platform_.system().lower()
-
-
-@pytest.fixture
-def unknown_platform(monkeypatch, name='nonplatform'):
-    monkeypatch.setattr('graphviz.backend.viewing.PLATFORM', name)
-    yield name
+    import platform
+    return platform.system().lower()
 
 
 @pytest.fixture(params=[False, True], ids=lambda q: f'quiet={q!r}')
@@ -106,22 +74,14 @@ def mock_platform(monkeypatch, request):
 
 
 @pytest.fixture
-def mock_run(mocker):
-    yield mocker.patch('subprocess.run', autospec=True)
+def unknown_platform(monkeypatch, name='nonplatform'):
+    monkeypatch.setattr('graphviz.backend.viewing.PLATFORM', name)
+    yield name
 
 
 @pytest.fixture
-def mock_popen(mocker):
-    yield mocker.patch('subprocess.Popen', autospec=True)
-
-
-@pytest.fixture
-def mock_startfile(mocker, platform):
-    if platform == 'windows':
-        kwargs = {'autospec': True}
-    else:
-        kwargs = {'create': True, 'new_callable': mocker.Mock}
-    yield mocker.patch('os.startfile', **kwargs)
+def mock_render(mocker):
+    yield mocker.patch('graphviz.backend.rendering.render', autospec=True)
 
 
 @pytest.fixture
@@ -137,11 +97,6 @@ def mock_pipe_lines(mocker):
 @pytest.fixture
 def mock_pipe_lines_string(mocker):
     yield mocker.patch('graphviz.backend.piping.pipe_lines_string', autospec=True)
-
-
-@pytest.fixture
-def mock_render(mocker):
-    yield mocker.patch('graphviz.backend.rendering.render', autospec=True)
 
 
 @pytest.fixture

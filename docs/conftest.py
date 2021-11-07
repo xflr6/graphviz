@@ -5,7 +5,7 @@ import pytest
 SKIP_EXE = '--skip-exe'
 
 
-def pytest_addoption(parser):
+def pytest_addoption(parser):  # pragma: no cover
     try:
         parser.addoption(SKIP_EXE, action='store_true',
                          help='Skip tests with pytest.mark.exe.'
@@ -17,7 +17,7 @@ def pytest_addoption(parser):
         assert SKIP_EXE in str(e), f'fails because {SKIP_EXE!r} is already added'
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture(autouse=True)  # pragma: no cover
 def doctests(pytestconfig, doctest_namespace):
     def doctest_mark_exe(**kwargs):
         return None

@@ -12,6 +12,11 @@ import _common
 INVALID_CMD = ['']
 
 
+@pytest.fixture
+def empty_path(monkeypatch):
+    monkeypatch.setenv('PATH', '')
+
+
 def test_run_check_oserror():
     with pytest.raises(OSError) as e:
         execute.run_check(INVALID_CMD)

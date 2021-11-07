@@ -5,7 +5,8 @@ import pytest
 import graphviz
 
 
-def test_view_unknown_platform(unknown_platform):
+@pytest.mark.usefixtures('unknown_platform')
+def test_view_unknown_platform():
     with pytest.raises(RuntimeError, match=r'platform'):
         graphviz.view('nonfilepath')
 
