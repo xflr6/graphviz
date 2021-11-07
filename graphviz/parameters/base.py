@@ -2,7 +2,7 @@
 
 from .. import copying
 
-__all__ = ['Parameter']
+__all__ = ['ParameterBase']
 
 
 class ParameterBase(copying.Copy):

@@ -1,7 +1,5 @@
 """Mixin classes used by Base subclasses to inherit backend functionality."""
 
-import typing
-
 from .. import parameters
 
 from . import piping
