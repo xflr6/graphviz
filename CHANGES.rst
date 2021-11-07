@@ -5,6 +5,7 @@ Changelog
 Version 0.18.1 (in development)
 -------------------------------
 
+Added ``build-docs.py`` script to the root dir.
 
 
 
