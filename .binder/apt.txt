@@ -1,2 +1,2 @@
-# binder environment: install upstream Graphviz dependency (https://www.graphviz.org/)
+# binder environment: apt install upstream Graphviz dependency (https://www.graphviz.org/)
 graphviz
