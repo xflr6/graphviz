@@ -4,8 +4,9 @@ import os
 import pathlib
 import typing
 
+from .. import parameters
+
 from . import _common
-from . import parameters
 
 __all__ = ['command']
 

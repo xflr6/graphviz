@@ -2,7 +2,7 @@
 
 import typing
 
-from ... import copying
+from .. import copying
 
 __all__ = ['RENDERERS', 'verify_renderer', 'Renderer']
 

@@ -2,7 +2,8 @@
 
 import typing
 
-from . import parameters
+from .. import parameters
+
 from . import piping
 from . import rendering
 from . import unflattening

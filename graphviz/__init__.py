@@ -25,11 +25,11 @@ digraph {
 }
 """
 
-from .backend import (ENGINES, FORMATS, RENDERERS, FORMATTERS,
-                      render, pipe, pipe_string, pipe_lines, pipe_lines_string,
+from .backend import (render, pipe, pipe_string, pipe_lines, pipe_lines_string,
                       unflatten, version, view,
                       RequiredArgumentError, ExecutableNotFound)
 from .graphs import Graph, Digraph
+from .parameters import ENGINES, FORMATS, RENDERERS, FORMATTERS
 from .quoting import escape, nohtml
 from .sources import Source
 
@@ -73,7 +73,7 @@ RequiredArgumentError = RequiredArgumentError
 
 def set_default_engine(engine: str) -> str:
     """Change the default engine, return the old default value."""
-    from .backend import parameters
+    from . import parameters
 
     parameters.verify_engine(engine)
 
@@ -86,7 +86,7 @@ def set_default_engine(engine: str) -> str:
 
 def set_default_format(format: str) -> str:
     """Change the default format, return the old default value."""
-    from .backend import parameters
+    from . import parameters
 
     parameters.verify_format(format)
 
