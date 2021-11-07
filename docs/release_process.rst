@@ -35,9 +35,7 @@ Run the tests, run the linter, and build the docs:
 
     $ python -m tox -r -- -W error  # --recreate, raise error on warning
     $ python -m flake8 --disable-noqa
-    $ cd docs
-    $ python -m sphinx . _build
-    $ cd ..
+    $ ./build-docs.py
     $ git clean -f -d -x  # remove all untracked files and directories
 
 Commit to ``release`` branch and push to ``origin``:
