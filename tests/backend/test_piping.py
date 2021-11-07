@@ -28,25 +28,6 @@ def test_pipe_invalid_data(capsys, quiet, engine='dot', format_='svg'):
         assert 'syntax error in line' in err
 
 
-@pytest.mark.exe
-@pytest.mark.parametrize(
-    'engine, format_, renderer, formatter, pattern',
-    [('dot', 'svg', None, None, SVG_PATTERN),
-     ('dot', 'ps', 'ps', 'core', r'%!PS-'),
-     # Error: remove_overlap: Graphviz not built with triangulation library
-     pytest.param('sfdp', 'svg', None, None, SVG_PATTERN,
-         marks=pytest.mark.xfail('graphviz.version() > (2, 38, 0)'
-                                " and platform.system().lower() == 'windows'",
-         reason='https://gitlab.com/graphviz/graphviz/-/issues/1269'))])
-def test_pipe(capsys, engine, format_, renderer, formatter, pattern,
-              data=b'graph { spam }'):
-    out = graphviz.pipe(engine, format_, data, renderer, formatter).decode('ascii')
-
-    if pattern is not None:
-        assert re.match(pattern, out)
-    assert capsys.readouterr() == ('', '')
-
-
 def test_pipe_pipe_invalid_data_mocked(mocker, sentinel, mock_run, quiet):
     mock_sys_stderr = mocker.patch('sys.stderr', autospec=True,
                                **{'flush': mocker.Mock(),
@@ -81,6 +62,25 @@ def test_pipe_pipe_invalid_data_mocked(mocker, sentinel, mock_run, quiet):
         mock_err.decode.assert_called_once_with(sentinel.encoding)
         mock_sys_stderr.write.assert_called_once_with(mock_err.decode.return_value)
         mock_sys_stderr.flush.assert_called_once_with()
+
+
+@pytest.mark.exe
+@pytest.mark.parametrize(
+    'engine, format_, renderer, formatter, pattern',
+    [('dot', 'svg', None, None, SVG_PATTERN),
+     ('dot', 'ps', 'ps', 'core', r'%!PS-'),
+     # Error: remove_overlap: Graphviz not built with triangulation library
+     pytest.param('sfdp', 'svg', None, None, SVG_PATTERN,
+         marks=pytest.mark.xfail('graphviz.version() > (2, 38, 0)'
+                                " and platform.system().lower() == 'windows'",
+         reason='https://gitlab.com/graphviz/graphviz/-/issues/1269'))])
+def test_pipe(capsys, engine, format_, renderer, formatter, pattern,
+              data=b'graph { spam }'):
+    out = graphviz.pipe(engine, format_, data, renderer, formatter).decode('ascii')
+
+    if pattern is not None:
+        assert re.match(pattern, out)
+    assert capsys.readouterr() == ('', '')
 
 
 def test_pipe_mocked(capsys, sentinel, mock_run, quiet):

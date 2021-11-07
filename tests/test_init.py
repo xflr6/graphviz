@@ -12,6 +12,11 @@ def test_set_default_engine_invalid():
         graphviz.set_default_engine('nonengine')
 
 
+def test_set_default_format_invalid():
+    with pytest.raises(ValueError, match=r'unknown format'):
+        graphviz.set_default_format('nonformat')
+
+
 def test_set_default_engine(monkeypatch, *, engine='neato', explicit_engine='sfdp'):
     assert len({DEFAULT_ENGINE, engine, explicit_engine}) == 3
 
@@ -46,11 +51,6 @@ def test_set_default_engine(monkeypatch, *, engine='neato', explicit_engine='sfd
     assert g2.engine == explicit_engine
     assert g3.engine == DEFAULT_ENGINE
     assert g4.engine == explicit_engine
-
-
-def test_set_default_format_invalid():
-    with pytest.raises(ValueError, match=r'unknown format'):
-        graphviz.set_default_format('nonformat')
 
 
 def test_set_default_format(monkeypatch, *, format='png', explicit_format='jpeg'):

@@ -17,6 +17,13 @@ def files_path():
     return TEST_FILES_DIRECTORY
 
 
+@pytest.mark.exe
+def test_render_missing_file(quiet, engine='dot', format_='pdf'):
+    with pytest.raises(subprocess.CalledProcessError) as e:
+        graphviz.render(engine, format_, '', quiet=quiet)
+    assert e.value.returncode == 2
+
+
 @pytest.mark.parametrize(
     'args, expected_exception, match',
     [(['', 'pdf', 'nonfilepath'], ValueError, r'unknown engine'),
@@ -29,13 +36,6 @@ def files_path():
 def test_render_unknown_parameter_raises(args, expected_exception, match):
     with pytest.raises(expected_exception, match=match):
         graphviz.render(*args)
-
-
-@pytest.mark.exe
-def test_render_missing_file(quiet, engine='dot', format_='pdf'):
-    with pytest.raises(subprocess.CalledProcessError) as e:
-        graphviz.render(engine, format_, '', quiet=quiet)
-    assert e.value.returncode == 2
 
 
 @pytest.mark.exe

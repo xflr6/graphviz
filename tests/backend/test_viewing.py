@@ -11,7 +11,7 @@ def test_view_unknown_platform():
         graphviz.view('nonfilepath')
 
 
-def test_view(mocker, mock_platform, mock_popen, mock_startfile, quiet):
+def test_view_mocked(mocker, mock_platform, mock_popen, mock_startfile, quiet):
     assert graphviz.view('nonfilepath', quiet=quiet) is None
 
     if mock_platform == 'windows':

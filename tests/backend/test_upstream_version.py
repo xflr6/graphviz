@@ -15,22 +15,6 @@ def test_version(capsys):
     assert capsys.readouterr() == ('', '')
 
 
-def test_version_parsefail_mocked(sentinel, mock_run):
-    mock_run.return_value = subprocess.CompletedProcess(sentinel.cmd,
-                                                        returncode=0,
-                                                        stdout='nonversioninfo',
-                                                        stderr=None)
-
-    with pytest.raises(RuntimeError, match=r'nonversioninfo'):
-        graphviz.version()
-
-    mock_run.assert_called_once_with([_common.EXPECTED_DOT_BINARY, '-V'],
-                                     stdout=subprocess.PIPE,
-                                     stderr=subprocess.STDOUT,
-                                     startupinfo=_common.StartupinfoMatcher(),
-                                     encoding='ascii')
-
-
 @pytest.mark.parametrize(
     'stdout, expected',
     [('dot - graphviz version 1.2.3 (mocked)', (1, 2, 3)),
@@ -45,6 +29,22 @@ def test_version_mocked(sentinel, mock_run, stdout, expected):
                                                         stderr=None)
 
     assert graphviz.version() == expected
+
+    mock_run.assert_called_once_with([_common.EXPECTED_DOT_BINARY, '-V'],
+                                     stdout=subprocess.PIPE,
+                                     stderr=subprocess.STDOUT,
+                                     startupinfo=_common.StartupinfoMatcher(),
+                                     encoding='ascii')
+
+
+def test_version_parsefail_mocked(sentinel, mock_run):
+    mock_run.return_value = subprocess.CompletedProcess(sentinel.cmd,
+                                                        returncode=0,
+                                                        stdout='nonversioninfo',
+                                                        stderr=None)
+
+    with pytest.raises(RuntimeError, match=r'nonversioninfo'):
+        graphviz.version()
 
     mock_run.assert_called_once_with([_common.EXPECTED_DOT_BINARY, '-V'],
                                      stdout=subprocess.PIPE,

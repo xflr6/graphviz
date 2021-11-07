@@ -11,6 +11,11 @@ import _common
 EXPECTED_UNFLATTEN_BINARY = pathlib.Path('unflatten')
 
 
+def test_unflatten_stagger_missing():
+    with pytest.raises(graphviz.RequiredArgumentError, match=r'without stagger'):
+        graphviz.unflatten('graph {}', fanout=True)
+
+
 @pytest.mark.exe
 @pytest.mark.parametrize(
     'source, kwargs, expected',
@@ -42,8 +47,3 @@ def test_unflatten_mocked(capsys, sentinel, mock_run,
                                      startupinfo=_common.StartupinfoMatcher(),
                                      encoding='utf-8')
     assert capsys.readouterr() == ('', '')
-
-
-def test_unflatten_stagger_missing():
-    with pytest.raises(graphviz.RequiredArgumentError, match=r'without stagger'):
-        graphviz.unflatten('graph {}', fanout=True)
