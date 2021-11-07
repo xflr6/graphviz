@@ -81,8 +81,7 @@ Documentation
 
 .. code:: bash
 
-    $ cd docs
-    $ python -m sphinx . _build
+    $ ./build-docs.py
 
 Overview
 --------

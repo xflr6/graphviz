@@ -31,7 +31,7 @@ def test_pipe_invalid_data(capsys, quiet, engine='dot', format_='svg'):
 def test_pipe_pipe_invalid_data_mocked(mocker, sentinel, mock_run, quiet):
     mock_sys_stderr = mocker.patch('sys.stderr', autospec=True,
                                    flush=mocker.Mock(),
-                                   encoding= sentinel.encoding)
+                                   encoding=sentinel.encoding)
 
     mock_out = mocker.create_autospec(bytes, instance=True, name='mock_out')
     mock_err = mocker.create_autospec(bytes, instance=True, name='mock_err',
