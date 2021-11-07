@@ -2,7 +2,7 @@
 
 import typing
 
-from .. import copying
+from . import base
 
 __all__ = ['FORMATTERS', 'verify_formatter', 'Formatter']
 
@@ -19,7 +19,7 @@ def verify_formatter(formatter: typing.Optional[str]) -> None:
         raise ValueError(f'unknown formatter: {formatter!r}')
 
 
-class Formatter(copying.Copy):
+class Formatter(base.ParameterBase):
     """Rendering engine parameter (no default)."""
 
     _formatter = None

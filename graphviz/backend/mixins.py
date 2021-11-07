@@ -12,50 +12,17 @@ from . import viewing
 __all__ = ['Render', 'Pipe', 'Unflatten', 'View']
 
 
-class Parameters(parameters.Engine, parameters.Format,
-                 parameters.Renderer, parameters.Formatter):
+class RenderParameters(parameters.Parameters):
     """Parameters for calling ``graphviz.render()`` and ``graphviz.pipe()``."""
 
-    def __init__(self, format=None, engine=None, **kwargs):
-        super().__init__(format=format, engine=engine, **kwargs)
-
-    def _get_parameters(self, *,
-                        engine: typing.Optional[str] = None,
-                        format: typing.Optional[str] = None,
-                        renderer: typing.Optional[str] = None,
-                        formatter: typing.Optional[str] = None,
-                        verify: bool = False,
-                        **kwargs):
-        if engine is None:
-            engine = self._engine
-        elif verify:
-            self._verify_engine(engine)
-
-        if format is None:
-            format = self._format
-        elif verify:
-            self._verify_format(format)
-
-        args = [engine, format]
-
-        if renderer is None:
-            renderer = self._renderer
-        elif verify:
-            self._verify_renderer(renderer)
-
-        if formatter is None:
-            formatter = self._formatter
-        elif verify:
-            self._verify_formatter(formatter)
-
-        kwargs.update(renderer=renderer, formatter=formatter)
-
-        return args, kwargs
+    def _get_parameters(self, **kwargs):
+        kwargs = super()._get_parameters(**kwargs)
+        return [kwargs.pop('engine'), kwargs.pop('format')], kwargs
 
 
-class Render(Parameters):
+class Render(RenderParameters):
 
-    _get_render_parameters = Parameters._get_parameters
+    _get_render_parameters = RenderParameters._get_parameters
 
     @property
     def _render(_):
@@ -63,9 +30,9 @@ class Render(Parameters):
         return rendering.render
 
 
-class Pipe(Parameters):
+class Pipe(RenderParameters):
 
-    _get_pipe_parameters = Parameters._get_parameters
+    _get_pipe_parameters = RenderParameters._get_parameters
 
     @property
     def _pipe_lines(_):

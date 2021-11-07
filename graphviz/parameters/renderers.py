@@ -2,7 +2,7 @@
 
 import typing
 
-from .. import copying
+from . import base
 
 __all__ = ['RENDERERS', 'verify_renderer', 'Renderer']
 
@@ -27,7 +27,7 @@ def verify_renderer(renderer: typing.Optional[str]) -> None:
         raise ValueError(f'unknown renderer: {renderer!r}')
 
 
-class Renderer(copying.Copy):
+class Renderer(base.ParameterBase):
     """Rendering renderer parameter (no default)."""
 
     _renderer = None

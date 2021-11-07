@@ -2,7 +2,7 @@
 
 import typing
 
-from .. import copying
+from . import base
 
 __all__ = ['FORMATS', 'verify_format', 'Format']
 
@@ -52,7 +52,7 @@ def verify_format(format: str) -> None:
         raise ValueError(f'unknown format: {format!r}')
 
 
-class Format(copying.Copy):
+class Format(base.ParameterBase):
     """Rendering format parameter with ``'pdf'`` default."""
 
     _format = DEFAULT_FORMAT

@@ -77,10 +77,8 @@ def set_default_engine(engine: str) -> str:
 
     parameters.verify_engine(engine)
 
-    from .backend.mixins import Parameters
-
-    old_default_engine = Parameters._engine
-    Parameters._engine = engine
+    old_default_engine = parameters.Parameters._engine
+    parameters.Parameters._engine = engine
     return old_default_engine
 
 
@@ -90,8 +88,6 @@ def set_default_format(format: str) -> str:
 
     parameters.verify_format(format)
 
-    from .backend.mixins import Parameters
-
-    old_default_format = Parameters._format
-    Parameters._format = format
+    old_default_format = parameters.Parameters._format
+    parameters.Parameters._format = format
     return old_default_format

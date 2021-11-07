@@ -15,10 +15,10 @@ def test_set_default_engine_invalid():
 def test_set_default_engine(monkeypatch, *, engine='neato', explicit_engine='sfdp'):
     assert len({DEFAULT_ENGINE, engine, explicit_engine}) == 3
 
-    from graphviz.backend.mixins import Parameters
+    from graphviz.parameters import Parameters
     assert Parameters._engine == DEFAULT_ENGINE
     # isolate the test
-    monkeypatch.setattr('graphviz.backend.mixins.Parameters._engine', DEFAULT_ENGINE)
+    monkeypatch.setattr('graphviz.parameters.Parameters._engine', DEFAULT_ENGINE)
     assert Parameters._engine == DEFAULT_ENGINE
 
     g1 = graphviz.Graph()
@@ -56,10 +56,10 @@ def test_set_default_format_invalid():
 def test_set_default_format(monkeypatch, *, format='png', explicit_format='jpeg'):
     assert len({DEFAULT_FORMAT, format, explicit_format}) == 3
 
-    from graphviz.backend.mixins import Parameters
+    from graphviz.parameters import Parameters
     assert Parameters._format == DEFAULT_FORMAT
     # isolate the test
-    monkeypatch.setattr('graphviz.backend.mixins.Parameters._format', DEFAULT_FORMAT)
+    monkeypatch.setattr('graphviz.parameters.Parameters._format', DEFAULT_FORMAT)
     assert Parameters._format == DEFAULT_FORMAT
 
     g1 = graphviz.Graph()

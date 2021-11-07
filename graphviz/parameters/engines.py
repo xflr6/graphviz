@@ -2,7 +2,7 @@
 
 import typing
 
-from .. import copying
+from . import base
 
 __all__ = ['ENGINES', 'verify_engine', 'Engine']
 
@@ -23,7 +23,7 @@ def verify_engine(engine: str) -> None:
         raise ValueError(f'unknown engine: {engine!r}')
 
 
-class Engine(copying.Copy):
+class Engine(base.ParameterBase):
     """Rendering engine parameter with ``'dot''`` default."""
 
     _engine = DEFAULT_ENGINE
