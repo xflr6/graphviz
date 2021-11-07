@@ -21,10 +21,10 @@ def classes(request):
 
 def test_copy(cls):
     c = cls()
-    assert c.__class__ is cls
+    assert type(c) is cls
     assert c.copy() is not c
     assert c.copy() is not c.copy()
-    assert c.copy().__class__ is c.__class__
+    assert type(c.copy()) is type(c)
     assert c.copy().__dict__ == c.__dict__ == c.copy().__dict__
 
 
@@ -40,17 +40,18 @@ def test_format_renderer_formatter_mocked(mocker, sentinel, mock_render,
 
     dot = cls(filename=filename, format=format,
               renderer=renderer, formatter=formatter)
-    save = mocker.patch.object(dot, 'save', autospec=True,
-                               return_value=sentinel.nonfilepath)
 
     assert dot.format == format
     assert dot.renderer == renderer
     assert dot.formatter == formatter
 
+    mock_save = mocker.patch.object(dot, 'save', autospec=True,
+                                    return_value=sentinel.nonfilepath)
+
     assert dot.render(quiet=quiet) is mock_render.return_value
 
-    save.assert_called_once_with(None, None, skip_existing=None)
-    mock_render.assert_called_once_with('dot', format, save.return_value,
+    mock_save.assert_called_once_with(None, None, skip_existing=None)
+    mock_render.assert_called_once_with('dot', format, mock_save.return_value,
                                         renderer=renderer, formatter=formatter,
                                         quiet=quiet)
 

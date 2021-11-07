@@ -19,6 +19,7 @@ def test_engine(source):
     assert not SOURCE['engine'].islower()
 
     assert source.engine == SOURCE['engine'].lower()
+
     with pytest.raises(ValueError, match=r'engine'):
         source.engine = ''
 
@@ -27,6 +28,7 @@ def test_format(source):
     assert not SOURCE['format'].islower()
 
     assert source.format == SOURCE['format'].lower()
+
     with pytest.raises(ValueError, match=r'format'):
         source.format = ''
 
@@ -115,33 +117,33 @@ def test_filepath(platform, source):
 
 def test_save_mocked(mocker, filename='nonfilename', directory='nondirectory'):
     source = graphviz.Source(**SOURCE)
-    makedirs = mocker.patch('os.makedirs', autospec=True)
-    open_ = mocker.patch('builtins.open', mocker.mock_open())
+    mock_makedirs = mocker.patch('os.makedirs', autospec=True)
+    mock_open = mocker.patch('builtins.open', mocker.mock_open())
 
     assert source.save(filename, directory) == source.filepath
 
     assert source.filename == filename and source.directory == directory
-    makedirs.assert_called_once_with(source.directory, 0o777, exist_ok=True)
-    open_.assert_called_once_with(source.filepath, 'w',
+    mock_makedirs.assert_called_once_with(source.directory, 0o777, exist_ok=True)
+    mock_open.assert_called_once_with(source.filepath, 'w',
                                   encoding=source.encoding)
-    assert open_.return_value.write.call_args_list == [mocker.call(source.source)]
+    assert mock_open.return_value.write.call_args_list == [mocker.call(source.source)]
 
 
 def test_render_mocked(mocker, sentinel, mock_render, source):
-    save = mocker.patch.object(source, 'save', autospec=True,
-                               return_value=sentinel.nonfilepath)
-    _view = mocker.patch.object(source, '_view', autospec=True)
-    remove = mocker.patch('os.remove', autospec=True)
+    mock_save = mocker.patch.object(source, 'save', autospec=True,
+                                    return_value=sentinel.nonfilepath)
+    mock_view = mocker.patch.object(source, '_view', autospec=True)
+    mock_remove = mocker.patch('os.remove', autospec=True)
 
     assert source.render(cleanup=True, view=True) is mock_render.return_value
 
-    save.assert_called_once_with(None, None, skip_existing=None)
+    mock_save.assert_called_once_with(None, None, skip_existing=None)
     mock_render.assert_called_once_with(source.engine, source.format,
-                                        save.return_value,
+                                        mock_save.return_value,
                                         renderer=None, formatter=None,
                                         quiet=False)
-    remove.assert_called_once_with(save.return_value)
-    _view.assert_called_once_with(mock_render.return_value, source.format, False)
+    mock_remove.assert_called_once_with(mock_save.return_value)
+    mock_view.assert_called_once_with(mock_render.return_value, source.format, False)
 
 
 def test_view_mocked(mocker, source):

@@ -60,19 +60,19 @@ def test_run_check_input_lines_mocked(mocker, sentinel, mock_popen,
     mock_err = mocker.create_autospec(bytes, instance=True, name='mock_err',
                                       **{'__len__.return_value': 1})
 
-    popen = mock_popen.return_value
-    popen.returncode = 0
-    popen.args = sentinel.cmd
-    popen.stdin = mocker.create_autospec(io.BytesIO, instance=True)
-    popen.communicate.return_value = (mock_out, mock_err)
+    proc = mock_popen.return_value
+    proc.configure_mock(args=sentinel.cmd,
+                        returncode=0,
+                        stdin=mocker.create_autospec(io.BytesIO, instance=True))
+    proc.communicate.return_value = (mock_out, mock_err)
 
-    result = execute.run_check(popen.args, input_lines=iter([line]),
+    result = execute.run_check(proc.args, input_lines=iter([line]),
                                capture_output=True)
 
     # subprocess.CompletedProcess.__eq__() is not implemented
     assert isinstance(result, subprocess.CompletedProcess)
-    assert result.args is popen.args
-    assert result.returncode == popen.returncode
+    assert result.args is proc.args
+    assert result.returncode == proc.returncode
     assert result.stdout is mock_out
     assert result.stderr is mock_err
 
@@ -81,7 +81,7 @@ def test_run_check_input_lines_mocked(mocker, sentinel, mock_popen,
                                        stdout=subprocess.PIPE,
                                        stderr=subprocess.PIPE,
                                        startupinfo=_common.StartupinfoMatcher())
-    popen.communicate.assert_called_once_with()
+    proc.communicate.assert_called_once_with()
     mock_out.decode.assert_not_called()
     mock_err.decode.assert_called_once_with(sentinel.encoding)
     mock_sys_stderr.write.assert_called_once_with(mock_err.decode.return_value)
