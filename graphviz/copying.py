@@ -1,9 +1,9 @@
 """Create new instance copies with cooperative ``super()`` calls."""
 
-__all__ = ['Copy']
+__all__ = ['CopyBase']
 
 
-class Copy:
+class CopyBase:
     """Create new instance copies with cooperative ``super()`` calls."""
 
     def copy(self):

@@ -5,7 +5,7 @@ from .. import copying
 __all__ = ['ParameterBase']
 
 
-class ParameterBase(copying.Copy):
+class ParameterBase(copying.CopyBase):
     """Rendering parameter."""
 
     def _getattr_from_dict(self, attrname: str, *, default=None):

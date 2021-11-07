@@ -20,7 +20,7 @@ class LineIterable:
 
 
 # Common base interface for all exposed classes
-class Base(LineIterable, copying.Copy):
+class Base(LineIterable, copying.CopyBase):
     """LineIterator with ``.source`` attribute, that it returns for ``str()``."""
 
     @property

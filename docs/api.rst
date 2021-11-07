@@ -206,12 +206,13 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      graphviz.base.LineIterable
      |      graphviz.backend.mixins.Render
      |      graphviz.backend.mixins.Pipe
-     |      graphviz.backend.mixins.Parameters
-     |      graphviz.backend.parameters.engines.Engine
-     |      graphviz.backend.parameters.formats.Format
-     |      graphviz.backend.parameters.renderers.Renderer
-     |      graphviz.backend.parameters.formatters.Formatter
-     |      graphviz.copying.Copy
+     |      graphviz.parameters.mixins.Parameters
+     |      graphviz.parameters.engines.Engine
+     |      graphviz.parameters.formats.Format
+     |      graphviz.parameters.renderers.Renderer
+     |      graphviz.parameters.formatters.Formatter
+     |      graphviz.parameters.base.ParameterBase
+     |      graphviz.copying.CopyBase
      |      graphviz.backend.mixins.View
      |      graphviz.backend.mixins.Unflatten
      |      builtins.object
@@ -563,35 +564,35 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      The DOT source code as string.
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.parameters.engines.Engine:
+     |  Data descriptors inherited from graphviz.parameters.engines.Engine:
      |
      |  engine
      |      The layout engine used for rendering
      |      (``'dot'``, ``'neato'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.parameters.formats.Format:
+     |  Data descriptors inherited from graphviz.parameters.formats.Format:
      |
      |  format
      |      The output format used for rendering
      |      (``'pdf'``, ``'png'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.parameters.renderers.Renderer:
+     |  Data descriptors inherited from graphviz.parameters.renderers.Renderer:
      |
      |  renderer
      |      The output renderer used for rendering
      |      (``'cairo'``, ``'gd'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.parameters.formatters.Formatter:
+     |  Data descriptors inherited from graphviz.parameters.formatters.Formatter:
      |
      |  formatter
      |      The output formatter used for rendering
      |      (``'cairo'``, ``'gd'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.copying.Copy:
+     |  Methods inherited from graphviz.copying.CopyBase:
      |
      |  copy(self)
      |      Return a copied instance of the object.
@@ -664,12 +665,13 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      graphviz.base.LineIterable
      |      graphviz.backend.mixins.Render
      |      graphviz.backend.mixins.Pipe
-     |      graphviz.backend.mixins.Parameters
-     |      graphviz.backend.parameters.engines.Engine
-     |      graphviz.backend.parameters.formats.Format
-     |      graphviz.backend.parameters.renderers.Renderer
-     |      graphviz.backend.parameters.formatters.Formatter
-     |      graphviz.copying.Copy
+     |      graphviz.parameters.mixins.Parameters
+     |      graphviz.parameters.engines.Engine
+     |      graphviz.parameters.formats.Format
+     |      graphviz.parameters.renderers.Renderer
+     |      graphviz.parameters.formatters.Formatter
+     |      graphviz.parameters.base.ParameterBase
+     |      graphviz.copying.CopyBase
      |      graphviz.backend.mixins.View
      |      graphviz.backend.mixins.Unflatten
      |      builtins.object
@@ -1020,35 +1022,35 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      The DOT source code as string.
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.parameters.engines.Engine:
+     |  Data descriptors inherited from graphviz.parameters.engines.Engine:
      |
      |  engine
      |      The layout engine used for rendering
      |      (``'dot'``, ``'neato'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.parameters.formats.Format:
+     |  Data descriptors inherited from graphviz.parameters.formats.Format:
      |
      |  format
      |      The output format used for rendering
      |      (``'pdf'``, ``'png'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.parameters.renderers.Renderer:
+     |  Data descriptors inherited from graphviz.parameters.renderers.Renderer:
      |
      |  renderer
      |      The output renderer used for rendering
      |      (``'cairo'``, ``'gd'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.parameters.formatters.Formatter:
+     |  Data descriptors inherited from graphviz.parameters.formatters.Formatter:
      |
      |  formatter
      |      The output formatter used for rendering
      |      (``'cairo'``, ``'gd'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.copying.Copy:
+     |  Methods inherited from graphviz.copying.CopyBase:
      |
      |  copy(self)
      |      Return a copied instance of the object.
@@ -1109,12 +1111,13 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      graphviz.base.LineIterable
      |      graphviz.backend.mixins.Render
      |      graphviz.backend.mixins.Pipe
-     |      graphviz.backend.mixins.Parameters
-     |      graphviz.backend.parameters.engines.Engine
-     |      graphviz.backend.parameters.formats.Format
-     |      graphviz.backend.parameters.renderers.Renderer
-     |      graphviz.backend.parameters.formatters.Formatter
-     |      graphviz.copying.Copy
+     |      graphviz.parameters.mixins.Parameters
+     |      graphviz.parameters.engines.Engine
+     |      graphviz.parameters.formats.Format
+     |      graphviz.parameters.renderers.Renderer
+     |      graphviz.parameters.formatters.Formatter
+     |      graphviz.parameters.base.ParameterBase
+     |      graphviz.copying.CopyBase
      |      graphviz.backend.mixins.View
      |      graphviz.backend.mixins.Unflatten
      |      builtins.object
@@ -1373,35 +1376,35 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      list of weak references to the object (if defined)
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.parameters.engines.Engine:
+     |  Data descriptors inherited from graphviz.parameters.engines.Engine:
      |
      |  engine
      |      The layout engine used for rendering
      |      (``'dot'``, ``'neato'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.parameters.formats.Format:
+     |  Data descriptors inherited from graphviz.parameters.formats.Format:
      |
      |  format
      |      The output format used for rendering
      |      (``'pdf'``, ``'png'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.parameters.renderers.Renderer:
+     |  Data descriptors inherited from graphviz.parameters.renderers.Renderer:
      |
      |  renderer
      |      The output renderer used for rendering
      |      (``'cairo'``, ``'gd'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.backend.parameters.formatters.Formatter:
+     |  Data descriptors inherited from graphviz.parameters.formatters.Formatter:
      |
      |  formatter
      |      The output formatter used for rendering
      |      (``'cairo'``, ``'gd'``, ...).
      |
      |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.copying.Copy:
+     |  Methods inherited from graphviz.copying.CopyBase:
      |
      |  copy(self)
      |      Return a copied instance of the object.

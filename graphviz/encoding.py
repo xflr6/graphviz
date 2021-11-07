@@ -12,7 +12,7 @@ __all__ = ['DEFAULT_ENCODING', 'Encoding']
 DEFAULT_ENCODING = 'utf-8'
 
 
-class Encoding(copying.Copy):
+class Encoding(copying.CopyBase):
     """Encoding used for input and output with ``'utf-8'`` default."""
 
     _encoding = DEFAULT_ENCODING
