@@ -67,8 +67,9 @@ class Format(base.ParameterBase):
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
-        if '_format' in self.__dict__:
-            kwargs['format'] = self._format
+        format = self._getattr_from_dict('_format')
+        if format is not None:
+            kwargs['format'] = format
         return super()._copy_kwargs(**kwargs)
 
     @property

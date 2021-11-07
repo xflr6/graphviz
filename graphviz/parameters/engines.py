@@ -38,8 +38,9 @@ class Engine(base.ParameterBase):
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
-        if '_engine' in self.__dict__:
-            kwargs['engine'] = self._engine
+        engine = self._getattr_from_dict('_engine')
+        if engine is not None:
+            kwargs['engine'] = engine
         return super()._copy_kwargs(**kwargs)
 
     @property

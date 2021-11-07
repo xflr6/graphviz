@@ -41,8 +41,9 @@ class Renderer(base.ParameterBase):
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
-        if '_renderer' in self.__dict__:
-            kwargs['renderer'] = self._renderer
+        renderer = self._getattr_from_dict('_renderer')
+        if renderer is not None:
+            kwargs['renderer'] = renderer
         return super()._copy_kwargs(**kwargs)
 
     @property

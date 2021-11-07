@@ -33,8 +33,9 @@ class Formatter(base.ParameterBase):
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
-        if '_formatter' in self.__dict__:
-            kwargs['formatter'] = self._formatter
+        formatter = self._getattr_from_dict('_formatter')
+        if formatter is not None:
+            kwargs['formatter'] = formatter
         return super()._copy_kwargs(**kwargs)
 
     @property
