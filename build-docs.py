@@ -16,7 +16,7 @@ TARGET = pathlib.Path('_build')
 
 RESULT = SOURCE / TARGET / 'index.html'
 
-ARGS = ['.', str(TARGET)]
+DEFAULT_ARGS = ['-n', '-v', '.', str(TARGET)]
 
 
 @contextlib.contextmanager
@@ -26,12 +26,13 @@ def chdir(path):
     try:
         yield path
     finally:
+        print(f'os.chdir({cwd_before}')
         os.chdir(cwd_before)
 
 
 args = sys.argv[1:]
 if not args:
-    args += ARGS
+    args = DEFAULT_ARGS
 
 print(f'os.chdir({SOURCE})')
 with chdir(SOURCE):
