@@ -14,9 +14,6 @@ class Parameters(engines.Engine, formats.Format,
                  renderers.Renderer, formatters.Formatter):
     """Parameters for calling ``graphviz.render()`` and ``graphviz.pipe()``."""
 
-    def __init__(self, format=None, engine=None, **kwargs):
-        super().__init__(format=format, engine=engine, **kwargs)
-
     def _get_parameters(self, *,
                         engine: typing.Optional[str] = None,
                         format: typing.Optional[str] = None,

@@ -32,7 +32,7 @@ class Formatter(base.ParameterBase):
 
     _verify_formatter = staticmethod(verify_formatter)
 
-    def __init__(self, *, formatter: typing.Optional[str] = None, **kwargs):
+    def __init__(self, *, formatter: typing.Optional[str] = None, **kwargs) -> None:
         super().__init__(**kwargs)
 
         self.formatter = formatter

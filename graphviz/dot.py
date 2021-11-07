@@ -59,7 +59,8 @@ class Dot(quoting.Quote, base.Base):
     def _edge_plain(cls, *, tail: str, head: str) -> str:
         return cls._edge(tail=tail, head=head, attr='')
 
-    def __init__(self, name: typing.Optional[str] = None,
+    def __init__(self, *,
+                 name: typing.Optional[str] = None,
                  comment: typing.Optional[str] = None,
                  graph_attr=None, node_attr=None, edge_attr=None, body=None,
                  strict: bool = False, **kwargs) -> None:

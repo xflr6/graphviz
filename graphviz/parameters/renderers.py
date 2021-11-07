@@ -41,7 +41,7 @@ class Renderer(base.ParameterBase):
 
     _verify_renderer = staticmethod(verify_renderer)
 
-    def __init__(self, *, renderer: typing.Optional[str] = None, **kwargs):
+    def __init__(self, *, renderer: typing.Optional[str] = None, **kwargs) -> None:
         super().__init__(**kwargs)
 
         self.renderer = renderer

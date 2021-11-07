@@ -17,7 +17,7 @@ class Encoding(copying.CopyBase):
 
     _encoding = DEFAULT_ENCODING
 
-    def __init__(self, encoding: typing.Optional[str] = DEFAULT_ENCODING,
+    def __init__(self, *, encoding: typing.Optional[str] = DEFAULT_ENCODING,
                  **kwargs) -> None:
         super().__init__(**kwargs)
 
