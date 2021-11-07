@@ -69,7 +69,7 @@ def test_unflatten(source):
     assert normalized == 'digraph { hello -> world; }'
 
 
-def test__repr_svg_(mocker, sentinel, source):
+def test_repr_svg_mocked(mocker, sentinel, source):
     mock_pipe = mocker.patch.object(source, 'pipe', autospec=True,
                                     return_value=sentinel.string)
 
@@ -78,7 +78,8 @@ def test__repr_svg_(mocker, sentinel, source):
     mock_pipe.assert_called_once_with(format='svg', encoding=source.encoding)
 
 
-def test_pipe_lines_format(mocker, mock_pipe_lines, source, format_='svg'):
+def test_pipe_lines_format_mocked(mocker, mock_pipe_lines, source,
+                                  format_='svg'):
     assert source.format != format_
 
     assert source.pipe(format=format_) is mock_pipe_lines.return_value
@@ -92,7 +93,7 @@ def test_pipe_lines_format(mocker, mock_pipe_lines, source, format_='svg'):
     assert list(data) == expected_lines
 
 
-def test_pipe_lines(mocker, mock_pipe_lines, source):
+def test_pipe_lines_mocked(mocker, mock_pipe_lines, source):
     assert source.pipe() is mock_pipe_lines.return_value
 
     mock_pipe_lines.assert_called_once_with(source.engine, source.format,
@@ -112,7 +113,7 @@ def test_filepath(platform, source):
         assert source.filepath == 'test-output/hello.gv'
 
 
-def test_save(mocker, filename='nonfilename', directory='nondirectory'):
+def test_save_mocked(mocker, filename='nonfilename', directory='nondirectory'):
     source = graphviz.Source(**SOURCE)
     makedirs = mocker.patch('os.makedirs', autospec=True)
     open_ = mocker.patch('builtins.open', mocker.mock_open())
@@ -126,7 +127,7 @@ def test_save(mocker, filename='nonfilename', directory='nondirectory'):
     assert open_.return_value.write.call_args_list == [mocker.call(source.source)]
 
 
-def test_render(mocker, sentinel, mock_render, source):
+def test_render_mocked(mocker, sentinel, mock_render, source):
     save = mocker.patch.object(source, 'save', autospec=True,
                                return_value=sentinel.nonfilepath)
     _view = mocker.patch.object(source, '_view', autospec=True)
@@ -143,7 +144,7 @@ def test_render(mocker, sentinel, mock_render, source):
     _view.assert_called_once_with(mock_render.return_value, source.format, False)
 
 
-def test_view(mocker, source):
+def test_view_mocked(mocker, source):
     mock_render = mocker.patch.object(source, 'render', autospec=True)
     kwargs = {'filename': 'filename', 'directory': 'directory',
               'cleanup': True, 'quiet': True, 'quiet_view': True}
@@ -158,7 +159,7 @@ def test__view_unknown_platform(unknown_platform, source):
         source._view('name', 'png', False)
 
 
-def test__view(mocker, sentinel, mock_platform, source):
+def test__view_mocked(mocker, sentinel, mock_platform, source):
     _view_platform = mocker.patch.object(source, f'_view_{mock_platform}',
                                          autospec=True)
 

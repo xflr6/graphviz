@@ -33,9 +33,10 @@ def test_str(cls):
     assert str(c) == c.source
 
 
-def test_format_renderer_formatter(mocker, sentinel, mock_render, quiet, cls,
-                                   filename='format.gv', format='jpg',
-                                   renderer='cairo', formatter='core'):
+def test_format_renderer_formatter_mocked(mocker, sentinel, mock_render,
+                                          quiet, cls,
+                                          filename='format.gv', format='jpg',
+                                          renderer='cairo', formatter='core'):
 
     dot = cls(filename=filename, format=format,
               renderer=renderer, formatter=formatter)
@@ -64,42 +65,6 @@ def test_invalid_formatter_raises_valueerror(cls):
     dot = cls()
     with pytest.raises(ValueError, match=r'unknown formatter'):
         dot.formatter = 'invalid_formatter'
-
-
-@pytest.mark.exe
-def test_unflatten(cls):
-    c = cls()
-    result = c.unflatten()
-    assert isinstance(result, graphviz.Source)
-
-    normalized = re.sub(r'\s+', ' ', result.source.strip())
-    assert normalized.startswith('digraph {' if c.directed else 'graph {')
-
-
-def test_unflatten_mocked(sentinel, mock_unflatten, cls):
-    dot = cls()
-    kwargs = {'stagger': sentinel.stagger,
-              'fanout': sentinel.fanout,
-              'chain': sentinel.chain}
-    result = dot.unflatten(**kwargs)
-
-    assert result is not None
-    assert isinstance(result, graphviz.Source)
-    assert type(result) is graphviz.Source
-    assert result.source is mock_unflatten.return_value
-
-    assert result.filename == dot.filename
-    assert result.directory == dot.directory
-    assert result.engine == dot.engine
-    assert result.format == dot.format
-    assert result.renderer == dot.renderer
-    assert result.formatter == dot.formatter
-    assert result.encoding == dot.encoding
-    assert result._loaded_from_path is None
-
-    mock_unflatten.assert_called_once_with(dot.source,
-                                           encoding=dot.encoding,
-                                           **kwargs)
 
 
 @pytest.mark.parametrize(
@@ -143,6 +108,42 @@ def test_repr_svg_mocked(mocker, sentinel, cls):
 
 
 @pytest.mark.exe
+def test_unflatten(cls):
+    c = cls()
+    result = c.unflatten()
+    assert isinstance(result, graphviz.Source)
+
+    normalized = re.sub(r'\s+', ' ', result.source.strip())
+    assert normalized.startswith('digraph {' if c.directed else 'graph {')
+
+
+def test_unflatten_mocked(sentinel, mock_unflatten, cls):
+    dot = cls()
+    kwargs = {'stagger': sentinel.stagger,
+              'fanout': sentinel.fanout,
+              'chain': sentinel.chain}
+    result = dot.unflatten(**kwargs)
+
+    assert result is not None
+    assert isinstance(result, graphviz.Source)
+    assert type(result) is graphviz.Source
+    assert result.source is mock_unflatten.return_value
+
+    assert result.filename == dot.filename
+    assert result.directory == dot.directory
+    assert result.engine == dot.engine
+    assert result.format == dot.format
+    assert result.renderer == dot.renderer
+    assert result.formatter == dot.formatter
+    assert result.encoding == dot.encoding
+    assert result._loaded_from_path is None
+
+    mock_unflatten.assert_called_once_with(dot.source,
+                                           encoding=dot.encoding,
+                                           **kwargs)
+
+
+@pytest.mark.exe
 @pytest.mark.parametrize(
     'kwargs', [{'engine': 'spam'}])
 def test_render_raises_before_save(tmp_path, cls, kwargs, filename='dot.gv'):
@@ -178,6 +179,31 @@ def test_render_raises_before_save_mocked(tmp_path, mock_render, cls, kwargs,
         dot.render(**kwargs)
 
     assert not expected_source.exists()
+
+
+@pytest.mark.exe
+@pytest.mark.parametrize(
+    'cls, expected',
+    [(graphviz.Graph, 'graph {\n\tC\n}\n'),
+     (graphviz.Digraph, 'digraph {\n\tC\n}\n')],
+    ids=lambda p: getattr(p, '__name__', '...'))
+def test_subgraph_render(capsys, tmp_path, cls, expected):
+    lpath = tmp_path / 's1.gv'
+    rendered = lpath.with_suffix('.gv.pdf')
+
+    dot = cls()
+    dot.edge('A', 'B')
+
+    with dot.subgraph() as s1:
+        s1.node('C')
+        result = s1.render(str(lpath))
+
+    assert result == str(rendered)
+
+    assert lpath.read_text(encoding='ascii') == expected
+
+    assert rendered.stat().st_size
+    assert capsys.readouterr() == ('', '')
 
 
 @pytest.mark.parametrize(
@@ -329,31 +355,6 @@ def test_subgraph():
 \tC -- F
 }
 '''
-
-
-@pytest.mark.exe
-@pytest.mark.parametrize(
-    'cls, expected',
-    [(graphviz.Graph, 'graph {\n\tC\n}\n'),
-     (graphviz.Digraph, 'digraph {\n\tC\n}\n')],
-    ids=lambda p: getattr(p, '__name__', '...'))
-def test_subgraph_render(capsys, tmp_path, cls, expected):
-    lpath = tmp_path / 's1.gv'
-    rendered = lpath.with_suffix('.gv.pdf')
-
-    dot = cls()
-    dot.edge('A', 'B')
-
-    with dot.subgraph() as s1:
-        s1.node('C')
-        result = s1.render(str(lpath))
-
-    assert result == str(rendered)
-
-    assert lpath.read_text(encoding='ascii') == expected
-
-    assert rendered.stat().st_size
-    assert capsys.readouterr() == ('', '')
 
 
 def test_label_html():
