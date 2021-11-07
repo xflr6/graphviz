@@ -10,17 +10,12 @@ from . import viewing
 __all__ = ['Render', 'Pipe', 'Unflatten', 'View']
 
 
-class RenderParameters(parameters.Parameters):
-    """Parameters for calling ``graphviz.render()`` and ``graphviz.pipe()``."""
+class Render(parameters.Parameters):
+    """Parameters for calling and calling ``graphviz.render()``."""
 
-    def _get_parameters(self, **kwargs):
-        kwargs = super()._get_parameters(**kwargs)
+    def _get_render_parameters(self, **kwargs):
+        kwargs = self._get_parameters(**kwargs)
         return [kwargs.pop('engine'), kwargs.pop('format')], kwargs
-
-
-class Render(RenderParameters):
-
-    _get_render_parameters = RenderParameters._get_parameters
 
     @property
     def _render(_):
@@ -28,9 +23,12 @@ class Render(RenderParameters):
         return rendering.render
 
 
-class Pipe(RenderParameters):
+class Pipe(parameters.Parameters):
+    """Parameters for calling and calling ``graphviz.pipe()``."""
 
-    _get_pipe_parameters = RenderParameters._get_parameters
+    def _get_pipe_parameters(self, **kwargs):
+        kwargs = self._get_parameters(**kwargs)
+        return [kwargs.pop('engine'), kwargs.pop('format')], kwargs
 
     @property
     def _pipe_lines(_):
