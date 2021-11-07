@@ -31,6 +31,7 @@ Graph
     :members:
         __iter__,
         source,
+        name, comment,
         node, edge, edges, attr, subgraph,
         format, engine, encoding,
         clear, copy, unflatten, pipe, save, render, view,
@@ -44,6 +45,7 @@ Digraph
     :members:
         __iter__,
         source,
+        name, comment,
         node, edge, edges, attr, subgraph,
         format, engine, encoding,
         clear, copy, unflatten, pipe, save, render, view,

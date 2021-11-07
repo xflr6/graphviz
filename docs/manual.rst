@@ -7,7 +7,7 @@ User Guide
 Installation
 ------------
 
-:mod:`graphviz` provides a simple pure-Python interface for the Graphviz_
+:ref:`graphviz <api>` provides a simple pure-Python interface for the Graphviz_
 graph-drawing software. It runs under Python 3.6+. To install it with pip_, run
 the following:
 
@@ -52,7 +52,7 @@ should print the version of your Graphiz installation.
 Basic usage
 -----------
 
-The :mod:`graphviz` module provides two classes: :class:`.Graph` and
+The :ref:`graphviz <api>` module provides two classes: :class:`.Graph` and
 :class:`.Digraph`. They create graph descriptions in the DOT_ language for
 undirected and directed graphs respectively. They have the same
 :ref:`API <api>`.
