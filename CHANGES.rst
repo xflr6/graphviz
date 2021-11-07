@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.18 (in development)
------------------------------
+Version 0.18
+------------
 
 Change of beaviour:
 File endings are now normalized so that all DOT source outputs
