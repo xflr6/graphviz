@@ -22,6 +22,7 @@ DEFAULT_ARGS = ['-n', '-v', '.', str(TARGET)]
 @contextlib.contextmanager
 def chdir(path):
     cwd_before = os.getcwd()
+    print(f'os.chdir({path})')
     os.chdir(path)
     try:
         yield path
@@ -34,7 +35,6 @@ args = sys.argv[1:]
 if not args:
     args = DEFAULT_ARGS
 
-print(f'os.chdir({SOURCE})')
 with chdir(SOURCE):
     print(f'sphinx.cmd.build.main({args})')
     result = build.main(args)
