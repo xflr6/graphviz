@@ -33,7 +33,7 @@ def test_str(cls):
     assert str(c) == c.source
 
 
-def test_format_renderer_formatter_mocked(mocker, sentinel, mock_render,
+def test_format_renderer_formatter_mocked(mocker, mock_render,
                                           quiet, cls,
                                           filename='format.gv', format='jpg',
                                           renderer='cairo', formatter='core'):
@@ -45,8 +45,7 @@ def test_format_renderer_formatter_mocked(mocker, sentinel, mock_render,
     assert dot.renderer == renderer
     assert dot.formatter == formatter
 
-    mock_save = mocker.patch.object(dot, 'save', autospec=True,
-                                    return_value=sentinel.nonfilepath)
+    mock_save = mocker.patch.object(dot, 'save', autospec=True)
 
     assert dot.render(quiet=quiet) is mock_render.return_value
 
@@ -98,12 +97,11 @@ def test_pipe_mocked(mocker, mock_pipe_lines, mock_pipe_lines_string, quiet, cls
                                             **expected_kwargs)
 
 
-def test_repr_svg_mocked(mocker, sentinel, cls):
+def test_repr_svg_mocked(mocker, cls):
     c = cls()
-    mock_pipe = mocker.patch.object(c, 'pipe', autospec=True,
-                                    return_value=sentinel.string)
+    mock_pipe = mocker.patch.object(c, 'pipe', autospec=True)
 
-    assert c._repr_svg_() is sentinel.string
+    assert c._repr_svg_() is mock_pipe.return_value
 
     mock_pipe.assert_called_once_with(format='svg', encoding=c.encoding)
 

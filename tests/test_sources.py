@@ -71,11 +71,10 @@ def test_unflatten(source):
     assert normalized == 'digraph { hello -> world; }'
 
 
-def test_repr_svg_mocked(mocker, sentinel, source):
-    mock_pipe = mocker.patch.object(source, 'pipe', autospec=True,
-                                    return_value=sentinel.string)
+def test_repr_svg_mocked(mocker, source):
+    mock_pipe = mocker.patch.object(source, 'pipe', autospec=True)
 
-    assert source._repr_svg_() is sentinel.string
+    assert source._repr_svg_() is mock_pipe.return_value
 
     mock_pipe.assert_called_once_with(format='svg', encoding=source.encoding)
 
@@ -129,9 +128,8 @@ def test_save_mocked(mocker, filename='nonfilename', directory='nondirectory'):
     assert mock_open.return_value.write.call_args_list == [mocker.call(source.source)]
 
 
-def test_render_mocked(mocker, sentinel, mock_render, source):
-    mock_save = mocker.patch.object(source, 'save', autospec=True,
-                                    return_value=sentinel.nonfilepath)
+def test_render_mocked(mocker, mock_render, source):
+    mock_save = mocker.patch.object(source, 'save', autospec=True)
     mock_view = mocker.patch.object(source, '_view', autospec=True)
     mock_remove = mocker.patch('os.remove', autospec=True)
 

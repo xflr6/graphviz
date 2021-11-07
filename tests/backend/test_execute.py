@@ -36,7 +36,7 @@ def test_run_check_oserror():
     assert e.value.errno in (errno.EACCES, errno.EINVAL)
 
 
-def test_run_check_called_process_error_mocked(capsys, sentinel, mock_run, quiet,
+def test_run_check_called_process_error_mocked(capsys, mock_run, quiet,
                                                stdout='I am the messiah',
                                                stderr='I am not the messiah!'):
     mock_run.return_value = subprocess.CompletedProcess(INVALID_CMD,
