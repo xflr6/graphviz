@@ -37,7 +37,7 @@ def test_pipe_pipe_invalid_data_mocked(mocker, sentinel, mock_run, quiet):
     mock_err = mocker.create_autospec(bytes, instance=True, name='mock_err',
                                       **{'__len__.return_value': 1})
 
-    mock_run.return_value = subprocess.CompletedProcess(sentinel.cmd,
+    mock_run.return_value = subprocess.CompletedProcess(_common.INVALID_CMD,
                                                         returncode=5,
                                                         stdout=mock_out,
                                                         stderr=mock_err)
@@ -46,7 +46,7 @@ def test_pipe_pipe_invalid_data_mocked(mocker, sentinel, mock_run, quiet):
         graphviz.pipe('dot', 'png', b'nongraph', quiet=quiet)
 
     assert e.value.returncode == 5
-    assert e.value.cmd is sentinel.cmd
+    assert e.value.cmd == _common.INVALID_CMD
     assert e.value.stdout is mock_out
     assert e.value.stderr is mock_err
     e.value.stdout = sentinel.new_stdout
@@ -83,8 +83,8 @@ def test_pipe(capsys, engine, format_, renderer, formatter, pattern,
     assert capsys.readouterr() == ('', '')
 
 
-def test_pipe_mocked(capsys, sentinel, mock_run, quiet):
-    mock_run.return_value = subprocess.CompletedProcess(sentinel.cmd,
+def test_pipe_mocked(capsys, mock_run, quiet):
+    mock_run.return_value = subprocess.CompletedProcess(_common.INVALID_CMD,
                                                         returncode=0,
                                                         stdout=b'stdout',
                                                         stderr=b'stderr')
@@ -101,9 +101,9 @@ def test_pipe_mocked(capsys, sentinel, mock_run, quiet):
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
-def test_pipe_string_mocked(capsys, sentinel, mock_run, quiet,
+def test_pipe_string_mocked(capsys, mock_run, quiet,
                             encoding='ascii'):
-    mock_run.return_value = subprocess.CompletedProcess(sentinel.cmd,
+    mock_run.return_value = subprocess.CompletedProcess(_common.INVALID_CMD,
                                                         returncode=0,
                                                         stdout='stdout',
                                                         stderr='stderr')
@@ -120,10 +120,10 @@ def test_pipe_string_mocked(capsys, sentinel, mock_run, quiet,
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
-def test_pipe_lines_mocked(capsys, sentinel, mock_popen, quiet,
+def test_pipe_lines_mocked(capsys, mock_popen, quiet,
                            input_encoding='ascii'):
     proc = mock_popen.return_value
-    proc.configure_mock(args=sentinel.cmd,
+    proc.configure_mock(args=_common.EXPECTED_DOT_BINARY,
                         returncode=0,
                         stdin=io.BytesIO(),
                         stdout=io.BytesIO(b'stdout'),
@@ -145,10 +145,10 @@ def test_pipe_lines_mocked(capsys, sentinel, mock_popen, quiet,
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
-def test_pipe_lines_string_mocked(capsys, sentinel, mock_popen, quiet,
+def test_pipe_lines_string_mocked(capsys, mock_popen, quiet,
                                   encoding='ascii'):
     proc = mock_popen.return_value
-    proc.configure_mock(args=sentinel.cmd,
+    proc.configure_mock(args=_common.INVALID_CMD,
                         returncode=0,
                         stdin=io.StringIO(),
                         stdout=io.StringIO('stdout'),

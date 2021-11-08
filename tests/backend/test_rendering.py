@@ -82,9 +82,9 @@ def test_render_img(capsys, tmp_path, files_path, engine='dot', format_='pdf'):
 
 @pytest.mark.parametrize(
     'directory', [None, 'dot_sources'])
-def test_render_mocked(capsys, sentinel, mock_run, quiet, directory,
+def test_render_mocked(capsys, mock_run, quiet, directory,
                        filepath='nonfilepath'):
-    mock_run.return_value = subprocess.CompletedProcess(sentinel.cmd,
+    mock_run.return_value = subprocess.CompletedProcess(_common.INVALID_CMD,
                                                         returncode=0,
                                                         stdout='stdout',
                                                         stderr='stderr')
