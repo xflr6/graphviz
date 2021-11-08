@@ -5,11 +5,41 @@ import typing
 from . import base
 from . import quoting
 
-__all__ = ['Dot']
+__all__ = ['GraphSyntax', 'DigraphSyntax', 'Dot']
 
 
 def comment(line: str):
     return f'// {line}\n'
+
+
+def graph_head(name: str) -> str:
+    return f'graph {name}{{\n'
+
+
+def digraph_head(name: str) -> str:
+    return f'digraph {name}{{\n'
+
+
+def graph_edge(*, tail: str, head: str, attr: str) -> str:
+    return f'\t{tail} -- {head}{attr}\n'
+
+
+def digraph_edge(*, tail: str, head: str, attr: str) -> str:
+    return f'\t{tail} -> {head}{attr}\n'
+
+
+class GraphSyntax:
+
+    _head = staticmethod(graph_head)
+
+    _edge = staticmethod(graph_edge)
+
+
+class DigraphSyntax:
+
+    _head = staticmethod(digraph_head)
+
+    _edge = staticmethod(digraph_edge)
 
 
 def subgraph(name: str) -> str:
