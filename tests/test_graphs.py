@@ -71,16 +71,6 @@ def test_pipe_mocked(mocker, mock_pipe_lines, mock_pipe_lines_string, quiet, cls
                                             **expected_kwargs)
 
 
-@pytest.mark.exe
-def test_unflatten(cls):
-    c = cls()
-    result = c.unflatten()
-    assert isinstance(result, graphviz.Source)
-
-    normalized = re.sub(r'\s+', ' ', result.source.strip())
-    assert normalized.startswith('digraph {' if c.directed else 'graph {')
-
-
 def test_unflatten_mocked(sentinel, mock_unflatten, cls):
     dot = cls()
     kwargs = {'stagger': sentinel.stagger,

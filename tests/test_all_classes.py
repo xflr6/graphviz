@@ -1,5 +1,8 @@
 import locale
+import re
+
 import pytest
+
 
 import graphviz
 
@@ -52,3 +55,15 @@ def test_repr_svg_mocked(mocker, dot):
     assert dot._repr_svg_() is mock_pipe.return_value
 
     mock_pipe.assert_called_once_with(format='svg', encoding=dot.encoding)
+
+
+@pytest.mark.exe
+def test_unflatten(cls, dot):
+    result = dot.unflatten()
+    assert isinstance(result, graphviz.Source)
+
+    normalized = re.sub(r'\s+', ' ', result.source.strip())
+    if cls.__name__ == 'Source':
+        assert normalized == 'digraph { hello -> world; }'
+    else:
+        assert normalized.startswith('digraph {' if dot.directed else 'graph {')

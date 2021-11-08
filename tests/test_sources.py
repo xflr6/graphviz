@@ -45,15 +45,6 @@ def test_init_filename():
                 {'name': 'name'})('').filename == 'name.gv'
 
 
-@pytest.mark.exe
-def test_unflatten(source):
-    result = source.unflatten()
-    assert isinstance(result, graphviz.Source)
-
-    normalized = re.sub(r'\s+', ' ', result.source.strip())
-    assert normalized == 'digraph { hello -> world; }'
-
-
 def test_pipe_lines_format_mocked(mocker, mock_pipe_lines, source,
                                   format_='svg'):
     assert source.format != format_
