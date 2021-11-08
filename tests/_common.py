@@ -6,7 +6,9 @@ import pathlib
 import platform
 import subprocess
 
-__all__ = ['EXPECTED_DOT_BINARY', 'EXPECTED_DEFAULT_ENCODING',
+__all__ = ['EXPECTED_DOT_BINARY', 'EXPECTED_UNFLATTEN_BINARY',
+           'EXPECTED_DEFAULT_ENCODING',
+           'INVALID_CMD',
            'as_cwd',
            'check_startupinfo', 'StartupinfoMatcher']
 
@@ -15,6 +17,8 @@ EXPECTED_DOT_BINARY = pathlib.Path('dot')
 EXPECTED_UNFLATTEN_BINARY = pathlib.Path('unflatten')
 
 EXPECTED_DEFAULT_ENCODING = 'utf-8'
+
+INVALID_CMD = ['']
 
 
 @contextlib.contextmanager

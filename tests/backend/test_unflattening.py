@@ -27,7 +27,7 @@ def test_unflatten(source, kwargs, expected):
 
 def test_unflatten_mocked(capsys, sentinel, mock_run,
                           stagger=10, fanout=True, chain=23):
-    mock_run.return_value = subprocess.CompletedProcess(sentinel.cmd,
+    mock_run.return_value = subprocess.CompletedProcess(_common.INVALID_CMD,
                                                         returncode=0,
                                                         stdout=sentinel.stdout,
                                                         stderr='')
