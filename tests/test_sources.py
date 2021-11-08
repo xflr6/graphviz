@@ -1,5 +1,4 @@
 import locale
-import re
 
 import pytest
 
@@ -18,7 +17,7 @@ def source():
 @pytest.mark.parametrize(
     'parameter', ['engine', 'format', 'encoding'])
 def test_source_parameter(source, parameter):
-    if parameter  != 'encoding':
+    if parameter != 'encoding':
         assert not SOURCE[parameter].islower()
     assert getattr(source, parameter) == SOURCE[parameter].lower()
 

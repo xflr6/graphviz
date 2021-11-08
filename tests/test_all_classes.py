@@ -13,6 +13,7 @@ ALL_CLASSES = [graphviz.Graph, graphviz.Digraph, graphviz.Source]
 def cls(request):
     return request.param
 
+
 @pytest.fixture
 def dot(cls):
     if cls.__name__ == 'Source':
