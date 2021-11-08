@@ -15,29 +15,22 @@ def source():
     return graphviz.Source(**SOURCE)
 
 
-def test_engine(source):
-    assert not SOURCE['engine'].islower()
-
-    assert source.engine == SOURCE['engine'].lower()
-
-    with pytest.raises(ValueError, match=r'engine'):
-        source.engine = ''
-
-
-def test_format(source):
-    assert not SOURCE['format'].islower()
-
-    assert source.format == SOURCE['format'].lower()
-
-    with pytest.raises(ValueError, match=r'format'):
-        source.format = ''
+@pytest.mark.parametrize(
+    'parameter', ['engine', 'format', 'encoding'])
+def test_source_parameter(source, parameter):
+    if parameter  != 'encoding':
+        assert not SOURCE[parameter].islower()
+    assert getattr(source, parameter) == SOURCE[parameter].lower()
 
 
-def test_encoding(source):
-    assert source.encoding == SOURCE['encoding']
-
-    with pytest.raises(LookupError, match=r'encoding'):
-        source.encoding = ''
+@pytest.mark.parametrize(
+    'parameter, expected_exception',
+    [('engine', ValueError),
+     ('format', ValueError),
+     ('encoding', LookupError)])
+def test_source_parameter_raises(source, parameter, expected_exception):
+    with pytest.raises(expected_exception, match=parameter):
+        setattr(source, parameter, '')
 
 
 def test_encoding_none(source):
