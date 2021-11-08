@@ -54,8 +54,8 @@ def test_format_renderer_formatter_mocked(mocker, mock_render,
                                           quiet, cls,
                                           filename='format.gv', format='jpg',
                                           renderer='cairo', formatter='core'):
-    dot = cls([''] if cls.__name__ == 'Source' else [],
-              filename=filename, format=format,
+    args = [''] if cls.__name__ == 'Source' else []
+    dot = cls(*args, filename=filename, format=format,
               renderer=renderer, formatter=formatter)
 
     assert dot.format == format
