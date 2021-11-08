@@ -19,28 +19,6 @@ def classes(request):
     return request.param
 
 
-def test_format_renderer_formatter_mocked(mocker, mock_render,
-                                          quiet, cls,
-                                          filename='format.gv', format='jpg',
-                                          renderer='cairo', formatter='core'):
-
-    dot = cls(filename=filename, format=format,
-              renderer=renderer, formatter=formatter)
-
-    assert dot.format == format
-    assert dot.renderer == renderer
-    assert dot.formatter == formatter
-
-    mock_save = mocker.patch.object(dot, 'save', autospec=True)
-
-    assert dot.render(quiet=quiet) is mock_render.return_value
-
-    mock_save.assert_called_once_with(None, None, skip_existing=None)
-    mock_render.assert_called_once_with('dot', format, mock_save.return_value,
-                                        renderer=renderer, formatter=formatter,
-                                        quiet=quiet)
-
-
 @pytest.mark.exe
 @pytest.mark.parametrize(
     'kwargs', [{'engine': 'spam'}])

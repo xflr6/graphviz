@@ -49,6 +49,28 @@ def test_encoding_none(dot):
     assert dot_copy.encoding == locale.getpreferredencoding()
 
 
+def test_format_renderer_formatter_mocked(mocker, mock_render,
+                                          quiet, cls,
+                                          filename='format.gv', format='jpg',
+                                          renderer='cairo', formatter='core'):
+    dot = cls([''] if cls.__name__ == 'Source' else [],
+              filename=filename, format=format,
+              renderer=renderer, formatter=formatter)
+
+    assert dot.format == format
+    assert dot.renderer == renderer
+    assert dot.formatter == formatter
+
+    mock_save = mocker.patch.object(dot, 'save', autospec=True)
+
+    assert dot.render(quiet=quiet) is mock_render.return_value
+
+    mock_save.assert_called_once_with(None, None, skip_existing=None)
+    mock_render.assert_called_once_with('dot', format, mock_save.return_value,
+                                        renderer=renderer, formatter=formatter,
+                                        quiet=quiet)
+
+
 @pytest.mark.parametrize(
     'encoding', [None, 'ascii', 'utf-8'])
 def test_pipe_mocked(mocker, mock_pipe_lines, mock_pipe_lines_string, quiet,
