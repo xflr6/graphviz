@@ -12,6 +12,8 @@ __all__ = ['EXPECTED_DOT_BINARY', 'EXPECTED_DEFAULT_ENCODING',
 
 EXPECTED_DOT_BINARY = pathlib.Path('dot')
 
+EXPECTED_UNFLATTEN_BINARY = pathlib.Path('unflatten')
+
 EXPECTED_DEFAULT_ENCODING = 'utf-8'
 
 

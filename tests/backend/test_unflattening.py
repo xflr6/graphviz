@@ -1,4 +1,3 @@
-import pathlib
 import re
 import subprocess
 
@@ -7,8 +6,6 @@ import pytest
 import graphviz
 
 import _common
-
-EXPECTED_UNFLATTEN_BINARY = pathlib.Path('unflatten')
 
 
 def test_unflatten_stagger_missing():
@@ -39,7 +36,7 @@ def test_unflatten_mocked(capsys, sentinel, mock_run,
                                 stagger=stagger, fanout=fanout, chain=chain)
     assert result is sentinel.stdout
 
-    mock_run.assert_called_once_with([EXPECTED_UNFLATTEN_BINARY,
+    mock_run.assert_called_once_with([_common.EXPECTED_UNFLATTEN_BINARY,
                                       '-l', '10', '-f', '-c', '23'],
                                      input='nonsource',
                                      stdout=subprocess.PIPE,

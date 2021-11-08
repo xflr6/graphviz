@@ -61,7 +61,7 @@ def test_run_check_input_lines_mocked(mocker, sentinel, mock_popen,
                                       **{'__len__.return_value': 1})
 
     proc = mock_popen.return_value
-    proc.configure_mock(args=sentinel.cmd,
+    proc.configure_mock(args=INVALID_CMD,
                         returncode=0,
                         stdin=mocker.create_autospec(io.BytesIO, instance=True))
     proc.communicate.return_value = (mock_out, mock_err)
@@ -76,7 +76,7 @@ def test_run_check_input_lines_mocked(mocker, sentinel, mock_popen,
     assert result.stdout is mock_out
     assert result.stderr is mock_err
 
-    mock_popen.assert_called_once_with(sentinel.cmd,
+    mock_popen.assert_called_once_with(INVALID_CMD,
                                        stdin=subprocess.PIPE,
                                        stdout=subprocess.PIPE,
                                        stderr=subprocess.PIPE,
