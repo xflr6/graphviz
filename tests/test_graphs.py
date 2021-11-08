@@ -55,16 +55,16 @@ def test_format_renderer_formatter_mocked(mocker, mock_render,
                                         quiet=quiet)
 
 
-def test_invalid_renderer_raises_valueerror(cls):
+@pytest.mark.parametrize(
+    'attribute, match',
+    [('engine', r'unknown engine'),
+     ('format', r'unknown format'),
+     ('renderer', r'unknown renderer'),
+     ('formatter', r'unknown formatter')])
+def test_invalid_paramezer_raises_valuerror(cls, attribute, match):
     dot = cls()
-    with pytest.raises(ValueError, match=r'unknown renderer'):
-        dot.renderer = 'invalid_renderer'
-
-
-def test_invalid_formatter_raises_valueerror(cls):
-    dot = cls()
-    with pytest.raises(ValueError, match=r'unknown formatter'):
-        dot.formatter = 'invalid_formatter'
+    with pytest.raises(ValueError, match=match):
+        setattr(dot, attribute, 'invalid_parameter')
 
 
 @pytest.mark.parametrize(
