@@ -49,6 +49,37 @@ def test_encoding_none(dot):
     assert dot_copy.encoding == locale.getpreferredencoding()
 
 
+@pytest.mark.parametrize(
+    'encoding', [None, 'ascii', 'utf-8'])
+def test_pipe_mocked(mocker, mock_pipe_lines, mock_pipe_lines_string, quiet,
+                     dot, encoding):
+    input_encoding = 'utf-8'
+    dot.encoding = input_encoding
+
+    result = dot.pipe(encoding=encoding, quiet=quiet)
+
+    expected_args = ['dot', 'pdf', mocker.ANY]
+    expected_kwargs = {'quiet': quiet,
+                       'renderer': None,
+                       'formatter': None}
+
+    if encoding == input_encoding:
+        assert result is mock_pipe_lines_string.return_value
+        mock_pipe_lines_string.assert_called_once_with(*expected_args,
+                                                       encoding=encoding,
+                                                       **expected_kwargs)
+        return
+
+    if encoding is None:
+        assert result is mock_pipe_lines.return_value
+    else:
+        assert result is mock_pipe_lines.return_value.decode.return_value
+        mock_pipe_lines.return_value.decode.assert_called_once_with(encoding)
+    mock_pipe_lines.assert_called_once_with(*expected_args,
+                                            input_encoding=input_encoding,
+                                            **expected_kwargs)
+
+
 def test_repr_svg_mocked(mocker, dot):
     mock_pipe = mocker.patch.object(dot, 'pipe', autospec=True)
 
