@@ -1,3 +1,4 @@
+import locale
 import pytest
 
 import graphviz
@@ -37,6 +38,12 @@ def test_str(dot):
 def test_invalid_parameter_raises_valuerror(dot, attribute, match):
     with pytest.raises(ValueError, match=match):
         setattr(dot, attribute, 'invalid_parameter')
+
+
+def test_encoding_none(dot):
+    dot_copy = dot.copy()
+    dot_copy.encoding = None
+    assert dot_copy.encoding == locale.getpreferredencoding()
 
 
 def test_repr_svg_mocked(mocker, dot):

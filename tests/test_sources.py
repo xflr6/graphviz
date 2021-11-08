@@ -33,12 +33,6 @@ def test_source_parameter_raises(source, parameter, expected_exception):
         setattr(source, parameter, '')
 
 
-def test_encoding_none(source):
-    source_copy = source.copy()
-    source_copy.encoding = None
-    assert source_copy.encoding == locale.getpreferredencoding()
-
-
 def test_init(source):
     assert source.source == SOURCE['source']
     assert source.filename == SOURCE['filename']
