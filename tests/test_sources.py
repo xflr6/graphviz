@@ -51,10 +51,6 @@ def test_init_filename():
                 {'name': 'name'})('').filename == 'name.gv'
 
 
-def test_str(source):
-    assert str(source) == source.source
-
-
 @pytest.mark.exe
 def test_unflatten(source):
     result = source.unflatten()
@@ -62,14 +58,6 @@ def test_unflatten(source):
 
     normalized = re.sub(r'\s+', ' ', result.source.strip())
     assert normalized == 'digraph { hello -> world; }'
-
-
-def test_repr_svg_mocked(mocker, source):
-    mock_pipe = mocker.patch.object(source, 'pipe', autospec=True)
-
-    assert source._repr_svg_() is mock_pipe.return_value
-
-    mock_pipe.assert_called_once_with(format='svg', encoding=source.encoding)
 
 
 def test_pipe_lines_format_mocked(mocker, mock_pipe_lines, source,
@@ -161,13 +149,6 @@ def test__view_mocked(mocker, sentinel, mock_platform, source):
     assert source._view(sentinel.name, 'png', **kwargs) is None
 
     _view_platform.assert_called_once_with(sentinel.name, **kwargs)
-
-
-def test_copy(source):
-    assert source.copy() is not source
-    assert source.copy() is not source.copy()
-    assert source.copy().__class__ is source.__class__
-    assert source.copy().__dict__ == source.__dict__ == source.copy().__dict__
 
 
 def test_from_file(tmp_path, filename='hello.gv', directory='source_hello',

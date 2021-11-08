@@ -19,20 +19,6 @@ def classes(request):
     return request.param
 
 
-def test_copy(cls):
-    c = cls()
-    assert type(c) is cls
-    assert c.copy() is not c
-    assert c.copy() is not c.copy()
-    assert type(c.copy()) is type(c)
-    assert c.copy().__dict__ == c.__dict__ == c.copy().__dict__
-
-
-def test_str(cls):
-    c = cls()
-    assert str(c) == c.source
-
-
 def test_format_renderer_formatter_mocked(mocker, mock_render,
                                           quiet, cls,
                                           filename='format.gv', format='jpg',
@@ -53,18 +39,6 @@ def test_format_renderer_formatter_mocked(mocker, mock_render,
     mock_render.assert_called_once_with('dot', format, mock_save.return_value,
                                         renderer=renderer, formatter=formatter,
                                         quiet=quiet)
-
-
-@pytest.mark.parametrize(
-    'attribute, match',
-    [('engine', r'unknown engine'),
-     ('format', r'unknown format'),
-     ('renderer', r'unknown renderer'),
-     ('formatter', r'unknown formatter')])
-def test_invalid_paramezer_raises_valuerror(cls, attribute, match):
-    dot = cls()
-    with pytest.raises(ValueError, match=match):
-        setattr(dot, attribute, 'invalid_parameter')
 
 
 @pytest.mark.parametrize(
@@ -95,15 +69,6 @@ def test_pipe_mocked(mocker, mock_pipe_lines, mock_pipe_lines_string, quiet, cls
     mock_pipe_lines.assert_called_once_with(*expected_args,
                                             input_encoding=input_encoding,
                                             **expected_kwargs)
-
-
-def test_repr_svg_mocked(mocker, cls):
-    c = cls()
-    mock_pipe = mocker.patch.object(c, 'pipe', autospec=True)
-
-    assert c._repr_svg_() is mock_pipe.return_value
-
-    mock_pipe.assert_called_once_with(format='svg', encoding=c.encoding)
 
 
 @pytest.mark.exe
