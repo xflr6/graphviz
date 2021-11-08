@@ -41,32 +41,6 @@ def test_format_renderer_formatter_mocked(mocker, mock_render,
                                         quiet=quiet)
 
 
-def test_unflatten_mocked(sentinel, mock_unflatten, cls):
-    dot = cls()
-    kwargs = {'stagger': sentinel.stagger,
-              'fanout': sentinel.fanout,
-              'chain': sentinel.chain}
-    result = dot.unflatten(**kwargs)
-
-    assert result is not None
-    assert isinstance(result, graphviz.Source)
-    assert type(result) is graphviz.Source
-    assert result.source is mock_unflatten.return_value
-
-    assert result.filename == dot.filename
-    assert result.directory == dot.directory
-    assert result.engine == dot.engine
-    assert result.format == dot.format
-    assert result.renderer == dot.renderer
-    assert result.formatter == dot.formatter
-    assert result.encoding == dot.encoding
-    assert result._loaded_from_path is None
-
-    mock_unflatten.assert_called_once_with(dot.source,
-                                           encoding=dot.encoding,
-                                           **kwargs)
-
-
 @pytest.mark.exe
 @pytest.mark.parametrize(
     'kwargs', [{'engine': 'spam'}])

@@ -98,3 +98,28 @@ def test_unflatten(cls, dot):
         assert normalized == 'digraph { hello -> world; }'
     else:
         assert normalized.startswith('digraph {' if dot.directed else 'graph {')
+
+
+def test_unflatten_mocked(sentinel, mock_unflatten, dot):
+    kwargs = {'stagger': sentinel.stagger,
+              'fanout': sentinel.fanout,
+              'chain': sentinel.chain}
+    result = dot.unflatten(**kwargs)
+
+    assert result is not None
+    assert isinstance(result, graphviz.Source)
+    assert type(result) is graphviz.Source
+    assert result.source is mock_unflatten.return_value
+
+    assert result.filename == dot.filename
+    assert result.directory == dot.directory
+    assert result.engine == dot.engine
+    assert result.format == dot.format
+    assert result.renderer == dot.renderer
+    assert result.formatter == dot.formatter
+    assert result.encoding == dot.encoding
+    assert result._loaded_from_path is None
+
+    mock_unflatten.assert_called_once_with(dot.source,
+                                           encoding=dot.encoding,
+                                           **kwargs)
