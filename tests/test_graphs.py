@@ -20,44 +20,6 @@ def classes(request):
 
 @pytest.mark.exe
 @pytest.mark.parametrize(
-    'kwargs', [{'engine': 'spam'}])
-def test_render_raises_before_save(tmp_path, cls, kwargs, filename='dot.gv'):
-    dot = cls(filename=filename, directory=tmp_path)
-    expected_source = tmp_path / filename
-    assert not expected_source.exists()
-
-    with pytest.raises(ValueError, match=r''):
-        dot.render(**kwargs)
-
-    assert not expected_source.exists()
-
-    pdf = dot.render(engine='dot')
-
-    assert pdf == f'{expected_source}.pdf'
-    assert expected_source.exists()
-    assert expected_source.stat().st_size
-
-
-@pytest.mark.parametrize(
-    'kwargs',
-    [{'engine': 'spam'}, {'format': 'spam'},
-     {'renderer': 'spam'}, {'formatter': 'spam'}])
-def test_render_raises_before_save_mocked(tmp_path, mock_render, cls, kwargs,
-                                          filename='dot.gv'):
-    dot = cls(filename=filename, directory=tmp_path)
-
-    expected_source = tmp_path / filename
-    assert not expected_source.exists()
-
-    first_arg = next(iter(kwargs))
-    with pytest.raises(ValueError, match=f'unknown {first_arg}'):
-        dot.render(**kwargs)
-
-    assert not expected_source.exists()
-
-
-@pytest.mark.exe
-@pytest.mark.parametrize(
     'cls, expected',
     [(graphviz.Graph, 'graph {\n\tC\n}\n'),
      (graphviz.Digraph, 'digraph {\n\tC\n}\n')],

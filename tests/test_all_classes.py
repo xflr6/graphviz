@@ -50,6 +50,46 @@ def test_encoding_none(dot):
     assert dot_copy.encoding == locale.getpreferredencoding()
 
 
+@pytest.mark.exe
+@pytest.mark.parametrize(
+    'kwargs', [{'engine': 'spam'}])
+def test_render_raises_before_save(tmp_path, cls, kwargs, filename='dot.gv'):
+    args = ['graph { spam }'] if cls.__name__ == 'Source' else []
+    dot = cls(*args, filename=filename, directory=tmp_path)
+    expected_source = tmp_path / filename
+    assert not expected_source.exists()
+
+    with pytest.raises(ValueError, match=r''):
+        dot.render(**kwargs)
+
+    assert not expected_source.exists()
+
+    pdf = dot.render(engine='dot')
+
+    assert pdf == f'{expected_source}.pdf'
+    assert expected_source.exists()
+    assert expected_source.stat().st_size
+
+
+@pytest.mark.parametrize(
+    'kwargs',
+    [{'engine': 'spam'}, {'format': 'spam'},
+     {'renderer': 'spam'}, {'formatter': 'spam'}])
+def test_render_raises_before_save_mocked(tmp_path, mock_render, cls, kwargs,
+                                          filename='dot.gv'):
+    args = [''] if cls.__name__ == 'Source' else []
+    dot = cls(*args, filename=filename, directory=tmp_path)
+
+    expected_source = tmp_path / filename
+    assert not expected_source.exists()
+
+    first_arg = next(iter(kwargs))
+    with pytest.raises(ValueError, match=f'unknown {first_arg}'):
+        dot.render(**kwargs)
+
+    assert not expected_source.exists()
+
+
 def test_format_renderer_formatter_mocked(mocker, mock_render,
                                           quiet, cls,
                                           filename='format.gv', format='jpg',
