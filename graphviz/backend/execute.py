@@ -71,6 +71,7 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
 
     if encoding is not None:
         kwargs['encoding'] = encoding
+
     kwargs.setdefault('startupinfo', _compat.get_startupinfo())
 
     try:
