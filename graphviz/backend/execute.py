@@ -77,13 +77,7 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
         if input_lines is not None:
             assert kwargs.get('input') is None
             assert iter(input_lines) is input_lines
-            popen = subprocess.Popen(cmd, stdin=subprocess.PIPE, **kwargs)
-            stdin_write = popen.stdin.write
-            for line in input_lines:
-                stdin_write(line)
-            stdout, stderr = popen.communicate()
-            proc = subprocess.CompletedProcess(popen.args, popen.returncode,
-                                               stdout=stdout, stderr=stderr)
+            proc = _run_input_lines(cmd, input_lines, kwargs=kwargs)
         else:
             proc = subprocess.run(cmd, **kwargs)
     except OSError as e:
@@ -92,13 +86,7 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
         raise
 
     if not quiet and proc.stderr:
-        stderr = proc.stderr
-        if isinstance(stderr, bytes):
-            stderr_encoding = (getattr(sys.stderr, 'encoding', None)
-                               or sys.getdefaultencoding())
-            stderr = stderr.decode(stderr_encoding)
-        sys.stderr.write(stderr)
-        sys.stderr.flush()
+        _write_stderr(proc.stderr)
 
     try:
         proc.check_returncode()
@@ -106,6 +94,29 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
         raise CalledProcessError(*e.args)
 
     return proc
+
+
+def _run_input_lines(cmd, input_lines, *, kwargs):
+    popen = subprocess.Popen(cmd, stdin=subprocess.PIPE, **kwargs)
+
+    stdin_write = popen.stdin.write
+    for line in input_lines:
+        stdin_write(line)
+
+    stdout, stderr = popen.communicate()
+    return subprocess.CompletedProcess(popen.args, popen.returncode,
+                                       stdout=stdout, stderr=stderr)
+
+
+def _write_stderr(stderr) -> None:
+    if isinstance(stderr, bytes):
+        stderr_encoding = (getattr(sys.stderr, 'encoding', None)
+                           or sys.getdefaultencoding())
+        stderr = stderr.decode(stderr_encoding)
+
+    sys.stderr.write(stderr)
+    sys.stderr.flush()
+    return None
 
 
 class ExecutableNotFound(RuntimeError):
