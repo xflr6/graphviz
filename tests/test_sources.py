@@ -22,16 +22,6 @@ def test_source_parameter(source, parameter):
     assert getattr(source, parameter) == SOURCE[parameter].lower()
 
 
-@pytest.mark.parametrize(
-    'parameter, expected_exception',
-    [('engine', ValueError),
-     ('format', ValueError),
-     ('encoding', LookupError)])
-def test_source_parameter_raises(source, parameter, expected_exception):
-    with pytest.raises(expected_exception, match=parameter):
-        setattr(source, parameter, '')
-
-
 def test_init(source):
     assert source.source == SOURCE['source']
     assert source.filename == SOURCE['filename']

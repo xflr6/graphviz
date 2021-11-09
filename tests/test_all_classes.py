@@ -34,14 +34,16 @@ def test_str(dot):
 
 
 @pytest.mark.parametrize(
-    'attribute, match',
-    [('engine', r'unknown engine'),
-     ('format', r'unknown format'),
-     ('renderer', r'unknown renderer'),
-     ('formatter', r'unknown formatter')])
-def test_invalid_parameter_raises_valuerror(dot, attribute, match):
-    with pytest.raises(ValueError, match=match):
-        setattr(dot, attribute, 'invalid_parameter')
+    'parameter, expected_exception, match',
+    [('engine', ValueError, r'unknown engine'),
+     ('format', ValueError, r'unknown format'),
+     ('renderer', ValueError, r'unknown renderer'),
+     ('formatter', ValueError, r'unknown formatter'),
+     ('encoding', LookupError, r'encoding')])
+def test_invalid_parameter_raises_valuerror(dot, parameter,
+                                            expected_exception, match):
+    with pytest.raises(expected_exception, match=match):
+        setattr(dot, parameter, 'invalid_parameter')
 
 
 def test_encoding_none(dot):
