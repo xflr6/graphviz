@@ -21,7 +21,7 @@ if platform.system() == 'Windows':
         ARGS += ['--capture=sys', '--color=no']
 
 
-args = sys.argv[1:] + ARGS
+args = ARGS + sys.argv[1:]
 
 print(f'pytest.main({args!r})')
 sys.exit(pytest.main(args))
