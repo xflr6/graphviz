@@ -161,6 +161,34 @@ def test_pipe_mocked(mocker, mock_pipe_lines, mock_pipe_lines_string, quiet,
                                             **expected_kwargs)
 
 
+def test_pipe_lines_mocked(mocker, mock_pipe_lines, dot):
+    assert dot.pipe() is mock_pipe_lines.return_value
+
+    mock_pipe_lines.assert_called_once_with(dot.engine, dot.format,
+                                            mocker.ANY,
+                                            renderer=None, formatter=None,
+                                            input_encoding='utf-8',
+                                            quiet=False)
+    _, _, data = mock_pipe_lines.call_args.args
+    expected_lines = dot.source.splitlines(keepends=True)
+    assert list(data) == expected_lines
+
+
+def test_pipe_lines_format_mocked(mocker, mock_pipe_lines, dot,
+                                  format_='svg'):
+    assert dot.format != format_
+
+    assert dot.pipe(format=format_) is mock_pipe_lines.return_value
+
+    mock_pipe_lines.assert_called_once_with(dot.engine, format_, mocker.ANY,
+                                            renderer=None, formatter=None,
+                                            input_encoding='utf-8',
+                                            quiet=False)
+    _, _, data = mock_pipe_lines.call_args.args
+    expected_lines = dot.source.splitlines(keepends=True)
+    assert list(data) == expected_lines
+
+
 def test_repr_svg_mocked(mocker, dot):
     mock_pipe = mocker.patch.object(dot, 'pipe', autospec=True)
 

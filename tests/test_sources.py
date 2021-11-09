@@ -34,34 +34,6 @@ def test_init_filename():
                 {'name': 'name'})('').filename == 'name.gv'
 
 
-def test_pipe_lines_format_mocked(mocker, mock_pipe_lines, source,
-                                  format_='svg'):
-    assert source.format != format_
-
-    assert source.pipe(format=format_) is mock_pipe_lines.return_value
-
-    mock_pipe_lines.assert_called_once_with(source.engine, format_, mocker.ANY,
-                                            renderer=None, formatter=None,
-                                            input_encoding='utf-8',
-                                            quiet=False)
-    _, _, data = mock_pipe_lines.call_args.args
-    expected_lines = source.source.splitlines(keepends=True)
-    assert list(data) == expected_lines
-
-
-def test_pipe_lines_mocked(mocker, mock_pipe_lines, source):
-    assert source.pipe() is mock_pipe_lines.return_value
-
-    mock_pipe_lines.assert_called_once_with(source.engine, source.format,
-                                            mocker.ANY,
-                                            renderer=None, formatter=None,
-                                            input_encoding='utf-8',
-                                            quiet=False)
-    _, _, data = mock_pipe_lines.call_args.args
-    expected_lines = source.source.splitlines(keepends=True)
-    assert list(data) == expected_lines
-
-
 def test_filepath(platform, source):
     if platform == 'windows':
         assert source.filepath == 'test-output\\hello.gv'
