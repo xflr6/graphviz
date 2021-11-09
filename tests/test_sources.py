@@ -83,22 +83,6 @@ def test_save_mocked(mocker, filename='nonfilename', directory='nondirectory'):
     assert mock_open.return_value.write.call_args_list == [mocker.call(source.source)]
 
 
-def test_render_mocked(mocker, mock_render, source):
-    mock_save = mocker.patch.object(source, 'save', autospec=True)
-    mock_view = mocker.patch.object(source, '_view', autospec=True)
-    mock_remove = mocker.patch('os.remove', autospec=True)
-
-    assert source.render(cleanup=True, view=True) is mock_render.return_value
-
-    mock_save.assert_called_once_with(None, None, skip_existing=None)
-    mock_render.assert_called_once_with(source.engine, source.format,
-                                        mock_save.return_value,
-                                        renderer=None, formatter=None,
-                                        quiet=False)
-    mock_remove.assert_called_once_with(mock_save.return_value)
-    mock_view.assert_called_once_with(mock_render.return_value, source.format, False)
-
-
 def test_from_file(tmp_path, filename='hello.gv', directory='source_hello',
                    data='digraph { hello -> world }', encoding='utf-8'):
     lpath = tmp_path / directory

@@ -92,6 +92,22 @@ def test_render_raises_before_save_mocked(tmp_path, mock_render, cls, kwargs,
     assert not expected_source.exists()
 
 
+def test_render_mocked(mocker, mock_render, dot):
+    mock_save = mocker.patch.object(dot, 'save', autospec=True)
+    mock_view = mocker.patch.object(dot, '_view', autospec=True)
+    mock_remove = mocker.patch('os.remove', autospec=True)
+
+    assert dot.render(cleanup=True, view=True) is mock_render.return_value
+
+    mock_save.assert_called_once_with(None, None, skip_existing=None)
+    mock_render.assert_called_once_with(dot.engine, dot.format,
+                                        mock_save.return_value,
+                                        renderer=None, formatter=None,
+                                        quiet=False)
+    mock_remove.assert_called_once_with(mock_save.return_value)
+    mock_view.assert_called_once_with(mock_render.return_value, dot.format, False)
+
+
 def test_format_renderer_formatter_mocked(mocker, mock_render,
                                           quiet, cls,
                                           filename='format.gv', format='jpg',
