@@ -99,32 +99,6 @@ def test_render_mocked(mocker, mock_render, source):
     mock_view.assert_called_once_with(mock_render.return_value, source.format, False)
 
 
-def test_view_mocked(mocker, source):
-    mock_render = mocker.patch.object(source, 'render', autospec=True)
-    kwargs = {'filename': 'filename', 'directory': 'directory',
-              'cleanup': True, 'quiet': True, 'quiet_view': True}
-
-    assert source.view(**kwargs) is mock_render.return_value
-
-    mock_render.assert_called_once_with(view=True, **kwargs)
-
-
-def test__view_unknown_platform(unknown_platform, source):
-    with pytest.raises(RuntimeError, match=r'support'):
-        source._view('name', 'png', False)
-
-
-def test__view_mocked(mocker, sentinel, mock_platform, source):
-    _view_platform = mocker.patch.object(source, f'_view_{mock_platform}',
-                                         autospec=True)
-
-    kwargs = {'quiet': False}
-
-    assert source._view(sentinel.name, 'png', **kwargs) is None
-
-    _view_platform.assert_called_once_with(sentinel.name, **kwargs)
-
-
 def test_from_file(tmp_path, filename='hello.gv', directory='source_hello',
                    data='digraph { hello -> world }', encoding='utf-8'):
     lpath = tmp_path / directory

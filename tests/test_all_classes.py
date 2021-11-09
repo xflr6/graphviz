@@ -188,3 +188,29 @@ def test_unflatten_mocked(sentinel, mock_unflatten, dot):
     mock_unflatten.assert_called_once_with(dot.source,
                                            encoding=dot.encoding,
                                            **kwargs)
+
+
+def test_view_mocked(mocker, dot):
+    mock_render = mocker.patch.object(dot, 'render', autospec=True)
+    kwargs = {'filename': 'filename', 'directory': 'directory',
+              'cleanup': True, 'quiet': True, 'quiet_view': True}
+
+    assert dot.view(**kwargs) is mock_render.return_value
+
+    mock_render.assert_called_once_with(view=True, **kwargs)
+
+
+def test__view_unknown_platform(unknown_platform, dot):
+    with pytest.raises(RuntimeError, match=r'support'):
+        dot._view('name', 'png', False)
+
+
+def test__view_mocked(mocker, sentinel, mock_platform, dot):
+    _view_platform = mocker.patch.object(dot, f'_view_{mock_platform}',
+                                         autospec=True)
+
+    kwargs = {'quiet': False}
+
+    assert dot._view(sentinel.name, 'png', **kwargs) is None
+
+    _view_platform.assert_called_once_with(sentinel.name, **kwargs)
