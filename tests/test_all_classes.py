@@ -130,6 +130,22 @@ def test_format_renderer_formatter_mocked(mocker, mock_render,
                                         quiet=quiet)
 
 
+def test_save_mocked(mocker, dot, filename='nonfilename', directory='nondirectory'):
+    mock_makedirs = mocker.patch('os.makedirs', autospec=True)
+    mock_open = mocker.patch('builtins.open', mocker.mock_open())
+
+    assert dot.save(filename, directory) == dot.filepath
+
+    assert dot.filename == filename
+    assert dot.directory == directory
+    mock_makedirs.assert_called_once_with(dot.directory, 0o777, exist_ok=True)
+    mock_open.assert_called_once_with(dot.filepath, 'w',
+                                      encoding=dot.encoding)
+    expected_calls = ([mocker.call(dot.source)] if type(dot).__name__ == 'Source'
+                      else [mocker.call(mocker.ANY), mocker.call('}\n')])
+    assert mock_open.return_value.write.call_args_list == expected_calls
+
+
 @pytest.mark.parametrize(
     'encoding', [None, 'ascii', 'utf-8'])
 def test_pipe_mocked(mocker, mock_pipe_lines, mock_pipe_lines_string, quiet,

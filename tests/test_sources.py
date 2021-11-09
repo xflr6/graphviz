@@ -41,20 +41,6 @@ def test_filepath(platform, source):
         assert source.filepath == 'test-output/hello.gv'
 
 
-def test_save_mocked(mocker, filename='nonfilename', directory='nondirectory'):
-    source = graphviz.Source(**SOURCE)
-    mock_makedirs = mocker.patch('os.makedirs', autospec=True)
-    mock_open = mocker.patch('builtins.open', mocker.mock_open())
-
-    assert source.save(filename, directory) == source.filepath
-
-    assert source.filename == filename and source.directory == directory
-    mock_makedirs.assert_called_once_with(source.directory, 0o777, exist_ok=True)
-    mock_open.assert_called_once_with(source.filepath, 'w',
-                                  encoding=source.encoding)
-    assert mock_open.return_value.write.call_args_list == [mocker.call(source.source)]
-
-
 def test_from_file(tmp_path, filename='hello.gv', directory='source_hello',
                    data='digraph { hello -> world }', encoding='utf-8'):
     lpath = tmp_path / directory
