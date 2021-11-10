@@ -12,14 +12,14 @@ r"""Assemble DOT source code objects.
 
 >>> dot.node_attr['shape'] = 'rectangle'
 
->>> print(dot.source.replace('\xf8', '0'))  #doctest: +NORMALIZE_WHITESPACE
-// M0nti Pyth0n ik den H0lie Grailen
+>>> print(dot.source)  #doctest: +NORMALIZE_WHITESPACE
+// Mønti Pythøn ik den Hølie Grailen
 graph {
     node [shape=rectangle]
-    "M00se"
+    "Møøse"
     trained_by [label="trained by"]
     tutte [label="TUTTE HERMSGERVORDENBROTBORDA"]
-    "M00se" -- trained_by
+    "Møøse" -- trained_by
     trained_by -- tutte
 }
 
