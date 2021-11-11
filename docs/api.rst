@@ -157,14 +157,17 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
     >>> help(graphviz.Graph)  # doctest: +NORMALIZE_WHITESPACE +SKIP
     Help on class Graph in module graphviz.graphs:
     <BLANKLINE>
-    class Graph(BaseGraph)
+    class Graph(graphviz.dot.GraphSyntax, BaseGraph)
      |  Graph(name: Optional[str] = None,
               comment: Optional[str] = None,
-              filename=None, directory=None,
+              filename=None,
+              directory=None,
               format: Optional[str] = None,
               engine: Optional[str] = None,
               encoding: Optional[str] = 'utf-8',
-              graph_attr=None, node_attr=None, edge_attr=None,
+              graph_attr=None,
+              node_attr=None,
+              edge_attr=None,
               body=None,
               strict: bool = False, *,
               renderer: Optional[str] = None,
@@ -195,6 +198,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |
      |  Method resolution order:
      |      Graph
+     |      graphviz.dot.GraphSyntax
      |      BaseGraph
      |      graphviz.dot.Dot
      |      graphviz.quoting.Quote
@@ -225,15 +229,28 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      ``False``
      |
      |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.dot.GraphSyntax:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |
+     |  ----------------------------------------------------------------------
      |  Methods inherited from BaseGraph:
      |
-     |  __init__(self, name: Optional[str] = None,
+     |  __init__(self,
+                 name: Optional[str] = None,
                  comment: Optional[str] = None,
-                 filename=None, directory=None,
+                 filename=None,
+                 directory=None,
                  format: Optional[str] = None,
                  engine: Optional[str] = None,
                  encoding: Optional[str] = 'utf-8',
-                 graph_attr=None, node_attr=None, edge_attr=None,
+                 graph_attr=None,
+                 node_attr=None,
+                 edge_attr=None,
                  body=None,
                  strict: bool = False, *,
                  renderer: Optional[str] = None,
@@ -270,7 +287,11 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      Args:
      |          keep_attrs (bool): preserve graph/node/egde_attr mappings
      |
-     |  edge(self, tail_name: str, head_name: str, label: Optional[str] = None, _attributes=None, **attrs) -> None
+     |  edge(self,
+             tail_name: str,
+             head_name: str,
+             label: Optional[str] = None,
+             _attributes=None, **attrs) -> None
      |      Create an edge between two nodes.
      |
      |      Args:
@@ -309,10 +330,13 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          label: Caption to be displayed (defaults to the node ``name``).
      |          attrs: Any additional node attributes (must be strings).
      |
-     |  subgraph(self, graph=None,
+     |  subgraph(self,
+                 graph=None,
                  name: Optional[str] = None,
                  comment: Optional[str] = None,
-                 graph_attr=None, node_attr=None, edge_attr=None,
+                 graph_attr=None,
+                 node_attr=None,
+                 edge_attr=None,
                  body=None)
      |      Add the current content of the given sole ``graph`` argument
      |          as subgraph or return a context manager
@@ -353,23 +377,18 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  __annotations__ = {'directed': <class 'bool'>}
      |
      |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.quoting.Quote:
-     |
-     |  __dict__
-     |      dictionary for instance variables (if defined)
-     |
-     |  __weakref__
-     |      list of weak references to the object (if defined)
-     |
-     |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.rendering.Render:
      |
-     |  render(self, filename=None, directory=None,
-               view: bool = False, cleanup: bool = False,
+     |  render(self,
+               filename=None,
+               directory=None,
+               view: bool = False,
+               cleanup: bool = False,
                format: Optional[str] = None,
                renderer: Optional[str] = None,
                formatter: Optional[str] = None,
-               quiet: bool = False, quiet_view: bool = False, *,
+               quiet: bool = False,
+               quiet_view: bool = False, *,
                engine: Optional[str] = None) -> str
      |      Save the source to file and render with the Graphviz engine.
      |
@@ -415,467 +434,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          (e.g. ``[image=images/camelot.png]``)
      |          can be given as paths relative to the DOT source file.
      |
-     |  view(self, filename=None, directory=None,
-             cleanup: bool = False, quiet: bool = False, quiet_view: bool = False) -> str
-     |      Save the source to file, open the rendered result in a viewer.
-     |
-     |      Convenience short-cut for running ``.render(view=True)``.
-     |
-     |      Args:
-     |          filename: Filename for saving the source
-     |              (defaults to ``name`` + ``'.gv'``).
-     |          directory: (Sub)directory for source saving and rendering.
-     |          cleanup (bool): Delete the source file after successful rendering.
-     |          quiet (bool): Suppress ``stderr`` output from the layout subprocess.
-     |          quiet_view (bool): Suppress ``stderr`` output
-     |              from the viewer process (ineffective on Windows).
-     |
-     |      Returns:
-     |          The (possibly relative) path of the rendered file.
-     |
-     |      Raises:
-     |          graphviz.ExecutableNotFound: If the Graphviz executable
-     |              is not found.
-     |          subprocess.CalledProcessError: If the exit status is non-zero.
-     |          RuntimeError: If opening the viewer is not supported.
-     |
-     |      Short-cut method for calling :meth:`.render` with ``view=True``.
-     |
-     |      Note:
-     |          There is no option to wait for the application to close,
-     |          and no way to retrieve the application's exit status.
-     |
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.saving.Save:
-     |
-     |  save(self, filename=None, directory=None, *,
-             skip_existing: Optional[bool] = False) -> str
-     |      Save the DOT source to file. Ensure the file ends with a newline.
-     |
-     |      Args:
-     |          filename: Filename for saving the source (defaults to ``name`` + ``'.gv'``)
-     |          directory: (Sub)directory for source saving and rendering.
-     |          skip_existing: Skip write if file exists (default: ``False``).
-     |
-     |      Returns:
-     |          The (possibly relative) path of the saved source file.
-     |
-     |  ----------------------------------------------------------------------
-     |  Readonly properties inherited from graphviz.saving.Save:
-     |
-     |  filepath
-     |
-     |  ----------------------------------------------------------------------
-     |  Data and other attributes inherited from graphviz.saving.Save:
-     |
-     |  directory = ''
-     |
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.piping.Pipe:
-     |
-     |  pipe(self,
-             format: Optional[str] = None,
-             renderer: Optional[str] = None,
-             formatter: Optional[str] = None,
-             quiet: bool = False, *,
-             engine: Optional[str] = None,
-             encoding: Optional[str] = None) -> Union[bytes, str]
-     |      Return the source piped through the Graphviz layout command.
-     |
-     |      Args:
-     |          format: The output format used for rendering
-     |              (``'pdf'``, ``'png'``, etc.).
-     |          renderer: The output renderer used for rendering
-     |              (``'cairo'``, ``'gd'``, ...).
-     |          formatter: The output formatter used for rendering
-     |              (``'cairo'``, ``'gd'``, ...).
-     |          quiet (bool): Suppress ``stderr`` output
-     |              from the layout subprocess.
-     |          engine: Layout engine for rendering
-     |              (``'dot'``, ``'neato'``, ...).
-     |          encoding: Encoding for decoding the stdout.
-     |
-     |      Returns:
-     |          Bytes or if encoding is given decoded string
-     |              (stdout of the layout command).
-     |
-     |      Raises:
-     |          ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
-     |              are not known.
-     |          graphviz.RequiredArgumentError: If ``formatter`` is given
-     |              but ``renderer`` is None.
-     |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
-     |              is not found.
-     |          subprocess.CalledProcessError: If the returncode (exit status)
-     |              of the rendering ``dot`` subprocess is non-zero.
-     |
-     |      Example:
-     |          >>> import graphviz
-     |
-     |          >>> source = 'graph { spam }'
-     |
-     |          >>> doctest_mark_exe()
-     |          >>> graphviz.Source(source, format='svg').pipe()[:14]
-     |          b'<?xml version='
-     |
-     |          >>> graphviz.Source(source, format='svg').pipe(encoding='ascii')[:14]
-     |          '<?xml version='
-     |
-     |          >>> graphviz.Source(source, format='svg').pipe(encoding='utf-8')[:14]
-     |          '<?xml version='
-     |
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.unflattening.Unflatten:
-     |
-     |  unflatten(self, stagger: Optional[int] = None, fanout: bool = False, chain: Optional[int] = None)
-     |      Return a new :class:`.Source` instance with the source
-     |          piped through the Graphviz *unflatten* preprocessor.
-     |
-     |      Args:
-     |          stagger: Stagger the minimum length
-     |              of leaf edges between 1 and this small integer.
-     |          fanout: Fanout nodes with indegree = outdegree = 1
-     |              when staggering (requires ``stagger``).
-     |          chain: Form disconnected nodes into chains
-     |              of up to this many nodes.
-     |
-     |      Returns:
-     |          Source: Prepocessed DOT source code (improved layout aspect ratio).
-     |
-     |      Raises:
-     |          graphviz.RequiredArgumentError: If ``fanout`` is given
-     |              but ``stagger`` is None.
-     |          graphviz.ExecutableNotFound: If the Graphviz ``unflatten`` executable
-     |              is not found.
-     |          subprocess.CalledProcessError: If the returncode (exit status)
-     |              of the unflattening 'unflatten' subprocess is non-zero.
-     |
-     |      See also:
-     |          https://www.graphviz.org/pdf/unflatten.1.pdf
-     |
-     |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.encoding.Encoding:
-     |
-     |  encoding
-     |      The encoding for the saved source file.
-     |
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.base.Base:
-     |
-     |  __str__(self) -> str
-     |      The DOT source code as string.
-     |
-     |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.parameters.engines.Engine:
-     |
-     |  engine
-     |      The layout engine used for rendering
-     |      (``'dot'``, ``'neato'``, ...).
-     |
-     |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.parameters.formats.Format:
-     |
-     |  format
-     |      The output format used for rendering
-     |      (``'pdf'``, ``'png'``, ...).
-     |
-     |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.parameters.renderers.Renderer:
-     |
-     |  renderer
-     |      The output renderer used for rendering
-     |      (``'cairo'``, ``'gd'``, ...).
-     |
-     |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.parameters.formatters.Formatter:
-     |
-     |  formatter
-     |      The output formatter used for rendering
-     |      (``'cairo'``, ``'gd'``, ...).
-     |
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.copying.CopyBase:
-     |
-     |  copy(self)
-     |      Return a copied instance of the object.
-     |
-     |      Returns:
-     |          An independent copy of the current object.
-    <BLANKLINE>
-
-
-Digraph
-"""""""
-
-Partially symntax-highlighed:
-https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
-
-.. code:: python
-
-    >>> import graphviz
-    >>> help(graphviz.Digraph)  # doctest: +NORMALIZE_WHITESPACE +SKIP
-    Help on class Digraph in module graphviz.graphs:
-    <BLANKLINE>
-    class Digraph(BaseGraph)
-     |  Digraph(name: Optional[str] = None,
-                comment: Optional[str] = None,
-                filename=None, directory=None,
-                format: Optional[str] = None,
-                engine: Optional[str] = None,
-                encoding: Optional[str] = 'utf-8',
-                graph_attr=None, node_attr=None, edge_attr=None,
-                body=None,
-                strict: bool = False, *,
-                renderer: Optional[str] = None,
-                formatter: Optional[str] = None) -> None
-     |
-     |  Directed graph source code in the DOT language.
-     |
-     |  Args:
-     |      name: Graph name used in the source code.
-     |      comment: Comment added to the first line of the source.
-     |      filename: Filename for saving the source
-     |          (defaults to ``name`` + ``'.gv'``).
-     |      directory: (Sub)directory for source saving and rendering.
-     |      format: Rendering output format (``'pdf'``, ``'png'``, ...).
-     |      engine: Layout command used (``'dot'``, ``'neato'``, ...).
-     |      renderer: Output renderer used (``'cairo'``, ``'gd'``, ...).
-     |      formatter: Output formatter used (``'cairo'``, ``'gd'``, ...).
-     |      encoding: Encoding for saving the source.
-     |      graph_attr: Mapping of ``(attribute, value)`` pairs for the graph.
-     |      node_attr: Mapping of ``(attribute, value)`` pairs set for all nodes.
-     |      edge_attr: Mapping of ``(attribute, value)`` pairs set for all edges.
-     |      body: Iterable of verbatim lines to add to the graph ``body``.
-     |      strict (bool): Rendering should merge multi-edges.
-     |
-     |  Note:
-     |      All parameters are `optional` and can be changed under their
-     |      corresponding attribute name after instance creation.
-     |
-     |  Method resolution order:
-     |      Digraph
-     |      BaseGraph
-     |      graphviz.dot.Dot
-     |      graphviz.quoting.Quote
-     |      graphviz.rendering.Render
-     |      graphviz.saving.Save
-     |      graphviz.jupyter_integration.JupyterSvgIntegration
-     |      graphviz.piping.Pipe
-     |      graphviz.unflattening.Unflatten
-     |      graphviz.encoding.Encoding
-     |      graphviz.base.Base
-     |      graphviz.base.LineIterable
-     |      graphviz.backend.mixins.Render
-     |      graphviz.backend.mixins.Pipe
-     |      graphviz.parameters.mixins.Parameters
-     |      graphviz.parameters.engines.Engine
-     |      graphviz.parameters.formats.Format
-     |      graphviz.parameters.renderers.Renderer
-     |      graphviz.parameters.formatters.Formatter
-     |      graphviz.parameters.base.ParameterBase
-     |      graphviz.copying.CopyBase
-     |      graphviz.backend.mixins.View
-     |      graphviz.backend.mixins.Unflatten
-     |      builtins.object
-     |
-     |  Readonly properties defined here:
-     |
-     |  directed
-     |      ``True``
-     |
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from BaseGraph:
-     |
-     |  __init__(self, name: Optional[str] = None,
-                 comment: Optional[str] = None,
-                 filename=None, directory=None,
-                 format: Optional[str] = None,
-                 engine: Optional[str] = None,
-                 encoding: Optional[str] = 'utf-8',
-                 graph_attr=None, node_attr=None, edge_attr=None,
-                 body=None,
-                 strict: bool = False, *,
-                 renderer: Optional[str] = None,
-                 formatter: Optional[str] = None) -> None
-     |      Initialize self.  See help(type(self)) for accurate signature.
-     |
-     |  ----------------------------------------------------------------------
-     |  Readonly properties inherited from BaseGraph:
-     |
-     |  source
-     |      The generated DOT source code as string.
-     |
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.dot.Dot:
-     |
-     |  __iter__(self, subgraph: bool = False) -> Iterator[str]
-     |      Yield the DOT source code line by line (as graph or subgraph).
-     |
-     |      Yields: Line ending with a newline (``'\n'``).
-     |
-     |  attr(self, kw: Optional[str] = None, _attributes=None, **attrs) -> None
-     |      Add a general or graph/node/edge attribute statement.
-     |
-     |      Args:
-     |          kw: Attributes target
-     |              (``None`` or ``'graph'``, ``'node'``, ``'edge'``).
-     |          attrs: Attributes to be set (must be strings, may be empty).
-     |
-     |      See the :ref:`usage examples in the User Guide <attributes>`.
-     |
-     |  clear(self, keep_attrs: bool = False) -> None
-     |      Reset content to an empty body, clear graph/node/egde_attr mappings.
-     |
-     |      Args:
-     |          keep_attrs (bool): preserve graph/node/egde_attr mappings
-     |
-     |  edge(self, tail_name: str, head_name: str, label: Optional[str] = None, _attributes=None, **attrs) -> None
-     |      Create an edge between two nodes.
-     |
-     |      Args:
-     |          tail_name: Start node identifier
-     |              (format: ``node[:port[:compass]]``).
-     |          head_name: End node identifier
-     |              (format: ``node[:port[:compass]]``).
-     |          label: Caption to be displayed near the edge.
-     |          attrs: Any additional edge attributes (must be strings).
-     |
-     |      Note:
-     |          The ``tail_name`` and ``head_name`` strings are separated
-     |          by (optional) colon(s) into ``node`` name, ``port`` name,
-     |          and ``compass`` (e.g. ``sw``).
-     |          See :ref:`details in the User Guide <ports>`.
-     |
-     |  edges(self, tail_head_iter) -> None
-     |      Create a bunch of edges.
-     |
-     |      Args:
-     |          tail_head_iter: Iterable of ``(tail_name, head_name)`` pairs
-     |              (format:``node[:port[:compass]]``).
-     |
-     |
-     |      Note:
-     |          The ``tail_name`` and ``head_name`` strings are separated
-     |          by (optional) colon(s) into ``node`` name, ``port`` name,
-     |          and ``compass`` (e.g. ``sw``).
-     |          See :ref:`details in the User Guide <ports>`.
-     |
-     |  node(self, name: str, label: Optional[str] = None, _attributes=None, **attrs) -> None
-     |      Create a node.
-     |
-     |      Args:
-     |          name: Unique identifier for the node inside the source.
-     |          label: Caption to be displayed (defaults to the node ``name``).
-     |          attrs: Any additional node attributes (must be strings).
-     |
-     |  subgraph(self, graph=None,
-                 name: Optional[str] = None,
-                 comment: Optional[str] = None,
-                 graph_attr=None, node_attr=None, edge_attr=None,
-                 body=None)
-     |      Add the current content of the given sole ``graph`` argument
-     |          as subgraph or return a context manager
-     |          returning a new graph instance
-     |          created with the given (``name``, ``comment``, etc.) arguments
-     |          whose content is added as subgraph
-     |          when leaving the context manager's ``with``-block.
-     |
-     |      Args:
-     |          graph: An instance of the same kind
-     |              (:class:`.Graph`, :class:`.Digraph`) as the current graph
-     |              (sole argument in non-with-block use).
-     |          name: Subgraph name (``with``-block use).
-     |          comment: Subgraph comment (``with``-block use).
-     |          graph_attr: Subgraph-level attribute-value mapping
-     |              (``with``-block use).
-     |          node_attr: Node-level attribute-value mapping
-     |              (``with``-block use).
-     |          edge_attr: Edge-level attribute-value mapping
-     |              (``with``-block use).
-     |          body: Verbatim lines to add to the subgraph ``body``
-     |              (``with``-block use).
-     |
-     |      See the :ref:`usage examples in the User Guide <subgraphs>`.
-     |
-     |      When used as a context manager, the returned new graph instance
-     |      uses ``strict=None`` and the parent graph's values
-     |      for ``directory``, ``format``, ``engine``, and ``encoding`` by default.
-     |
-     |      Note:
-     |          If the ``name`` of the subgraph begins with
-     |          ``'cluster'`` (all lowercase)
-     |          the layout engine will treat it as a special cluster subgraph.
-     |
-     |  ----------------------------------------------------------------------
-     |  Data and other attributes inherited from graphviz.dot.Dot:
-     |
-     |  __annotations__ = {'directed': <class 'bool'>}
-     |
-     |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from graphviz.quoting.Quote:
-     |
-     |  __dict__
-     |      dictionary for instance variables (if defined)
-     |
-     |  __weakref__
-     |      list of weak references to the object (if defined)
-     |
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from graphviz.rendering.Render:
-     |
-     |  render(self, filename=None, directory=None,
-               view: bool = False, cleanup: bool = False,
-               format: Optional[str] = None,
-               renderer: Optional[str] = None,
-               formatter: Optional[str] = None,
-               quiet: bool = False, quiet_view: bool = False, *,
-               engine: Optional[str] = None) -> str
-     |      Save the source to file and render with the Graphviz engine.
-     |
-     |      Args:
-     |          filename: Filename for saving the source
-     |              (defaults to ``name`` + ``'.gv'``).s
-     |          directory: (Sub)directory for source saving and rendering.
-     |          view (bool): Open the rendered result
-     |              with the default application.
-     |          cleanup (bool): Delete the source file
-     |              after successful rendering.
-     |          format: The output format used for rendering
-     |              (``'pdf'``, ``'png'``, etc.).
-     |          renderer: The output renderer used for rendering
-     |              (``'cairo'``, ``'gd'``, ...).
-     |          formatter: The output formatter used for rendering
-     |              (``'cairo'``, ``'gd'``, ...).
-     |          quiet (bool): Suppress ``stderr`` output
-     |              from the layout subprocess.
-     |          quiet_view (bool): Suppress ``stderr`` output
-     |              from the viewer process
-     |              (implies ``view=True``, ineffective on Windows platform).
-     |          engine: Layout engine for rendering
-     |              (``'dot'``, ``'neato'``, ...).
-     |
-     |      Returns:
-     |          The (possibly relative) path of the rendered file.
-     |
-     |      Raises:
-     |          ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
-     |              are not known.
-     |          graphviz.RequiredArgumentError: If ``formatter`` is given
-     |              but ``renderer`` is None.
-     |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
-     |              is not found.
-     |          subprocess.CalledProcessError: If the returncode (exit status)
-     |              of the rendering ``dot`` subprocess is non-zero.
-     |          RuntimeError: If viewer opening is requested but not supported.
-     |
-     |      Note:
-     |          The layout command is started from the directory of ``filepath``,
-     |          so that references to external files
-     |          (e.g. ``[image=images/camelot.png]``)
-     |          can be given as paths relative to the DOT source file.
-     |
-     |  view(self, filename=None, directory=None,
-             cleanup: bool = False, quiet: bool = False, quiet_view: bool = False) -> str
+     |  view(self,
+             filename=None,
+             directory=None,
+             cleanup: bool = False,
+             quiet: bool = False,
+             quiet_view: bool = False) -> str
      |      Save the source to file, open the rendered result in a viewer.
      |
      |      Convenience short-cut for running ``.render(view=True)``.
@@ -985,7 +549,494 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.unflattening.Unflatten:
      |
-     |  unflatten(self, stagger: Optional[int] = None, fanout: bool = False, chain: Optional[int] = None)
+     |  unflatten(self,
+                  stagger: Optional[int] = None,
+                  fanout: bool = False,
+                  chain: Optional[int] = None)
+     |      Return a new :class:`.Source` instance with the source
+     |          piped through the Graphviz *unflatten* preprocessor.
+     |
+     |      Args:
+     |          stagger: Stagger the minimum length
+     |              of leaf edges between 1 and this small integer.
+     |          fanout: Fanout nodes with indegree = outdegree = 1
+     |              when staggering (requires ``stagger``).
+     |          chain: Form disconnected nodes into chains
+     |              of up to this many nodes.
+     |
+     |      Returns:
+     |          Source: Prepocessed DOT source code (improved layout aspect ratio).
+     |
+     |      Raises:
+     |          graphviz.RequiredArgumentError: If ``fanout`` is given
+     |              but ``stagger`` is None.
+     |          graphviz.ExecutableNotFound: If the Graphviz ``unflatten`` executable
+     |              is not found.
+     |          subprocess.CalledProcessError: If the returncode (exit status)
+     |              of the unflattening 'unflatten' subprocess is non-zero.
+     |
+     |      See also:
+     |          https://www.graphviz.org/pdf/unflatten.1.pdf
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.encoding.Encoding:
+     |
+     |  encoding
+     |      The encoding for the saved source file.
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from graphviz.base.Base:
+     |
+     |  __str__(self) -> str
+     |      The DOT source code as string.
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.parameters.engines.Engine:
+     |
+     |  engine
+     |      The layout engine used for rendering
+     |      (``'dot'``, ``'neato'``, ...).
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.parameters.formats.Format:
+     |
+     |  format
+     |      The output format used for rendering
+     |      (``'pdf'``, ``'png'``, ...).
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.parameters.renderers.Renderer:
+     |
+     |  renderer
+     |      The output renderer used for rendering
+     |      (``'cairo'``, ``'gd'``, ...).
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.parameters.formatters.Formatter:
+     |
+     |  formatter
+     |      The output formatter used for rendering
+     |      (``'cairo'``, ``'gd'``, ...).
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from graphviz.copying.CopyBase:
+     |
+     |  copy(self)
+     |      Return a copied instance of the object.
+     |
+     |      Returns:
+     |          An independent copy of the current object.
+    <BLANKLINE>
+
+
+Digraph
+"""""""
+
+Partially symntax-highlighed:
+https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
+
+.. code:: python
+
+    >>> import graphviz
+    >>> help(graphviz.Digraph)  # doctest: +NORMALIZE_WHITESPACE +SKIP
+    Help on class Digraph in module graphviz.graphs:
+    <BLANKLINE>
+    class Digraph(graphviz.dot.DigraphSyntax, BaseGraph)
+     |  Digraph(name: Optional[str] = None,
+                comment: Optional[str] = None,
+                filename=None,
+                directory=None,
+                format: Optional[str] = None,
+                engine: Optional[str] = None,
+                encoding: Optional[str] = 'utf-8',
+                graph_attr=None,
+                node_attr=None,
+                edge_attr=None,
+                body=None,
+                strict: bool = False, *,
+                renderer: Optional[str] = None,
+                formatter: Optional[str] = None) -> None
+     |
+     |  Directed graph source code in the DOT language.
+     |
+     |  Args:
+     |      name: Graph name used in the source code.
+     |      comment: Comment added to the first line of the source.
+     |      filename: Filename for saving the source
+     |          (defaults to ``name`` + ``'.gv'``).
+     |      directory: (Sub)directory for source saving and rendering.
+     |      format: Rendering output format (``'pdf'``, ``'png'``, ...).
+     |      engine: Layout command used (``'dot'``, ``'neato'``, ...).
+     |      renderer: Output renderer used (``'cairo'``, ``'gd'``, ...).
+     |      formatter: Output formatter used (``'cairo'``, ``'gd'``, ...).
+     |      encoding: Encoding for saving the source.
+     |      graph_attr: Mapping of ``(attribute, value)`` pairs for the graph.
+     |      node_attr: Mapping of ``(attribute, value)`` pairs set for all nodes.
+     |      edge_attr: Mapping of ``(attribute, value)`` pairs set for all edges.
+     |      body: Iterable of verbatim lines to add to the graph ``body``.
+     |      strict (bool): Rendering should merge multi-edges.
+     |
+     |  Note:
+     |      All parameters are `optional` and can be changed under their
+     |      corresponding attribute name after instance creation.
+     |
+     |  Method resolution order:
+     |      Digraph
+     |      graphviz.dot.DigraphSyntax
+     |      BaseGraph
+     |      graphviz.dot.Dot
+     |      graphviz.quoting.Quote
+     |      graphviz.rendering.Render
+     |      graphviz.saving.Save
+     |      graphviz.jupyter_integration.JupyterSvgIntegration
+     |      graphviz.piping.Pipe
+     |      graphviz.unflattening.Unflatten
+     |      graphviz.encoding.Encoding
+     |      graphviz.base.Base
+     |      graphviz.base.LineIterable
+     |      graphviz.backend.mixins.Render
+     |      graphviz.backend.mixins.Pipe
+     |      graphviz.parameters.mixins.Parameters
+     |      graphviz.parameters.engines.Engine
+     |      graphviz.parameters.formats.Format
+     |      graphviz.parameters.renderers.Renderer
+     |      graphviz.parameters.formatters.Formatter
+     |      graphviz.parameters.base.ParameterBase
+     |      graphviz.copying.CopyBase
+     |      graphviz.backend.mixins.View
+     |      graphviz.backend.mixins.Unflatten
+     |      builtins.object
+     |
+     |  Readonly properties defined here:
+     |
+     |  directed
+     |      ``True``
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from graphviz.dot.DigraphSyntax:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from BaseGraph:
+     |
+     |  __init__(self,
+                 name: Optional[str] = None,
+                 comment: Optional[str] = None,
+                 filename=None,
+                 directory=None,
+                 format: Optional[str] = None,
+                 engine: Optional[str] = None,
+                 encoding: Optional[str] = 'utf-8',
+                 graph_attr=None,
+                 node_attr=None,
+                 edge_attr=None,
+                 body=None,
+                 strict: bool = False, *,
+                 renderer: Optional[str] = None,
+                 formatter: Optional[str] = None) -> None
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |
+     |  ----------------------------------------------------------------------
+     |  Readonly properties inherited from BaseGraph:
+     |
+     |  source
+     |      The generated DOT source code as string.
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from graphviz.dot.Dot:
+     |
+     |  __iter__(self, subgraph: bool = False) -> Iterator[str]
+     |      Yield the DOT source code line by line (as graph or subgraph).
+     |
+     |      Yields: Line ending with a newline (``'\n'``).
+     |
+     |  attr(self, kw: Optional[str] = None, _attributes=None, **attrs) -> None
+     |      Add a general or graph/node/edge attribute statement.
+     |
+     |      Args:
+     |          kw: Attributes target
+     |              (``None`` or ``'graph'``, ``'node'``, ``'edge'``).
+     |          attrs: Attributes to be set (must be strings, may be empty).
+     |
+     |      See the :ref:`usage examples in the User Guide <attributes>`.
+     |
+     |  clear(self, keep_attrs: bool = False) -> None
+     |      Reset content to an empty body, clear graph/node/egde_attr mappings.
+     |
+     |      Args:
+     |          keep_attrs (bool): preserve graph/node/egde_attr mappings
+     |
+     |  edge(self,
+             tail_name: str,
+             head_name: str,
+             label: Optional[str] = None,
+             _attributes=None, **attrs) -> None
+     |      Create an edge between two nodes.
+     |
+     |      Args:
+     |          tail_name: Start node identifier
+     |              (format: ``node[:port[:compass]]``).
+     |          head_name: End node identifier
+     |              (format: ``node[:port[:compass]]``).
+     |          label: Caption to be displayed near the edge.
+     |          attrs: Any additional edge attributes (must be strings).
+     |
+     |      Note:
+     |          The ``tail_name`` and ``head_name`` strings are separated
+     |          by (optional) colon(s) into ``node`` name, ``port`` name,
+     |          and ``compass`` (e.g. ``sw``).
+     |          See :ref:`details in the User Guide <ports>`.
+     |
+     |  edges(self, tail_head_iter) -> None
+     |      Create a bunch of edges.
+     |
+     |      Args:
+     |          tail_head_iter: Iterable of ``(tail_name, head_name)`` pairs
+     |              (format:``node[:port[:compass]]``).
+     |
+     |
+     |      Note:
+     |          The ``tail_name`` and ``head_name`` strings are separated
+     |          by (optional) colon(s) into ``node`` name, ``port`` name,
+     |          and ``compass`` (e.g. ``sw``).
+     |          See :ref:`details in the User Guide <ports>`.
+     |
+     |  node(self, name: str, label: Optional[str] = None, _attributes=None, **attrs) -> None
+     |      Create a node.
+     |
+     |      Args:
+     |          name: Unique identifier for the node inside the source.
+     |          label: Caption to be displayed (defaults to the node ``name``).
+     |          attrs: Any additional node attributes (must be strings).
+     |
+     |  subgraph(self,
+                 graph=None,
+                 name: Optional[str] = None,
+                 comment: Optional[str] = None,
+                 graph_attr=None,
+                 node_attr=None,
+                 edge_attr=None,
+                 body=None)
+     |      Add the current content of the given sole ``graph`` argument
+     |          as subgraph or return a context manager
+     |          returning a new graph instance
+     |          created with the given (``name``, ``comment``, etc.) arguments
+     |          whose content is added as subgraph
+     |          when leaving the context manager's ``with``-block.
+     |
+     |      Args:
+     |          graph: An instance of the same kind
+     |              (:class:`.Graph`, :class:`.Digraph`) as the current graph
+     |              (sole argument in non-with-block use).
+     |          name: Subgraph name (``with``-block use).
+     |          comment: Subgraph comment (``with``-block use).
+     |          graph_attr: Subgraph-level attribute-value mapping
+     |              (``with``-block use).
+     |          node_attr: Node-level attribute-value mapping
+     |              (``with``-block use).
+     |          edge_attr: Edge-level attribute-value mapping
+     |              (``with``-block use).
+     |          body: Verbatim lines to add to the subgraph ``body``
+     |              (``with``-block use).
+     |
+     |      See the :ref:`usage examples in the User Guide <subgraphs>`.
+     |
+     |      When used as a context manager, the returned new graph instance
+     |      uses ``strict=None`` and the parent graph's values
+     |      for ``directory``, ``format``, ``engine``, and ``encoding`` by default.
+     |
+     |      Note:
+     |          If the ``name`` of the subgraph begins with
+     |          ``'cluster'`` (all lowercase)
+     |          the layout engine will treat it as a special cluster subgraph.
+     |
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes inherited from graphviz.dot.Dot:
+     |
+     |  __annotations__ = {'directed': <class 'bool'>}
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from graphviz.rendering.Render:
+     |
+     |  render(self,
+               filename=None,
+               directory=None,
+               view: bool = False,
+               cleanup: bool = False,
+               format: Optional[str] = None,
+               renderer: Optional[str] = None,
+               formatter: Optional[str] = None,
+               quiet: bool = False,
+               quiet_view: bool = False, *,
+               engine: Optional[str] = None) -> str
+     |      Save the source to file and render with the Graphviz engine.
+     |
+     |      Args:
+     |          filename: Filename for saving the source
+     |              (defaults to ``name`` + ``'.gv'``).s
+     |          directory: (Sub)directory for source saving and rendering.
+     |          view (bool): Open the rendered result
+     |              with the default application.
+     |          cleanup (bool): Delete the source file
+     |              after successful rendering.
+     |          format: The output format used for rendering
+     |              (``'pdf'``, ``'png'``, etc.).
+     |          renderer: The output renderer used for rendering
+     |              (``'cairo'``, ``'gd'``, ...).
+     |          formatter: The output formatter used for rendering
+     |              (``'cairo'``, ``'gd'``, ...).
+     |          quiet (bool): Suppress ``stderr`` output
+     |              from the layout subprocess.
+     |          quiet_view (bool): Suppress ``stderr`` output
+     |              from the viewer process
+     |              (implies ``view=True``, ineffective on Windows platform).
+     |          engine: Layout engine for rendering
+     |              (``'dot'``, ``'neato'``, ...).
+     |
+     |      Returns:
+     |          The (possibly relative) path of the rendered file.
+     |
+     |      Raises:
+     |          ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
+     |              are not known.
+     |          graphviz.RequiredArgumentError: If ``formatter`` is given
+     |              but ``renderer`` is None.
+     |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
+     |              is not found.
+     |          subprocess.CalledProcessError: If the returncode (exit status)
+     |              of the rendering ``dot`` subprocess is non-zero.
+     |          RuntimeError: If viewer opening is requested but not supported.
+     |
+     |      Note:
+     |          The layout command is started from the directory of ``filepath``,
+     |          so that references to external files
+     |          (e.g. ``[image=images/camelot.png]``)
+     |          can be given as paths relative to the DOT source file.
+     |
+     |  view(self,
+             filename=None,
+             directory=None,
+             cleanup: bool = False,
+             quiet: bool = False,
+             quiet_view: bool = False) -> str
+     |      Save the source to file, open the rendered result in a viewer.
+     |
+     |      Convenience short-cut for running ``.render(view=True)``.
+     |
+     |      Args:
+     |          filename: Filename for saving the source
+     |              (defaults to ``name`` + ``'.gv'``).
+     |          directory: (Sub)directory for source saving and rendering.
+     |          cleanup (bool): Delete the source file after successful rendering.
+     |          quiet (bool): Suppress ``stderr`` output from the layout subprocess.
+     |          quiet_view (bool): Suppress ``stderr`` output
+     |              from the viewer process (ineffective on Windows).
+     |
+     |      Returns:
+     |          The (possibly relative) path of the rendered file.
+     |
+     |      Raises:
+     |          graphviz.ExecutableNotFound: If the Graphviz executable
+     |              is not found.
+     |          subprocess.CalledProcessError: If the exit status is non-zero.
+     |          RuntimeError: If opening the viewer is not supported.
+     |
+     |      Short-cut method for calling :meth:`.render` with ``view=True``.
+     |
+     |      Note:
+     |          There is no option to wait for the application to close,
+     |          and no way to retrieve the application's exit status.
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from graphviz.saving.Save:
+     |
+     |  save(self, filename=None, directory=None, *, skip_existing: Optional[bool] = False) -> str
+     |      Save the DOT source to file. Ensure the file ends with a newline.
+     |
+     |      Args:
+     |          filename: Filename for saving the source (defaults to ``name`` + ``'.gv'``)
+     |          directory: (Sub)directory for source saving and rendering.
+     |          skip_existing: Skip write if file exists (default: ``False``).
+     |
+     |      Returns:
+     |          The (possibly relative) path of the saved source file.
+     |
+     |  ----------------------------------------------------------------------
+     |  Readonly properties inherited from graphviz.saving.Save:
+     |
+     |  filepath
+     |
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes inherited from graphviz.saving.Save:
+     |
+     |  directory = ''
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from graphviz.piping.Pipe:
+     |
+     |  pipe(self,
+             format: Optional[str] = None,
+             renderer: Optional[str] = None,
+             formatter: Optional[str] = None,
+             quiet: bool = False, *,
+             engine: Optional[str] = None,
+             encoding: Optional[str] = None) -> Union[bytes, str]
+     |      Return the source piped through the Graphviz layout command.
+     |
+     |      Args:
+     |          format: The output format used for rendering
+     |              (``'pdf'``, ``'png'``, etc.).
+     |          renderer: The output renderer used for rendering
+     |              (``'cairo'``, ``'gd'``, ...).
+     |          formatter: The output formatter used for rendering
+     |              (``'cairo'``, ``'gd'``, ...).
+     |          quiet (bool): Suppress ``stderr`` output
+     |              from the layout subprocess.
+     |          engine: Layout engine for rendering
+     |              (``'dot'``, ``'neato'``, ...).
+     |          encoding: Encoding for decoding the stdout.
+     |
+     |      Returns:
+     |          Bytes or if encoding is given decoded string
+     |              (stdout of the layout command).
+     |
+     |      Raises:
+     |          ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
+     |              are not known.
+     |          graphviz.RequiredArgumentError: If ``formatter`` is given
+     |              but ``renderer`` is None.
+     |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
+     |              is not found.
+     |          subprocess.CalledProcessError: If the returncode (exit status)
+     |              of the rendering ``dot`` subprocess is non-zero.
+     |
+     |      Example:
+     |          >>> import graphviz
+     |
+     |          >>> source = 'graph { spam }'
+     |
+     |          >>> doctest_mark_exe()
+     |          >>> graphviz.Source(source, format='svg').pipe()[:14]
+     |          b'<?xml version='
+     |
+     |          >>> graphviz.Source(source, format='svg').pipe(encoding='ascii')[:14]
+     |          '<?xml version='
+     |
+     |          >>> graphviz.Source(source, format='svg').pipe(encoding='utf-8')[:14]
+     |          '<?xml version='
+     |
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from graphviz.unflattening.Unflatten:
+     |
+     |  unflatten(self,
+                  stagger: Optional[int] = None,
+                  fanout: bool = False,
+                  chain: Optional[int] = None)
      |      Return a new :class:`.Source` instance with the source
      |          piped through the Graphviz *unflatten* preprocessor.
      |
@@ -1078,7 +1129,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
                  graphviz.jupyter_integration.JupyterSvgIntegration, graphviz.piping.Pipe,
                  graphviz.unflattening.Unflatten)
      |  Source(source: str,
-               filename=None, directory=None,
+               filename=None,
+               directory=None,
                format: Optional[str] = None,
                engine: Optional[str] = None,
                encoding: Optional[str] = 'utf-8', *,
@@ -1126,8 +1178,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |
      |  Methods defined here:
      |
-     |  __init__(self, source: str,
-                 filename=None, directory=None,
+     |  __init__(self,
+                 source: str,
+                 filename=None,
+                 directory=None,
                  format: Optional[str] = None,
                  engine: Optional[str] = None,
                  encoding: Optional[str] = 'utf-8', *,
@@ -1157,7 +1211,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  ----------------------------------------------------------------------
      |  Class methods defined here:
      |
-     |  from_file(filename, directory=None,
+     |  from_file(filename,
+                  directory=None,
                   format: Optional[str] = None,
                   engine: Optional[str] = None,
                   encoding: Optional[str] = 'utf-8',
@@ -1183,12 +1238,16 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.rendering.Render:
      |
-     |  render(self, filename=None, directory=None,
-               view: bool = False, cleanup: bool = False,
+     |  render(self,
+               filename=None,
+               directory=None,
+               view: bool = False,
+               cleanup: bool = False,
                format: Optional[str] = None,
                renderer: Optional[str] = None,
                formatter: Optional[str] = None,
-               quiet: bool = False, quiet_view: bool = False, *,
+               quiet: bool = False,
+               quiet_view: bool = False, *,
                engine: Optional[str] = None) -> str
      |      Save the source to file and render with the Graphviz engine.
      |
@@ -1234,8 +1293,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |          (e.g. ``[image=images/camelot.png]``)
      |          can be given as paths relative to the DOT source file.
      |
-     |  view(self, filename=None, directory=None,
-             cleanup: bool = False, quiet: bool = False, quiet_view: bool = False) -> str
+     |  view(self,
+             filename=None,
+             directory=None,
+             cleanup: bool = False,
+             quiet: bool = False,
+             quiet_view: bool = False) -> str
      |      Save the source to file, open the rendered result in a viewer.
      |
      |      Convenience short-cut for running ``.render(view=True)``.
@@ -1280,7 +1343,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  pipe(self,
              format: Optional[str] = None,
              renderer: Optional[str] = None,
-             formatter: Optional[str] = None, quiet: bool = False, *,
+             formatter: Optional[str] = None,
+             quiet: bool = False, *,
              engine: Optional[str] = None,
              encoding: Optional[str] = None) -> Union[bytes, str]
      |      Return the source piped through the Graphviz layout command.
@@ -1330,7 +1394,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.unflattening.Unflatten:
      |
-     |  unflatten(self, stagger: Optional[int] = None, fanout: bool = False, chain: Optional[int] = None)
+     |  unflatten(self,
+                  stagger: Optional[int] = None,
+                  fanout: bool = False,
+                  chain: Optional[int] = None)
      |      Return a new :class:`.Source` instance with the source
      |          piped through the Graphviz *unflatten* preprocessor.
      |
