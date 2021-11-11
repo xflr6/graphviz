@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""http://www.graphviz.org/content/fsm"""
+"""https://graphviz.org/Gallery/directed/fsm.html"""
 
 import graphviz
 

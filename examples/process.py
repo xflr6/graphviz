@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""http://www.graphviz.org/content/process"""
+"""https://graphviz.org/Gallery/undirected/process.html"""
 
 import graphviz
 
