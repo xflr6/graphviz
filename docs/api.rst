@@ -326,7 +326,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          and ``compass`` (e.g. ``sw``).
      |          See :ref:`details in the User Guide <ports>`.
      |
-     |  node(self, name: str, label: Optional[str] = None, _attributes=None, **attrs) -> None
+     |  node(self,
+             name: str,
+             label: Optional[str] = None,
+             _attributes=None, **attrs) -> None
      |      Create a node.
      |
      |      Args:
@@ -475,7 +478,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.saving.Save:
      |
-     |  save(self, filename=None, directory=None, *, skip_existing: Optional[bool] = False) -> str
+     |  save(self,
+             filename=None,
+             directory=None, *,
+             skip_existing: Optional[bool] = False) -> str
      |      Save the DOT source to file. Ensure the file ends with a newline.
      |
      |      Args:
@@ -810,7 +816,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          and ``compass`` (e.g. ``sw``).
      |          See :ref:`details in the User Guide <ports>`.
      |
-     |  node(self, name: str, label: Optional[str] = None, _attributes=None, **attrs) -> None
+     |  node(self,
+             name: str,
+             label: Optional[str] = None,
+             _attributes=None, **attrs) -> None
      |      Create a node.
      |
      |      Args:
@@ -959,7 +968,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.saving.Save:
      |
-     |  save(self, filename=None, directory=None, *, skip_existing: Optional[bool] = False) -> str
+     |  save(self,
+             filename=None,
+             directory=None, *,
+             skip_existing: Optional[bool] = False) -> str
      |      Save the DOT source to file. Ensure the file ends with a newline.
      |
      |      Args:
@@ -1201,7 +1213,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |
      |      Yields: Line ending with a newline (``'\n'``).
      |
-     |  save(self, filename=None, directory=None, *, skip_existing: Optional[bool] = None) -> str
+     |  save(self,
+             filename=None,
+             directory=None, *,
+             skip_existing: Optional[bool] = None) -> str
      |      Save the DOT source to file. Ensure the file ends with a newline.
      |
      |      Args:

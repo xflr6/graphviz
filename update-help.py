@@ -13,7 +13,7 @@ ALL_CLASSES = [graphviz.Graph, graphviz.Digraph, graphviz.Source]
 
 ARGS_LINE = re.compile(r'(?:class | \| {2})\w+\(')
 
-WRAP_AFTER = 100
+WRAP_AFTER = 80
 
 WRAP_SEARCH, WRAP_REPL = re.compile(r'(,)[ ](?!\*)'), '\\1\n{indent} '
 
