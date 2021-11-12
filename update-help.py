@@ -15,17 +15,21 @@ ARGS_LINE = re.compile(r'(?:class | \| {2})\w+\(')
 
 WRAP_AFTER = 80
 
-WRAP_SEARCH, WRAP_REPL = re.compile(r'(,)[ ](?!\*)'), '\\1\n{indent} '
+WRAP_SEARCH, WRAP_REPL = re.compile(r'(,)[ ](?!\*)'), r'\1\n{indent} '
 
 INDENT = ' ' * 4
 
 TARGET = pathlib.Path('docs/api.rst')
 
-PATTERN = (r'(    >>> help\(graphviz\.{cls_name}\).*\n)'
-           r'    Help on class {cls_name} in module graphviz\.(?:graphs|sources):\n'
-           r'    <BLANKLINE>\n'
-           r'(?:.*\n)+?'
-           r'    <BLANKLINE>\n')
+PATTERN = (r'''
+           (
+           \ {{4}}>>>\ help\(graphviz\.{cls_name}\).*\n)
+           \ {{4}}Help\ on\ class\ {cls_name}
+                  \ in\ module\ graphviz\.(?:graphs|sources):\n
+           \ {{4}}<BLANKLINE>\n
+           (?:.*\n)+?
+           \ {{4}}<BLANKLINE>\n
+           ''')
 
 ENCODING = 'utf-8'
 
@@ -72,12 +76,12 @@ target = target_before = TARGET.read_text(encoding=ENCODING)
 for cls_name, doc in help_docs.items():
     print('replace', cls_name, 'section')
 
-    pattern = re.compile(PATTERN.format(cls_name=cls_name))
+    pattern = re.compile(PATTERN.format(cls_name=cls_name), flags=re.VERBOSE)
 
-    target, found = pattern.subn(f'\\1{doc}', target, count=1)
+    target, found = pattern.subn(fr'\1{doc}', target, count=1)
     assert found, f'replaced {cls_name} section'
 
-    target = target.replace('    \n', '    <BLANKLINE>\n')
+    target = target.replace(INDENT + '\n', INDENT + '<BLANKLINE>\n')
 
 if target == target_before:
     print('unchanged')
