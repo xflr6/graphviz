@@ -1125,8 +1125,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
     >>> help(graphviz.Source)  # doctest: +NORMALIZE_WHITESPACE +SKIP
     Help on class Source in module graphviz.sources:
     <BLANKLINE>
-    class Source(graphviz.rendering.Render, graphviz.saving.Save,
-                 graphviz.jupyter_integration.JupyterSvgIntegration, graphviz.piping.Pipe,
+    class Source(graphviz.rendering.Render,
+                 graphviz.saving.Save,
+                 graphviz.jupyter_integration.JupyterSvgIntegration,
+                 graphviz.piping.Pipe,
                  graphviz.unflattening.Unflatten)
      |  Source(source: str,
                filename=None,
