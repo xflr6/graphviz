@@ -12,10 +12,7 @@ jobs:
           - name: linux-3.10
             python-version: "3.10"
             os: ubuntu-latest
-          - name: linux-3.10-flake8-skip-exe
-            python-version: "3.10"
-            os: ubuntu-latest
-          - name: linux-3.10-update-help-skip-exe
+          - name: linux-3.10-update-help-flake8-skip-exe
             python-version: "3.10"
             os: ubuntu-latest
           - name: linux-3.9-pytype-skip-exe
@@ -63,9 +60,9 @@ jobs:
       - name: Render examples (if not -skip-exe)
         run: python try-examples.py
         if: ${{ !contains(matrix.name, '-skip-exe') }}
-      - name: Run update-help.py (if -update-help or -pytype)
+      - name: Run update-help.py (if -update-help or -3.9)
         run: python update-help.py
-        if: ${{ contains(matrix.name, '-update-help') || contains(matrix.name, '-pytype') }}
+        if: ${{ contains(matrix.name, '-update-help') || contains(matrix.name, '-3.9') }}
         continue-on-error: true
       - name: Run pytype (if -pytype)
         run: |
