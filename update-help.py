@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Update the ``help()`` docs  in ``docs/api.rst``."""
+"""Update the ``help()`` outputs  in ``docs/api.rst``."""
 
 import contextlib
 import io
@@ -44,10 +44,11 @@ def iterlines(lines, *, wrap_after: int = WRAP_AFTER, line_indent: str = INDENT)
         line = line.replace("``'\\n'``", "``'\\\\n'``")
 
         if len(line) > wrap_after and ARGS_LINE.match(line):
-            if ' -> ' in line:
-                line, sep, rest = line.rpartition(' -> ')
+            line, sep, rest = line.rpartition(' -> ')
+            if sep:
                 return_annotation = sep + rest
             else:
+                line = rest
                 return_annotation = ''
 
             indent = line_indent + ' ' * line.index('(')
