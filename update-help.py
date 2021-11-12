@@ -52,12 +52,12 @@ def iterlines(stdout_lines, *,
         line = line.replace("``'\\n'``", r"``'\\n'``")
 
         if len(line) > wrap_after and ARGS_LINE.match(line):
-            line, sep, rest = line.rpartition(' -> ')
+            _, sep, _ = parts = line.rpartition(' -> ')
             if sep:
-                return_annotation = sep + rest
+                line, _, return_annotation = parts
             else:
-                line = rest
-                return_annotation = ''
+                return_annotation, _, line = parts
+            return_annotation = sep + return_annotation
 
             indent = line_indent + ' ' * line.index('(')
             repl = WRAP_REPL.format(indent=indent)
