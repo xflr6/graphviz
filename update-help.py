@@ -3,6 +3,7 @@
 """Update the ``help()`` outputs  in ``docs/api.rst``."""
 
 import contextlib
+import difflib
 import io
 import pathlib
 import re
@@ -98,4 +99,9 @@ else:
 
     TARGET.write_text(target, **IO_KWARGS)
 
-    sys.exit(f'changed {TARGET!r}')
+    for diff in difflib.context_diff(target_before, target):
+        print(diff)
+
+    message = f'changed {TARGET!r}'
+    print(f'sys.exit({message!r})')
+    sys.exit(message)
