@@ -5,6 +5,7 @@
 import contextlib
 import difflib
 import io
+import operator
 import pathlib
 import re
 import sys
@@ -91,13 +92,16 @@ if target == target_before:
     sys.exit(None)
 else:
     print('write', TARGET)
-    print(target_before.count('\n'), 'lines before')
-    print(target.count('\n'), 'lines after')
+    splitlines = operator.methodcaller('splitlines', keepends=True)
+    target_before, target = map(splitlines, (target_before, target))
+    print(len(target_before), 'lines before')
+    print(len(target), 'lines after')
 
-    TARGET.write_text(target, **IO_KWARGS)
+    with TARGET.open('w', **IO_KWARGS) as f:
+        for line in target:
+            f.write(line)
 
-    for diff in difflib.context_diff(target_before.splitlines(),
-                                     target.splitlines()):
+    for diff in difflib.context_diff(target_before, target):
         print(diff)
 
     message = f'changed {TARGET!r} (WARNING)'
