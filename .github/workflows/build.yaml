@@ -63,9 +63,9 @@ jobs:
       - name: Render examples (if not -skip-exe)
         run: python try-examples.py
         if: ${{ !contains(matrix.name, '-skip-exe') }}
-      - name: Run update-help.py (if -update-help)
+      - name: Run update-help.py (if -update-help or -pytype)
         run: python update-help.py
-        if: ${{ contains(matrix.name, '-update-help') }}
+        if: ${{ contains(matrix.name, '-update-help') || contains(matrix.name, '-pytype') }}
         continue-on-error: true
       - name: Run pytype (if -pytype)
         run: |
