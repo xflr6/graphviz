@@ -99,7 +99,8 @@ else:
 
     TARGET.write_text(target, **IO_KWARGS)
 
-    for diff in difflib.context_diff(target_before, target):
+    for diff in difflib.context_diff(target_before.splitlines(),
+                                     target.splitlines()):
         print(diff)
 
     message = f'changed {TARGET!r}'
