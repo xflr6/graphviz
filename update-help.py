@@ -54,7 +54,7 @@ def iterlines(lines, *, wrap_after: int = WRAP_AFTER, line_indent: str = INDENT)
             repl = WRAP_REPL.format(indent=indent)
 
             line, n_newlines = WRAP_SEARCH.subn(repl, line)
-            print(len(line) , 'character line wrapped into',
+            print(len(line), 'character line wrapped into',
                   n_newlines + 1, 'lines')
             assert n_newlines, 'wrapped long argument line'
 
