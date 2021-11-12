@@ -1,25 +1,25 @@
 r"""Assemble DOT source code objects.
 
 >>> import graphviz
->>> dot = graphviz.Graph(comment='M\xf8nti Pyth\xf8n ik den H\xf8lie Grailen')
+>>> dot = graphviz.Graph(comment='Mønti Pythøn ik den Hølie Grailen')
 
->>> dot.node('M\xf8\xf8se')
+>>> dot.node('Møøse')
 >>> dot.node('trained_by', 'trained by')
 >>> dot.node('tutte', 'TUTTE HERMSGERVORDENBROTBORDA')
 
->>> dot.edge('M\xf8\xf8se', 'trained_by')
+>>> dot.edge('Møøse', 'trained_by')
 >>> dot.edge('trained_by', 'tutte')
 
 >>> dot.node_attr['shape'] = 'rectangle'
 
->>> print(dot.source.replace('\xf8', '0'))  #doctest: +NORMALIZE_WHITESPACE
-// M0nti Pyth0n ik den H0lie Grailen
+>>> print(dot.source)  #doctest: +NORMALIZE_WHITESPACE
+// Mønti Pythøn ik den Hølie Grailen
 graph {
     node [shape=rectangle]
-    "M00se"
+    "Møøse"
     trained_by [label="trained by"]
     tutte [label="TUTTE HERMSGERVORDENBROTBORDA"]
-    "M00se" -- trained_by
+    "Møøse" -- trained_by
     trained_by -- tutte
 }
 
