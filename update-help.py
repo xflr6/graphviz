@@ -44,8 +44,8 @@ def get_help(obj) -> str:
 
 
 def iterlines(stdout_lines, *,
-              wrap_after: int = WRAP_AFTER,
-              line_indent: str = INDENT) -> typing.Iterator[str]:
+              line_indent: str = INDENT,
+              wrap_after: int = WRAP_AFTER) -> typing.Iterator[str]:
     """Yield post-processed help() stdout lines: rstrip, indent, wrap."""
     for line in stdout_lines:
         line = line.rstrip() + '\n'
