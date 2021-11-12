@@ -6,6 +6,7 @@ import contextlib
 import io
 import pathlib
 import re
+import sys
 import typing
 
 import graphviz
@@ -89,9 +90,12 @@ for cls_name, doc in help_docs.items():
 
 if target == target_before:
     print('unchanged')
+    sys.exit(None)
 else:
     print('write', TARGET)
     print(target_before.count('\n'), 'lines before')
     print(target.count('\n'), 'lines after')
 
     TARGET.write_text(target, **IO_KWARGS)
+
+    sys.exit(f'changed {TARGET!r}')
