@@ -90,7 +90,7 @@ for cls_name, doc in help_docs.items():
     target = target.replace(INDENT + '\n', INDENT + '<BLANKLINE>\n')
 
 if target == target_before:
-    print('unchanged')
+    print('unchanged (OK)')
     sys.exit(None)
 else:
     print('write', TARGET)
@@ -103,6 +103,6 @@ else:
                                      target.splitlines()):
         print(diff)
 
-    message = f'changed {TARGET!r}'
+    message = f'changed {TARGET!r} (WARNING)'
     print(f'sys.exit({message!r})')
     sys.exit(message)
