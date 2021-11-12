@@ -136,13 +136,17 @@ and :class:`.Source` for reference.
     First shalt thou take out the Holy Pin.
     Then shalt thou count to three, no more, no less.
 
-To update: remove ``+SKIP`` flags below and copy output(s) from ``Got:``.
+To update ``help()`` outputs below:
+
+.. code:: bash
+
+    $ ./update-help.py
+
+To debug: remove ``+SKIP`` flags below and check output(s):
 
 .. code:: bash
 
     $ ./run-tests.py docs --doctest-report none --doctest-continue-on-failure
-
-``TODO:`` automate reindent
 
 
 Graph
