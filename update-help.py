@@ -55,9 +55,7 @@ def iterlines(stdout_lines, *,
 
         if len(line) > wrap_after and ARGS_LINE.match(line):
             _, sep, _ = parts = line.rpartition(' -> ')
-            if not sep:
-                parts = reversed(parts)
-            line, _, return_annotation = parts
+            line, _, return_annotation = parts if sep else reversed(parts)
             return_annotation = sep + return_annotation
 
             indent = line_indent + ' ' * line.index('(')
