@@ -6,6 +6,7 @@ import contextlib
 import io
 import pathlib
 import re
+import typing
 
 import graphviz
 
@@ -31,7 +32,7 @@ PATTERN = (r'''
            \ {{4}}<BLANKLINE>\n
            ''')
 
-ENCODING = 'utf-8'
+IO_KWARGS = {'encoding': 'utf-8'}
 
 
 def get_help(obj) -> str:
@@ -42,10 +43,13 @@ def get_help(obj) -> str:
     return ''.join(iterlines(buf))
 
 
-def iterlines(lines, *, wrap_after: int = WRAP_AFTER, line_indent: str = INDENT):
-    for line in lines:
+def iterlines(stdout_lines, *,
+              wrap_after: int = WRAP_AFTER,
+              line_indent: str = INDENT) -> typing.Iterator[str]:
+    """Yield post-processed help() stdout lines: rstrip, indent, wrap."""
+    for line in stdout_lines:
         line = line.rstrip() + '\n'
-        line = line.replace("``'\\n'``", "``'\\\\n'``")
+        line = line.replace("``'\\n'``", r"``'\\n'``")
 
         if len(line) > wrap_after and ARGS_LINE.match(line):
             line, sep, rest = line.rpartition(' -> ')
@@ -71,10 +75,10 @@ def iterlines(lines, *, wrap_after: int = WRAP_AFTER, line_indent: str = INDENT)
 help_docs = {cls.__name__: get_help(cls) for cls in ALL_CLASSES}
 
 print('read', TARGET)
-target = target_before = TARGET.read_text(encoding=ENCODING)
+target = target_before = TARGET.read_text(**IO_KWARGS)
 
 for cls_name, doc in help_docs.items():
-    print('replace', cls_name, 'section')
+    print('replace', cls_name, 'PATTERN match')
 
     pattern = re.compile(PATTERN.format(cls_name=cls_name), flags=re.VERBOSE)
 
@@ -90,4 +94,4 @@ else:
     print(target_before.count('\n'), 'lines before')
     print(target.count('\n'), 'lines after')
 
-    TARGET.write_text(target, encoding=ENCODING)
+    TARGET.write_text(target, **IO_KWARGS)
