@@ -37,10 +37,10 @@ jobs:
             python-version: pypy-3.6
             os: ubuntu-latest
     steps:
-      - name: Install system dependencies (if not -skip-exe)
+      - name: Apt install system dependencies (unless -skip-exe)
         run: sudo apt install graphviz
         if: ${{ !contains(matrix.name, '-skip-exe') }}
-      - name: Checkout repo
+      - name: Checkout source repo
         uses: actions/checkout@v2
       - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
@@ -48,18 +48,19 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Upgrade pip
         run: python -m pip install --upgrade pip setuptools wheel
-      - name: Install dependencies
+      - name: Pip install dependencies
         run: pip install .[test] codecov flake8
-      - name: Run full tests
+      - name: Run full tests (unless -skip-exe)
         run: python run-tests.py
         if: ${{ !contains(matrix.name, '-skip-exe') }}
       - name: Run tests with --skip-exe (always included)
-        run: python run-tests.py --skip-exe
-      - name: Upload coverage
+        run: python run-tests.py --skip-exe --cov-append
+      - name: Upload test coverage
         uses: codecov/codecov-action@v1
-      - name: Render examples (if not -skip-exe)
+      - name: Run try-examples.py (unless -skip-exe)
         run: python try-examples.py
         if: ${{ !contains(matrix.name, '-skip-exe') }}
+        continue-on-error: true
       - name: Run update-help.py (if -update-help or -3.9)
         run: python update-help.py
         if: ${{ contains(matrix.name, '-update-help') || contains(matrix.name, '-3.9') }}
@@ -74,7 +75,7 @@ jobs:
         run: python -m flake8
         if: ${{ contains(matrix.name, '-flake8') }}
         continue-on-error: true
-      - name: Upload artifacts ${{ matrix.name }}
+      - name: Upload ${{ matrix.name }} artifacts
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.name }}
