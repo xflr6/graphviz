@@ -7,6 +7,7 @@ import contextlib
 import os
 import pathlib
 import sys
+import webbrowser
 
 from sphinx.cmd import build
 
@@ -42,6 +43,7 @@ with chdir(SOURCE):
 print('', RESULT, sep='\n')
 
 try:
-    assert RESULT.stat().st_size, f'should be non-empty: {RESULT}'
+    assert RESULT.stat().st_size, f'non-empty {RESULT}'
+    webbrowser.open(RESULT)
 finally:
     sys.exit(result)
