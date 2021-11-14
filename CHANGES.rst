@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.18.1 (in development)
--------------------------------
+Version 0.18.1
+--------------
 
 Fix `TypeError: argument of type 'WindowsPath' is not iterable`
 on Windows platform under Python 3.6 and 3.7

@@ -17,13 +17,17 @@ Cleanup:
 
     $ git clean -f -d -x  # remove all untracked files and directories
 
+Update ``help()`` output:
+
+.. code:: bash
+
+    $ ./update-help.py
+
 Set release version (remove ``.dev0`` from ``$MAJOR.$MINOR[.$BUGFIX]``):
 
 - ``docs/conf.py``
 - ``graphviz/__init__.py``
 - ``setup.py``
-
-Update `help output <online-help-internal>`_ if needed.
 
 Document release:
 
