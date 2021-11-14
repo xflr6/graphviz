@@ -112,6 +112,8 @@ Commit to main branch and push:
     $ git commit -m "bump version for development"
     $ git push --tags  # pushes all tags
 
+Update the ``stable`` branch to the release.
+
 - Check GitHub Actions `main branch Build workflow
   <https://github.com/xflr6/graphviz/actions?query=branch%3Amaster>`_
 - Check GitHub `Main page <https://github.com/xflr6/graphviz>`_
