@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # flake8: noqa
 
+"""Run the tests with https://pytest.org."""
+
 import platform
 import sys
 
@@ -14,6 +16,7 @@ ARGS = [#'--skip-exe',
         #'-W', 'error',
         #'--doctest-report none',
         #'--doctest-continue-on-failure',
+        #'--cov-append',
         ]
 
 if platform.system() == 'Windows':
