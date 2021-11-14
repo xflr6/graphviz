@@ -701,9 +701,9 @@ cycles.
 
 .. _output file format: https://www.graphviz.org/doc/info/output.html
 .. _appearance: https://www.graphviz.org/doc/info/attrs.html
-.. _escString: https://www.graphviz.org/doc/info/attrs.html#k:escString
+.. _escString: https://www.graphviz.org/docs/attr-types/escString/
 .. _raw string literals: https://docs.python.org/3/reference/lexical_analysis.html#string-and-bytes-literals
-.. _HTML-like labels: https://graphviz.gitlab.io/_pages/doc/info/shapes.html#html
+.. _HTML-like labels: https://graphviz.org/doc/info/shapes.html#html
 .. _unflatten: https://linux.die.net/man/1/unflatten
 .. _unflatten_pdf: https://www.graphviz.org/pdf/unflatten.1.pdf
 .. _Jupyter notebook: https://jupyter.org
