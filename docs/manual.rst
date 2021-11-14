@@ -201,7 +201,7 @@ graph, nodes, and edges.
 
 .. code:: python
 
-    >>> ps = graphviz.Digraph(name='pet-shop', node_attr={'shape': 'plaintext'})
+    >>> ps = graphviz.Digraph('pet-shop', node_attr={'shape': 'plaintext'})
 
     >>> ps.node('parrot')
     >>> ps.node('dead')
@@ -331,13 +331,13 @@ instead (same solution as proposed for the stdlib :mod:`re` module):
 
 .. code:: python
 
-    >>> e = graphviz.Digraph()
+    >>> e = graphviz.Digraph('escapes')
 
     >>> e.node('backslash', label=r'\\')
     >>> e.node('multi_line', label=r'centered\nleft\lright\r')
 
     >>> print(e.source)  # doctest: +NORMALIZE_WHITESPACE
-    digraph {
+    digraph escapes {
         backslash [label="\\"]
         multi_line [label="centered\nleft\lright\r"]
     }
@@ -413,12 +413,12 @@ workaround was to add leading or trailing space, e.g. ``label=' <>'``):
 
 .. code:: python
 
-    >>> d = graphviz.Digraph(format='svg')
+    >>> d = graphviz.Digraph('diamond', format='svg')
 
     >>> d.node('diamond', label=graphviz.nohtml('<>'))
 
     >>> print(d.source)  # doctest: +NORMALIZE_WHITESPACE
-    digraph {
+    digraph diamond {
         diamond [label="<>"]
     }
 
@@ -524,7 +524,7 @@ the unflatten_ preprocessor (`PDF <unflatten_pdf_>`_), use the
 
 .. code:: python
 
-    >>> w = graphviz.Digraph()
+    >>> w = graphviz.Digraph('wide')
 
     >>> w.edges(('0', str(i)) for i in range(1, 10))
 
