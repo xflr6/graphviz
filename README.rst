@@ -1,7 +1,7 @@
 Graphviz
 ========
 
-|PyPI version| |License| |Supported Python| |Format|
+|PyPI version| |License| |Supported Python| |Wheel| |Downloads|
 
 |Build| |Codecov| |Readthedocs-stable| |Readthedocs-latest|
 
@@ -104,8 +104,11 @@ Save and render the source code, optionally view the result:
     >>> dot.render('test-output/round-table.gv', view=True)  # doctest: +SKIP
     'test-output/round-table.gv.pdf'
 
-.. image:: https://raw.github.com/xflr6/graphviz/master/docs/round-table.png
+.. image:: data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIKICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8IS0tIEdlbmVyYXRlZCBieSBncmFwaHZpeiB2ZXJzaW9uIDIuNDguMCAoMjAyMTA3MTcuMTU1NikKIC0tPgo8IS0tIFBhZ2VzOiAxIC0tPgo8c3ZnIHdpZHRoPSIzOTBwdCIgaGVpZ2h0PSIxMTZwdCIKIHZpZXdCb3g9IjAuMDAgMC4wMCAzODkuOTggMTE2LjAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KPGcgaWQ9ImdyYXBoMCIgY2xhc3M9ImdyYXBoIiB0cmFuc2Zvcm09InNjYWxlKDEgMSkgcm90YXRlKDApIHRyYW5zbGF0ZSg0IDExMikiPgo8cG9seWdvbiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSJ0cmFuc3BhcmVudCIgcG9pbnRzPSItNCw0IC00LC0xMTIgMzg1Ljk4LC0xMTIgMzg1Ljk4LDQgLTQsNCIvPgo8IS0tIEEgLS0+CjxnIGlkPSJub2RlMSIgY2xhc3M9Im5vZGUiPgo8dGl0bGU+QTwvdGl0bGU+CjxlbGxpcHNlIGZpbGw9Im5vbmUiIHN0cm9rZT0iYmxhY2siIGN4PSIxOTAuOTkiIGN5PSItOTAiIHJ4PSI1My44OSIgcnk9IjE4Ii8+Cjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjE5MC45OSIgeT0iLTg2LjMiIGZvbnQtZmFtaWx5PSJUaW1lcyBOZXcgUm9tYW4sc2VyaWYiIGZvbnQtc2l6ZT0iMTQuMDAiPktpbmcgQXJ0aHVyPC90ZXh0Pgo8L2c+CjwhLS0gQiAtLT4KPGcgaWQ9Im5vZGUyIiBjbGFzcz0ibm9kZSI+Cjx0aXRsZT5CPC90aXRsZT4KPGVsbGlwc2UgZmlsbD0ibm9uZSIgc3Ryb2tlPSJibGFjayIgY3g9IjkwLjk5IiBjeT0iLTE4IiByeD0iOTAuOTgiIHJ5PSIxOCIvPgo8dGV4dCB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB4PSI5MC45OSIgeT0iLTE0LjMiIGZvbnQtZmFtaWx5PSJUaW1lcyBOZXcgUm9tYW4sc2VyaWYiIGZvbnQtc2l6ZT0iMTQuMDAiPlNpciBCZWRldmVyZSB0aGUgV2lzZTwvdGV4dD4KPC9nPgo8IS0tIEEmIzQ1OyZndDtCIC0tPgo8ZyBpZD0iZWRnZTEiIGNsYXNzPSJlZGdlIj4KPHRpdGxlPkEmIzQ1OyZndDtCPC90aXRsZT4KPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJibGFjayIgZD0iTTE2OC44LC03My40NkMxNTUuMzMsLTY0LjA0IDEzNy45MiwtNTEuODUgMTIyLjk4LC00MS4zOSIvPgo8cG9seWdvbiBmaWxsPSJibGFjayIgc3Ryb2tlPSJibGFjayIgcG9pbnRzPSIxMjQuNzIsLTM4LjMzIDExNC41MiwtMzUuNDcgMTIwLjcsLTQ0LjA3IDEyNC43MiwtMzguMzMiLz4KPC9nPgo8IS0tIEwgLS0+CjxnIGlkPSJub2RlMyIgY2xhc3M9Im5vZGUiPgo8dGl0bGU+TDwvdGl0bGU+CjxlbGxpcHNlIGZpbGw9Im5vbmUiIHN0cm9rZT0iYmxhY2siIGN4PSIyOTAuOTkiIGN5PSItMTgiIHJ4PSI5MC45OCIgcnk9IjE4Ii8+Cjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjI5MC45OSIgeT0iLTE0LjMiIGZvbnQtZmFtaWx5PSJUaW1lcyBOZXcgUm9tYW4sc2VyaWYiIGZvbnQtc2l6ZT0iMTQuMDAiPlNpciBMYW5jZWxvdCB0aGUgQnJhdmU8L3RleHQ+CjwvZz4KPCEtLSBBJiM0NTsmZ3Q7TCAtLT4KPGcgaWQ9ImVkZ2UyIiBjbGFzcz0iZWRnZSI+Cjx0aXRsZT5BJiM0NTsmZ3Q7TDwvdGl0bGU+CjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iYmxhY2siIGQ9Ik0yMTMuMTksLTczLjQ2QzIyNi42NSwtNjQuMDQgMjQ0LjA3LC01MS44NSAyNTkuMDEsLTQxLjM5Ii8+Cjxwb2x5Z29uIGZpbGw9ImJsYWNrIiBzdHJva2U9ImJsYWNrIiBwb2ludHM9IjI2MS4yOCwtNDQuMDcgMjY3LjQ3LC0zNS40NyAyNTcuMjcsLTM4LjMzIDI2MS4yOCwtNDQuMDciLz4KPC9nPgo8IS0tIEImIzQ1OyZndDtMIC0tPgo8ZyBpZD0iZWRnZTMiIGNsYXNzPSJlZGdlIj4KPHRpdGxlPkImIzQ1OyZndDtMPC90aXRsZT4KPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJibGFjayIgZD0iTTE4Mi4wMSwtMThDMTg0LjYyLC0xOCAxODcuMjIsLTE4IDE4OS44MywtMTgiLz4KPHBvbHlnb24gZmlsbD0iYmxhY2siIHN0cm9rZT0iYmxhY2siIHBvaW50cz0iMTg5Ljg5LC0yMS41IDE5OS44OSwtMTggMTg5Ljg5LC0xNC41IDE4OS44OSwtMjEuNSIvPgo8L2c+CjwvZz4KPC9zdmc+Cg==
     :align: center
+    :target: https://raw.github.com/xflr6/graphviz/master/docs/_static/round-table.svg
+    :alt: round-table.svg
+
 
 See also
 --------
@@ -151,6 +154,7 @@ Development
 .. _conda-forge-python-graphviz-feedstock: https://github.com/conda-forge/python-graphviz-feedstock
 .. _conda-forge-graphviz: https://anaconda.org/conda-forge/graphviz
 .. _conda-forge-graphviz-feedstock: https://github.com/conda-forge/graphviz-feedstock
+
 .. _pygraphviz: https://pypi.org/project/pygraphviz/
 .. _graphviz-python: https://pypi.org/project/graphviz-python/
 .. _graphviz-python-docs: https://www.graphviz.org/pdf/gv.3python.pdf
@@ -166,14 +170,17 @@ Development
     :target: https://pypi.org/project/graphviz/
     :alt: Latest PyPI Version
 .. |License| image:: https://img.shields.io/pypi/l/graphviz.svg
-    :target: https://pypi.org/project/graphviz/
+    :target: https://github.com/xflr6/graphviz/blob/master/LICENSE.txt
     :alt: License
 .. |Supported Python| image:: https://img.shields.io/pypi/pyversions/graphviz.svg
     :target: https://pypi.org/project/graphviz/
     :alt: Supported Python Versions
-.. |Format| image:: https://img.shields.io/pypi/format/graphviz.svg
+.. |Wheel| image:: https://img.shields.io/pypi/wheel/graphviz.svg
     :target: https://pypi.org/project/graphviz/
-    :alt: Format
+    :alt: Wheel format
+.. |Downloads| image::  https://img.shields.io/pypi/dm/graphviz.svg
+    :target: https://pypi.org/project/graphviz/#files
+    :alt: Monthly downloads
 
 .. |Build| image:: https://github.com/xflr6/graphviz/actions/workflows/build.yaml/badge.svg?branch=master
     :target: https://github.com/xflr6/graphviz/actions/workflows/build.yaml?query=branch%3Amaster
@@ -182,12 +189,12 @@ Development
     :target: https://codecov.io/gh/xflr6/graphviz
     :alt: Codecov
 .. |Readthedocs-stable| image:: https://readthedocs.org/projects/graphviz/badge/?version=stable
-    :target: https://graphviz.readthedocs.io/en/stable/?badge=stable
-    :alt: Readthedocs stable
+    :target: https://graphviz.readthedocs.io/en/stable/
+    :alt: Readthedocs (stable)
 .. |Readthedocs-latest| image:: https://readthedocs.org/projects/graphviz/badge/?version=latest
-    :target: https://graphviz.readthedocs.io/en/latest/?badge=latest
-    :alt: Readthedocs latest
+    :target: https://graphviz.readthedocs.io/en/latest/
+    :alt: Readthedocs (latest)
 
 .. |Binder stable| image:: https://img.shields.io/badge/launch-binder%20(stable)-579ACA.svg?logo=data:image/png;base64,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
-   :target: https://mybinder.org/v2/gh/xflr6/graphviz/stable
-   :alt: Binder stable
+    :target: https://mybinder.org/v2/gh/xflr6/graphviz/stable
+    :alt: Binder (stable)
