@@ -1,5 +1,6 @@
 """Python 3.6 to 3.8 compatibility and platform compatibility."""
 
+import pathlib
 import platform
 import sys
 import typing
@@ -38,3 +39,14 @@ if platform.system() == 'Windows':  # pragma: no cover
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW  # pytype: disable=module-attr
         startupinfo.wShowWindow = subprocess.SW_HIDE  # pytype: disable=module-attr
         return startupinfo
+
+
+def make_subprocess_arg(arg: typing.Union[str, pathlib.Path]):
+    """Return subprocess argument as is (default no-op)."""
+    return arg
+
+
+if platform.system() == 'Windows' and sys.version_info < (3, 8):  # pragma: no cover
+    def make_subprocess_arg(arg: typing.Union[str, pathlib.Path]) -> str:  # noqa: F811
+        """Workaround https://bugs.python.org/issue41649 (not backported)."""
+        return str(arg)

@@ -63,6 +63,8 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
     """
     log.debug('run %r', cmd)
 
+    cmd = list(map(_compat.make_subprocess_arg, cmd))
+
     if not kwargs.pop('check', True):  # pragma: no cover
         raise NotImplementedError('check must be True or omited')
 
