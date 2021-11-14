@@ -4,7 +4,8 @@
 
 import graphviz
 
-s = graphviz.Digraph('structs', node_attr={'shape': 'plaintext'})
+s = graphviz.Digraph('structs', filename='structs.gv',
+                     node_attr={'shape': 'plaintext'})
 
 s.node('struct1', '''<
 <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">

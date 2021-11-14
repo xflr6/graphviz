@@ -4,7 +4,7 @@
 
 import graphviz
 
-g = graphviz.Graph('colors')
+g = graphviz.Graph(filename='colors.gv')
 
 red, green, blue = 64, 224, 208
 assert f'#{red:x}{green:x}{blue:x}' == '#40e0d0'
