@@ -5,9 +5,22 @@ Changelog
 Version 0.18.1 (in development)
 -------------------------------
 
+Fix `TypeError: argument of type 'WindowsPath' is not iterable`
+on Windows platform under Python 3.6 and 3.7
+(work around https://bugs.python.org/issue41649).
+
+Update outdated examples source links.
+
+Improve mode structure and separation of concerns.
+
+Improve test structure and coverage.
+
+Improve output of ``try-examples.py``.
+Add exit status for CI. Disable `view()`.
+
 Add ``build-docs.py`` script for development.
 
-Add ``update-help.py`` script for development. 
+Add ``update-help.py`` script for development.
 
 
 Version 0.18
