@@ -30,8 +30,8 @@ def test_init(source):
 
 def test_init_filename():
     assert graphviz.Source('').filename == 'Source.gv'
-    assert type('Named', (graphviz.Source,),
-                {'name': 'name'})('').filename == 'name.gv'
+    assert type('Subcls', (graphviz.Source,),
+                {'name': 'name'})('').filename == 'Subcls.gv'
 
 
 def test_filepath(platform, source):

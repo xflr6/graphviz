@@ -94,7 +94,7 @@ class Dot(quoting.Quote, base.Base):
                  comment: typing.Optional[str] = None,
                  graph_attr=None, node_attr=None, edge_attr=None, body=None,
                  strict: bool = False, **kwargs) -> None:
-        super().__init__(**kwargs)
+        super().__init__(name=name, **kwargs)
 
         self.name = name
         self.comment = comment

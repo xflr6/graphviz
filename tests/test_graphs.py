@@ -18,6 +18,12 @@ def classes(request):
     return request.param
 
 
+def test_init_filename(cls):
+    assert cls().filename == f'{cls.__name__}.gv'
+    assert type('Subcls', (cls,), {})().filename == 'Subcls.gv'
+    assert cls('spam').filename == 'spam.gv'
+
+
 @pytest.mark.exe
 @pytest.mark.parametrize(
     'cls, expected',
