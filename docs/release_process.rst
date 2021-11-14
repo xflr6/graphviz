@@ -112,29 +112,33 @@ Commit to main branch and push:
     $ git commit -m "bump version for development"
     $ git push --tags  # pushes all tags
 
-- Check GitHub Actions `main branch Build workflow
-  <https://github.com/xflr6/graphviz/actions?query=branch%3Amaster>`_
-- Check GitHub `Main page <https://github.com/xflr6/graphviz>`_
-
-Update the ``stable`` branch to the releases.
-
-- Check ``stable`` binder: https://mybinder.org/v2/gh/xflr6/graphviz/stable
-
 
 Verify
 ------
 
-Verify publication (install in default environment):
+Verify publication:
 
 - Check `PyPI files <https://pypi.org/project/graphviz/#files>`_
+- Check GitHub `Main page <https://github.com/xflr6/graphviz>`_
+- Check GitHub Actions `main branch Build workflow
+  <https://github.com/xflr6/graphviz/actions?query=branch%3Amaster>`_
 - Check Read the Docs `builds <https://readthedocs.org/projects/graphviz/builds/>`_
 - Check `stable release notes <https://graphviz.readthedocs.io/en/stable/changelog.html>`_
 - Check `latest release notes <https://graphviz.readthedocs.io/en/latest/changelog.html>`_
+
+Install in default environment:
 
 .. code:: bash
 
     $ pip install -U graphviz
     $ python -c "import graphviz; print((graphviz.__version__, graphviz.version()))"
+
+Update ``stable`` binder:
+
+- Set the ``stable`` branch to the release.
+- Check binder: https://mybinder.org/v2/gh/xflr6/graphviz/stable
+
+Verify downstream:
 
 - Check downstream `conda-forge release <https://github.com/conda-forge/python-graphviz-feedstock>`_
 
