@@ -2,6 +2,12 @@ Changelog
 =========
 
 
+Version 0.18.3 (in development)
+-------------------------------
+
+
+
+
 Version 0.18.2
 --------------
 
@@ -10,7 +16,7 @@ when filepath is not present (restore
 ``graphviz.Graph('spam').filename == 'spam.gv'`` broken in 0.18).
 
 Fix unintended API docs reference to internal ``backend`` name for 
-``DOT_BINARY`` and ``UNFLATTEN_BINARY``: Moved to public API
+``DOT_BINARY`` and ``UNFLATTEN_BINARY``. Moved to public API
 as ``graphviz.DOT_BINARY`` and ``graphviz.UNFLATTEN_BINARY``.
 
 Fix broken documentation links.
