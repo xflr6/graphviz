@@ -25,7 +25,8 @@ digraph {
 }
 """
 
-from .backend import (render, pipe, pipe_string, pipe_lines, pipe_lines_string,
+from .backend import (DOT_BINARY, UNFLATTEN_BINARY,
+                      render, pipe, pipe_string, pipe_lines, pipe_lines_string,
                       unflatten, version, view,
                       RequiredArgumentError, ExecutableNotFound)
 from .graphs import Graph, Digraph
@@ -34,6 +35,7 @@ from .quoting import escape, nohtml
 from .sources import Source
 
 __all__ = ['ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
+           'DOT_BINARY', 'UNFLATTEN_BINARY',
            'Graph', 'Digraph',
            'Source',
            'escape', 'nohtml',
@@ -49,20 +51,28 @@ __license__ = 'MIT, see LICENSE.txt'
 __copyright__ = 'Copyright (c) 2013-2021 Sebastian Bank'
 
 #: :class:`set` of known layout commands used for rendering
-#:      (``'dot'``, ``'neato'``, ...)
+#: (``'dot'``, ``'neato'``, ...)
 ENGINES = ENGINES
 
 #: :class:`set` of known output formats for rendering
-#:      (``'pdf'``, ``'png'``, ...)
+#: (``'pdf'``, ``'png'``, ...)
 FORMATS = FORMATS
 
 #: :class:`set` of known output renderers for rendering
-#:      (``'cairo'``, ``'gd'``, ...)
+#: (``'cairo'``, ``'gd'``, ...)
 RENDERERS = RENDERERS
 
 #: :class:`set` of known output formatters for rendering
-#:      (``'cairo'``, ``'gd'``, ...)
+#: (``'cairo'``, ``'gd'``, ...)
 FORMATTERS = FORMATTERS
+
+#: :class:`pathlib.Path` of rendering command
+#: (``Path('dot')``)
+DOT_BINARY = DOT_BINARY
+
+#: :class:`pathlib.Path` of unflatten command
+#: (``Path('unflatten')``)
+UNFLATTEN_BINARY = UNFLATTEN_BINARY
 
 
 ExecutableNotFound = ExecutableNotFound

@@ -8,9 +8,8 @@ from ..encoding import DEFAULT_ENCODING
 from . import _common
 from . import execute
 
-__all__ = ['unflatten']
+__all__ = ['UNFLATTEN_BINARY', 'unflatten']
 
-#: :class:`pathlib.Path` of unflatten command (``Path('unflatten')``).
 UNFLATTEN_BINARY = pathlib.Path('unflatten')
 
 

@@ -8,9 +8,8 @@ from .. import parameters
 
 from . import _common
 
-__all__ = ['command']
+__all__ = ['DOT_BINARY', 'command']
 
-#: :class:`pathlib.Path` of layout command (``Path('dot')``).
 DOT_BINARY = pathlib.Path('dot')
 
 

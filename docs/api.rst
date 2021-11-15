@@ -112,10 +112,10 @@ http://www.graphviz.org/doc/info/output.html, and ``dot -T:`` output):
 
 Names of upstream binaries:
 
-.. autodata:: graphviz.backend.DOT_BINARY
+.. autodata:: graphviz.DOT_BINARY
    :annotation:
 
-.. autodata:: graphviz.backend.UNFLATTEN_BINARY
+.. autodata:: graphviz.UNFLATTEN_BINARY
    :annotation:
 
 
