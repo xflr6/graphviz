@@ -123,7 +123,6 @@ Verify publication:
 - Check GitHub Actions `main branch Build workflow
   <https://github.com/xflr6/graphviz/actions?query=branch%3Amaster>`_
 - Check Read the Docs `builds <https://readthedocs.org/projects/graphviz/builds/>`_
-- Check `stable release notes <https://graphviz.readthedocs.io/en/stable/changelog.html>`_
 - Check `latest release notes <https://graphviz.readthedocs.io/en/latest/changelog.html>`_
 
 Install in default environment:
@@ -133,9 +132,10 @@ Install in default environment:
     $ pip install -U graphviz
     $ python -c "import graphviz; print((graphviz.__version__, graphviz.version()))"
 
-Update ``stable`` binder:
+Update ``stable`` branch:
 
-- Set the ``stable`` branch to the release.
+- Set the ``stable`` branch to latest release.
+- Check `stable release notes <https://graphviz.readthedocs.io/en/stable/changelog.html>`_
 - Check binder: https://mybinder.org/v2/gh/xflr6/graphviz/stable
 
 Verify downstream:
