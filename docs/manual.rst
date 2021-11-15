@@ -179,7 +179,7 @@ Jupyter notebooks
 -----------------
 
 :class:`.Graph` and :class:`.Digraph` objects have a
-:meth:`~.Graph._repr_svg_`-method so they can be rendered and displayed
+:meth:`~.Graph._repr_mimebundle_`-method so they can be rendered and displayed
 directly inside a `Jupyter notebook`_. For an example, check the
 ``examples/graphviz-notebook.ipynb`` file in the
 `source repository/distribution <graphviz-notebook.ipynb_>`_ (or the same
@@ -191,6 +191,9 @@ This also allows direct displaying within the `Jupyter Qt Console`_ (e.g.
 .. image:: _static/qtconsole.png
     :align: center
 
+By default `Jupyter notebook`_ will use SVG for displaying.
+You can use :attr:`~display_svg`, :attr:`~display_png` or
+:attr:`~display_jpeg` from `IPython.display`_ to get a SVG, PNG or JPEG.
 
 Styling
 -------
@@ -707,6 +710,7 @@ cycles.
 .. _unflatten: https://linux.die.net/man/1/unflatten
 .. _unflatten_pdf: https://www.graphviz.org/pdf/unflatten.1.pdf
 .. _Jupyter notebook: https://jupyter.org
+.. _IPython.display: https://ipython.readthedocs.io/en/stable/api/generated/IPython.display.html
 .. _graphviz-notebook.ipynb: https://github.com/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
 .. _nbviewer: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
 .. _Jupyter Qt Console: https://qtconsole.readthedocs.io

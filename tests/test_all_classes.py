@@ -194,9 +194,28 @@ def test_pipe_lines_mocked(mocker, mock_pipe_lines, dot, format_='svg'):
 def test_repr_svg_mocked(mocker, dot):
     mock_pipe = mocker.patch.object(dot, 'pipe', autospec=True)
 
-    assert dot._repr_svg_() is mock_pipe.return_value
+    assert dot._repr_mimebundle_({'image/svg+xml'}) == {
+        'image/svg+xml': mock_pipe.return_value}
 
     mock_pipe.assert_called_once_with(format='svg', encoding=dot.encoding)
+
+
+def test_repr_png_mocked(mocker, dot):
+    mock_pipe = mocker.patch.object(dot, 'pipe', autospec=True)
+
+    assert dot._repr_mimebundle_({'image/png'}) == {
+        'image/png': mock_pipe.return_value}
+
+    mock_pipe.assert_called_once_with(format='png')
+
+
+def test_repr_jpeg_mocked(mocker, dot):
+    mock_pipe = mocker.patch.object(dot, 'pipe', autospec=True)
+
+    assert dot._repr_mimebundle_({'image/jpeg'}) == {
+        'image/jpeg': mock_pipe.return_value}
+
+    mock_pipe.assert_called_once_with(format='jpeg')
 
 
 @pytest.mark.exe

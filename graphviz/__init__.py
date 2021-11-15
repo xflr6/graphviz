@@ -101,3 +101,16 @@ def set_default_format(format: str) -> str:
     old_default_format = parameters.Parameters._format
     parameters.Parameters._format = format
     return old_default_format
+
+
+def set_default_jupyter_representation(jupyter_representation: str) -> str:
+    """Change the default jupyter_representation, return the old default value.
+    """
+    from . import jupyter_integration
+
+    jupyter_integration.verify_jupyter_representation(jupyter_representation)
+
+    old = jupyter_integration.JupyterIntegration._jupyter_representation
+    jupyter_integration.JupyterIntegration._jupyter_representation = \
+        jupyter_representation
+    return old

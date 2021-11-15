@@ -19,7 +19,7 @@ log = logging.getLogger(__name__)
 
 
 class Source(rendering.Render, saving.Save,
-             jupyter_integration.JupyterSvgIntegration, piping.Pipe,
+             jupyter_integration.JupyterIntegration, piping.Pipe,
              unflattening.Unflatten):
     """Verbatim DOT source code string to be rendered by Graphviz.
 

@@ -5,7 +5,7 @@ Changelog
 Version 0.19 (in development)
 -----------------------------
 
-
+Replace ``_repr_svg_`` with ``_repr_mimebundle_`` to support svg, png and jpeg.
 
 
 Version 0.18.2

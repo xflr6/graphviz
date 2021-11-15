@@ -2,11 +2,13 @@ import pytest
 
 import graphviz
 from graphviz import parameters
+from graphviz import jupyter_integration
 
 VERIFY_FUNCS = [parameters.verify_engine,
                 parameters.verify_format,
                 parameters.verify_renderer,
-                parameters.verify_formatter]
+                parameters.verify_formatter,
+                jupyter_integration.verify_jupyter_representation]
 
 
 @pytest.mark.parametrize(
