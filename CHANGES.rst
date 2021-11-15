@@ -5,7 +5,17 @@ Changelog
 Version 0.18.2 (in development)
 -------------------------------
 
+Fix ``filepath`` fallback to ``name`` of ``Graph/Digraph`` for 
+when filepath is not present (restore
+``graphviz.Graph('spam').filename == 'spam.gv'`` broken in 0.18).
 
+Fix unintended API docs reference to internal ``backend`` name for 
+``DOT_BINARY`` and ``UNFLATTEN_BINARY``: Moved to public API
+as ``graphviz.DOT_BINARY`` and ``graphviz.UNFLATTEN_BINARY``.
+
+Fix broken documentation links.
+
+Docs: re-render most SVGs and notebooks with upstream Graphviz 2.49.3.
 
 
 Version 0.18.1
