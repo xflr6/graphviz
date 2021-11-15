@@ -72,7 +72,7 @@ class Source(rendering.Render, saving.Save,
                  formatter: typing.Optional[str] = None,
                  loaded_from_path: typing.Optional[os.PathLike] = None) -> None:
         if filename is None:
-             filename = f'{self.__class__.__name__}.{self._default_extension}'
+            filename = f'{self.__class__.__name__}.{self._default_extension}'
 
         super().__init__(filename=filename, directory=directory,
                          format=format, engine=engine,
