@@ -71,10 +71,14 @@ class Source(rendering.Render, saving.Save,
                  renderer: typing.Optional[str] = None,
                  formatter: typing.Optional[str] = None,
                  loaded_from_path: typing.Optional[os.PathLike] = None) -> None:
+        if filename is None:
+             filename = f'{self.__class__.__name__}.{self._default_extension}'
+
         super().__init__(filename=filename, directory=directory,
                          format=format, engine=engine,
                          renderer=renderer, formatter=formatter,
                          encoding=encoding)
+
         self._loaded_from_path = loaded_from_path
         self._source = source  #: The verbatim DOT source code string.
 

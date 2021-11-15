@@ -56,6 +56,9 @@ class BaseGraph(dot.Dot,
                  strict: bool = False, *,
                  renderer: typing.Optional[str] = None,
                  formatter: typing.Optional[str] = None) -> None:
+        if filename is None:
+            filename = f'{name or self.__class__.__name__}.{self._default_extension}'
+
         super().__init__(name=name, comment=comment,
                          graph_attr=graph_attr,
                          node_attr=node_attr, edge_attr=edge_attr,

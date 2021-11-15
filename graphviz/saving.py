@@ -22,13 +22,9 @@ class Save(encoding.Encoding, base.Base):
 
     _mkdirs = staticmethod(tools.mkdirs)
 
-    def __init__(self, *,
-                 name: typing.Optional[str] = None,
-                 filename=None, directory=None, **kwargs) -> None:
+    def __init__(self, *, filename, directory=None, **kwargs) -> None:
         super().__init__(**kwargs)
 
-        if filename is None:
-            filename = f'{name or self.__class__.__name__}.{self._default_extension}'
         self.filename = filename
 
         if directory is not None:
