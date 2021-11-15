@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.18.2 (in development)
--------------------------------
+Version 0.18.2
+--------------
 
 Fix ``filepath`` fallback to ``name`` of ``Graph/Digraph`` for 
 when filepath is not present (restore
