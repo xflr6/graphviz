@@ -19,9 +19,8 @@ ARGS = [#'--skip-exe',
         #'--cov-append',
         ]
 
-if platform.system() == 'Windows':
-    if 'idlelib' in sys.modules:
-        ARGS += ['--capture=sys', '--color=no']
+if platform.system() == 'Windows' and 'idlelib' in sys.modules:
+    ARGS += ['--capture=sys', '--color=no']
 
 
 args = ARGS + sys.argv[1:]
