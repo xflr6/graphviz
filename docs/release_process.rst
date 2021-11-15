@@ -11,11 +11,11 @@ Create ``release`` branch from main:
 
     $ git checkout -b release
 
-Cleanup:
+Cleanup (remove all untracked files and directories):
 
 .. code:: bash
 
-    $ git clean -f -d -x  # remove all untracked files and directories
+    $ git clean -f -d -x
 
 Update ``help()`` output:
 
@@ -40,7 +40,7 @@ Run the tests, run the linter, and build the docs:
     $ python -m tox -r -- -W error  # --recreate, raise error on warning
     $ python -m flake8 --disable-noqa
     $ ./build-docs.py
-    $ git clean -f -d -x  # remove all untracked files and directories
+    $ git clean -f -d -x
 
 Commit to ``release`` branch and push to ``origin``:
 
