@@ -46,6 +46,12 @@ def get_help(obj) -> str:
     return ''.join(iterlines(buf))
 
 
+def rpartition_initial(value: str, *, sep: str) -> typing.Tuple[str, str, str]:
+    """Return (value, '', '') if sep not in value else value.rpartition(sep)."""
+    _, sep_found, _ = parts = value.rpartition(sep)
+    return reversed(parts) if not sep_found else parts 
+
+
 def iterlines(stdout_lines, *,
               line_indent: str = INDENT,
               wrap_after: int = WRAP_AFTER) -> typing.Iterator[str]:
@@ -55,9 +61,7 @@ def iterlines(stdout_lines, *,
         line = line.replace("``'\\n'``", r"``'\\n'``")
 
         if len(line) > wrap_after and ARGS_LINE.match(line):
-            _, sep, _ = parts = line.rpartition(' -> ')
-            line, _, return_annotation = parts if sep else reversed(parts)
-            return_annotation = sep + return_annotation
+            line, *rest = rpartition_initial(line, sep=' -> ')
 
             indent = line_indent + ' ' * line.index('(')
             repl = WRAP_REPL.format(indent=indent)
@@ -67,7 +71,7 @@ def iterlines(stdout_lines, *,
                   n_newlines + 1, 'lines')
             assert n_newlines, 'wrapped long argument line'
 
-            line += return_annotation
+            line += ''.join(rest)
 
         yield line_indent + line
 
