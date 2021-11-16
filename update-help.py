@@ -49,7 +49,7 @@ def get_help(obj) -> str:
 def rpartition_initial(value: str, *, sep: str) -> typing.Tuple[str, str, str]:
     """Return (value, '', '') if sep not in value else value.rpartition(sep)."""
     _, sep_found, _ = parts = value.rpartition(sep)
-    return reversed(parts) if not sep_found else parts 
+    return reversed(parts) if not sep_found else parts
 
 
 def iterlines(stdout_lines, *,
