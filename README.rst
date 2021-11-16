@@ -175,7 +175,7 @@ Development
     :target: https://pypi.org/project/graphviz/
     :alt: Supported Python Versions
 .. |Wheel| image:: https://img.shields.io/pypi/wheel/graphviz.svg
-    :target: https://pypi.org/project/graphviz/
+    :target: https://pypi.org/project/graphviz/#files
     :alt: Wheel format
 .. |Downloads| image::  https://img.shields.io/pypi/dm/graphviz.svg
     :target: https://pypistats.org/packages/graphviz
