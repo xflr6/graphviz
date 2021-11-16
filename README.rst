@@ -178,7 +178,7 @@ Development
     :target: https://pypi.org/project/graphviz/
     :alt: Wheel format
 .. |Downloads| image::  https://img.shields.io/pypi/dm/graphviz.svg
-    :target: https://pypi.org/project/graphviz/#files
+    :target: https://pypistats.org/packages/graphviz
     :alt: Monthly downloads
 
 .. |Build| image:: https://github.com/xflr6/graphviz/actions/workflows/build.yaml/badge.svg?branch=master
