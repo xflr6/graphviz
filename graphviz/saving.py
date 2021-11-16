@@ -25,6 +25,9 @@ class Save(encoding.Encoding, base.Base):
     def __init__(self, *, filename, directory=None, **kwargs) -> None:
         super().__init__(**kwargs)
 
+        if filename is None:
+            filename = f'{self.__class__.__name__}.{self._default_extension}'
+
         self.filename = filename
 
         if directory is not None:
