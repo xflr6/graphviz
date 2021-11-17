@@ -68,7 +68,7 @@ This mimics iteration over ``file`` object lines in text mode.
 
 When passing invalid parameters such as unknown ``engine``, ``format``, etc.,
 ``.render()`` now raises early before writing the file.
-Call ``.save()`` explicitly to produce the previous (less safe) behaiour.
+Call ``.save()`` explicitly to produce the previous (less safe) behaviour.
 
 Add optional keyword-only ``encoding`` argument to ``pipe()``.
 Returns the decoded stdout from the rendering process
@@ -91,7 +91,7 @@ Pipe ``input_lines`` incrementally, return ``string``.
 
 Add ``set_default_engine()`` and ``set_default_format()``
 
-Add ``backend.DOT_BINARY`` and ``backend.UNFLATTEN_BINARY``.
+Add ``DOT_BINARY`` and ``UNFLATTEN_BINARY``.
 
 Restructure the internal class hierarchy using multiple-inheritance
 with cooperative ``super()`` calling:
