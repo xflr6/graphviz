@@ -46,7 +46,16 @@ class JupyterIntegration(piping.Pipe):
                           include: typing.Optional[typing.Iterable[str]] = None,
                           exclude: typing.Optional[typing.Iterable[str]] = None,
                           **_) -> typing.Dict[str, typing.Union[bytes, str]]:
-        """Return the rendered graph as mimebundle.
+        """Return the rendered graph as IPython mimebundle.
+
+        Args:
+            include: Iterable of mimetypes to include in the result.
+                If not given or ``None``: ``['image/sxg.xml']``.
+            exclude: Iterable of minetypes to exclude from the result.
+                Overrides ``include``.
+
+        Returns:
+            Mapping from mimetypes to data.
 
         Example:
             >>> doctest_mark_exe()
@@ -62,8 +71,10 @@ class JupyterIntegration(piping.Pipe):
             ...                       exclude=['image/svg+xml'])  # doctest: +ELLIPSIS
             {'image/jpeg': b'\xff...
 
-        https://ipython.readthedocs.io/en/stable/config/integrating.html#MyObject._repr_mimebundle
-        https://nbviewer.org/github/ipython/ipython/blob/master/examples/IPython%20Kernel/Custom%20Display%20Logic.ipynb
+        See also:
+         IPython documentation:
+            - https://ipython.readthedocs.io/en/stable/config/integrating.html#MyObject._repr_mimebundle
+            - https://nbviewer.org/github/ipython/ipython/blob/master/examples/IPython%20Kernel/Custom%20Display%20Logic.ipynb
         """
         include = set(include) if include is not None else {self._jupyter_mimetype}
         include -= set(exclude or [])

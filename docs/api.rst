@@ -63,7 +63,7 @@ Source
         source,
         format, engine, encoding,
         copy, unflatten, pipe, save, render, view,
-        _repr_mimebundle_
+        _repr_mimebundle_,
         from_file
 
 
