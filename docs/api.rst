@@ -35,6 +35,7 @@ Graph
         node, edge, edges, attr, subgraph,
         format, engine, encoding,
         clear, copy, unflatten, pipe, save, render, view,
+        _repr_mimebundle_,
         directed
 
 
@@ -49,6 +50,7 @@ Digraph
         node, edge, edges, attr, subgraph,
         format, engine, encoding,
         clear, copy, unflatten, pipe, save, render, view,
+        _repr_mimebundle_,
         directed
 
 
@@ -61,6 +63,7 @@ Source
         source,
         format, engine, encoding,
         copy, unflatten, pipe, save, render, view,
+        _repr_mimebundle_
         from_file
 
 

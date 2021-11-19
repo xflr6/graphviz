@@ -84,17 +84,13 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                 of the rendering ``dot`` subprocess is non-zero.
 
         Example:
-            >>> import graphviz
-
-            >>> source = 'graph { spam }'
-
             >>> doctest_mark_exe()
+            >>> import graphviz
+            >>> source = 'graph { spam }'
             >>> graphviz.Source(source, format='svg').pipe()[:14]
             b'<?xml version='
-
             >>> graphviz.Source(source, format='svg').pipe(encoding='ascii')[:14]
             '<?xml version='
-
             >>> graphviz.Source(source, format='svg').pipe(encoding='utf-8')[:14]
             '<?xml version='
         """

@@ -48,18 +48,19 @@ class JupyterIntegration(piping.Pipe):
                           **_) -> typing.Dict[str, typing.Union[bytes, str]]:
         """Return the rendered graph as mimebundle.
 
-        >>> doctest_mark_exe()
-        >>> import graphviz
-        >>> dot = graphviz.Graph()
-        >>> dot._repr_mimebundle_()  # doctest: +ELLIPSIS
-        {'image/svg+xml': '<?xml version=...
-        >>> dot._repr_mimebundle_(include=['image/png'])  # doctest: +ELLIPSIS
-        {'image/png': b'\x89PNG...
-        >>> dot._repr_mimebundle_(include=[])
-        {}
-        >>> dot._repr_mimebundle_(include=['image/svg+xml', 'image/jpeg'],
-        ...                       exclude=['image/svg+xml'])  # doctest: +ELLIPSIS
-        {'image/jpeg': b'\xff...
+        Example:
+            >>> doctest_mark_exe()
+            >>> import graphviz
+            >>> dot = graphviz.Graph()
+            >>> dot._repr_mimebundle_()  # doctest: +ELLIPSIS
+            {'image/svg+xml': '<?xml version=...
+            >>> dot._repr_mimebundle_(include=['image/png'])  # doctest: +ELLIPSIS
+            {'image/png': b'\x89PNG...
+            >>> dot._repr_mimebundle_(include=[])
+            {}
+            >>> dot._repr_mimebundle_(include=['image/svg+xml', 'image/jpeg'],
+            ...                       exclude=['image/svg+xml'])  # doctest: +ELLIPSIS
+            {'image/jpeg': b'\xff...
 
         https://ipython.readthedocs.io/en/stable/config/integrating.html#MyObject._repr_mimebundle
         https://nbviewer.org/github/ipython/ipython/blob/master/examples/IPython%20Kernel/Custom%20Display%20Logic.ipynb
