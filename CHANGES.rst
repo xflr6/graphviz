@@ -5,7 +5,11 @@ Changelog
 Version 0.19 (in development)
 -----------------------------
 
-Replace ``_repr_svg_`` with ``_repr_mimebundle_`` to support svg, png and jpeg.
+Add ``graphviz.set_jupyter_format()`` to set the output format
+used by the jupyter visualization of ``graphviz.Graph``, ``graphviz.Digraph``,
+and ``graphviz.Source`` (supported formats: ``'svg'``, ``'png'``,```'jpeg'``).
+Replace ``_repr_svg_()`` with ``_repr_mimebundle_(include, exclude)``
+returning a mimebundle ``{'image/svg+xml', '<?xml version=...'}`` by default.
 
 
 Version 0.18.2

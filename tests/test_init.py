@@ -6,7 +6,9 @@ DEFAULT_ENGINE = 'dot'
 
 DEFAULT_FORMAT = 'pdf'
 
-DEFAULT_JUPYTER_REPRESENTATION = 'image/svg+xml'
+DEFAULT_JUPYTER_FORMAT = 'svg'
+
+DEFAULT_JUPYTER_MIMETYPE = 'image/svg+xml'
 
 
 def test_set_default_engine_invalid():
@@ -19,16 +21,12 @@ def test_set_default_format_invalid():
         graphviz.set_default_format('nonformat')
 
 
-def test_set_default_jupyter_representation_invalid():
-    with pytest.raises(ValueError, match=r'unknown jupyter_representation'):
-        graphviz.set_default_jupyter_representation('nonformat')
-
-
 def test_set_default_engine(monkeypatch, *, engine='neato', explicit_engine='sfdp'):
     assert len({DEFAULT_ENGINE, engine, explicit_engine}) == 3
 
     from graphviz.parameters import Parameters
     assert Parameters._engine == DEFAULT_ENGINE
+
     # isolate the test
     monkeypatch.setattr('graphviz.parameters.Parameters._engine', DEFAULT_ENGINE)
     assert Parameters._engine == DEFAULT_ENGINE
@@ -65,6 +63,7 @@ def test_set_default_format(monkeypatch, *, format='png', explicit_format='jpeg'
 
     from graphviz.parameters import Parameters
     assert Parameters._format == DEFAULT_FORMAT
+
     # isolate the test
     monkeypatch.setattr('graphviz.parameters.Parameters._format', DEFAULT_FORMAT)
     assert Parameters._format == DEFAULT_FORMAT
@@ -96,50 +95,35 @@ def test_set_default_format(monkeypatch, *, format='png', explicit_format='jpeg'
     assert g4.format == explicit_format
 
 
-def test_set_default_jupyter_representation(
-        monkeypatch,
-        *,
-        jupyter_representation='image/png',
-        explicit_jupyter_representation='image/jpeg'):
-    assert len({DEFAULT_JUPYTER_REPRESENTATION,
-                jupyter_representation,
-                explicit_jupyter_representation}) == 3
+def test_set_jupyter_format(monkeypatch, *, jupyter_format='jpg',
+                            expected_old_format='svg',
+                            expected_normalized_format='jpeg',
+                            expected_mimetype='image/jpeg'):
+    assert len({DEFAULT_JUPYTER_MIMETYPE, jupyter_format}) == 2
 
-    from graphviz.jupyter_integration import JupyterIntegration
-    assert JupyterIntegration._jupyter_representation == \
-           DEFAULT_JUPYTER_REPRESENTATION
+    from graphviz import jupyter_integration
+    assert (jupyter_integration.JupyterIntegration._jupyter_mimetype
+            == DEFAULT_JUPYTER_MIMETYPE)
+
     # isolate the test
-    monkeypatch.setattr(
-        'graphviz.jupyter_integration.JupyterIntegration._jupyter_representation',
-        DEFAULT_JUPYTER_REPRESENTATION)
-    assert JupyterIntegration._jupyter_representation == \
-           DEFAULT_JUPYTER_REPRESENTATION
+    monkeypatch.setattr('graphviz.jupyter_integration.JupyterIntegration._jupyter_mimetype',
+                        DEFAULT_JUPYTER_MIMETYPE)
+    assert (jupyter_integration.JupyterIntegration._jupyter_mimetype
+            == DEFAULT_JUPYTER_MIMETYPE)
 
     g1 = graphviz.Graph()
-    assert g1._jupyter_representation == DEFAULT_JUPYTER_REPRESENTATION
+    assert g1._jupyter_mimetype == DEFAULT_JUPYTER_MIMETYPE
+
+    old = graphviz.set_jupyter_format(jupyter_format)
+    assert old == jupyter_integration.DEFAULT_JUPYTER_FORMAT
+
+    assert g1._jupyter_mimetype == expected_mimetype
 
     g2 = graphviz.Graph()
-    g2.jupyter_representation = explicit_jupyter_representation
-    assert g2.jupyter_representation == explicit_jupyter_representation
+    assert g2._jupyter_mimetype == expected_mimetype
 
-    old = graphviz.set_default_jupyter_representation(jupyter_representation)
-    assert old == DEFAULT_JUPYTER_REPRESENTATION
+    old = graphviz.set_jupyter_format(DEFAULT_JUPYTER_FORMAT)
+    assert old == expected_normalized_format
 
-    assert g1.jupyter_representation == jupyter_representation
-    assert g2.jupyter_representation == explicit_jupyter_representation
-
-    g3 = graphviz.Graph()
-    assert g3.jupyter_representation == jupyter_representation
-
-    g4 = graphviz.Graph()
-    g4.jupyter_representation = explicit_jupyter_representation
-    assert g4.jupyter_representation == explicit_jupyter_representation
-
-    old = graphviz.set_default_jupyter_representation(
-        DEFAULT_JUPYTER_REPRESENTATION)
-    assert old == jupyter_representation
-
-    assert g1.jupyter_representation == DEFAULT_JUPYTER_REPRESENTATION
-    assert g2.jupyter_representation == explicit_jupyter_representation
-    assert g3.jupyter_representation == DEFAULT_JUPYTER_REPRESENTATION
-    assert g4.jupyter_representation == explicit_jupyter_representation
+    assert g1._jupyter_mimetype == DEFAULT_JUPYTER_MIMETYPE
+    assert g2._jupyter_mimetype == DEFAULT_JUPYTER_MIMETYPE

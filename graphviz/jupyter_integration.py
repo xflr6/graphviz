@@ -1,86 +1,81 @@
 """Display rendered graph as SVG in Jupyter Notebooks and QtConsole."""
-import typing
-from . import piping
 
-__all__ = ['JUPYTER_REPRESENTATIONS',
-           'verify_jupyter_representation',
+import typing
+
+__all__ = ['JUPYTER_FORMATS', 'DEFAULT_JUPYTER_FORMAT',
+           'get_jupyter_format_mimetype',
            'JupyterIntegration']
 
-JUPYTER_REPRESENTATIONS = {
-    'image/svg+xml': '_repr_image_svg_xml',
-    'image/png': '_repr_image_png',
-    'image/jpeg': '_repr_image_jpeg',
+_IMAGE_JPEG = 'image/jpeg'
 
-    # The following does not work yet. Not clear why, because the documentation
-    # has only few information about them.
-    'application/json': None,  # ToDo: What does jupyter expect?
-    'application/pdf': None,  # ToDo: Does Jupyter only accept file path?
+JUPYTER_FORMATS = {'jpeg': _IMAGE_JPEG,
+                   'jpg': _IMAGE_JPEG,
+                   'png': 'image/png',
+                   'svg': 'image/svg+xml'}
 
-    # No reasonable representation
-    'text/plain': None,
-    'text/latex': None,
-    'text/html': None,
-    'application/javascript': None,
-    'text/markdown': None,
-}
+DEFAULT_JUPYTER_FORMAT = 'svg'
 
-DEFAULT_JUPYTER_REPRESENTATION = 'image/svg+xml'
-
-REQUIRED = True
+MIME_TYPES = {'image/jpeg': '_repr_image_jpeg',
+              'image/png': '_repr_image_png',
+              'image/svg+xml': '_repr_image_svg_xml'}
 
 
-def verify_jupyter_representation(jupyter_representation: str,
-                                  *,
-                                  required: bool = REQUIRED) -> None:
-    if jupyter_representation is None:
-        if required:
-            raise ValueError('missing jupyter_representation')
-    elif jupyter_representation not in JUPYTER_REPRESENTATIONS:
-        raise ValueError(
-            f'unknown jupyter_representation: {jupyter_representation!r}')
+def get_jupyter_format_mimetype(jupyter_format: str) -> str:
+    try:
+        return JUPYTER_FORMATS[jupyter_format]
+    except KeyError:
+        raise ValueError(f'unknown jupyter_format: {jupyter_format!r}')
 
 
-class JupyterIntegration(piping.Pipe):
+def get_jupyter_mimetype_format(mimetype: str) -> typing.Optional[str]:
+    if mimetype not in MIME_TYPES:
+        raise ValueError(r'unsupported mimetype: {mimetype!r}')
+    for format, jupyter_mimetype in JUPYTER_FORMATS.items():
+        if jupyter_mimetype == mimetype:
+            return format
+
+
+class JupyterIntegration:
     """Display rendered graph as SVG in Jupyter Notebooks and QtConsole."""
 
-    _jupyter_representation = DEFAULT_JUPYTER_REPRESENTATION
-
-    _verify_jupyter_representation = staticmethod(verify_jupyter_representation)
-
-    @property
-    def jupyter_representation(self) -> str:
-        """The output format used for rendering
-            (``'pdf'``, ``'png'``, ...)."""
-        return self._jupyter_representation
-
-    @jupyter_representation.setter
-    def jupyter_representation(self, jupyter_representation: str) -> None:
-        self._verify_jupyter_representation(jupyter_representation)
-        self._jupyter_representation = jupyter_representation
+    _jupyter_mimetype = get_jupyter_format_mimetype(DEFAULT_JUPYTER_FORMAT)
 
     def _repr_mimebundle_(self,
-                          include: typing.Optional[list] = None,
-                          exclude: typing.Optional[list] = None,
-                          **kwargs) -> dict:
-        # The documentation of this function is in the following notebook:
-        #     "examples/IPython Kernel/Custom Display Logic.ipynb"
-        # https://nbviewer.org/github/ipython/ipython/blob/master/examples/IPython%20Kernel/Custom%20Display%20Logic.ipynb
-        # from IPython git repository. At the moment the readthedocs
-        # documentation of IPython only mention _repr_mimebundle_ but details
-        # are missing.
-        del kwargs
-        reprs = set(include) if include else {self._jupyter_representation}
-        reprs -= exclude or set()
+                          include: typing.Optional[typing.Iterable[str]] = None,
+                          exclude: typing.Optional[typing.Iterable[str]] = None,
+                          **_) -> typing.Dict[str, typing.Union[bytes, str]]:
+        """Return the rendered graph as mimebundle.
 
-        return {mime: getattr(self, method_name)()
-                for mime, method_name in JUPYTER_REPRESENTATIONS.items()
-                if method_name is not None and mime in reprs}
+        >>> doctest_mark_exe()
+        >>> import graphviz
+        >>> dot = graphviz.Graph()
+        >>> dot._repr_mimebundle_()  # doctest: +ELLIPSIS
+        {'image/svg+xml': '<?xml version=...
+        >>> dot._repr_mimebundle_(include=['image/png'])  # doctest: +ELLIPSIS
+        {'image/png': b'\x89PNG...
+        >>> dot._repr_mimebundle_(include=[])
+        {}
+        >>> dot._repr_mimebundle_(include=['image/svg+xml', 'image/jpeg'],
+        ...                       exclude=['image/svg+xml'])  # doctest: +ELLIPSIS
+        {'image/jpeg': b'\xff...
 
-    def _repr_image_svg_xml(self):
-        return self.pipe(format='svg', encoding=self._encoding)
+        https://ipython.readthedocs.io/en/stable/config/integrating.html#MyObject._repr_mimebundle
+        https://nbviewer.org/github/ipython/ipython/blob/master/examples/IPython%20Kernel/Custom%20Display%20Logic.ipynb
+        """
+        include = set(include) if include is not None else {self._jupyter_mimetype}
+        include -= set(exclude or [])
+        return {mimetype: getattr(self, method_name)()
+                for mimetype, method_name in MIME_TYPES.items()
+                if mimetype in include and hasattr(self, method_name)}
 
-    def _repr_image_png(self):
+    def _repr_image_jpeg(self) -> bytes:
+        """Return the rendered graph as JPEG bytes."""
+        return self.pipe(format='jpeg')
+
+    def _repr_image_png(self) -> bytes:
+        """Return the rendered graph as PNG bytes."""
         return self.pipe(format='png')
 
-    def _repr_image_jpeg(self):
-        return self.pipe(format='jpeg')
+    def _repr_image_svg_xml(self) -> str:
+        """Return the rendered graph as SVG string."""
+        return self.pipe(format='svg', encoding=self._encoding)

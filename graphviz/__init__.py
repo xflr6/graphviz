@@ -42,7 +42,7 @@ __all__ = ['ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
            'render', 'pipe', 'pipe_string', 'pipe_lines', 'pipe_lines_string',
            'unflatten', 'version', 'view',
            'RequiredArgumentError', 'ExecutableNotFound',
-           'set_default_engine', 'set_default_format']
+           'set_default_engine', 'set_default_format', 'set_jupyter_format']
 
 __title__ = 'graphviz'
 __version__ = '0.19.dev0'
@@ -103,14 +103,15 @@ def set_default_format(format: str) -> str:
     return old_default_format
 
 
-def set_default_jupyter_representation(jupyter_representation: str) -> str:
-    """Change the default jupyter_representation, return the old default value.
-    """
+def set_jupyter_format(jupyter_format: str) -> str:
+    """Change the default mimetype format for ``_repr_mimebundle_(include, exclude)``
+        and return the old value."""
     from . import jupyter_integration
 
-    jupyter_integration.verify_jupyter_representation(jupyter_representation)
+    mimetype = jupyter_integration.get_jupyter_format_mimetype(jupyter_format)
 
-    old = jupyter_integration.JupyterIntegration._jupyter_representation
-    jupyter_integration.JupyterIntegration._jupyter_representation = \
-        jupyter_representation
-    return old
+    old_mimetype = jupyter_integration.JupyterIntegration._jupyter_mimetype
+    old_format = jupyter_integration.get_jupyter_mimetype_format(old_mimetype)
+
+    jupyter_integration.JupyterIntegration._jupyter_mimetype = mimetype
+    return old_format
