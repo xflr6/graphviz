@@ -30,12 +30,14 @@ from .backend import (DOT_BINARY, UNFLATTEN_BINARY,
                       unflatten, version, view,
                       RequiredArgumentError, ExecutableNotFound)
 from .graphs import Graph, Digraph
+from .jupyter_integration import SUPPORTED_JUPYTER_FORMATS
 from .parameters import ENGINES, FORMATS, RENDERERS, FORMATTERS
 from .quoting import escape, nohtml
 from .sources import Source
 
 __all__ = ['ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
            'DOT_BINARY', 'UNFLATTEN_BINARY',
+           'SUPPORTED_JUPYTER_FORMATS',
            'Graph', 'Digraph',
            'Source',
            'escape', 'nohtml',
@@ -65,6 +67,10 @@ RENDERERS = RENDERERS
 #: :class:`set` of known output formatters for rendering
 #: (``'cairo'``, ``'gd'``, ...)
 FORMATTERS = FORMATTERS
+
+#: :class:`set` of supported formats for ``Ipython.display``
+#: (``'svg'``, ``'png'``, ...)
+SUPPORTED_JUPYTER_FORMATS = SUPPORTED_JUPYTER_FORMATS
 
 #: :class:`pathlib.Path` of rendering command
 #: (``Path('dot')``)

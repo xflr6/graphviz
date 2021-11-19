@@ -4,7 +4,8 @@ import typing
 
 from . import piping
 
-__all__ = ['JUPYTER_FORMATS', 'DEFAULT_JUPYTER_FORMAT',
+__all__ = ['JUPYTER_FORMATS',
+           'SUPPORTED_JUPYTER_FORMATS', 'DEFAULT_JUPYTER_FORMAT',
            'get_jupyter_format_mimetype',
            'JupyterIntegration']
 
@@ -15,7 +16,9 @@ JUPYTER_FORMATS = {'jpeg': _IMAGE_JPEG,
                    'png': 'image/png',
                    'svg': 'image/svg+xml'}
 
-DEFAULT_JUPYTER_FORMAT = 'svg'
+SUPPORTED_JUPYTER_FORMATS = set(JUPYTER_FORMATS)
+
+DEFAULT_JUPYTER_FORMAT = next(_ for _ in SUPPORTED_JUPYTER_FORMATS if _ == 'svg')
 
 MIME_TYPES = {'image/jpeg': '_repr_image_jpeg',
               'image/png': '_repr_image_png',

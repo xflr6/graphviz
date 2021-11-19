@@ -113,6 +113,11 @@ http://www.graphviz.org/doc/info/output.html, and ``dot -T:`` output):
 .. autodata:: graphviz.FORMATTERS
    :annotation:
 
+Jupyter display formats:
+
+.. autodata:: graphviz.SUPPORTED_JUPYTER_FORMATS
+   :annotation:
+
 Names of upstream binaries:
 
 .. autodata:: graphviz.DOT_BINARY
