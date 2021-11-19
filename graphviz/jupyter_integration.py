@@ -2,6 +2,8 @@
 
 import typing
 
+from . import piping
+
 __all__ = ['JUPYTER_FORMATS', 'DEFAULT_JUPYTER_FORMAT',
            'get_jupyter_format_mimetype',
            'JupyterIntegration']
@@ -35,7 +37,7 @@ def get_jupyter_mimetype_format(mimetype: str) -> typing.Optional[str]:
             return format
 
 
-class JupyterIntegration:
+class JupyterIntegration(piping.Pipe):
     """Display rendered graph as SVG in Jupyter Notebooks and QtConsole."""
 
     _jupyter_mimetype = get_jupyter_format_mimetype(DEFAULT_JUPYTER_FORMAT)
