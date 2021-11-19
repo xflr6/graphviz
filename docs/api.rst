@@ -208,7 +208,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      graphviz.quoting.Quote
      |      graphviz.rendering.Render
      |      graphviz.saving.Save
-     |      graphviz.jupyter_integration.JupyterSvgIntegration
+     |      graphviz.jupyter_integration.JupyterIntegration
      |      graphviz.piping.Pipe
      |      graphviz.unflattening.Unflatten
      |      graphviz.encoding.Encoding
@@ -698,7 +698,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      graphviz.quoting.Quote
      |      graphviz.rendering.Render
      |      graphviz.saving.Save
-     |      graphviz.jupyter_integration.JupyterSvgIntegration
+     |      graphviz.jupyter_integration.JupyterIntegration
      |      graphviz.piping.Pipe
      |      graphviz.unflattening.Unflatten
      |      graphviz.encoding.Encoding
@@ -1143,7 +1143,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
     <BLANKLINE>
     class Source(graphviz.rendering.Render,
                  graphviz.saving.Save,
-                 graphviz.jupyter_integration.JupyterSvgIntegration,
+                 graphviz.jupyter_integration.JupyterIntegration,
                  graphviz.piping.Pipe,
                  graphviz.unflattening.Unflatten)
      |  Source(source: str,
@@ -1175,7 +1175,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      Source
      |      graphviz.rendering.Render
      |      graphviz.saving.Save
-     |      graphviz.jupyter_integration.JupyterSvgIntegration
+     |      graphviz.jupyter_integration.JupyterIntegration
      |      graphviz.piping.Pipe
      |      graphviz.unflattening.Unflatten
      |      graphviz.encoding.Encoding
