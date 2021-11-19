@@ -45,7 +45,7 @@ class Unflatten(encoding.Encoding, base.Base, backend.Unflatten):
 
         out = self._unflatten(self.source,
                               stagger=stagger, fanout=fanout, chain=chain,
-                              encoding=self._encoding)
+                              encoding=self.encoding)
 
         kwargs = self._copy_kwargs()
         return sources.Source(out,

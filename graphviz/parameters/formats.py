@@ -60,7 +60,7 @@ def verify_format(format: str, *, required: bool = REQUIRED) -> None:
 class Format(base.ParameterBase):
     """Rendering format parameter with ``'pdf'`` default."""
 
-    _format = DEFAULT_FORMAT
+    _format: str = DEFAULT_FORMAT
 
     _verify_format = staticmethod(verify_format)
 

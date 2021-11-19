@@ -28,7 +28,7 @@ def verify_formatter(formatter: typing.Optional[str], *,
 class Formatter(base.ParameterBase):
     """Rendering engine parameter (no default)."""
 
-    _formatter = None
+    _formatter: typing.Optional[str] = None
 
     _verify_formatter = staticmethod(verify_formatter)
 

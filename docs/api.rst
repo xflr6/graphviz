@@ -1442,6 +1442,11 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      The encoding for the saved source file.
      |
      |  ----------------------------------------------------------------------
+     |  Data and other attributes inherited from graphviz.encoding.Encoding:
+     |
+     |  __annotations__ = {'_encoding': <class 'str'>}
+     |
+     |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.base.Base:
      |
      |  __str__(self) -> str

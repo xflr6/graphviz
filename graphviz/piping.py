@@ -44,7 +44,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
              formatter: typing.Optional[str] = ...,
              quiet: bool = ..., *,
              engine: typing.Optional[str] = ...,
-             encoding: typing.Optional[str] = ...) -> typing.Union[bytes, str]:
+             encoding: typing.Optional[str]) -> typing.Union[bytes, str]:
         """Return bytes or string depending on encoding argument."""
 
     def pipe(self,
@@ -104,9 +104,9 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
         args.append(iter(self))
 
         if encoding is not None:
-            if codecs.lookup(encoding) is codecs.lookup(self._encoding):
+            if codecs.lookup(encoding) is codecs.lookup(self.encoding):
                 # common case: both stdin and stdout need the same encoding
                 return self._pipe_lines_string(*args, encoding=encoding, **kwargs)
-            raw = self._pipe_lines(*args, input_encoding=self._encoding, **kwargs)
+            raw = self._pipe_lines(*args, input_encoding=self.encoding, **kwargs)
             return raw.decode(encoding)
-        return self._pipe_lines(*args, input_encoding=self._encoding, **kwargs)
+        return self._pipe_lines(*args, input_encoding=self.encoding, **kwargs)

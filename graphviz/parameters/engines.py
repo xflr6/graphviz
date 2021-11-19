@@ -31,7 +31,7 @@ def verify_engine(engine: str, *, required: bool = REQUIRED) -> None:
 class Engine(base.ParameterBase):
     """Rendering engine parameter with ``'dot''`` default."""
 
-    _engine = DEFAULT_ENGINE
+    _engine: str = DEFAULT_ENGINE
 
     _verify_engine = staticmethod(verify_engine)
 

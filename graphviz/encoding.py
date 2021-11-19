@@ -15,7 +15,7 @@ DEFAULT_ENCODING = 'utf-8'
 class Encoding(copying.CopyBase):
     """Encoding used for input and output with ``'utf-8'`` default."""
 
-    _encoding = DEFAULT_ENCODING
+    _encoding: str = DEFAULT_ENCODING
 
     def __init__(self, *, encoding: typing.Optional[str] = DEFAULT_ENCODING,
                  **kwargs) -> None:

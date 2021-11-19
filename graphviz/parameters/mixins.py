@@ -22,22 +22,22 @@ class Parameters(engines.Engine, formats.Format,
                         verify: bool = False,
                         **kwargs):
         if engine is None:
-            engine = self._engine
+            engine = self.engine
         elif verify:
             self._verify_engine(engine)
 
         if format is None:
-            format = self._format
+            format = self.format
         elif verify:
             self._verify_format(format)
 
         if renderer is None:
-            renderer = self._renderer
+            renderer = self.renderer
         elif verify:
             self._verify_renderer(renderer)
 
         if formatter is None:
-            formatter = self._formatter
+            formatter = self.formatter
         elif verify:
             self._verify_formatter(formatter)
 
