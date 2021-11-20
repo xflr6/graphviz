@@ -10,7 +10,7 @@ used by the jupyter visualization of ``graphviz.Graph``, ``graphviz.Digraph``,
 and ``graphviz.Source`` (supported formats: ``'svg'``, ``'png'``, ``'jpeg'``).
 Replace ``_repr_svg_()`` internally with ``_repr_mimebundle_(include, exclude)``
 returning a mimebundle ``{'image/svg+xml', '<?xml version=...'}`` by default.
-Pull request #150 courtesy Christoph Boeddeker.
+PR `#150 <https://github.com/xflr6/graphviz/pull/150>`_ Christoph Boeddeker.
 
 
 Version 0.18.2
@@ -163,15 +163,18 @@ Re-render most documentation graphs with Graphviz 2.44.1.
 Version 0.15
 ------------
 
-``Graph`` and ``Digraph`` instances created via the context-manager returned
-by ``subgraph()`` now (re)use ``directory``, ``format``, ``engine``, and
-``encoding`` from the parent instead of using defaults (behavioral change).
-Note that these attributes are only relevant when rendering the
-subgraph independently (i.e. as a stand-alone graph) from within the
-``with``-block, which was previously underdocumented (PR BMaxV). To reflect that
-the DOT language does not allow subgraph statements to specify ``strict``
-(i.e. no way to override the setting of the containing graph), instances
-created via the context-manager are now ``strict=None`` instead of ``False``
+``Graph`` and ``Digraph`` instances created via the context-manager
+returned by ``subgraph()`` now (re)use
+``directory``, ``format``, ``engine``, and ``encoding`` from the parent
+instead of using defaults (behavioral change).
+Note that these attributes are only relevant
+when rendering the subgraph independently (i.e. as a stand-alone graph)
+from within the ``with``-block, which was previously underdocumented.
+PR `#116 <https://github.com/xflr6/graphviz/pull/116>`_ BMaxV.
+To reflect that the DOT language does not allow subgraph statements
+to specify ``strict``
+(i.e. no way to override the setting of the containing graph),
+instances created via the context-manager are now ``strict=None`` instead of ``False``
 (so they continue to render stand-alone as non-strict by default).
 
 Drop Python 3.5 support and tag Python 3.9 support.
@@ -189,9 +192,9 @@ format introduced with ``2.44.2`` (``version()`` is needed to run the tests).
 Version 0.14.1
 --------------
 
-Document the colon-separated ``node[:port[:compass]]`` format used for ``tail``
-and ``head`` points in the ``edge()``- and ``edges()``-methods (PR Michał
-Góral).
+Document the colon-separated ``node[:port[:compass]]`` format used for
+``tail`` and ``head`` points in the ``edge()``- and ``edges()``-methods.
+PR `#101 <https://github.com/xflr6/graphviz/pull/101>`_ Michał Góral.
 
 
 Version 0.14
