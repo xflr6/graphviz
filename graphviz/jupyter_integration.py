@@ -25,6 +25,8 @@ MIME_TYPES = {'image/jpeg': '_repr_image_jpeg',
               'image/png': '_repr_image_png',
               'image/svg+xml': '_repr_image_svg_xml'}
 
+assert MIME_TYPES.keys() == set(JUPYTER_FORMATS.values())
+
 
 def get_jupyter_format_mimetype(jupyter_format: str) -> str:
     try:
