@@ -14,6 +14,8 @@ PR `#150 <https://github.com/xflr6/graphviz/pull/150>`_ Christoph Boeddeker.
 
 Extend and improve documentation.
 
+Add ``--only-exe`` flag to ``run-tests.py`` (overrides ``--skip-exe``).
+
 
 Version 0.18.2
 --------------
