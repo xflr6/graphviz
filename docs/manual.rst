@@ -182,8 +182,8 @@ Jupyter notebooks
 :meth:`~.Graph._repr_mimebundle_`-method so they can be rendered and displayed
 directly inside a `Jupyter notebook`_. For an example, check the
 ``examples/graphviz-notebook.ipynb`` file in the
-`source repository/distribution <graphviz-notebook.ipynb_>`_ (or the same
-rendered within nbviewer_).
+`source repository/distribution <graphviz-notebook.ipynb_>`_
+(or the same notebook in `nbviewer <graphviz-notebook.ipynb-nbviewer_>`_).
 
 This also allows direct displaying within the `Jupyter Qt Console`_ (e.g.
 `the one <spyderconsole_>`_ inside `Spyder IDE`_):
@@ -192,7 +192,10 @@ This also allows direct displaying within the `Jupyter Qt Console`_ (e.g.
     :align: center
 
 By default :meth:`~.Graph._repr_mimebundle_` uses ``'svg'`` format.
-Use the :func:`~.set_jupyter_format` to override.
+You can use the :func:`~.set_jupyter_format` to override the default format
+that is used for displaying in IPython/Jupyter.
+(`example <graphviz-jupyter-format.ipynb_>`_,
+`nbviewer <graphviz-jupyter-format.ipynb-nbviewer_>`_).
 
 .. hint::
 
@@ -719,7 +722,9 @@ cycles.
 .. _Jupyter notebook: https://jupyter.org
 .. _IPython.display: https://ipython.readthedocs.io/en/stable/api/generated/IPython.display.html#functions
 .. _graphviz-notebook.ipynb: https://github.com/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
-.. _nbviewer: https://nbviewer.org/github/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
+.. _graphviz-notebook.ipynb-nbviewer: https://nbviewer.org/github/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
+.. _graphviz-jupyter-format.ipynb: https://github.com/xflr6/graphviz/blob/master/examples/graphviz-jupyter-format.ipynb
+.. _graphviz-jupyter-format.ipynb-nbviewer: https://nbviewer.org/github/xflr6/graphviz/blob/master/examples/graphviz-jupyter-format.ipynb
 .. _Jupyter Qt Console: https://qtconsole.readthedocs.io
 .. _spyderconsole: https://docs.spyder-ide.org/ipythonconsole.html
 .. _Spyder IDE: https://github.com/spyder-ide/spyder
