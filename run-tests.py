@@ -9,6 +9,7 @@ import sys
 import pytest
 
 ARGS = [#'--skip-exe',
+        #'--only-exe',
         #'--collect-only',
         #'--verbose',
         #'--pdb',

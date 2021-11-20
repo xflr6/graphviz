@@ -49,10 +49,11 @@ def _make_exe_marker(item, only: bool = False):
                   for m in item.iter_markers(name='exe')]
 
 
-    if only and not exe_values:
+    if only:
+        if exe_values:
+            return None
         return pytest.mark.skip(reason=f'skipped by {ONLY_EXE} flag')
-
-    if exe_values:
+    elif exe_values:
         assert len(exe_values) == 1
         kwargs, = exe_values
 
