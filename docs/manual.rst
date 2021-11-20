@@ -62,11 +62,11 @@ Create a graph by instantiating a new :class:`.Graph` or
 
 .. code:: python
 
-    >>> import graphviz
+    >>> import graphviz  # doctest: +NO_EXE
 
-    >>> dot = graphviz.Digraph(comment='The Round Table')
+    >>> dot = graphviz.Digraph('round-table', comment='The Round Table', directory='doctest-output')
 
-    >>> dot  #doctest: +ELLIPSIS
+    >>> dot  # doctest: +ELLIPSIS
     <graphviz.graphs.Digraph object at 0x...>
 
 Their constructors allow to set the graph's :attr:`~.Graph.name`, the
@@ -78,7 +78,7 @@ Add nodes and edges to the graph object using its :meth:`~.Graph.node` and
 
 .. code:: python
 
-    >>> dot.node('A', 'King Arthur')
+    >>> dot.node('A', 'King Arthur')  # doctest: +NO_EXE
     >>> dot.node('B', 'Sir Bedevere the Wise')
     >>> dot.node('L', 'Sir Lancelot the Brave')
 
@@ -95,7 +95,7 @@ Check the generated source code:
 
 .. code:: python
 
-    >>> print(dot.source)  # doctest: +NORMALIZE_WHITESPACE
+    >>> print(dot.source)  # doctest: +NORMALIZE_WHITESPACE +NO_EXE
     // The Round Table
     digraph {
         A [label="King Arthur"]
@@ -112,8 +112,10 @@ default layout program (``dot``, see below for using `other layout commands
 
 .. code:: python
 
-    >>> dot.render('test-output/round-table.gv', view=True)  # doctest: +SKIP
-    'test-output/round-table.gv.pdf'
+    >>> doctest_mark_exe()
+
+    >>> dot.render('doctest-output/round-table.gv', view=True)  # doctest: +SKIP
+    'doctest-output/round-table.gv.pdf'
 
 .. image:: _static/round-table.svg
     :align: center
@@ -131,17 +133,19 @@ To use a different `output file format`_ than the default PDF, use the
 
 .. code:: python
 
-    >>> g = graphviz.Graph(format='png')
+    >>> g = graphviz.Graph(format='png')  # doctest: +NO_EXE
 
 You can also change the :attr:`~.Graph.format` attribute on an existing graph
 object:
 
 .. code:: python
 
+    >>> doctest_mark_exe()
+
     >>> dot.format = 'svg'
 
-    >>> dot.render()  # doctest: +SKIP
-    'test-output/round-table.gv.svg'
+    >>> dot.render().replace('\\', '/')
+    'doctest-output/round-table.gv.svg'
 
 
 Piped output
@@ -154,9 +158,11 @@ use the :meth:`~.Graph.pipe`-method of your :class:`.Graph` or
 
 .. code:: python
 
-    >>> h = graphviz.Graph('hello', format='svg')
+    >>> h = graphviz.Graph('hello', format='svg')  # doctest: +NO_EXE
 
     >>> h.edge('Hello', 'World')
+
+.. code:: python
 
     >>> doctest_mark_exe()
     >>> print(h.pipe().decode('utf-8'))  # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
@@ -214,7 +220,7 @@ graph, nodes, and edges.
 
 .. code:: python
 
-    >>> ps = graphviz.Digraph('pet-shop', node_attr={'shape': 'plaintext'})
+    >>> ps = graphviz.Digraph('pet-shop', node_attr={'shape': 'plaintext'})  # doctest: +NO_EXE
 
     >>> ps.node('parrot')
     >>> ps.node('dead')
@@ -224,7 +230,7 @@ After creation, they can be edited on the graph object:
 
 .. code:: python
 
-    >>> ps.graph_attr['rankdir'] = 'LR'
+    >>> ps.graph_attr['rankdir'] = 'LR'  # doctest: +NO_EXE
     >>> ps.edge_attr.update(arrowhead='vee', arrowsize='2')
 
     >>> print(ps.source)  # doctest: +NORMALIZE_WHITESPACE
@@ -252,7 +258,7 @@ with the target as first argument:
 
 .. code:: python
 
-    >>> ni = graphviz.Graph('ni')
+    >>> ni = graphviz.Graph('ni')  # doctest: +NO_EXE
 
     >>> ni.attr('node', shape='rarrow')
     >>> ni.node('1', 'Ni!')
@@ -271,7 +277,7 @@ key-value pairs targeting the current (sub-)graph (e.g. for ``rankdir``,
 
 .. code:: python
 
-    >>> ni.attr(rankdir='LR')
+    >>> ni.attr(rankdir='LR')  # doctest: +NO_EXE
 
     >>> ni.edges(['12', '23', '34', '45'])
 
@@ -313,7 +319,7 @@ colon-free ``name`` together with the wanted ``label``:
 
 .. code:: python
 
-    >>> cpp = graphviz.Digraph('C++')
+    >>> cpp = graphviz.Digraph('C++')  # doctest: +NO_EXE
     
     >>> cpp.node('A', 'std::string')
     >>> cpp.node('B', '"spam"')
@@ -344,7 +350,7 @@ instead (same solution as proposed for the stdlib :mod:`re` module):
 
 .. code:: python
 
-    >>> e = graphviz.Digraph('escapes')
+    >>> e = graphviz.Digraph('escapes')  # doctest: +NO_EXE
 
     >>> e.node('backslash', label=r'\\')
     >>> e.node('multi_line', label=r'centered\nleft\lright\r')
@@ -364,7 +370,7 @@ be rendered literally), use the :func:`.escape` function (cf. the
 
 .. code:: python
 
-    >>> bs = graphviz.Digraph()
+    >>> bs = graphviz.Digraph()  # doctest: +NO_EXE
 
     >>> bs.node(graphviz.escape('\\'))
 
@@ -390,7 +396,7 @@ automatically take care of quoting (and escaping quotes)
 
 .. code:: python
 
-    >>> q = graphviz.Digraph()
+    >>> q = graphviz.Digraph()  # doctest: +NO_EXE
 
     >>> q.edge('spam', 'eggs eggs')
     >>> q.edge('node', '"here\'s a quote"')
@@ -407,7 +413,7 @@ the engine as special **HTML string** that can be used for `HTML-like labels`_:
 
 .. code:: python
 
-    >>> h = graphviz.Graph('html_table')
+    >>> h = graphviz.Graph('html_table')  # doctest: +NO_EXE
 
     >>> h.node('tab', label='''<<TABLE>
     ...  <TR>
@@ -426,7 +432,7 @@ workaround was to add leading or trailing space, e.g. ``label=' <>'``):
 
 .. code:: python
 
-    >>> d = graphviz.Digraph('diamond', format='svg')
+    >>> d = graphviz.Digraph('diamond', format='svg')  # doctest: +NO_EXE
 
     >>> d.node('diamond', label=graphviz.nohtml('<>'))
 
@@ -456,7 +462,7 @@ First usage option, with ``graph`` as the only argument:
 
 .. code:: python
 
-    >>> p = graphviz.Graph(name='parent')
+    >>> p = graphviz.Graph(name='parent')  # doctest: +NO_EXE
     >>> p.edge('spam', 'eggs')
 
     >>> c = graphviz.Graph(name='child', node_attr={'shape': 'box'})
@@ -468,7 +474,7 @@ Second usage, with a ``with``-block (omitting the ``graph`` argument):
 
 .. code:: python
 
-    >>> p = graphviz.Graph(name='parent')
+    >>> p = graphviz.Graph(name='parent')  # doctest: +NO_EXE
     >>> p.edge('spam', 'eggs')
 
     >>> with p.subgraph(name='child', node_attr={'shape': 'box'}) as c:
@@ -478,7 +484,7 @@ Both produce the same result:
 
 .. code:: python
 
-    >>> print(p.source)  # doctest: +NORMALIZE_WHITESPACE
+    >>> print(p.source)  # doctest: +NORMALIZE_WHITESPACE +NO_EXE
     graph parent {
         spam -- eggs
         subgraph child {
@@ -502,11 +508,15 @@ Note that these attributes are only relevant when rendering the subgraph indepen
 
 .. code:: python
 
+    >>> import pytest
+    >>> pytest.xfail(reason='FIXME')
+    >>> doctest_mark_exe()
+
     >>> p = graphviz.Graph(name='parent')
 
     >>> with p.subgraph(name='child') as c:
     ...    c.edge('bacon', 'eggs')
-    ...    c.render()  # doctest: +SKIP
+    ...    c.render()
     'child.gv.pdf'
 
 
@@ -518,14 +528,14 @@ graph, use the :attr:`~.Graph.engine` argument when creating your graph.
 
 .. code:: python
 
-    >>> g = graphviz.Graph(engine='neato')
+    >>> g = graphviz.Graph(engine='neato')  # doctest: +NO_EXE
 
 You can also change the :attr:`~.Graph.engine` attribute of an existing
 instance:
 
 .. code:: python
 
-    >>> dot.engine = 'circo'
+    >>> dot.engine = 'circo'  # doctest: +NO_EXE
 
 
 Unflatten
@@ -537,7 +547,7 @@ the unflatten_ preprocessor (`PDF <unflatten_pdf_>`_), use the
 
 .. code:: python
 
-    >>> w = graphviz.Digraph('wide')
+    >>> w = graphviz.Digraph('wide')  # doctest: +NO_EXE
 
     >>> w.edges(('0', str(i)) for i in range(1, 10))
 
@@ -551,7 +561,7 @@ disconnected nodes.
 
 .. code:: python
 
-    >>> u = w.unflatten(stagger=3)
+    >>> u = w.unflatten(stagger=3)  # doctest: +NO_EXE
 
     >>> u.view()  # doctest: +SKIP
 
@@ -582,7 +592,7 @@ object. It holds the verbatim :class:`list` of lines to be written to the source
 
 .. code:: python
 
-    >>> rt = graphviz.Digraph(comment='The Round Table')
+    >>> rt = graphviz.Digraph(comment='The Round Table')  # doctest: +NO_EXE
 
     >>> rt.body.append('\t"King Arthur" -> {\n\t\t"Sir Bedevere", "Sir Lancelot"\n\t}\n')
     >>> rt.edge('Sir Bedevere', 'Sir Lancelot', constraint='false')
@@ -609,7 +619,7 @@ the higher-level interface of :class:`.Graph` or :class:`.Digraph`), create a
 
 .. code:: python
 
-    >>> src = graphviz.Source('digraph "the holy hand grenade" { rankdir=LR; 1 -> 2 -> 3 -> lob }')
+    >>> src = graphviz.Source('digraph "the holy hand grenade" { rankdir=LR; 1 -> 2 -> 3 -> lob }')  # doctest: +NO_EXE
 
     >>> src  #doctest: +ELLIPSIS
     <graphviz.sources.Source object at 0x...>
@@ -618,8 +628,13 @@ Use the :meth:`~.Source.render`-method to save and render it:
 
 .. code:: python
 
-    >>> src.render('test-output/holy-grenade.gv', view=True)  # doctest: +SKIP
-    'test-output/holy-grenade.gv.pdf'
+    >>> doctest_mark_exe()
+
+    >>> src.render('doctest-output/holy-grenade.gv').replace('\\', '/')
+    'doctest-output/holy-grenade.gv.pdf'
+
+    >>> src.render('doctest-output/holy-grenade.gv', view=True).replace('\\', '/')  # doctest: +SKIP
+    'doctest-output/holy-grenade.gv.pdf'
 
 .. image:: _static/holy-grenade.svg
     :align: center
@@ -638,8 +653,10 @@ you can use the :func:`graphviz.render` function.
 
 .. code:: python
 
-    >>> graphviz.render('dot', 'png', 'test-output/holy-grenade.gv')  # doctest: +SKIP
-    'test-output/holy-grenade.gv.png'
+    >>> doctest_mark_exe()
+
+    >>> graphviz.render('dot', 'png', 'doctest-output/holy-grenade.gv').replace('\\', '/')
+    'doctest-output/holy-grenade.gv.png'
 
 To directly display the graph of an existing DOT source file inside a 
 Jupyter `notebook <Jupyter notebook_>`_ or `Qt Console <Jupyter Qt Console_>`_,
@@ -678,9 +695,13 @@ incremental workflow (and also preserve its intermediate steps):
 
     >>> import tempfile
 
-    >>> g = graphviz.Graph()
+    >>> g = graphviz.Graph()  # doctest: +NO_EXE
 
     >>> g.node('spam')
+
+.. code:: python
+
+    >>> doctest_mark_exe()
 
     >>> g.view(tempfile.mktemp('.gv'))  # doctest: +SKIP
     'C:\\Users\\User\\AppData\\Local\\Temp\\tmp3aoie8d0.gv.pdf'

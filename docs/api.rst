@@ -206,7 +206,7 @@ To debug: remove ``+SKIP`` flags below and check output(s):
 
 .. code:: bash
 
-    $ ./run-tests.py docs --doctest-report none --doctest-continue-on-failure
+    $ ./run-tests.py docs --doctest-report none
 
 
 Graph

@@ -1,6 +1,6 @@
 r"""Assemble DOT source code objects.
 
->>> import graphviz
+>>> import graphviz  # doctest: +NO_EXE
 >>> dot = graphviz.Graph(comment='Mønti Pythøn ik den Hølie Grailen')
 
 >>> dot.node('Møøse')

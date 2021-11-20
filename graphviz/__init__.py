@@ -2,7 +2,7 @@
 
 """Assemble DOT source code and render it with Graphviz.
 
->>> import graphviz
+>>> import graphviz  # doctest: +NO_EXE
 >>> dot = graphviz.Digraph(comment='The Round Table')
 
 >>> dot.node('A', 'King Arthur')

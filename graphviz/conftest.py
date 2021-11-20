@@ -1,8 +1,25 @@
-"""pytest doctest command line options and fixtures."""
+"""pytest command line options and doctest namespace."""
 
-import pytest
+import doctest as _doctest
+from unittest import mock as _mock
+
+_NO_EXE = _doctest.register_optionflag('NO_EXE')
 
 SKIP_EXE = '--skip-exe'
+
+ONLY_EXE = '--only-exe'
+
+
+class _NoExeChecker(_doctest.OutputChecker):
+
+    def check_output(self, want, got, optionflags, *args, **kwargs) -> bool:
+        if optionflags & _NO_EXE:
+            return True
+        return super().check_output(want, got, optionflags, *args, **kwargs)
+
+
+_mock.patch.object(_doctest, 'OutputChecker', new=_NoExeChecker).start()
+import pytest  # noqa: E402
 
 
 def pytest_addoption(parser):  # pragma: no cover
@@ -16,6 +33,14 @@ def pytest_addoption(parser):  # pragma: no cover
     except ValueError as e:  # pragma: no cover
         assert SKIP_EXE in str(e), f'fails because {SKIP_EXE!r} is already added'
 
+    try:
+        parser.addoption(ONLY_EXE, action='store_true',
+                         help='Skip tests without pytest.mark.exe.'
+                              ' Overrides --skip-exe.'
+                              ' exe marks tests requiring backend.DOT_BINARY.')
+    except ValueError as e:  # pragma: no cover
+        assert ONLY_EXE in str(e), f'fails because {ONLY_EXE!r} is already added'
+
 
 @pytest.fixture(autouse=True)  # pragma: no cover
 def doctests(pytestconfig, doctest_namespace):
@@ -23,7 +48,8 @@ def doctests(pytestconfig, doctest_namespace):
         return None
 
     if pytestconfig.getoption(SKIP_EXE):
-        def doctest_mark_exe(*, xfail: bool = False, **kwargs):  # noqa: F811
-            return pytest.xfail(**kwargs) if xfail else pytest.skip(**kwargs)
+        def doctest_mark_exe(*, reason=SKIP_EXE, xfail: bool = False, **kwargs):  # noqa: F811
+            return (pytest.xfail(reason=reason, **kwargs) if xfail
+                    else pytest.skip(reason, **kwargs))
 
-    doctest_namespace['doctest_mark_exe'] = doctest_mark_exe
+    doctest_namespace.update(doctest_mark_exe=doctest_mark_exe)

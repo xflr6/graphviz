@@ -20,6 +20,7 @@ Thumbs.db
 
 .ipynb_checkpoints/
 
+/doctest-output/
 /test-output/
 
 /examples/*.gv

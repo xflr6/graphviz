@@ -35,7 +35,7 @@ def quote(identifier: str,
           escape_unescaped_quotes=ESCAPE_UNESCAPED_QUOTES) -> str:
     r"""Return DOT identifier from string, quote if needed.
 
-    >>> quote('')
+    >>> quote('')  # doctest: +NO_EXE
     '""'
 
     >>> quote('spam')
@@ -78,7 +78,7 @@ def quote(identifier: str,
 def quote_edge(identifier: str) -> str:
     """Return DOT edge statement node_id from string, quote if needed.
 
-    >>> quote_edge('spam')
+    >>> quote_edge('spam')  # doctest: +NO_EXE
     'spam'
 
     >>> quote_edge('spam spam:eggs eggs')
@@ -101,7 +101,7 @@ def a_list(label: typing.Optional[str] = None,
            kwargs=None, attributes=None) -> str:
     """Return assembled DOT a_list string.
 
-    >>> a_list('spam', {'spam': None, 'ham': 'ham ham', 'eggs': ''})
+    >>> a_list('spam', {'spam': None, 'ham': 'ham ham', 'eggs': ''})  # doctest: +NO_EXE
     'label=spam eggs="" ham="ham ham"'
     """
     result = [f'label={quote(label)}'] if label is not None else []
@@ -125,7 +125,7 @@ def attr_list(label: typing.Optional[str] = None,
     Sorts ``kwargs`` and ``attributes`` if they are plain dicts
     (to avoid unpredictable order from hash randomization in Python < 3.7).
 
-    >>> attr_list()
+    >>> attr_list()  # doctest: +NO_EXE
     ''
 
     >>> attr_list('spam spam', kwargs={'eggs': 'eggs', 'ham': 'ham ham'})
@@ -166,7 +166,7 @@ def escape(s: str) -> 'NoHtml':
         TypeError: If ``s`` is not a ``str``.
 
     Example:
-        >>> import graphviz
+        >>> import graphviz  # doctest: +NO_EXE
         >>> print(graphviz.escape(r'\l'))
         \\l
     """
@@ -193,7 +193,7 @@ def nohtml(s: str) -> NoHtml:
         TypeError: If ``s`` is not a ``str``.
 
     Example:
-        >>> import graphviz
+        >>> import graphviz  # doctest: +NO_EXE
         >>> g = graphviz.Graph()
         >>> g.node(graphviz.nohtml('<>-*-<>'))
         >>> print(g.source)  # doctest: +NORMALIZE_WHITESPACE

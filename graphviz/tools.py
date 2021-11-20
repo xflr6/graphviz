@@ -15,7 +15,7 @@ log = logging.getLogger(__name__)
 def attach(object: typing.Any, name: str) -> typing.Callable:
     """Return a decorator doing ``setattr(object, name)`` with its argument.
 
-    >>> spam = type('Spam', (object,), {})()
+    >>> spam = type('Spam', (object,), {})()  # doctest: +NO_EXE
 
     >>> @attach(spam, 'eggs')
     ... def func():
@@ -45,7 +45,7 @@ def mapping_items(mapping):
     """Return an iterator over the ``mapping`` items,
         sort if it's a plain dict.
 
-    >>> list(mapping_items({'spam': 0, 'ham': 1, 'eggs': 2}))
+    >>> list(mapping_items({'spam': 0, 'ham': 1, 'eggs': 2}))  # doctest: +NO_EXE
     [('eggs', 2), ('ham', 1), ('spam', 0)]
 
     >>> from collections import OrderedDict

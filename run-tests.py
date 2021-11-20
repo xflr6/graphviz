@@ -16,7 +16,6 @@ ARGS = [#'--skip-exe',
         #'--exitfirst',  # a.k.a. -x
         #'-W', 'error',
         #'--doctest-report none',
-        #'--doctest-continue-on-failure',
         #'--cov-append',
         ]
 

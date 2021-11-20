@@ -12,6 +12,8 @@ Replace ``_repr_svg_()`` internally with ``_repr_mimebundle_(include, exclude)``
 returning a mimebundle ``{'image/svg+xml', '<?xml version=...'}`` by default.
 PR `#150 <https://github.com/xflr6/graphviz/pull/150>`_ Christoph Boeddeker.
 
+Increase doctest coverage.
+
 Extend and improve documentation.
 
 Add ``--only-exe`` flag to ``run-tests.py`` (overrides ``--skip-exe``).
