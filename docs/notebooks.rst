@@ -6,6 +6,7 @@ Notebooks
 - Render gallery examples with logging: graphviz-notebook.ipynb_
 - Engine comparison: graphviz-engines.ipynb_
 - Verify escaping and quoting: graphviz-escapes.ipynb_
+- Using ``graphviz.set_jupyter_format()``': graphviz-jupyter-format.ipynb_
 
 
 .. _graphviz-notebook.ipynb: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
