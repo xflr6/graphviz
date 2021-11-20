@@ -113,10 +113,20 @@ http://www.graphviz.org/doc/info/output.html, and ``dot -T:`` output):
 .. autodata:: graphviz.FORMATTERS
    :annotation:
 
+Functions for setting module-wide defaults:
+
+.. autofunction:: graphviz.set_default_engine
+
+.. autofunction:: graphviz.set_default_format
+
 Jupyter display formats:
 
 .. autodata:: graphviz.SUPPORTED_JUPYTER_FORMATS
    :annotation:
+
+Function for setting module-wide jupyter display format:
+
+.. autofunction:: graphviz.set_jupyter_format
 
 Names of upstream binaries:
 
