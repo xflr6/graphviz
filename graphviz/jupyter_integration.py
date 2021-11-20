@@ -6,7 +6,6 @@ from . import piping
 
 __all__ = ['JUPYTER_FORMATS',
            'SUPPORTED_JUPYTER_FORMATS', 'DEFAULT_JUPYTER_FORMAT',
-           'SVG_ENCODING',
            'get_jupyter_format_mimetype',
            'JupyterIntegration']
 

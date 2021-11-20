@@ -23,7 +23,7 @@ def test_get_jupyter_mimetype_format_raises_unsupported():
 
 @pytest.mark.exe
 def test_repr_image_svg_xml_encoding(input_encoding='latin1'):
-    assert input_encoding != jupyter_integration.SVG_ENCODING
+    assert input_encoding != EXPECTED_SVG_ENCODING
     dot = graphviz.Graph(comment='Mønti Pythøn ik den Hølie Grailen',
                          encoding=input_encoding)
 
