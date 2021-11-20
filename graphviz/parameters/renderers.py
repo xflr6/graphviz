@@ -37,7 +37,7 @@ def verify_renderer(renderer: typing.Optional[str], *,
 class Renderer(base.ParameterBase):
     """Rendering renderer parameter (no default)."""
 
-    _renderer: typing.Optional[str] = None
+    _renderer = None
 
     _verify_renderer = staticmethod(verify_renderer)
 

@@ -20,7 +20,7 @@ def pytest_addoption(parser):
 
     try:
         parser.addoption(ONLY_EXE, action='store_true',
-                         help='Only run tests with pytest.mark.exe.'
+                         help='Skip tests without pytest.mark.exe.'
                               ' Overrides --skip-exe.'
                               ' exe marks tests requiring backend.DOT_BINARY.')
     except ValueError as e:  # pragma: no cover

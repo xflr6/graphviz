@@ -2,11 +2,11 @@
 
 import typing
 
-from . import encoding
 from . import piping
 
 __all__ = ['JUPYTER_FORMATS',
            'SUPPORTED_JUPYTER_FORMATS', 'DEFAULT_JUPYTER_FORMAT',
+           'SVG_ENCODING',
            'get_jupyter_format_mimetype',
            'JupyterIntegration']
 
@@ -27,6 +27,8 @@ MIME_TYPES = {'image/jpeg': '_repr_image_jpeg',
 
 assert MIME_TYPES.keys() == set(JUPYTER_FORMATS.values())
 
+SVG_ENCODING = 'utf-8'
+
 
 def get_jupyter_format_mimetype(jupyter_format: str) -> str:
     try:
@@ -46,9 +48,7 @@ def get_jupyter_mimetype_format(mimetype: str) -> typing.Optional[str]:
 class JupyterIntegration(piping.Pipe):
     """Display rendered graph as SVG in Jupyter Notebooks and QtConsole."""
 
-    _encoding: str = encoding.DEFAULT_ENCODING
-
-    _jupyter_mimetype: str = get_jupyter_format_mimetype(DEFAULT_JUPYTER_FORMAT)
+    _jupyter_mimetype = get_jupyter_format_mimetype(DEFAULT_JUPYTER_FORMAT)
 
     def _repr_mimebundle_(self,
                           include: typing.Optional[typing.Iterable[str]] = None,
@@ -102,4 +102,4 @@ class JupyterIntegration(piping.Pipe):
 
     def _repr_image_svg_xml(self) -> str:
         """Return the rendered graph as SVG string."""
-        return self.pipe(format='svg', encoding=self._encoding)
+        return self.pipe(format='svg', encoding=SVG_ENCODING)
