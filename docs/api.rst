@@ -119,7 +119,7 @@ Functions for setting **package-wide defaults** for ``engine`` and ``format``:
 
     These functions are provided mainly to simplify testing
     but may also be used by end-users for convenience in scripts.
-    They should be avoided in library code.
+    They **should be avoided in library code**.
     Prefer passing or setting ``engine`` and ``format`` explicitly
     if you create a library that depends on this package.
 
