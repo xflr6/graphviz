@@ -85,7 +85,7 @@ class JupyterIntegration(piping.Pipe):
         include -= set(exclude or [])
         return {mimetype: getattr(self, method_name)()
                 for mimetype, method_name in MIME_TYPES.items()
-                if mimetype in include and hasattr(self, method_name)}
+                if mimetype in include}
 
     def _repr_image_jpeg(self) -> bytes:
         """Return the rendered graph as JPEG bytes."""
