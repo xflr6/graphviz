@@ -22,7 +22,8 @@ def verify_formatter(formatter: typing.Optional[str], *,
         if required:
             raise ValueError('missing formatter')
     elif formatter.lower() not in FORMATTERS:
-        raise ValueError(f'unknown formatter: {formatter!r}')
+        raise ValueError(f'unknown formatter: {formatter!r}'
+                         f' (must be None or one of {sorted(FORMATTERS)})')
 
 
 class Formatter(base.ParameterBase):

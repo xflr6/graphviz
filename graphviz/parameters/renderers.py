@@ -31,7 +31,8 @@ def verify_renderer(renderer: typing.Optional[str], *,
         if required:
             raise ValueError('missing renderer')
     elif renderer.lower() not in RENDERERS:
-        raise ValueError(f'unknown renderer: {renderer!r}')
+        raise ValueError(f'unknown renderer: {renderer!r}'
+                         f' (must be None or one of {sorted(RENDERERS)})')
 
 
 class Renderer(base.ParameterBase):

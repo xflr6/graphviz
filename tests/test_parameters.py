@@ -41,7 +41,7 @@ def test_parameters(cls, engine='patchwork', format='tiff',
 @pytest.mark.parametrize(
     'verify_func', VERIFY_FUNCS)
 def test_verify_parameter_raises_unknown(verify_func):
-    with pytest.raises(ValueError, match=r'unknown'):
+    with pytest.raises(ValueError, match=r'unknown .*\(must be .*one of'):
         verify_func('Brian!')
 
 

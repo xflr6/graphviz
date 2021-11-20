@@ -54,7 +54,8 @@ def verify_format(format: str, *, required: bool = REQUIRED) -> None:
         if required:
             raise ValueError('missing format')
     elif format.lower() not in FORMATS:
-        raise ValueError(f'unknown format: {format!r}')
+        raise ValueError(f'unknown format: {format!r}'
+                         f' (must be one of {sorted(FORMATS)})')
 
 
 class Format(base.ParameterBase):

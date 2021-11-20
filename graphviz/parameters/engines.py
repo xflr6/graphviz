@@ -25,7 +25,8 @@ def verify_engine(engine: str, *, required: bool = REQUIRED) -> None:
         if required:
             raise ValueError('missing engine')
     elif engine.lower() not in ENGINES:
-        raise ValueError(f'unknown engine: {engine!r}')
+        raise ValueError(f'unknown engine: {engine!r}'
+                         f' (must be one of {sorted(ENGINES)})')
 
 
 class Engine(base.ParameterBase):
