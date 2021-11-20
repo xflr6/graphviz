@@ -151,8 +151,7 @@ class Quote:
 
 
 def escape(s: str) -> 'NoHtml':
-    r"""Return ``s`` as literal disabling special meaning of backslashes
-        and ``'<...>'``.
+    r"""Return string disabling special meaning of backslashes and ``'<...>'``.
 
     see also https://www.graphviz.org/doc/info/attrs.html#k:escString
 
@@ -181,8 +180,7 @@ class NoHtml(str):
 
 
 def nohtml(s: str) -> NoHtml:
-    """Return copy of ``s`` that will not treat ``'<...>'``
-        as DOT HTML string in quoting.
+    """Return string not treating ``'<...>'`` as DOT HTML string in quoting.
 
     Args:
         s: String in which leading ``'<'`` and trailing ``'>'``

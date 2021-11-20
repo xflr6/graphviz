@@ -13,8 +13,7 @@ def render(engine: str, format: str, filepath: typing.Union[os.PathLike, str],
            renderer: typing.Optional[str] = None,
            formatter: typing.Optional[str] = None,
            quiet: bool = False) -> str:
-    """Render file with Graphviz ``engine`` into ``format``,
-        return result filename.
+    """Render file with ``engine`` into ``format`` and return result filename.
 
     Args:
         engine: Layout engine for rendering (``'dot'``, ``'neato'``, ...).

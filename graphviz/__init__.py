@@ -70,7 +70,7 @@ RENDERERS = RENDERERS
 #: (``'cairo'``, ``'gd'``, ...)
 FORMATTERS = FORMATTERS
 
-#: :class:`set` of supported formats for ``Ipython.display``
+#: :class:`set` of supported formats for ``_repr_mimebundle_()``
 #: (``'svg'``, ``'png'``, ...)
 SUPPORTED_JUPYTER_FORMATS = SUPPORTED_JUPYTER_FORMATS
 

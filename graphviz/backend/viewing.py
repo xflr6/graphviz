@@ -16,8 +16,7 @@ log = logging.getLogger(__name__)
 
 
 def view(filepath, quiet: bool = False) -> None:
-    """Open filepath with its default viewing application
-        (platform-specific).
+    """Open filepath with its default viewing application (platform-specific).
 
     Args:
         filepath: Path to the file to open in viewer.

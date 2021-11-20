@@ -18,7 +18,7 @@ def unflatten(source: str,
               fanout: bool = False,
               chain: typing.Optional[int] = None,
               encoding: str = DEFAULT_ENCODING) -> str:
-    """Return DOT ``source`` piped through Graphviz *unflatten* preprocessor.
+    """Return DOT ``source`` piped through ``unflatten`` preprocessor as string.
 
     Args:
         source: DOT source to process

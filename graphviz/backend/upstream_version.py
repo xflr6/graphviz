@@ -27,8 +27,7 @@ log = logging.getLogger(__name__)
 
 
 def version() -> typing.Tuple[int, ...]:
-    """Return the version number tuple
-        from the ``stderr`` output of ``dot -V``.
+    """Return the upstream version number tuple from ``stderr`` of ``dot -V``.
 
     Returns:
         Two, three, or four ``int`` version ``tuple``.

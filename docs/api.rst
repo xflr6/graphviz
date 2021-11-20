@@ -9,19 +9,22 @@ API Reference
     graphviz.Graph
     graphviz.Digraph
     graphviz.Source
+    graphviz.escape
+    graphviz.nohtml
+    graphviz.ExecutableNotFound
+    graphviz.RequiredArgumentError
     graphviz.render
     graphviz.pipe
     graphviz.pipe_string
-    graphviz.pipe_lines
-    graphviz.pipe_lines_string
     graphviz.unflatten
     graphviz.view
+    graphviz.version
 
 .. hint::
 
     The two main classes :class:`.Graph` and :class:`.Digraph` (for creating
     `undirected` vs. `directed` graphs) have exactly the same API.
-    Their division reflects the fact that both graph types cannot be mixed.
+    Their division reflects the fact that both graph syntaxes cannot be mixed.
 
 
 Graph
@@ -67,6 +70,24 @@ Source
         from_file
 
 
+Quoting/escaping
+----------------
+
+.. autofunction:: graphviz.escape
+
+.. autofunction:: graphviz.nohtml
+
+
+Exceptions
+----------
+
+.. autodata:: graphviz.ExecutableNotFound
+   :annotation:
+
+.. autodata:: graphviz.RequiredArgumentError
+   :annotation:
+
+
 Low-level functions
 -------------------
 
@@ -83,22 +104,11 @@ documented above.
 .. autofunction:: graphviz.view
 
 
-Other
------
+Constants
+---------
 
-.. autodata:: graphviz.ExecutableNotFound
-   :annotation:
-
-.. autodata:: graphviz.RequiredArgumentError
-   :annotation:
-
-.. autofunction:: graphviz.version
-
-.. autofunction:: graphviz.escape
-
-.. autofunction:: graphviz.nohtml
-
-Manually maintained **allowlists** (see https://graphviz.gitlab.io/_pages/pdf/dot.1.pdf,
+Manually maintained allowlists for **upstream parameters**
+(cf. https://graphviz.gitlab.io/_pages/pdf/dot.1.pdf,
 http://www.graphviz.org/doc/info/output.html, and ``dot -T:`` output):
 
 .. autodata:: graphviz.ENGINES
@@ -112,6 +122,23 @@ http://www.graphviz.org/doc/info/output.html, and ``dot -T:`` output):
 
 .. autodata:: graphviz.FORMATTERS
    :annotation:
+
+Supported **IPython/Jupyter display formats**:
+
+.. autodata:: graphviz.SUPPORTED_JUPYTER_FORMATS
+   :annotation:
+
+Names of **upstream binaries**:
+
+.. autodata:: graphviz.DOT_BINARY
+   :annotation:
+
+.. autodata:: graphviz.UNFLATTEN_BINARY
+   :annotation:
+
+
+Settings
+--------
 
 Functions for setting **package-wide defaults** for ``engine`` and ``format``:
 
@@ -127,10 +154,6 @@ Functions for setting **package-wide defaults** for ``engine`` and ``format``:
 
 .. autofunction:: graphviz.set_default_format
 
-Jupyter display formats:
-
-.. autodata:: graphviz.SUPPORTED_JUPYTER_FORMATS
-   :annotation:
 
 Function for setting the **package-wide default for IPython/Jupyter display format**:
 
@@ -143,13 +166,13 @@ __ https://ipython.readthedocs.io/en/stable/api/generated/IPython.display.html#f
 
 .. autofunction:: graphviz.set_jupyter_format
 
-Names of upstream binaries:
 
-.. autodata:: graphviz.DOT_BINARY
-   :annotation:
+Other
+-----
 
-.. autodata:: graphviz.UNFLATTEN_BINARY
-   :annotation:
+
+.. autofunction:: graphviz.version
+
 
 
 Online ``help()`` (internal)
