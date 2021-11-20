@@ -34,7 +34,7 @@ def get_jupyter_format_mimetype(jupyter_format: str) -> str:
         return JUPYTER_FORMATS[jupyter_format]
     except KeyError:
         raise ValueError(f'unknown jupyter_format: {jupyter_format!r}'
-                         f' (must be None or one of {sorted(JUPYTER_FORMATS)})')
+                         f' (must be one of {sorted(JUPYTER_FORMATS)})')
 
 
 def get_jupyter_mimetype_format(mimetype: str) -> typing.Optional[str]:
