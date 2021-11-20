@@ -717,7 +717,7 @@ cycles.
 .. _unflatten: https://linux.die.net/man/1/unflatten
 .. _unflatten_pdf: https://www.graphviz.org/pdf/unflatten.1.pdf
 .. _Jupyter notebook: https://jupyter.org
-.. _IPython.display: https://ipython.readthedocs.io/en/stable/api/generated/IPython.display.html
+.. _IPython.display: https://ipython.readthedocs.io/en/stable/api/generated/IPython.display.html#functions
 .. _graphviz-notebook.ipynb: https://github.com/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
 .. _nbviewer: https://nbviewer.org/github/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
 .. _Jupyter Qt Console: https://qtconsole.readthedocs.io
