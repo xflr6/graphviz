@@ -1,4 +1,4 @@
-"""pytest command line options and fixtures."""
+"""pytest markers and fixtures."""
 
 import pytest
 
