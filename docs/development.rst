@@ -74,7 +74,7 @@ Run **only tests** that are expected to work **without Graphviz** executables:
 **Run the static type checker**
 (pytype_,
 supported `platforms <pytpe_platforms_>`_
-and `Python versions <pytype_python_versions_>`_) :
+and `Python versions <pytype_python_versions_>`_):
 
 .. code:: bash
 
