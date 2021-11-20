@@ -73,6 +73,8 @@ class JupyterIntegration(piping.Pipe):
             >>> dot._repr_mimebundle_(include=['image/svg+xml', 'image/jpeg'],
             ...                       exclude=['image/svg+xml'])  # doctest: +ELLIPSIS
             {'image/jpeg': b'\xff...
+            >>> list(dot._repr_mimebundle_(include=['image/png', 'image/jpeg']))
+            ['image/jpeg', 'image/png']
 
         See also:
          IPython documentation:
