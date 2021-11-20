@@ -4,4 +4,4 @@ __all__ = ['RequiredArgumentError']
 
 
 class RequiredArgumentError(Exception):
-    """Exception raised if a required argument is missing."""
+    """:class:`Exception` raised if a required argument is missing."""

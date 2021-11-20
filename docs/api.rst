@@ -11,8 +11,9 @@ API Reference
     graphviz.Source
     graphviz.escape
     graphviz.nohtml
-    graphviz.ExecutableNotFound
     graphviz.RequiredArgumentError
+    graphviz.ExecutableNotFound
+    graphviz.CalledProcessError
     graphviz.render
     graphviz.pipe
     graphviz.pipe_string
@@ -81,10 +82,13 @@ Quoting/escaping
 Exceptions
 ----------
 
+.. autodata:: graphviz.RequiredArgumentError
+   :annotation:
+
 .. autodata:: graphviz.ExecutableNotFound
    :annotation:
 
-.. autodata:: graphviz.RequiredArgumentError
+.. autodata:: graphviz.CalledProcessError
    :annotation:
 
 

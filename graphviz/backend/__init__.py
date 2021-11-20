@@ -2,7 +2,7 @@
 
 from ._common import RequiredArgumentError
 from .dot_command import DOT_BINARY
-from .execute import ExecutableNotFound
+from .execute import ExecutableNotFound, CalledProcessError
 from .mixins import Render, Pipe, Unflatten, View
 from .piping import pipe, pipe_string, pipe_lines, pipe_lines_string
 from .rendering import render

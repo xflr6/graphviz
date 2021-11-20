@@ -9,7 +9,7 @@ import typing
 
 from .. import _compat
 
-__all__ = ['run_check', 'ExecutableNotFound']
+__all__ = ['run_check', 'ExecutableNotFound', 'CalledProcessError']
 
 
 log = logging.getLogger(__name__)
@@ -123,7 +123,7 @@ def _write_stderr(stderr) -> None:
 
 
 class ExecutableNotFound(RuntimeError):
-    """Exception raised if the Graphviz executable is not found."""
+    """:class:`RuntimeError` raised if the Graphviz executable is not found."""
 
     _msg = ('failed to execute {!r}, '
             'make sure the Graphviz executables are on your systems\' PATH')
@@ -133,7 +133,7 @@ class ExecutableNotFound(RuntimeError):
 
 
 class CalledProcessError(subprocess.CalledProcessError):
-    """Exception raised if the returncode of the subprocess is non-zero."""
+    """:class:`~subprocess.CalledProcessError` raised if a subprocess ``returncode`` is not ``0``."""
 
     def __str__(self) -> 'str':
         s = super().__str__()
