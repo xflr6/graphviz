@@ -2,7 +2,7 @@
 
 import typing
 
-from . import encoding as _encoding
+from . import encoding
 from . import piping
 
 __all__ = ['JUPYTER_FORMATS',
@@ -44,7 +44,7 @@ def get_jupyter_mimetype_format(mimetype: str) -> typing.Optional[str]:
 class JupyterIntegration(piping.Pipe):
     """Display rendered graph as SVG in Jupyter Notebooks and QtConsole."""
 
-    _encoding: str = _encoding.DEFAULT_ENCODING
+    _encoding: str = encoding.DEFAULT_ENCODING
 
     _jupyter_mimetype: str = get_jupyter_format_mimetype(DEFAULT_JUPYTER_FORMAT)
 
