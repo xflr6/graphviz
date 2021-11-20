@@ -1369,6 +1369,11 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  directory = ''
      |
      |  ----------------------------------------------------------------------
+     |  Data and other attributes inherited from graphviz.jupyter_integration.JupyterIntegration:
+     |
+     |  __annotations__ = {'_encoding': <class 'str'>, '_jupyter_mimetype': <c...
+     |
+     |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.piping.Pipe:
      |
      |  pipe(self,
@@ -1455,11 +1460,6 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |
      |  encoding
      |      The encoding for the saved source file.
-     |
-     |  ----------------------------------------------------------------------
-     |  Data and other attributes inherited from graphviz.encoding.Encoding:
-     |
-     |  __annotations__ = {'_encoding': <class 'str'>}
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.base.Base:
