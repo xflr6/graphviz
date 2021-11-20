@@ -719,7 +719,7 @@ cycles.
 .. _Jupyter notebook: https://jupyter.org
 .. _IPython.display: https://ipython.readthedocs.io/en/stable/api/generated/IPython.display.html
 .. _graphviz-notebook.ipynb: https://github.com/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
-.. _nbviewer: https://nbviewer.jupyter.org/github/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
+.. _nbviewer: https://nbviewer.org/github/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
 .. _Jupyter Qt Console: https://qtconsole.readthedocs.io
 .. _spyderconsole: https://docs.spyder-ide.org/ipythonconsole.html
 .. _Spyder IDE: https://github.com/spyder-ide/spyder
