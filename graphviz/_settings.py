@@ -40,8 +40,7 @@ def set_default_format(format: str) -> str:
 
 
 def set_jupyter_format(jupyter_format: str) -> str:
-    """Change the default mimetype format for ``_repr_mimebundle_(include, exclude)``
-        and return the old value.
+    """Change the default mimetype format for ``_repr_mimebundle_(include, exclude)``and return the old value.
 
     Args:
         jupyter_format: new display format for all present and newly created instances.
