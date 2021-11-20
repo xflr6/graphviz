@@ -5,6 +5,7 @@ Development
 
 |PyPI version| |License| |Supported Python| |Wheel| |Downloads|
 
+- GitHub: https://github.com/xflr6/graphviz
 - Changelog: https://graphviz.readthedocs.io/en/latest/changelog.html
 - Issue Tracker: https://github.com/xflr6/graphviz/issues
 
