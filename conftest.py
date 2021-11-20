@@ -22,27 +22,21 @@ _mock.patch.object(_doctest, 'OutputChecker', new=_NoExeChecker).start()
 import pytest  # noqa: E402
 
 
-def pytest_addoption(parser):  # pragma: no cover
-    try:
-        parser.addoption(SKIP_EXE, action='store_true',
-                         help='Skip tests with pytest.mark.exe.'
-                              ' Xfail tests with pytest.mark.exe(xfail=True).'
-                              ' Skip doctests with doctest_mark_exe().'
-                              ' Xfail doctests with doctest_mark_exe(xfail=True).'
-                              ' exe marks tests requiring backend.DOT_BINARY.')
-    except ValueError as e:  # pragma: no cover
-        assert SKIP_EXE in str(e), f'fails because {SKIP_EXE!r} is already added'
+def pytest_addoption(parser):
+    parser.addoption(SKIP_EXE, action='store_true',
+                     help='Skip tests with pytest.mark.exe.'
+                          ' Xfail tests with pytest.mark.exe(xfail=True).'
+                          ' Skip doctests with doctest_mark_exe().'
+                          ' Xfail doctests with doctest_mark_exe(xfail=True).'
+                          ' exe marks tests requiring backend.DOT_BINARY.')
 
-    try:
-        parser.addoption(ONLY_EXE, action='store_true',
-                         help='Skip tests without pytest.mark.exe.'
-                              ' Overrides --skip-exe.'
-                              ' exe marks tests requiring backend.DOT_BINARY.')
-    except ValueError as e:  # pragma: no cover
-        assert ONLY_EXE in str(e), f'fails because {ONLY_EXE!r} is already added'
+    parser.addoption(ONLY_EXE, action='store_true',
+                     help='Skip tests without pytest.mark.exe.'
+                          ' Overrides --skip-exe.'
+                          ' exe marks tests requiring backend.DOT_BINARY.')
 
 
-@pytest.fixture(autouse=True)  # pragma: no cover
+@pytest.fixture(autouse=True)
 def doctests(pytestconfig, doctest_namespace):
     def doctest_mark_exe(**kwargs):
         return None
