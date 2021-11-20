@@ -82,6 +82,12 @@ jobs:
         run: python run-tests.py --skip-exe --cov-append
       - name: Upload test coverage
         uses: codecov/codecov-action@v1
+      - name: Run build-docs.py -b doctest (unless -skip-exe)
+        if: ${{ !contains(matrix.name, '-skip-exe') }}
+        run: |
+          pip install .[docs]
+          python build-docs.py -b doctest
+        continue-on-error: true
       - name: Run try-examples.py (unless -skip-exe)
         if: ${{ !contains(matrix.name, '-skip-exe') }}
         run: python try-examples.py
