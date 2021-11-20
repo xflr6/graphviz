@@ -4,7 +4,6 @@
 """Build the docs with https://www.sphinx-doc.org."""
 
 import functools
-import os
 import pathlib
 import sys
 import webbrowser
@@ -57,7 +56,7 @@ elif any(a.partition('=')[0] == BROWSER_OPEN for a in args):
 
 if not args:  # no pytest args given
     args = [a for a in DEFAULT_ARGS
-            if a != SKIP_OPEN_RESULT and  a.partition('=')[0] != BROWSER_OPEN]
+            if a != SKIP_OPEN_RESULT and a.partition('=')[0] != BROWSER_OPEN]
 
 if args == ['-b', 'doctest']:
     args += [str(SOURCE), str(SOURCE / '_doctest')]
