@@ -53,7 +53,7 @@ class JupyterIntegration(piping.Pipe):
                           include: typing.Optional[typing.Iterable[str]] = None,
                           exclude: typing.Optional[typing.Iterable[str]] = None,
                           **_) -> typing.Dict[str, typing.Union[bytes, str]]:
-        """Return the rendered graph as IPython mimebundle.
+        r"""Return the rendered graph as IPython mimebundle.
 
         Args:
             include: Iterable of mimetypes to include in the result.
