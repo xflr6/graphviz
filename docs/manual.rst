@@ -34,10 +34,10 @@ should print the version of your Graphiz installation.
     (gvedit.exe__, sfdp__, commands__) and consider trying an older archived
     version as a workaround (e.g. graphviz-2.38.msi__).
 
-    __ https://gitlab.com/graphviz/graphviz/-/issues/1816
-    __ https://gitlab.com/graphviz/graphviz/-/issues/1269
-    __ https://gitlab.com/graphviz/graphviz/-/issues/1753
-    __ https://www2.graphviz.org/Archive/stable/windows/graphviz-2.38.msi
+__ https://gitlab.com/graphviz/graphviz/-/issues/1816
+__ https://gitlab.com/graphviz/graphviz/-/issues/1269
+__ https://gitlab.com/graphviz/graphviz/-/issues/1753
+__ https://www2.graphviz.org/Archive/stable/windows/graphviz-2.38.msi
 
 .. admonition:: Platform: Anaconda
 

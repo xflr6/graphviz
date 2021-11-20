@@ -98,7 +98,7 @@ Other
 
 .. autofunction:: graphviz.nohtml
 
-Manually maintained whitelists (see https://graphviz.gitlab.io/_pages/pdf/dot.1.pdf,
+Manually maintained **allowlists** (see https://graphviz.gitlab.io/_pages/pdf/dot.1.pdf,
 http://www.graphviz.org/doc/info/output.html, and ``dot -T:`` output):
 
 .. autodata:: graphviz.ENGINES
@@ -113,7 +113,15 @@ http://www.graphviz.org/doc/info/output.html, and ``dot -T:`` output):
 .. autodata:: graphviz.FORMATTERS
    :annotation:
 
-Functions for setting module-wide defaults:
+Functions for setting **package-wide defaults** for ``engine`` and ``format``:
+
+.. attention::
+
+    These functions are provided mainly to simplify testing
+    but may also be used by end-users for convenience in scripts.
+    They should be avoided in library code.
+    Prefer passing or setting ``engine`` and ``format`` explicitly
+    if you create a library that depends on this package.
 
 .. autofunction:: graphviz.set_default_engine
 
@@ -124,7 +132,14 @@ Jupyter display formats:
 .. autodata:: graphviz.SUPPORTED_JUPYTER_FORMATS
    :annotation:
 
-Function for setting module-wide jupyter display format:
+Function for setting the **package-wide default for IPython/Jupyter display format**:
+
+.. attention::
+
+    This function is provided for end-users.
+    Prefer `IPython.display`__ functions in library code.
+
+__ https://ipython.readthedocs.io/en/stable/api/generated/IPython.display.html#functions
 
 .. autofunction:: graphviz.set_jupyter_format
 
@@ -143,7 +158,7 @@ Online ``help()`` (internal)
 Results of :func:`help` for :class:`.Graph`, :class:`.Digraph`,
 and :class:`.Source` for reference.
 
-.. important::
+.. attention::
 
     The outputs in this section may contain some **internals** (implementation details).
     They serve to record some current implementation details and their changes.
