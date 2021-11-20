@@ -215,9 +215,11 @@ Graph
 Partially syntax-highlighted:
 https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
 
-.. code:: python
+.. testsetup::
+    import graphviz
 
-    >>> import graphviz
+.. doctest::
+
     >>> help(graphviz.Graph)  # doctest: +NORMALIZE_WHITESPACE +SKIP
     Help on class Graph in module graphviz.graphs:
     <BLANKLINE>
@@ -701,9 +703,8 @@ Digraph
 Partially symntax-highlighed:
 https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
 
-.. code:: python
+.. doctest::
 
-    >>> import graphviz
     >>> help(graphviz.Digraph)  # doctest: +NORMALIZE_WHITESPACE +SKIP
     Help on class Digraph in module graphviz.graphs:
     <BLANKLINE>
@@ -1187,9 +1188,8 @@ Source
 Partially syntax-highlighted:
 https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
 
-.. code:: python
+.. doctest::
 
-    >>> import graphviz
     >>> help(graphviz.Source)  # doctest: +NORMALIZE_WHITESPACE +SKIP
     Help on class Source in module graphviz.sources:
     <BLANKLINE>

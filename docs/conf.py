@@ -42,6 +42,7 @@ release = version
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
+    'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',
     'sphinx_autodoc_typehints',  # https://github.com/agronholm/sphinx-autodoc-typehints/issues/15

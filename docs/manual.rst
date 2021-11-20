@@ -60,9 +60,11 @@ undirected and directed graphs respectively. They have the same
 Create a graph by instantiating a new :class:`.Graph` or
 :class:`.Digraph` object:
 
-.. code:: python
+.. testsetup::
+    import graphviz
 
-    >>> import graphviz  # doctest: +NO_EXE
+.. doctest::
+    :options: +NO_EXE
 
     >>> dot = graphviz.Digraph('round-table', comment='The Round Table', directory='doctest-output')
 
@@ -76,9 +78,10 @@ Their constructors allow to set the graph's :attr:`~.Graph.name`, the
 Add nodes and edges to the graph object using its :meth:`~.Graph.node` and
 :meth:`~.Graph.edge`- or :meth:`~.Graph.edges`-methods:
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> dot.node('A', 'King Arthur')  # doctest: +NO_EXE
+    >>> dot.node('A', 'King Arthur')
     >>> dot.node('B', 'Sir Bedevere the Wise')
     >>> dot.node('L', 'Sir Lancelot the Brave')
 
@@ -93,9 +96,10 @@ name pairs. Keyword arguments are turned into (node and edge) attributes (see
 
 Check the generated source code:
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> print(dot.source)  # doctest: +NORMALIZE_WHITESPACE +NO_EXE
+    >>> print(dot.source)  # doctest: +NORMALIZE_WHITESPACE
     // The Round Table
     digraph {
         A [label="King Arthur"]
@@ -110,9 +114,10 @@ Use the :meth:`~.Graph.render`-method to save the source code and render it with
 default layout program (``dot``, see below for using `other layout commands
 <Engines_>`_). 
 
-.. code:: python
+.. testsetup:: render
+    doctest_mark_exe()
 
-    >>> doctest_mark_exe()
+.. doctest:: render
 
     >>> dot.render().replace('\\', '/')
     'doctest-output/round-table.gv.pdf'
@@ -120,9 +125,7 @@ default layout program (``dot``, see below for using `other layout commands
 Passing ``view=True`` will automatically open the resulting (PDF, PNG, SVG,
 etc.) file with your system's default viewer application for the file type.
 
-.. code:: python
-
-    >>> doctest_mark_exe()
+.. doctest:: render
 
     >>> dot.render(view=True)  # doctest: +SKIP
     'doctest-output/round-table.gv.pdf'
@@ -139,16 +142,18 @@ To use a different `output file format`_ than the default PDF, use the
 :attr:`~.Graph.format` argument when creating your :class:`.Graph` or
 :class:`.Digraph` object:
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> g = graphviz.Graph(format='png')  # doctest: +NO_EXE
+    >>> g = graphviz.Graph(format='png')
 
 You can also change the :attr:`~.Graph.format` attribute on an existing graph
 object:
 
-.. code:: python
+..testsetup:: render
+    doctest_mark_exe()
 
-    >>> doctest_mark_exe()
+.. doctest::
 
     >>> dot.format = 'svg'
 
@@ -164,15 +169,15 @@ To directly access the results from the Graphviz rendering command (e.g.
 use the :meth:`~.Graph.pipe`-method of your :class:`.Graph` or
 :class:`.Digraph` object:
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> h = graphviz.Graph('hello', format='svg')  # doctest: +NO_EXE
+    >>> h = graphviz.Graph('hello', format='svg')
 
     >>> h.edge('Hello', 'World')
 
-.. code:: python
+.. doctest:: render
 
-    >>> doctest_mark_exe()
     >>> print(h.pipe().decode('utf-8'))  # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
     <?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <!DOCTYPE svg
@@ -226,9 +231,10 @@ Use the :attr:`~.Graph.graph_attr`, :attr:`~.Graph.node_attr`, and
 :attr:`~.Graph.edge_attr` arguments to change the default appearance_ of your
 graph, nodes, and edges.
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> ps = graphviz.Digraph('pet-shop', node_attr={'shape': 'plaintext'})  # doctest: +NO_EXE
+    >>> ps = graphviz.Digraph('pet-shop', node_attr={'shape': 'plaintext'})
 
     >>> ps.node('parrot')
     >>> ps.node('dead')
@@ -236,9 +242,10 @@ graph, nodes, and edges.
 
 After creation, they can be edited on the graph object:
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> ps.graph_attr['rankdir'] = 'LR'  # doctest: +NO_EXE
+    >>> ps.graph_attr['rankdir'] = 'LR'
     >>> ps.edge_attr.update(arrowhead='vee', arrowsize='2')
 
     >>> print(ps.source)  # doctest: +NORMALIZE_WHITESPACE
@@ -264,9 +271,10 @@ To directly add attritbute statements (affecting all following graph, node, or
 edge items within the same (sub-)graph), use the :meth:`~.Graph.attr`-method
 with the target as first argument:
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> ni = graphviz.Graph('ni')  # doctest: +NO_EXE
+    >>> ni = graphviz.Graph('ni')
 
     >>> ni.attr('node', shape='rarrow')
     >>> ni.node('1', 'Ni!')
@@ -283,9 +291,10 @@ key-value pairs targeting the current (sub-)graph (e.g. for ``rankdir``,
 ``label``, or setting ``rank='same'`` within a subgraph context,
 :ref:`example <rank_same.py>`):
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> ni.attr(rankdir='LR')  # doctest: +NO_EXE
+    >>> ni.attr(rankdir='LR')
 
     >>> ni.edges(['12', '23', '34', '45'])
 
@@ -325,9 +334,10 @@ literal colon(s) (``:``) are not supported. Note that there is no such
 restriction for the ``label`` argument, so you can work around by choosing a
 colon-free ``name`` together with the wanted ``label``:
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> cpp = graphviz.Digraph('C++')  # doctest: +NO_EXE
+    >>> cpp = graphviz.Digraph('C++')
     
     >>> cpp.node('A', 'std::string')
     >>> cpp.node('B', '"spam"')
@@ -356,9 +366,10 @@ literals, a second level of doubling is needed (e.g. ``label='\\\\'``). This
 kind of doubling can be avoided by using `raw string literals`_ (``r'...'``)
 instead (same solution as proposed for the stdlib :mod:`re` module):
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> e = graphviz.Digraph('escapes')  # doctest: +NO_EXE
+    >>> e = graphviz.Digraph('escapes')
 
     >>> e.node('backslash', label=r'\\')
     >>> e.node('multi_line', label=r'centered\nleft\lright\r')
@@ -376,9 +387,10 @@ To disable any special character meaning in a string (e.g. from user input to
 be rendered literally), use the :func:`.escape` function (cf. the
 :func:`re.escape` function):
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> bs = graphviz.Digraph()  # doctest: +NO_EXE
+    >>> bs = graphviz.Digraph()
 
     >>> bs.node(graphviz.escape('\\'))
 
@@ -402,9 +414,10 @@ The graph-building methods of :class:`.Graph` and :class:`.Digraph` objects
 automatically take care of quoting (and escaping quotes)
 `where needed <DOT_>`_ (whitespace, keywords, double quotes, etc.):
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> q = graphviz.Digraph()  # doctest: +NO_EXE
+    >>> q = graphviz.Digraph()
 
     >>> q.edge('spam', 'eggs eggs')
     >>> q.edge('node', '"here\'s a quote"')
@@ -419,9 +432,10 @@ If a string starts with ``'<'`` and ends with ``'>'``, it is passed on as is,
 without quoting/escaping: The content between the angle brackets is treated by
 the engine as special **HTML string** that can be used for `HTML-like labels`_:
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> h = graphviz.Graph('html_table')  # doctest: +NO_EXE
+    >>> h = graphviz.Graph('html_table')
 
     >>> h.node('tab', label='''<<TABLE>
     ...  <TR>
@@ -438,9 +452,10 @@ the :func:`.nohtml` function to disable the special meaning of angled
 parenthesis and apply normal quoting/escaping (before ``0.8.2``, the only
 workaround was to add leading or trailing space, e.g. ``label=' <>'``):
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> d = graphviz.Digraph('diamond', format='svg')  # doctest: +NO_EXE
+    >>> d = graphviz.Digraph('diamond', format='svg')
 
     >>> d.node('diamond', label=graphviz.nohtml('<>'))
 
@@ -468,9 +483,10 @@ content more elegantly within a ``with``-block).
 
 First usage option, with ``graph`` as the only argument:
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> p = graphviz.Graph(name='parent')  # doctest: +NO_EXE
+    >>> p = graphviz.Graph(name='parent')
     >>> p.edge('spam', 'eggs')
 
     >>> c = graphviz.Graph(name='child', node_attr={'shape': 'box'})
@@ -480,9 +496,10 @@ First usage option, with ``graph`` as the only argument:
 
 Second usage, with a ``with``-block (omitting the ``graph`` argument):
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> p = graphviz.Graph(name='parent')  # doctest: +NO_EXE
+    >>> p = graphviz.Graph(name='parent')
     >>> p.edge('spam', 'eggs')
 
     >>> with p.subgraph(name='child', node_attr={'shape': 'box'}) as c:
@@ -490,9 +507,10 @@ Second usage, with a ``with``-block (omitting the ``graph`` argument):
 
 Both produce the same result:
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> print(p.source)  # doctest: +NORMALIZE_WHITESPACE +NO_EXE
+    >>> print(p.source)  # doctest: +NORMALIZE_WHITESPACE
     graph parent {
         spam -- eggs
         subgraph child {
@@ -514,11 +532,10 @@ instance  is created with ``strict=None`` and the parent graph's values for
 Note that these attributes are only relevant when rendering the subgraph independently
 (i.e. as a stand-alone graph) from within the ``with``-block:
 
-.. code:: python
+.. doctest:: render
 
     >>> import pytest
     >>> pytest.xfail(reason='FIXME')
-    >>> doctest_mark_exe()
 
     >>> p = graphviz.Graph(name='parent')
 
@@ -534,16 +551,18 @@ Engines
 To use a different layout command than the default ``dot`` when rendering your
 graph, use the :attr:`~.Graph.engine` argument when creating your graph. 
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> g = graphviz.Graph(engine='neato')  # doctest: +NO_EXE
+    >>> g = graphviz.Graph(engine='neato')
 
 You can also change the :attr:`~.Graph.engine` attribute of an existing
 instance:
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> dot.engine = 'circo'  # doctest: +NO_EXE
+    >>> dot.engine = 'circo'
 
 
 Unflatten
@@ -553,9 +572,10 @@ To prepocess the DOT_ source of a :class:`.Graph` or :class:`.Digraph` with
 the unflatten_ preprocessor (`PDF <unflatten_pdf_>`_), use the
 :meth:`~.Graph.unflatten`-method.
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> w = graphviz.Digraph('wide')  # doctest: +NO_EXE
+    >>> w = graphviz.Digraph('wide')
 
     >>> w.edges(('0', str(i)) for i in range(1, 10))
 
@@ -567,9 +587,10 @@ the unflatten_ preprocessor (`PDF <unflatten_pdf_>`_), use the
 unflatten_ is used to improve the aspect ratio of graphs having many leaves or
 disconnected nodes.
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> u = w.unflatten(stagger=3)  # doctest: +NO_EXE
+    >>> u = w.unflatten(stagger=3)
 
     >>> u.view()  # doctest: +SKIP
 
@@ -580,9 +601,11 @@ The method returns a :class:`.Source` object that you can
 :meth:`~.Source.render`, :meth:`~.Source.view`, etc. with the same API
 (minus modification, see details `below <Using raw DOT_>`_).
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
     >>> u = w.unflatten(stagger=2)
+    >>> u
 
     >>> u.view()  # doctest: +SKIP
 
@@ -598,9 +621,10 @@ To add arbitrary statements to the created DOT_ source, use the
 object. It holds the verbatim :class:`list` of lines to be written to the source file
 (including their newline). Use its ``append()``- or ``extend()``-method:
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> rt = graphviz.Digraph(comment='The Round Table')  # doctest: +NO_EXE
+    >>> rt = graphviz.Digraph(comment='The Round Table')
 
     >>> rt.body.append('\t"King Arthur" -> {\n\t\t"Sir Bedevere", "Sir Lancelot"\n\t}\n')
     >>> rt.edge('Sir Bedevere', 'Sir Lancelot', constraint='false')
@@ -625,18 +649,17 @@ To render a ready-made DOT source code string (instead of assembling one with
 the higher-level interface of :class:`.Graph` or :class:`.Digraph`), create a
 :class:`.Source` object holding your DOT string:
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> src = graphviz.Source('digraph "the holy hand grenade" { rankdir=LR; 1 -> 2 -> 3 -> lob }')  # doctest: +NO_EXE
+    >>> src = graphviz.Source('digraph "the holy hand grenade" { rankdir=LR; 1 -> 2 -> 3 -> lob }')
 
     >>> src  #doctest: +ELLIPSIS
     <graphviz.sources.Source object at 0x...>
 
 Use the :meth:`~.Source.render`-method to save and render it:
 
-.. code:: python
-
-    >>> doctest_mark_exe()
+.. doctest:: render
 
     >>> src.render('doctest-output/holy-grenade.gv').replace('\\', '/')
     'doctest-output/holy-grenade.gv.pdf'
@@ -659,9 +682,7 @@ Existing files
 To directly render an existing DOT source file (e.g. created with other tools),
 you can use the :func:`graphviz.render` function. 
 
-.. code:: python
-
-    >>> doctest_mark_exe()
+.. doctest:: render
 
     >>> graphviz.render('dot', 'png', 'doctest-output/holy-grenade.gv').replace('\\', '/')
     'doctest-output/holy-grenade.gv.png'
@@ -699,23 +720,21 @@ from the stdlib :mod:`tempfile` module to render to a different file for each
 invocation to avoid needing to close the viewer window each time within such an
 incremental workflow (and also preserve its intermediate steps):
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
     >>> import tempfile
 
-    >>> g = graphviz.Graph()  # doctest: +NO_EXE
+    >>> g = graphviz.Graph()
 
     >>> g.node('spam')
-
-.. code:: python
-
-    >>> doctest_mark_exe()
 
     >>> g.view(tempfile.mktemp('.gv'))  # doctest: +SKIP
     'C:\\Users\\User\\AppData\\Local\\Temp\\tmp3aoie8d0.gv.pdf'
 
     >>> g.view(tempfile.mktemp('.gv'))  # doctest: +SKIP
     'C:\\Users\\User\\AppData\\Local\\Temp\\tmphh4ig7a_.gv.pdf'
+
 
 Other options are viewers that `support live updates`_ or using the Jupyter
 `notebook <Jupyter notebook_>`_ or `Qt Console <Jupyter Qt Console_>`_ to

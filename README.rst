@@ -64,18 +64,20 @@ Quickstart
 
 Create a graph object:
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> import graphviz  # doctest: +NO_EXE
+    >>> import graphviz
     >>> dot = graphviz.Digraph(comment='The Round Table')
     >>> dot  #doctest: +ELLIPSIS
     <graphviz.graphs.Digraph object at 0x...>
 
 Add nodes and edges:
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> dot.node('A', 'King Arthur')  # doctest: +NO_EXE
+    >>> dot.node('A', 'King Arthur')
     >>> dot.node('B', 'Sir Bedevere the Wise')
     >>> dot.node('L', 'Sir Lancelot the Brave')
 
@@ -84,9 +86,10 @@ Add nodes and edges:
 
 Check the generated source code:
 
-.. code:: python
+.. doctest::
+    :options: +NO_EXE
 
-    >>> print(dot.source)  # doctest: +NORMALIZE_WHITESPACE +NO_EXE
+    >>> print(dot.source)  # doctest: +NORMALIZE_WHITESPACE
     // The Round Table
     digraph {
         A [label="King Arthur"]
@@ -99,16 +102,17 @@ Check the generated source code:
 
 Save and render the source code:
 
-.. code:: python
+.. testsetup:: render
+    doctest_mark_exe()
 
-    >>> doctest_mark_exe()
+.. doctest:: render
 
     >>> dot.render('doctest-output/round-table.gv').replace('\\', '/')
     'doctest-output/round-table.gv.pdf'
 
 Save and render and view the result:
 
-    >>> doctest_mark_exe()
+.. doctest:: render
 
     >>> dot.render('doctest-output/round-table.gv', view=True)  # doctest: +SKIP
     'doctest-output/round-table.gv.pdf'
