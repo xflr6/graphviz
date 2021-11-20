@@ -97,12 +97,21 @@ Check the generated source code:
         B -> L [constraint=false]
     }
 
-Save and render the source code, optionally view the result:
+Save and render the source code:
 
 .. code:: python
 
-    >>> dot.render('test-output/round-table.gv', view=True)  # doctest: +SKIP
-    'test-output/round-table.gv.pdf'
+    >>> doctest_mark_exe()
+
+    >>> dot.render('doctest-output/round-table.gv').replace('\\', '/')
+    'doctest-output/round-table.gv.pdf'
+
+Save and render and view the result:
+
+    >>> doctest_mark_exe()
+
+    >>> dot.render('doctest-output/round-table.gv', view=True)  # doctest: +SKIP
+    'doctest-output/round-table.gv.pdf'
 
 .. image:: https://raw.github.com/xflr6/graphviz/master/docs/_static/round-table.svg
     :align: center

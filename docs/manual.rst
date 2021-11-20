@@ -114,14 +114,22 @@ default layout program (``dot``, see below for using `other layout commands
 
     >>> doctest_mark_exe()
 
-    >>> dot.render('doctest-output/round-table.gv', view=True)  # doctest: +SKIP
+    >>> dot.render().replace('\\', '/')
+    'doctest-output/round-table.gv.pdf'
+
+Passing ``view=True`` will automatically open the resulting (PDF, PNG, SVG,
+etc.) file with your system's default viewer application for the file type.
+
+.. code:: python
+
+    >>> doctest_mark_exe()
+
+    >>> dot.render(view=True)  # doctest: +SKIP
     'doctest-output/round-table.gv.pdf'
 
 .. image:: _static/round-table.svg
     :align: center
 
-Passing ``view=True`` will automatically open the resulting (PDF, PNG, SVG,
-etc.) file with your system's default viewer application for the file type.
 
 
 Formats

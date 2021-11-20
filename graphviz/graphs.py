@@ -1,6 +1,8 @@
 r"""Assemble DOT source code objects.
 
->>> import graphviz  # doctest: +NO_EXE
+>>> doctest_mark_exe()
+
+>>> import graphviz
 >>> dot = graphviz.Graph(comment='Mønti Pythøn ik den Hølie Grailen')
 
 >>> dot.node('Møøse')
@@ -23,8 +25,11 @@ graph {
     trained_by -- tutte
 }
 
->>> dot.view('test-output/m00se.gv')  # doctest: +SKIP
-'test-output/m00se.gv.pdf'
+>>> dot.render('doctest-output/m00se.gv').replace('\\', '/')
+'doctest-output/m00se.gv.pdf'
+
+>>> dot.view('doctest-output/m00se.gv').replace('\\', '/')  # doctest: +SKIP
+'doctest-output/m00se.gv.pdf'
 """
 
 import typing
