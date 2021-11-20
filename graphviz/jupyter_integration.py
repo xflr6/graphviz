@@ -83,7 +83,7 @@ class JupyterIntegration(piping.Pipe):
         See also:
          IPython documentation:
             - https://ipython.readthedocs.io/en/stable/api/generated/IPython.display.html#functions
-            - https://ipython.readthedocs.io/en/stable/config/integrating.html#MyObject._repr_mimebundle  # noqa: E501
+            - https://ipython.readthedocs.io/en/stable/config/integrating.html#MyObject._repr_mimebundle_  # noqa: E501
             - https://nbviewer.org/github/ipython/ipython/blob/master/examples/IPython%20Kernel/Custom%20Display%20Logic.ipynb  # noqa: E501
         """
         include = set(include) if include is not None else {self._jupyter_mimetype}
