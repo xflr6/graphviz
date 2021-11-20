@@ -21,7 +21,7 @@ DEFAULT_ARGS = ['-n', '-v', '.', str(TARGET)]
 
 OPEN_RESULT = True
 
-NO_OPEN_RESULT = '--no-open'
+SKIP_OPEN_RESULT = '--no-open'
 
 
 @contextlib.contextmanager
@@ -37,9 +37,9 @@ def chdir(path):
 
 
 args = sys.argv[1:]
-if NO_OPEN_RESULT in args:
+if SKIP_OPEN_RESULT in args:
     OPEN_RESULT = False
-    args = [a for a in args if a != NO_OPEN_RESULT]
+    args = [a for a in args if a != SKIP_OPEN_RESULT]
 if not args:
     args = DEFAULT_ARGS
 
