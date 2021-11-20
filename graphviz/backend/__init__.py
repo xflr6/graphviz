@@ -17,5 +17,6 @@ __all__ = ['DOT_BINARY', 'UNFLATTEN_BINARY',
            'unflatten',
            'version',
            'view',
-           'RequiredArgumentError', 'ExecutableNotFound',
+           'RequiredArgumentError',
+           'ExecutableNotFound', 'CalledProcessError',
            'Render', 'Pipe', 'Unflatten', 'View']
