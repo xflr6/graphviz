@@ -53,7 +53,7 @@ class JupyterIntegration(piping.Pipe):
 
         Args:
             include: Iterable of mimetypes to include in the result.
-                If not given or ``None``: ``['image/sxg.xml']``.
+                If not given or ``None``: ``['image/sxg+xml']``.
             exclude: Iterable of minetypes to exclude from the result.
                 Overrides ``include``.
 
