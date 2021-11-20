@@ -276,6 +276,7 @@ class Dot(quoting.Quote, base.Base):
         """
         if graph is None:
             kwargs = self._copy_kwargs()
+            kwargs.pop('filename', None)
             kwargs.update(name=name, comment=comment,
                           graph_attr=graph_attr, node_attr=node_attr, edge_attr=edge_attr,
                           body=body, strict=None)

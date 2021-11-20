@@ -482,7 +482,7 @@ Second usage, with a ``with``-block (omitting the ``graph`` argument):
 
 .. doctest::
 
-    >>> p = graphviz.Graph(name='parent')  # doctest: +NO_EXE
+    >>> p = graphviz.Graph('parent')  # doctest: +NO_EXE
     >>> p.edge('spam', 'eggs')
 
     >>> with p.subgraph(name='child', node_attr={'shape': 'box'}) as c:
@@ -516,15 +516,14 @@ Note that these attributes are only relevant when rendering the subgraph indepen
 
 .. doctest::
 
-    >>> import pytest
-    >>> pytest.xfail(reason='FIXME')
+    >>> doctest_mark_exe()
 
-    >>> p = graphviz.Graph(name='parent')
+    >>> p = graphviz.Graph('parent', directory='doctest-output')
 
     >>> with p.subgraph(name='child') as c:
     ...    c.edge('bacon', 'eggs')
-    ...    c.render()
-    'child.gv.pdf'
+    ...    c.render().replace('\\', '/')
+    'doctest-output/child.gv.pdf'
 
 
 Engines
@@ -589,8 +588,8 @@ The method returns a :class:`.Source` object that you can
 
 .. doctest::
 
-    >>> u = w.unflatten(stagger=2)  # doctest: +ELLIPSIS +NO_EXE
-    >>> u
+    >>> u = w.unflatten(stagger=2)  # doctest: +NO_EXE
+    >>> u  # doctest: +ELLIPSIS
     <graphviz.sources.Source object at 0x...>
 
 .. doctest::

@@ -106,5 +106,6 @@ jobs:
           name: ${{ matrix.name }}
           path: |
             test-log.txt
+            doctest-output/
             examples/*.gv
             examples/*.pdf
