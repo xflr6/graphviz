@@ -8,8 +8,9 @@ Version 0.19 (in development)
 Add ``graphviz.set_jupyter_format()`` to set the output format
 used by the jupyter visualization of ``graphviz.Graph``, ``graphviz.Digraph``,
 and ``graphviz.Source`` (supported formats: ``'svg'``, ``'png'``, ``'jpeg'``).
-Replace ``_repr_svg_()`` with ``_repr_mimebundle_(include, exclude)``
+Replace ``_repr_svg_()`` internally with ``_repr_mimebundle_(include, exclude)``
 returning a mimebundle ``{'image/svg+xml', '<?xml version=...'}`` by default.
+Pull request #150 courtesy Christoph Boeddeker.
 
 
 Version 0.18.2
