@@ -4,6 +4,8 @@ import pytest
 
 SKIP_EXE = '--skip-exe'
 
+ONLY_EXE = '--only-exe'
+
 
 def pytest_addoption(parser):
     try:
@@ -16,6 +18,14 @@ def pytest_addoption(parser):
     except ValueError as e:  # pragma: no cover
         assert SKIP_EXE in str(e), f'fails because {SKIP_EXE!r} is already added'
 
+    try:
+        parser.addoption(ONLY_EXE, action='store_true',
+                         help='Only run tests with pytest.mark.exe.'
+                              ' Overrides --skip-exe.'
+                              ' exe marks tests requiring backend.DOT_BINARY.')
+    except ValueError as e:  # pragma: no cover
+        assert ONLY_EXE in str(e), f'fails because {ONLY_EXE!r} is already added'
+
 
 def pytest_configure(config):
     config.addinivalue_line('markers',
@@ -23,19 +33,24 @@ def pytest_configure(config):
 
 
 def pytest_collection_modifyitems(config, items):
-    if config.getoption(SKIP_EXE):
+    if config.getoption(ONLY_EXE) or config.getoption(SKIP_EXE):
+        only = config.getoption(ONLY_EXE)
         for item in items:
-            exe_marker = _make_exe_marker(item)
+            exe_marker = _make_exe_marker(item, only=only)
             if exe_marker is not None:
                 item.add_marker(exe_marker)
 
 
-def _make_exe_marker(item):
+def _make_exe_marker(item, only: bool = False):
     def make_kwargs(**kwargs):
         return kwargs
 
     exe_values = [make_kwargs(*m.args, **m.kwargs)
                   for m in item.iter_markers(name='exe')]
+
+
+    if only and not exe_values:
+        return pytest.mark.skip(reason=f'skipped by {ONLY_EXE} flag')
 
     if exe_values:
         assert len(exe_values) == 1
@@ -47,6 +62,7 @@ def _make_exe_marker(item):
         else:
             kwargs.setdefault('reason', f'skipped by {SKIP_EXE} flag')
             return pytest.mark.skip(**kwargs)
+
     return None
 
 
