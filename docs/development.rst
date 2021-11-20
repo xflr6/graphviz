@@ -8,6 +8,7 @@ Development
 - Changelog: https://graphviz.readthedocs.io/en/latest/changelog.html
 - Issue Tracker: https://github.com/xflr6/graphviz/issues
 
+
 Installation
 ------------
 
@@ -37,6 +38,7 @@ Install in a venv_ in development mode (includes all ``extras_require``):
 
     alteratively: ``pip install -e .[dev,test,docs]``
     (same as ``pip install -r requirements.txt``)
+
 
 Tests
 -----
@@ -68,6 +70,13 @@ Run **only tests** that are expected to work **without Graphviz** executables:
 
     $ python -m tox
 
+**Run the code style linter** (flake8_):
+
+.. code:: bash
+
+    $ python -m flake8
+
+
 Documentation
 -------------
 
@@ -82,6 +91,7 @@ Documentation
 .. code:: bash
 
     $ ./build-docs.py
+
 
 Overview
 --------
@@ -105,6 +115,7 @@ Use ``help()`` in the REPL to shows/structure methods and attributes in dependen
 .. _venv: https://docs.python.org/3/library/venv.html#creating-virtual-environments
 .. _tox: https://tox.wiki/en/latest/
 .. _virtualenv: https://virtualenv.pypa.io
+.. _flake8: https://flake8.pycqa.org/en/latest/
 .. _sphinx: https://www.sphinx-doc.org
 .. _sphinx-rtd-theme: https://sphinx-rtd-theme.readthedocs.io
 
