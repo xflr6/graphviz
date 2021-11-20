@@ -60,11 +60,9 @@ undirected and directed graphs respectively. They have the same
 Create a graph by instantiating a new :class:`.Graph` or
 :class:`.Digraph` object:
 
-.. testsetup::
-    import graphviz
-
 .. doctest::
 
+    >>> import graphviz
     >>> dot = graphviz.Digraph('round-table', comment='The Round Table', directory='doctest-output')  # doctest: +NO_EXE
 
     >>> dot  # doctest: +ELLIPSIS
@@ -98,7 +96,7 @@ Check the generated source code:
 
     >>> print(dot.source)  # doctest: +NORMALIZE_WHITESPACE  +NO_EXE
     // The Round Table
-    digraph {
+    digraph "round-table" {
         A [label="King Arthur"]
         B [label="Sir Bedevere the Wise"]
         L [label="Sir Lancelot the Brave"]
@@ -111,10 +109,10 @@ Use the :meth:`~.Graph.render`-method to save the source code and render it with
 default layout program (``dot``, see below for using `other layout commands
 <Engines_>`_). 
 
-.. testsetup:: render
-    doctest_mark_exe()
 
-.. doctest:: render
+.. doctest::
+
+    >>> doctest_mark_exe()
 
     >>> dot.render().replace('\\', '/')
     'doctest-output/round-table.gv.pdf'
@@ -122,7 +120,9 @@ default layout program (``dot``, see below for using `other layout commands
 Passing ``view=True`` will automatically open the resulting (PDF, PNG, SVG,
 etc.) file with your system's default viewer application for the file type.
 
-.. doctest:: render
+.. doctest::
+
+    >>> doctest_mark_exe()
 
     >>> dot.render(view=True)  # doctest: +SKIP
     'doctest-output/round-table.gv.pdf'
@@ -146,10 +146,10 @@ To use a different `output file format`_ than the default PDF, use the
 You can also change the :attr:`~.Graph.format` attribute on an existing graph
 object:
 
-..testsetup:: render
-    doctest_mark_exe()
 
 .. doctest::
+
+    >>> doctest_mark_exe()
 
     >>> dot.format = 'svg'
 
@@ -171,7 +171,7 @@ use the :meth:`~.Graph.pipe`-method of your :class:`.Graph` or
 
     >>> h.edge('Hello', 'World')
 
-.. doctest:: render
+.. doctest::
 
     >>> print(h.pipe().decode('utf-8'))  # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
     <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -514,7 +514,7 @@ instance  is created with ``strict=None`` and the parent graph's values for
 Note that these attributes are only relevant when rendering the subgraph independently
 (i.e. as a stand-alone graph) from within the ``with``-block:
 
-.. doctest:: render
+.. doctest::
 
     >>> import pytest
     >>> pytest.xfail(reason='FIXME')
@@ -558,6 +558,10 @@ the unflatten_ preprocessor (`PDF <unflatten_pdf_>`_), use the
 
     >>> w.edges(('0', str(i)) for i in range(1, 10))
 
+.. doctest::
+
+    >>> doctest_mark_exe()
+
     >>> w.view()  # doctest: +SKIP
 
 .. image:: _static/wide.svg
@@ -570,6 +574,10 @@ disconnected nodes.
 
     >>> u = w.unflatten(stagger=3)  # doctest: +NO_EXE
 
+.. doctest::
+
+    >>> doctest_mark_exe()
+
     >>> u.view()  # doctest: +SKIP
 
 .. image:: _static/wide-unflatten-stagger-3.svg
@@ -581,8 +589,13 @@ The method returns a :class:`.Source` object that you can
 
 .. doctest::
 
-    >>> u = w.unflatten(stagger=2)  # doctest: +NO_EXE
+    >>> u = w.unflatten(stagger=2)  # doctest: +ELLIPSIS +NO_EXE
     >>> u
+    <graphviz.sources.Source object at 0x...>
+
+.. doctest::
+
+    >>> doctest_mark_exe()
 
     >>> u.view()  # doctest: +SKIP
 
@@ -634,10 +647,16 @@ the higher-level interface of :class:`.Graph` or :class:`.Digraph`), create a
 
 Use the :meth:`~.Source.render`-method to save and render it:
 
-.. doctest:: render
+.. doctest::
+
+    >>> doctest_mark_exe()
 
     >>> src.render('doctest-output/holy-grenade.gv').replace('\\', '/')
     'doctest-output/holy-grenade.gv.pdf'
+
+.. doctest::
+
+    >>> doctest_mark_exe()
 
     >>> src.render('doctest-output/holy-grenade.gv', view=True).replace('\\', '/')  # doctest: +SKIP
     'doctest-output/holy-grenade.gv.pdf'
@@ -657,7 +676,7 @@ Existing files
 To directly render an existing DOT source file (e.g. created with other tools),
 you can use the :func:`graphviz.render` function. 
 
-.. doctest:: render
+.. doctest::
 
     >>> graphviz.render('dot', 'png', 'doctest-output/holy-grenade.gv').replace('\\', '/')
     'doctest-output/holy-grenade.gv.png'
@@ -702,6 +721,10 @@ incremental workflow (and also preserve its intermediate steps):
     >>> g = graphviz.Graph()
 
     >>> g.node('spam')
+
+.. doctest::
+
+    >>> doctest_mark_exe()
 
     >>> g.view(tempfile.mktemp('.gv'))  # doctest: +SKIP
     'C:\\Users\\User\\AppData\\Local\\Temp\\tmp3aoie8d0.gv.pdf'

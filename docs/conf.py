@@ -49,6 +49,15 @@ extensions = [
     'sphinx.ext.viewcode',
 ]
 
+doctest_global_setup = '''\
+import doctest as _doctest
+
+_doctest.register_optionflag('NO_EXE')
+
+def doctest_mark_exe(**kwargs):
+    pass
+'''
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 

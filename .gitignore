@@ -5,6 +5,7 @@ __pycache__/
 /build/
 /dist/
 /docs/_build/
+/docs/_doctest/
 /*.egg-info/
 /*.egg
 /.eggs/

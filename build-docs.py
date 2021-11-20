@@ -3,7 +3,6 @@
 
 """Build the docs with https://www.sphinx-doc.org."""
 
-import contextlib
 import functools
 import os
 import pathlib
@@ -14,15 +13,15 @@ from sphinx.cmd import build
 
 SOURCE = pathlib.Path('docs')
 
-TARGET = pathlib.Path('_build')
+TARGET = SOURCE / '_build'
 
-RESULT = SOURCE / TARGET / 'index.html'
+RESULT = TARGET / 'index.html'
 
 BROWSER_OPEN = '--open'
 
 SKIP_OPEN_RESULT = '--no-open'
 
-DEFAULT_ARGS = [BROWSER_OPEN, '-n', '-v', '.', str(TARGET)]
+DEFAULT_ARGS = [BROWSER_OPEN, '-n', '-v', str(SOURCE), str(TARGET)]
 
 OPEN_RESULT = BROWSER_OPEN in DEFAULT_ARGS
 
@@ -32,20 +31,8 @@ SELF = pathlib.Path(__file__)
 print = functools.partial(print, sep='\n')
 
 
-@contextlib.contextmanager
-def chdir(path):
-    cwd_before = os.getcwd()
-    print(f'os.chdir({path!r})')
-    os.chdir(path)
-    try:
-        yield path
-    finally:
-        print('', f'os.chdir({cwd_before!r})')
-        os.chdir(cwd_before)
-
-
 args = sys.argv[1:]
-print(f'run {SELF.name} {args}', '')
+print(f'run {SELF.name} {args}')
 if not args:
     args = DEFAULT_ARGS
 
@@ -72,17 +59,19 @@ if not args:  # no pytest args given
     args = [a for a in DEFAULT_ARGS
             if a != SKIP_OPEN_RESULT and  a.partition('=')[0] != BROWSER_OPEN]
 
-with chdir(SOURCE):
-    print('', f'sphinx.cmd.build.main({args})', '')
-    returncode = build.main(args)
+if args == ['-b', 'doctest']:
+    args += [str(SOURCE), str(SOURCE / '_doctest')]
 
-print('', f'returncode: {returncode!r}')
+print('', f'sphinx.cmd.build.main({args})',)
+returncode = build.main(args)
+print('', f'returncode: {returncode!r}', end='')
 
 try:
-    print('', f'index: {RESULT}', f'assert {RESULT!r}.stat().st_size', end='')
-    assert open_result.stat().st_size, f'non-empty {open_result}'
-    if open_result:
-        print('', f'webbrowser.open({open_result!r})', end='')
-        webbrowser.open(open_result)
+    if 'doctest' not in args:
+        print('', f'index: {RESULT}', f'assert {RESULT!r}.stat().st_size', end='')
+        assert open_result.stat().st_size, f'non-empty {open_result}'
+        if open_result:
+            print('', f'webbrowser.open({open_result!r})', end='')
+            webbrowser.open(open_result)
 finally:
     sys.exit(returncode)

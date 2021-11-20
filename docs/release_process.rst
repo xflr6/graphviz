@@ -39,6 +39,7 @@ Run the tests, run the linter, and build the docs:
 
     $ python -m tox -r -- -W error  # --recreate, raise error on warning
     $ python -m flake8 --disable-noqa
+    $ ./build-docs.py -b doctest
     $ ./build-docs.py
     $ git clean -f -d -x
 
