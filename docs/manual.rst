@@ -191,13 +191,15 @@ This also allows direct displaying within the `Jupyter Qt Console`_ (e.g.
 .. image:: _static/qtconsole.png
     :align: center
 
-By default ``_repr_mimebundle_()`` will use `'svg'`` format for displaying.
+By default :meth:`~.Graph._repr_mimebundle_` uses ``'svg'`` format.
+Use the :func:`~.set_jupyter_format` to override.
 
 .. hint::
 
-    You can use ``display_svg()``, `display_png``, or ``.display_jpeg``
-    from `IPython.display`_ to display the SVG, PNG or JPEG representation
-    of a :class:`.Graph` or :class:`.Digraph` in a IPython/Jupyter.
+    You can also use ``display_svg()``, ``display_png()``, or ``.display_jpeg()``
+    from `IPython.display`_ to display the rendered
+    :class:`.Graph` or :class:`.Digraph` as SVG, PNG or JPEG
+    in IPython/Jupyter.
 
 
 Styling
