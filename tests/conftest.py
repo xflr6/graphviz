@@ -48,7 +48,6 @@ def _make_exe_marker(item, only: bool = False):
     exe_values = [make_kwargs(*m.args, **m.kwargs)
                   for m in item.iter_markers(name='exe')]
 
-
     if only:
         if exe_values:
             return None
