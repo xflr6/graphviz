@@ -66,7 +66,7 @@ Create a graph object:
 
 .. code:: python
 
-    >>> import graphviz
+    >>> import graphviz  # doctest: +NO_EXE
     >>> dot = graphviz.Digraph(comment='The Round Table')
     >>> dot  #doctest: +ELLIPSIS
     <graphviz.graphs.Digraph object at 0x...>
@@ -75,7 +75,7 @@ Add nodes and edges:
 
 .. code:: python
 
-    >>> dot.node('A', 'King Arthur')
+    >>> dot.node('A', 'King Arthur')  # doctest: +NO_EXE
     >>> dot.node('B', 'Sir Bedevere the Wise')
     >>> dot.node('L', 'Sir Lancelot the Brave')
 
@@ -86,7 +86,7 @@ Check the generated source code:
 
 .. code:: python
 
-    >>> print(dot.source)  # doctest: +NORMALIZE_WHITESPACE
+    >>> print(dot.source)  # doctest: +NORMALIZE_WHITESPACE +NO_EXE
     // The Round Table
     digraph {
         A [label="King Arthur"]
