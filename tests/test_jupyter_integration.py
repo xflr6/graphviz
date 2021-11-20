@@ -17,7 +17,8 @@ def test_get_jupyter_mimetype_format_normalizes():
 
 
 def test_get_jupyter_mimetype_format_raises_unsupported():
-    with pytest.raises(ValueError, match='unsupported'):
+    with pytest.raises(ValueError,
+                       match=r"unsupported .*\(must be one of .+'image/svg\+xml'"):
         jupyter_integration.get_jupyter_mimetype_format('A boy called Brian!')
 
 

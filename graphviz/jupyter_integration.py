@@ -39,7 +39,8 @@ def get_jupyter_format_mimetype(jupyter_format: str) -> str:
 
 def get_jupyter_mimetype_format(mimetype: str) -> typing.Optional[str]:
     if mimetype not in MIME_TYPES:
-        raise ValueError(r'unsupported mimetype: {mimetype!r}')
+        raise ValueError(f'unsupported mimetype: {mimetype!r}'
+                         f' (must be one of {sorted(MIME_TYPES)})')
     for format, jupyter_mimetype in JUPYTER_FORMATS.items():
         if jupyter_mimetype == mimetype:
             return format
