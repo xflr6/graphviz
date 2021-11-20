@@ -19,6 +19,10 @@ RESULT = SOURCE / TARGET / 'index.html'
 
 DEFAULT_ARGS = ['-n', '-v', '.', str(TARGET)]
 
+OPEN_RESULT = True
+
+NO_OPEN_RESULT = '--no-open'
+
 
 @contextlib.contextmanager
 def chdir(path):
@@ -33,6 +37,9 @@ def chdir(path):
 
 
 args = sys.argv[1:]
+if NO_OPEN_RESULT in args:
+    OPEN_RESULT = False
+    args = [a for a in args if a != NO_OPEN_RESULT]
 if not args:
     args = DEFAULT_ARGS
 
@@ -44,6 +51,7 @@ print('', RESULT, sep='\n')
 
 try:
     assert RESULT.stat().st_size, f'non-empty {RESULT}'
-    webbrowser.open(RESULT)
+    if OPEN_RESULT:
+        webbrowser.open(RESULT)
 finally:
     sys.exit(result)
