@@ -4,6 +4,7 @@
 """Build the docs with https://www.sphinx-doc.org."""
 
 import contextlib
+import functools
 import os
 import pathlib
 import sys
@@ -17,41 +18,71 @@ TARGET = pathlib.Path('_build')
 
 RESULT = SOURCE / TARGET / 'index.html'
 
-DEFAULT_ARGS = ['-n', '-v', '.', str(TARGET)]
-
-OPEN_RESULT = True
+BROWSER_OPEN = '--open'
 
 SKIP_OPEN_RESULT = '--no-open'
+
+DEFAULT_ARGS = [BROWSER_OPEN, '-n', '-v', '.', str(TARGET)]
+
+OPEN_RESULT = BROWSER_OPEN in DEFAULT_ARGS
+
+SELF = pathlib.Path(__file__)
+
+
+print = functools.partial(print, sep='\n')
 
 
 @contextlib.contextmanager
 def chdir(path):
     cwd_before = os.getcwd()
-    print(f'os.chdir({path})')
+    print(f'os.chdir({path!r})')
     os.chdir(path)
     try:
         yield path
     finally:
-        print(f'os.chdir({cwd_before}')
+        print('', f'os.chdir({cwd_before!r})')
         os.chdir(cwd_before)
 
 
 args = sys.argv[1:]
-if SKIP_OPEN_RESULT in args:
-    OPEN_RESULT = False
-    args = [a for a in args if a != SKIP_OPEN_RESULT]
+print(f'run {SELF.name} {args}', '')
 if not args:
     args = DEFAULT_ARGS
 
-with chdir(SOURCE):
-    print(f'sphinx.cmd.build.main({args})')
-    result = build.main(args)
+if SKIP_OPEN_RESULT in args:
+    open_result = None
+    args = [a for a in args
+            for name, value in [a.partition('=')[::2]]
+            if name not in (SKIP_OPEN_RESULT, BROWSER_OPEN)]
+elif any(a.partition('=')[0] == BROWSER_OPEN for a in args):
+    open_result = RESULT
 
-print('', RESULT, sep='\n')
+    values = {value for a in args
+              for name, value in [a.partition('=')[::2]]
+              if name == BROWSER_OPEN and value}
+    if values:
+        if len(values) != 1:
+            raise ValueError(f'conflicting {BROWSER_OPEN}: {values}')
+        value, = values
+        if value:
+            open_result = open_result.parent / value
+    args = [a for a in args if a.partition('=')[0] != BROWSER_OPEN]
+
+if not args:  # no pytest args given
+    args = [a for a in DEFAULT_ARGS
+            if a != SKIP_OPEN_RESULT and  a.partition('=')[0] != BROWSER_OPEN]
+
+with chdir(SOURCE):
+    print('', f'sphinx.cmd.build.main({args})', '')
+    returncode = build.main(args)
+
+print('', f'returncode: {returncode!r}')
 
 try:
-    assert RESULT.stat().st_size, f'non-empty {RESULT}'
-    if OPEN_RESULT:
-        webbrowser.open(RESULT)
+    print('', f'index: {RESULT}', f'assert {RESULT!r}.stat().st_size', end='')
+    assert open_result.stat().st_size, f'non-empty {open_result}'
+    if open_result:
+        print('', f'webbrowser.open({open_result!r})', end='')
+        webbrowser.open(open_result)
 finally:
-    sys.exit(result)
+    sys.exit(returncode)
