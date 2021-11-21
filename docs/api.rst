@@ -1,5 +1,3 @@
-.. _api:
-
 API Reference
 =============
 
@@ -33,14 +31,19 @@ Graph
 
 .. autoclass:: graphviz.Graph
     :members:
+        directed,
+        name, comment,
+        filename, directory,
+        format, engine, encoding, renderer, formatter,
+        graph_attr, node_attr, edge_attr,
+        body,
+        strict,
         __iter__,
         source,
-        name, comment,
         node, edge, edges, attr, subgraph,
-        format, engine, encoding,
-        clear, copy, unflatten, pipe, save, render, view,
+        filepath, save, render, view, pipe, unflatten,
         _repr_mimebundle_,
-        directed
+        clear, copy
 
 
 Digraph
@@ -48,14 +51,19 @@ Digraph
 
 .. autoclass:: graphviz.Digraph
     :members:
+        directed,
+        name, comment,
+        filename, directory,
+        format, engine, encoding, renderer, formatter,
+        graph_attr, node_attr, edge_attr,
+        body,
+        strict,
         __iter__,
         source,
-        name, comment,
         node, edge, edges, attr, subgraph,
-        format, engine, encoding,
-        clear, copy, unflatten, pipe, save, render, view,
+        filepath, save, render, view, pipe, unflatten,
         _repr_mimebundle_,
-        directed
+        clear, copy
 
 
 Source
@@ -63,12 +71,14 @@ Source
 
 .. autoclass:: graphviz.Source
     :members:
+        from_file,
+        filename, directory,
+        format, engine, encoding, renderer, formatter,
         __iter__,
         source,
-        format, engine, encoding,
-        copy, unflatten, pipe, save, render, view,
+        filepath, save, render, view, pipe, unflatten,
         _repr_mimebundle_,
-        from_file
+        copy
 
 
 Quoting/escaping
@@ -82,14 +92,11 @@ Quoting/escaping
 Exceptions
 ----------
 
-.. autodata:: graphviz.RequiredArgumentError
-   :annotation:
+.. autoexception:: graphviz.RequiredArgumentError
 
-.. autodata:: graphviz.ExecutableNotFound
-   :annotation:
+.. autoexception:: graphviz.ExecutableNotFound
 
-.. autodata:: graphviz.CalledProcessError
-   :annotation:
+.. autoexception:: graphviz.CalledProcessError
 
 
 Low-level functions
@@ -173,7 +180,6 @@ __ https://ipython.readthedocs.io/en/stable/api/generated/IPython.display.html#f
 
 Other
 -----
-
 
 .. autofunction:: graphviz.version
 
@@ -343,7 +349,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |              (``None`` or ``'graph'``, ``'node'``, ``'edge'``).
      |          attrs: Attributes to be set (must be strings, may be empty).
      |
-     |      See the :ref:`usage examples in the User Guide <attributes>`.
+     |      See the `usage examples in the User Guide <attributes>`.
      |
      |  clear(self, keep_attrs: bool = False) -> None
      |      Reset content to an empty body, clear graph/node/egde_attr mappings.
@@ -370,7 +376,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          The ``tail_name`` and ``head_name`` strings are separated
      |          by (optional) colon(s) into ``node`` name, ``port`` name,
      |          and ``compass`` (e.g. ``sw``).
-     |          See :ref:`details in the User Guide <ports>`.
+     |          See `details in the User Guide <ports>`.
      |
      |  edges(self, tail_head_iter) -> None
      |      Create a bunch of edges.
@@ -384,7 +390,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          The ``tail_name`` and ``head_name`` strings are separated
      |          by (optional) colon(s) into ``node`` name, ``port`` name,
      |          and ``compass`` (e.g. ``sw``).
-     |          See :ref:`details in the User Guide <ports>`.
+     |          See `details in the User Guide <ports>`.
      |
      |  node(self,
              name: str,
@@ -427,7 +433,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          body: Verbatim lines to add to the subgraph ``body``
      |              (``with``-block use).
      |
-     |      See the :ref:`usage examples in the User Guide <subgraphs>`.
+     |      See the `usage examples in the User Guide <subgraphs>`.
      |
      |      When used as a context manager, the returned new graph instance
      |      uses ``strict=None`` and the parent graph's values
@@ -491,7 +497,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |              but ``renderer`` is None.
      |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
      |              is not found.
-     |          subprocess.CalledProcessError: If the returncode (exit status)
+     |          graphviz.CalledProcessError: If the returncode (exit status)
      |              of the rendering ``dot`` subprocess is non-zero.
      |          RuntimeError: If viewer opening is requested but not supported.
      |
@@ -526,7 +532,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      Raises:
      |          graphviz.ExecutableNotFound: If the Graphviz executable
      |              is not found.
-     |          subprocess.CalledProcessError: If the exit status is non-zero.
+     |          graphviz.CalledProcessError: If the exit status is non-zero.
      |          RuntimeError: If opening the viewer is not supported.
      |
      |      Short-cut method for calling :meth:`.render` with ``view=True``.
@@ -556,6 +562,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  Readonly properties inherited from graphviz.saving.Save:
      |
      |  filepath
+     |      The target path for saving the DOT source file.
      |
      |  ----------------------------------------------------------------------
      |  Data and other attributes inherited from graphviz.saving.Save:
@@ -598,7 +605,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |              but ``renderer`` is None.
      |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
      |              is not found.
-     |          subprocess.CalledProcessError: If the returncode (exit status)
+     |          graphviz.CalledProcessError: If the returncode (exit status)
      |              of the rendering ``dot`` subprocess is non-zero.
      |
      |      Example:
@@ -618,7 +625,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  unflatten(self,
                   stagger: Optional[int] = None,
                   fanout: bool = False,
-                  chain: Optional[int] = None)
+                  chain: Optional[int] = None) -> 'graphviz.Source'
      |      Return a new :class:`.Source` instance with the source
      |          piped through the Graphviz *unflatten* preprocessor.
      |
@@ -631,14 +638,14 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |              of up to this many nodes.
      |
      |      Returns:
-     |          Source: Prepocessed DOT source code (improved layout aspect ratio).
+     |          Prepocessed DOT source code (improved layout aspect ratio).
      |
      |      Raises:
      |          graphviz.RequiredArgumentError: If ``fanout`` is given
      |              but ``stagger`` is None.
      |          graphviz.ExecutableNotFound: If the Graphviz ``unflatten`` executable
      |              is not found.
-     |          subprocess.CalledProcessError: If the returncode (exit status)
+     |          graphviz.CalledProcessError: If the returncode (exit status)
      |              of the unflattening 'unflatten' subprocess is non-zero.
      |
      |      See also:
@@ -829,7 +836,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |              (``None`` or ``'graph'``, ``'node'``, ``'edge'``).
      |          attrs: Attributes to be set (must be strings, may be empty).
      |
-     |      See the :ref:`usage examples in the User Guide <attributes>`.
+     |      See the `usage examples in the User Guide <attributes>`.
      |
      |  clear(self, keep_attrs: bool = False) -> None
      |      Reset content to an empty body, clear graph/node/egde_attr mappings.
@@ -856,7 +863,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          The ``tail_name`` and ``head_name`` strings are separated
      |          by (optional) colon(s) into ``node`` name, ``port`` name,
      |          and ``compass`` (e.g. ``sw``).
-     |          See :ref:`details in the User Guide <ports>`.
+     |          See `details in the User Guide <ports>`.
      |
      |  edges(self, tail_head_iter) -> None
      |      Create a bunch of edges.
@@ -870,7 +877,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          The ``tail_name`` and ``head_name`` strings are separated
      |          by (optional) colon(s) into ``node`` name, ``port`` name,
      |          and ``compass`` (e.g. ``sw``).
-     |          See :ref:`details in the User Guide <ports>`.
+     |          See `details in the User Guide <ports>`.
      |
      |  node(self,
              name: str,
@@ -913,7 +920,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          body: Verbatim lines to add to the subgraph ``body``
      |              (``with``-block use).
      |
-     |      See the :ref:`usage examples in the User Guide <subgraphs>`.
+     |      See the `usage examples in the User Guide <subgraphs>`.
      |
      |      When used as a context manager, the returned new graph instance
      |      uses ``strict=None`` and the parent graph's values
@@ -977,7 +984,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |              but ``renderer`` is None.
      |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
      |              is not found.
-     |          subprocess.CalledProcessError: If the returncode (exit status)
+     |          graphviz.CalledProcessError: If the returncode (exit status)
      |              of the rendering ``dot`` subprocess is non-zero.
      |          RuntimeError: If viewer opening is requested but not supported.
      |
@@ -1012,7 +1019,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      Raises:
      |          graphviz.ExecutableNotFound: If the Graphviz executable
      |              is not found.
-     |          subprocess.CalledProcessError: If the exit status is non-zero.
+     |          graphviz.CalledProcessError: If the exit status is non-zero.
      |          RuntimeError: If opening the viewer is not supported.
      |
      |      Short-cut method for calling :meth:`.render` with ``view=True``.
@@ -1042,6 +1049,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  Readonly properties inherited from graphviz.saving.Save:
      |
      |  filepath
+     |      The target path for saving the DOT source file.
      |
      |  ----------------------------------------------------------------------
      |  Data and other attributes inherited from graphviz.saving.Save:
@@ -1084,7 +1092,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |              but ``renderer`` is None.
      |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
      |              is not found.
-     |          subprocess.CalledProcessError: If the returncode (exit status)
+     |          graphviz.CalledProcessError: If the returncode (exit status)
      |              of the rendering ``dot`` subprocess is non-zero.
      |
      |      Example:
@@ -1104,7 +1112,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  unflatten(self,
                   stagger: Optional[int] = None,
                   fanout: bool = False,
-                  chain: Optional[int] = None)
+                  chain: Optional[int] = None) -> 'graphviz.Source'
      |      Return a new :class:`.Source` instance with the source
      |          piped through the Graphviz *unflatten* preprocessor.
      |
@@ -1117,14 +1125,14 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |              of up to this many nodes.
      |
      |      Returns:
-     |          Source: Prepocessed DOT source code (improved layout aspect ratio).
+     |          Prepocessed DOT source code (improved layout aspect ratio).
      |
      |      Raises:
      |          graphviz.RequiredArgumentError: If ``fanout`` is given
      |              but ``stagger`` is None.
      |          graphviz.ExecutableNotFound: If the Graphviz ``unflatten`` executable
      |              is not found.
-     |          subprocess.CalledProcessError: If the returncode (exit status)
+     |          graphviz.CalledProcessError: If the returncode (exit status)
      |              of the unflattening 'unflatten' subprocess is non-zero.
      |
      |      See also:
@@ -1304,7 +1312,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  Readonly properties defined here:
      |
      |  source
-     |      The DOT source code as string (read from file).
+     |      The DOT source code as string.
      |
      |      Normalizes so that the string always ends in a final newline.
      |
@@ -1356,7 +1364,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |              but ``renderer`` is None.
      |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
      |              is not found.
-     |          subprocess.CalledProcessError: If the returncode (exit status)
+     |          graphviz.CalledProcessError: If the returncode (exit status)
      |              of the rendering ``dot`` subprocess is non-zero.
      |          RuntimeError: If viewer opening is requested but not supported.
      |
@@ -1391,7 +1399,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      Raises:
      |          graphviz.ExecutableNotFound: If the Graphviz executable
      |              is not found.
-     |          subprocess.CalledProcessError: If the exit status is non-zero.
+     |          graphviz.CalledProcessError: If the exit status is non-zero.
      |          RuntimeError: If opening the viewer is not supported.
      |
      |      Short-cut method for calling :meth:`.render` with ``view=True``.
@@ -1404,9 +1412,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  Readonly properties inherited from graphviz.saving.Save:
      |
      |  filepath
+     |      The target path for saving the DOT source file.
      |
      |  ----------------------------------------------------------------------
      |  Data and other attributes inherited from graphviz.saving.Save:
+     |
+     |  __annotations__ = {'directory': <class 'str'>}
      |
      |  directory = ''
      |
@@ -1446,7 +1457,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |              but ``renderer`` is None.
      |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
      |              is not found.
-     |          subprocess.CalledProcessError: If the returncode (exit status)
+     |          graphviz.CalledProcessError: If the returncode (exit status)
      |              of the rendering ``dot`` subprocess is non-zero.
      |
      |      Example:
@@ -1466,7 +1477,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  unflatten(self,
                   stagger: Optional[int] = None,
                   fanout: bool = False,
-                  chain: Optional[int] = None)
+                  chain: Optional[int] = None) -> 'graphviz.Source'
      |      Return a new :class:`.Source` instance with the source
      |          piped through the Graphviz *unflatten* preprocessor.
      |
@@ -1479,14 +1490,14 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |              of up to this many nodes.
      |
      |      Returns:
-     |          Source: Prepocessed DOT source code (improved layout aspect ratio).
+     |          Prepocessed DOT source code (improved layout aspect ratio).
      |
      |      Raises:
      |          graphviz.RequiredArgumentError: If ``fanout`` is given
      |              but ``stagger`` is None.
      |          graphviz.ExecutableNotFound: If the Graphviz ``unflatten`` executable
      |              is not found.
-     |          subprocess.CalledProcessError: If the returncode (exit status)
+     |          graphviz.CalledProcessError: If the returncode (exit status)
      |              of the unflattening 'unflatten' subprocess is non-zero.
      |
      |      See also:

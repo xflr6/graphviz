@@ -6,16 +6,14 @@ Examples
 .. tip::
 
     The following code examples are included in the ``examples/`` directory of the
-    `source repository/distribution`__. 
+    `source repository/distribution <examples directory_>`_. 
 
 .. note::
 
     Most of them recreate examples from the
-    `graphviz.org gallery`__ or the `graphviz.org documentation`__.
+    `graphviz.org gallery`_ or the `graphviz.org documentation`_.
 
-.. __: https://github.com/xflr6/graphviz/tree/master/examples/
-.. __: http://www.graphviz.org/gallery/
-.. __: http://www.graphviz.org/documentation/
+.. include:: _links.rst
 
 
 hello.py 
@@ -158,7 +156,6 @@ angles.py
 
 
 .. _rank_same.py:
-
 
 rank_same.py
 ------------
