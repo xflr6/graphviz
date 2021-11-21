@@ -20,7 +20,7 @@ BROWSER_OPEN = '--open'
 
 SKIP_OPEN_RESULT = '--no-open'
 
-DEFAULT_ARGS = [BROWSER_OPEN, '-n', '-v', str(SOURCE), str(TARGET)]
+DEFAULT_ARGS = [BROWSER_OPEN, '-W', '-n', '-v', str(SOURCE), str(TARGET)]
 
 OPEN_RESULT = BROWSER_OPEN in DEFAULT_ARGS
 
@@ -59,7 +59,7 @@ if not args:  # no pytest args given
             if a != SKIP_OPEN_RESULT and a.partition('=')[0] != BROWSER_OPEN]
 
 if args == ['-b', 'doctest']:
-    args += [str(SOURCE), str(SOURCE / '_doctest')]
+    args += ['-W', str(SOURCE), str(SOURCE / '_doctest')]
 
 print('', f'sphinx.cmd.build.main({args})',)
 returncode = build.main(args)
