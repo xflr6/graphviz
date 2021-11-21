@@ -38,7 +38,7 @@ def unflatten(source: str,
             but no ``stagger``.
         graphviz.ExecutableNotFound: If the Graphviz 'unflatten' executable
             is not found.
-        subprocess.CalledProcessError: If the returncode (exit status)
+        graphviz.CalledProcessError: If the returncode (exit status)
             of the unflattening 'unflatten' subprocess is non-zero.
 
     See also:

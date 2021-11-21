@@ -33,7 +33,7 @@ def render(engine: str, format: str, filepath: typing.Union[os.PathLike, str],
             but ``renderer`` is None.
         graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
             is not found.
-        subprocess.CalledProcessError: If the returncode (exit status)
+        graphviz.CalledProcessError: If the returncode (exit status)
             of the rendering 'dot' subprocess is non-zero.
 
     Note:

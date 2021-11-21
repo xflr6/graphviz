@@ -33,7 +33,7 @@ def pipe(engine: str, format: str, data: bytes,
             but ``renderer`` is None.
         graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
             is not found.
-        subprocess.CalledProcessError: If the returncode (exit status)
+        graphviz.CalledProcessError: If the returncode (exit status)
             of the rendering 'dot' subprocess is non-zero.
 
     Example:
@@ -79,7 +79,7 @@ def pipe_string(engine: str, format: str, input_string: str, *,
             but ``renderer`` is None.
         graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
             is not found.
-        subprocess.CalledProcessError: If the returncode (exit status)
+        graphviz.CalledProcessError: If the returncode (exit status)
             of the rendering 'dot' subprocess is non-zero.
 
     Example:
@@ -126,7 +126,7 @@ def pipe_lines(engine: str, format: str, input_lines: typing.Iterator[str], *,
             but ``renderer`` is None.
         graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
             is not found.
-        subprocess.CalledProcessError: If the returncode (exit status)
+        graphviz.CalledProcessError: If the returncode (exit status)
             of the rendering 'dot' subprocess is non-zero.
 
     Example:
@@ -173,7 +173,7 @@ def pipe_lines_string(engine: str, format: str, input_lines: typing.Iterator[str
             but ``renderer`` is None.
         graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
             is not found.
-        subprocess.CalledProcessError: If the returncode (exit status)
+        graphviz.CalledProcessError: If the returncode (exit status)
             of the rendering 'dot' subprocess is non-zero.
 
     Example:

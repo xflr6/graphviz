@@ -59,7 +59,7 @@ class Render(saving.Save, backend.Render, backend.View):
                 but ``renderer`` is None.
             graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
                 is not found.
-            subprocess.CalledProcessError: If the returncode (exit status)
+            graphviz.CalledProcessError: If the returncode (exit status)
                 of the rendering ``dot`` subprocess is non-zero.
             RuntimeError: If viewer opening is requested but not supported.
 
@@ -130,7 +130,7 @@ class Render(saving.Save, backend.Render, backend.View):
         Raises:
             graphviz.ExecutableNotFound: If the Graphviz executable
                 is not found.
-            subprocess.CalledProcessError: If the exit status is non-zero.
+            graphviz.CalledProcessError: If the exit status is non-zero.
             RuntimeError: If opening the viewer is not supported.
 
         Short-cut method for calling :meth:`.render` with ``view=True``.

@@ -34,7 +34,7 @@ def version() -> typing.Tuple[int, ...]:
 
     Raises:
         graphviz.ExecutableNotFound: If the Graphviz executable is not found.
-        subprocess.CalledProcessError: If the exit status is non-zero.
+        graphviz.CalledProcessError: If the exit status is non-zero.
         RuntimeError: If the output cannot be parsed into a version number.
 
     Example:
