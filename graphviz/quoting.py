@@ -150,7 +150,7 @@ class Quote:
     _attr_list = staticmethod(attr_list)
 
 
-def escape(s: str) -> 'NoHtml':
+def escape(s: str) -> str:
     r"""Return string disabling special meaning of backslashes and ``'<...>'``.
 
     see also https://www.graphviz.org/doc/info/attrs.html#k:escString
@@ -179,7 +179,7 @@ class NoHtml(str):
     __slots__ = ()
 
 
-def nohtml(s: str) -> NoHtml:
+def nohtml(s: str) -> str:
     """Return string not treating ``'<...>'`` as DOT HTML string in quoting.
 
     Args:

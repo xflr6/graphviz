@@ -2,6 +2,7 @@
 
 import typing
 
+import graphviz
 from . import base
 from . import backend
 from . import encoding
@@ -15,7 +16,7 @@ class Unflatten(encoding.Encoding, base.Base, backend.Unflatten):
     def unflatten(self,
                   stagger: typing.Optional[int] = None,
                   fanout: bool = False,
-                  chain: typing.Optional[int] = None):
+                  chain: typing.Optional[int] = None) -> 'graphviz.Source':
         """Return a new :class:`.Source` instance with the source
             piped through the Graphviz *unflatten* preprocessor.
 
@@ -28,14 +29,14 @@ class Unflatten(encoding.Encoding, base.Base, backend.Unflatten):
                 of up to this many nodes.
 
         Returns:
-            Source: Prepocessed DOT source code (improved layout aspect ratio).
+            Prepocessed DOT source code (improved layout aspect ratio).
 
         Raises:
             graphviz.RequiredArgumentError: If ``fanout`` is given
                 but ``stagger`` is None.
             graphviz.ExecutableNotFound: If the Graphviz ``unflatten`` executable
                 is not found.
-            subprocess.CalledProcessError: If the returncode (exit status)
+            graphviz.CalledProcessError: If the returncode (exit status)
                 of the unflattening 'unflatten' subprocess is non-zero.
 
         See also:

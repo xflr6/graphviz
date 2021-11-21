@@ -16,7 +16,7 @@ log = logging.getLogger(__name__)
 class Save(encoding.Encoding, base.Base):
     """Save DOT source lines to file."""
 
-    directory = ''
+    directory: str = ''
 
     _default_extension = 'gv'
 
@@ -29,6 +29,7 @@ class Save(encoding.Encoding, base.Base):
             filename = f'{self.__class__.__name__}.{self._default_extension}'
 
         self.filename = filename
+        """str: Target file name for saving the DOT source file."""
 
         if directory is not None:
             self.directory = directory
@@ -42,6 +43,7 @@ class Save(encoding.Encoding, base.Base):
 
     @property
     def filepath(self) -> str:
+        """The target path for saving the DOT source file."""
         return os.path.join(self.directory, self.filename)
 
     def save(self, filename=None, directory=None, *,

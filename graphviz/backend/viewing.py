@@ -23,9 +23,6 @@ def view(filepath, quiet: bool = False) -> None:
         quiet: Suppress ``stderr`` output
             from the viewer process (ineffective on Windows).
 
-    Returns:
-        ``None``
-
     Raises:
         RuntimeError: If the current platform is not supported.
 

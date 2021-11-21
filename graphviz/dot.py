@@ -97,15 +97,25 @@ class Dot(quoting.Quote, base.Base):
         super().__init__(**kwargs)
 
         self.name = name
+        """str: DOT source identifier for the ``graph`` or ``digraph`` statement."""
+
         self.comment = comment
+        """str: DOT source comment for the first source line."""
 
         self.graph_attr = dict(graph_attr) if graph_attr is not None else {}
+        """~typing.Dict[str, str]: Attribute-value pairs applying to the graph."""
+
         self.node_attr = dict(node_attr) if node_attr is not None else {}
+        """~typing.Dict[str, str]: Attribute-value pairs applying to all nodes."""
+
         self.edge_attr = dict(edge_attr) if edge_attr is not None else {}
+        """~typing.Dict[str, str]: Attribute-value pairs applying to all edges."""
 
         self.body = list(body) if body is not None else []
+        """~typing.List[str]: Verbatim DOT source lines including final newline."""
 
         self.strict = strict
+        """bool: Rendering should merge multi-edges."""
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
@@ -186,7 +196,7 @@ class Dot(quoting.Quote, base.Base):
             The ``tail_name`` and ``head_name`` strings are separated
             by (optional) colon(s) into ``node`` name, ``port`` name,
             and ``compass`` (e.g. ``sw``).
-            See :ref:`details in the User Guide <ports>`.
+            See `details in the User Guide <ports>`.
         """
         tail_name = self._quote_edge(tail_name)
         head_name = self._quote_edge(head_name)
@@ -206,7 +216,7 @@ class Dot(quoting.Quote, base.Base):
             The ``tail_name`` and ``head_name`` strings are separated
             by (optional) colon(s) into ``node`` name, ``port`` name,
             and ``compass`` (e.g. ``sw``).
-            See :ref:`details in the User Guide <ports>`.
+            See `details in the User Guide <ports>`.
         """
         edge = self._edge_plain
         quote = self._quote_edge
@@ -222,7 +232,7 @@ class Dot(quoting.Quote, base.Base):
                 (``None`` or ``'graph'``, ``'node'``, ``'edge'``).
             attrs: Attributes to be set (must be strings, may be empty).
 
-        See the :ref:`usage examples in the User Guide <attributes>`.
+        See the `usage examples in the User Guide <attributes>`.
         """
         if kw is not None and kw.lower() not in ('graph', 'node', 'edge'):
             raise ValueError('attr statement must target graph, node, or edge:'
@@ -263,7 +273,7 @@ class Dot(quoting.Quote, base.Base):
             body: Verbatim lines to add to the subgraph ``body``
                 (``with``-block use).
 
-        See the :ref:`usage examples in the User Guide <subgraphs>`.
+        See the `usage examples in the User Guide <subgraphs>`.
 
         When used as a context manager, the returned new graph instance
         uses ``strict=None`` and the parent graph's values

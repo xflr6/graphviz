@@ -77,7 +77,7 @@ class Source(rendering.Render, saving.Save,
                          encoding=encoding)
 
         self._loaded_from_path = loaded_from_path
-        self._source = source  #: The verbatim DOT source code string.
+        self._source = source
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
@@ -99,7 +99,7 @@ class Source(rendering.Render, saving.Save,
 
     @property
     def source(self) -> str:
-        """The DOT source code as string (read from file).
+        """The DOT source code as string.
 
         Normalizes so that the string always ends in a final newline.
         """
