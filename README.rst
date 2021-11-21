@@ -149,7 +149,7 @@ Development
 .. _upstream-archived: https://www2.graphviz.org/Archive/stable/
 .. _upstream-windows: https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224
 
-.. _pip: https://pip.readthedocs.io
+.. _pip: https://pip.pypa.io
 
 .. _Jupyter notebooks: https://jupyter.org
 .. _IPython notebooks: https://ipython.org/notebook.html

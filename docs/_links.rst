@@ -13,10 +13,10 @@
 .. _conda-forge-graphviz: https://anaconda.org/conda-forge/graphviz
 .. _conda-forge-graphviz-feedstock: https://github.com/conda-forge/graphviz-feedstock
 
-.. _pip: https://pip.pypa.io/
+.. _pip: https://pip.pypa.io
 .. _venv: https://docs.python.org/3/library/venv.html#creating-virtual-environments
 .. _virtualenv: https://virtualenv.pypa.io
-.. _tox: https://tox.wiki/en/latest/
+.. _tox: https://tox.wiki
 .. _pytype: https://google.github.io/pytype/
 .. _pytpe_platforms: https://google.github.io/pytype/#requirements
 .. _pytype_python_versions: https://google.github.io/pytype/support.html#python-version
