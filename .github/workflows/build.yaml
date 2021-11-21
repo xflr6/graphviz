@@ -95,6 +95,13 @@ jobs:
         run: python run-tests.py --skip-exe --cov-append
       - name: Upload test coverage
         uses: codecov/codecov-action@v1
+      - name: Check test coverage
+        run: |
+          echo ::group::Run coverage report --fail-under=100 --show-missing --skip-covered;
+          FAILED=0; coverage report --fail-under=100 --show-missing --skip-covered || FAILED=$?;
+          echo ::endgroup::
+          [ $FAILED -eq 0 ] || echo ::warning::Run coverage report --fail-under=100 with exit code $FAILED
+        shell: bash
       - name: Run build-docs.py -b doctest (unless -skip-exe)
         if: ${{ !contains(matrix.name, '-skip-exe') }}
         run: |
