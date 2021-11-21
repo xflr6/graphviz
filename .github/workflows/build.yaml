@@ -85,7 +85,9 @@ jobs:
       - name: Run build-docs.py -b doctest (unless -skip-exe)
         if: ${{ !contains(matrix.name, '-skip-exe') }}
         run: |
+          echo '::group::Install docs extras_require'
           pip install .[docs]
+          echo '::group::Run doctest'
           python build-docs.py -b doctest
         continue-on-error: true
       - name: Run try-examples.py (unless -skip-exe)
@@ -100,6 +102,7 @@ jobs:
         if: ${{ contains(matrix.name, '-pytype') }}
         run: |
           pip install pytype
+          echo '::group::Run pytype'
           pytype
         continue-on-error: true
       - name: Run flake8 (if -flake8)
