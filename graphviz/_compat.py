@@ -16,7 +16,7 @@ if PY38:  # pragma: no cover
     import unittest.mock
 
     Literal = unittest.mock.MagicMock(name='Literal')
-else:
+else:  # pragma: no cover
     from typing import Literal
 
     Literal = Literal  # CAVEAT: use None instead of Literal[None]
