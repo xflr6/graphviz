@@ -46,32 +46,45 @@ jobs:
             python-version: pypy-3.6
             os: ubuntu-latest
     steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v2
       - name: Apt install system dependencies (linux unless -skip-exe)
         if: ${{ startsWith(matrix.name, 'linux-') && !contains(matrix.name, '-skip-exe') }}
         run: |
-          sudo apt-get update
-          sudo apt-get install graphviz
+          echo ::group::Run sudo apt-get update; sudo apt-get update; echo ::endgroup::
+          echo ::group::Run sudo apt-get install graphviz; sudo apt-get install graphviz; echo ::endgroup::
+          echo ::group::Run dot -V; DOT_VERSION="$(dot -V 2>&1)"; echo $DOT_VERSION; echo ::endgroup::
+          echo ::notice::Apt installed ${DOT_VERSION#dot - }
+        shell: bash
       - name: Brew install system dependencies (macos unless -skip-exe)
         if: ${{ startsWith(matrix.name, 'macos-') && !contains(matrix.name, '-skip-exe') }}
         run: |
-          brew update --preinstall
-          brew install graphviz
+          echo ::group::Run brew update --preinstall; brew update --preinstall; echo ::endgroup::
+          echo ::group::Run brew install graphviz; brew install graphviz; echo ::endgroup::
+          echo ::group::Run dot -V; DOT_VERSION="$(dot -V 2>&1)"; echo $DOT_VERSION; echo ::endgroup::
+          echo ::notice::Brew installed ${DOT_VERSION#dot - }
+        shell: bash
       - name: Choco install system dependencies (windows unless -skip-exe)
         if: ${{ startsWith(matrix.name, 'windows-') && !contains(matrix.name, '-skip-exe') }}
-        run: choco install graphviz
-      - name: Run dot -V (unless -skip-exe)
-        if: ${{ !contains(matrix.name, '-skip-exe') }}
-        run: dot -V
-      - name: Checkout source repo
-        uses: actions/checkout@v2
+        run: |
+          echo ::group::Run choco install --no-progress graphviz
+          choco install --no-progress graphviz
+          echo ::endgroup::
+          echo ::group::Run dot -V; DOT_VERSION="$(dot -V 2>&1)"; echo $DOT_VERSION; echo ::endgroup::
+          echo ::notice::Choco installed ${DOT_VERSION#dot - }
+        shell: bash
       - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Upgrade pip
-        run: python -m pip install --upgrade pip setuptools wheel
       - name: Pip install dependencies
-        run: pip install .[test] codecov flake8
+        run: |
+          echo ::group::Run python -m pip install --upgrade pip setuptools wheel
+          python -m pip install --upgrade pip setuptools wheel
+          echo ::endgroup::
+          echo ::group::Run pip install .[test] codecov flake8
+          pip install .[test] codecov flake8
+          echo ::endgroup::
       - name: Run full tests (unless -skip-exe)
         if: ${{ !contains(matrix.name, '-skip-exe') }}
         run: python run-tests.py
@@ -85,30 +98,39 @@ jobs:
       - name: Run build-docs.py -b doctest (unless -skip-exe)
         if: ${{ !contains(matrix.name, '-skip-exe') }}
         run: |
-          echo '::group::Install docs extras_require'
-          pip install .[docs]
-          echo '::group::Run doctest'
-          python build-docs.py -b doctest
-        continue-on-error: true
+          echo ::group::Run pip install .[docs]; pip install .[docs]; echo ::endgroup::
+          echo ::group::Run build-docs.py -b doctest; FAILED=0;
+          python build-docs.py -b doctest || FAILED=$?
+          echo ::endgroup::
+          [ $FAILED -eq 0 ] || echo ::warning::Run build-docs.py -b doctestfailed with exit code $FAILED
+        shell: bash
       - name: Run try-examples.py (unless -skip-exe)
         if: ${{ !contains(matrix.name, '-skip-exe') }}
-        run: python try-examples.py
-        continue-on-error: true
+        run: |
+          echo ::group::Run try-examples.py; FAILED=0;
+          python try-examples.py || FAILED=$?
+          echo ::endgroup::
+          SEVERITY=warning; ${{ startsWith(matrix.name, 'windows-') }} && SEVERITY=notice
+          [ $FAILED -eq 0 ] || echo ::$SEVERITY::Run try-examples.py failed with exit code $FAILED
+        shell: bash
+      - name: Run flake8 (if -flake8)
+        if: ${{ contains(matrix.name, '-flake8') }}
+        run: |
+          echo ::group::Run flake8; FAILED=0; python -m flake8 || FAILED=$?; echo ::endgroup::
+          [ $FAILED -eq 0 ] || echo ::warning::Run flake8 failed with exit code $FAILED
+        shell: bash
       - name: Run update-help.py (if -update-help or -3.9)
         if: ${{ contains(matrix.name, '-update-help') || contains(matrix.name, '-3.9') }}
-        run: python update-help.py
-        continue-on-error: true
+        run: |
+          echo ::group::Run update-help.py; FAILED=0; python update-help.py || FAILED=$?; echo ::endgroup::
+          [ $FAILED -eq 0 ] || echo ::warning::Run update-help.py failed with exit code $FAILED
       - name: Run pytype (if -pytype)
         if: ${{ contains(matrix.name, '-pytype') }}
         run: |
-          pip install pytype
-          echo '::group::Run pytype'
-          pytype
-        continue-on-error: true
-      - name: Run flake8 (if -flake8)
-        if: ${{ contains(matrix.name, '-flake8') }}
-        run: python -m flake8
-        continue-on-error: true
+          echo ::group::Run pip install pytype; pip install pytype; echo ::endgroup::
+          echo ::group::Run pytype; FAILED=0; pytype || FAILED=$?; echo; echo ::endgroup::
+          [ $FAILED -eq 0 ] || echo ::warning::Run pytype failed with exit code $FAILED
+        shell: bash
       - name: Upload ${{ matrix.name }} artifacts
         uses: actions/upload-artifact@v2
         with:
