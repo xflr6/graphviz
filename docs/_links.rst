@@ -14,16 +14,26 @@
 .. _conda-forge-graphviz-feedstock: https://github.com/conda-forge/graphviz-feedstock
 
 .. _pip: https://pip.pypa.io/
+.. _venv: https://docs.python.org/3/library/venv.html#creating-virtual-environments
 .. _virtualenv: https://virtualenv.pypa.io
+.. _tox: https://tox.wiki/en/latest/
+.. _pytype: https://google.github.io/pytype/
+.. _pytpe_platforms: https://google.github.io/pytype/#requirements
+.. _pytype_python_versions: https://google.github.io/pytype/support.html#python-version
+.. _sphinx: https://www.sphinx-doc.org
+.. _sphinx-rtd-theme: https://sphinx-rtd-theme.readthedocs.io
+.. _flake8: https://flake8.pycqa.org
+.. _twine: https://twine.readthedocs.io
 
 .. _DOT: https://www.graphviz.org/doc/info/lang.html
 .. _DOT command: http://graphviz.org/doc/info/command.html
 .. _DOT layouts: http://graphviz.org/docs/layouts/
-.. _DOT output: https://www.graphviz.org/doc/info/output.html
+.. _DOT outputs: https://graphviz.org/docs/outputs/
 .. _DOT attrs: https://www.graphviz.org/doc/info/attrs.html
 .. _DOT escString: https://www.graphviz.org/docs/attr-types/escString/
 .. _DOT shapes: https://graphviz.org/doc/info/shapes.html
 .. _DOT shapes HTML: https://graphviz.org/doc/info/shapes.html#html
+.. _DOT manpage_pdf: https://graphviz.gitlab.io/_pages/pdf/dot.1.pdf
 .. _DOT unflatten: https://linux.die.net/man/1/unflatten
 .. _DOT unflatten_pdf: https://www.graphviz.org/pdf/unflatten.1.pdf
 

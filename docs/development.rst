@@ -123,15 +123,7 @@ Use ``help()`` in the REPL to shows/structure methods and attributes in dependen
     TLDR; you might find this presentation helps to follow the implementation.
 
 
-.. _venv: https://docs.python.org/3/library/venv.html#creating-virtual-environments
-.. _tox: https://tox.wiki/en/latest/
-.. _virtualenv: https://virtualenv.pypa.io
-.. _pytype: https://google.github.io/pytype/
-.. _pytpe_platforms: https://google.github.io/pytype/#requirements
-.. _pytype_python_versions: https://google.github.io/pytype/support.html#python-version
-.. _flake8: https://flake8.pycqa.org/en/latest/
-.. _sphinx: https://www.sphinx-doc.org
-.. _sphinx-rtd-theme: https://sphinx-rtd-theme.readthedocs.io
+.. include:: _links.rst
 
 
 .. |PyPI version| image:: https://img.shields.io/pypi/v/graphviz.svg

@@ -144,5 +144,4 @@ Verify downstream:
 - Check downstream `conda-forge release <https://github.com/conda-forge/python-graphviz-feedstock>`_
 
 
-.. flake8: https://flake8.pycqa.org/en/latest/
-.. _twine: https://twine.readthedocs.io/en/latest/
+.. include:: _links.rst

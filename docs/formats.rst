@@ -1,7 +1,7 @@
 Formats
 -------
 
-To use a different `output file format <DOT output_>`_ than the default PDF,
+To use a different `output file format <DOT outputs_>`_ than the default PDF,
 you canuse the ``format`` argument when creating your :class:`.Graph`
 or :class:`.Digraph` object:
 

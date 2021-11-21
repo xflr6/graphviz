@@ -21,8 +21,8 @@ API Reference
 
 .. hint::
 
-    The two main classes :class:`.Graph` and :class:`.Digraph` (for creating
-    `undirected` vs. `directed` graphs) have exactly the same API.
+    The two main classes :class:`.Graph` and :class:`.Digraph`
+    (creating **undirected** vs. **directed** graphs) have exactly the same API.
     Their division reflects the fact that both graph syntaxes cannot be mixed.
 
 
@@ -102,9 +102,9 @@ Exceptions
 Low-level functions
 -------------------
 
-The functions in this section are provided to work directly with existing
-files and strings instead of using the object-oriented DOT creation methods
-documented above.
+The functions in this section are provided to work directly
+with existing files and strings instead of using the object-oriented
+DOT_ creation methods documented above.
 
 .. autofunction:: graphviz.render
 .. autofunction:: graphviz.pipe
@@ -118,9 +118,8 @@ documented above.
 Constants
 ---------
 
-Manually maintained allowlists for **upstream parameters**
-(cf. https://graphviz.gitlab.io/_pages/pdf/dot.1.pdf,
-http://www.graphviz.org/doc/info/output.html, and ``dot -T:`` output):
+Manually maintained allowlists for Graphviz_ **parameters**
+(cf. `man dot <DOT manpage_pdf_>`_, `outputs <DOT outputs_>`_, and ``dot -T:`` output):
 
 .. autodata:: graphviz.ENGINES
    :annotation:
@@ -184,16 +183,18 @@ Other
 .. autofunction:: graphviz.version
 
 
+.. include:: _links.rst
+
 
 Online ``help()`` (internal)
 ----------------------------
 
-Results of :func:`help` for :class:`.Graph`, :class:`.Digraph`,
-and :class:`.Source` for reference.
+Results of :func:`help` for :class:`graphviz.Graph`, :class:`graphviz.Digraph`,
+and :class:`graphviz.Source` for reference.
 
 .. attention::
 
-    The outputs in this section may contain some **internals** (implementation details).
+    The outputs in this section may contain (some) **internals** (implementation details).
     They serve to record some current implementation details and their changes.
     They mainly serve the development process (e.g. checking the MRO).
     They might be outdated.
@@ -202,13 +203,13 @@ and :class:`.Source` for reference.
     First shalt thou take out the Holy Pin.
     Then shalt thou count to three, no more, no less.
 
-To update ``help()`` outputs below:
+To **update** :func:`help` outputs below:
 
 .. code:: bash
 
     $ ./update-help.py
 
-To debug: remove ``+SKIP`` flags below and check output(s):
+To **debug**: remove ``+SKIP`` flags below and check output(s):
 
 .. code:: bash
 
