@@ -100,7 +100,7 @@ jobs:
           echo ::group::Run coverage report --fail-under=100 --show-missing --skip-covered;
           FAILED=0; coverage report --fail-under=100 --show-missing --skip-covered || FAILED=$?;
           echo ::endgroup::
-          [ $FAILED -eq 0 ] || echo ::warning::Run coverage report --fail-under=100 with exit code $FAILED
+          [ $FAILED -eq 0 ] || echo ::warning::coverage report --fail-under=100 failed with exit code $FAILED
         shell: bash
       - name: Run build-docs.py -b doctest (unless -skip-exe)
         if: ${{ !contains(matrix.name, '-skip-exe') }}
@@ -109,7 +109,7 @@ jobs:
           echo ::group::Run build-docs.py -b doctest; FAILED=0;
           python build-docs.py -b doctest || FAILED=$?
           echo ::endgroup::
-          [ $FAILED -eq 0 ] || echo ::warning::Run build-docs.py -b doctestfailed with exit code $FAILED
+          [ $FAILED -eq 0 ] || echo ::warning::build-docs.py -b doctest failed with exit code $FAILED
         shell: bash
       - name: Run try-examples.py (unless -skip-exe)
         if: ${{ !contains(matrix.name, '-skip-exe') }}
@@ -118,25 +118,25 @@ jobs:
           python try-examples.py || FAILED=$?
           echo ::endgroup::
           SEVERITY=warning; ${{ startsWith(matrix.name, 'windows-') }} && SEVERITY=notice
-          [ $FAILED -eq 0 ] || echo ::$SEVERITY::Run try-examples.py failed with exit code $FAILED
+          [ $FAILED -eq 0 ] || echo ::$SEVERITY::try-examples.py failed with exit code $FAILED
         shell: bash
       - name: Run flake8 (if -flake8)
         if: ${{ contains(matrix.name, '-flake8') }}
         run: |
           echo ::group::Run flake8; FAILED=0; python -m flake8 || FAILED=$?; echo ::endgroup::
-          [ $FAILED -eq 0 ] || echo ::warning::Run flake8 failed with exit code $FAILED
+          [ $FAILED -eq 0 ] || echo ::warning::flake8 failed with exit code $FAILED
         shell: bash
       - name: Run update-help.py (if -update-help or -3.9)
         if: ${{ contains(matrix.name, '-update-help') || contains(matrix.name, '-3.9') }}
         run: |
           echo ::group::Run update-help.py; FAILED=0; python update-help.py || FAILED=$?; echo ::endgroup::
-          [ $FAILED -eq 0 ] || echo ::warning::Run update-help.py failed with exit code $FAILED
+          [ $FAILED -eq 0 ] || echo ::warning::update-help.py failed with exit code $FAILED
       - name: Run pytype (if -pytype)
         if: ${{ contains(matrix.name, '-pytype') }}
         run: |
           echo ::group::Run pip install pytype; pip install pytype; echo ::endgroup::
           echo ::group::Run pytype; FAILED=0; pytype || FAILED=$?; echo; echo ::endgroup::
-          [ $FAILED -eq 0 ] || echo ::warning::Run pytype failed with exit code $FAILED
+          [ $FAILED -eq 0 ] || echo ::warning::pytype failed with exit code $FAILED
         shell: bash
       - name: Upload ${{ matrix.name }} artifacts
         uses: actions/upload-artifact@v2
