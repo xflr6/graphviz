@@ -1,10 +1,11 @@
 Custom DOT statements
 ---------------------
 
-To add arbitrary statements to the created DOT_ source, use the
-:attr:`~.Graph.body` attribute of the :class:`.Graph` or :class:`.Digraph`
-object. It holds the verbatim :class:`list` of lines to be written to the source file
-(including their newline). Use its ``append()``- or ``extend()``-method:
+To add arbitrary statements to the created DOT_ source, you can use the
+:attr:`~.Graph.body` attribute of :class:`.Graph` and :class:`.Digraph` objects.
+It holds the verbatim :class:`list` of (:class:`str`) lines to be written to the source file
+(including their final newline).
+Use its ``append()`` or ``extend()`` method:
 
 .. doctest::
 
@@ -24,8 +25,11 @@ object. It holds the verbatim :class:`list` of lines to be written to the source
         "Sir Bedevere" -> "Sir Lancelot" [constraint=false]
     }
 
-Note that you might need to correctly quote/escape identifiers and strings
-containing whitespace or other special characters when using this method.
+.. attention::
+
+    Note that you might need to correctly quote/escape identifiers
+    and strings containing whitespace or other special characters
+    when using this method.
 
 
 .. include:: _links.rst

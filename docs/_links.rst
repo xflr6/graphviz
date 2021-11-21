@@ -13,32 +13,39 @@
 .. _conda-forge-graphviz: https://anaconda.org/conda-forge/graphviz
 .. _conda-forge-graphviz-feedstock: https://github.com/conda-forge/graphviz-feedstock
 
-.. _pip: https://pip.readthedocs.io
+.. _pip: https://pip.pypa.io/
 .. _virtualenv: https://virtualenv.pypa.io
 
 .. _DOT: https://www.graphviz.org/doc/info/lang.html
+.. _DOT command: http://graphviz.org/doc/info/command.html
+.. _DOT layouts: http://graphviz.org/docs/layouts/
 .. _DOT output: https://www.graphviz.org/doc/info/output.html
 .. _DOT attrs: https://www.graphviz.org/doc/info/attrs.html
-.. _DOT shapes: https://graphviz.org/doc/info/shapes.html
 .. _DOT escString: https://www.graphviz.org/docs/attr-types/escString/
+.. _DOT shapes: https://graphviz.org/doc/info/shapes.html
+.. _DOT shapes HTML: https://graphviz.org/doc/info/shapes.html#html
 .. _DOT unflatten: https://linux.die.net/man/1/unflatten
 .. _DOT unflatten_pdf: https://www.graphviz.org/pdf/unflatten.1.pdf
 
 .. _Jupyter notebook: https://jupyter.org
 .. _Jupyter Qt Console: https://qtconsole.readthedocs.io
 
-.. _spyderconsole: https://docs.spyder-ide.org/ipythonconsole.html
-.. _Spyder IDE: https://github.com/spyder-ide/spyder
+.. _Spyder IDE: https://www.spyder-ide.org
+.. _Spyder ipythonconsole: http://docs.spyder-ide.org/current/panes/ipythonconsole.html
 
 .. _IPython.display: https://ipython.readthedocs.io/en/stable/api/generated/IPython.display.html#functions
 
 .. _examples directory: https://github.com/xflr6/graphviz/tree/master/examples/
 
-.. _graphviz-notebook.ipynb: https://github.com/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
-.. _graphviz-notebook.ipynb-nbviewer: https://nbviewer.org/github/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
+.. _GitHub graphviz-notebook.ipynb: https://github.com/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
+.. _GitHub graphviz-engines.ipynb: https://github.com/xflr6/graphviz/blob/master/examples/graphviz-engines.ipynb
+.. _GitHub graphviz-jupyter-format.ipynb: https://github.com/xflr6/graphviz/blob/master/examples/graphviz-jupyter-format.ipynb
+.. _GitHub graphviz-escapes.ipynb: https://github.com/xflr6/graphviz/blob/master/examples/graphviz-escapes.ipynb
 
-.. _graphviz-jupyter-format.ipynb: https://github.com/xflr6/graphviz/blob/master/examples/graphviz-jupyter-format.ipynb
-.. _graphviz-jupyter-format.ipynb-nbviewer: https://nbviewer.org/github/xflr6/graphviz/blob/master/examples/graphviz-jupyter-format.ipynb
+.. _nbviewer graphviz-notebook.ipynb: https://nbviewer.org/github/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
+.. _nbviewer graphviz-engines.ipynb: https://nbviewer.org/github/xflr6/graphviz/blob/master/examples/graphviz-engines.ipynb
+.. _nbviewer graphviz-jupyter-format.ipynb: https://nbviewer.org/github/xflr6/graphviz/blob/master/examples/graphviz-jupyter-format.ipynb
+.. _nbviewer graphviz-escapes.ipynb: https://nbviewer.org/github/xflr6/graphviz/blob/master/examples/graphviz-escapes.ipynb
 
 .. _raw string literals: https://docs.python.org/3/reference/lexical_analysis.html#string-and-bytes-literals
 

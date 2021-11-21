@@ -1,9 +1,15 @@
 Attributes
 ----------
 
-To directly add attritbute statements (affecting all following graph, node, or
-edge items within the same (sub-)graph), use the :meth:`~.Graph.attr`-method
-with the target as first argument:
+To directly add DOT_ ``att_stmt`` attribute statements, 
+call the :meth:`~.Graph.attr` method
+of the :class:`.Graph` or :class:`.Digraph` instance
+with the wanted target as first argument and the attributes as keyword args.
+
+.. hint::
+
+    Attribute statements affect all **later** graphs, nodes, or edges
+    within the same (sub-)graph.
 
 .. doctest::
 
@@ -21,9 +27,11 @@ with the target as first argument:
     >>> ni.node('4', 'Ni!')
     >>> ni.node('5', 'Ni!')
 
-By omitting its first argument, you can use it to set arbitrary attributes as
-key-value pairs targeting the current (sub-)graph (e.g. for ``rankdir``,
-``label``, or setting ``rank='same'`` within a subgraph context,
+If you omit the first :meth:`~.Graph.attr` argument, the method can be used
+to set arbitrary attributes as key-value pairs targeting
+the current (sub-)graph
+(e.g. for ``rankdir``, ``label``,
+or setting ``rank='same'`` within a subgraph context,
 :ref:`example <rank_same.py>`):
 
 .. doctest::
@@ -50,3 +58,6 @@ key-value pairs targeting the current (sub-)graph (e.g. for ``rankdir``,
 
 .. image:: _static/ni.svg
     :align: center
+
+
+.. include:: _links.rst

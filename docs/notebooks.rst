@@ -3,13 +3,18 @@
 Notebooks
 =========
 
-- Render gallery examples with logging: graphviz-notebook.ipynb_
-- Engine comparison: graphviz-engines.ipynb_
-- Verify escaping and quoting: graphviz-escapes.ipynb_
-- Using ``graphviz.set_jupyter_format()``: graphviz-jupyter-format.ipynb_
+- Render `graphviz.org gallery`_ examples with logging:
+  `examples/graphviz-notebook.ipynb <nbviewer graphviz-notebook.ipynb_>`_
+  (`source <GitHub graphviz-notebook.ipynb_>`_)
+- `Laypout engine <DOT layouts_>`_ comparison:
+  `examples/graphviz-engines.ipynb <nbviewer graphviz-engines.ipynb_>`_
+  (`source <GitHub graphviz-engines.ipynb_>`_)
+- Example for :meth:`graphviz.set_jupyter_format`:
+  `examples/graphviz-jupyter-format.ipynb <nbviewer graphviz-jupyter-format.ipynb_>`_
+  (`source <GitHub graphviz-jupyter-format.ipynb_>`_)
+- Verify `escaping <DOT escString_>`_ and quoting:
+  `examples/graphviz-escapes.ipynb <nbviewer graphviz-escapes.ipynb_>`_
+  (`source <GitHub graphviz-escapes.ipynb_>`_)
 
 
-.. _graphviz-notebook.ipynb: https://nbviewer.org/github/xflr6/graphviz/blob/master/examples/graphviz-notebook.ipynb
-.. _graphviz-engines.ipynb: https://nbviewer.org/github/xflr6/graphviz/blob/master/examples/graphviz-engines.ipynb
-.. _graphviz-escapes.ipynb: https://nbviewer.org/github/xflr6/graphviz/blob/master/examples/graphviz-escapes.ipynb
-.. _graphviz-jupyter-format.ipynb: https://nbviewer.org/github/xflr6/graphviz/blob/master/examples/graphviz-jupyter-format.ipynb
+.. include:: _links.rst

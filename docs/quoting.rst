@@ -2,14 +2,14 @@ Quoting and HTML-like labels
 ----------------------------
 
 The graph-building methods of :class:`.Graph` and :class:`.Digraph` objects
-automatically take care of quoting (and escaping quotes)
-`where needed <DOT_>`_ (whitespace, keywords, double quotes, etc.):
+automatically take care of quoting (and escaping quotes) `where needed <DOT_>`_
+(whitespace, keywords, double quotes, etc.):
 
 .. doctest::
 
-    >>> import graphviz
+    >>> import graphviz  # doctest: +NO_EXE
 
-    >>> q = graphviz.Digraph()  # doctest: +NO_EXE
+    >>> q = graphviz.Digraph()
 
     >>> q.edge('spam', 'eggs eggs')
     >>> q.edge('node', '"here\'s a quote"')
@@ -20,10 +20,11 @@ automatically take care of quoting (and escaping quotes)
         "node" -> "\"here's a quote\""
     }
 
-If a string starts with ``'<'`` and ends with ``'>'``, it is passed on as is,
-without quoting/escaping: The content between the angle brackets is treated by
-the engine as special **HTML string** that can be used for
-`HTML-like labels <DOT shapes_>`_:
+If a string starts with ``'<'`` and ends with ``'>'``,
+it is passed on **as is**, i.e. without quoting/escaping:
+The content between the angle brackets is treated by
+the Graphviz_ layout `engine <DOT layouts_>`_ as special **HTML string**
+that can be used for `HTML-like labels <DOT shapes HTML_>`_:
 
 .. doctest::
 
@@ -39,10 +40,9 @@ the engine as special **HTML string** that can be used for
 .. image:: _static/html_table.svg
     :align: center
 
-For strings that should literally begin with ``'<'`` and end with ``'>'``, use
-the :func:`.nohtml` function to disable the special meaning of angled
-parenthesis and apply normal quoting/escaping (before ``0.8.2``, the only
-workaround was to add leading or trailing space, e.g. ``label=' <>'``):
+For strings that should literally begin with ``'<'`` and end with ``'>'``,
+use the :func:`graphviz.nohtml` function to disable the special meaning of angled
+parenthesis and apply normal quoting/escaping:
 
 .. doctest::
 
@@ -55,8 +55,21 @@ workaround was to add leading or trailing space, e.g. ``label=' <>'``):
         diamond [label="<>"]
     }
 
+.. doctest::
+
+    >>> doctest_mark_exe()
+
+    >>> d.render(directory='doctest-output').replace('\\', '/')
+    'doctest-output/diamond.gv.svg'
+
 .. image:: _static/diamond.svg
     :align: center
+
+.. admonition:: Historical note
+
+    Before version ``0.8.2``,
+    the only workaround was to add leading or trailing space
+    (``label=' <>'``):
 
 
 .. include:: _links.rst

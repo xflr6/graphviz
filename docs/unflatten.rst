@@ -2,14 +2,15 @@ Unflatten
 ---------
 
 To prepocess the DOT_ source of a :class:`.Graph` or :class:`.Digraph` with
-the `unflatten <DOT unflatten>`_ preprocessor (`PDF <DOT unflatten_pdf_>`_),
-use the :meth:`~.Graph.unflatten`-method.
+the `unflatten <DOT unflatten>`_ preprocessor
+(`manpage <DOT unflatten_>`_, `PDF <DOT unflatten_pdf_>`_),
+use the :meth:`~.Graph.unflatten` method.
 
 .. doctest::
 
-    >>> import graphviz
+    >>> import graphviz  # doctest: +NO_EXE
 
-    >>> w = graphviz.Digraph('wide')  # doctest: +NO_EXE
+    >>> w = graphviz.Digraph('wide')
 
     >>> w.edges(('0', str(i)) for i in range(1, 10))
 
@@ -22,8 +23,10 @@ use the :meth:`~.Graph.unflatten`-method.
 .. image:: _static/wide.svg
     :align: center
 
-unflatten_ is used to improve the aspect ratio of graphs having many leaves or
-disconnected nodes.
+.. hint::
+
+    :meth:`~.Graph.unflatten` improves the aspect ratio of graphs
+    with many leaves or disconnected nodes.
 
 .. doctest::
 
@@ -38,9 +41,10 @@ disconnected nodes.
 .. image:: _static/wide-unflatten-stagger-3.svg
     :align: center
 
-The method returns a :class:`.Source` object that you can
-:meth:`~.Source.render`, :meth:`~.Source.view`, etc. with the same API
-(minus modification, see details `below <sources>`_).
+The method returns a :class:`.Source` object
+that you can :meth:`~.Source.render`, :meth:`~.Source.view`, etc.
+with the same basic API as :class:`.Graph` or :class:`.Digraph` objects
+(minus modification, see details :ref:`below <Sources>`).
 
 .. doctest::
 

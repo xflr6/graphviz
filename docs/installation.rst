@@ -18,9 +18,9 @@ The only dependency is a working installation of Graphviz_
 `installation procedure for Windows <upstream-windows_>`_).
 
 After installing Graphviz, make sure that its ``bin/`` subdirectory containing
-the layout commands for rendering graph descriptions (``dot``, ``circo``,
-``neato``, etc.) is on your systems' path: On the command-line, ``dot -V``
-should print the version of your Graphiz installation.
+the ``dot`` `layout command <DOT command_>`_ for rendering graph descriptions
+is on your systems' path:
+On the command-line, ``dot -V`` should print the version of your Graphiz installation.
 
 .. admonition:: Platform: Windows
 
@@ -35,7 +35,7 @@ __ https://www2.graphviz.org/Archive/stable/windows/graphviz-2.38.msi
 
 .. admonition:: Platform: Anaconda
 
-    See the conda-forge_ package
+    See the downstream conda-forge_ distribution
     `conda-forge/python-graphviz <conda-forge-python-graphviz_>`_
     (`feedstock <conda-forge-python-graphviz-feedstock_>`_),
     which should automatically ``conda install``

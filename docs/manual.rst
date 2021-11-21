@@ -7,16 +7,16 @@ User Guide
 .. include:: installation.rst
 
 
-.. include:: quickstart.rst
+.. include:: basic_usage.rst
 
 
 .. include:: formats.rst
 
 
-.. include:: piping.rst
+.. include:: piped_output.rst
 
 
-.. include:: jupyter_integration.rst
+.. include:: jupyter_notebooks.rst
 
 
 .. include:: styling.rst
@@ -25,7 +25,7 @@ User Guide
 .. include:: attributes.rst
 
 
-.. include:: ports.rst
+.. include:: node_ports.rst
 
 
 .. include:: escapes.rst
@@ -34,8 +34,10 @@ User Guide
 .. include:: quoting.rst
 
 
-.. include:: subgraphs.rst
+.. include:: subgraphs_and_clusters.rst
 
+
+.. _Engines:
 
 .. include:: engines.rst
 
@@ -46,10 +48,12 @@ User Guide
 .. include:: custom_dot.rst
 
 
-.. include:: sources.rst
+.. _Sources:
+
+.. include:: raw_dot.rst
 
 
-.. include:: rendering.rst
+.. include:: existing_files.rst
 
 
-.. include:: viewing.rst
+.. include:: integration_with_viewers.rst

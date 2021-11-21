@@ -1,21 +1,22 @@
 Styling
 -------
 
-Use the :attr:`~.Graph.graph_attr`, :attr:`~.Graph.node_attr`, and
-:attr:`~.Graph.edge_attr` arguments to change the default `appearance <DOT attrs_>`_
-of your graph, nodes, and edges.
+Use the ``graph_attr``, ``node_attr``, and ``edge_attr`` arguments
+of the :class:`.Graph` and :class:`.Digraph` constuctors to change
+the default `attributes <DOT attrs_>`_ for your graph, nodes, and edges.
 
 .. doctest::
 
-    >>> import graphviz
+    >>> import graphviz  # doctest: +NO_EXE
 
-    >>> ps = graphviz.Digraph('pet-shop', node_attr={'shape': 'plaintext'})  # doctest: +NO_EXE
+    >>> ps = graphviz.Digraph('pet-shop', node_attr={'shape': 'plaintext'})
 
     >>> ps.node('parrot')
     >>> ps.node('dead')
     >>> ps.edge('parrot', 'dead')
 
-After creation, they can be edited on the graph object:
+After creation, the :attr:`~.Graph.graph_attr`, :attr:`~.Graph.node_attr`, and
+:attr:`~.Graph.edge_attr` attributes be edited on instances:
 
 .. doctest::
 
