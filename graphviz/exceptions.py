@@ -1,4 +1,4 @@
-"""Common backend constants."""
+"""Commonly used exception classes."""
 
 __all__ = ['RequiredArgumentError']
 

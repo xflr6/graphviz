@@ -4,9 +4,8 @@ import os
 import pathlib
 import typing
 
+from .. import exceptions
 from .. import parameters
-
-from . import _common
 
 __all__ = ['DOT_BINARY', 'command']
 
@@ -25,7 +24,7 @@ def command(engine: str, format_: str, *,
         - https://www.graphviz.org/doc/info/command.html#-T
     """
     if formatter is not None and renderer is None:
-        raise _common.RequiredArgumentError('formatter given without renderer')
+        raise exceptions.RequiredArgumentError('formatter given without renderer')
 
     parameters.verify_engine(engine, required=True)
     parameters.verify_format(format_, required=True)

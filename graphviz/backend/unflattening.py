@@ -4,8 +4,8 @@ import pathlib
 import typing
 
 from ..encoding import DEFAULT_ENCODING
+from .. import exceptions
 
-from . import _common
 from . import execute
 
 __all__ = ['UNFLATTEN_BINARY', 'unflatten']
@@ -46,7 +46,7 @@ def unflatten(source: str,
         https://www.graphviz.org/pdf/unflatten.1.pdf
     """
     if fanout and stagger is None:
-        raise _common.RequiredArgumentError('fanout given without stagger')
+        raise exceptions.RequiredArgumentError('fanout given without stagger')
 
     cmd = [UNFLATTEN_BINARY]
     if stagger is not None:

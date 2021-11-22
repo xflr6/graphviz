@@ -1,6 +1,5 @@
 """Execute rendering and unflattening subprocesses, open files in viewer."""
 
-from ._common import RequiredArgumentError
 from .dot_command import DOT_BINARY
 from .execute import ExecutableNotFound, CalledProcessError
 from .mixins import Render, Pipe, Unflatten, View
@@ -17,6 +16,5 @@ __all__ = ['DOT_BINARY', 'UNFLATTEN_BINARY',
            'unflatten',
            'version',
            'view',
-           'RequiredArgumentError',
            'ExecutableNotFound', 'CalledProcessError',
            'Render', 'Pipe', 'Unflatten', 'View']
