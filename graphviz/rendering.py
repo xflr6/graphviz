@@ -54,7 +54,7 @@ class Render(saving.Save, backend.Render, backend.View):
 
         Raises:
             ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
-                are not known.
+                are unknown.
             graphviz.RequiredArgumentError: If ``formatter`` is given
                 but ``renderer`` is None.
             graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable

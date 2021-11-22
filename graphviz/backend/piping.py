@@ -28,7 +28,7 @@ def pipe(engine: str, format: str, data: bytes,
 
     Raises:
         ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
-            are not known.
+            are unknown.
         graphviz.RequiredArgumentError: If ``formatter`` is given
             but ``renderer`` is None.
         graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
@@ -74,7 +74,7 @@ def pipe_string(engine: str, format: str, input_string: str, *,
 
     Raises:
         ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
-            are not known.
+            are unknown.
         graphviz.RequiredArgumentError: If ``formatter`` is given
             but ``renderer`` is None.
         graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
@@ -121,7 +121,7 @@ def pipe_lines(engine: str, format: str, input_lines: typing.Iterator[str], *,
 
     Raises:
         ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
-            are not known.
+            are unknown.
         graphviz.RequiredArgumentError: If ``formatter`` is given
             but ``renderer`` is None.
         graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
@@ -168,7 +168,7 @@ def pipe_lines_string(engine: str, format: str, input_lines: typing.Iterator[str
 
     Raises:
         ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
-            are not known.
+            are unknown.
         graphviz.RequiredArgumentError: If ``formatter`` is given
             but ``renderer`` is None.
         graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
