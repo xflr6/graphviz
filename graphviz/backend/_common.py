@@ -3,5 +3,5 @@
 __all__ = ['RequiredArgumentError']
 
 
-class RequiredArgumentError(Exception):
-    """:class:`Exception` raised if a required argument is missing."""
+class RequiredArgumentError(TypeError):
+    """:class:`TypeError` raised if a required argument is missing."""
