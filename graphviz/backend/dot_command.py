@@ -17,7 +17,11 @@ def command(engine: str, format_: str, *,
             renderer: typing.Optional[str] = None,
             formatter: typing.Optional[str] = None
             ) -> typing.List[typing.Union[os.PathLike, str]]:
-    """Return ``subprocess.Popen`` argument list for rendering."""
+    """Return ``subprocess.Popen`` argument list for rendering.
+
+    https://www.graphviz.org/doc/info/command.html#-K
+    https://www.graphviz.org/doc/info/command.html#-T
+    """
     if formatter is not None and renderer is None:
         raise _common.RequiredArgumentError('formatter given without renderer')
 
