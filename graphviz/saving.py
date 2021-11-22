@@ -4,6 +4,7 @@ import logging
 import os
 import typing
 
+from . import _defaults
 from . import base
 from . import encoding
 from . import tools
@@ -18,7 +19,7 @@ class Save(encoding.Encoding, base.Base):
 
     directory: str = ''
 
-    _default_extension = 'gv'
+    _default_extension = _defaults.DEFAULT_SOURCE_EXTENSION
 
     _mkdirs = staticmethod(tools.mkdirs)
 

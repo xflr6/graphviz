@@ -147,7 +147,7 @@ Names of **upstream binaries**:
    :annotation:
 
 
-Settings
+Defaults
 --------
 
 Functions for setting **package-wide defaults** for ``engine`` and ``format``:

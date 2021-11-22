@@ -26,7 +26,7 @@ Example:
     }
 """
 
-from ._settings import set_default_engine, set_default_format, set_jupyter_format
+from ._defaults import set_default_engine, set_default_format, set_jupyter_format
 
 from .backend import (DOT_BINARY, UNFLATTEN_BINARY,
                       render, pipe, pipe_string, pipe_lines, pipe_lines_string,
