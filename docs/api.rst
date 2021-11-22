@@ -170,9 +170,7 @@ Function for setting the **package-wide default for IPython/Jupyter display form
 .. attention::
 
     This function is provided for end-users.
-    Prefer `IPython.display`__ functions in library code.
-
-__ https://ipython.readthedocs.io/en/stable/api/generated/IPython.display.html#functions
+    Prefer `IPython.display`_ functions in library code.
 
 .. autofunction:: graphviz.set_jupyter_format
 
@@ -650,6 +648,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |              of the unflattening 'unflatten' subprocess is non-zero.
      |
      |      See also:
+     |          Upstream documentation:
      |          https://www.graphviz.org/pdf/unflatten.1.pdf
      |
      |  ----------------------------------------------------------------------
@@ -1137,6 +1136,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |              of the unflattening 'unflatten' subprocess is non-zero.
      |
      |      See also:
+     |          Upstream documentation:
      |          https://www.graphviz.org/pdf/unflatten.1.pdf
      |
      |  ----------------------------------------------------------------------
@@ -1502,6 +1502,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |              of the unflattening 'unflatten' subprocess is non-zero.
      |
      |      See also:
+     |          Upstream documentation:
      |          https://www.graphviz.org/pdf/unflatten.1.pdf
      |
      |  ----------------------------------------------------------------------

@@ -47,7 +47,7 @@ def version() -> typing.Tuple[int, ...]:
         Ignores the ``~dev.<YYYYmmdd.HHMM>`` portion of development versions.
 
     See also:
-        Graphviz Release version entry format:
+        Upstream release version entry format:
         https://gitlab.com/graphviz/graphviz/-/blob/f94e91ba819cef51a4b9dcb2d76153684d06a913/gen_version.py#L17-20
     """
     cmd = [dot_command.DOT_BINARY, '-V']

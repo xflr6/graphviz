@@ -40,6 +40,7 @@ class Unflatten(encoding.Encoding, base.Base, backend.Unflatten):
                 of the unflattening 'unflatten' subprocess is non-zero.
 
         See also:
+            Upstream documentation:
             https://www.graphviz.org/pdf/unflatten.1.pdf
         """
         from . import sources

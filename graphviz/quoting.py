@@ -153,8 +153,6 @@ class Quote:
 def escape(s: str) -> str:
     r"""Return string disabling special meaning of backslashes and ``'<...>'``.
 
-    see also https://www.graphviz.org/doc/info/attrs.html#k:escString
-
     Args:
         s: String in which backslashes and ``'<...>'``
             should be treated as literal.
@@ -169,6 +167,10 @@ def escape(s: str) -> str:
         >>> import graphviz  # doctest: +NO_EXE
         >>> print(graphviz.escape(r'\l'))
         \\l
+
+    See also:
+        Upstream documentation:
+        https://www.graphviz.org/doc/info/attrs.html#k:escString
     """
     return nohtml(s.replace('\\', '\\\\'))
 
