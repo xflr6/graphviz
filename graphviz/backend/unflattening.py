@@ -4,6 +4,7 @@ import pathlib
 import typing
 
 from ..encoding import DEFAULT_ENCODING
+from .. import _tools
 from .. import exceptions
 
 from . import execute
@@ -13,6 +14,7 @@ __all__ = ['UNFLATTEN_BINARY', 'unflatten']
 UNFLATTEN_BINARY = pathlib.Path('unflatten')
 
 
+@_tools.deprecate_positional_args(supported_number=1)
 def unflatten(source: str,
               stagger: typing.Optional[int] = None,
               fanout: bool = False,

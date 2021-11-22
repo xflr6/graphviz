@@ -28,6 +28,7 @@ ESCAPE_UNESCAPED_QUOTES = functools.partial(QUOTE_OPTIONAL_BACKSLASHES.sub,
                                             r'\g<bs>\\\g<quote>')
 
 
+@_tools.deprecate_positional_args(supported_number=1)
 def quote(identifier: str,
           is_html_string=HTML_STRING.match,
           is_valid_id=ID.match,
@@ -97,11 +98,12 @@ def quote_edge(identifier: str) -> str:
     return ':'.join(parts)
 
 
+@_tools.deprecate_positional_args(supported_number=1)
 def a_list(label: typing.Optional[str] = None,
            kwargs=None, attributes=None) -> str:
     """Return assembled DOT a_list string.
 
-    >>> a_list('spam', {'spam': None, 'ham': 'ham ham', 'eggs': ''})  # doctest: +NO_EXE
+    >>> a_list('spam', kwargs={'spam': None, 'ham': 'ham ham', 'eggs': ''})  # doctest: +NO_EXE
     'label=spam eggs="" ham="ham ham"'
     """
     result = [f'label={quote(label)}'] if label is not None else []
@@ -118,6 +120,7 @@ def a_list(label: typing.Optional[str] = None,
     return ' '.join(result)
 
 
+@_tools.deprecate_positional_args(supported_number=1)
 def attr_list(label: typing.Optional[str] = None,
               kwargs=None, attributes=None) -> str:
     """Return assembled DOT attribute list string.
@@ -134,7 +137,7 @@ def attr_list(label: typing.Optional[str] = None,
     >>> attr_list(kwargs={'spam': None, 'eggs': ''})
     ' [eggs=""]'
     """
-    content = a_list(label, kwargs, attributes)
+    content = a_list(label, kwargs=kwargs, attributes=attributes)
     if not content:
         return ''
     return f' [{content}]'

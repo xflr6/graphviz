@@ -59,7 +59,7 @@ def test_clear(cls, keep_attrs):
     assert len(c.body) == 1
     body = c.body
 
-    c.clear(keep_attrs)
+    c.clear(keep_attrs=keep_attrs)
     assert c.body == []
     assert c.body is body
     if keep_attrs:

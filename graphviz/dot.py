@@ -2,6 +2,7 @@
 
 import typing
 
+from . import _tools
 from . import base
 from . import quoting
 
@@ -127,6 +128,7 @@ class Dot(quoting.Quote, base.Base):
                                     body=list(self.body),
                                     strict=self.strict)
 
+    @_tools.deprecate_positional_args(supported_number=1)
     def clear(self, keep_attrs: bool = False) -> None:
         """Reset content to an empty body, clear graph/node/egde_attr mappings.
 
@@ -138,6 +140,7 @@ class Dot(quoting.Quote, base.Base):
                 a.clear()
         del self.body[:]
 
+    @_tools.deprecate_positional_args(supported_number=1)
     def __iter__(self, subgraph: bool = False) -> typing.Iterator[str]:
         r"""Yield the DOT source code line by line (as graph or subgraph).
 
@@ -157,13 +160,14 @@ class Dot(quoting.Quote, base.Base):
         for kw in ('graph', 'node', 'edge'):
             attrs = getattr(self, f'{kw}_attr')
             if attrs:
-                yield self._attr(kw, self._attr_list(None, attrs))
+                yield self._attr(kw, self._attr_list(None, kwargs=attrs))
 
         for line in self.body:
             yield line
 
         yield self._tail
 
+    @_tools.deprecate_positional_args(supported_number=3)
     def node(self, name: str,
              label: typing.Optional[str] = None,
              _attributes=None, **attrs) -> None:
@@ -175,10 +179,11 @@ class Dot(quoting.Quote, base.Base):
             attrs: Any additional node attributes (must be strings).
         """
         name = self._quote(name)
-        attr_list = self._attr_list(label, attrs, _attributes)
+        attr_list = self._attr_list(label, kwargs=attrs, attributes=_attributes)
         line = self._node(name, attr_list)
         self.body.append(line)
 
+    @_tools.deprecate_positional_args(supported_number=4)
     def edge(self, tail_name: str, head_name: str,
              label: typing.Optional[str] = None,
              _attributes=None, **attrs) -> None:
@@ -200,7 +205,7 @@ class Dot(quoting.Quote, base.Base):
         """
         tail_name = self._quote_edge(tail_name)
         head_name = self._quote_edge(head_name)
-        attr_list = self._attr_list(label, attrs, _attributes)
+        attr_list = self._attr_list(label, kwargs=attrs, attributes=_attributes)
         line = self._edge(tail=tail_name, head=head_name, attr=attr_list)
         self.body.append(line)
 
@@ -223,6 +228,7 @@ class Dot(quoting.Quote, base.Base):
         lines = (edge(tail=quote(t), head=quote(h)) for t, h in tail_head_iter)
         self.body.extend(lines)
 
+    @_tools.deprecate_positional_args(supported_number=2)
     def attr(self, kw: typing.Optional[str] = None,
              _attributes=None, **attrs) -> None:
         """Add a general or graph/node/edge attribute statement.
@@ -239,13 +245,14 @@ class Dot(quoting.Quote, base.Base):
                              f' {kw!r}')
         if attrs or _attributes:
             if kw is None:
-                a_list = self._a_list(None, attrs, _attributes)
+                a_list = self._a_list(None, kwargs=attrs, attributes=_attributes)
                 line = self._attr_plain(a_list)
             else:
-                attr_list = self._attr_list(None, attrs, _attributes)
+                attr_list = self._attr_list(None, kwargs=attrs, attributes=_attributes)
                 line = self._attr(kw, attr_list)
             self.body.append(line)
 
+    @_tools.deprecate_positional_args(supported_number=2)
     def subgraph(self, graph=None,
                  name: typing.Optional[str] = None,
                  comment: typing.Optional[str] = None,
@@ -290,7 +297,7 @@ class Dot(quoting.Quote, base.Base):
             kwargs.update(name=name, comment=comment,
                           graph_attr=graph_attr, node_attr=node_attr, edge_attr=edge_attr,
                           body=body, strict=None)
-            return SubgraphContext(self, kwargs)
+            return SubgraphContext(self, kwargs=kwargs)
 
         args = [name, comment, graph_attr, node_attr, edge_attr, body]
         if not all(a is None for a in args):
@@ -307,6 +314,7 @@ class Dot(quoting.Quote, base.Base):
 class SubgraphContext:
     """Return a blank instance of the parent and add as subgraph on exit."""
 
+    @_tools.deprecate_positional_args(supported_number=2)
     def __init__(self, parent, kwargs) -> None:
         self.parent = parent
         self.graph = parent.__class__(**kwargs)

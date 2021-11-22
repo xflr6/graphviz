@@ -47,6 +47,7 @@ class Save(encoding.Encoding, base.Base):
         """The target path for saving the DOT source file."""
         return os.path.join(self.directory, self.filename)
 
+    @_tools.deprecate_positional_args(supported_number=2)
     def save(self, filename=None, directory=None, *,
              skip_existing: typing.Optional[bool] = False) -> str:
         """Save the DOT source to file. Ensure the file ends with a newline.

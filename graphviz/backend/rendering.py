@@ -3,12 +3,15 @@
 import os
 import typing
 
+from .. import _tools
+
 from . import dot_command
 from . import execute
 
 __all__ = ['render']
 
 
+@_tools.deprecate_positional_args(supported_number=3)
 def render(engine: str, format: str, filepath: typing.Union[os.PathLike, str],
            renderer: typing.Optional[str] = None,
            formatter: typing.Optional[str] = None,

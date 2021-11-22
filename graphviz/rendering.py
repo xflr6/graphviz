@@ -4,6 +4,7 @@ import logging
 import os
 import typing
 
+from . import _tools
 from . import backend
 from . import saving
 
@@ -16,6 +17,7 @@ log = logging.getLogger(__name__)
 class Render(saving.Save, backend.Render, backend.View):
     """Write source lines to file and render with Graphviz."""
 
+    @_tools.deprecate_positional_args(supported_number=2)
     def render(self, filename=None, directory=None,
                view: bool = False,
                cleanup: bool = False,
@@ -107,6 +109,7 @@ class Render(saving.Save, backend.Render, backend.View):
                                f' on {backend.viewing.PLATFORM!r} platform')
         view_method(filepath, quiet=quiet)
 
+    @_tools.deprecate_positional_args(supported_number=2)
     def view(self, filename=None, directory=None,
              cleanup: bool = False,
              quiet: bool = False,

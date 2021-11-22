@@ -2,6 +2,8 @@
 
 import typing
 
+from .. import _tools
+
 from . import dot_command
 from . import execute
 
@@ -9,6 +11,7 @@ __all__ = ['pipe', 'pipe_string',
            'pipe_lines', 'pipe_lines_string']
 
 
+@_tools.deprecate_positional_args(supported_number=3)
 def pipe(engine: str, format: str, data: bytes,
          renderer: typing.Optional[str] = None,
          formatter: typing.Optional[str] = None,

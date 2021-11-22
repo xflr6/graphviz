@@ -6,6 +6,7 @@ import os
 import typing
 
 from .encoding import DEFAULT_ENCODING
+from . import _tools
 from . import saving
 from . import jupyter_integration
 from . import piping
@@ -38,6 +39,7 @@ class Source(rendering.Render, saving.Save,
     """
 
     @classmethod
+    @_tools.deprecate_positional_args(supported_number=2)
     def from_file(cls, filename, directory=None,
                   format: typing.Optional[str] = None,
                   engine: typing.Optional[str] = None,
@@ -64,6 +66,7 @@ class Source(rendering.Render, saving.Save,
                    renderer=renderer, formatter=formatter,
                    loaded_from_path=filepath)
 
+    @_tools.deprecate_positional_args(supported_number=2)
     def __init__(self, source: str, filename=None, directory=None,
                  format: typing.Optional[str] = None,
                  engine: typing.Optional[str] = None,
@@ -108,6 +111,7 @@ class Source(rendering.Render, saving.Save,
             source += '\n'
         return source
 
+    @_tools.deprecate_positional_args(supported_number=2)
     def save(self, filename=None, directory=None, *,
              skip_existing: typing.Optional[bool] = None) -> str:
         """Save the DOT source to file. Ensure the file ends with a newline.

@@ -15,6 +15,7 @@ PLATFORM = platform.system().lower()
 log = logging.getLogger(__name__)
 
 
+@_tools.deprecate_positional_args(supported_number=1)
 def view(filepath, quiet: bool = False) -> None:
     """Open filepath with its default viewing application (platform-specific).
 

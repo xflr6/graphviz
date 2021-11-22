@@ -3,6 +3,7 @@
 import typing
 
 import graphviz
+from . import _tools
 from . import base
 from . import backend
 from . import encoding
@@ -13,6 +14,7 @@ __all__ = ['Unflatten']
 class Unflatten(encoding.Encoding, base.Base, backend.Unflatten):
     """Pipe source through the Graphviz *unflatten* preprocessor."""
 
+    @_tools.deprecate_positional_args(supported_number=1)
     def unflatten(self,
                   stagger: typing.Optional[int] = None,
                   fanout: bool = False,

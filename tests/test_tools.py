@@ -32,3 +32,27 @@ def test_mkdirs(tmp_path):
             _tools.mkdirs('spam/eggs/spam.eggs')
             assert list(itertree(str(tmp_path))) == [(False, 'spam'),
                                                      (False, 'spam/eggs')]
+
+
+@pytest.mark.parametrize('category, match',
+                         [(FutureWarning, r" third='third' "),
+                          (DeprecationWarning, r" third='third' "),
+                          (PendingDeprecationWarning, r" third='third' "),
+                          (_tools.SKIP_DEPRECATION, None)])
+def test_deprecate_positional_args(category, match):
+    @_tools.deprecate_positional_args(supported_number=2, category=category)
+    def func(first, second, third=None, **kwargs):
+        pass
+
+    with pytest.warns(None) as captured:
+        func('first', 'second', third='third', extra='extra')
+
+    assert not captured
+
+    if category is _tools.SKIP_DEPRECATION:
+        category = None
+
+    with pytest.warns(category, match=match) as captured:
+        func('first', 'second', 'third', extra='extra')
+
+    assert bool(captured) == bool(category is not None)

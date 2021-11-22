@@ -33,6 +33,7 @@ Example:
 import typing
 
 from .encoding import DEFAULT_ENCODING
+from . import _tools
 from . import dot
 from . import jupyter_integration
 from . import piping
@@ -48,6 +49,7 @@ class BaseGraph(dot.Dot,
                 unflattening.Unflatten):
     """Dot language creation and source code rendering."""
 
+    @_tools.deprecate_positional_args(supported_number=2)
     def __init__(self, name: typing.Optional[str] = None,
                  comment: typing.Optional[str] = None,
                  filename=None, directory=None,

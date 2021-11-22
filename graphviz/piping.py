@@ -4,6 +4,7 @@ import codecs
 import logging
 import typing
 
+from . import _tools
 from . import backend
 from . import base
 from . import encoding
@@ -47,6 +48,8 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
              encoding: typing.Optional[str]) -> typing.Union[bytes, str]:
         """Return bytes or string depending on encoding argument."""
 
+    @_tools.deprecate_positional_args(supported_number=1,
+                                      category=_tools.SKIP_DEPRECATION)  # FIXME
     def pipe(self,
              format: typing.Optional[str] = None,
              renderer: typing.Optional[str] = None,
