@@ -48,8 +48,6 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
              encoding: typing.Optional[str]) -> typing.Union[bytes, str]:
         """Return bytes or string depending on encoding argument."""
 
-    @_tools.deprecate_positional_args(supported_number=1,
-                                      category=_tools.SKIP_DEPRECATION)  # FIXME
     def pipe(self,
              format: typing.Optional[str] = None,
              renderer: typing.Optional[str] = None,
@@ -97,6 +95,36 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
             >>> graphviz.Source(source, format='svg').pipe(encoding='utf-8')[:14]
             '<?xml version='
         """
+        return self._pipe_legacy(format,
+                                 renderer=renderer,
+                                 formatter=formatter,
+                                 quiet=quiet,
+                                 engine=engine,
+                                 encoding=encoding)
+
+    # FIXME
+    @_tools.deprecate_positional_args(supported_number=1,
+                                      category=_tools.SKIP_DEPRECATION)
+    def _pipe_legacy(self,
+                     format: typing.Optional[str] = None,
+                     renderer: typing.Optional[str] = None,
+                     formatter: typing.Optional[str] = None,
+                     quiet: bool = False, *,
+                     engine: typing.Optional[str] = None,
+                     encoding: typing.Optional[str] = None) -> typing.Union[bytes, str]:
+        return self._pipe_future(format,
+                                 renderer=renderer,
+                                 formatter=formatter,
+                                 quiet=quiet,
+                                 engine=engine,
+                                 encoding=encoding)
+
+    def _pipe_future(self, format: typing.Optional[str] = None, *,
+                     renderer: typing.Optional[str] = None,
+                     formatter: typing.Optional[str] = None,
+                     quiet: bool = False,
+                     engine: typing.Optional[str] = None,
+                     encoding: typing.Optional[str] = None) -> typing.Union[bytes, str]:
         args, kwargs = self._get_pipe_parameters(engine=engine,
                                                  format=format,
                                                  renderer=renderer,

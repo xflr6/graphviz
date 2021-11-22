@@ -115,6 +115,9 @@ def deprecate_positional_args(*,
                 supported = dict(supported)
                 deprecated = dict(call_args)
                 assert deprecated
+                func_name = func.__name__.lstrip('_')
+                func_name, sep, rest = func_name.partition('_legacy')
+                assert not set or not rest
                 wanted = ', '.join(f'{name}={value!r}'
                                    for name, value in deprecated.items())
                 warnings.warn(f'The signature of {func.__name__} will be reduced'
