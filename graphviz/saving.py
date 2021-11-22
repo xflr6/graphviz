@@ -5,9 +5,9 @@ import os
 import typing
 
 from . import _defaults
+from . import _tools
 from . import base
 from . import encoding
-from . import tools
 
 __all__ = ['Save']
 
@@ -21,7 +21,7 @@ class Save(encoding.Encoding, base.Base):
 
     _default_extension = _defaults.DEFAULT_SOURCE_EXTENSION
 
-    _mkdirs = staticmethod(tools.mkdirs)
+    _mkdirs = staticmethod(_tools.mkdirs)
 
     def __init__(self, *, filename, directory=None, **kwargs) -> None:
         super().__init__(**kwargs)

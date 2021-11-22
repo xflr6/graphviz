@@ -5,7 +5,7 @@ import os
 import platform
 import subprocess
 
-from .. import tools
+from .. import _tools
 
 __all__ = ['view']
 
@@ -37,7 +37,7 @@ def view(filepath, quiet: bool = False) -> None:
     view_func(filepath, quiet=quiet)
 
 
-@tools.attach(view, 'darwin')
+@_tools.attach(view, 'darwin')
 def view_darwin(filepath, *, quiet: bool) -> None:
     """Open filepath with its default application (mac)."""
     cmd = ['open', filepath]
@@ -46,8 +46,8 @@ def view_darwin(filepath, *, quiet: bool) -> None:
     subprocess.Popen(cmd, **kwargs)
 
 
-@tools.attach(view, 'linux')
-@tools.attach(view, 'freebsd')
+@_tools.attach(view, 'linux')
+@_tools.attach(view, 'freebsd')
 def view_unixoid(filepath, *, quiet: bool) -> None:
     """Open filepath in the user's preferred application (linux, freebsd)."""
     cmd = ['xdg-open', filepath]
@@ -56,7 +56,7 @@ def view_unixoid(filepath, *, quiet: bool) -> None:
     subprocess.Popen(cmd, **kwargs)
 
 
-@tools.attach(view, 'windows')
+@_tools.attach(view, 'windows')
 def view_windows(filepath, *, quiet: bool) -> None:
     """Start filepath with its associated application (windows)."""
     # TODO: implement quiet=True

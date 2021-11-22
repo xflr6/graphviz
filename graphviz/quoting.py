@@ -4,7 +4,7 @@ import functools
 import re
 import typing
 
-from . import tools
+from . import _tools
 
 __all__ = ['quote', 'quote_edge',
            'a_list', 'attr_list',
@@ -107,11 +107,11 @@ def a_list(label: typing.Optional[str] = None,
     result = [f'label={quote(label)}'] if label is not None else []
     if kwargs:
         items = [f'{quote(k)}={quote(v)}'
-                 for k, v in tools.mapping_items(kwargs) if v is not None]
+                 for k, v in _tools.mapping_items(kwargs) if v is not None]
         result.extend(items)
     if attributes:
         if hasattr(attributes, 'items'):
-            attributes = tools.mapping_items(attributes)
+            attributes = _tools.mapping_items(attributes)
         items = [f'{quote(k)}={quote(v)}'
                  for k, v in attributes if v is not None]
         result.extend(items)
