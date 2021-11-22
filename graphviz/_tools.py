@@ -8,13 +8,10 @@ import os
 import typing
 import warnings
 
-__all__ = ['SKIP_DEPRECATION',
-           'attach',
+__all__ = ['attach',
            'mkdirs',
            'mapping_items',
            'deprecate_positional_args']
-
-SKIP_DEPRECATION = object()
 
 
 log = logging.getLogger(__name__)
@@ -76,7 +73,7 @@ def deprecate_positional_args(*,
         supported_number: Number of positional arguments
             for which no warning is raised.
         category: Type of Warning to raise
-            or SKIP_DEPRECATION to return a nulldecorator
+            or None to return a nulldecorator
             returning the undecorated function.
         stacklevel: See :func:`warning.warn`.
 
@@ -91,7 +88,7 @@ def deprecate_positional_args(*,
     """
     assert supported_number > 0, f'supported_number at least one: {supported_number!r}'
 
-    if category is SKIP_DEPRECATION:
+    if category is None:
         def nulldecorator(func):
             """Return the undecorated function."""
             return func

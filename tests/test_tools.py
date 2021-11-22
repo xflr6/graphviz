@@ -38,7 +38,7 @@ def test_mkdirs(tmp_path):
                          [(FutureWarning, r" third='third' "),
                           (DeprecationWarning, r" third='third' "),
                           (PendingDeprecationWarning, r" third='third' "),
-                          (_tools.SKIP_DEPRECATION, None)])
+                          (None, None)])
 def test_deprecate_positional_args(category, match):
     @_tools.deprecate_positional_args(supported_number=2, category=category)
     def func(first, second, third=None, **kwargs):
@@ -48,9 +48,6 @@ def test_deprecate_positional_args(category, match):
         func('first', 'second', third='third', extra='extra')
 
     assert not captured
-
-    if category is _tools.SKIP_DEPRECATION:
-        category = None
 
     with pytest.warns(category, match=match) as captured:
         func('first', 'second', 'third', extra='extra')
