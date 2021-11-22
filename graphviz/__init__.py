@@ -2,27 +2,28 @@
 
 """Assemble DOT source code and render it with Graphviz.
 
->>> import graphviz  # doctest: +NO_EXE
->>> dot = graphviz.Digraph(comment='The Round Table')
+Example:
+    >>> import graphviz  # doctest: +NO_EXE
+    >>> dot = graphviz.Digraph(comment='The Round Table')
 
->>> dot.node('A', 'King Arthur')
->>> dot.node('B', 'Sir Bedevere the Wise')
->>> dot.node('L', 'Sir Lancelot the Brave')
+    >>> dot.node('A', 'King Arthur')
+    >>> dot.node('B', 'Sir Bedevere the Wise')
+    >>> dot.node('L', 'Sir Lancelot the Brave')
 
->>> dot.edges(['AB', 'AL'])
+    >>> dot.edges(['AB', 'AL'])
 
->>> dot.edge('B', 'L', constraint='false')
+    >>> dot.edge('B', 'L', constraint='false')
 
->>> print(dot)  #doctest: +NORMALIZE_WHITESPACE
-// The Round Table
-digraph {
-    A [label="King Arthur"]
-    B [label="Sir Bedevere the Wise"]
-    L [label="Sir Lancelot the Brave"]
-    A -> B
-    A -> L
-    B -> L [constraint=false]
-}
+    >>> print(dot)  #doctest: +NORMALIZE_WHITESPACE
+    // The Round Table
+    digraph {
+        A [label="King Arthur"]
+        B [label="Sir Bedevere the Wise"]
+        L [label="Sir Lancelot the Brave"]
+        A -> B
+        A -> L
+        B -> L [constraint=false]
+    }
 """
 
 from ._settings import set_default_engine, set_default_format, set_jupyter_format

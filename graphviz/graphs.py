@@ -1,35 +1,33 @@
 r"""Assemble DOT source code objects.
 
->>> doctest_mark_exe()
+Example:
+    >>> doctest_mark_exe()
 
->>> import graphviz
->>> dot = graphviz.Graph(comment='Mønti Pythøn ik den Hølie Grailen')
+    >>> import graphviz
+    >>> dot = graphviz.Graph(comment='Mønti Pythøn ik den Hølie Grailen')
 
->>> dot.node('Møøse')
->>> dot.node('trained_by', 'trained by')
->>> dot.node('tutte', 'TUTTE HERMSGERVORDENBROTBORDA')
+    >>> dot.node('Møøse')
+    >>> dot.node('trained_by', 'trained by')
+    >>> dot.node('tutte', 'TUTTE HERMSGERVORDENBROTBORDA')
 
->>> dot.edge('Møøse', 'trained_by')
->>> dot.edge('trained_by', 'tutte')
+    >>> dot.edge('Møøse', 'trained_by')
+    >>> dot.edge('trained_by', 'tutte')
 
->>> dot.node_attr['shape'] = 'rectangle'
+    >>> dot.node_attr['shape'] = 'rectangle'
 
->>> print(dot.source)  #doctest: +NORMALIZE_WHITESPACE
-// Mønti Pythøn ik den Hølie Grailen
-graph {
-    node [shape=rectangle]
-    "Møøse"
-    trained_by [label="trained by"]
-    tutte [label="TUTTE HERMSGERVORDENBROTBORDA"]
-    "Møøse" -- trained_by
-    trained_by -- tutte
-}
+    >>> print(dot.source)  #doctest: +NORMALIZE_WHITESPACE
+    // Mønti Pythøn ik den Hølie Grailen
+    graph {
+        node [shape=rectangle]
+        "Møøse"
+        trained_by [label="trained by"]
+        tutte [label="TUTTE HERMSGERVORDENBROTBORDA"]
+        "Møøse" -- trained_by
+        trained_by -- tutte
+    }
 
->>> dot.render('doctest-output/m00se.gv').replace('\\', '/')
-'doctest-output/m00se.gv.pdf'
-
->>> dot.view('doctest-output/m00se.gv').replace('\\', '/')  # doctest: +SKIP
-'doctest-output/m00se.gv.pdf'
+    >>> dot.render('doctest-output/m00se.gv').replace('\\', '/')
+    'doctest-output/m00se.gv.pdf'
 """
 
 import typing
