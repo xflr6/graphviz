@@ -102,9 +102,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                                  engine=engine,
                                  encoding=encoding)
 
-    # FIXME
-    @_tools.deprecate_positional_args(supported_number=1,
-                                      category=_tools.SKIP_DEPRECATION)
+    @_tools.deprecate_positional_args(supported_number=1)
     def _pipe_legacy(self,
                      format: typing.Optional[str] = None,
                      renderer: typing.Optional[str] = None,
