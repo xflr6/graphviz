@@ -493,7 +493,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |
      |      Raises:
      |          ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
-     |              are not known.
+     |              are unknown.
      |          graphviz.RequiredArgumentError: If ``formatter`` is given
      |              but ``renderer`` is None.
      |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
@@ -601,7 +601,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |
      |      Raises:
      |          ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
-     |              are not known.
+     |              are unknown.
      |          graphviz.RequiredArgumentError: If ``formatter`` is given
      |              but ``renderer`` is None.
      |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
@@ -980,7 +980,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |
      |      Raises:
      |          ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
-     |              are not known.
+     |              are unknown.
      |          graphviz.RequiredArgumentError: If ``formatter`` is given
      |              but ``renderer`` is None.
      |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
@@ -1088,7 +1088,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |
      |      Raises:
      |          ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
-     |              are not known.
+     |              are unknown.
      |          graphviz.RequiredArgumentError: If ``formatter`` is given
      |              but ``renderer`` is None.
      |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
@@ -1360,7 +1360,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |
      |      Raises:
      |          ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
-     |              are not known.
+     |              are unknown.
      |          graphviz.RequiredArgumentError: If ``formatter`` is given
      |              but ``renderer`` is None.
      |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
@@ -1453,7 +1453,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |
      |      Raises:
      |          ValueError: If ``engine``, ``format``, ``renderer``, or ``formatter``
-     |              are not known.
+     |              are unknown.
      |          graphviz.RequiredArgumentError: If ``formatter`` is given
      |              but ``renderer`` is None.
      |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
