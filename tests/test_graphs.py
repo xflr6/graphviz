@@ -201,7 +201,7 @@ def test_subgraph():
 
 
 def test_label_html():
-    """http://www.graphviz.org/doc/info/shapes.html#html"""
+    """https://www.graphviz.org/doc/info/shapes.html#html"""
     dot = graphviz.Digraph('structs', node_attr={'shape': 'plaintext'})
     dot.node('struct1', '''<
 <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">

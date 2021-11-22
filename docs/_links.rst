@@ -1,6 +1,6 @@
 .. _Graphviz: https://www.graphviz.org
-.. _graphviz.org gallery: http://www.graphviz.org/gallery/
-.. _graphviz.org documentation: http://www.graphviz.org/documentation/
+.. _graphviz.org gallery: https://www.graphviz.org/gallery/
+.. _graphviz.org documentation: https://www.graphviz.org/documentation/
 
 .. _upstream-download: https://www.graphviz.org/download/
 .. _upstream-archived: https://www2.graphviz.org/Archive/stable/
@@ -26,14 +26,14 @@
 .. _twine: https://twine.readthedocs.io
 
 .. _DOT: https://www.graphviz.org/doc/info/lang.html
-.. _DOT command: http://graphviz.org/doc/info/command.html
-.. _DOT layouts: http://graphviz.org/docs/layouts/
+.. _DOT command: https://graphviz.org/doc/info/command.html
+.. _DOT layouts: https://graphviz.org/docs/layouts/
 .. _DOT outputs: https://graphviz.org/docs/outputs/
 .. _DOT attrs: https://www.graphviz.org/doc/info/attrs.html
 .. _DOT escString: https://www.graphviz.org/docs/attr-types/escString/
 .. _DOT shapes: https://graphviz.org/doc/info/shapes.html
 .. _DOT shapes HTML: https://graphviz.org/doc/info/shapes.html#html
-.. _DOT manpage_pdf: https://graphviz.gitlab.io/_pages/pdf/dot.1.pdf
+.. _DOT manpage_pdf: https://www.graphviz.org/pdf/dot.1.pdf
 .. _DOT unflatten: https://linux.die.net/man/1/unflatten
 .. _DOT unflatten_pdf: https://www.graphviz.org/pdf/unflatten.1.pdf
 
@@ -41,7 +41,7 @@
 .. _Jupyter Qt Console: https://qtconsole.readthedocs.io
 
 .. _Spyder IDE: https://www.spyder-ide.org
-.. _Spyder ipythonconsole: http://docs.spyder-ide.org/current/panes/ipythonconsole.html
+.. _Spyder ipythonconsole: https://docs.spyder-ide.org/current/panes/ipythonconsole.html
 
 .. _IPython.display: https://ipython.readthedocs.io/en/stable/api/generated/IPython.display.html#functions
 

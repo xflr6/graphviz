@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""http://www.graphviz.org/Gallery/undirected/fdpclust.html"""
+"""https://www.graphviz.org/Gallery/undirected/fdpclust.html"""
 
 import graphviz
 

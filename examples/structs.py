@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""http://www.graphviz.org/doc/info/shapes.html#html"""
+"""https://www.graphviz.org/doc/info/shapes.html#html"""
 
 import graphviz
 

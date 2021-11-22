@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""http://www.graphviz.org/Gallery/gradient/angles.html"""
+"""https://www.graphviz.org/Gallery/gradient/angles.html"""
 
 import graphviz
 

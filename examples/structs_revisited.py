@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""http://www.graphviz.org/pdf/dotguide.pdf, Figure 12"""
+"""https://www.graphviz.org/pdf/dotguide.pdf, Figure 12"""
 
 import graphviz
 

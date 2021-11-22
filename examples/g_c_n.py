@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""http://www.graphviz.org/Gallery/gradient/g_c_n.html"""
+"""https://www.graphviz.org/Gallery/gradient/g_c_n.html"""
 
 import graphviz
 

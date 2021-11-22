@@ -6,7 +6,7 @@ from . import base
 
 __all__ = ['ENGINES', 'verify_engine', 'Engine']
 
-ENGINES = {'dot',  # http://www.graphviz.org/pdf/dot.1.pdf
+ENGINES = {'dot',  # https://www.graphviz.org/pdf/dot.1.pdf
            'neato',
            'twopi',
            'circo',

@@ -6,7 +6,7 @@ from . import base
 
 __all__ = ['FORMATS', 'verify_format', 'Format']
 
-FORMATS = {'bmp',  # http://www.graphviz.org/doc/info/output.html
+FORMATS = {'bmp',  # https://graphviz.org/docs/outputs/
            'canon', 'dot', 'gv', 'xdot', 'xdot1.2', 'xdot1.4',
            'cgimage',
            'cmap',

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""http://www.graphviz.org/Gallery/directed/traffic_lights.html"""
+"""https://www.graphviz.org/Gallery/directed/traffic_lights.html"""
 
 import graphviz
 
