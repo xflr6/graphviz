@@ -55,6 +55,14 @@ ValueError: outfile 'spam.gv' must be different from input file 'spam.gv'
 >>> graphviz.render('dot', filepath=source, outfile=outfile_render).replace('\\', '/')
 'doctest-output/render/spam.pdf'
 
+>>> graphviz.render('dot', outfile='spam.png', raise_if_exists=True, overwrite=True)
+Traceback (most recent call last):
+    ...
+ValueError: overwrite cannot be combined with raise_if_exists
+
+>>> graphviz.render('dot', outfile=outfile_png, raise_if_exists=True)  # doctest: +ELLIPSIS
+Traceback (most recent call last):
+FileExistsError: output file exists: 'doctest-output...spam.png'
 """
 
 import os
@@ -79,7 +87,9 @@ def render(engine: str,
            renderer: typing.Optional[str] = ...,
            formatter: typing.Optional[str] = ...,
            quiet: bool = ..., *,
-           outfile: None = ...) -> str:
+           outfile: typing.Optional[str] = ...,
+           raise_if_exists: bool = ...,
+           overwrite: bool = ...) -> str:
     """Require ``format`` and ``filepath`` with default ``outfile=None``."""
 
 
@@ -89,8 +99,10 @@ def render(engine: str,
            filepath: typing.Optional[typing.Union[os.PathLike, str]] = ...,
            renderer: typing.Optional[str] = ...,
            formatter: typing.Optional[str] = ...,
-           quiet: bool = ..., *,
-           outfile: str) -> str:
+           quiet: bool = False, *,
+           outfile: typing.Optional[str] = ...,
+           raise_if_exists: bool = ...,
+           overwrite: bool = ...) -> str:
     """Optional ``format`` and ``filepath`` with given ``outfile``."""
 
 
@@ -100,8 +112,10 @@ def render(engine: str,
            filepath: typing.Optional[typing.Union[os.PathLike, str]] = ...,
            renderer: typing.Optional[str] = ...,
            formatter: typing.Optional[str] = ...,
-           quiet: bool = ..., *,
-           outfile: typing.Optional[str]) -> str:
+           quiet: bool = False, *,
+           outfile: typing.Optional[str] = ...,
+           raise_if_exists: bool = ...,
+           overwrite: bool = ...) -> str:
     """Required/optional ``format`` and ``filepath`` depending on ``outfile``."""
 
 
@@ -112,7 +126,9 @@ def render(engine: str,
            renderer: typing.Optional[str] = None,
            formatter: typing.Optional[str] = None,
            quiet: bool = False, *,
-           outfile: typing.Optional[str] = None) -> str:
+           outfile: typing.Optional[str] = None,
+           raise_if_exists: bool = False,
+           overwrite: bool = False) -> str:
     """Render file with ``engine`` into ``format`` and return result filename.
 
     Args:
@@ -123,6 +139,9 @@ def render(engine: str,
         formatter: Output formatter (``'cairo'``, ``'gd'``, ...).
         quiet: Suppress ``stderr`` output from the layout subprocess.
         outfile: Path for the rendered output file.
+        raise_if_exits: Raise :exc:`FileExistError` if the result file exists.
+        overwrite: Allow ``dot`` to write to the file it reads from.
+            Incompatible with raise_if_exists.
 
     Returns:
         The (possibly relative) path of the rendered file.
@@ -138,6 +157,7 @@ def render(engine: str,
             is not found.
         graphviz.CalledProcessError: If the returncode (exit status)
             of the rendering 'dot' subprocess is non-zero.
+        FileExitsError: If ``raise_if_exists`` and the result file exists.
 
     Note:
         The layout command is started from the directory of ``filepath``,
@@ -145,6 +165,9 @@ def render(engine: str,
         (e.g. ``[image=images/camelot.png]``)
         can be given as paths relative to the DOT source file.
     """
+    if raise_if_exists and overwrite:
+        raise ValueError('overwrite cannot be combined with raise_if_exists')
+
     if outfile is not None:
         try:
             suffix_format = get_rendering_format(outfile)
@@ -181,7 +204,8 @@ def render(engine: str,
         outfile_dirname, outfile_filename = os.path.split(outfile)
 
         if (outfile_filename == filename
-            and os.path.abspath(outfile_dirname) == os.path.abspath(dirname)):  # noqa: E129
+            and os.path.abspath(outfile_dirname) == os.path.abspath(dirname)
+            and not overwrite):  # noqa: E129
             raise ValueError(f'outfile {outfile_filename!r} must be different'
                              f' from input file {filename!r}')
 
@@ -202,6 +226,9 @@ def render(engine: str,
     cmd.append(filename)
 
     rendered = os.path.join(rendered_dirname, rendered)
+
+    if raise_if_exists and os.path.exists(rendered):
+        raise FileExistsError(f'output file exists: {rendered!r}')
 
     execute.run_check(cmd, cwd=dirname or None,
                       quiet=quiet, capture_output=True,)
