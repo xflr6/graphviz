@@ -63,6 +63,13 @@ ValueError: overwrite cannot be combined with raise_if_exists
 >>> graphviz.render('dot', outfile=outfile_png, raise_if_exists=True)  # doctest: +ELLIPSIS
 Traceback (most recent call last):
 FileExistsError: output file exists: 'doctest-output...spam.png'
+
+>>> graphviz.render('dot', 'jpg', outfile='doctest-output/spam.jpeg')
+'doctest-output\\spam.jpeg'
+
+>>> graphviz.render('dot', 'png', outfile='doctest-output/spam.peng')
+'doctest-output\\spam.peng'
+
 """
 
 import os
@@ -169,20 +176,7 @@ def render(engine: str,
         raise ValueError('overwrite cannot be combined with raise_if_exists')
 
     if outfile is not None:
-        try:
-            suffix_format = get_rendering_format(outfile)
-        except ValueError:
-            if format is None:
-                msg = ('cannot infer rendering format from outfile:'
-                       f' {outfile!r} (provide format or outfile'
-                       f' with a suffix from {sorted(parameters.FORMATS)})')
-                raise exceptions.RequiredArgumentError(msg)
-        else:
-            assert suffix_format is not None
-            if format is not None and format.lower() != suffix_format:
-                warnings.warn(f'expected format {suffix_format!r} from outfile'
-                              f' differs from given format: {format!r}')
-            format = suffix_format
+        format = get_rendering_format(outfile, format=format)
 
         if filepath is None:
             outfile_stem, _ = os.path.splitext(outfile)
@@ -235,25 +229,44 @@ def render(engine: str,
     return rendered
 
 
-def get_rendering_format(outfile: typing.Union[os.PathLike, str]) -> str:
+def get_rendering_format(outfile: typing.Union[os.PathLike, str], *,
+                         format: typing.Optional[str]) -> str:
+    try:
+        result = _get_rendering_format(outfile)
+    except ValueError:
+        if format is None:
+            msg = ('cannot infer rendering format from outfile:'
+                   f' {outfile!r} (provide format or outfile'
+                   f' with a suffix from {sorted(parameters.FORMATS)})')
+            raise exceptions.RequiredArgumentError(msg)
+        return format
+    else:
+        assert result is not None
+        if format is not None and format.lower() != result:
+            warnings.warn(f'expected format {result!r} from outfile'
+                          f' differs from given format: {format!r}')
+        return result
+
+
+def _get_rendering_format(outfile: typing.Union[os.PathLike, str]) -> str:
     """Return rendering format inferred from rendered filename suffix.
 
-    >>> get_rendering_format('spam.pdf')  # doctest: +NO_EXE
+    >>> _get_rendering_format('spam.pdf')  # doctest: +NO_EXE
     'pdf'
 
     >>> import pathlib
-    >>> get_rendering_format(pathlib.Path('spam.gv.svg'))
+    >>> _get_rendering_format(pathlib.Path('spam.gv.svg'))
     'svg'
 
-    >>> get_rendering_format('spam.PNG')
+    >>> _get_rendering_format('spam.PNG')
     'png'
 
-    >>> get_rendering_format('spam')
+    >>> _get_rendering_format('spam')
     Traceback (most recent call last):
         ...
     ValueError: cannot infer rendering format from outfile: 'spam' (missing suffix)
 
-    >>> get_rendering_format('spam.mp3')  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> _get_rendering_format('spam.mp3')  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
         ...
     ValueError: cannot infer rendering format from outfile: 'spam.mp3'
