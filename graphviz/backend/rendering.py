@@ -91,13 +91,21 @@ __all__ = ['render']
 
 
 def get_supported_formats() -> typing.List[str]:
-    """Return a sorted list of supported formats for exception/warning messages."""
+    """Return a sorted list of supported formats for exception/warning messages.
+
+    >>> get_supported_formats()  # doctest: +ELLIPSIS
+    ['bmp', ...]
+    """
     return sorted(parameters.FORMATS)
 
 
 def get_supported_suffixes() -> typing.List[str]:
-    """Return a sorted list of supported outfile suffixes for exception/warning messages."""
-    return ['.' + format for format in get_supported_formats()]
+    """Return a sorted list of supported outfile suffixes for exception/warning messages.
+
+    >>> get_supported_suffixes()  # doctest: +ELLIPSIS
+    ['.bmp', ...]
+    """
+    return [f'.{format}' for format in get_supported_formats()]
 
 
 @typing.overload
