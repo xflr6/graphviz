@@ -48,7 +48,7 @@ This probably only makes sense for text-based Graphviz formats
 such as ``dot``, ``plain``, or ``json``.
 You need to specify ``overwrite_filepath=True`` to enable this.
 
-Add ``graphviz.CalledProcessError`` derived from ``subprocess.FileExistsError``
+Add ``graphviz.CalledProcessError`` derived from ``subprocess.CalledProcessError``
 so users can choose either one in their excepts.
 
 Add ``graphviz.FileExistsError`` derived from ``FileExistsError``
