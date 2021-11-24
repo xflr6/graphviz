@@ -14,7 +14,8 @@ from the rendered ``outfile`` name:
 ``.render(outfile='spam.svg')``
 Tries to infer default ``format`` from the ``outfile`` suffix.
 You can override by setting ``format`` explicitly.
-Warns if there is a mismatch between given format and inferred format.
+Warns if there is a mismatch between given ``format``
+and the inferred format from ``outfile`` suffix.
 Warns if outfile uses a suffix that cannot be mapped to a supported format.
 
 Add keyword-only ``raise_if_result_exists`` argument to ``.render()``
