@@ -19,8 +19,8 @@ graphviz.exceptions.RequiredArgumentError: filepath: (required if outfile is not
 >>> graphviz.render('dot', outfile='spam.mp3')  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 Traceback (most recent call last):
     ...
-graphviz.exceptions.RequiredArgumentError: cannot infer rendering format from outfile: 'spam.mp3'
-(provide format or outfile with a suffix from [...])
+graphviz.exceptions.RequiredArgumentError: cannot infer rendering format from suffix '.mp3' of outfile: 'spam.mp3'
+(provide format or outfile with a suffix from ['.bmp', ...])
 
 >>> source = pathlib.Path('doctest-output/spam.gv')
 >>> source.write_text('graph { spam }', encoding='ascii')
@@ -34,10 +34,10 @@ graphviz.exceptions.RequiredArgumentError: cannot infer rendering format from ou
 'doctest-output/spam.png'
 
 >>> outfile_dot = source.with_suffix('.dot')
->>> with warnings.catch_warnings(record=True) as catched_warnings:
+>>> with warnings.catch_warnings(record=True) as captured:
 ...     graphviz.render('dot', 'plain', source, outfile=outfile_dot).replace('\\', '/')
 'doctest-output/spam.dot'
->>> print(*[repr(w.message) for w in catched_warnings])  # doctest: +NORMALIZE_WHITESPACE
+>>> print(*[repr(w.message) for w in captured])  # doctest: +NORMALIZE_WHITESPACE
 UserWarning("expected format 'dot' from outfile differs from given format: 'plain'")
 
 >>> graphviz.render('dot', 'gv', source, outfile=str(source))
@@ -67,9 +67,11 @@ FileExistsError: output file exists: 'doctest-output...spam.png'
 >>> graphviz.render('dot', 'jpg', outfile='doctest-output/spam.jpeg').replace('\\', '/')
 'doctest-output/spam.jpeg'
 
->>> graphviz.render('dot', 'png', outfile='doctest-output/spam.peng').replace('\\', '/')
+>>> with warnings.catch_warnings(record=True) as captured:
+...     graphviz.render('dot', 'png', outfile='doctest-output/spam.peng').replace('\\', '/')
 'doctest-output/spam.peng'
-
+>>> print(*[repr(w.message) for w in captured])  # doctest: +NORMALIZE_WHITESPACE
+UserWarning("unknown outfile suffix '.peng' (expected: '.png')")
 """
 
 import os
@@ -85,6 +87,16 @@ from . import dot_command
 from . import execute
 
 __all__ = ['render']
+
+
+def get_supported_formats() -> typing.List[str]:
+    """Return a sorted list of supported formats for exception/warning messages."""
+    return sorted(parameters.FORMATS)
+
+
+def get_supported_suffixes() -> typing.List[str]:
+    """Return a sorted list of supported outfile suffixes for exception/warning messages."""
+    return ['.' + format for format in get_supported_formats()]
 
 
 @typing.overload
@@ -231,25 +243,30 @@ def render(engine: str,
 
 def get_rendering_format(outfile: typing.Union[os.PathLike, str], *,
                          format: typing.Optional[str]) -> str:
+    """Return format from outfile suffix and/or given format."""
     try:
         result = _get_rendering_format(outfile)
     except ValueError:
+        _, suffix = os.path.splitext(outfile)
         if format is None:
-            msg = ('cannot infer rendering format from outfile:'
-                   f' {outfile!r} (provide format or outfile'
-                   f' with a suffix from {sorted(parameters.FORMATS)})')
+            msg = (f'cannot infer rendering format from suffix {suffix!r}'
+                   f' of outfile: {outfile!r} (provide format or outfile'
+                   f' with a suffix from {get_supported_suffixes()!r})')
             raise exceptions.RequiredArgumentError(msg)
+
+        warnings.warn(f'unknown outfile suffix {suffix!r} (expected: {"." + format!r})')
         return format
     else:
         assert result is not None
         if format is not None and format.lower() != result:
             warnings.warn(f'expected format {result!r} from outfile'
                           f' differs from given format: {format!r}')
+
         return result
 
 
 def _get_rendering_format(outfile: typing.Union[os.PathLike, str]) -> str:
-    """Return rendering format inferred from rendered filename suffix.
+    """Return format inferred from outfile suffix.
 
     >>> _get_rendering_format('spam.pdf')  # doctest: +NO_EXE
     'pdf'
@@ -286,5 +303,5 @@ def _get_rendering_format(outfile: typing.Union[os.PathLike, str]) -> str:
     except ValueError:
         raise ValueError('cannot infer rendering format from outfile:'
                          f' {outfile!r} (unknown format: {format_!r}'
-                         f' must be one of {sorted(parameters.FORMATS)})')
+                         f' must be one of {get_supported_formats()!r})')
     return format_
