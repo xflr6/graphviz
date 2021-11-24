@@ -98,6 +98,8 @@ Exceptions
 
 .. autoexception:: graphviz.CalledProcessError
 
+.. autoexception:: graphviz.FileExistsError
+
 
 Low-level functions
 -------------------

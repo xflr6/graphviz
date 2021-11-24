@@ -63,7 +63,7 @@ ValueError: overwrite cannot be combined with raise_if_exists
 
 >>> graphviz.render('dot', outfile=outfile_png, raise_if_exists=True)  # doctest: +ELLIPSIS
 Traceback (most recent call last):
-FileExistsError: output file exists: 'doctest-output...spam.png'
+graphviz.exceptions.FileExistsError: output file exists: 'doctest-output...spam.png'
 
 >>> graphviz.render('dot', 'jpg', outfile='doctest-output/spam.jpeg')  # doctest: +ELLIPSIS
 'doctest-output...spam.jpeg'
@@ -180,7 +180,7 @@ def render(engine: str,
         formatter: Output formatter (``'cairo'``, ``'gd'``, ...).
         quiet: Suppress ``stderr`` output from the layout subprocess.
         outfile: Path for the rendered output file.
-        raise_if_exits: Raise :exc:`FileExistError` if the result file exists.
+        raise_if_exits: Raise :exc:`.FileExistsError` if the result file exists.
         overwrite: Allow ``dot`` to write to the file it reads from.
             Incompatible with raise_if_exists.
 
@@ -200,7 +200,8 @@ def render(engine: str,
             is not found.
         graphviz.CalledProcessError: If the returncode (exit status)
             of the rendering 'dot' subprocess is non-zero.
-        FileExistsError: If ``raise_if_exists`` and the result file exists.
+        graphviz.FileExistsError: If ``raise_if_exists``
+            and the result file exists.
 
     Note:
         The layout command is started from the directory of ``filepath``,
@@ -253,7 +254,7 @@ def render(engine: str,
         rendered = filepath.parent / f'{filepath.name}.{suffix}'
 
     if raise_if_exists and os.path.exists(rendered):
-        raise FileExistsError(f'output file exists: {os.fspath(rendered)!r}')
+        raise exceptions.FileExistsError(f'output file exists: {os.fspath(rendered)!r}')
 
     cwd = os.fspath(filepath.parent) if filepath.parent.parts else None
 

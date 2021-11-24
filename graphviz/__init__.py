@@ -32,7 +32,7 @@ from .backend import (DOT_BINARY, UNFLATTEN_BINARY,
                       render, pipe, pipe_string, pipe_lines, pipe_lines_string,
                       unflatten, version, view,
                       ExecutableNotFound, CalledProcessError)
-from .exceptions import RequiredArgumentError
+from .exceptions import RequiredArgumentError, FileExistsError
 from .graphs import Graph, Digraph
 from .jupyter_integration import SUPPORTED_JUPYTER_FORMATS
 from .parameters import ENGINES, FORMATS, RENDERERS, FORMATTERS
@@ -90,3 +90,6 @@ ExecutableNotFound = ExecutableNotFound
 
 
 CalledProcessError = CalledProcessError
+
+
+FileExistsError = FileExistsError
