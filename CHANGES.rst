@@ -26,7 +26,7 @@ Add support to for ``.render()`` amd stand-alone ``.render()``
 to overwrite the input source file with the rendered output
 when using the ``outfile`` keyword-only argument.
 This probably only makes sense for text-based formats
-such as ``dot``, `json``, ``plain``, or ``svg``.
+such as ``dot``, ``json``, ``plain``, or ``svg``.
 You need to specify ``overwrite_filepath=True`` to enable this.
 
 Add ``graphviz.set_jupyter_format()`` to set the output ``format``
