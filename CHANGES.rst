@@ -5,6 +5,15 @@ Changelog
 Version 0.19 (in development)
 -----------------------------
 
+Add ``PendingDeprecationWarning`` to calls using positional arguments
+that will be deprecated in a later version.
+The future API will allow one, two, or three positional arguments for all calls.
+Keyword-only arguments where not around when this library was created.
+This requires callers to start updating or pinning to the wanted version.
+Crucially, this helps new users with a safer API
+that allows to avoid some common mistakes.
+Warnings reported in tests.
+
 Add keyword-only ``outfile`` argument to ``.render()``
 and stand-alone ``graphviz.render()``.
 Allows to override the rendered output file name:
