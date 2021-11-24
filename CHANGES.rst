@@ -25,8 +25,8 @@ Raises ``graphviz.FileExistsError`` if the rendered file already exists.
 Add support to for ``.render()`` and stand-alone ``.render()``
 to overwrite the input source file with the rendered output
 when using the ``outfile`` keyword-only argument.
-This probably only makes sense for text-based formats
-such as ``dot``, ``json``, ``plain``, or ``svg``.
+This probably only makes sense for text-based Graphviz formats
+such as ``dot``, ``plain``, or ``json``.
 You need to specify ``overwrite_filepath=True`` to enable this.
 
 Add ``graphviz.set_jupyter_format()`` to set the output ``format``
