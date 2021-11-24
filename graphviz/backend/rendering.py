@@ -109,7 +109,7 @@ def get_supported_suffixes() -> typing.List[str]:
     return [f'.{format}' for format in get_supported_formats()]
 
 
-def promote_pathlike(filepath: typing.Optional[typing.Union[os.PathLike, str]]
+def promote_pathlike(filepath: typing.Union[os.PathLike, str, None]
                      ) -> typing.Optional[pathlib.Path]:
     """Return path-like object ``filepath`` promoted into a path object.
 
