@@ -22,7 +22,7 @@ Add keyword-only ``raise_if_result_exists`` argument to ``.render()``
 and stand-alone ``graphviz.render()``.
 Raises ``graphviz.FileExistsError`` if the rendered file already exists.
 
-Add support to for ``.render()`` amd stand-alone ``.render()``
+Add support to for ``.render()`` and stand-alone ``.render()``
 to overwrite the input source file with the rendered output
 when using the ``outfile`` keyword-only argument.
 This probably only makes sense for text-based formats
