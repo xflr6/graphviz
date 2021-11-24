@@ -200,7 +200,7 @@ def render(engine: str,
             is not found.
         graphviz.CalledProcessError: If the returncode (exit status)
             of the rendering 'dot' subprocess is non-zero.
-        FileExistsError` If ``raise_if_exists`` and the result file exists.
+        FileExistsError: If ``raise_if_exists`` and the result file exists.
 
     Note:
         The layout command is started from the directory of ``filepath``,
