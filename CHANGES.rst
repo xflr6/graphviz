@@ -27,7 +27,7 @@ to overwrite the input source file with the rendered output
 when using the ``outfile``keyword-only argument.
 This probably only makes sense for text-based formats
 such as ``dot``, `json``, ``plain``, or ``svg``.
-You need to specify ``overwrite=True`` to enable this.
+You need to specify ``overwrite_filepath=True`` to enable this.
 
 Add ``graphviz.set_jupyter_format()`` to set the output ``format``
 used by the jupyter visualization of ``graphviz.Graph``, ``graphviz.Digraph``,
