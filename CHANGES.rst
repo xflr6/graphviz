@@ -30,10 +30,12 @@ such as ``dot``, ``plain``, or ``json``.
 You need to specify ``overwrite_filepath=True`` to enable this.
 
 Add ``graphviz.set_jupyter_format()`` to set the output ``format``
-used by the jupyter visualization of ``graphviz.Graph``, ``graphviz.Digraph``,
+used by the Jupyter visualization of ``graphviz.Graph``, ``graphviz.Digraph``,
 and ``graphviz.Source`` (supported formats: ``'svg'``, ``'png'``, ``'jpeg'``).
 Replace ``_repr_svg_()`` internally with ``_repr_mimebundle_(include, exclude)``
 returning a mimebundle ``{'image/svg+xml', '<?xml version=...'}`` by default.
+Adds support for ``IPython.display.display_png()``.
+Adds support for ``IPython.display.display_jpeg()``.
 PR `#150 <https://github.com/xflr6/graphviz/pull/150>`_ Christoph Boeddeker.
 
 Add ``graphviz.FileExistsError`` derived from ``FileExistsError`` so users
