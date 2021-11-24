@@ -76,6 +76,7 @@ UserWarning("unknown outfile suffix '.peng' (expected: '.png')")
 """
 
 import os
+import pathlib
 import typing
 import warnings
 
@@ -108,14 +109,26 @@ def get_supported_suffixes() -> typing.List[str]:
     return [f'.{format}' for format in get_supported_formats()]
 
 
+PathLikeObject = typing.Union[os.PathLike, str]
+"""https://docs.python.org/3/glossary.html#term-path-like-object"""
+
+
+def promote_pathlike(filepath: typing.Optional[PathLikeObject]
+                     ) -> typing.Optional[pathlib.Path]:
+    """Return path-like object ``filepath`` promoted into a path object."""
+    if filepath is None:
+        return None
+    return pathlib.Path(filepath)
+
+
 @typing.overload
 def render(engine: str,
            format: str,
-           filepath: typing.Union[os.PathLike, str],
+           filepath: PathLikeObject,
            renderer: typing.Optional[str] = ...,
            formatter: typing.Optional[str] = ...,
            quiet: bool = ..., *,
-           outfile: typing.Optional[str] = ...,
+           outfile: typing.Optional[PathLikeObject] = ...,
            raise_if_exists: bool = ...,
            overwrite: bool = ...) -> str:
     """Require ``format`` and ``filepath`` with default ``outfile=None``."""
@@ -124,11 +137,11 @@ def render(engine: str,
 @typing.overload
 def render(engine: str,
            format: typing.Optional[str] = ...,
-           filepath: typing.Optional[typing.Union[os.PathLike, str]] = ...,
+           filepath: typing.Optional[PathLikeObject] = ...,
            renderer: typing.Optional[str] = ...,
            formatter: typing.Optional[str] = ...,
            quiet: bool = False, *,
-           outfile: typing.Optional[str] = ...,
+           outfile: typing.Optional[PathLikeObject] = ...,
            raise_if_exists: bool = ...,
            overwrite: bool = ...) -> str:
     """Optional ``format`` and ``filepath`` with given ``outfile``."""
@@ -137,11 +150,11 @@ def render(engine: str,
 @typing.overload
 def render(engine: str,
            format: typing.Optional[str] = ...,
-           filepath: typing.Optional[typing.Union[os.PathLike, str]] = ...,
+           filepath: typing.Optional[PathLikeObject] = ...,
            renderer: typing.Optional[str] = ...,
            formatter: typing.Optional[str] = ...,
            quiet: bool = False, *,
-           outfile: typing.Optional[str] = ...,
+           outfile: typing.Optional[PathLikeObject] = ...,
            raise_if_exists: bool = ...,
            overwrite: bool = ...) -> str:
     """Required/optional ``format`` and ``filepath`` depending on ``outfile``."""
@@ -150,11 +163,11 @@ def render(engine: str,
 @_tools.deprecate_positional_args(supported_number=3)
 def render(engine: str,
            format: typing.Optional[str] = None,
-           filepath: typing.Optional[typing.Union[os.PathLike, str]] = None,
+           filepath: typing.Optional[PathLikeObject] = None,
            renderer: typing.Optional[str] = None,
            formatter: typing.Optional[str] = None,
            quiet: bool = False, *,
-           outfile: typing.Optional[str] = None,
+           outfile: typing.Optional[PathLikeObject] = None,
            raise_if_exists: bool = False,
            overwrite: bool = False) -> str:
     """Render file with ``engine`` into ``format`` and return result filename.
@@ -198,33 +211,30 @@ def render(engine: str,
     if raise_if_exists and overwrite:
         raise ValueError('overwrite cannot be combined with raise_if_exists')
 
+    filepath, outfile = map(promote_pathlike, (filepath, outfile))
+
     if outfile is not None:
         # https://www.graphviz.org/doc/info/command.html#-o
+
         format = get_rendering_format(outfile, format=format)
 
         cmd = dot_command.command(engine, format,
                                   renderer=renderer, formatter=formatter)
 
         if filepath is None:
-            outfile_stem, _ = os.path.splitext(outfile)
-            filepath = f'{outfile_stem}.{DEFAULT_SOURCE_EXTENSION}'
+            filepath = outfile.with_suffix(f'.{DEFAULT_SOURCE_EXTENSION}')
 
-        dirname, filename = os.path.split(filepath)
-        outfile_dirname, outfile_filename = os.path.split(outfile)
-        del filepath
+        if (not overwrite and outfile.name == filepath.name
+            and outfile.resolve() == filepath.resolve()):  # noqa: E129
+            raise ValueError(f'outfile {outfile.name!r} must be different'
+                             f' from input file {filepath.name!r}')
 
-        if (outfile_filename == filename
-            and os.path.abspath(outfile_dirname) == os.path.abspath(dirname)
-            and not overwrite):  # noqa: E129
-            raise ValueError(f'outfile {outfile_filename!r} must be different'
-                             f' from input file {filename!r}')
+        outfile_arg = (outfile.resolve() if outfile.parent != filepath.parent
+                       else outfile.name)
 
-        if outfile_dirname != dirname:
-            outfile_filename = os.path.abspath(outfile)
+        cmd += ['-o', outfile_arg, filepath.name]
 
-        cmd += ['-o', outfile_filename, filename]
-
-        rendered = os.fspath(outfile)
+        rendered = outfile
     elif format is None:
         raise exceptions.RequiredArgumentError('format: (required if outfile is not given,'
                                              f' got {format!r})')
@@ -236,22 +246,22 @@ def render(engine: str,
         cmd = dot_command.command(engine, format,
                                   renderer=renderer, formatter=formatter)
 
-        dirname, filename = os.path.split(filepath)
-        del filepath
-
-        cmd += ['-O', filename]
+        cmd += ['-O', filepath.name]
 
         suffix_args = (formatter, renderer, format)
         suffix = '.'.join(a for a in suffix_args if a is not None)
 
-        rendered = os.path.join(dirname, f'{filename}.{suffix}')
+        rendered = filepath.parent / f'{filepath.name}.{suffix}'
 
     if raise_if_exists and os.path.exists(rendered):
-        raise FileExistsError(f'output file exists: {rendered!r}')
+        raise FileExistsError(f'output file exists: {os.fspath(rendered)!r}')
 
-    execute.run_check(cmd, cwd=dirname or None,
-                      quiet=quiet, capture_output=True,)
-    return rendered
+    cwd = os.fspath(filepath.parent) if filepath.parent.parts else None
+
+    execute.run_check(cmd, cwd=cwd, quiet=quiet,
+                      capture_output=True)
+
+    return os.fspath(rendered)
 
 
 def get_rendering_format(outfile: typing.Union[os.PathLike, str], *,
@@ -263,8 +273,8 @@ def get_rendering_format(outfile: typing.Union[os.PathLike, str], *,
         _, suffix = os.path.splitext(outfile)
         if format is None:
             msg = (f'cannot infer rendering format from suffix {suffix!r}'
-                   f' of outfile: {outfile!r} (provide format or outfile'
-                   f' with a suffix from {get_supported_suffixes()!r})')
+                   f' of outfile: {os.fspath(outfile)!r} (provide format'
+                   f' or outfile with a suffix from {get_supported_suffixes()!r})')
             raise exceptions.RequiredArgumentError(msg)
 
         warnings.warn(f'unknown outfile suffix {suffix!r} (expected: {"." + format!r})')
@@ -305,7 +315,7 @@ def _get_rendering_format(outfile: typing.Union[os.PathLike, str]) -> str:
     _, suffix = os.path.splitext(outfile)
     if not suffix:
         raise ValueError('cannot infer rendering format from outfile:'
-                         f' {outfile!r} (missing suffix)')
+                         f' {os.fspath(outfile)!r} (missing suffix)')
 
     start, sep, format_ = suffix.partition('.')
     assert sep and not start, f"{suffix}.startswith('.')"
@@ -315,6 +325,6 @@ def _get_rendering_format(outfile: typing.Union[os.PathLike, str]) -> str:
         parameters.verify_format(format_)
     except ValueError:
         raise ValueError('cannot infer rendering format from outfile:'
-                         f' {outfile!r} (unknown format: {format_!r}'
+                         f' {os.fspath(outfile)!r} (unknown format: {format_!r}'
                          f' must be one of {get_supported_formats()!r})')
     return format_
