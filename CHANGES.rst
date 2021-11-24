@@ -7,7 +7,8 @@ Version 0.19 (in development)
 
 Add ``PendingDeprecationWarning`` to calls using positional arguments
 that will be deprecated in a later version.
-The future API will allow one, two, or three positional arguments for all calls.
+The future API will allow from one to three positional arguments
+depending on the method or function.
 Keyword-only arguments where not around when this library was created.
 This requires callers to start updating or pinning to the wanted version.
 Crucially, this helps new users with a safer API
