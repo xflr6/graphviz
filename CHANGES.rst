@@ -16,14 +16,15 @@ Tries to infer default ``format`` from the ``outfile`` suffix.
 You can override by setting ``format`` explicitly.
 Warns if there is a mismatch between given ``format``
 and the inferred format from ``outfile`` suffix.
-Warns if outfile uses a suffix that cannot be mapped to a supported format.
+Warns if ``outfile`` uses a suffix that cannot be mapped to a supported format.
 
 Add keyword-only ``raise_if_result_exists`` argument to ``.render()``
 and stand-alone ``graphviz.render()``.
 Raises ``graphviz.FileExistsError`` if the rendered file already exists.
 
-Add support to for ``dot`` to overwrite the input source file
-with the rendered output when using the ``outfile``keyword-only argument.
+Add support to for ``.render()`` amd stand-alone ``.render()``
+to overwrite the input source file with the rendered output
+when using the ``outfile``keyword-only argument.
 This probably only makes sense for text-based formats
 such as ``dot``, `json``, ``plain``, or ``svg``.
 You need to specify ``overwrite=True`` to enable this.
