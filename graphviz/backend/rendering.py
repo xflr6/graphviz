@@ -214,8 +214,6 @@ def render(engine: str,
     filepath, outfile = map(promote_pathlike, (filepath, outfile))
 
     if outfile is not None:
-        # https://www.graphviz.org/doc/info/command.html#-o
-
         format = get_rendering_format(outfile, format=format)
 
         cmd = dot_command.command(engine, format,
@@ -232,20 +230,21 @@ def render(engine: str,
         outfile_arg = (outfile.resolve() if outfile.parent != filepath.parent
                        else outfile.name)
 
+        # https://www.graphviz.org/doc/info/command.html#-o
         cmd += ['-o', outfile_arg, filepath.name]
 
         rendered = outfile
     elif format is None:
         raise exceptions.RequiredArgumentError('format: (required if outfile is not given,'
-                                             f' got {format!r})')
+                                               f' got {format!r})')
     elif filepath is None:
         raise exceptions.RequiredArgumentError('filepath: (required if outfile is not given,'
-                                             f' got {filepath!r})')
+                                               f' got {filepath!r})')
     else:
-        # https://www.graphviz.org/doc/info/command.html#-O
         cmd = dot_command.command(engine, format,
                                   renderer=renderer, formatter=formatter)
 
+        # https://www.graphviz.org/doc/info/command.html#-O
         cmd += ['-O', filepath.name]
 
         suffix_args = (formatter, renderer, format)
