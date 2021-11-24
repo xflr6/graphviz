@@ -19,25 +19,24 @@ graphviz.exceptions.RequiredArgumentError: filepath: (required if outfile is not
 >>> graphviz.render('dot', outfile='spam.mp3')  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 Traceback (most recent call last):
     ...
-graphviz.exceptions.RequiredArgumentError:
-cannot infer rendering format from suffix '.mp3' of outfile: 'spam.mp3'
+graphviz.exceptions.RequiredArgumentError: cannot infer rendering format from suffix '.mp3' of outfile: 'spam.mp3'
 (provide format or outfile with a suffix from ['.bmp', ...])
 
 >>> source = pathlib.Path('doctest-output/spam.gv')
 >>> source.write_text('graph { spam }', encoding='ascii')
 14
 
->>> graphviz.render('dot', 'png', source).replace('\\', '/')
-'doctest-output/spam.gv.png'
+>>> graphviz.render('dot', 'png', source) # doctest: +ELLIPSIS
+'doctest-output...spam.gv.png'
 
 >>> outfile_png =source.with_suffix('.png')
->>> graphviz.render('dot', 'png', source, outfile=outfile_png).replace('\\', '/')
-'doctest-output/spam.png'
+>>> graphviz.render('dot', 'png', source, outfile=outfile_png)  # doctest: +ELLIPSIS
+'doctest-output...spam.png'
 
 >>> outfile_dot = source.with_suffix('.dot')
 >>> with warnings.catch_warnings(record=True) as captured:
-...     graphviz.render('dot', 'plain', source, outfile=outfile_dot).replace('\\', '/')
-'doctest-output/spam.dot'
+...     graphviz.render('dot', 'plain', source, outfile=outfile_dot)  # doctest: +ELLIPSIS
+'doctest-output...spam.dot'
 >>> print(*[repr(w.message) for w in captured])  # doctest: +NORMALIZE_WHITESPACE
 UserWarning("expected format 'dot' from outfile differs from given format: 'plain'")
 
@@ -46,15 +45,15 @@ Traceback (most recent call last):
     ...
 ValueError: outfile 'spam.gv' must be different from input file 'spam.gv'
 
->>> graphviz.render('dot', outfile=source.with_suffix('.pdf')).replace('\\', '/')
-'doctest-output/spam.pdf'
+>>> graphviz.render('dot', outfile=source.with_suffix('.pdf'))  # doctest: +ELLIPSIS
+'doctest-output...spam.pdf'
 
 >>> import os
 >>> render = source.parent / 'render'
 >>> os.makedirs(render, exist_ok=True)
 >>> outfile_render = render / source.with_suffix('.pdf').name
->>> graphviz.render('dot', filepath=source, outfile=outfile_render).replace('\\', '/')
-'doctest-output/render/spam.pdf'
+>>> graphviz.render('dot', filepath=source, outfile=outfile_render)  # doctest: +ELLIPSIS
+'doctest-output...render...spam.pdf'
 
 >>> graphviz.render('dot', outfile='spam.png', raise_if_exists=True, overwrite=True)
 Traceback (most recent call last):
@@ -65,12 +64,12 @@ ValueError: overwrite cannot be combined with raise_if_exists
 Traceback (most recent call last):
 FileExistsError: output file exists: 'doctest-output...spam.png'
 
->>> graphviz.render('dot', 'jpg', outfile='doctest-output/spam.jpeg').replace('\\', '/')
-'doctest-output/spam.jpeg'
+>>> graphviz.render('dot', 'jpg', outfile='doctest-output/spam.jpeg')  # doctest: +ELLIPSIS
+'doctest-output...spam.jpeg'
 
 >>> with warnings.catch_warnings(record=True) as captured:
-...     graphviz.render('dot', 'png', outfile='doctest-output/spam.peng').replace('\\', '/')
-'doctest-output/spam.peng'
+...     graphviz.render('dot', 'png', outfile='doctest-output/spam.peng')  # doctest: +ELLIPSIS
+'doctest-output...spam.peng'
 >>> print(*[repr(w.message) for w in captured])  # doctest: +NORMALIZE_WHITESPACE
 UserWarning("unknown outfile suffix '.peng' (expected: '.png')")
 """
@@ -189,19 +188,26 @@ def render(engine: str,
         raise ValueError('overwrite cannot be combined with raise_if_exists')
 
     if outfile is not None:
-        # https://www.graphviz.org/doc/info/command.html#-o
         format = get_rendering_format(outfile, format=format)
-
-        cmd = dot_command.command(engine, format,
-                                  renderer=renderer, formatter=formatter)
 
         if filepath is None:
             outfile_stem, _ = os.path.splitext(outfile)
             filepath = f'{outfile_stem}.{DEFAULT_SOURCE_EXTENSION}'
+    elif format is None:
+        raise exceptions.RequiredArgumentError('format: (required if outfile is not given,'
+                                             f' got {format!r})')
+    elif filepath is None:
+        raise exceptions.RequiredArgumentError('filepath: (required if outfile is not given,'
+                                             f' got {filepath!r})')
 
-        dirname, filename = os.path.split(filepath)
+    cmd = dot_command.command(engine, format,
+                              renderer=renderer, formatter=formatter)
+
+    dirname, filename = os.path.split(filepath)
+    del filepath
+
+    if outfile is not None:
         outfile_dirname, outfile_filename = os.path.split(outfile)
-        del filepath
 
         if (outfile_filename == filename
             and os.path.abspath(outfile_dirname) == os.path.abspath(dirname)
@@ -209,32 +215,23 @@ def render(engine: str,
             raise ValueError(f'outfile {outfile_filename!r} must be different'
                              f' from input file {filename!r}')
 
+        rendered = outfile_filename
+
         if outfile_dirname != dirname:
             outfile_filename = os.path.abspath(outfile)
 
-        cmd += ['-o', outfile_filename, filename]
-
-        rendered = os.fspath(outfile)
-    elif format is None:
-        raise exceptions.RequiredArgumentError('format: (required if outfile is not given,'
-                                             f' got {format!r})')
-    elif filepath is None:
-        raise exceptions.RequiredArgumentError('filepath: (required if outfile is not given,'
-                                             f' got {filepath!r})')
+        cmd += ['-o', outfile_filename]  # https://www.graphviz.org/doc/info/command.html#-o
+        rendered_dirname = outfile_dirname
     else:
-        # https://www.graphviz.org/doc/info/command.html#-O
-        cmd = dot_command.command(engine, format,
-                                  renderer=renderer, formatter=formatter)
-
-        dirname, filename = os.path.split(filepath)
-        del filepath
-
-        cmd += ['-O', filename]
-
+        cmd.append('-O')  # https://www.graphviz.org/doc/info/command.html#-O
         suffix_args = (formatter, renderer, format)
         suffix = '.'.join(a for a in suffix_args if a is not None)
+        rendered = f'{filename}.{suffix}'
+        rendered_dirname = dirname
 
-        rendered = os.path.join(dirname, f'{filename}.{suffix}')
+    cmd.append(filename)
+
+    rendered = os.path.join(rendered_dirname, rendered)
 
     if raise_if_exists and os.path.exists(rendered):
         raise FileExistsError(f'output file exists: {rendered!r}')
