@@ -109,13 +109,13 @@ def get_supported_suffixes() -> typing.List[str]:
     return [f'.{format}' for format in get_supported_formats()]
 
 
-PathLikeObject = typing.Union[os.PathLike, str]
-"""https://docs.python.org/3/glossary.html#term-path-like-object"""
-
-
-def promote_pathlike(filepath: typing.Optional[PathLikeObject]
+def promote_pathlike(filepath: typing.Optional[typing.Union[os.PathLike, str]]
                      ) -> typing.Optional[pathlib.Path]:
-    """Return path-like object ``filepath`` promoted into a path object."""
+    """Return path-like object ``filepath`` promoted into a path object.
+
+    See also:
+        https://docs.python.org/3/glossary.html#term-path-like-object
+    """
     if filepath is None:
         return None
     return pathlib.Path(filepath)
@@ -124,11 +124,11 @@ def promote_pathlike(filepath: typing.Optional[PathLikeObject]
 @typing.overload
 def render(engine: str,
            format: str,
-           filepath: PathLikeObject,
+           filepath: typing.Union[os.PathLike, str],
            renderer: typing.Optional[str] = ...,
            formatter: typing.Optional[str] = ...,
            quiet: bool = ..., *,
-           outfile: typing.Optional[PathLikeObject] = ...,
+           outfile: typing.Union[os.PathLike, str, None] = ...,
            raise_if_exists: bool = ...,
            overwrite: bool = ...) -> str:
     """Require ``format`` and ``filepath`` with default ``outfile=None``."""
@@ -137,11 +137,11 @@ def render(engine: str,
 @typing.overload
 def render(engine: str,
            format: typing.Optional[str] = ...,
-           filepath: typing.Optional[PathLikeObject] = ...,
+           filepath: typing.Union[os.PathLike, str, None] = ...,
            renderer: typing.Optional[str] = ...,
            formatter: typing.Optional[str] = ...,
            quiet: bool = False, *,
-           outfile: typing.Optional[PathLikeObject] = ...,
+           outfile: typing.Union[os.PathLike, str, None] = ...,
            raise_if_exists: bool = ...,
            overwrite: bool = ...) -> str:
     """Optional ``format`` and ``filepath`` with given ``outfile``."""
@@ -150,11 +150,11 @@ def render(engine: str,
 @typing.overload
 def render(engine: str,
            format: typing.Optional[str] = ...,
-           filepath: typing.Optional[PathLikeObject] = ...,
+           filepath: typing.Union[os.PathLike, str, None] = ...,
            renderer: typing.Optional[str] = ...,
            formatter: typing.Optional[str] = ...,
            quiet: bool = False, *,
-           outfile: typing.Optional[PathLikeObject] = ...,
+           outfile: typing.Union[os.PathLike, str, None] = ...,
            raise_if_exists: bool = ...,
            overwrite: bool = ...) -> str:
     """Required/optional ``format`` and ``filepath`` depending on ``outfile``."""
@@ -163,11 +163,11 @@ def render(engine: str,
 @_tools.deprecate_positional_args(supported_number=3)
 def render(engine: str,
            format: typing.Optional[str] = None,
-           filepath: typing.Optional[PathLikeObject] = None,
+           filepath: typing.Union[os.PathLike, str, None] = None,
            renderer: typing.Optional[str] = None,
            formatter: typing.Optional[str] = None,
            quiet: bool = False, *,
-           outfile: typing.Optional[PathLikeObject] = None,
+           outfile: typing.Union[os.PathLike, str, None] = None,
            raise_if_exists: bool = False,
            overwrite: bool = False) -> str:
     """Render file with ``engine`` into ``format`` and return result filename.
@@ -200,7 +200,7 @@ def render(engine: str,
             is not found.
         graphviz.CalledProcessError: If the returncode (exit status)
             of the rendering 'dot' subprocess is non-zero.
-        FileExitsError: If ``raise_if_exists`` and the result file exists.
+        FileExistsError` If ``raise_if_exists`` and the result file exists.
 
     Note:
         The layout command is started from the directory of ``filepath``,
