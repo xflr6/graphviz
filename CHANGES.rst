@@ -9,7 +9,8 @@ Add keyword-only ``outfile`` argument to ``.render()``
 and stand-alone ``graphviz.render()``.
 Allows to override the rendered output file name:
 ``.render(filename='spam.gv', outfile='spam.pdf')``
-Allows to derive the filename from the rendered output file name:
+Allows to derive the ``format`` and the ``filename``
+from the rendered ``outfile`` name:
 ``.render(outfile='spam.svg')``
 Tries to infer default ``format`` from the ``outfile`` suffix.
 You can override by setting ``format`` explicitly.
