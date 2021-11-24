@@ -64,11 +64,11 @@ ValueError: overwrite cannot be combined with raise_if_exists
 Traceback (most recent call last):
 FileExistsError: output file exists: 'doctest-output...spam.png'
 
->>> graphviz.render('dot', 'jpg', outfile='doctest-output/spam.jpeg')
-'doctest-output\\spam.jpeg'
+>>> graphviz.render('dot', 'jpg', outfile='doctest-output/spam.jpeg').replace('\\', '/')
+'doctest-output/spam.jpeg'
 
->>> graphviz.render('dot', 'png', outfile='doctest-output/spam.peng')
-'doctest-output\\spam.peng'
+>>> graphviz.render('dot', 'png', outfile='doctest-output/spam.peng').replace('\\', '/')
+'doctest-output/spam.peng'
 
 """
 
