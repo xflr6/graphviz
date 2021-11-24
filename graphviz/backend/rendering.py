@@ -181,6 +181,8 @@ def render(engine: str,
             unless ``outfile`` is given.
         graphviz.RequiredArgumentError: If ``formatter`` is given
             but ``renderer`` is None.
+        ValueError: If ``outfile`` and ``filename`` are the same file
+            unless ``overwite=True``.
         graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
             is not found.
         graphviz.CalledProcessError: If the returncode (exit status)
