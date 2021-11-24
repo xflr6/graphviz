@@ -48,14 +48,21 @@ This probably only makes sense for text-based Graphviz formats
 such as ``dot``, ``plain``, or ``json``.
 You need to specify ``overwrite_filepath=True`` to enable this.
 
-Add ``graphviz.FileExistsError`` derived from ``FileExistsError`` so users
-can choose either one in their excepts.
+Add ``graphviz.CalledProcessError`` derived from ``subprocess.FileExistsError``
+so users can choose either one in their excepts.
+
+Add ``graphviz.FileExistsError`` derived from ``FileExistsError``
+so users can choose either one in their excepts.
 
 Add ``--only-exe`` flag to ``run-tests.py`` (overrides ``--skip-exe``).
+
+Add ``--skip-open`` and ``--open`` flags to ``build-docs.py``.
 
 Increase doctest coverage.
 
 Extend and improve documentation.
+
+Improve build tests.
 
 
 Version 0.18.2
