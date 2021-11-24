@@ -19,7 +19,8 @@ graphviz.exceptions.RequiredArgumentError: filepath: (required if outfile is not
 >>> graphviz.render('dot', outfile='spam.mp3')  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 Traceback (most recent call last):
     ...
-graphviz.exceptions.RequiredArgumentError: cannot infer rendering format from suffix '.mp3' of outfile: 'spam.mp3'
+graphviz.exceptions.RequiredArgumentError:
+cannot infer rendering format from suffix '.mp3' of outfile: 'spam.mp3'
 (provide format or outfile with a suffix from ['.bmp', ...])
 
 >>> source = pathlib.Path('doctest-output/spam.gv')
@@ -188,26 +189,19 @@ def render(engine: str,
         raise ValueError('overwrite cannot be combined with raise_if_exists')
 
     if outfile is not None:
+        # https://www.graphviz.org/doc/info/command.html#-o
         format = get_rendering_format(outfile, format=format)
+
+        cmd = dot_command.command(engine, format,
+                                  renderer=renderer, formatter=formatter)
 
         if filepath is None:
             outfile_stem, _ = os.path.splitext(outfile)
             filepath = f'{outfile_stem}.{DEFAULT_SOURCE_EXTENSION}'
-    elif format is None:
-        raise exceptions.RequiredArgumentError('format: (required if outfile is not given,'
-                                             f' got {format!r})')
-    elif filepath is None:
-        raise exceptions.RequiredArgumentError('filepath: (required if outfile is not given,'
-                                             f' got {filepath!r})')
 
-    cmd = dot_command.command(engine, format,
-                              renderer=renderer, formatter=formatter)
-
-    dirname, filename = os.path.split(filepath)
-    del filepath
-
-    if outfile is not None:
+        dirname, filename = os.path.split(filepath)
         outfile_dirname, outfile_filename = os.path.split(outfile)
+        del filepath
 
         if (outfile_filename == filename
             and os.path.abspath(outfile_dirname) == os.path.abspath(dirname)
@@ -215,23 +209,32 @@ def render(engine: str,
             raise ValueError(f'outfile {outfile_filename!r} must be different'
                              f' from input file {filename!r}')
 
-        rendered = outfile_filename
-
         if outfile_dirname != dirname:
             outfile_filename = os.path.abspath(outfile)
 
-        cmd += ['-o', outfile_filename]  # https://www.graphviz.org/doc/info/command.html#-o
-        rendered_dirname = outfile_dirname
+        cmd += ['-o', outfile_filename, filename]
+
+        rendered = os.fspath(outfile)
+    elif format is None:
+        raise exceptions.RequiredArgumentError('format: (required if outfile is not given,'
+                                             f' got {format!r})')
+    elif filepath is None:
+        raise exceptions.RequiredArgumentError('filepath: (required if outfile is not given,'
+                                             f' got {filepath!r})')
     else:
-        cmd.append('-O')  # https://www.graphviz.org/doc/info/command.html#-O
+        # https://www.graphviz.org/doc/info/command.html#-O
+        cmd = dot_command.command(engine, format,
+                                  renderer=renderer, formatter=formatter)
+
+        dirname, filename = os.path.split(filepath)
+        del filepath
+
+        cmd += ['-O', filename]
+
         suffix_args = (formatter, renderer, format)
         suffix = '.'.join(a for a in suffix_args if a is not None)
-        rendered = f'{filename}.{suffix}'
-        rendered_dirname = dirname
 
-    cmd.append(filename)
-
-    rendered = os.path.join(rendered_dirname, rendered)
+        rendered = os.path.join(dirname, f'{filename}.{suffix}')
 
     if raise_if_exists and os.path.exists(rendered):
         raise FileExistsError(f'output file exists: {rendered!r}')
