@@ -24,10 +24,10 @@ from the rendered ``outfile`` name:
 ``.render(outfile='spam.svg')``
 Tries to infer default ``format`` from the ``outfile`` suffix.
 You can override by setting ``format`` explicitly.
-Warns a ``graphviz.FormatSuffixMismatchWarning``
+Warns with a ``graphviz.FormatSuffixMismatchWarning``
 if there is a mismatch between given ``format``
 and the inferred format from ``outfile`` suffix.
-Warns a ``graphviz.UnknownSuffixWarning``
+Warns with a ``graphviz.UnknownSuffixWarning``
 if ``format`` is given and ``outfile`` uses a suffix
 that cannot be mapped to a supported format.
 
