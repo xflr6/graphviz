@@ -28,12 +28,15 @@ with unittest.mock.patch.object(graphviz.graphs.BaseGraph, '_view') as mock_view
     for path in pathlib.Path().glob('*.py'):
         print(path)
         code = path.read_text(**IO_KWARGS)
+
         try:
             exec(code)
         except Exception as e:
             raised.append(e)
             warnings.warn(e)
         else:
+            if path.name == 'graphviz_transform_recipe.py':
+                continue
             rendered = f'{path.stem}.gv.{DEFAULT_FORMAT}'
             assert pathlib.Path(rendered).stat().st_size, f'non-empty {rendered}'
             mock_view.assert_called_once_with(rendered, DEFAULT_FORMAT, False)
