@@ -7,6 +7,8 @@ from unittest import mock
 
 import graphviz
 
+WRAPS = ['Graph', 'Digraph']
+
 RENDERING_METHODS = ('pipe', 'save', 'render', 'view', 'unflatten')
 
 INPUT_PROPERTIES = ('source',)
@@ -14,8 +16,13 @@ INPUT_PROPERTIES = ('source',)
 __all__ = ['LazyGraph', 'LazyDigraph']
 
 
-def create_lazy_graph(cls_name: str,
-                      *init_args, **init_kwargs) -> mock.NonCallableMagicMock:
+def lazy_graph_cls(wrapped_cls_name: str):
+    return functools.partial(create_lazy_graph_instance, wrapped_cls_name)
+
+
+def create_lazy_graph_instance(cls_name: str,
+                               *init_args,
+                               **init_kwargs) -> mock.NonCallableMagicMock:
     cls = getattr(graphviz, cls_name)
     if cls not in (graphviz.Graph, graphviz.Digraph):
         raise ValueError(f'cls_name: {cls_name!r}')
@@ -65,8 +72,7 @@ def create_lazy_graph(cls_name: str,
     return fake
 
 
-LazyGraph, LazyDigraph = (functools.partial(create_lazy_graph, cls_name)
-                          for cls_name in ('Graph', 'Digraph'))
+LazyGraph, LazyDigraph = map(lazy_graph_cls, WRAPS)
 
 
 if __name__ == '__main__':

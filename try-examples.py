@@ -35,7 +35,7 @@ with unittest.mock.patch.object(graphviz.graphs.BaseGraph, '_view') as mock_view
             raised.append(e)
             warnings.warn(e)
         else:
-            if path.name == 'graphviz_transform_recipe.py':
+            if path.name.endswith('_recipe.py'):
                 continue
             rendered = f'{path.stem}.gv.{DEFAULT_FORMAT}'
             assert pathlib.Path(rendered).stat().st_size, f'non-empty {rendered}'
