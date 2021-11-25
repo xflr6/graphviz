@@ -248,9 +248,9 @@ def render(engine: str,
 
 def get_rendering_format(outfile: pathlib.Path, *,
                          format: typing.Optional[str]) -> str:
-    """Return format from outfile suffix and/or given format."""
+    """Return format inferred from outfile suffix and/or given format."""
     try:
-        result = _get_rendering_format(outfile)
+        result = infer_rendering_format(outfile)
     except ValueError:
         if format is None:
             msg = ('cannot infer rendering format'
@@ -273,29 +273,28 @@ def get_rendering_format(outfile: pathlib.Path, *,
         return result
 
 
-def _get_rendering_format(outfile: pathlib.Path) -> str:
+def infer_rendering_format(outfile: pathlib.Path) -> str:
     """Return format inferred from outfile suffix.
 
-    >>> _get_rendering_format(pathlib.Path('spam.pdf'))  # doctest: +NO_EXE
+    >>> infer_rendering_format(pathlib.Path('spam.pdf'))  # doctest: +NO_EXE
     'pdf'
 
-    >>> import pathlib
-    >>> _get_rendering_format(pathlib.Path('spam.gv.svg'))
+    >>> infer_rendering_format(pathlib.Path('spam.gv.svg'))
     'svg'
 
-    >>> _get_rendering_format(pathlib.Path('spam.PNG'))
+    >>> infer_rendering_format(pathlib.Path('spam.PNG'))
     'png'
 
-    >>> _get_rendering_format(pathlib.Path('spam'))
+    >>> infer_rendering_format(pathlib.Path('spam'))
     Traceback (most recent call last):
         ...
     ValueError: cannot infer rendering format from outfile: 'spam' (missing suffix)
 
-    >>> _get_rendering_format(pathlib.Path('spam.mp3'))  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> infer_rendering_format(pathlib.Path('spam.mp3'))  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
         ...
-    ValueError: cannot infer rendering format from outfile: 'spam.mp3'
-        (unknown format: 'mp3' must be one of [...])
+    ValueError: cannot infer rendering format from suffix '.mp3' of outfile: 'spam.mp3'
+    (unknown format: 'mp3', provide outfile with a suffix from ['.bmp', ...])
     """
     if not outfile.suffix:
         raise ValueError('cannot infer rendering format from outfile:'
@@ -309,7 +308,9 @@ def _get_rendering_format(outfile: pathlib.Path) -> str:
         parameters.verify_format(format_)
     except ValueError:
         raise ValueError('cannot infer rendering format'
-                         f' from outfile: {os.fspath(outfile)!r}'
-                         f' (unknown format: {format_!r}'
-                         f' must be one of {get_supported_formats()!r})')
+                         f' from suffix {outfile.suffix!r}'
+                         f' of outfile: {os.fspath(outfile)!r}'
+                         f' (unknown format: {format_!r},'
+                         ' provide outfile with a suffix'
+                         f' from {get_supported_suffixes()!r})')
     return format_
