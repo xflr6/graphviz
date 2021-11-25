@@ -12,15 +12,12 @@ r"""Render DOT source files with Graphviz ``dot``.
 >>> graphviz.render('dot', 'png', source).replace('\\', '/')
 'doctest-output/spam.gv.png'
 
->>> graphviz.render('dot', 'png', source,
+>>> graphviz.render('dot', filepath=source,
 ...                 outfile=source.with_suffix('.png')).replace('\\', '/')
 'doctest-output/spam.png'
 
 >>> graphviz.render('dot', outfile=source.with_suffix('.pdf')).replace('\\', '/')
 'doctest-output/spam.pdf'
-
->>> graphviz.render('dot', 'jpg', outfile=source.with_suffix('.jpeg')).replace('\\', '/')
-'doctest-output/spam.jpeg'
 """
 
 import os
