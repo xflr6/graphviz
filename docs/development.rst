@@ -81,11 +81,11 @@ and `Python versions <pytype_python_versions_>`_):
     $ pip install pytype
     $ pytype
 
-**Run the code style linter** (flake8_):
+**Run the code linter** (flake8_):
 
 .. code:: bash
 
-    $ python -m flake8
+    $ ./lint-code.py
 
 
 Documentation

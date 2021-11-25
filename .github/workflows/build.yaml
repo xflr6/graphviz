@@ -21,7 +21,7 @@ jobs:
           - name: macos-10.5-3.10-skip-exe
             python-version: "3.10"
             os: macos-10.15
-          - name: linux-3.10-flake8-skip-exe
+          - name: linux-3.10-lint-skip-exe
             python-version: "3.10"
             os: ubuntu-latest
           - name: linux-3.9-pytype-skip-exe
@@ -120,11 +120,11 @@ jobs:
           SEVERITY=warning; ${{ startsWith(matrix.name, 'windows-') }} && SEVERITY=notice
           [ $FAILED -eq 0 ] || echo ::$SEVERITY::try-examples.py failed with exit code $FAILED
         shell: bash
-      - name: Run flake8 (if -flake8)
-        if: ${{ contains(matrix.name, '-flake8') }}
+      - name: Run lint-code.py (if -lint)
+        if: ${{ contains(matrix.name, '-lint') }}
         run: |
-          echo ::group::Run flake8; FAILED=0; python -m flake8 || FAILED=$?; echo ::endgroup::
-          [ $FAILED -eq 0 ] || echo ::warning::flake8 failed with exit code $FAILED
+          echo ::group::Run lint-code.py; FAILED=0; python lint-code.py || FAILED=$?; echo ::endgroup::
+          [ $FAILED -eq 0 ] || echo ::warning::lint-code.py failed with exit code $FAILED
         shell: bash
       - name: Run update-help.py (if -update-help or -3.9)
         if: ${{ contains(matrix.name, '-update-help') || contains(matrix.name, '-3.9') }}

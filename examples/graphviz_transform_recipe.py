@@ -39,7 +39,7 @@ def create_lazy_graph_instance(cls_name: str,
         return dot
 
     def make_methodcaller(method_name):
-        def call_method(*args,  **kwargs):
+        def call_method(*args, **kwargs):
             last_call = fake.mock_calls.pop()
             assert last_call == getattr(mock.call, method_name)(*args, **kwargs)
 
@@ -86,7 +86,7 @@ if __name__ == '__main__':
     dot.edge('B', 'L', constraint='false')
 
     print(repr(dot), dot.mock_calls, dot.source, sep='\n')
-    #dot.view()
+    #dot.view()  # noqa: E265
 
     def transform(mock_calls):
         """Replace full name labels with first names."""
@@ -107,4 +107,4 @@ if __name__ == '__main__':
     dot.edge(*reversed(tail_head), **edge_attrs)
 
     print(repr(dot), dot.mock_calls, dot.source, sep='\n')
-    #dot.view('round-table-transformed.gv')
+    #dot.view('round-table-transformed.gv')  # noqa: E265
