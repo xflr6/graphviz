@@ -49,7 +49,7 @@ To render the generated DOT source code, you also need to install Graphviz_
 `installation procedure for Windows <upstream-windows_>`_).
 
 Make sure that the directory containing the ``dot`` executable is on your
-systems' path.
+systems' ``PATH``.
 
 Anaconda_: see the conda-forge_ package
 `conda-forge/python-graphviz <conda-forge-python-graphviz_>`_

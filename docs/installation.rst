@@ -19,7 +19,7 @@ The only dependency is a working installation of Graphviz_
 
 After installing Graphviz, make sure that its ``bin/`` subdirectory containing
 the ``dot`` `layout command <DOT command_>`_ for rendering graph descriptions
-is on your systems' path:
+is on your systems' ``PATH``:
 On the command-line, ``dot -V`` should print the version of your Graphiz installation.
 
 .. admonition:: Platform: Windows
