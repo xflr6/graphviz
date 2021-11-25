@@ -24,9 +24,12 @@ from the rendered ``outfile`` name:
 ``.render(outfile='spam.svg')``
 Tries to infer default ``format`` from the ``outfile`` suffix.
 You can override by setting ``format`` explicitly.
-Warns if there is a mismatch between given ``format``
+Warns a ``graphviz.FormatSuffixMismatchWarning``
+if there is a mismatch between given ``format``
 and the inferred format from ``outfile`` suffix.
-Warns if ``outfile`` uses a suffix that cannot be mapped to a supported format.
+Warns a ``graphviz.UnknownSuffixWarning``
+if ``format`` is given and ``outfile`` uses a suffix
+that cannot be mapped to a supported format.
 
 Add ``graphviz.set_jupyter_format()`` to set the output ``format``
 used by the Jupyter visualization of ``graphviz.Graph``, ``graphviz.Digraph``,
@@ -56,7 +59,7 @@ so users can choose either one in their excepts.
 
 Add ``--only-exe`` flag to ``run-tests.py`` (overrides ``--skip-exe``).
 
-Add ``--skip-open`` and ``--open`` flags to ``build-docs.py``.
+Add ``--no-open`` and ``--open`` flags to ``build-docs.py``.
 
 Increase doctest coverage.
 
