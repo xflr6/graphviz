@@ -6,16 +6,6 @@ r"""Render DOT source files with Graphviz ``dot``.
 >>> import warnings
 >>> import graphviz
 
->>> graphviz.render('dot')
-Traceback (most recent call last):
-    ...
-graphviz.exceptions.RequiredArgumentError: format: (required if outfile is not given, got None)
-
->>> graphviz.render('dot', 'svg')
-Traceback (most recent call last):
-    ...
-graphviz.exceptions.RequiredArgumentError: filepath: (required if outfile is not given, got None)
-
 >>> source = pathlib.Path('doctest-output/spam.gv')
 >>> source.write_text('graph { spam }', encoding='ascii')
 14
@@ -27,11 +17,6 @@ graphviz.exceptions.RequiredArgumentError: filepath: (required if outfile is not
 >>> graphviz.render('dot', 'png', source, outfile=outfile_png)  # doctest: +ELLIPSIS
 'doctest-output...spam.png'
 
->>> graphviz.render('dot', 'gv', source, outfile=str(source))
-Traceback (most recent call last):
-    ...
-ValueError: outfile 'spam.gv' must be different from input file 'spam.gv'
-
 >>> graphviz.render('dot', outfile=source.with_suffix('.pdf'))  # doctest: +ELLIPSIS
 'doctest-output...spam.pdf'
 
@@ -41,11 +26,6 @@ ValueError: outfile 'spam.gv' must be different from input file 'spam.gv'
 >>> outfile_render = render / source.with_suffix('.pdf').name
 >>> graphviz.render('dot', filepath=source, outfile=outfile_render)  # doctest: +ELLIPSIS
 'doctest-output...render...spam.pdf'
-
->>> graphviz.render('dot', outfile='spam.png', raise_if_result_exists=True, overwrite_filepath=True)
-Traceback (most recent call last):
-    ...
-ValueError: overwrite_filepath cannot be combined with raise_if_result_exists
 
 >>> graphviz.render('dot', outfile=outfile_png, raise_if_result_exists=True)  # doctest: +ELLIPSIS
 Traceback (most recent call last):

@@ -52,7 +52,9 @@ def test_render(capsys, tmp_path, engine, format_, renderer, formatter,
     lpath.write_bytes(data)
     rendered = lpath.with_suffix(f'{lpath.suffix}.{expected_suffix}')
 
-    assert graphviz.render(engine, format_, str(lpath), renderer, formatter) == str(rendered)
+    result = graphviz.render(engine, format_, str(lpath), renderer, formatter)
+
+    assert result == str(rendered)
 
     assert rendered.stat().st_size
     assert capsys.readouterr() == ('', '')
@@ -104,6 +106,21 @@ def test_render_mocked(capsys, mock_run, quiet, directory,
                                      cwd=directory,
                                      startupinfo=_common.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
+
+
+@pytest.mark.parametrize(
+    'args,  kwargs, expected_exception, match',
+    [(['dot'], {}, graphviz.RequiredArgumentError, r'format: \(required'),
+     (['dot', 'svg'], {}, graphviz.RequiredArgumentError, r'filepath: \(required'),
+     (['dot', 'gv', 'spam.gv'], {'outfile': 'spam.gv'}, ValueError,
+      r"outfile 'spam\.gv' must be different from input file 'spam\.gv'"),
+     (['dot'], {'outfile': 'spam.png',
+                'raise_if_result_exists': True, 'overwrite_filepath': True},
+      ValueError,
+      r'overwrite_filepath cannot be combined with raise_if_result_exists')])
+def test_render_raises_mocked(mock_run, args, kwargs, expected_exception, match):
+    with pytest.raises(expected_exception, match=match):
+        graphviz.render(*args, **kwargs)
 
 
 @pytest.mark.parametrize(
