@@ -27,10 +27,6 @@ r"""Render DOT source files with Graphviz ``dot``.
 >>> graphviz.render('dot', filepath=source, outfile=outfile_render)  # doctest: +ELLIPSIS
 'doctest-output...render...spam.pdf'
 
->>> graphviz.render('dot', outfile=outfile_png, raise_if_result_exists=True)  # doctest: +ELLIPSIS
-Traceback (most recent call last):
-graphviz.exceptions.FileExistsError: output file exists: 'doctest-output...spam.png'
-
 >>> graphviz.render('dot', 'jpg', outfile='doctest-output/spam.jpeg')  # doctest: +ELLIPSIS
 'doctest-output...spam.jpeg'
 """
@@ -188,7 +184,8 @@ def render(engine: str,
         if (not overwrite_filepath and outfile.name == filepath.name
             and outfile.resolve() == filepath.resolve()):  # noqa: E129
             raise ValueError(f'outfile {outfile.name!r} must be different'
-                             f' from input file {filepath.name!r}')
+                             f' from input file {filepath.name!r}'
+                             ' (pass overwrite_filepath=True to override)')
 
         outfile_arg = (outfile.resolve() if outfile.parent != filepath.parent
                        else outfile.name)

@@ -117,10 +117,18 @@ def test_render_mocked(capsys, mock_run, quiet, directory,
      (['dot'], {'outfile': 'spam.png',
                 'raise_if_result_exists': True, 'overwrite_filepath': True},
       ValueError,
-      r'overwrite_filepath cannot be combined with raise_if_result_exists')])
-def test_render_raises_mocked(mock_run, args, kwargs, expected_exception, match):
-    with pytest.raises(expected_exception, match=match):
-        graphviz.render(*args, **kwargs)
+      r'overwrite_filepath cannot be combined with raise_if_result_exists'),
+     (['dot'], {'outfile': 'spam.png', 'raise_if_result_exists': True},
+      graphviz.FileExistsError, r"output file exists: 'spam.png'")])
+def test_render_raises_mocked(tmp_path, mock_run, args, kwargs,
+                              expected_exception, match):
+    if issubclass(expected_exception, FileExistsError):
+        existing_outfile = tmp_path / kwargs['outfile']
+        existing_outfile.touch()
+
+    with _common.as_cwd(tmp_path):
+        with pytest.raises(expected_exception, match=match):
+            graphviz.render(*args, **kwargs)
 
 
 @pytest.mark.parametrize(
