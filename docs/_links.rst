@@ -6,6 +6,10 @@
 .. _upstream-archived: https://www2.graphviz.org/Archive/stable/
 .. _upstream-windows: https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224
 
+.. _set-path-windows: https://www.computerhope.com/issues/ch000549.htm
+.. _set-path-linux: https://stackoverflow.com/questions/14637979/how-to-permanently-set-path-on-linux-unix
+.. _set-path-darwin: https://stackoverflow.com/questions/22465332/setting-path-environment-variable-in-osx-permanently
+
 .. _Anaconda: https://docs.anaconda.com/anaconda/install/
 .. _conda-forge: https://conda-forge.org
 .. _conda-forge-python-graphviz: https://anaconda.org/conda-forge/python-graphviz

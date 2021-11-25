@@ -49,7 +49,12 @@ To render the generated DOT source code, you also need to install Graphviz_
 `installation procedure for Windows <upstream-windows_>`_).
 
 Make sure that the directory containing the ``dot`` executable is on your
-systems' ``PATH``.
+systems' ``PATH``
+(sometimes done by the installer;
+setting ``PATH``
+on `Linux <set-path-linux_>`_,
+`Mac <set-path-darwin_>`_,
+and `Windows <set-path-windows_>`_).
 
 Anaconda_: see the conda-forge_ package
 `conda-forge/python-graphviz <conda-forge-python-graphviz_>`_
@@ -148,6 +153,10 @@ Development
 .. _upstream-download: https://www.graphviz.org/download/
 .. _upstream-archived: https://www2.graphviz.org/Archive/stable/
 .. _upstream-windows: https://forum.graphviz.org/t/new-simplified-installation-procedure-on-windows/224
+
+.. _set-path-windows: https://www.computerhope.com/issues/ch000549.htm
+.. _set-path-linux: https://stackoverflow.com/questions/14637979/how-to-permanently-set-path-on-linux-unix
+.. _set-path-darwin: https://stackoverflow.com/questions/22465332/setting-path-environment-variable-in-osx-permanently
 
 .. _pip: https://pip.pypa.io
 
