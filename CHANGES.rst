@@ -48,7 +48,7 @@ Add support to for ``.render()`` and stand-alone ``.render()``
 to overwrite the input source file with the rendered output
 when using the ``outfile`` keyword-only argument.
 This probably only makes sense for text-based Graphviz formats
-such as ``dot``, ``plain``, or ``json``.
+such as ``dot`` or ``plain``.
 You need to specify ``overwrite_filepath=True`` to enable this.
 
 Add ``graphviz.CalledProcessError`` derived from ``subprocess.CalledProcessError``

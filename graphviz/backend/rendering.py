@@ -149,7 +149,7 @@ def render(engine: str,
         graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
             is not found.
         graphviz.CalledProcessError: If the returncode (exit status)
-            of the rendering 'dot' subprocess is non-zero.
+            of the rendering ``dot`` subprocess is non-zero.
         graphviz.FileExistsError: If ``raise_if_exists``
             and the result file exists.
 
