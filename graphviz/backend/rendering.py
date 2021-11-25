@@ -149,6 +149,12 @@ def render(engine: str,
         graphviz.FileExistsError: If ``raise_if_exists``
             and the result file exists.
 
+    Warns:
+        graphviz.UnknownSuffixWarning: If the suffix of ``outfile``
+            is empty or unknown.
+        graphviz.FormatSuffixMismatchWarning: If the suffix of ``outfile``
+            does not match the given ``format``.
+
     Note:
         The layout command is started from the directory of ``filepath``,
         so that references to external files
@@ -214,7 +220,21 @@ def render(engine: str,
 
 def get_rendering_format(outfile: pathlib.Path, *,
                          format: typing.Optional[str]) -> str:
-    """Return format inferred from outfile suffix and/or given format."""
+    """Return format inferred from outfile suffix and/or given format.
+
+    Args:
+        outfile: Path for the rendered output file.
+        format: Output format for rendering (``'pdf'``, ``'png'``, ...).
+
+    Returns:
+        The given ``format`` falling back to the inferred format.
+
+    Warns:
+        graphviz.UnknownSuffixWarning: If the suffix of ``outfile``
+            is empty/unknown.
+        graphviz.FormatSuffixMismatchWarning: If the suffix of ``outfile``
+            does not match the given ``format``.
+    """
     try:
         result = infer_rendering_format(outfile)
     except ValueError:
@@ -227,13 +247,15 @@ def get_rendering_format(outfile: pathlib.Path, *,
             raise exceptions.RequiredArgumentError(msg)
 
         warnings.warn(f'unknown outfile suffix {outfile.suffix!r}'
-                      f' (expected: {"." + format!r})')
+                      f' (expected: {"." + format!r})',
+                      category=exceptions.UnknownSuffixWarning)
         return format
     else:
         assert result is not None
         if format is not None and format.lower() != result:
             warnings.warn(f'expected format {result!r} from outfile'
-                          f' differs from given format: {format!r}')
+                          f' differs from given format: {format!r}',
+                          category=exceptions.FormatSuffixMismatchWarning)
             return format
 
         return result
@@ -241,6 +263,15 @@ def get_rendering_format(outfile: pathlib.Path, *,
 
 def infer_rendering_format(outfile: pathlib.Path) -> str:
     """Return format inferred from outfile suffix.
+
+    Args:
+        outfile: Path for the rendered output file.
+
+    Returns:
+        The inferred format.
+
+    Raises:
+        ValueError: If the suffix of ``outfile`` is empty/unknown.
 
     >>> infer_rendering_format(pathlib.Path('spam.pdf'))  # doctest: +NO_EXE
     'pdf'

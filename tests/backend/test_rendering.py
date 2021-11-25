@@ -170,13 +170,13 @@ def test_get_rendering_format(outfile_name, format, expected_result):
 
 @pytest.mark.parametrize(
     'outfile_name,  format, expected_result, expected_warning, match',
-    [('spam.jpg', 'jpeg', 'jpeg', UserWarning,
+    [('spam.jpg', 'jpeg', 'jpeg', graphviz.FormatSuffixMismatchWarning,
       r"expected format 'jpg' from outfile differs from given format: 'jpeg'"),
-     ('spam.dot', 'plain', 'plain', UserWarning,
+     ('spam.dot', 'plain', 'plain', graphviz.FormatSuffixMismatchWarning,
       r"expected format 'dot' from outfile differs from given format: 'plain'"),
-     ('spam', 'svg', 'svg', UserWarning,
+     ('spam', 'svg', 'svg', graphviz.UnknownSuffixWarning,
       r"unknown outfile suffix '' \(expected: '.svg'\)"),
-     ('spam.peng', 'png', 'png', UserWarning,
+     ('spam.peng', 'png', 'png', graphviz.UnknownSuffixWarning,
       r"unknown outfile suffix '.peng' \(expected: '.png'\)")])
 def test_get_rendering_format_warns(outfile_name, format, expected_result,
                                     expected_warning, match):

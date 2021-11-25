@@ -101,6 +101,14 @@ Exceptions
 .. autoexception:: graphviz.FileExistsError
 
 
+Warnings
+--------
+
+.. autoexception:: graphviz.UnknownSuffixWarning
+
+.. autoexception:: graphviz.FormatSuffixMismatchWarning
+
+
 Low-level functions
 -------------------
 

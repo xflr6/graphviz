@@ -1,6 +1,7 @@
 """Commonly used exception classes."""
 
-__all__ = ['RequiredArgumentError', 'FileExistsError']
+__all__ = ['RequiredArgumentError', 'FileExistsError',
+           'UnknownSuffixWarning', 'FormatSuffixMismatchWarning']
 
 
 class RequiredArgumentError(TypeError):
@@ -9,3 +10,11 @@ class RequiredArgumentError(TypeError):
 
 class FileExistsError(FileExistsError):
     """:class:`FileNotFoundError` raised with ``raise_if_exists=True``."""
+
+
+class UnknownSuffixWarning(UserWarning):
+    """:class:`UserWarning` raised for unknown ``outfile`` suffix."""
+
+
+class FormatSuffixMismatchWarning(UserWarning):
+    """:class:`UserWarning` raised for ``format`` mismatch with ``outfile`` suffix."""
