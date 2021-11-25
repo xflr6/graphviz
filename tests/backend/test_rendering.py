@@ -106,7 +106,6 @@ def test_render_mocked(capsys, mock_run, quiet, directory,
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
 
-
 @pytest.mark.parametrize(
     'outfile_name, format, expected_result',
     [('spam.gv.pdf', None, 'pdf'),
