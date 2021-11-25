@@ -6,6 +6,7 @@ import subprocess
 import pytest
 
 import graphviz
+from graphviz.backend import rendering
 
 import _common
 
@@ -103,3 +104,55 @@ def test_render_mocked(capsys, mock_run, quiet, directory,
                                      cwd=directory,
                                      startupinfo=_common.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
+
+
+
+@pytest.mark.parametrize(
+    'outfile_name, format, expected_result',
+    [('spam.gv.pdf', None, 'pdf'),
+     ('spam.jpeg', None, 'jpeg'),
+     ('spam.SVG', None, 'svg'),
+     ('spam.pdf', None, 'pdf'),
+     ('spam.pdf', 'pdf', 'pdf'),
+     ('spam', 'pdf', 'pdf')])
+def test_get_rendering_format(outfile_name, format, expected_result):
+    outfile = pathlib.Path(outfile_name)
+
+    result = rendering.get_rendering_format(outfile, format=format)
+
+    assert result == expected_result
+
+
+@pytest.mark.parametrize(
+    'outfile_name,  format, expected_result, expected_warning, match',
+    [('spam.jpg', 'jpeg', 'jpeg', UserWarning,
+      r"expected format 'jpg' from outfile differs from given format: 'jpeg'"),
+     ('spam.dot', 'plain', 'plain', UserWarning,
+      r"expected format 'dot' from outfile differs from given format: 'plain'"),
+     ('spam', 'svg', 'svg', UserWarning,
+      r"unknown outfile suffix '' \(expected: '.svg'\)"),
+     ('spam.peng', 'png', 'png', UserWarning,
+      r"unknown outfile suffix '.peng' \(expected: '.png'\)")])
+def test_get_rendering_format_warns(outfile_name, format, expected_result,
+                                    expected_warning, match):
+    outfile = pathlib.Path(outfile_name)
+
+    with pytest.warns(expected_warning, match=match):
+        result = rendering.get_rendering_format(outfile, format=format)
+
+    assert result == expected_result
+
+
+@pytest.mark.parametrize(
+    'outfile_name,  expected_exception, match',
+    [('spam', graphviz.RequiredArgumentError,
+      r"cannot infer rendering format from suffix '' of outfile: 'spam'"),
+     ('spam.peng', graphviz.RequiredArgumentError,
+      r"cannot infer rendering format from suffix '.peng' of outfile: 'spam.peng'"),
+     ('spam.mp3', graphviz.RequiredArgumentError,
+      r"cannot infer rendering format from suffix '.mp3' of outfile: 'spam.mp3'")])
+def test_get_rendering_format_raises(outfile_name, expected_exception, match):
+    outfile = pathlib.Path(outfile_name)
+
+    with pytest.raises(expected_exception, match=match):
+        rendering.get_rendering_format(outfile, format=None)

@@ -16,13 +16,6 @@ Traceback (most recent call last):
     ...
 graphviz.exceptions.RequiredArgumentError: filepath: (required if outfile is not given, got None)
 
->>> graphviz.render('dot', outfile='spam.mp3')  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-Traceback (most recent call last):
-    ...
-graphviz.exceptions.RequiredArgumentError:
-cannot infer rendering format from suffix '.mp3' of outfile: 'spam.mp3'
-(provide format or outfile with a suffix from ['.bmp', ...])
-
 >>> source = pathlib.Path('doctest-output/spam.gv')
 >>> source.write_text('graph { spam }', encoding='ascii')
 14
@@ -33,13 +26,6 @@ cannot infer rendering format from suffix '.mp3' of outfile: 'spam.mp3'
 >>> outfile_png =source.with_suffix('.png')
 >>> graphviz.render('dot', 'png', source, outfile=outfile_png)  # doctest: +ELLIPSIS
 'doctest-output...spam.png'
-
->>> outfile_dot = source.with_suffix('.dot')
->>> with warnings.catch_warnings(record=True) as captured:
-...     graphviz.render('dot', 'plain', source, outfile=outfile_dot)  # doctest: +ELLIPSIS
-'doctest-output...spam.dot'
->>> print(*[repr(w.message) for w in captured])  # doctest: +NORMALIZE_WHITESPACE
-UserWarning("expected format 'dot' from outfile differs from given format: 'plain'")
 
 >>> graphviz.render('dot', 'gv', source, outfile=str(source))
 Traceback (most recent call last):
@@ -67,12 +53,6 @@ graphviz.exceptions.FileExistsError: output file exists: 'doctest-output...spam.
 
 >>> graphviz.render('dot', 'jpg', outfile='doctest-output/spam.jpeg')  # doctest: +ELLIPSIS
 'doctest-output...spam.jpeg'
-
->>> with warnings.catch_warnings(record=True) as captured:
-...     graphviz.render('dot', 'png', outfile='doctest-output/spam.peng')  # doctest: +ELLIPSIS
-'doctest-output...spam.peng'
->>> print(*[repr(w.message) for w in captured])  # doctest: +NORMALIZE_WHITESPACE
-UserWarning("unknown outfile suffix '.peng' (expected: '.png')")
 """
 
 import os
@@ -288,6 +268,7 @@ def get_rendering_format(outfile: pathlib.Path, *,
         if format is not None and format.lower() != result:
             warnings.warn(f'expected format {result!r} from outfile'
                           f' differs from given format: {format!r}')
+            return format
 
         return result
 
