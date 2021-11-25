@@ -34,7 +34,7 @@ def pipe(engine: str, format: str, data: bytes,
             are unknown.
         graphviz.RequiredArgumentError: If ``formatter`` is given
             but ``renderer`` is None.
-        graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
+        graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
             is not found.
         graphviz.CalledProcessError: If the returncode (exit status)
             of the rendering 'dot' subprocess is non-zero.
@@ -80,7 +80,7 @@ def pipe_string(engine: str, format: str, input_string: str, *,
             are unknown.
         graphviz.RequiredArgumentError: If ``formatter`` is given
             but ``renderer`` is None.
-        graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
+        graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
             is not found.
         graphviz.CalledProcessError: If the returncode (exit status)
             of the rendering 'dot' subprocess is non-zero.
@@ -127,7 +127,7 @@ def pipe_lines(engine: str, format: str, input_lines: typing.Iterator[str], *,
             are unknown.
         graphviz.RequiredArgumentError: If ``formatter`` is given
             but ``renderer`` is None.
-        graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
+        graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
             is not found.
         graphviz.CalledProcessError: If the returncode (exit status)
             of the rendering 'dot' subprocess is non-zero.
@@ -174,7 +174,7 @@ def pipe_lines_string(engine: str, format: str, input_lines: typing.Iterator[str
             are unknown.
         graphviz.RequiredArgumentError: If ``formatter`` is given
             but ``renderer`` is None.
-        graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
+        graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
             is not found.
         graphviz.CalledProcessError: If the returncode (exit status)
             of the rendering 'dot' subprocess is non-zero.

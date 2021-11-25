@@ -120,15 +120,19 @@ def render(engine: str,
     Args:
         engine: Layout engine for rendering (``'dot'``, ``'neato'``, ...).
         format: Output format for rendering (``'pdf'``, ``'png'``, ...).
+            Can be omitted if an ``outfile`` with a known ``format`` is given,
+            i.e. if ``outfile`` ends  with a known ``.{format}`` suffix.
         filepath: Path to the DOT source file to render.
+            Can be omitted if ``outfile`` is given,
+            in which case it defaults to ``outfile.with_suffix('.gv')``.
         renderer: Output renderer (``'cairo'``, ``'gd'``, ...).
         formatter: Output formatter (``'cairo'``, ``'gd'``, ...).
         quiet: Suppress ``stderr`` output from the layout subprocess.
         outfile: Path for the rendered output file.
-        raise_if_result_exits: Raise :exc:`.FileExistsError`
+        raise_if_result_exits: Raise :exc:`graphviz.FileExistsError`
             if the result file exists.
         overwrite_filepath: Allow ``dot`` to write to the file it reads from.
-            Incompatible with raise_if_outfile_exists.
+            Incompatible with ``raise_if_result_exists``.
 
     Returns:
         The (possibly relative) path of the rendered file.
@@ -142,7 +146,7 @@ def render(engine: str,
             but ``renderer`` is None.
         ValueError: If ``outfile`` and ``filename`` are the same file
             unless ``overwite=True``.
-        graphviz.ExecutableNotFound: If the Graphviz 'dot' executable
+        graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
             is not found.
         graphviz.CalledProcessError: If the returncode (exit status)
             of the rendering 'dot' subprocess is non-zero.

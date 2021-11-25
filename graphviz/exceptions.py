@@ -12,9 +12,11 @@ class FileExistsError(FileExistsError):
     """:class:`FileNotFoundError` raised with ``raise_if_exists=True``."""
 
 
-class UnknownSuffixWarning(UserWarning):
-    """:class:`UserWarning` raised for unknown ``outfile`` suffix."""
+class UnknownSuffixWarning(RuntimeWarning):
+    """:class:`RuntimeWarning` raised if the suffix of ``outfile`` is unknown
+        and the given ``format`` is used instead."""
 
 
 class FormatSuffixMismatchWarning(UserWarning):
-    """:class:`UserWarning` raised for ``format`` mismatch with ``outfile`` suffix."""
+    """:class:`UserWarning` raised if the suffix ``outfile``
+        does not match the given ``format``."""
