@@ -61,7 +61,7 @@ Add ``--only-exe`` flag to ``run-tests.py`` (overrides ``--skip-exe``).
 
 Add ``--no-open`` and ``--open`` flags to ``build-docs.py``.
 
-Add ``lint-code.py``
+Add ``lint-code.py`` and use in build job.
 
 Increase doctest coverage.
 
