@@ -174,9 +174,6 @@ def render(engine: str,
     if outfile is not None:
         format = get_rendering_format(outfile, format=format)
 
-        cmd = dot_command.command(engine, format,
-                                  renderer=renderer, formatter=formatter)
-
         if filepath is None:
             filepath = outfile.with_suffix(f'.{DEFAULT_SOURCE_EXTENSION}')
 
@@ -186,12 +183,7 @@ def render(engine: str,
                              f' from input file {filepath.name!r}'
                              ' (pass overwrite_filepath=True to override)')
 
-        outfile_arg = (outfile.resolve() if outfile.parent != filepath.parent
-                       else outfile.name)
-
-        # https://www.graphviz.org/doc/info/command.html#-o
-        cmd += ['-o', outfile_arg, filepath.name]
-
+        args = _get_outfile_args(outfile, filepath=filepath)
         rendered = outfile
     elif format is None:
         raise exceptions.RequiredArgumentError('format: (required if outfile is not given,'
@@ -200,19 +192,19 @@ def render(engine: str,
         raise exceptions.RequiredArgumentError('filepath: (required if outfile is not given,'
                                                f' got {filepath!r})')
     else:
-        cmd = dot_command.command(engine, format,
-                                  renderer=renderer, formatter=formatter)
-
-        # https://www.graphviz.org/doc/info/command.html#-O
-        cmd += ['-O', filepath.name]
-
-        suffix_args = (formatter, renderer, format)
-        suffix = '.'.join(a for a in suffix_args if a is not None)
-
+        args, suffix = _get_args_suffix(filepath,
+                                        format=format,
+                                        renderer=renderer,
+                                        formatter=formatter)
         rendered = filepath.parent / f'{filepath.name}.{suffix}'
+
+    cmd = dot_command.command(engine, format,
+                              renderer=renderer, formatter=formatter)
 
     if raise_if_result_exists and os.path.exists(rendered):
         raise exceptions.FileExistsError(f'output file exists: {os.fspath(rendered)!r}')
+
+    cmd += args
 
     cwd = os.fspath(filepath.parent) if filepath.parent.parts else None
 
@@ -220,6 +212,29 @@ def render(engine: str,
                       capture_output=True)
 
     return os.fspath(rendered)
+
+
+def _get_outfile_args(outfile: pathlib.Path, *,
+                      filepath: pathlib.Path):
+
+    outfile_arg = (outfile.resolve() if outfile.parent != filepath.parent
+                   else outfile.name)
+
+    # https://www.graphviz.org/doc/info/command.html#-o
+    return ['-o', outfile_arg, filepath.name]
+
+
+def _get_args_suffix(filepath: pathlib.Path, *,
+                     format: typing.Optional[str],
+                     renderer: typing.Optional[str] = None,
+                     formatter: typing.Optional[str] = None):
+    # https://www.graphviz.org/doc/info/command.html#-O
+    args = ['-O', filepath.name]
+
+    suffix_args = (formatter, renderer, format)
+    suffix = '.'.join(a for a in suffix_args if a is not None)
+
+    return args, suffix
 
 
 def get_rendering_format(outfile: pathlib.Path, *,
