@@ -152,6 +152,15 @@ def test_render_raises_mocked(tmp_path, mock_run, args, kwargs,
             graphviz.render(*args, **kwargs)
 
 
+
+def test_get_outfile():
+    assert rendering._get_outfile('spam',
+                                  format=None,
+                                  renderer=None,
+                                  formatter=None,
+                                  outfile='eggs') == 'eggs'
+
+
 @pytest.mark.parametrize(
     'outfile_name, format, expected_result',
     [('spam.gv.pdf', None, 'pdf'),
