@@ -3,32 +3,24 @@ r"""Render DOT source files with Graphviz ``dot``.
 >>> doctest_mark_exe()
 
 >>> import pathlib
->>> import warnings
 >>> import graphviz
 
 >>> source = pathlib.Path('doctest-output/spam.gv')
 >>> source.write_text('graph { spam }', encoding='ascii')
 14
 
->>> graphviz.render('dot', 'png', source) # doctest: +ELLIPSIS
-'doctest-output...spam.gv.png'
+>>> graphviz.render('dot', 'png', source).replace('\\', '/')
+'doctest-output/spam.gv.png'
 
->>> outfile_png =source.with_suffix('.png')
->>> graphviz.render('dot', 'png', source, outfile=outfile_png)  # doctest: +ELLIPSIS
-'doctest-output...spam.png'
+>>> graphviz.render('dot', 'png', source,
+...                 outfile=source.with_suffix('.png')).replace('\\', '/')
+'doctest-output/spam.png'
 
->>> graphviz.render('dot', outfile=source.with_suffix('.pdf'))  # doctest: +ELLIPSIS
-'doctest-output...spam.pdf'
+>>> graphviz.render('dot', outfile=source.with_suffix('.pdf')).replace('\\', '/')
+'doctest-output/spam.pdf'
 
->>> import os
->>> render = source.parent / 'render'
->>> os.makedirs(render, exist_ok=True)
->>> outfile_render = render / source.with_suffix('.pdf').name
->>> graphviz.render('dot', filepath=source, outfile=outfile_render)  # doctest: +ELLIPSIS
-'doctest-output...render...spam.pdf'
-
->>> graphviz.render('dot', 'jpg', outfile='doctest-output/spam.jpeg')  # doctest: +ELLIPSIS
-'doctest-output...spam.jpeg'
+>>> graphviz.render('dot', 'jpg', outfile=source.with_suffix('.jpeg')).replace('\\', '/')
+'doctest-output/spam.jpeg'
 """
 
 import os

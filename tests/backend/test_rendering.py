@@ -49,7 +49,7 @@ def test_render(capsys, tmp_path, engine, format_, renderer, formatter,
                 expected_suffix, filename='hello.gv',
                 data=b'digraph { hello -> world }'):
     lpath = tmp_path / filename
-    lpath.write_bytes(data)
+    assert lpath.write_bytes(data) == len(data) == lpath.stat().st_size
     rendered = lpath.with_suffix(f'{lpath.suffix}.{expected_suffix}')
 
     result = graphviz.render(engine, format_, str(lpath), renderer, formatter)
@@ -80,6 +80,27 @@ def test_render_img(capsys, tmp_path, files_path, engine='dot', format_='pdf'):
         assert graphviz.render(engine, format_, gv_rel) == str(rendered_rel)
 
     assert rendered.stat().st_size
+    assert capsys.readouterr() == ('', '')
+
+
+@pytest.mark.exe
+def test_render_outfile_differnt_parent(capsys, tmp_path,
+                                        engine='dot', outfile='spam.pdf',
+                                        source='graph { spam }'):
+    outfile = tmp_path / 'rendered' / outfile
+    outfile.parent.mkdir()
+    assert not outfile.exists()
+
+    filepath = tmp_path / 'sources' / outfile.with_suffix('.gv').name
+    filepath.parent.mkdir()
+    assert filepath.write_text(source) == len(source) == filepath.stat().st_size
+
+    result = graphviz.render(engine, filepath=filepath, outfile=outfile)
+
+    assert result == os.fspath(outfile)
+
+    assert outfile.stat().st_size
+
     assert capsys.readouterr() == ('', '')
 
 
