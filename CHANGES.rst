@@ -10,7 +10,8 @@ that will be **deprecated in a later version**.
 The future API will allow from one to three positional arguments
 depending on the method or function.
 Keyword-only arguments where not around when this library was created.
-This signals callers to start updating or pinning to the wanted version.
+This signals dependents and in general users to start updating
+or pinning to the wanted version (or range).
 Crucially, this helps new users with a safer API
 that allows to avoid some common mistakes.
 Warnings reported in tests.
