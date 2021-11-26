@@ -1,5 +1,8 @@
 """Mixin classes used by Base subclasses to inherit backend functionality."""
 
+import os
+import typing
+
 from .. import parameters
 
 from . import piping
@@ -13,8 +16,15 @@ __all__ = ['Render', 'Pipe', 'Unflatten', 'View']
 class Render(parameters.Parameters):
     """Parameters for calling and calling ``graphviz.render()``."""
 
-    def _get_render_parameters(self, **kwargs):
+    def _get_render_parameters(self,
+                               outfile: typing.Union[os.PathLike, str, None] = None,
+                               raise_if_result_exists: bool = False,
+                               overwrite_source: bool = False,
+                               **kwargs):
         kwargs = self._get_parameters(**kwargs)
+        kwargs.update(outfile=outfile,
+                      raise_if_result_exists=raise_if_result_exists,
+                      overwrite_filepath=overwrite_source)
         return [kwargs.pop('engine'), kwargs.pop('format')], kwargs
 
     @property
