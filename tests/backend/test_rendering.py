@@ -179,10 +179,10 @@ def test_get_filepath(outfile, expected_fspath):
      ('spam.pdf', None, 'pdf'),
      ('spam.pdf', 'pdf', 'pdf'),
      ('spam', 'pdf', 'pdf')])
-def test_get_rendering_format(outfile_name, format, expected_result):
+def test_get_ormat(outfile_name, format, expected_result):
     outfile = pathlib.Path(outfile_name)
 
-    result = rendering.get_rendering_format(outfile, format=format)
+    result = rendering.get_format(outfile, format=format)
 
     assert result == expected_result
 
@@ -197,12 +197,12 @@ def test_get_rendering_format(outfile_name, format, expected_result):
       r"unknown outfile suffix '' \(expected: '.svg'\)"),
      ('spam.peng', 'png', 'png', graphviz.UnknownSuffixWarning,
       r"unknown outfile suffix '.peng' \(expected: '.png'\)")])
-def test_get_rendering_format_warns(outfile_name, format, expected_result,
+def test_get_format_warns(outfile_name, format, expected_result,
                                     expected_warning, match):
     outfile = pathlib.Path(outfile_name)
 
     with pytest.warns(expected_warning, match=match):
-        result = rendering.get_rendering_format(outfile, format=format)
+        result = rendering.get_format(outfile, format=format)
 
     assert result == expected_result
 
@@ -215,8 +215,8 @@ def test_get_rendering_format_warns(outfile_name, format, expected_result,
       r"cannot infer rendering format from suffix '.peng' of outfile: 'spam.peng'"),
      ('spam.mp3', graphviz.RequiredArgumentError,
       r"cannot infer rendering format from suffix '.mp3' of outfile: 'spam.mp3'")])
-def test_get_rendering_format_raises(outfile_name, expected_exception, match):
+def test_get_format_raises(outfile_name, expected_exception, match):
     outfile = pathlib.Path(outfile_name)
 
     with pytest.raises(expected_exception, match=match):
-        rendering.get_rendering_format(outfile, format=None)
+        rendering.get_format(outfile, format=None)
