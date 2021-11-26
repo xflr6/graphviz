@@ -64,6 +64,23 @@ def mapping_items(mapping):
     return result
 
 
+@typing.overload
+def promote_pathlike(filepath: typing.Union[os.PathLike, str]
+                     ) -> pathlib.Path:
+    """Return path object for path-like-object."""
+
+
+@typing.overload
+def promote_pathlike(filepath: None) -> None:
+    """Return None for None."""
+
+
+@typing.overload
+def promote_pathlike(filepath: typing.Union[os.PathLike, str, None]
+                     ) -> typing.Optional[pathlib.Path]:
+    """Return path object or ``None`` depending on ``filepath``."""
+
+
 def promote_pathlike(filepath: typing.Union[os.PathLike, str, None]
                      ) -> typing.Optional[pathlib.Path]:
     """Return path-like object ``filepath`` promoted into a path object.

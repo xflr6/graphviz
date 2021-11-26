@@ -63,7 +63,7 @@ def get_outfile(filepath: typing.Union[os.PathLike, str], *,
     """Return ``outfile`` if given or ``filepath`` + ``[[.formatter].renderer].format``.
 
     See also:
-        https://www.graphviz.org/doc/info/command.html#-O        
+        https://www.graphviz.org/doc/info/command.html#-O
     """
     filepath, outfile = map(_tools.promote_pathlike, (filepath, outfile))
 
