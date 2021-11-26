@@ -18,7 +18,8 @@ class Render(saving.Save, backend.Render, backend.View):
     """Write source lines to file and render with Graphviz."""
 
     @_tools.deprecate_positional_args(supported_number=2)
-    def render(self, filename=None, directory=None,
+    def render(self, filename: typing.Union[os.PathLike, str, None] = None,
+               directory: typing.Union[os.PathLike, str, None] = None,
                view: bool = False,
                cleanup: bool = False,
                format: typing.Optional[str] = None,
@@ -26,6 +27,7 @@ class Render(saving.Save, backend.Render, backend.View):
                formatter: typing.Optional[str] = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
+               outfile: typing.Union[os.PathLike, str, None] = None,
                engine: typing.Optional[str] = None) -> str:
         """Save the source to file and render with the Graphviz engine.
 
@@ -71,12 +73,18 @@ class Render(saving.Save, backend.Render, backend.View):
             (e.g. ``[image=images/camelot.png]``)
             can be given as paths relative to the DOT source file.
         """
+        if outfile is not None:
+            format = self._get_format(outfile, format=format)
+
         args, kwargs = self._get_render_parameters(engine=engine,
                                                    format=format,
                                                    renderer=renderer,
                                                    formatter=formatter,
                                                    quiet=quiet,
                                                    verify=True)
+
+        if outfile is not None and filename is None:
+            filename = self._get_filepath(outfile)
 
         filepath = self.save(filename, directory, skip_existing=None)
 

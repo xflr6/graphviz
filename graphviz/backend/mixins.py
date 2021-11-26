@@ -26,6 +26,10 @@ class Render(parameters.Parameters):
 class Pipe(parameters.Parameters):
     """Parameters for calling and calling ``graphviz.pipe()``."""
 
+    _get_format = staticmethod(rendering.get_format)
+
+    _get_filepath = staticmethod(rendering.get_filepath)
+
     def _get_pipe_parameters(self, **kwargs):
         kwargs = self._get_parameters(**kwargs)
         return [kwargs.pop('engine'), kwargs.pop('format')], kwargs

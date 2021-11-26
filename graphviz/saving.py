@@ -23,17 +23,20 @@ class Save(encoding.Encoding, base.Base):
 
     _mkdirs = staticmethod(_tools.mkdirs)
 
-    def __init__(self, *, filename, directory=None, **kwargs) -> None:
+    def __init__(self, *,
+                 filename: typing.Union[os.PathLike, str],
+                 directory: typing.Union[os.PathLike, str, None] = None,
+                 **kwargs) -> None:
         super().__init__(**kwargs)
 
         if filename is None:
             filename = f'{self.__class__.__name__}.{self._default_extension}'
 
-        self.filename = filename
+        self.filename = os.fspath(filename)
         """str: Target file name for saving the DOT source file."""
 
         if directory is not None:
-            self.directory = directory
+            self.directory = os.fspath(directory)
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
@@ -48,7 +51,8 @@ class Save(encoding.Encoding, base.Base):
         return os.path.join(self.directory, self.filename)
 
     @_tools.deprecate_positional_args(supported_number=2)
-    def save(self, filename=None, directory=None, *,
+    def save(self, filename: typing.Union[os.PathLike, str, None] = None,
+             directory: typing.Union[os.PathLike, str, None] = None, *,
              skip_existing: typing.Optional[bool] = False) -> str:
         """Save the DOT source to file. Ensure the file ends with a newline.
 
