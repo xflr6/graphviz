@@ -155,11 +155,19 @@ def test_render_raises_mocked(tmp_path, mock_run, args, kwargs,
 
 @pytest.mark.parametrize(
     'filepath,  kwargs, expected_fspath',
-    [('spam.gv', {'format': 'svg', 'outfile': 'eggs.pdf'}, 'eggs.pdf'),
-     ('spam.gv', {'format': 'pdf'}, 'spam.gv.pdf')])
+    [('spam.gv', {'format': 'pdf'}, 'spam.gv.pdf'),
+     ('spam.gv', {'format': 'plain', 'renderer': 'dot'}, 'spam.gv.dot.plain')])
 def test_get_outfile(filepath, kwargs, expected_fspath):
     result = rendering.get_outfile(filepath, **kwargs)
+    assert os.fspath(result) == expected_fspath
 
+
+@pytest.mark.parametrize(
+    'outfile,  expected_fspath',
+    [('spam.pdf', 'spam.gv'),
+     ('spam', 'spam.gv')])
+def test_get_filepath(outfile, expected_fspath):
+    result = rendering.get_filepath(outfile)
     assert os.fspath(result) == expected_fspath
 
 

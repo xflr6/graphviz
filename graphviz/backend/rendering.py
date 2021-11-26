@@ -33,7 +33,7 @@ from .. import parameters
 from . import dot_command
 from . import execute
 
-__all__ = ['get_outfile', 'render']
+__all__ = ['get_filepath', 'render']
 
 
 def get_supported_formats() -> typing.List[str]:
@@ -57,26 +57,27 @@ def get_supported_suffixes() -> typing.List[str]:
 def get_outfile(filepath: typing.Union[os.PathLike, str], *,
                 format: str,
                 renderer: typing.Optional[str] = None,
-                formatter: typing.Optional[str] = None,
-                outfile: typing.Union[os.PathLike, str, None] = None
-                ) -> pathlib.Path:
-    """Return ``outfile`` if given or ``filepath`` + ``[[.formatter].renderer].format``.
+                formatter: typing.Optional[str] = None) -> pathlib.Path:
+    """Return ``filepath`` + ``[[.formatter].renderer].format``.
 
     See also:
         https://www.graphviz.org/doc/info/command.html#-O
     """
-    filepath, outfile = map(_tools.promote_pathlike, (filepath, outfile))
+    filepath = _tools.promote_pathlike(filepath)
 
     parameters.verify_format(format, required=True)
     parameters.verify_renderer(renderer, required=False)
     parameters.verify_formatter(formatter, required=False)
 
-    if outfile is not None:
-        return outfile
-
     suffix_args = (formatter, renderer, format)
     suffix = '.'.join(a for a in suffix_args if a is not None)
     return filepath.with_suffix(f'{filepath.suffix}.{suffix}')
+
+
+def get_filepath(outfile: typing.Union[os.PathLike, str]) -> pathlib.Path:
+    """Return ``outfile.with_suffix('.gv')``."""
+    outfile = _tools.promote_pathlike(outfile)
+    return outfile.with_suffix(f'.{DEFAULT_SOURCE_EXTENSION}')
 
 
 @typing.overload
@@ -191,7 +192,7 @@ def render(engine: str,
         format = get_rendering_format(outfile, format=format)
 
         if filepath is None:
-            filepath = outfile.with_suffix(f'.{DEFAULT_SOURCE_EXTENSION}')
+            filepath = get_filepath(outfile)
 
         if (not overwrite_filepath and outfile.name == filepath.name
             and outfile.resolve() == filepath.resolve()):  # noqa: E129
@@ -214,8 +215,7 @@ def render(engine: str,
         outfile = get_outfile(filepath,
                               format=format,
                               renderer=renderer,
-                              formatter=formatter,
-                              outfile=outfile)
+                              formatter=formatter)
         # https://www.graphviz.org/doc/info/command.html#-O
         args = ['-O', filepath.name]
 
