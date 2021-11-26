@@ -28,7 +28,9 @@ class Render(saving.Save, backend.Render, backend.View):
                quiet: bool = False,
                quiet_view: bool = False, *,
                outfile: typing.Union[os.PathLike, str, None] = None,
-               engine: typing.Optional[str] = None) -> str:
+               engine: typing.Optional[str] = None,
+               raise_if_result_exists: bool = False,
+               overwrite_source: bool = False) -> str:
         """Save the source to file and render with the Graphviz engine.
 
         Args:
@@ -50,8 +52,13 @@ class Render(saving.Save, backend.Render, backend.View):
             quiet_view (bool): Suppress ``stderr`` output
                 from the viewer process
                 (implies ``view=True``, ineffective on Windows platform).
+            outfile: Path for the rendered output file.
             engine: Layout engine for rendering
                 (``'dot'``, ``'neato'``, ...).
+            raise_if_result_exits: Raise :exc:`graphviz.FileExistsError`
+                if the result file exists.
+            overwrite_source: Allow ``dot`` to write to the file it reads from.
+                Incompatible with ``raise_if_result_exists.
 
         Returns:
             The (possibly relative) path of the rendered file.
@@ -61,6 +68,8 @@ class Render(saving.Save, backend.Render, backend.View):
                 are unknown.
             graphviz.RequiredArgumentError: If ``formatter`` is given
                 but ``renderer`` is None.
+            ValueError: If ``outfile`` is the same file as the source file
+                unless ``overwite_source=True``.
             graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
                 is not found.
             graphviz.CalledProcessError: If the returncode (exit status)
@@ -81,6 +90,9 @@ class Render(saving.Save, backend.Render, backend.View):
                                                    renderer=renderer,
                                                    formatter=formatter,
                                                    quiet=quiet,
+                                                   outfile=outfile,
+                                                   raise_if_result_exists=raise_if_result_exists,
+                                                   overwrite_filepath=overwrite_source,
                                                    verify=True)
 
         if outfile is not None and filename is None:

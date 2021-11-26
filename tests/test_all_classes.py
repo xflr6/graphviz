@@ -103,6 +103,9 @@ def test_render_mocked(mocker, mock_render, dot):
     mock_render.assert_called_once_with(dot.engine, dot.format,
                                         mock_save.return_value,
                                         renderer=None, formatter=None,
+                                        outfile=None,
+                                        raise_if_result_exists=False,
+                                        overwrite_filepath=False,
                                         quiet=False)
     mock_remove.assert_called_once_with(mock_save.return_value)
     mock_view.assert_called_once_with(mock_render.return_value, dot.format, False)
@@ -127,6 +130,9 @@ def test_format_renderer_formatter_mocked(mocker, mock_render,
     mock_save.assert_called_once_with(None, None, skip_existing=None)
     mock_render.assert_called_once_with('dot', format, mock_save.return_value,
                                         renderer=renderer, formatter=formatter,
+                                        outfile=None,
+                                        raise_if_result_exists=False,
+                                        overwrite_filepath=False,
                                         quiet=quiet)
 
 
