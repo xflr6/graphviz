@@ -66,12 +66,13 @@ def get_outfile(filepath: typing.Union[os.PathLike, str], *,
         https://www.graphviz.org/doc/info/command.html#-O        
     """
     filepath, outfile = map(_tools.promote_pathlike, (filepath, outfile))
-    if outfile is not None:
-        return outfile
 
     parameters.verify_format(format, required=True)
     parameters.verify_renderer(renderer, required=False)
     parameters.verify_formatter(formatter, required=False)
+
+    if outfile is not None:
+        return outfile
 
     suffix_args = (formatter, renderer, format)
     suffix = '.'.join(a for a in suffix_args if a is not None)
