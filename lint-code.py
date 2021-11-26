@@ -14,13 +14,11 @@ CMD = [PYTHON, '-m', 'flake8']
 cmd = CMD + sys.argv[1:]
 
 print(f'subprocess.run({cmd!r})')
-proc = subprocess.run(cmd)
-
 try:
-    proc.check_returncode()
+    proc = subprocess.run(cmd, check=True)
 except subprocess.CalledProcessError as e:
-    print('FAIL:', e, proc, sep='\n    ')
+    print('FAIL:', e)
+    sys.exit(e.returncode)
 else:
     print('PASS:', proc)
-finally:
     sys.exit(proc.returncode)
