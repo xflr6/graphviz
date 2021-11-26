@@ -33,7 +33,7 @@ from .. import parameters
 from . import dot_command
 from . import execute
 
-__all__ = ['render']
+__all__ = ['get_outfile', 'render']
 
 
 def get_supported_formats() -> typing.List[str]:
@@ -52,6 +52,30 @@ def get_supported_suffixes() -> typing.List[str]:
     ['.bmp', ...]
     """
     return [f'.{format}' for format in get_supported_formats()]
+
+
+def get_outfile(filepath: typing.Union[os.PathLike, str], *,
+                format: str,
+                renderer: typing.Optional[str] = None,
+                formatter: typing.Optional[str] = None,
+                outfile: typing.Union[os.PathLike, str, None] = None
+                ) -> pathlib.Path:
+    """Return ``outfile`` if given or ``filepath`` + ``[[.formatter].renderer].format``.
+
+    See also:
+        https://www.graphviz.org/doc/info/command.html#-O        
+    """
+    filepath, outfile = map(_tools.promote_pathlike, (filepath, outfile))
+    if outfile is not None:
+        return outfile
+
+    parameters.verify_format(format, required=True)
+    parameters.verify_renderer(renderer, required=False)
+    parameters.verify_formatter(formatter, required=False)
+
+    suffix_args = (formatter, renderer, format)
+    suffix = '.'.join(a for a in suffix_args if a is not None)
+    return filepath.with_suffix(f'{filepath.suffix}.{suffix}')
 
 
 @typing.overload
@@ -152,6 +176,9 @@ def render(engine: str,
         so that references to external files
         (e.g. ``[image=images/camelot.png]``)
         can be given as paths relative to the DOT source file.
+
+    See also:
+        Upstream docs: https://www.graphviz.org/doc/info/command.html
     """
     if raise_if_result_exists and overwrite_filepath:
         raise ValueError('overwrite_filepath cannot be combined'
@@ -183,11 +210,11 @@ def render(engine: str,
         raise exceptions.RequiredArgumentError('filepath: (required if outfile is not given,'
                                                f' got {filepath!r})')
     else:
-        outfile = _get_outfile(filepath,
-                               format=format,
-                               renderer=renderer,
-                               formatter=formatter,
-                               outfile=outfile)
+        outfile = get_outfile(filepath,
+                              format=format,
+                              renderer=renderer,
+                              formatter=formatter,
+                              outfile=outfile)
         # https://www.graphviz.org/doc/info/command.html#-O
         args = ['-O', filepath.name]
 
@@ -205,20 +232,6 @@ def render(engine: str,
                       capture_output=True)
 
     return os.fspath(outfile)
-
-
-def _get_outfile(filepath: pathlib.Path, *,
-                 format: typing.Optional[str],
-                 renderer: typing.Optional[str],
-                 formatter: typing.Optional[str],
-                 outfile: typing.Optional[pathlib.Path]):
-    if outfile is not None:
-        return outfile
-
-    suffix_args = (formatter, renderer, format)
-    suffix = '.'.join(a for a in suffix_args if a is not None)
-
-    return filepath.parent / f'{filepath.name}.{suffix}'
 
 
 def get_rendering_format(outfile: pathlib.Path, *,

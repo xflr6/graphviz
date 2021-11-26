@@ -22,7 +22,7 @@ def files_path():
 @pytest.mark.exe
 def test_render_missing_file(quiet, engine='dot', format_='pdf'):
     with pytest.raises(subprocess.CalledProcessError) as e:
-        graphviz.render(engine, format_, '', quiet=quiet)
+        graphviz.render(engine, format_, 'nonexisting', quiet=quiet)
     assert e.value.returncode == 2
 
 
@@ -153,12 +153,14 @@ def test_render_raises_mocked(tmp_path, mock_run, args, kwargs,
             graphviz.render(*args, **kwargs)
 
 
-def test_get_outfile():
-    assert rendering._get_outfile('spam',
-                                  format=None,
-                                  renderer=None,
-                                  formatter=None,
-                                  outfile='eggs') == 'eggs'
+@pytest.mark.parametrize(
+    'filepath,  kwargs, expected_fspath',
+    [('spam.gv', {'format': 'svg', 'outfile': 'eggs.pdf'}, 'eggs.pdf'),
+     ('spam.gv', {'format': 'pdf'}, 'spam.gv.pdf')])
+def test_get_outfile(filepath, kwargs, expected_fspath):
+    result = rendering.get_outfile(filepath, **kwargs)
+
+    assert os.fspath(result) == expected_fspath
 
 
 @pytest.mark.parametrize(
