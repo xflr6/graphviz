@@ -254,7 +254,8 @@ def render(engine: str,
         >>> assert pathlib.Path('doctest-output/spam.gv').write_text('graph { spam }') == 14
         >>> graphviz.render('dot', 'png', 'doctest-output/spam.gv').replace('\\', '/')
         'doctest-output/spam.gv.png'
-        >>> graphviz.render('dot', filepath='doctest-output/spam.gv', outfile='doctest-output/spam.png').replace('\\', '/')
+        >>> graphviz.render('dot', filepath='doctest-output/spam.gv',
+        ...                 outfile='doctest-output/spam.png').replace('\\', '/')
         'doctest-output/spam.png'
         >>> graphviz.render('dot', outfile='doctest-output/spam.pdf').replace('\\', '/')
         'doctest-output/spam.pdf'
