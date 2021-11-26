@@ -198,7 +198,7 @@ def test_get_ormat(outfile_name, format, expected_result):
      ('spam.peng', 'png', 'png', graphviz.UnknownSuffixWarning,
       r"unknown outfile suffix '.peng' \(expected: '.png'\)")])
 def test_get_format_warns(outfile_name, format, expected_result,
-                                    expected_warning, match):
+                          expected_warning, match):
     outfile = pathlib.Path(outfile_name)
 
     with pytest.warns(expected_warning, match=match):

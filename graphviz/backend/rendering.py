@@ -33,12 +33,10 @@ from .. import parameters
 from . import dot_command
 from . import execute
 
-__all__ = ['get_renering_format', 'get_filepath',
-           'render']
+__all__ = ['get_format', 'get_filepath', 'render']
 
 
-def get_format(outfile: pathlib.Path, *,
-                         format: typing.Optional[str]) -> str:
+def get_format(outfile: pathlib.Path, *, format: typing.Optional[str]) -> str:
     """Return format inferred from outfile suffix and/or given ``format``.
 
     Args:
