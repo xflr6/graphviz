@@ -292,12 +292,12 @@ def render(engine: str,
 
         # https://www.graphviz.org/doc/info/command.html#-o
         args = ['-o', outfile_arg, filepath.name]
-    elif format is None:
-        raise exceptions.RequiredArgumentError('format: (required if outfile is not given,'
-                                               f' got {format!r})')
     elif filepath is None:
         raise exceptions.RequiredArgumentError('filepath: (required if outfile is not given,'
                                                f' got {filepath!r})')
+    elif format is None:
+        raise exceptions.RequiredArgumentError('format: (required if outfile is not given,'
+                                               f' got {format!r})')
     else:
         outfile = get_outfile(filepath,
                               format=format,

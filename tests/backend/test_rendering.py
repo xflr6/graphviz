@@ -132,7 +132,9 @@ def test_render_mocked(capsys, mock_run, quiet, directory,
 
 @pytest.mark.parametrize(
     'args,  kwargs, expected_exception, match',
-    [(['dot'], {}, graphviz.RequiredArgumentError, r'format: \(required'),
+    [(['dot'], {}, graphviz.RequiredArgumentError, r'filepath: \(required'),
+     (['dot'], {'format': 'png'}, graphviz.RequiredArgumentError, r'filepath: \(required'),
+     (['dot'], {'filepath': 'spam'}, graphviz.RequiredArgumentError, r'format: \(required'),
      (['dot', 'svg'], {}, graphviz.RequiredArgumentError, r'filepath: \(required'),
      (['dot', 'gv', 'spam.gv'], {'outfile': 'spam.gv'}, ValueError,
       r"outfile 'spam\.gv' must be different from input file 'spam\.gv'"),
