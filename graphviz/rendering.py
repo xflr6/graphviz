@@ -2,6 +2,7 @@
 
 import logging
 import os
+import pathlib
 import typing
 
 from . import _tools
@@ -82,7 +83,7 @@ class Render(saving.Save, backend.Render, backend.View):
             >>> dot = graphviz.Graph(name='spam', directory='doctest-output')
             >>> dot.render(format='png').replace('\\', '/')
             'doctest-output/spam.gv.png'
-            >>> #dot.render(outfile='spam.svg').replace('\\', '/')
+            >>> dot.render(outfile='spam.svg').replace('\\', '/')
             'doctest-output/spam.svg'
 
         Note:
@@ -94,6 +95,8 @@ class Render(saving.Save, backend.Render, backend.View):
         outfile = _tools.promote_pathlike(outfile)
         if outfile is not None:
             format = self._get_format(outfile, format=format)
+            if directory is None:
+                outfile = pathlib.Path(self.directory, outfile)
 
         args, kwargs = self._get_render_parameters(engine=engine,
                                                    format=format,
