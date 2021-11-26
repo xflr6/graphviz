@@ -133,6 +133,9 @@ def deprecate_positional_args(*,
         signature = inspect.signature(func)
         argnames = [name for name, param in signature.parameters.items()
                     if param.kind == inspect.Parameter.POSITIONAL_OR_KEYWORD]
+        log.debug('deprecate positional args: %s.%s(%r)',
+                  func.__module__, func.__qualname__,
+                  argnames[supported_number:])
 
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
