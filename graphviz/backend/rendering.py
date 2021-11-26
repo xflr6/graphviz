@@ -54,18 +54,6 @@ def get_supported_suffixes() -> typing.List[str]:
     return [f'.{format}' for format in get_supported_formats()]
 
 
-def promote_pathlike(filepath: typing.Union[os.PathLike, str, None]
-                     ) -> typing.Optional[pathlib.Path]:
-    """Return path-like object ``filepath`` promoted into a path object.
-
-    See also:
-        https://docs.python.org/3/glossary.html#term-path-like-object
-    """
-    if filepath is None:
-        return None
-    return pathlib.Path(filepath)
-
-
 @typing.overload
 def render(engine: str,
            format: str,
@@ -169,7 +157,7 @@ def render(engine: str,
         raise ValueError('overwrite_filepath cannot be combined'
                          ' with raise_if_result_exists')
 
-    filepath, outfile = map(promote_pathlike, (filepath, outfile))
+    filepath, outfile = map(_tools.promote_pathlike, (filepath, outfile))
 
     if outfile is not None:
         format = get_rendering_format(outfile, format=format)
@@ -211,9 +199,9 @@ def render(engine: str,
 
     cmd += args
 
-    cwd = os.fspath(filepath.parent) if filepath.parent.parts else None
-
-    execute.run_check(cmd, cwd=cwd, quiet=quiet,
+    execute.run_check(cmd,
+                      cwd=filepath.parent if filepath.parent.parts else None,
+                      quiet=quiet,
                       capture_output=True)
 
     return os.fspath(outfile)

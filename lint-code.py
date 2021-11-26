@@ -16,5 +16,11 @@ cmd = CMD + sys.argv[1:]
 print(f'subprocess.run({cmd!r})')
 proc = subprocess.run(cmd)
 
-print('', proc, sep='\n')
-sys.exit(proc.returncode)
+try:
+    proc.check_returncode()
+except subprocess.CalledProcessError as e:
+    print('FAIL:', e, proc, sep='\n    ')
+else:
+    print('PASS:', proc)
+finally:
+    sys.exit(proc.returncode)

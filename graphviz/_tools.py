@@ -5,6 +5,7 @@ import inspect
 import itertools
 import logging
 import os
+import pathlib
 import typing
 import warnings
 
@@ -61,6 +62,18 @@ def mapping_items(mapping):
     if type(mapping) is dict:
         result = iter(sorted(result))
     return result
+
+
+def promote_pathlike(filepath: typing.Union[os.PathLike, str, None]
+                     ) -> typing.Optional[pathlib.Path]:
+    """Return path-like object ``filepath`` promoted into a path object.
+
+    See also:
+        https://docs.python.org/3/glossary.html#term-path-like-object
+    """
+    if filepath is None:
+        return None
+    return pathlib.Path(filepath)
 
 
 def deprecate_positional_args(*,

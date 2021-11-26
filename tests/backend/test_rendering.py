@@ -6,6 +6,7 @@ import subprocess
 import pytest
 
 import graphviz
+from graphviz import _tools
 from graphviz.backend import rendering
 
 import _common
@@ -124,7 +125,7 @@ def test_render_mocked(capsys, mock_run, quiet, directory,
                                       '-Kdot', '-Tpdf', '-O', 'nonfilepath'],
                                      stdout=subprocess.PIPE,
                                      stderr=subprocess.PIPE,
-                                     cwd=directory,
+                                     cwd=_tools.promote_pathlike(directory),
                                      startupinfo=_common.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
@@ -150,7 +151,6 @@ def test_render_raises_mocked(tmp_path, mock_run, args, kwargs,
     with _common.as_cwd(tmp_path):
         with pytest.raises(expected_exception, match=match):
             graphviz.render(*args, **kwargs)
-
 
 
 def test_get_outfile():
