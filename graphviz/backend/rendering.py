@@ -1,24 +1,4 @@
-r"""Render DOT source files with Graphviz ``dot``.
-
->>> doctest_mark_exe()
-
->>> import pathlib
->>> import graphviz
-
->>> source = pathlib.Path('doctest-output/spam.gv')
->>> source.write_text('graph { spam }', encoding='ascii')
-14
-
->>> graphviz.render('dot', 'png', source).replace('\\', '/')
-'doctest-output/spam.gv.png'
-
->>> graphviz.render('dot', filepath=source,
-...                 outfile=source.with_suffix('.png')).replace('\\', '/')
-'doctest-output/spam.png'
-
->>> graphviz.render('dot', outfile=source.with_suffix('.pdf')).replace('\\', '/')
-'doctest-output/spam.pdf'
-"""
+"""Render DOT source files with Graphviz ``dot``."""
 
 import os
 import pathlib
@@ -223,7 +203,7 @@ def render(engine: str,
            outfile: typing.Union[os.PathLike, str, None] = None,
            raise_if_result_exists: bool = False,
            overwrite_filepath: bool = False) -> str:
-    """Render file with ``engine`` into ``format`` and return result filename.
+    r"""Render file with ``engine`` into ``format`` and return result filename.
 
     Args:
         engine: Layout engine for rendering (``'dot'``, ``'neato'``, ...).
@@ -266,6 +246,18 @@ def render(engine: str,
             is empty or unknown.
         graphviz.FormatSuffixMismatchWarning: If the suffix of ``outfile``
             does not match the given ``format``.
+
+    Example:
+        >>> doctest_mark_exe()
+        >>> import pathlib
+        >>> import graphviz
+        >>> assert pathlib.Path('doctest-output/spam.gv').write_text('graph { spam }') == 14
+        >>> graphviz.render('dot', 'png', 'doctest-output/spam.gv').replace('\\', '/')
+        'doctest-output/spam.gv.png'
+        >>> graphviz.render('dot', filepath='doctest-output/spam.gv', outfile='doctest-output/spam.png').replace('\\', '/')
+        'doctest-output/spam.png'
+        >>> graphviz.render('dot', outfile='doctest-output/spam.pdf').replace('\\', '/')
+        'doctest-output/spam.pdf'
 
     Note:
         The layout command is started from the directory of ``filepath``,
