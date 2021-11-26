@@ -462,8 +462,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  Methods inherited from graphviz.rendering.Render:
      |
      |  render(self,
-               filename=None,
-               directory=None,
+               filename: Union[os.PathLike,
+               str,
+               NoneType] = None,
+               directory: Union[os.PathLike,
+               str,
+               NoneType] = None,
                view: bool = False,
                cleanup: bool = False,
                format: Optional[str] = None,
@@ -471,7 +475,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
                formatter: Optional[str] = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
-               engine: Optional[str] = None) -> str
+               outfile: Union[os.PathLike,
+               str,
+               NoneType] = None,
+               engine: Optional[str] = None,
+               raise_if_result_exists: bool = False,
+               overwrite_source: bool = False) -> str
      |      Save the source to file and render with the Graphviz engine.
      |
      |      Args:
@@ -493,8 +502,13 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          quiet_view (bool): Suppress ``stderr`` output
      |              from the viewer process
      |              (implies ``view=True``, ineffective on Windows platform).
+     |          outfile: Path for the rendered output file.
      |          engine: Layout engine for rendering
      |              (``'dot'``, ``'neato'``, ...).
+     |          raise_if_result_exits: Raise :exc:`graphviz.FileExistsError`
+     |              if the result file exists.
+     |          overwrite_source: Allow ``dot`` to write to the file it reads from.
+     |              Incompatible with ``raise_if_result_exists.
      |
      |      Returns:
      |          The (possibly relative) path of the rendered file.
@@ -504,11 +518,22 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |              are unknown.
      |          graphviz.RequiredArgumentError: If ``formatter`` is given
      |              but ``renderer`` is None.
+     |          ValueError: If ``outfile`` is the same file as the source file
+     |              unless ``overwite_source=True``.
      |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
      |              is not found.
      |          graphviz.CalledProcessError: If the returncode (exit status)
      |              of the rendering ``dot`` subprocess is non-zero.
      |          RuntimeError: If viewer opening is requested but not supported.
+     |
+     |      Example:
+     |          >>> doctest_mark_exe()
+     |          >>> import graphviz
+     |          >>> dot = graphviz.Graph(name='spam', directory='doctest-output')
+     |          >>> dot.render(format='png').replace('\', '/')
+     |          'doctest-output/spam.gv.png'
+     |          >>> dot.render(outfile='spam.svg').replace('\', '/')
+     |          'doctest-output/spam.svg'
      |
      |      Note:
      |          The layout command is started from the directory of ``filepath``,
@@ -554,8 +579,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  Methods inherited from graphviz.saving.Save:
      |
      |  save(self,
-             filename=None,
-             directory=None, *,
+             filename: Union[os.PathLike,
+             str,
+             NoneType] = None,
+             directory: Union[os.PathLike,
+             str,
+             NoneType] = None, *,
              skip_existing: Optional[bool] = False) -> str
      |      Save the DOT source to file. Ensure the file ends with a newline.
      |
@@ -950,8 +979,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  Methods inherited from graphviz.rendering.Render:
      |
      |  render(self,
-               filename=None,
-               directory=None,
+               filename: Union[os.PathLike,
+               str,
+               NoneType] = None,
+               directory: Union[os.PathLike,
+               str,
+               NoneType] = None,
                view: bool = False,
                cleanup: bool = False,
                format: Optional[str] = None,
@@ -959,7 +992,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
                formatter: Optional[str] = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
-               engine: Optional[str] = None) -> str
+               outfile: Union[os.PathLike,
+               str,
+               NoneType] = None,
+               engine: Optional[str] = None,
+               raise_if_result_exists: bool = False,
+               overwrite_source: bool = False) -> str
      |      Save the source to file and render with the Graphviz engine.
      |
      |      Args:
@@ -981,8 +1019,13 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          quiet_view (bool): Suppress ``stderr`` output
      |              from the viewer process
      |              (implies ``view=True``, ineffective on Windows platform).
+     |          outfile: Path for the rendered output file.
      |          engine: Layout engine for rendering
      |              (``'dot'``, ``'neato'``, ...).
+     |          raise_if_result_exits: Raise :exc:`graphviz.FileExistsError`
+     |              if the result file exists.
+     |          overwrite_source: Allow ``dot`` to write to the file it reads from.
+     |              Incompatible with ``raise_if_result_exists.
      |
      |      Returns:
      |          The (possibly relative) path of the rendered file.
@@ -992,11 +1035,22 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |              are unknown.
      |          graphviz.RequiredArgumentError: If ``formatter`` is given
      |              but ``renderer`` is None.
+     |          ValueError: If ``outfile`` is the same file as the source file
+     |              unless ``overwite_source=True``.
      |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
      |              is not found.
      |          graphviz.CalledProcessError: If the returncode (exit status)
      |              of the rendering ``dot`` subprocess is non-zero.
      |          RuntimeError: If viewer opening is requested but not supported.
+     |
+     |      Example:
+     |          >>> doctest_mark_exe()
+     |          >>> import graphviz
+     |          >>> dot = graphviz.Graph(name='spam', directory='doctest-output')
+     |          >>> dot.render(format='png').replace('\', '/')
+     |          'doctest-output/spam.gv.png'
+     |          >>> dot.render(outfile='spam.svg').replace('\', '/')
+     |          'doctest-output/spam.svg'
      |
      |      Note:
      |          The layout command is started from the directory of ``filepath``,
@@ -1042,8 +1096,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  Methods inherited from graphviz.saving.Save:
      |
      |  save(self,
-             filename=None,
-             directory=None, *,
+             filename: Union[os.PathLike,
+             str,
+             NoneType] = None,
+             directory: Union[os.PathLike,
+             str,
+             NoneType] = None, *,
              skip_existing: Optional[bool] = False) -> str
      |      Save the DOT source to file. Ensure the file ends with a newline.
      |
@@ -1331,8 +1389,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  Methods inherited from graphviz.rendering.Render:
      |
      |  render(self,
-               filename=None,
-               directory=None,
+               filename: Union[os.PathLike,
+               str,
+               NoneType] = None,
+               directory: Union[os.PathLike,
+               str,
+               NoneType] = None,
                view: bool = False,
                cleanup: bool = False,
                format: Optional[str] = None,
@@ -1340,7 +1402,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
                formatter: Optional[str] = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
-               engine: Optional[str] = None) -> str
+               outfile: Union[os.PathLike,
+               str,
+               NoneType] = None,
+               engine: Optional[str] = None,
+               raise_if_result_exists: bool = False,
+               overwrite_source: bool = False) -> str
      |      Save the source to file and render with the Graphviz engine.
      |
      |      Args:
@@ -1362,8 +1429,13 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |          quiet_view (bool): Suppress ``stderr`` output
      |              from the viewer process
      |              (implies ``view=True``, ineffective on Windows platform).
+     |          outfile: Path for the rendered output file.
      |          engine: Layout engine for rendering
      |              (``'dot'``, ``'neato'``, ...).
+     |          raise_if_result_exits: Raise :exc:`graphviz.FileExistsError`
+     |              if the result file exists.
+     |          overwrite_source: Allow ``dot`` to write to the file it reads from.
+     |              Incompatible with ``raise_if_result_exists.
      |
      |      Returns:
      |          The (possibly relative) path of the rendered file.
@@ -1373,11 +1445,22 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |              are unknown.
      |          graphviz.RequiredArgumentError: If ``formatter`` is given
      |              but ``renderer`` is None.
+     |          ValueError: If ``outfile`` is the same file as the source file
+     |              unless ``overwite_source=True``.
      |          graphviz.ExecutableNotFound: If the Graphviz ``dot`` executable
      |              is not found.
      |          graphviz.CalledProcessError: If the returncode (exit status)
      |              of the rendering ``dot`` subprocess is non-zero.
      |          RuntimeError: If viewer opening is requested but not supported.
+     |
+     |      Example:
+     |          >>> doctest_mark_exe()
+     |          >>> import graphviz
+     |          >>> dot = graphviz.Graph(name='spam', directory='doctest-output')
+     |          >>> dot.render(format='png').replace('\', '/')
+     |          'doctest-output/spam.gv.png'
+     |          >>> dot.render(outfile='spam.svg').replace('\', '/')
+     |          'doctest-output/spam.svg'
      |
      |      Note:
      |          The layout command is started from the directory of ``filepath``,
