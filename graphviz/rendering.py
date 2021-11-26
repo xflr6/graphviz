@@ -31,7 +31,7 @@ class Render(saving.Save, backend.Render, backend.View):
                engine: typing.Optional[str] = None,
                raise_if_result_exists: bool = False,
                overwrite_source: bool = False) -> str:
-        """Save the source to file and render with the Graphviz engine.
+        r"""Save the source to file and render with the Graphviz engine.
 
         Args:
             filename: Filename for saving the source
@@ -76,12 +76,22 @@ class Render(saving.Save, backend.Render, backend.View):
                 of the rendering ``dot`` subprocess is non-zero.
             RuntimeError: If viewer opening is requested but not supported.
 
+        Example:
+            >>> doctest_mark_exe()
+            >>> import graphviz
+            >>> dot = graphviz.Graph(name='spam', directory='doctest-output')
+            >>> dot.render(format='png').replace('\\', '/')
+            'doctest-output/spam.gv.png'
+            >>> #dot.render(outfile='spam.svg').replace('\\', '/')
+            'doctest-output/spam.svg'
+
         Note:
             The layout command is started from the directory of ``filepath``,
             so that references to external files
             (e.g. ``[image=images/camelot.png]``)
             can be given as paths relative to the DOT source file.
         """
+        outfile = _tools.promote_pathlike(outfile)
         if outfile is not None:
             format = self._get_format(outfile, format=format)
 
