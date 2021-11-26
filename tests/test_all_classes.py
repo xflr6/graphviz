@@ -1,4 +1,5 @@
 import locale
+import pathlib
 import re
 
 import pytest
@@ -106,6 +107,32 @@ def test_render_mocked(mocker, mock_render, dot):
                                         outfile=None,
                                         raise_if_result_exists=False,
                                         overwrite_filepath=False,
+                                        quiet=False)
+    mock_remove.assert_called_once_with(mock_save.return_value)
+    mock_view.assert_called_once_with(mock_render.return_value, dot.format, False)
+
+
+def test_render_outfile_mocked(mocker, mock_render, dot):
+    mock_save = mocker.patch.object(dot, 'save', autospec=True)
+    mock_view = mocker.patch.object(dot, '_view', autospec=True)
+    mock_remove = mocker.patch('os.remove', autospec=True)
+
+    outfile = 'spam.pdf'
+
+    assert dot.render(outfile=outfile,
+                      raise_if_result_exists=True,
+                      overwrite_source=True,
+                      cleanup=True, view=True) is mock_render.return_value
+
+    expected_filename = pathlib.Path('spam.gv')
+
+    mock_save.assert_called_once_with(expected_filename, None, skip_existing=None)
+    mock_render.assert_called_once_with(dot.engine, dot.format,
+                                        mock_save.return_value,
+                                        renderer=None, formatter=None,
+                                        outfile=pathlib.Path(outfile),
+                                        raise_if_result_exists=True,
+                                        overwrite_filepath=True,
                                         quiet=False)
     mock_remove.assert_called_once_with(mock_save.return_value)
     mock_view.assert_called_once_with(mock_render.return_value, dot.format, False)

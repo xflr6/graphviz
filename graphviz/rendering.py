@@ -105,7 +105,7 @@ class Render(saving.Save, backend.Render, backend.View):
                                                    quiet=quiet,
                                                    outfile=outfile,
                                                    raise_if_result_exists=raise_if_result_exists,
-                                                   overwrite_filepath=overwrite_source,
+                                                   overwrite_source=overwrite_source,
                                                    verify=True)
 
         if outfile is not None and filename is None:
