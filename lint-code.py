@@ -17,8 +17,10 @@ print(f'subprocess.run({cmd!r})')
 try:
     proc = subprocess.run(cmd, check=True)
 except subprocess.CalledProcessError as e:
+    assert e.returncode != 0, f'non-zero returncode: {e}'
     print('FAIL:', e)
     sys.exit(e.returncode)
 else:
+    assert proc.returncode == 0, f'passed: {proc}'
     print('PASS:', proc)
     sys.exit(proc.returncode)
