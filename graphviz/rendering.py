@@ -59,7 +59,7 @@ class Render(saving.Save, backend.Render, backend.View):
             raise_if_result_exits: Raise :exc:`graphviz.FileExistsError`
                 if the result file exists.
             overwrite_source: Allow ``dot`` to write to the file it reads from.
-                Incompatible with ``raise_if_result_exists.
+                Incompatible with ``raise_if_result_exists``.
 
         Returns:
             The (possibly relative) path of the rendered file.

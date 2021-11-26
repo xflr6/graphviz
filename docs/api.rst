@@ -508,7 +508,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          raise_if_result_exits: Raise :exc:`graphviz.FileExistsError`
      |              if the result file exists.
      |          overwrite_source: Allow ``dot`` to write to the file it reads from.
-     |              Incompatible with ``raise_if_result_exists.
+     |              Incompatible with ``raise_if_result_exists``.
      |
      |      Returns:
      |          The (possibly relative) path of the rendered file.
@@ -1025,7 +1025,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          raise_if_result_exits: Raise :exc:`graphviz.FileExistsError`
      |              if the result file exists.
      |          overwrite_source: Allow ``dot`` to write to the file it reads from.
-     |              Incompatible with ``raise_if_result_exists.
+     |              Incompatible with ``raise_if_result_exists``.
      |
      |      Returns:
      |          The (possibly relative) path of the rendered file.
@@ -1435,7 +1435,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |          raise_if_result_exits: Raise :exc:`graphviz.FileExistsError`
      |              if the result file exists.
      |          overwrite_source: Allow ``dot`` to write to the file it reads from.
-     |              Incompatible with ``raise_if_result_exists.
+     |              Incompatible with ``raise_if_result_exists``.
      |
      |      Returns:
      |          The (possibly relative) path of the rendered file.
