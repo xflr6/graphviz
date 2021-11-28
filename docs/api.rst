@@ -308,6 +308,11 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      ``False``
      |
      |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  __annotations__ = {}
+     |
+     |  ----------------------------------------------------------------------
      |  Data descriptors inherited from graphviz.dot.GraphSyntax:
      |
      |  __dict__
@@ -452,11 +457,6 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          If the ``name`` of the subgraph begins with
      |          ``'cluster'`` (all lowercase)
      |          the layout engine will treat it as a special cluster subgraph.
-     |
-     |  ----------------------------------------------------------------------
-     |  Data and other attributes inherited from graphviz.dot.Dot:
-     |
-     |  __annotations__ = {'directed': <class 'bool'>}
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.rendering.Render:
@@ -825,6 +825,11 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      ``True``
      |
      |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  __annotations__ = {}
+     |
+     |  ----------------------------------------------------------------------
      |  Data descriptors inherited from graphviz.dot.DigraphSyntax:
      |
      |  __dict__
@@ -969,11 +974,6 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          If the ``name`` of the subgraph begins with
      |          ``'cluster'`` (all lowercase)
      |          the layout engine will treat it as a special cluster subgraph.
-     |
-     |  ----------------------------------------------------------------------
-     |  Data and other attributes inherited from graphviz.dot.Dot:
-     |
-     |  __annotations__ = {'directed': <class 'bool'>}
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.rendering.Render:
@@ -1386,6 +1386,11 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      Normalizes so that the string always ends in a final newline.
      |
      |  ----------------------------------------------------------------------
+     |  Data and other attributes defined here:
+     |
+     |  __annotations__ = {}
+     |
+     |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.rendering.Render:
      |
      |  render(self,
@@ -1510,8 +1515,6 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |
      |  ----------------------------------------------------------------------
      |  Data and other attributes inherited from graphviz.saving.Save:
-     |
-     |  __annotations__ = {'directory': <class 'str'>}
      |
      |  directory = ''
      |
