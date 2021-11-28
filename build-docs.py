@@ -63,8 +63,8 @@ if args == ['-b', 'doctest']:
 
 print('', f'sphinx.cmd.build.main({args})',)
 returncode = build.main(args)
-flag = 'FAIL' if returncode else 'PASS'
-print('', f'{flag} (returncode {returncode!r})', end='')
+status = 'FAILED' if returncode else 'PASSED'
+print('', f'{status} (returncode {returncode!r})', end='')
 
 try:
     if 'doctest' not in args:

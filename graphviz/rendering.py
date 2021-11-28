@@ -19,7 +19,8 @@ class Render(saving.Save, backend.Render, backend.View):
     """Write source lines to file and render with Graphviz."""
 
     @_tools.deprecate_positional_args(supported_number=2)
-    def render(self, filename: typing.Union[os.PathLike, str, None] = None,
+    def render(self,
+               filename: typing.Union[os.PathLike, str, None] = None,
                directory: typing.Union[os.PathLike, str, None] = None,
                view: bool = False,
                cleanup: bool = False,
@@ -122,11 +123,12 @@ class Render(saving.Save, backend.Render, backend.View):
             os.remove(filepath)
 
         if quiet_view or view:
-            self._view(rendered, self._format, quiet_view)
+            self._view(rendered, format=self._format, quiet=quiet_view)
 
         return rendered
 
-    def _view(self, filepath: str, format: str, quiet: bool) -> None:
+    def _view(self, filepath: typing.Union[os.PathLike, str], *,
+              format: str, quiet: bool) -> None:
         """Start the right viewer based on file format and platform."""
         methodnames = [
             f'_view_{format}_{backend.viewing.PLATFORM}',
@@ -143,7 +145,9 @@ class Render(saving.Save, backend.Render, backend.View):
         view_method(filepath, quiet=quiet)
 
     @_tools.deprecate_positional_args(supported_number=2)
-    def view(self, filename=None, directory=None,
+    def view(self,
+             filename: typing.Union[os.PathLike, str, None] = None,
+             directory: typing.Union[os.PathLike, str, None] = None,
              cleanup: bool = False,
              quiet: bool = False,
              quiet_view: bool = False) -> str:
@@ -175,6 +179,5 @@ class Render(saving.Save, backend.Render, backend.View):
             There is no option to wait for the application to close,
             and no way to retrieve the application's exit status.
         """
-        return self.render(filename=filename, directory=directory,
-                           view=True, cleanup=cleanup,
-                           quiet=quiet, quiet_view=quiet_view)
+        return self.render(filename=filename, directory=directory, view=True,
+                           cleanup=cleanup, quiet=quiet, quiet_view=quiet_view)

@@ -109,7 +109,8 @@ def test_render_mocked(mocker, mock_render, dot):
                                         overwrite_filepath=False,
                                         quiet=False)
     mock_remove.assert_called_once_with(mock_save.return_value)
-    mock_view.assert_called_once_with(mock_render.return_value, dot.format, False)
+    mock_view.assert_called_once_with(mock_render.return_value,
+                                      format=dot.format, quiet=False)
 
 
 def test_render_outfile_mocked(mocker, mock_render, dot):
@@ -135,7 +136,8 @@ def test_render_outfile_mocked(mocker, mock_render, dot):
                                         overwrite_filepath=True,
                                         quiet=False)
     mock_remove.assert_called_once_with(mock_save.return_value)
-    mock_view.assert_called_once_with(mock_render.return_value, dot.format, False)
+    mock_view.assert_called_once_with(mock_render.return_value,
+                                      format=dot.format, quiet=False)
 
 
 def test_format_renderer_formatter_mocked(mocker, mock_render,
@@ -297,7 +299,7 @@ def test_view_mocked(mocker, dot):
 
 def test__view_unknown_platform(unknown_platform, dot):
     with pytest.raises(RuntimeError, match=r'support'):
-        dot._view('name', 'png', False)
+        dot._view('name', format='png', quiet=False)
 
 
 def test__view_mocked(mocker, sentinel, mock_platform, dot):
@@ -306,6 +308,6 @@ def test__view_mocked(mocker, sentinel, mock_platform, dot):
 
     kwargs = {'quiet': False}
 
-    assert dot._view(sentinel.name, 'png', **kwargs) is None
+    assert dot._view(sentinel.name, format='png', **kwargs) is None
 
     _view_platform.assert_called_once_with(sentinel.name, **kwargs)

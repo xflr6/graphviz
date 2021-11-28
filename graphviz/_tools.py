@@ -81,16 +81,17 @@ def promote_pathlike(filepath: typing.Union[os.PathLike, str, None]
     """Return path object or ``None`` depending on ``filepath``."""
 
 
-def promote_pathlike(filepath: typing.Union[os.PathLike, str, None]
+def promote_pathlike(filepath: typing.Union[os.PathLike, str, None], *,
+                     default: typing.Union[os.PathLike, str, None] = None,
                      ) -> typing.Optional[pathlib.Path]:
     """Return path-like object ``filepath`` promoted into a path object.
 
     See also:
         https://docs.python.org/3/glossary.html#term-path-like-object
     """
-    if filepath is None:
-        return None
-    return pathlib.Path(filepath)
+    return (pathlib.Path(filepath) if filepath is not None
+            else pathlib.Path(default) if default is not None
+            else None)
 
 
 def deprecate_positional_args(*,

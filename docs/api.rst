@@ -462,12 +462,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  Methods inherited from graphviz.rendering.Render:
      |
      |  render(self,
-               filename: Union[os.PathLike,
-               str,
-               NoneType] = None,
-               directory: Union[os.PathLike,
-               str,
-               NoneType] = None,
+               filename: Union[os.PathLike, str, NoneType] = None,
+               directory: Union[os.PathLike, str, NoneType] = None,
                view: bool = False,
                cleanup: bool = False,
                format: Optional[str] = None,
@@ -475,9 +471,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
                formatter: Optional[str] = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
-               outfile: Union[os.PathLike,
-               str,
-               NoneType] = None,
+               outfile: Union[os.PathLike, str, NoneType] = None,
                engine: Optional[str] = None,
                raise_if_result_exists: bool = False,
                overwrite_source: bool = False) -> str
@@ -542,8 +536,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          can be given as paths relative to the DOT source file.
      |
      |  view(self,
-             filename=None,
-             directory=None,
+             filename: Union[os.PathLike, str, NoneType] = None,
+             directory: Union[os.PathLike, str, NoneType] = None,
              cleanup: bool = False,
              quiet: bool = False,
              quiet_view: bool = False) -> str
@@ -579,12 +573,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  Methods inherited from graphviz.saving.Save:
      |
      |  save(self,
-             filename: Union[os.PathLike,
-             str,
-             NoneType] = None,
-             directory: Union[os.PathLike,
-             str,
-             NoneType] = None, *,
+             filename: Union[os.PathLike, str, NoneType] = None,
+             directory: Union[os.PathLike, str, NoneType] = None, *,
              skip_existing: Optional[bool] = False) -> str
      |      Save the DOT source to file. Ensure the file ends with a newline.
      |
@@ -979,12 +969,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  Methods inherited from graphviz.rendering.Render:
      |
      |  render(self,
-               filename: Union[os.PathLike,
-               str,
-               NoneType] = None,
-               directory: Union[os.PathLike,
-               str,
-               NoneType] = None,
+               filename: Union[os.PathLike, str, NoneType] = None,
+               directory: Union[os.PathLike, str, NoneType] = None,
                view: bool = False,
                cleanup: bool = False,
                format: Optional[str] = None,
@@ -992,9 +978,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
                formatter: Optional[str] = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
-               outfile: Union[os.PathLike,
-               str,
-               NoneType] = None,
+               outfile: Union[os.PathLike, str, NoneType] = None,
                engine: Optional[str] = None,
                raise_if_result_exists: bool = False,
                overwrite_source: bool = False) -> str
@@ -1059,8 +1043,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          can be given as paths relative to the DOT source file.
      |
      |  view(self,
-             filename=None,
-             directory=None,
+             filename: Union[os.PathLike, str, NoneType] = None,
+             directory: Union[os.PathLike, str, NoneType] = None,
              cleanup: bool = False,
              quiet: bool = False,
              quiet_view: bool = False) -> str
@@ -1096,12 +1080,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  Methods inherited from graphviz.saving.Save:
      |
      |  save(self,
-             filename: Union[os.PathLike,
-             str,
-             NoneType] = None,
-             directory: Union[os.PathLike,
-             str,
-             NoneType] = None, *,
+             filename: Union[os.PathLike, str, NoneType] = None,
+             directory: Union[os.PathLike, str, NoneType] = None, *,
              skip_existing: Optional[bool] = False) -> str
      |      Save the DOT source to file. Ensure the file ends with a newline.
      |
@@ -1276,8 +1256,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
                  graphviz.piping.Pipe,
                  graphviz.unflattening.Unflatten)
      |  Source(source: str,
-               filename=None,
-               directory=None,
+               filename: Union[os.PathLike, str, NoneType] = None,
+               directory: Union[os.PathLike, str, NoneType] = None,
                format: Optional[str] = None,
                engine: Optional[str] = None,
                encoding: Optional[str] = 'utf-8', *,
@@ -1327,8 +1307,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |
      |  __init__(self,
                  source: str,
-                 filename=None,
-                 directory=None,
+                 filename: Union[os.PathLike, str, NoneType] = None,
+                 directory: Union[os.PathLike, str, NoneType] = None,
                  format: Optional[str] = None,
                  engine: Optional[str] = None,
                  encoding: Optional[str] = 'utf-8', *,
@@ -1343,8 +1323,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      Yields: Line ending with a newline (``'\n'``).
      |
      |  save(self,
-             filename=None,
-             directory=None, *,
+             filename: Union[os.PathLike, str, NoneType] = None,
+             directory: Union[os.PathLike, str, NoneType] = None, *,
              skip_existing: Optional[bool] = None) -> str
      |      Save the DOT source to file. Ensure the file ends with a newline.
      |
@@ -1361,8 +1341,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  ----------------------------------------------------------------------
      |  Class methods defined here:
      |
-     |  from_file(filename,
-                  directory=None,
+     |  from_file(filename: Union[os.PathLike, str],
+                  directory: Union[os.PathLike, str, NoneType] = None,
                   format: Optional[str] = None,
                   engine: Optional[str] = None,
                   encoding: Optional[str] = 'utf-8',
@@ -1394,12 +1374,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  Methods inherited from graphviz.rendering.Render:
      |
      |  render(self,
-               filename: Union[os.PathLike,
-               str,
-               NoneType] = None,
-               directory: Union[os.PathLike,
-               str,
-               NoneType] = None,
+               filename: Union[os.PathLike, str, NoneType] = None,
+               directory: Union[os.PathLike, str, NoneType] = None,
                view: bool = False,
                cleanup: bool = False,
                format: Optional[str] = None,
@@ -1407,9 +1383,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
                formatter: Optional[str] = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
-               outfile: Union[os.PathLike,
-               str,
-               NoneType] = None,
+               outfile: Union[os.PathLike, str, NoneType] = None,
                engine: Optional[str] = None,
                raise_if_result_exists: bool = False,
                overwrite_source: bool = False) -> str
@@ -1474,8 +1448,8 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |          can be given as paths relative to the DOT source file.
      |
      |  view(self,
-             filename=None,
-             directory=None,
+             filename: Union[os.PathLike, str, NoneType] = None,
+             directory: Union[os.PathLike, str, NoneType] = None,
              cleanup: bool = False,
              quiet: bool = False,
              quiet_view: bool = False) -> str

@@ -39,7 +39,9 @@ with unittest.mock.patch.object(graphviz.graphs.BaseGraph, '_view') as mock_view
                 continue
             rendered = f'{path.stem}.gv.{DEFAULT_FORMAT}'
             assert pathlib.Path(rendered).stat().st_size, f'non-empty {rendered}'
-            mock_view.assert_called_once_with(rendered, DEFAULT_FORMAT, False)
+            mock_view.assert_called_once_with(rendered,
+                                              format=DEFAULT_FORMAT,
+                                              quiet=False)
             mock_view.reset_mock()
 
 if not raised:

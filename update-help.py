@@ -19,8 +19,6 @@ ARGS_LINE = re.compile(r'(?:class | \| {2})\w+\(')
 
 WRAP_AFTER = 80
 
-WRAP_SEARCH, WRAP_REPL = re.compile(r'(,)[ ](?!\*)'), r'\1\n{indent} '
-
 INDENT = ' ' * 4
 
 TARGET = pathlib.Path('docs/api.rst')
@@ -52,6 +50,31 @@ def rpartition_initial(value: str, *, sep: str) -> typing.Tuple[str, str, str]:
     return tuple(reversed(parts)) if not sep_found else parts
 
 
+def iterarguments(unwrapped_line: str) -> typing.Iterator[str]:
+    """Yield unwrapped line of argument definitions divided into one line per arg.
+
+    >>> list(iterarguments('spam: str, eggs: typing.Union[str, None], ham'))
+    ['spam: str,', 'eggs: typing.Union[str, None],', 'ham']
+    """
+    pos = 0
+    bracket_level = paren_level = 0
+    for i, char in enumerate(unwrapped_line):
+        if char == '[':
+            bracket_level += 1
+        elif char == ']':
+            bracket_level -= 1
+        elif char == '(':
+            paren_level += 1
+        elif char == ')':
+            paren_level -= 1
+        elif (not bracket_level and not paren_level and char == ','
+              and unwrapped_line[i + 1: i + 3].strip() != '*'):
+            i += 1
+            yield unwrapped_line[pos:i].strip()
+            pos = i
+    yield unwrapped_line[pos:].strip()
+
+
 def iterlines(stdout_lines, *,
               line_indent: str = INDENT,
               wrap_after: int = WRAP_AFTER) -> typing.Iterator[str]:
@@ -61,17 +84,19 @@ def iterlines(stdout_lines, *,
         line = line.replace("``'\\n'``", r"``'\\n'``")
 
         if len(line) > wrap_after and ARGS_LINE.match(line):
-            line, *rest = rpartition_initial(line, sep=' -> ')
+            indent = line_indent + ' ' * (line.index('(') + 1)
 
-            indent = line_indent + ' ' * line.index('(')
-            repl = WRAP_REPL.format(indent=indent)
+            *start, rest = line.partition('(')
+            line, *rest = rpartition_initial(rest, sep=' -> ')
 
-            line, n_newlines = WRAP_SEARCH.subn(repl, line)
+            arguments = list(iterarguments(line))
             print(len(line), 'character line wrapped into',
-                  n_newlines + 1, 'lines')
-            assert n_newlines, 'wrapped long argument line'
+                  len(arguments), 'lines')
+            assert len(arguments) > 1, 'wrapped long argument line'
 
-            line += ''.join(rest)
+            line = ''.join(start)
+            line += f'\n{indent}'.join(arguments)
+            line += ''.join(rest) if any(rest) else '\n'
 
         yield line_indent + line
 

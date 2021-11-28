@@ -28,7 +28,7 @@ class Render(parameters.Parameters):
         return [kwargs.pop('engine'), kwargs.pop('format')], kwargs
 
     @property
-    def _render(_):
+    def _render(_):  # noqa: N805
         """Simplify ``._render()`` mocking."""
         return rendering.render
 
@@ -45,12 +45,12 @@ class Pipe(parameters.Parameters):
         return [kwargs.pop('engine'), kwargs.pop('format')], kwargs
 
     @property
-    def _pipe_lines(_):
+    def _pipe_lines(_):  # noqa: N805
         """Simplify ``._pipe_lines()`` mocking."""
         return piping.pipe_lines
 
     @property
-    def _pipe_lines_string(_):
+    def _pipe_lines_string(_):  # noqa: N805
         """Simplify ``._pipe_lines_string()`` mocking."""
         return piping.pipe_lines_string
 
@@ -58,7 +58,7 @@ class Pipe(parameters.Parameters):
 class Unflatten:
 
     @property
-    def _unflatten(_):
+    def _unflatten(_):  # noqa: N805
         """Simplify ``._unflatten mocking."""
         return unflattening.unflatten
 

@@ -40,7 +40,8 @@ class Source(rendering.Render, saving.Save,
 
     @classmethod
     @_tools.deprecate_positional_args(supported_number=2)
-    def from_file(cls, filename, directory=None,
+    def from_file(cls, filename: typing.Union[os.PathLike, str],
+                  directory: typing.Union[os.PathLike, str, None] = None,
                   format: typing.Optional[str] = None,
                   engine: typing.Optional[str] = None,
                   encoding: typing.Optional[str] = DEFAULT_ENCODING,
@@ -55,19 +56,26 @@ class Source(rendering.Render, saving.Save,
             engine: Layout command used (``'dot'``, ``'neato'``, ...).
             encoding: Encoding for loading/saving the source.
         """
-        filepath = os.path.join(directory or '', filename)
+        directory = _tools.promote_pathlike(directory, default=os.curdir)
+        filepath = (os.path.join(directory, filename) if directory.parts
+                    else os.fspath(filename))
+
         if encoding is None:
             encoding = locale.getpreferredencoding()
+
         log.debug('read %r with encoding %r', filepath, encoding)
         with open(filepath, encoding=encoding) as fd:
             source = fd.read()
+
         return cls(source, filename, directory,
                    format, engine, encoding,
                    renderer=renderer, formatter=formatter,
                    loaded_from_path=filepath)
 
     @_tools.deprecate_positional_args(supported_number=2)
-    def __init__(self, source: str, filename=None, directory=None,
+    def __init__(self, source: str,
+                 filename: typing.Union[os.PathLike, str, None] = None,
+                 directory: typing.Union[os.PathLike, str, None] = None,
                  format: typing.Optional[str] = None,
                  engine: typing.Optional[str] = None,
                  encoding: typing.Optional[str] = DEFAULT_ENCODING, *,
@@ -78,7 +86,6 @@ class Source(rendering.Render, saving.Save,
                          format=format, engine=engine,
                          renderer=renderer, formatter=formatter,
                          encoding=encoding)
-
         self._loaded_from_path = loaded_from_path
         self._source = source
 
@@ -112,7 +119,8 @@ class Source(rendering.Render, saving.Save,
         return source
 
     @_tools.deprecate_positional_args(supported_number=2)
-    def save(self, filename=None, directory=None, *,
+    def save(self, filename: typing.Union[os.PathLike, str, None] = None,
+             directory: typing.Union[os.PathLike, str, None] = None, *,
              skip_existing: typing.Optional[bool] = None) -> str:
         """Save the DOT source to file. Ensure the file ends with a newline.
 
@@ -126,8 +134,7 @@ class Source(rendering.Render, saving.Save,
         Returns:
             The (possibly relative) path of the saved source file.
         """
-        skip = (skip_existing is None
-                and self._loaded_from_path
+        skip = (skip_existing is None and self._loaded_from_path
                 and os.path.samefile(self._loaded_from_path, self.filepath))
         if skip:
             log.debug('.save(skip_existing=None) skip writing Source.from_file(%r)',
