@@ -45,9 +45,9 @@ with unittest.mock.patch.object(graphviz.graphs.BaseGraph, '_view') as mock_view
             mock_view.reset_mock()
 
 if not raised:
-    print('all examples passed without raising (OK)')
+    print('PASSED: all examples passed without raising')
     sys.exit(None)
 else:
-    message = f'{len(raised)} examples raised (WARNING)'
+    message = f'FAILED: {len(raised)} examples raised (WARNING)'
     print(message, *raised, sep='\n')
     sys.exit(message)
