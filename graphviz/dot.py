@@ -1,5 +1,6 @@
 """Create DOT code with method-calls."""
 
+import contextlib
 import typing
 
 from . import _tools
@@ -297,7 +298,7 @@ class Dot(quoting.Quote, base.Base):
             kwargs.update(name=name, comment=comment,
                           graph_attr=graph_attr, node_attr=node_attr, edge_attr=edge_attr,
                           body=body, strict=None)
-            return SubgraphContext(self, kwargs=kwargs)
+            return SubgraphContext(self, **kwargs)
 
         args = [name, comment, graph_attr, node_attr, edge_attr, body]
         if not all(a is None for a in args):
@@ -311,17 +312,21 @@ class Dot(quoting.Quote, base.Base):
         self.body.extend(lines)
 
 
-class SubgraphContext:
+class SubgraphContext(contextlib.AbstractContextManager):
     """Return a blank instance of the parent and add as subgraph on exit."""
 
+    parent: Dot
+
+    graph: Dot
+
     @_tools.deprecate_positional_args(supported_number=2)
-    def __init__(self, parent, kwargs) -> None:
+    def __init__(self, parent, **kwargs) -> None:
         self.parent = parent
         self.graph = parent.__class__(**kwargs)
 
-    def __enter__(self):
+    def __enter__(self) -> Dot:
         return self.graph
 
-    def __exit__(self, type_, value, traceback):
+    def __exit__(self, type_, _, __) -> None:
         if type_ is None:
             self.parent.subgraph(self.graph)
