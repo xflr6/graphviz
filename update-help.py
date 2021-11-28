@@ -67,7 +67,7 @@ def iterarguments(unwrapped_line: str) -> typing.Iterator[str]:
             paren_level += 1
         elif char == ')':
             paren_level -= 1
-        elif (bracket_level == 0 and paren_level ==0 and char == ','
+        elif (bracket_level == 0 and paren_level == 0 and char == ','
               and unwrapped_line[i + 1: i + 3].strip() != '*'):
             pos_including_comma = i + 1
             yield unwrapped_line[pos:pos_including_comma].lstrip()
