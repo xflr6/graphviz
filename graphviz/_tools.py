@@ -101,11 +101,8 @@ def promote_pathlike_directory(directory: typing.Union[os.PathLike, str, None], 
     See also:
         https://docs.python.org/3/glossary.html#term-path-like-object
     """
-    if directory is None:
-        args = [default or os.curdir] if default is not None else []
-    else:
-        args = [directory]
-    return pathlib.Path(*args)
+    return pathlib.Path(directory if directory is not None
+                        else default or os.curdir)
 
 
 def deprecate_positional_args(*,
