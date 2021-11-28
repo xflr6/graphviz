@@ -69,7 +69,7 @@ Quickstart
 
 Create a graph object:
 
-.. doctest::
+.. code:: python
 
     >>> import graphviz  # doctest: +NO_EXE
     >>> dot = graphviz.Digraph(comment='The Round Table')
@@ -78,7 +78,7 @@ Create a graph object:
 
 Add nodes and edges:
 
-.. doctest::
+.. code:: python
 
     >>> dot.node('A', 'King Arthur')  # doctest: +NO_EXE
     >>> dot.node('B', 'Sir Bedevere the Wise')
@@ -89,7 +89,7 @@ Add nodes and edges:
 
 Check the generated source code:
 
-.. doctest::
+.. code:: python
 
     >>> print(dot.source)  # doctest: +NORMALIZE_WHITESPACE +NO_EXE
     // The Round Table
@@ -104,7 +104,7 @@ Check the generated source code:
 
 Save and render the source code:
 
-.. doctest::
+.. code:: python
 
     >>> doctest_mark_exe()
 
@@ -113,7 +113,7 @@ Save and render the source code:
 
 Save and render and view the result:
 
-.. doctest::
+.. code:: python
 
     >>> doctest_mark_exe()
 
