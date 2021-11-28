@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.19 (in development)
------------------------------
+Version 0.19
+------------
 
 Add ``PendingDeprecationWarning`` to calls using positional arguments
 that will be **deprecated in a later version**.
