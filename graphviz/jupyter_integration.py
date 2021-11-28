@@ -37,13 +37,18 @@ def get_jupyter_format_mimetype(jupyter_format: str) -> str:
                          f' (must be one of {sorted(JUPYTER_FORMATS)})')
 
 
-def get_jupyter_mimetype_format(mimetype: str) -> typing.Optional[str]:
+def get_jupyter_mimetype_format(mimetype: str) -> str:
     if mimetype not in MIME_TYPES:
         raise ValueError(f'unsupported mimetype: {mimetype!r}'
                          f' (must be one of {sorted(MIME_TYPES)})')
+
+    assert mimetype in JUPYTER_FORMATS.values()
+
     for format, jupyter_mimetype in JUPYTER_FORMATS.items():
         if jupyter_mimetype == mimetype:
             return format
+
+    raise RuntimeError  # pragma: no cover
 
 
 class JupyterIntegration(piping.Pipe):
