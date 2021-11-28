@@ -114,6 +114,8 @@ Publish the release with twine_:
 
 Push main branch and push all new tags:
 
+.. code:: bash
+
     $ git push --tags
 
 
