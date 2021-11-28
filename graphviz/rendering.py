@@ -112,7 +112,7 @@ class Render(saving.Save, backend.Render, backend.View):
         if outfile is not None and filename is None:
             filename = self._get_filepath(outfile)
 
-        filepath = self.save(filename, directory, skip_existing=None)
+        filepath = self.save(filename, directory=directory, skip_existing=None)
 
         args.append(filepath)
 

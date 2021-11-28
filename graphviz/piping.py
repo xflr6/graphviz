@@ -102,7 +102,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                                  engine=engine,
                                  encoding=encoding)
 
-    @_tools.deprecate_positional_args(supported_number=1)
+    @_tools.deprecate_positional_args(supported_number=2)
     def _pipe_legacy(self,
                      format: typing.Optional[str] = None,
                      renderer: typing.Optional[str] = None,

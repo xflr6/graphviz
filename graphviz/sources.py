@@ -67,8 +67,9 @@ class Source(rendering.Render, saving.Save,
         with open(filepath, encoding=encoding) as fd:
             source = fd.read()
 
-        return cls(source, filename, directory,
-                   format, engine, encoding,
+        return cls(source,
+                   filename=filename, directory=directory,
+                   format=format, engine=engine, encoding=encoding,
                    renderer=renderer, formatter=formatter,
                    loaded_from_path=filepath)
 
