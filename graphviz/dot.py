@@ -56,6 +56,18 @@ def node(left: str, right: str) -> str:
     return f'\t{left}{right}\n'
 
 
+ParentType = typing.TypeVar('ParentType')
+
+
+@contextlib.contextmanager
+def subgraph_contextmanager(parent: ParentType,
+                            **kwargs) -> typing.Iterator[ParentType]:
+    """Return a new ``parent`` instance and add as parent subgraph on exit."""
+    dot = parent.__class__(**kwargs)
+    yield dot
+    parent.subgraph(dot)
+
+
 class Dot(quoting.Quote, base.Base):
     """Assemble, save, and render DOT source code, open result in viewer."""
 
@@ -298,7 +310,7 @@ class Dot(quoting.Quote, base.Base):
             kwargs.update(name=name, comment=comment,
                           graph_attr=graph_attr, node_attr=node_attr, edge_attr=edge_attr,
                           body=body, strict=None)
-            return SubgraphContext(self, **kwargs)
+            return subgraph_contextmanager(self, **kwargs)
 
         args = [name, comment, graph_attr, node_attr, edge_attr, body]
         if not all(a is None for a in args):
@@ -310,23 +322,3 @@ class Dot(quoting.Quote, base.Base):
 
         lines = ['\t' + line for line in graph.__iter__(subgraph=True)]
         self.body.extend(lines)
-
-
-class SubgraphContext(contextlib.AbstractContextManager):
-    """Return a blank instance of the parent and add as subgraph on exit."""
-
-    parent: Dot
-
-    graph: Dot
-
-    @_tools.deprecate_positional_args(supported_number=2)
-    def __init__(self, parent, **kwargs) -> None:
-        self.parent = parent
-        self.graph = parent.__class__(**kwargs)
-
-    def __enter__(self) -> Dot:
-        return self.graph
-
-    def __exit__(self, type_, _, __) -> None:
-        if type_ is None:
-            self.parent.subgraph(self.graph)
