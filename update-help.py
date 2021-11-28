@@ -67,12 +67,12 @@ def iterarguments(unwrapped_line: str) -> typing.Iterator[str]:
             paren_level += 1
         elif char == ')':
             paren_level -= 1
-        elif (not bracket_level and not paren_level and char == ','
+        elif (bracket_level == 0 and paren_level ==0 and char == ','
               and unwrapped_line[i + 1: i + 3].strip() != '*'):
-            i += 1
-            yield unwrapped_line[pos:i].strip()
-            pos = i
-    yield unwrapped_line[pos:].strip()
+            pos_including_comma = i + 1
+            yield unwrapped_line[pos:pos_including_comma].lstrip()
+            pos = pos_including_comma
+    yield unwrapped_line[pos:].lstrip()
 
 
 def iterlines(stdout_lines, *,
@@ -87,16 +87,14 @@ def iterlines(stdout_lines, *,
             indent = line_indent + ' ' * (line.index('(') + 1)
 
             *start, rest = line.partition('(')
-            line, *rest = rpartition_initial(rest, sep=' -> ')
+            argument_line, *rest = rpartition_initial(rest, sep=' -> ')
 
-            arguments = list(iterarguments(line))
+            arguments = list(iterarguments(argument_line))
             print(len(line), 'character line wrapped into',
                   len(arguments), 'lines')
             assert len(arguments) > 1, 'wrapped long argument line'
 
-            line = ''.join(start)
-            line += f'\n{indent}'.join(arguments)
-            line += ''.join(rest) if any(rest) else '\n'
+            line = ''.join(start + [f'\n{indent}'.join(arguments)] + rest)
 
         yield line_indent + line
 
