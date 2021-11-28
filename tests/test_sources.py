@@ -47,16 +47,21 @@ def test_from_file(tmp_path, filename='hello.gv', directory='source_hello',
     lpath.mkdir()
     (lpath / filename).write_text(data, encoding=encoding)
 
-    source = graphviz.Source.from_file(filename, str(lpath))
+    with pytest.deprecated_call():
+        source = graphviz.Source.from_file(filename, str(lpath))
     assert source.encoding == 'utf-8'
 
-    source = graphviz.Source.from_file(filename, str(lpath), encoding=None)
+    with pytest.deprecated_call():
+        source = graphviz.Source.from_file(filename, str(lpath), encoding=None)
     assert source.encoding == locale.getpreferredencoding()
 
     renderer = 'xdot'
     formatter = 'core'
-    source = graphviz.Source.from_file(filename, str(lpath), encoding=encoding,
-                                       renderer=renderer, formatter=formatter)
+    with pytest.deprecated_call():
+        source = graphviz.Source.from_file(filename, str(lpath),
+                                           encoding=encoding,
+                                           renderer=renderer,
+                                           formatter=formatter)
     assert source.source == data + '\n'
     assert source.filename == filename
     assert source.directory == str(lpath)

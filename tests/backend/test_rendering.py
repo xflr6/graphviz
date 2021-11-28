@@ -36,7 +36,7 @@ def test_render_missing_file(quiet, engine='dot', format_='pdf'):
      (['dot', 'ps', 'nonfilepath', 'ps', ''], ValueError, r'unknown formatter')],
     ids=lambda x: getattr(x, '__name__', x))
 def test_render_unknown_parameter_raises(args, expected_exception, match):
-    with pytest.raises(expected_exception, match=match):
+    with pytest.raises(expected_exception, match=match), pytest.deprecated_call():
         graphviz.render(*args)
 
 
@@ -53,7 +53,9 @@ def test_render(capsys, tmp_path, engine, format_, renderer, formatter,
     assert lpath.write_bytes(data) == len(data) == lpath.stat().st_size
     rendered = lpath.with_suffix(f'{lpath.suffix}.{expected_suffix}')
 
-    result = graphviz.render(engine, format_, str(lpath), renderer, formatter)
+    with pytest.deprecated_call():
+        result = graphviz.render(engine, format_, str(lpath),
+                                 renderer, formatter)
 
     assert result == str(rendered)
 
@@ -181,7 +183,7 @@ def test_get_filepath(outfile, expected_fspath):
      ('spam.pdf', None, 'pdf'),
      ('spam.pdf', 'pdf', 'pdf'),
      ('spam', 'pdf', 'pdf')])
-def test_get_ormat(outfile_name, format, expected_result):
+def test_get_format(outfile_name, format, expected_result):
     outfile = pathlib.Path(outfile_name)
 
     result = rendering.get_format(outfile, format=format)
