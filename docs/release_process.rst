@@ -73,16 +73,6 @@ If changes are needed (and go back to: **Cleanup**):
 
     $ git commit --amend --date=now
 
-
-Publish
--------
-
-Publish the release with twine_:
-
-.. code:: bash
-
-    $ python -m twine upload dist/*
-
 Switch to main branch and merge ``release``:
 
 .. code:: bash
@@ -96,22 +86,35 @@ Create annotated release tag:
 
     $ git tag -a -m "$MAJOR.$MINOR[.$BUGFIX] release"
 
-Bump version to ``$MAJOR.$MINOR.[.$BUGFIX].dev0``:
+Bump post-release version to ``$MAJOR.$MINOR.[.$BUGFIX].dev0``:
 
 - ``docs/conf.py``
 - ``graphviz/__init__.py``
 - ``setup.py``
 
-Document release:
+Document post-release:
 
 - edit ``CHANGES.rst`` (add ``Version $MAJOR.$MINOR[.$BUGFIX] (in development)``)
 
-Commit to main branch and push:
+Commit version bump to main branch:
 
 .. code:: bash
 
     $ git commit -m "bump version for development"
-    $ git push --tags  # pushes all tags
+
+
+Publish
+-------
+
+Publish the release with twine_:
+
+.. code:: bash
+
+    $ python -m twine upload dist/*
+
+Push main branch and push all new tags:
+
+    $ git push --tags
 
 
 Verify
