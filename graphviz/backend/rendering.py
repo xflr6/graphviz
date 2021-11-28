@@ -102,11 +102,11 @@ def infer_format(outfile: pathlib.Path) -> str:
         ...
     ValueError: cannot infer rendering format from outfile: 'spam' (missing suffix)
 
-    >>> infer_format(pathlib.Path('spam.mp3'))  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+    >>> infer_format(pathlib.Path('spam.wav'))  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Traceback (most recent call last):
         ...
-    ValueError: cannot infer rendering format from suffix '.mp3' of outfile: 'spam.mp3'
-    (unknown format: 'mp3', provide outfile with a suffix from ['.bmp', ...])
+    ValueError: cannot infer rendering format from suffix '.wav' of outfile: 'spam.wav'
+    (unknown format: 'wav', provide outfile with a suffix from ['.bmp', ...])
     """
     if not outfile.suffix:
         raise ValueError('cannot infer rendering format from outfile:'

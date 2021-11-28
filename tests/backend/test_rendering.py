@@ -215,8 +215,8 @@ def test_get_format_warns(outfile_name, format, expected_result,
       r"cannot infer rendering format from suffix '' of outfile: 'spam'"),
      ('spam.peng', graphviz.RequiredArgumentError,
       r"cannot infer rendering format from suffix '.peng' of outfile: 'spam.peng'"),
-     ('spam.mp3', graphviz.RequiredArgumentError,
-      r"cannot infer rendering format from suffix '.mp3' of outfile: 'spam.mp3'")])
+     ('spam.wav', graphviz.RequiredArgumentError,
+      r"cannot infer rendering format from suffix '.wav' of outfile: 'spam.wav'")])
 def test_get_format_raises(outfile_name, expected_exception, match):
     outfile = pathlib.Path(outfile_name)
 
