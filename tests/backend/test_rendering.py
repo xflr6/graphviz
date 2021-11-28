@@ -181,8 +181,7 @@ def test_get_filepath(outfile, expected_fspath):
      ('spam.jpeg', None, 'jpeg'),
      ('spam.SVG', None, 'svg'),
      ('spam.pdf', None, 'pdf'),
-     ('spam.pdf', 'pdf', 'pdf'),
-     ('spam', 'pdf', 'pdf')])
+     ('spam.pdf', 'pdf', 'pdf')])
 def test_get_format(outfile_name, format, expected_result):
     outfile = pathlib.Path(outfile_name)
 
@@ -198,9 +197,11 @@ def test_get_format(outfile_name, format, expected_result):
      ('spam.dot', 'plain', 'plain', graphviz.FormatSuffixMismatchWarning,
       r"expected format 'dot' from outfile differs from given format: 'plain'"),
      ('spam', 'svg', 'svg', graphviz.UnknownSuffixWarning,
-      r"unknown outfile suffix '' \(expected: '.svg'\)"),
+      r"unknown outfile suffix '' \(expected: '\.svg'\)"),
      ('spam.peng', 'png', 'png', graphviz.UnknownSuffixWarning,
-      r"unknown outfile suffix '.peng' \(expected: '.png'\)")])
+      r"unknown outfile suffix '.peng' \(expected: '\.png'\)"),
+     ('spam', 'pdf', 'pdf', graphviz.UnknownSuffixWarning,
+      r"unknown outfile suffix '' \(expected: '\.pdf'\)")])
 def test_get_format_warns(outfile_name, format, expected_result,
                           expected_warning, match):
     outfile = pathlib.Path(outfile_name)
