@@ -66,6 +66,9 @@ Add ``lint-code.py`` and use in build job.
 
 Increase doctest coverage.
 
+Extend type annotations.
+Accept path-like objects for ``filename``, ``directory``, and ``filepath``.
+
 Extend and improve documentation.
 
 Improve build tests.
