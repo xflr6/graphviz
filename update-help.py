@@ -115,7 +115,7 @@ for cls_name, doc in help_docs.items():
     target = target.replace(INDENT + '\n', INDENT + '<BLANKLINE>\n')
 
 if target == target_before:
-    print('unchanged (OK)')
+    print(f'PASSED: unchanged {TARGET} (OK)')
     sys.exit(None)
 else:
     print('write', TARGET)
@@ -131,6 +131,6 @@ else:
     for diff in difflib.context_diff(target_before, target):
         print(diff)
 
-    message = f'changed {TARGET!r} (WARNING)'
+    message = f'FAILED: changed {TARGET!r} (WARNING)'
     print(f'sys.exit({message!r})')
     sys.exit(message)
