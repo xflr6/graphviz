@@ -56,18 +56,6 @@ def node(left: str, right: str) -> str:
     return f'\t{left}{right}\n'
 
 
-ParentType = typing.TypeVar('ParentType')
-
-
-@contextlib.contextmanager
-def subgraph_contextmanager(parent: ParentType,
-                            **kwargs) -> typing.Iterator[ParentType]:
-    """Return a new ``parent`` instance and add as parent subgraph on exit."""
-    dot = parent.__class__(**kwargs)
-    yield dot
-    parent.subgraph(dot)
-
-
 class Dot(quoting.Quote, base.Base):
     """Assemble, save, and render DOT source code, open result in viewer."""
 
@@ -310,7 +298,15 @@ class Dot(quoting.Quote, base.Base):
             kwargs.update(name=name, comment=comment,
                           graph_attr=graph_attr, node_attr=node_attr, edge_attr=edge_attr,
                           body=body, strict=None)
-            return subgraph_contextmanager(self, **kwargs)
+            subgraph = self.__class__(**kwargs)
+
+            @contextlib.contextmanager
+            def subgraph_contextmanager():
+                """Return subgraph and add to self on exit."""
+                yield subgraph
+                self.subgraph(subgraph)
+
+            return subgraph_contextmanager()
 
         args = [name, comment, graph_attr, node_attr, edge_attr, body]
         if not all(a is None for a in args):
