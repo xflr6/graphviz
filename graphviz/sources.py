@@ -56,7 +56,7 @@ class Source(rendering.Render, saving.Save,
             engine: Layout command used (``'dot'``, ``'neato'``, ...).
             encoding: Encoding for loading/saving the source.
         """
-        directory = _tools.promote_pathlike(directory, default=os.curdir)
+        directory = _tools.promote_pathlike_directory(directory)
         filepath = (os.path.join(directory, filename) if directory.parts
                     else os.fspath(filename))
 

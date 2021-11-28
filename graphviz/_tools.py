@@ -12,6 +12,8 @@ import warnings
 __all__ = ['attach',
            'mkdirs',
            'mapping_items',
+           'promote_pathlike',
+           'promote_pathlike_directory',
            'deprecate_positional_args']
 
 
@@ -81,17 +83,29 @@ def promote_pathlike(filepath: typing.Union[os.PathLike, str, None]
     """Return path object or ``None`` depending on ``filepath``."""
 
 
-def promote_pathlike(filepath: typing.Union[os.PathLike, str, None], *,
-                     default: typing.Union[os.PathLike, str, None] = None,
+def promote_pathlike(filepath: typing.Union[os.PathLike, str, None]
                      ) -> typing.Optional[pathlib.Path]:
     """Return path-like object ``filepath`` promoted into a path object.
 
     See also:
         https://docs.python.org/3/glossary.html#term-path-like-object
     """
-    return (pathlib.Path(filepath) if filepath is not None
-            else pathlib.Path(default) if default is not None
-            else None)
+    return pathlib.Path(filepath) if filepath is not None else None
+
+
+def promote_pathlike_directory(directory: typing.Union[os.PathLike, str, None], *,
+                               default: typing.Union[os.PathLike, str, None] = None,
+                               ) -> pathlib.Path:
+    """Return path-like object ``directory`` promoted into a path object (default to ``os.curdir``).
+
+    See also:
+        https://docs.python.org/3/glossary.html#term-path-like-object
+    """
+    if directory is None:
+        args = [default or os.curdir] if default is not None else []
+    else:
+        args = [directory]
+    return pathlib.Path(*args)
 
 
 def deprecate_positional_args(*,
