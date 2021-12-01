@@ -11,6 +11,8 @@ import warnings
 
 import graphviz  # noqa: F401
 
+SELF = pathlib.Path(__file__)
+
 EXAMPLES = pathlib.Path('examples')
 
 IO_KWARGS = {'encoding': 'utf-8'}
@@ -18,6 +20,7 @@ IO_KWARGS = {'encoding': 'utf-8'}
 DEFAULT_FORMAT = 'pdf'
 
 
+print('run', [SELF.name] + sys.argv[1:])
 os.chdir(EXAMPLES)
 
 graphviz.set_default_format(DEFAULT_FORMAT)

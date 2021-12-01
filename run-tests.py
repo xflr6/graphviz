@@ -3,11 +3,13 @@
 
 """Run the tests with https://pytest.org."""
 
-import doctest as doctest
-from unittest import mock
-
+import doctest
+import pathlib
 import platform
 import sys
+from unittest import mock
+
+SELF = pathlib.Path(__file__)
 
 NO_EXE = doctest.register_optionflag('NO_EXE')
 
@@ -39,6 +41,7 @@ if platform.system() == 'Windows' and 'idlelib' in sys.modules:
     ARGS += ['--capture=sys', '--color=no']
 
 
+print('run', [SELF.name] + sys.argv[1:])
 args = ARGS + sys.argv[1:]
 
 print(f'pytest.main({args!r})')

@@ -10,6 +10,8 @@ import webbrowser
 
 from sphinx.cmd import build
 
+SELF = pathlib.Path(__file__)
+
 SOURCE = pathlib.Path('docs')
 
 TARGET = SOURCE / '_build'
@@ -24,14 +26,12 @@ DEFAULT_ARGS = [BROWSER_OPEN, '-W', '-n', '-v', str(SOURCE), str(TARGET)]
 
 OPEN_RESULT = BROWSER_OPEN in DEFAULT_ARGS
 
-SELF = pathlib.Path(__file__)
-
 
 print = functools.partial(print, sep='\n')
 
 
 args = sys.argv[1:]
-print(f'run {SELF.name} {args}')
+print(f'run {[SELF.name] + args}')
 if not args:
     args = DEFAULT_ARGS
 

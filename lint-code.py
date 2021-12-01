@@ -2,15 +2,19 @@
 
 """Run code linting with https://flake8.pycqa.org."""
 
+import pathlib
 import platform
 import subprocess
 import sys
+
+SELF = pathlib.Path(__file__)
 
 PYTHON = 'py' if platform.system() == 'Windows' else 'python'
 
 CMD = [PYTHON, '-m', 'flake8']
 
 
+print('run', [SELF.name] + sys.argv[1:])
 cmd = CMD + sys.argv[1:]
 
 print(f'subprocess.run({cmd!r})')

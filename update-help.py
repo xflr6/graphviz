@@ -13,6 +13,8 @@ import typing
 
 import graphviz
 
+SELF = pathlib.Path(__file__)
+
 ALL_CLASSES = [graphviz.Graph, graphviz.Digraph, graphviz.Source]
 
 ARGS_LINE = re.compile(r'(?:class | \| {2})\w+\(')
@@ -99,6 +101,7 @@ def iterlines(stdout_lines, *,
         yield line_indent + line
 
 
+print('run', [SELF.name] + sys.argv[1:])
 help_docs = {cls.__name__: get_help(cls) for cls in ALL_CLASSES}
 
 print('read', TARGET)
