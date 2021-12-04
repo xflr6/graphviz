@@ -21,8 +21,10 @@ ARGS = [#'--skip-exe',
         #'--exitfirst',  # a.k.a. -x
         #'-W', 'error',
         #'--doctest-report none',
-        #'--cov-append',
-        ]
+       ]
+
+if platform.system() == 'Windows' and 'idlelib' in sys.modules:
+    ARGS += ['--capture=sys', '--color=no']
 
 
 class NoExeChecker(doctest.OutputChecker):
@@ -35,10 +37,6 @@ class NoExeChecker(doctest.OutputChecker):
 
 mock.patch.object(doctest, 'OutputChecker', new=NoExeChecker).start()
 import pytest  # noqa: E402
-
-
-if platform.system() == 'Windows' and 'idlelib' in sys.modules:
-    ARGS += ['--capture=sys', '--color=no']
 
 
 print('run', [SELF.name] + sys.argv[1:])
