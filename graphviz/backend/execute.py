@@ -136,5 +136,4 @@ class CalledProcessError(subprocess.CalledProcessError):
     """:class:`~subprocess.CalledProcessError` raised if a subprocess ``returncode`` is not ``0``."""  # noqa: E501
 
     def __str__(self) -> 'str':
-        s = super().__str__()
-        return f'{s} [stderr: {self.stderr!r}]'
+        return f'{super().__str__()} [stderr: {self.stderr!r}]'
