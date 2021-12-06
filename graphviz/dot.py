@@ -302,7 +302,7 @@ class Dot(quoting.Quote, base.Base):
 
             @contextlib.contextmanager
             def subgraph_contextmanager(*, parent):
-                """Return subgraph and add to self on exit."""
+                """Return subgraph and add to parent on exit."""
                 yield subgraph
                 parent.subgraph(subgraph)
 
