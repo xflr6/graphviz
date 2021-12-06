@@ -139,7 +139,7 @@ class Dot(quoting.Quote, base.Base):
         if not keep_attrs:
             for a in (self.graph_attr, self.node_attr, self.edge_attr):
                 a.clear()
-        del self.body[:]
+        self.body.clear()
 
     @_tools.deprecate_positional_args(supported_number=1)
     def __iter__(self, subgraph: bool = False) -> typing.Iterator[str]:
