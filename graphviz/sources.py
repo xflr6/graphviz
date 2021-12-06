@@ -102,8 +102,7 @@ class Source(rendering.Render, saving.Save,
         Yields: Line ending with a newline (``'\n'``).
         """
         lines = self._source.splitlines(keepends=True)
-        for line in lines[:-1]:
-            yield line
+        yield from lines[:-1]
         for line in lines[-1:]:
             suffix = '\n' if not line.endswith('\n') else ''
             yield line + suffix

@@ -163,8 +163,7 @@ class Dot(quoting.Quote, base.Base):
             if attrs:
                 yield self._attr(kw, self._attr_list(None, kwargs=attrs))
 
-        for line in self.body:
-            yield line
+        yield from self.body
 
         yield self._tail
 
