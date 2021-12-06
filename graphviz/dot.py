@@ -11,26 +11,32 @@ __all__ = ['GraphSyntax', 'DigraphSyntax', 'Dot']
 
 
 def comment(line: str):
+    """Return comment header line."""
     return f'// {line}\n'
 
 
 def graph_head(name: str) -> str:
+    """Return DOT graph head line."""
     return f'graph {name}{{\n'
 
 
 def digraph_head(name: str) -> str:
+    """Return DOT digraph head line."""
     return f'digraph {name}{{\n'
 
 
 def graph_edge(*, tail: str, head: str, attr: str) -> str:
+    """Return DOT graph edge statement line."""
     return f'\t{tail} -- {head}{attr}\n'
 
 
 def digraph_edge(*, tail: str, head: str, attr: str) -> str:
+    """Return DOT digraph edge statement line."""
     return f'\t{tail} -> {head}{attr}\n'
 
 
 class GraphSyntax:
+    """DOT graph head and edge syntax."""
 
     _head = staticmethod(graph_head)
 
@@ -38,6 +44,7 @@ class GraphSyntax:
 
 
 class DigraphSyntax:
+    """DOT digraph head and edge syntax."""
 
     _head = staticmethod(digraph_head)
 
@@ -45,19 +52,22 @@ class DigraphSyntax:
 
 
 def subgraph(name: str) -> str:
+    """Return DOT subgraph head line."""
     return f'subgraph {name}{{\n'
 
 
 def subgraph_plain(name: str) -> str:
+    """Return plain DOT subgraph head line."""
     return f'{name}{{\n'
 
 
 def node(left: str, right: str) -> str:
+    """Return DOT node statement line."""
     return f'\t{left}{right}\n'
 
 
 class Dot(quoting.Quote, base.Base):
-    """Assemble, save, and render DOT source code, open result in viewer."""
+    """Assemble DOT source code."""
 
     directed: bool
 
@@ -65,10 +75,12 @@ class Dot(quoting.Quote, base.Base):
 
     @staticmethod
     def _head(name: str) -> str:  # pragma: no cover
+        """Return DOT head line."""
         raise NotImplementedError('must be implemented by concrete subclasses')
 
     @classmethod
     def _head_strict(cls, name: str) -> str:
+        """Return DOT strict head line."""
         return f'strict {cls._head(name)}'
 
     _tail = '}\n'
@@ -85,10 +97,12 @@ class Dot(quoting.Quote, base.Base):
 
     @staticmethod
     def _edge(*, tail: str, head: str, attr: str) -> str:  # pragma: no cover
+        """Return DOT edge statement line."""
         raise NotImplementedError('must be implemented by concrete subclasses')
 
     @classmethod
     def _edge_plain(cls, *, tail: str, head: str) -> str:
+        """Return plain DOT edge statement line."""
         return cls._edge(tail=tail, head=head, attr='')
 
     def __init__(self, *,
