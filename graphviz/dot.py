@@ -301,12 +301,12 @@ class Dot(quoting.Quote, base.Base):
             subgraph = self.__class__(**kwargs)
 
             @contextlib.contextmanager
-            def subgraph_contextmanager():
+            def subgraph_contextmanager(*, parent):
                 """Return subgraph and add to self on exit."""
                 yield subgraph
-                self.subgraph(subgraph)
+                parent.subgraph(subgraph)
 
-            return subgraph_contextmanager()
+            return subgraph_contextmanager(parent=self)
 
         args = [name, comment, graph_attr, node_attr, edge_attr, body]
         if not all(a is None for a in args):
