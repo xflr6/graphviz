@@ -226,8 +226,8 @@ class Dot(quoting.Quote, base.Base):
         """
         edge = self._edge_plain
         quote = self._quote_edge
-        lines = (edge(tail=quote(t), head=quote(h)) for t, h in tail_head_iter)
-        self.body.extend(lines)
+        self.body += [edge(tail=quote(t), head=quote(h))
+                      for t, h in tail_head_iter]
 
     @_tools.deprecate_positional_args(supported_number=2)
     def attr(self, kw: typing.Optional[str] = None,
@@ -316,5 +316,4 @@ class Dot(quoting.Quote, base.Base):
             raise ValueError(f'{self!r} cannot add subgraph of different kind:'
                              f' {graph!r}')
 
-        lines = ['\t' + line for line in graph.__iter__(subgraph=True)]
-        self.body.extend(lines)
+        self.body += [f'\t{line}' for line in graph.__iter__(subgraph=True)]

@@ -108,15 +108,13 @@ def a_list(label: typing.Optional[str] = None,
     """
     result = [f'label={quote(label)}'] if label is not None else []
     if kwargs:
-        items = [f'{quote(k)}={quote(v)}'
-                 for k, v in _tools.mapping_items(kwargs) if v is not None]
-        result.extend(items)
+        result += [f'{quote(k)}={quote(v)}'
+                   for k, v in _tools.mapping_items(kwargs) if v is not None]
     if attributes:
         if hasattr(attributes, 'items'):
             attributes = _tools.mapping_items(attributes)
-        items = [f'{quote(k)}={quote(v)}'
-                 for k, v in attributes if v is not None]
-        result.extend(items)
+        result += [f'{quote(k)}={quote(v)}'
+                   for k, v in attributes if v is not None]
     return ' '.join(result)
 
 
