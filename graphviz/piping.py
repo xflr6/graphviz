@@ -6,6 +6,7 @@ import typing
 
 from . import _tools
 from . import backend
+from . import exceptions
 from . import base
 from . import encoding
 
@@ -136,6 +137,15 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
             if codecs.lookup(encoding) is codecs.lookup(self.encoding):
                 # common case: both stdin and stdout need the same encoding
                 return self._pipe_lines_string(*args, encoding=encoding, **kwargs)
-            raw = self._pipe_lines(*args, input_encoding=self.encoding, **kwargs)
-            return raw.decode(encoding)
+            try:
+                raw = self._pipe_lines(*args, input_encoding=self.encoding, **kwargs)
+            except exceptions.CalledProcessError as e:
+                *args, output, stderr = e.args
+                if output is not None:
+                    output = output.decode(self.encoding)
+                if stderr is not None:
+                    stderr = stderr.decode(self.encoding)
+                raise e.__class__(*args, output=output, stderr=stderr)
+            else:
+                return raw.decode(encoding)
         return self._pipe_lines(*args, input_encoding=self.encoding, **kwargs)

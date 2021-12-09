@@ -1,6 +1,7 @@
 import locale
 import pathlib
 import re
+import subprocess
 
 import pytest
 
@@ -225,6 +226,26 @@ def test_pipe_lines_mocked(mocker, mock_pipe_lines, dot, format_='svg'):
     _, _, data = mock_pipe_lines.call_args.args
     expected_lines = dot.source.splitlines(keepends=True)
     assert list(data) == expected_lines
+
+
+@pytest.mark.exe
+def test_pipe_lines_called_process_error(cls, encoding='ascii',
+                                         input_encoding='utf-8'):
+    kwargs = {'encoding': input_encoding}
+    if cls.__name__ == 'Source':
+        dot = cls('graph { spam -- \\ }', **kwargs)
+    else:
+        dot = cls(**kwargs)
+        dot.edge('spam', '\\')
+
+    assert encoding != input_encoding
+
+    with pytest.raises(subprocess.CalledProcessError,
+                       match=r'syntax error') as info:
+        dot.pipe(format='svg', encoding=encoding)
+
+    assert isinstance(info.value.stderr, str)
+    assert 'syntax error' in info.value.stderr
 
 
 def test_repr_mimebundle_image_svg_xml_mocked(mocker, dot):

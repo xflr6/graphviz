@@ -1,7 +1,10 @@
 """Commonly used exception classes."""
 
+from .backend.execute import ExecutableNotFound, CalledProcessError
+
 __all__ = ['RequiredArgumentError', 'FileExistsError',
-           'UnknownSuffixWarning', 'FormatSuffixMismatchWarning']
+           'UnknownSuffixWarning', 'FormatSuffixMismatchWarning',
+           'ExecutableNotFound', 'CalledProcessError']
 
 
 class RequiredArgumentError(TypeError):

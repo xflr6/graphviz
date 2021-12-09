@@ -30,10 +30,10 @@ from ._defaults import set_default_engine, set_default_format, set_jupyter_forma
 
 from .backend import (DOT_BINARY, UNFLATTEN_BINARY,
                       render, pipe, pipe_string, pipe_lines, pipe_lines_string,
-                      unflatten, version, view,
-                      ExecutableNotFound, CalledProcessError)
+                      unflatten, version, view)
 from .exceptions import (RequiredArgumentError, FileExistsError,
-                         UnknownSuffixWarning, FormatSuffixMismatchWarning)
+                         UnknownSuffixWarning, FormatSuffixMismatchWarning,
+                         ExecutableNotFound, CalledProcessError)
 from .graphs import Graph, Digraph
 from .jupyter_integration import SUPPORTED_JUPYTER_FORMATS
 from .parameters import ENGINES, FORMATS, RENDERERS, FORMATTERS
