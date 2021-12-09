@@ -232,6 +232,13 @@ def test_pipe_lines_mocked(mocker, mock_pipe_lines, dot, format_='svg'):
 @pytest.mark.exe
 def test_pipe_lines_called_process_error(cls, encoding='ascii',
                                          input_encoding='utf-8'):
+    _test_pipe_lines(cls, format='svg',
+                     encoding=encoding, input_encoding=input_encoding,
+                     expected_syntax_error='syntax error')
+
+
+def _test_pipe_lines(cls, *, format, encoding, input_encoding,
+                     expected_syntax_error):
     kwargs = {'encoding': input_encoding}
     if cls.__name__ == 'Source':
         dot = cls('graph { spam -- \\ }', **kwargs)
@@ -242,41 +249,31 @@ def test_pipe_lines_called_process_error(cls, encoding='ascii',
     assert encoding != input_encoding
 
     with pytest.raises(graphviz.CalledProcessError,
-                       match=r'syntax error') as info:
-        dot.pipe(format='svg', encoding=encoding)
-
-    assert isinstance(info.value, subprocess.CalledProcessError)
-    assert isinstance(info.value, graphviz.CalledProcessError)
-    assert isinstance(info.value.stderr, str)
-    assert 'syntax error' in info.value.stderr
-
-
-def test_pipe_lines_called_process_error_mocked(cls, mocker, mock_pipe_lines,
-                                                encoding='ascii',
-                                                input_encoding='utf-8'):
-    fake_error = [1, _common.INVALID_CMD, b'', b'fake syntax error']
-    fake_error = graphviz.CalledProcessError(*fake_error)
-    mock_pipe_lines.side_effect = fake_error
-
-    kwargs = {'encoding': input_encoding}
-    if cls.__name__ == 'Source':
-        dot = cls('graph { spam -- \\ }', **kwargs)
-    else:
-        dot = cls(**kwargs)
-        dot.edge('spam', '\\')
-
-    assert encoding != input_encoding
-
-    format = 'svg'
-
-    with pytest.raises(graphviz.CalledProcessError,
-                       match=r'fake syntax error') as info:
+                       match=expected_syntax_error) as info:
         dot.pipe(format=format, encoding=encoding)
 
     assert isinstance(info.value, subprocess.CalledProcessError)
     assert isinstance(info.value, graphviz.CalledProcessError)
     assert isinstance(info.value.stderr, str)
-    assert 'fake syntax error' in info.value.stderr
+    assert expected_syntax_error in info.value.stderr
+
+
+def test_pipe_lines_called_process_error_mocked(cls, mocker, mock_pipe_lines,
+                                                encoding='ascii',
+                                                input_encoding='utf-8'):
+    format = 'svg'
+
+    expected_syntax_error = 'syntax error'
+    expected_syntax_error = f'fake {expected_syntax_error}'
+
+    fake_error = [1, _common.INVALID_CMD,
+                  b'', expected_syntax_error.encode(input_encoding)]
+    fake_error = graphviz.CalledProcessError(*fake_error)
+    mock_pipe_lines.side_effect = fake_error
+
+    _test_pipe_lines(cls, format=format,
+                     encoding=encoding, input_encoding=input_encoding,
+                     expected_syntax_error=expected_syntax_error)
 
     mock_pipe_lines.assert_called_once_with(_common.EXPECTED_DEFAULT_ENGINE,
                                             format,
