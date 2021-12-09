@@ -8,7 +8,9 @@ import subprocess
 
 from graphviz import _compat
 
-__all__ = ['EXPECTED_DOT_BINARY', 'EXPECTED_UNFLATTEN_BINARY',
+__all__ = ['EXPECTED_DOT_BINARY',
+           'EXPECTED_UNFLATTEN_BINARY',
+           'EXPECTED_DEFAULT_ENGINE',
            'EXPECTED_DEFAULT_ENCODING',
            'INVALID_CMD',
            'as_cwd',
@@ -17,6 +19,8 @@ __all__ = ['EXPECTED_DOT_BINARY', 'EXPECTED_UNFLATTEN_BINARY',
 EXPECTED_DOT_BINARY = _compat.make_subprocess_arg(pathlib.Path('dot'))
 
 EXPECTED_UNFLATTEN_BINARY = _compat.make_subprocess_arg(pathlib.Path('unflatten'))
+
+EXPECTED_DEFAULT_ENGINE = 'dot'
 
 EXPECTED_DEFAULT_ENCODING = 'utf-8'
 
