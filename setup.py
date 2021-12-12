@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='graphviz',
-    version='0.19.1.dev0',
+    version='0.19.1',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Simple Python interface for Graphviz',

@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.19.1 (in development)
--------------------------------
+Version 0.19.1
+--------------
 
 Fix undecoded ``CalledProcessError.stdout`` and ``.stderr`` when ``.pipe()`` call
 with an ``encoding`` different from ``self.encoding`` fails.
