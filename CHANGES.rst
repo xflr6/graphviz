@@ -5,7 +5,16 @@ Changelog
 Version 0.19.1 (in development)
 -------------------------------
 
+Fix undecoded ``CalledProcessError.stdout`` and ``.stderr`` when ``.pipe()`` call
+with an ``encoding`` different from ``self.encoding`` fails.
 
+Fix missing project root ``conftest.py`` in source distribution.
+
+Extend ``examples/graphviz-escapes.ipynb``.
+
+Improve development scripts.
+
+Improve test coverage.
 
 
 Version 0.19
