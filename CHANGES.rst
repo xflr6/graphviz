@@ -12,9 +12,9 @@ Fix missing project root ``conftest.py`` in source distribution.
 
 Extend ``examples/graphviz-escapes.ipynb``.
 
-Improve development scripts.
-
 Improve test coverage.
+
+Increase build scripts verbosity.
 
 
 Version 0.19
