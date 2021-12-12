@@ -13,8 +13,8 @@ def pytest_configure(config):
 
 
 def pytest_collection_modifyitems(config, items):
-    if config.getoption(ONLY_EXE) or config.getoption(SKIP_EXE):
-        only = config.getoption(ONLY_EXE)
+    if config.getoption(ONLY_EXE, None) or config.getoption(SKIP_EXE, None):
+        only = config.getoption(ONLY_EXE, None)
         for item in items:
             exe_marker = _make_exe_marker(item, only=only)
             if exe_marker is not None:
