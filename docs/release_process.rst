@@ -67,6 +67,7 @@ Commit to ``release`` branch and push to ``origin``:
 .. code:: bash
 
     $ python setup.py sdist bdist_wheel
+    $ python -m twine check --strict dist/*
 
 - ``dist/graphviz-$MAJOR.$MINOR[.$BUGFIX].zip``
 - ``dist/graphviz-$MAJOR.$MINOR[.$BUGFIX]-py3-none-any.whl``
