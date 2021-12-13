@@ -3,7 +3,6 @@
 
 """Run the tests with https://pytest.org."""
 
-import doctest
 import pathlib
 import platform
 import sys

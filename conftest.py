@@ -1,4 +1,4 @@
-"""pytest command line options and doctest namespace."""
+"""pytest command line options and doctest flag definition/setup."""
 
 import doctest
 import unittest.mock
