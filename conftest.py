@@ -1,6 +1,20 @@
 """pytest command line options and doctest namespace."""
 
-import pytest
+import doctest
+import unittest.mock
+
+NO_EXE = doctest.register_optionflag('NO_EXE')
+
+class NoExeChecker(doctest.OutputChecker):  # noqa: E302
+
+    def check_output(self, want, got, optionflags, *args, **kwargs) -> bool:
+        if optionflags & NO_EXE:
+            return True
+        return super().check_output(want, got, optionflags, *args, **kwargs)
+
+unittest.mock.patch.object(doctest, 'OutputChecker', new=NoExeChecker).start()  # noqa: E305
+
+import pytest  # noqa: E402
 
 SKIP_EXE = '--skip-exe'
 

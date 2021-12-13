@@ -7,11 +7,10 @@ import doctest
 import pathlib
 import platform
 import sys
-from unittest import mock
+
+import pytest
 
 SELF = pathlib.Path(__file__)
-
-NO_EXE = doctest.register_optionflag('NO_EXE')
 
 ARGS = [#'--skip-exe',
         #'--only-exe',
@@ -25,18 +24,6 @@ ARGS = [#'--skip-exe',
 
 if platform.system() == 'Windows' and 'idlelib' in sys.modules:
     ARGS += ['--capture=sys', '--color=no']
-
-
-class NoExeChecker(doctest.OutputChecker):
-
-    def check_output(self, want, got, optionflags, *args, **kwargs) -> bool:
-        if optionflags & NO_EXE:
-            return True
-        return super().check_output(want, got, optionflags, *args, **kwargs)
-
-
-mock.patch.object(doctest, 'OutputChecker', new=NoExeChecker).start()
-import pytest  # noqa: E402
 
 
 print('run', [SELF.name] + sys.argv[1:])
