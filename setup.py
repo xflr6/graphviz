@@ -23,7 +23,7 @@ setup(
     extras_require={
         'dev': ['tox>=3', 'flake8', 'pep8-naming', 'wheel', 'twine'],
         'test': ['pytest>=6',
-                 'pytest-mock>=3', 'mock>=4',
+                 'pytest-mock>=3',
                  'pytest-cov', 'coverage'],
         'docs': ['sphinx>=1.8', 'sphinx-autodoc-typehints', 'sphinx-rtd-theme'],
     },
