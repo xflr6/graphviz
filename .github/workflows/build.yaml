@@ -51,27 +51,44 @@ jobs:
       - name: Apt install system dependencies (linux unless -skip-exe)
         if: ${{ startsWith(matrix.name, 'linux-') && !contains(matrix.name, '-skip-exe') }}
         run: |
-          echo ::group::Run sudo apt-get update; sudo apt-get update; echo ::endgroup::
-          echo ::group::Run sudo apt-get install graphviz; sudo apt-get install graphviz; echo ::endgroup::
-          echo ::group::Run dot -V; DOT_VERSION="$(dot -V 2>&1)"; echo $DOT_VERSION; echo ::endgroup::
-          echo ::notice::Apt installed ${DOT_VERSION#dot - }
+          echo "::group::Run sudo apt-get update"
+          sudo apt-get update
+          echo "::endgroup::"
+          echo "::group::Run sudo apt-get install graphviz"
+          sudo apt-get install graphviz
+          echo "::endgroup::"
+          echo "::group::Run dot -V"
+          DOT_VERSION="$(dot -V 2>&1)"
+          echo $DOT_VERSION;
+          echo "::endgroup::"
+          echo "::notice::Apt installed ${DOT_VERSION#dot - }"
         shell: bash
       - name: Brew install system dependencies (macos unless -skip-exe)
         if: ${{ startsWith(matrix.name, 'macos-') && !contains(matrix.name, '-skip-exe') }}
         run: |
-          echo ::group::Run brew update --preinstall; brew update --preinstall; echo ::endgroup::
-          echo ::group::Run brew install graphviz; brew install graphviz; echo ::endgroup::
-          echo ::group::Run dot -V; DOT_VERSION="$(dot -V 2>&1)"; echo $DOT_VERSION; echo ::endgroup::
-          echo ::notice::Brew installed ${DOT_VERSION#dot - }
+          echo "::group::Run brew update --preinstall"
+          brew update --preinstall
+          echo "::endgroup::"
+          echo "::group::Run brew install graphviz"
+          brew install graphviz
+          echo "::endgroup::"
+          echo "::group::Run dot -V"
+          DOT_VERSION="$(dot -V 2>&1)"
+          echo $DOT_VERSION
+          echo "::endgroup::"
+          echo "::notice::Brew installed ${DOT_VERSION#dot - }"
         shell: bash
       - name: Choco install system dependencies (windows unless -skip-exe)
         if: ${{ startsWith(matrix.name, 'windows-') && !contains(matrix.name, '-skip-exe') }}
         run: |
-          echo ::group::Run choco install --no-progress graphviz
+          echo "::group::Run choco install --no-progress graphviz"
           choco install --no-progress graphviz
-          echo ::endgroup::
-          echo ::group::Run dot -V; DOT_VERSION="$(dot -V 2>&1)"; echo $DOT_VERSION; echo ::endgroup::
-          echo ::notice::Choco installed ${DOT_VERSION#dot - }
+          echo "::endgroup::"
+          echo "::group::Run dot -V"
+          DOT_VERSION="$(dot -V 2>&1)"
+          echo $DOT_VERSION
+          echo "::endgroup::"
+          echo "::notice::Choco installed ${DOT_VERSION#dot - }"
         shell: bash
       - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
@@ -79,12 +96,12 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Pip install dependencies
         run: |
-          echo ::group::Run python -m pip install --upgrade pip setuptools wheel
+          echo "::group::Run python -m pip install --upgrade pip setuptools wheel"
           python -m pip install --upgrade pip setuptools wheel
-          echo ::endgroup::
-          echo ::group::Run pip install .[test] flake8
+          echo "::endgroup::"
+          echo "::group::Run pip install .[test] flake8"
           pip install .[test] flake8
-          echo ::endgroup::
+          echo "::endgroup::"
       - name: Run full tests (unless -skip-exe)
         if: ${{ !contains(matrix.name, '-skip-exe') }}
         run: python run-tests.py
@@ -97,46 +114,63 @@ jobs:
         uses: codecov/codecov-action@v1
       - name: Check test coverage
         run: |
-          echo ::group::Run coverage report --fail-under=100 --show-missing --skip-covered;
-          FAILED=0; coverage report --fail-under=100 --show-missing --skip-covered || FAILED=$?;
-          echo ::endgroup::
-          [ $FAILED -eq 0 ] || echo ::warning::coverage report --fail-under=100 failed with exit code $FAILED
+          echo "::group::Run coverage report --fail-under=100 --show-missing --skip-covered"
+          FAILED=0
+          coverage report --fail-under=100 --show-missing --skip-covered || FAILED=$?
+          echo "::endgroup::"
+          [ $FAILED -eq 0 ] || echo "::warning::coverage report --fail-under=100 failed with exit code $FAILED"
         shell: bash
       - name: Run build-docs.py -b doctest (unless -skip-exe)
         if: ${{ !contains(matrix.name, '-skip-exe') }}
         run: |
-          echo ::group::Run pip install .[docs]; pip install .[docs]; echo ::endgroup::
-          echo ::group::Run build-docs.py -b doctest; FAILED=0;
+          echo "::group::Run pip install .[docs]"
+          pip install .[docs]
+          echo "::endgroup::"
+          echo "::group::Run build-docs.py -b doctest"
+          FAILED=0
           python build-docs.py -b doctest || FAILED=$?
           echo ::endgroup::
-          [ $FAILED -eq 0 ] || echo ::warning::build-docs.py -b doctest failed with exit code $FAILED
+          [ $FAILED -eq 0 ] || echo "::warning::build-docs.py -b doctest failed with exit code $FAILED"
         shell: bash
       - name: Run try-examples.py (unless -skip-exe)
         if: ${{ !contains(matrix.name, '-skip-exe') }}
         run: |
-          echo ::group::Run try-examples.py; FAILED=0;
+          echo "::group::Run try-examples.py"
+          FAILED=0
           python try-examples.py || FAILED=$?
-          echo ::endgroup::
-          SEVERITY=warning; ${{ startsWith(matrix.name, 'windows-') }} && SEVERITY=notice
-          [ $FAILED -eq 0 ] || echo ::$SEVERITY::try-examples.py failed with exit code $FAILED \(XFAIL on Windows cbuild\)
+          echo "::endgroup::"
+          SEVERITY=warning
+          ${{ startsWith(matrix.name, 'windows-') }} && SEVERITY=notice
+          [ $FAILED -eq 0 ] || echo "::$SEVERITY::try-examples.py failed with exit code $FAILED \(XFAIL on Windows cbuild\)"
         shell: bash
       - name: Run lint-code.py (if -lint)
         if: ${{ contains(matrix.name, '-lint') }}
         run: |
-          echo ::group::Run lint-code.py; FAILED=0; python lint-code.py || FAILED=$?; echo ::endgroup::
-          [ $FAILED -eq 0 ] || echo ::warning::lint-code.py failed with exit code $FAILED
+          echo "::group::Run lint-code.py"
+          FAILED=0
+          python lint-code.py || FAILED=$?
+          echo "::endgroup::"
+          [ $FAILED -eq 0 ] || echo "::warning::lint-code.py failed with exit code $FAILED"
         shell: bash
       - name: Run update-help.py (if -update-help)
         if: ${{ contains(matrix.name, '-update-help') }}
         run: |
-          echo ::group::Run update-help.py; FAILED=0; python update-help.py || FAILED=$?; echo ::endgroup::
-          [ $FAILED -eq 0 ] || echo ::warning::update-help.py failed with exit code $FAILED
+          echo "::group::Run update-help.py"
+          FAILED=0
+          python update-help.py || FAILED=$?
+          echo "::endgroup::"
+          [ $FAILED -eq 0 ] || echo "::warning::update-help.py failed with exit code $FAILED"
       - name: Run pytype (if -pytype)
         if: ${{ contains(matrix.name, '-pytype') }}
         run: |
-          echo ::group::Run pip install pytype; pip install pytype; echo ::endgroup::
-          echo ::group::Run pytype; FAILED=0; pytype || FAILED=$?; echo; echo ::endgroup::
-          [ $FAILED -eq 0 ] || echo ::warning::pytype failed with exit code $FAILED
+          echo "::group::Run pip install pytype"
+          pip install pytype
+          echo "::endgroup::"
+          echo "::group::Run pytype"
+          FAILED=0
+          pytype || FAILED=$?
+          echo "::endgroup::"
+          [ $FAILED -eq 0 ] || echo "::warning::pytype failed with exit code $FAILED"
         shell: bash
       - name: Upload ${{ matrix.name }} artifacts
         uses: actions/upload-artifact@v2
