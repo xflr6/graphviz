@@ -54,8 +54,7 @@ def test_pipe_pipe_invalid_data_mocked(mocker, sentinel, mock_run, quiet):
     mock_run.assert_called_once_with([_common.EXPECTED_DOT_BINARY,
                                       '-Kdot', '-Tpng'],
                                      input=b'nongraph',
-                                     stdout=subprocess.PIPE,
-                                     stderr=subprocess.PIPE,
+                                     capture_output=True,
                                      startupinfo=_common.StartupinfoMatcher())
     if not quiet:
         mock_out.decode.assert_not_called()
@@ -97,8 +96,7 @@ def test_pipe_mocked(capsys, mock_run, quiet):
     mock_run.assert_called_once_with([_common.EXPECTED_DOT_BINARY,
                                       '-Kdot', '-Tpng'],
                                      input=b'nongraph',
-                                     stdout=subprocess.PIPE,
-                                     stderr=subprocess.PIPE,
+                                     capture_output=True,
                                      startupinfo=_common.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 
@@ -116,8 +114,7 @@ def test_pipe_string_mocked(capsys, mock_run, quiet,
     mock_run.assert_called_once_with([_common.EXPECTED_DOT_BINARY, '-Kdot', '-Tpng'],
                                      input='nongraph',
                                      encoding=encoding,
-                                     stdout=subprocess.PIPE,
-                                     stderr=subprocess.PIPE,
+                                     capture_output=True,
                                      startupinfo=_common.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
 

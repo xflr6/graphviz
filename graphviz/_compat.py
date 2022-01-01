@@ -1,4 +1,4 @@
-"""Python 3.6 to 3.8 compatibility and platform compatibility."""
+"""Python 3.7 to 3.8 compatibility and platform compatibility."""
 
 import pathlib
 import platform

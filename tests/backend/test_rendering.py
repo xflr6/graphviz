@@ -125,8 +125,7 @@ def test_render_mocked(capsys, mock_run, quiet, directory,
 
     mock_run.assert_called_once_with([_common.EXPECTED_DOT_BINARY,
                                       '-Kdot', '-Tpdf', '-O', 'nonfilepath'],
-                                     stdout=subprocess.PIPE,
-                                     stderr=subprocess.PIPE,
+                                     capture_output=True,
                                      cwd=_tools.promote_pathlike(directory),
                                      startupinfo=_common.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')

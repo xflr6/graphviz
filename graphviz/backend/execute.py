@@ -23,7 +23,6 @@ BytesOrStrIterator = typing.Union[typing.Iterator[bytes],
 def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
               input_lines: typing.Optional[typing.Iterator[bytes]] = ...,
               encoding: None = ...,
-              capture_output: bool = ...,
               quiet: bool = ...,
               **kwargs) -> subprocess.CompletedProcess:
     """Accept bytes input_lines with default ``encoding=None```."""
@@ -33,7 +32,6 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
 def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
               input_lines: typing.Optional[typing.Iterator[str]] = ...,
               encoding: str,
-              capture_output: bool = ...,
               quiet: bool = ...,
               **kwargs) -> subprocess.CompletedProcess:
     """Accept string input_lines when given ``encoding``."""
@@ -52,7 +50,6 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
 def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
               input_lines: typing.Optional[BytesOrStrIterator] = None,
               encoding: typing.Optional[str] = None,
-              capture_output: bool = False,
               quiet: bool = False,
               **kwargs) -> subprocess.CompletedProcess:
     """Run the command described by ``cmd``
@@ -68,9 +65,6 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
     if not kwargs.pop('check', True):  # pragma: no cover
         raise NotImplementedError('check must be True or omited')
 
-    if capture_output:  # Python 3.6 compat
-        kwargs['stdout'] = kwargs['stderr'] = subprocess.PIPE
-
     if encoding is not None:
         kwargs['encoding'] = encoding
 
@@ -80,6 +74,8 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
         if input_lines is not None:
             assert kwargs.get('input') is None
             assert iter(input_lines) is input_lines
+            if kwargs.pop('capture_output'):
+                kwargs['stdout'] = kwargs['stderr'] = subprocess.PIPE
             proc = _run_input_lines(cmd, input_lines, kwargs=kwargs)
         else:
             proc = subprocess.run(cmd, **kwargs)

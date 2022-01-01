@@ -39,8 +39,7 @@ def test_unflatten_mocked(capsys, sentinel, mock_run,
     mock_run.assert_called_once_with([_common.EXPECTED_UNFLATTEN_BINARY,
                                       '-l', '10', '-f', '-c', '23'],
                                      input='nonsource',
-                                     stdout=subprocess.PIPE,
-                                     stderr=subprocess.PIPE,
+                                     capture_output=True,
                                      startupinfo=_common.StartupinfoMatcher(),
                                      encoding='utf-8')
     assert capsys.readouterr() == ('', '')
