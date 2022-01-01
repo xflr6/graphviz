@@ -5,7 +5,7 @@ Changelog
 Version 0.19.2 (in development)
 -------------------------------
 
-
+Drop Python 3.6 support.
 
 
 Version 0.19.1
