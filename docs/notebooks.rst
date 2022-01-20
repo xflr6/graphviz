@@ -6,7 +6,7 @@ Notebooks
 - Render `graphviz.org gallery`_ examples with logging:
   `examples/graphviz-notebook.ipynb <nbviewer graphviz-notebook.ipynb_>`_
   (`source <GitHub graphviz-notebook.ipynb_>`_)
-- `Laypout engine <DOT layouts_>`_ comparison:
+- `Layout engine <DOT layouts_>`_ comparison:
   `examples/graphviz-engines.ipynb <nbviewer graphviz-engines.ipynb_>`_
   (`source <GitHub graphviz-engines.ipynb_>`_)
 - Example for :meth:`graphviz.set_jupyter_format`:
