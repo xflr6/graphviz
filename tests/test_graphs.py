@@ -24,6 +24,18 @@ def test_init_filename(cls):
     assert cls('spam').filename == 'spam.gv'
 
 
+@pytest.mark.parametrize(
+    'cls, body_lines, expected',
+    [(graphviz.Graph, ['\tspam -- {\n', '\t\teggs, ham\n', '\t}\n'],
+      'graph {\n\tspam -- {\n\t\teggs, ham\n\t}\n}\n'),
+     (graphviz.Digraph, ['\tspam -> {\n', '\t\teggs, ham\n', '\t}\n'],
+      'digraph {\n\tspam -> {\n\t\teggs, ham\n\t}\n}\n')],
+    ids=lambda p: getattr(p, '__name__', '...'))
+def test_init_body(cls, body_lines, expected):
+    dot = cls(body=iter(body_lines))
+    assert dot.source == expected
+
+
 @pytest.mark.exe
 @pytest.mark.parametrize(
     'cls, expected',

@@ -7,6 +7,9 @@ Version 0.19.2 (in development)
 
 Drop Python 3.6 support.
 
+Better document `0.18` change of behaviour for the ``body`` argument/attribute
+(lines need to include their final newline).
+
 
 Version 0.19.1
 --------------
@@ -152,6 +155,11 @@ Change of undocumented behaviour:
 When iterating over a ``Graph``, ``Digraph``, or ``Source`` instance,
 the yielded lines now include a final newline (``'\n'``).
 This mimics iteration over ``file`` object lines in text mode.
+
+Change of behaviour:
+When adding custom DOT statements using the ``body`` argument
+of ``Graph`` or ``Digraph`` or appending to the ``body`` attribute
+of an instance, the lines now need to include their final newline (``'\n'``).
 
 When passing invalid parameters such as unknown ``engine``, ``format``, etc.,
 ``.render()`` now raises early before writing the file.
