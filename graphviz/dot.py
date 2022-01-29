@@ -177,7 +177,8 @@ class Dot(quoting.Quote, base.Base):
             if attrs:
                 yield self._attr(kw, self._attr_list(None, kwargs=attrs))
 
-        yield from self.body
+        for line in self.body:
+            yield line if line.endswith('\n') else line + '\n'
 
         yield self._tail
 
