@@ -268,7 +268,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      graph_attr: Mapping of ``(attribute, value)`` pairs for the graph.
      |      node_attr: Mapping of ``(attribute, value)`` pairs set for all nodes.
      |      edge_attr: Mapping of ``(attribute, value)`` pairs set for all edges.
-     |      body: Iterable of verbatim lines to add to the graph ``body``.
+     |      body: Iterable of verbatim lines (including their final newline) to add to the graph ``body``.
      |      strict (bool): Rendering should merge multi-edges.
      |
      |  Note:
@@ -775,7 +775,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      graph_attr: Mapping of ``(attribute, value)`` pairs for the graph.
      |      node_attr: Mapping of ``(attribute, value)`` pairs set for all nodes.
      |      edge_attr: Mapping of ``(attribute, value)`` pairs set for all edges.
-     |      body: Iterable of verbatim lines to add to the graph ``body``.
+     |      body: Iterable of verbatim lines (including their final newline) to add to the graph ``body``.
      |      strict (bool): Rendering should merge multi-edges.
      |
      |  Note:
