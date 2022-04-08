@@ -2,10 +2,10 @@ Changelog
 =========
 
 
-Version 0.19.2 (in development)
--------------------------------
+Version 0.19.2
+--------------
 
-Drop Python 3.6 support.
+Drop Python 3.6 support (end of life 23 Dec 2021).
 
 Fix `ExecutableNotFound` and `CalledProcessError` in `graphviz.__all__`.
 
