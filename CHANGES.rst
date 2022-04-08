@@ -13,9 +13,9 @@ Version 0.19.2
 
 Drop Python 3.6 support (end of life 23 Dec 2021).
 
-Fix `ExecutableNotFound` and `CalledProcessError` in `graphviz.__all__`.
+Fix ``ExecutableNotFound`` and ``CalledProcessError`` in ``graphviz.__all__``.
 
-Better document `0.18` change of behaviour for the ``body`` argument/attribute
+Better document ``0.18`` change of behaviour for the ``body`` argument/attribute
 (lines need to include their final newline).
 
 
