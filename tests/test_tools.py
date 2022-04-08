@@ -1,5 +1,6 @@
 import functools
 import os
+import warnings
 
 import pytest
 
@@ -44,12 +45,14 @@ def test_deprecate_positional_args(category, match):
     def func(first, second, third=None, **kwargs):
         pass
 
-    with pytest.warns(None) as captured:
+    with warnings.catch_warnings():
+        warnings.simplefilter('error')
         func('first', 'second', third='third', extra='extra')
 
-    assert not captured
-
-    with pytest.warns(category, match=match) as captured:
-        func('first', 'second', 'third', extra='extra')
-
-    assert bool(captured) == bool(category is not None)
+    if category is not None:
+        with pytest.warns(category, match=match):
+            func('first', 'second', 'third', extra='extra')
+    else:
+        with warnings.catch_warnings():
+            warnings.simplefilter('error')
+            func('first', 'second', 'third', extra='extra')
