@@ -50,7 +50,7 @@ __all__ = ['ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
            'unflatten', 'version', 'view',
            'RequiredArgumentError', 'FileExistsError',
            'UnknownSuffixWarning', 'FormatSuffixMismatchWarning',
-           'ExecutableNotFound, CalledProcessError',
+           'ExecutableNotFound', 'CalledProcessError',
            'set_default_engine', 'set_default_format', 'set_jupyter_format']
 
 __title__ = 'graphviz'
