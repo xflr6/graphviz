@@ -83,5 +83,4 @@ use the :func:`graphviz.escape` function
     (`nbviewer <nbviewer graphviz-escapes.ipynb_>`_).
 
 
-
 .. include:: _links.rst
