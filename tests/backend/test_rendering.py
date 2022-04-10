@@ -119,12 +119,16 @@ def test_render_mocked(capsys, mock_run, quiet, directory,
     if directory is not None:
         filepath = os.path.join(directory, filepath)
 
-    result = graphviz.render('dot', 'pdf', filepath, quiet=quiet)
+    result = graphviz.render('dot', 'pdf', filepath,
+                             neato_no_op=True,
+                             quiet=quiet)
 
     assert result == f'{filepath}.pdf'
 
     mock_run.assert_called_once_with([_common.EXPECTED_DOT_BINARY,
-                                      '-Kdot', '-Tpdf', '-O', 'nonfilepath'],
+                                      '-Kdot', '-Tpdf',
+                                      '-n1',
+                                      '-O', 'nonfilepath'],
                                      capture_output=True,
                                      cwd=_tools.promote_pathlike(directory),
                                      startupinfo=_common.StartupinfoMatcher())

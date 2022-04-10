@@ -27,6 +27,7 @@ class Render(saving.Save, backend.Render, backend.View):
                format: typing.Optional[str] = None,
                renderer: typing.Optional[str] = None,
                formatter: typing.Optional[str] = None,
+               neato_no_op: typing.Union[bool, int, None] = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
                outfile: typing.Union[os.PathLike, str, None] = None,
@@ -49,6 +50,7 @@ class Render(saving.Save, backend.Render, backend.View):
                 (``'cairo'``, ``'gd'``, ...).
             formatter: The output formatter used for rendering
                 (``'cairo'``, ``'gd'``, ...).
+            neato_no_op: Neato layout engine no-op flag.
             quiet (bool): Suppress ``stderr`` output
                 from the layout subprocess.
             quiet_view (bool): Suppress ``stderr`` output
@@ -103,6 +105,7 @@ class Render(saving.Save, backend.Render, backend.View):
                                                    format=format,
                                                    renderer=renderer,
                                                    formatter=formatter,
+                                                   neato_no_op=neato_no_op,
                                                    quiet=quiet,
                                                    outfile=outfile,
                                                    raise_if_result_exists=raise_if_result_exists,

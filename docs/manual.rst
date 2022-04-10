@@ -42,6 +42,9 @@ User Guide
 .. include:: engines.rst
 
 
+.. include:: neato_no_op.rst
+
+
 .. include:: unflatten.rst
 
 

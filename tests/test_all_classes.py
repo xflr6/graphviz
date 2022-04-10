@@ -116,6 +116,7 @@ def test_render_mocked(mocker, mock_render, dot):
     mock_render.assert_called_once_with(dot.engine, dot.format,
                                         mock_save.return_value,
                                         renderer=None, formatter=None,
+                                        neato_no_op=None,
                                         outfile=None,
                                         raise_if_result_exists=False,
                                         overwrite_filepath=False,
@@ -143,6 +144,7 @@ def test_render_outfile_mocked(mocker, mock_render, dot):
     mock_render.assert_called_once_with(dot.engine, dot.format,
                                         mock_save.return_value,
                                         renderer=None, formatter=None,
+                                        neato_no_op=None,
                                         outfile=pathlib.Path(outfile),
                                         raise_if_result_exists=True,
                                         overwrite_filepath=True,
@@ -156,8 +158,8 @@ def test_format_renderer_formatter_mocked(mocker, mock_render,
                                           quiet, cls,
                                           filename='format.gv', format='jpg',
                                           renderer='cairo', formatter='core'):
-    args = [''] if cls.__name__ == 'Source' else []
-    dot = cls(*args, filename=filename, format=format,
+    dot = cls(*[''] if cls.__name__ == 'Source' else [],
+              filename=filename, format=format,
               renderer=renderer, formatter=formatter)
 
     assert dot.format == format
@@ -171,6 +173,32 @@ def test_format_renderer_formatter_mocked(mocker, mock_render,
     mock_save.assert_called_once_with(None, None, skip_existing=None)
     mock_render.assert_called_once_with('dot', format, mock_save.return_value,
                                         renderer=renderer, formatter=formatter,
+                                        neato_no_op=None,
+                                        outfile=None,
+                                        raise_if_result_exists=False,
+                                        overwrite_filepath=False,
+                                        quiet=quiet)
+
+
+@pytest.mark.parametrize(
+    'neato_no_op', [None, False, True, 0, 1, 2])
+def test_neato_no_op_mocked(mocker, mock_render,
+                            quiet, cls, neato_no_op,
+                            engine='neato',
+                            filename='neato_no_op.gv', format='svg'):
+    dot = cls(*[''] if cls.__name__ == 'Source' else [],
+              engine=engine,
+              filename=filename, format=format)
+
+    mock_save = mocker.patch.object(dot, 'save', autospec=True)
+
+    assert dot.render(neato_no_op=neato_no_op,
+                      quiet=quiet) is mock_render.return_value
+
+    mock_save.assert_called_once_with(None, None, skip_existing=None)
+    mock_render.assert_called_once_with(engine, format, mock_save.return_value,
+                                        renderer=None, formatter=None,
+                                        neato_no_op=neato_no_op,
                                         outfile=None,
                                         raise_if_result_exists=False,
                                         overwrite_filepath=False,
@@ -206,7 +234,8 @@ def test_pipe_mocked(mocker, mock_pipe_lines, mock_pipe_lines_string, quiet,
     expected_args = ['dot', 'pdf', mocker.ANY]
     expected_kwargs = {'quiet': quiet,
                        'renderer': None,
-                       'formatter': None}
+                       'formatter': None,
+                       'neato_no_op': None}
 
     if encoding == input_encoding:
         assert result is mock_pipe_lines_string.return_value
@@ -232,6 +261,7 @@ def test_pipe_lines_mocked(mocker, mock_pipe_lines, dot, format_='svg'):
 
     mock_pipe_lines.assert_called_once_with(dot.engine, format_, mocker.ANY,
                                             renderer=None, formatter=None,
+                                            neato_no_op=None,
                                             input_encoding='utf-8',
                                             quiet=False)
     _, _, data = mock_pipe_lines.call_args.args
@@ -292,7 +322,8 @@ def test_pipe_lines_called_process_error_mocked(invalid_dot,
                                             input_encoding=input_encoding,
                                             quiet=False,
                                             renderer=None,
-                                            formatter=None)
+                                            formatter=None,
+                                            neato_no_op=None)
 
 
 def test_repr_mimebundle_image_svg_xml_mocked(mocker, dot):

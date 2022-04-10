@@ -160,6 +160,7 @@ def render(engine: str,
            filepath: typing.Union[os.PathLike, str],
            renderer: typing.Optional[str] = ...,
            formatter: typing.Optional[str] = ...,
+           neato_no_op: typing.Union[bool, int, None] = ...,
            quiet: bool = ..., *,
            outfile: typing.Union[os.PathLike, str, None] = ...,
            raise_if_result_exists: bool = ...,
@@ -173,6 +174,7 @@ def render(engine: str,
            filepath: typing.Union[os.PathLike, str, None] = ...,
            renderer: typing.Optional[str] = ...,
            formatter: typing.Optional[str] = ...,
+           neato_no_op: typing.Union[bool, int, None] = ...,
            quiet: bool = False, *,
            outfile: typing.Union[os.PathLike, str, None] = ...,
            raise_if_result_exists: bool = ...,
@@ -186,6 +188,7 @@ def render(engine: str,
            filepath: typing.Union[os.PathLike, str, None] = ...,
            renderer: typing.Optional[str] = ...,
            formatter: typing.Optional[str] = ...,
+           neato_no_op: typing.Union[bool, int, None] = ...,
            quiet: bool = False, *,
            outfile: typing.Union[os.PathLike, str, None] = ...,
            raise_if_result_exists: bool = ...,
@@ -199,6 +202,7 @@ def render(engine: str,
            filepath: typing.Union[os.PathLike, str, None] = None,
            renderer: typing.Optional[str] = None,
            formatter: typing.Optional[str] = None,
+           neato_no_op: typing.Union[bool, int, None] = None,
            quiet: bool = False, *,
            outfile: typing.Union[os.PathLike, str, None] = None,
            raise_if_result_exists: bool = False,
@@ -215,6 +219,7 @@ def render(engine: str,
             in which case it defaults to ``outfile.with_suffix('.gv')``.
         renderer: Output renderer (``'cairo'``, ``'gd'``, ...).
         formatter: Output formatter (``'cairo'``, ``'gd'``, ...).
+        neato_no_op: Neato layout engine no-op flag.
         quiet: Suppress ``stderr`` output from the layout subprocess.
         outfile: Path for the rendered output file.
         raise_if_result_exits: Raise :exc:`graphviz.FileExistsError`
@@ -307,7 +312,9 @@ def render(engine: str,
         args = ['-O', filepath.name]
 
     cmd = dot_command.command(engine, format,
-                              renderer=renderer, formatter=formatter)
+                              renderer=renderer,
+                              formatter=formatter,
+                              neato_no_op=neato_no_op)
 
     if raise_if_result_exists and os.path.exists(outfile):
         raise exceptions.FileExistsError(f'output file exists: {os.fspath(outfile)!r}')

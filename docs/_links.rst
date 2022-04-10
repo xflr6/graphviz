@@ -33,7 +33,12 @@
 .. _DOT command: https://graphviz.org/doc/info/command.html
 .. _DOT layouts: https://graphviz.org/docs/layouts/
 .. _DOT outputs: https://graphviz.org/docs/outputs/
+.. _DOT neato: https://graphviz.org/docs/layouts/neato/
+.. _neato no-op: https://www.graphviz.org/doc/info/command.html#-n
 .. _DOT attrs: https://www.graphviz.org/doc/info/attrs.html
+.. _DOT pos: https://graphviz.org/docs/attrs/pos/
+.. _DOT overlap: https://graphviz.org/docs/attrs/overlap/
+.. _DOT splines: https://graphviz.org/docs/attrs/splines/
 .. _DOT escString: https://www.graphviz.org/docs/attr-types/escString/
 .. _DOT shapes: https://graphviz.org/doc/info/shapes.html
 .. _DOT shapes HTML: https://graphviz.org/doc/info/shapes.html#html

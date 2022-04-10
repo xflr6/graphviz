@@ -24,6 +24,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
              format: typing.Optional[str] = ...,
              renderer: typing.Optional[str] = ...,
              formatter: typing.Optional[str] = ...,
+             neato_no_op: typing.Union[bool, int, None] = ...,
              quiet: bool = ..., *,
              engine: typing.Optional[str] = ...,
              encoding: None = ...) -> bytes:
@@ -34,6 +35,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
              format: typing.Optional[str] = ...,
              renderer: typing.Optional[str] = ...,
              formatter: typing.Optional[str] = ...,
+             neato_no_op: typing.Union[bool, int, None] = ...,
              quiet: bool = ..., *,
              engine: typing.Optional[str] = ...,
              encoding: str) -> str:
@@ -44,6 +46,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
              format: typing.Optional[str] = ...,
              renderer: typing.Optional[str] = ...,
              formatter: typing.Optional[str] = ...,
+             neato_no_op: typing.Union[bool, int, None] = ...,
              quiet: bool = ..., *,
              engine: typing.Optional[str] = ...,
              encoding: typing.Optional[str]) -> typing.Union[bytes, str]:
@@ -53,6 +56,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
              format: typing.Optional[str] = None,
              renderer: typing.Optional[str] = None,
              formatter: typing.Optional[str] = None,
+             neato_no_op: typing.Union[bool, int, None] = None,
              quiet: bool = False, *,
              engine: typing.Optional[str] = None,
              encoding: typing.Optional[str] = None) -> typing.Union[bytes, str]:
@@ -65,6 +69,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                 (``'cairo'``, ``'gd'``, ...).
             formatter: The output formatter used for rendering
                 (``'cairo'``, ``'gd'``, ...).
+            neato_no_op: Neato layout engine no-op flag.
             quiet (bool): Suppress ``stderr`` output
                 from the layout subprocess.
             engine: Layout engine for rendering
@@ -99,6 +104,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
         return self._pipe_legacy(format,
                                  renderer=renderer,
                                  formatter=formatter,
+                                 neato_no_op=neato_no_op,
                                  quiet=quiet,
                                  engine=engine,
                                  encoding=encoding)
@@ -108,12 +114,14 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                      format: typing.Optional[str] = None,
                      renderer: typing.Optional[str] = None,
                      formatter: typing.Optional[str] = None,
+                     neato_no_op: typing.Union[bool, int, None] = None,
                      quiet: bool = False, *,
                      engine: typing.Optional[str] = None,
                      encoding: typing.Optional[str] = None) -> typing.Union[bytes, str]:
         return self._pipe_future(format,
                                  renderer=renderer,
                                  formatter=formatter,
+                                 neato_no_op=neato_no_op,
                                  quiet=quiet,
                                  engine=engine,
                                  encoding=encoding)
@@ -121,6 +129,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
     def _pipe_future(self, format: typing.Optional[str] = None, *,
                      renderer: typing.Optional[str] = None,
                      formatter: typing.Optional[str] = None,
+                     neato_no_op: typing.Union[bool, int, None] = None,
                      quiet: bool = False,
                      engine: typing.Optional[str] = None,
                      encoding: typing.Optional[str] = None) -> typing.Union[bytes, str]:
@@ -128,6 +137,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                                                  format=format,
                                                  renderer=renderer,
                                                  formatter=formatter,
+                                                 neato_no_op=neato_no_op,
                                                  quiet=quiet,
                                                  verify=True)
 

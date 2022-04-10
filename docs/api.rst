@@ -470,6 +470,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
                format: Optional[str] = None,
                renderer: Optional[str] = None,
                formatter: Optional[str] = None,
+               neato_no_op: Union[bool, int, NoneType] = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
                outfile: Union[os.PathLike, str, NoneType] = None,
@@ -492,6 +493,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |              (``'cairo'``, ``'gd'``, ...).
      |          formatter: The output formatter used for rendering
      |              (``'cairo'``, ``'gd'``, ...).
+     |          neato_no_op: Neato layout engine no-op flag.
      |          quiet (bool): Suppress ``stderr`` output
      |              from the layout subprocess.
      |          quiet_view (bool): Suppress ``stderr`` output
@@ -605,6 +607,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
              format: Optional[str] = None,
              renderer: Optional[str] = None,
              formatter: Optional[str] = None,
+             neato_no_op: Union[bool, int, NoneType] = None,
              quiet: bool = False, *,
              engine: Optional[str] = None,
              encoding: Optional[str] = None) -> Union[bytes, str]
@@ -617,6 +620,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |              (``'cairo'``, ``'gd'``, ...).
      |          formatter: The output formatter used for rendering
      |              (``'cairo'``, ``'gd'``, ...).
+     |          neato_no_op: Neato layout engine no-op flag.
      |          quiet (bool): Suppress ``stderr`` output
      |              from the layout subprocess.
      |          engine: Layout engine for rendering
@@ -978,6 +982,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
                format: Optional[str] = None,
                renderer: Optional[str] = None,
                formatter: Optional[str] = None,
+               neato_no_op: Union[bool, int, NoneType] = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
                outfile: Union[os.PathLike, str, NoneType] = None,
@@ -1000,6 +1005,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |              (``'cairo'``, ``'gd'``, ...).
      |          formatter: The output formatter used for rendering
      |              (``'cairo'``, ``'gd'``, ...).
+     |          neato_no_op: Neato layout engine no-op flag.
      |          quiet (bool): Suppress ``stderr`` output
      |              from the layout subprocess.
      |          quiet_view (bool): Suppress ``stderr`` output
@@ -1113,6 +1119,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
              format: Optional[str] = None,
              renderer: Optional[str] = None,
              formatter: Optional[str] = None,
+             neato_no_op: Union[bool, int, NoneType] = None,
              quiet: bool = False, *,
              engine: Optional[str] = None,
              encoding: Optional[str] = None) -> Union[bytes, str]
@@ -1125,6 +1132,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |              (``'cairo'``, ``'gd'``, ...).
      |          formatter: The output formatter used for rendering
      |              (``'cairo'``, ``'gd'``, ...).
+     |          neato_no_op: Neato layout engine no-op flag.
      |          quiet (bool): Suppress ``stderr`` output
      |              from the layout subprocess.
      |          engine: Layout engine for rendering
@@ -1383,6 +1391,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
                format: Optional[str] = None,
                renderer: Optional[str] = None,
                formatter: Optional[str] = None,
+               neato_no_op: Union[bool, int, NoneType] = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
                outfile: Union[os.PathLike, str, NoneType] = None,
@@ -1405,6 +1414,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |              (``'cairo'``, ``'gd'``, ...).
      |          formatter: The output formatter used for rendering
      |              (``'cairo'``, ``'gd'``, ...).
+     |          neato_no_op: Neato layout engine no-op flag.
      |          quiet (bool): Suppress ``stderr`` output
      |              from the layout subprocess.
      |          quiet_view (bool): Suppress ``stderr`` output
@@ -1501,6 +1511,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
              format: Optional[str] = None,
              renderer: Optional[str] = None,
              formatter: Optional[str] = None,
+             neato_no_op: Union[bool, int, NoneType] = None,
              quiet: bool = False, *,
              engine: Optional[str] = None,
              encoding: Optional[str] = None) -> Union[bytes, str]
@@ -1513,6 +1524,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |              (``'cairo'``, ``'gd'``, ...).
      |          formatter: The output formatter used for rendering
      |              (``'cairo'``, ``'gd'``, ...).
+     |          neato_no_op: Neato layout engine no-op flag.
      |          quiet (bool): Suppress ``stderr`` output
      |              from the layout subprocess.
      |          engine: Layout engine for rendering

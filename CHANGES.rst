@@ -5,7 +5,8 @@ Changelog
 Version 0.20 (in development)
 -----------------------------
 
-
+Add keyword-only ``neato_no_op`` argument to ``.render()``, ``.pipe()``,
+and stand-alone ``graphviz.render()`` and ``graphviz.pipe()``.
 
 
 Version 0.19.2
