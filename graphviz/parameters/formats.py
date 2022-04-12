@@ -41,8 +41,7 @@ FORMATS = {'bmp',  # https://graphviz.org/docs/outputs/
            'vrml',
            'wbmp',
            'webp',
-           'xlib',
-           'x11'}
+           'xlib', 'x11'}
 
 DEFAULT_FORMAT = 'pdf'
 
