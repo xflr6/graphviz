@@ -8,18 +8,18 @@ __all__ = ['RequiredArgumentError', 'FileExistsError',
 
 
 class RequiredArgumentError(TypeError):
-    """:class:`TypeError` raised if a required argument is missing."""
+    """:exc:`TypeError` raised if a required argument is missing."""
 
 
 class FileExistsError(FileExistsError):
-    """:class:`FileExistsError` raised with ``raise_if_exists=True``."""
+    """:exc:`FileExistsError` raised with ``raise_if_exists=True``."""
 
 
 class UnknownSuffixWarning(RuntimeWarning):
-    """:class:`RuntimeWarning` raised if the suffix of ``outfile`` is unknown
+    """:exc:`RuntimeWarning` raised if the suffix of ``outfile`` is unknown
         and the given ``format`` is used instead."""
 
 
 class FormatSuffixMismatchWarning(UserWarning):
-    """:class:`UserWarning` raised if the suffix ``outfile``
+    """:exc:`UserWarning` raised if the suffix ``outfile``
         does not match the given ``format``."""

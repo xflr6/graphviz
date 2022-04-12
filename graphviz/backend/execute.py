@@ -119,7 +119,7 @@ def _write_stderr(stderr) -> None:
 
 
 class ExecutableNotFound(RuntimeError):
-    """:class:`RuntimeError` raised if the Graphviz executable is not found."""
+    """:exc:`RuntimeError` raised if the Graphviz executable is not found."""
 
     _msg = ('failed to execute {!r}, '
             'make sure the Graphviz executables are on your systems\' PATH')
@@ -129,7 +129,7 @@ class ExecutableNotFound(RuntimeError):
 
 
 class CalledProcessError(subprocess.CalledProcessError):
-    """:class:`~subprocess.CalledProcessError` raised if a subprocess ``returncode`` is not ``0``."""  # noqa: E501
+    """:exc:`~subprocess.CalledProcessError` raised if a subprocess ``returncode`` is not ``0``."""  # noqa: E501
 
     def __str__(self) -> 'str':
         return f'{super().__str__()} [stderr: {self.stderr!r}]'
