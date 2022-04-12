@@ -12,7 +12,7 @@ class RequiredArgumentError(TypeError):
 
 
 class FileExistsError(FileExistsError):
-    """:class:`FileNotFoundError` raised with ``raise_if_exists=True``."""
+    """:class:`FileExistsError` raised with ``raise_if_exists=True``."""
 
 
 class UnknownSuffixWarning(RuntimeWarning):
