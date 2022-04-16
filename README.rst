@@ -124,6 +124,12 @@ Save and render and view the result:
     :align: center
     :alt: round-table.svg
 
+**Caveat:**
+Backslash-escapes and strings of the form ``<...>``
+have a special meaning in the DOT language.
+If you need to render arbitrary strings (e.g. from user input),
+check the details in the `user guide`_.
+
 
 See also
 --------
@@ -173,6 +179,8 @@ Development
 .. _conda-forge-python-graphviz-feedstock: https://github.com/conda-forge/python-graphviz-feedstock
 .. _conda-forge-graphviz: https://anaconda.org/conda-forge/graphviz
 .. _conda-forge-graphviz-feedstock: https://github.com/conda-forge/graphviz-feedstock
+
+.. _user guide: https://graphviz.readthedocs.io/en/stable/manual.html
 
 .. _pygraphviz: https://pypi.org/project/pygraphviz/
 .. _graphviz-python: https://pypi.org/project/graphviz-python/

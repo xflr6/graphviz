@@ -88,3 +88,12 @@ for the rendered file type.
 
 
 .. include:: _links.rst
+
+.. attention::
+
+    Backslash-escapes and strings of the form ``<...>``
+    have a special meaning in the DOT_ language
+    and are currently passed on as is by this library.
+    If you need to render arbitrary strings literally (e.g. from user input),
+    consider wraping them with the :func:`graphviz.escape` function first.
+    See the sections on :ref:`Escapes` and :ref:`Quoting` below for details.
