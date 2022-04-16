@@ -15,6 +15,8 @@ when passing a string that ends with an odd number of backslashes
 instead of correct ``..., label=r'\\'``
 for a node labled as a backslash).
 
+Increase visibility of ``graphviz.escape()`` in the documentation.
+
 
 Version 0.19.2
 --------------
