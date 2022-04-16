@@ -39,7 +39,7 @@ def attach(object: typing.Any, name: str) -> typing.Callable:
     return decorator
 
 
-def mkdirs(filename, *, mode: int = 0o777) -> None:
+def mkdirs(filename: typing.Union[os.PathLike, str], *, mode: int = 0o777) -> None:
     """Recursively create directories up to the path of ``filename``
         as needed."""
     dirname = os.path.dirname(filename)
@@ -67,8 +67,7 @@ def mapping_items(mapping):
 
 
 @typing.overload
-def promote_pathlike(filepath: typing.Union[os.PathLike, str]
-                     ) -> pathlib.Path:
+def promote_pathlike(filepath: typing.Union[os.PathLike, str]) -> pathlib.Path:
     """Return path object for path-like-object."""
 
 

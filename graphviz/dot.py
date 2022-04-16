@@ -10,7 +10,7 @@ from . import quoting
 __all__ = ['GraphSyntax', 'DigraphSyntax', 'Dot']
 
 
-def comment(line: str):
+def comment(line: str) -> str:
     """Return comment header line."""
     return f'// {line}\n'
 

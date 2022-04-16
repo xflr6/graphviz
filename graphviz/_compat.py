@@ -1,6 +1,6 @@
 """Python 3.7 to 3.8 compatibility and platform compatibility."""
 
-import pathlib
+import os
 import platform
 import sys
 import typing
@@ -41,12 +41,12 @@ if platform.system() == 'Windows':  # pragma: no cover
         return startupinfo
 
 
-def make_subprocess_arg(arg: typing.Union[str, pathlib.Path]):
+def make_subprocess_arg(arg: typing.Union[str, os.PathLike]) -> typing.Union[str, os.PathLike]:
     """Return subprocess argument as is (default no-op)."""
     return arg
 
 
 if platform.system() == 'Windows' and sys.version_info < (3, 8):  # pragma: no cover
-    def make_subprocess_arg(arg: typing.Union[str, pathlib.Path]) -> str:  # noqa: F811
+    def make_subprocess_arg(arg: typing.Union[str, os.PathLike]) -> str:  # noqa: F811
         """Workaround https://bugs.python.org/issue41649 (not backported)."""
-        return str(arg)
+        return os.fspath(arg)
