@@ -25,7 +25,7 @@ copyright = '2013-2022, Sebastian Bank'
 author = 'Sebastian Bank'
 
 # The short X.Y version
-version = '0.20.dev0'
+version = '0.20'
 # The full version, including alpha/beta/rc tags
 release = version
 
