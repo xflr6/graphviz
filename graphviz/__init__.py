@@ -33,6 +33,7 @@ from .backend import (DOT_BINARY, UNFLATTEN_BINARY,
                       unflatten, version, view)
 from .exceptions import (RequiredArgumentError, FileExistsError,
                          UnknownSuffixWarning, FormatSuffixMismatchWarning,
+                         DotSyntaxWarning,
                          ExecutableNotFound, CalledProcessError)
 from .graphs import Graph, Digraph
 from .jupyter_integration import SUPPORTED_JUPYTER_FORMATS
@@ -50,6 +51,7 @@ __all__ = ['ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
            'unflatten', 'version', 'view',
            'RequiredArgumentError', 'FileExistsError',
            'UnknownSuffixWarning', 'FormatSuffixMismatchWarning',
+           'DotSyntaxWarning',
            'ExecutableNotFound', 'CalledProcessError',
            'set_default_engine', 'set_default_format', 'set_jupyter_format']
 

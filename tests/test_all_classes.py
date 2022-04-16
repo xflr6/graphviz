@@ -30,7 +30,8 @@ def invalid_dot(cls):
         return cls('graph { spam -- \\ }')
     else:
         invalid_dot = cls()
-        invalid_dot.edge('spam', '\\')
+        with pytest.warns(graphviz.DotSyntaxWarning, match=r'syntax error'):
+            invalid_dot.edge('spam', '\\')
         return invalid_dot
 
 

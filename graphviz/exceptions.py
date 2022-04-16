@@ -4,6 +4,7 @@ from .backend.execute import ExecutableNotFound, CalledProcessError
 
 __all__ = ['RequiredArgumentError', 'FileExistsError',
            'UnknownSuffixWarning', 'FormatSuffixMismatchWarning',
+           'DotSyntaxWarning',
            'ExecutableNotFound', 'CalledProcessError']
 
 
@@ -23,3 +24,8 @@ class UnknownSuffixWarning(RuntimeWarning):
 class FormatSuffixMismatchWarning(UserWarning):
     """:exc:`UserWarning` raised if the suffix ``outfile``
         does not match the given ``format``."""
+
+
+class DotSyntaxWarning(RuntimeWarning):
+    """:exc:`RuntimeWarning` raised if a quoted string
+        is expected to cause a ``CalledProcessError`` from rendering."""

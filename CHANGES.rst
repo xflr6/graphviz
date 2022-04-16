@@ -8,6 +8,13 @@ Version 0.20 (in development)
 Add keyword-only ``neato_no_op`` argument to ``.render()``, ``.pipe()``,
 and stand-alone ``graphviz.render()`` and ``graphviz.pipe()``.
 
+When building a ``Graph`` or ``Digraph``,
+warn about an expected DOT syntax error in rendering
+when passing a string that ends with an odd number of backslashes
+(e.g. invalid ``dot.node('spam', label='\\')``
+instead of correct ``..., label=r'\\'``
+for a node labled as a backslash).
+
 
 Version 0.19.2
 --------------

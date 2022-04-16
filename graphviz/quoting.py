@@ -3,8 +3,10 @@
 import functools
 import re
 import typing
+import warnings
 
 from . import _tools
+from . import exceptions
 
 __all__ = ['quote', 'quote_edge',
            'a_list', 'attr_list',
@@ -21,11 +23,18 @@ KEYWORDS = {'node', 'edge', 'graph', 'digraph', 'subgraph', 'strict'}
 
 COMPASS = {'n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw', 'c', '_'}  # TODO
 
-QUOTE_OPTIONAL_BACKSLASHES = re.compile(r'(?P<bs>(?:\\\\)*)'
-                                        r'\\?(?P<quote>")')
+FINAL_ODD_BACKSLASHES = re.compile(r'(?<!\\)(?:\\{2})*\\$')
 
-ESCAPE_UNESCAPED_QUOTES = functools.partial(QUOTE_OPTIONAL_BACKSLASHES.sub,
-                                            r'\g<bs>\\\g<quote>')
+QUOTE_WITH_OPTIONAL_BACKSLASHES = re.compile(r'''
+                                            (?P<escaped_backslashes>(?:\\{2})*)
+                                            \\?  # treat \" same as "
+                                            (?P<literal_quote>")
+                                            ''', flags=re.VERBOSE)
+
+ESCAPE_UNESCAPED_QUOTES = functools.partial(QUOTE_WITH_OPTIONAL_BACKSLASHES.sub,
+                                            r'\g<escaped_backslashes>'
+                                            r'\\'
+                                            r'\g<literal_quote>')
 
 
 @_tools.deprecate_positional_args(supported_number=1)
@@ -33,6 +42,7 @@ def quote(identifier: str,
           is_html_string=HTML_STRING.match,
           is_valid_id=ID.match,
           dot_keywords=KEYWORDS,
+          endswith_odd_number_of_backslashes=FINAL_ODD_BACKSLASHES.search,
           escape_unescaped_quotes=ESCAPE_UNESCAPED_QUOTES) -> str:
     r"""Return DOT identifier from string, quote if needed.
 
@@ -72,6 +82,10 @@ def quote(identifier: str,
     if is_html_string(identifier) and not isinstance(identifier, NoHtml):
         pass
     elif not is_valid_id(identifier) or identifier.lower() in dot_keywords:
+        if endswith_odd_number_of_backslashes(identifier):
+            warnings.warn('expect syntax error scanning invalid quoted string:'
+                          f' {identifier!r}',
+                          category=exceptions.DotSyntaxWarning)
         return f'"{escape_unescaped_quotes(identifier)}"'
     return identifier
 
