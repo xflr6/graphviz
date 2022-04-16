@@ -2,10 +2,10 @@
 
 from .backend.execute import ExecutableNotFound, CalledProcessError
 
-__all__ = ['RequiredArgumentError', 'FileExistsError',
+__all__ = ['ExecutableNotFound', 'CalledProcessError',
+           'RequiredArgumentError', 'FileExistsError',
            'UnknownSuffixWarning', 'FormatSuffixMismatchWarning',
-           'DotSyntaxWarning',
-           'ExecutableNotFound', 'CalledProcessError']
+           'DotSyntaxWarning']
 
 
 class RequiredArgumentError(TypeError):

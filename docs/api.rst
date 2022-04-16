@@ -9,9 +9,9 @@ API Reference
     graphviz.Source
     graphviz.escape
     graphviz.nohtml
-    graphviz.RequiredArgumentError
     graphviz.ExecutableNotFound
     graphviz.CalledProcessError
+    graphviz.RequiredArgumentError
     graphviz.render
     graphviz.pipe
     graphviz.pipe_string
@@ -92,11 +92,11 @@ Quoting/escaping
 Exceptions
 ----------
 
-.. autoexception:: graphviz.RequiredArgumentError
-
 .. autoexception:: graphviz.ExecutableNotFound
 
 .. autoexception:: graphviz.CalledProcessError
+
+.. autoexception:: graphviz.RequiredArgumentError
 
 .. autoexception:: graphviz.FileExistsError
 
@@ -107,6 +107,8 @@ Warnings
 .. autoexception:: graphviz.UnknownSuffixWarning
 
 .. autoexception:: graphviz.FormatSuffixMismatchWarning
+
+.. autoexception:: graphviz.DotSyntaxWarning
 
 
 Low-level functions

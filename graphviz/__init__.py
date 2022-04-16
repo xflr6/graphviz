@@ -31,10 +31,10 @@ from ._defaults import set_default_engine, set_default_format, set_jupyter_forma
 from .backend import (DOT_BINARY, UNFLATTEN_BINARY,
                       render, pipe, pipe_string, pipe_lines, pipe_lines_string,
                       unflatten, version, view)
-from .exceptions import (RequiredArgumentError, FileExistsError,
+from .exceptions import (ExecutableNotFound, CalledProcessError,
+                         RequiredArgumentError, FileExistsError,
                          UnknownSuffixWarning, FormatSuffixMismatchWarning,
-                         DotSyntaxWarning,
-                         ExecutableNotFound, CalledProcessError)
+                         DotSyntaxWarning)
 from .graphs import Graph, Digraph
 from .jupyter_integration import SUPPORTED_JUPYTER_FORMATS
 from .parameters import ENGINES, FORMATS, RENDERERS, FORMATTERS
@@ -49,10 +49,10 @@ __all__ = ['ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
            'escape', 'nohtml',
            'render', 'pipe', 'pipe_string', 'pipe_lines', 'pipe_lines_string',
            'unflatten', 'version', 'view',
+           'ExecutableNotFound', 'CalledProcessError',
            'RequiredArgumentError', 'FileExistsError',
            'UnknownSuffixWarning', 'FormatSuffixMismatchWarning',
            'DotSyntaxWarning',
-           'ExecutableNotFound', 'CalledProcessError',
            'set_default_engine', 'set_default_format', 'set_jupyter_format']
 
 __title__ = 'graphviz'
@@ -88,10 +88,16 @@ UNFLATTEN_BINARY = UNFLATTEN_BINARY
 """:class:`pathlib.Path` of unflatten command (``Path('unflatten')``)."""
 
 
+ExecutableNotFound = ExecutableNotFound
+
+
+CalledProcessError = CalledProcessError
+
+
 RequiredArgumentError = RequiredArgumentError
 
 
-ExecutableNotFound = ExecutableNotFound
+FileExistsError = FileExistsError
 
 
 UnknownSuffixWarning = UnknownSuffixWarning
@@ -100,7 +106,4 @@ UnknownSuffixWarning = UnknownSuffixWarning
 FormatSuffixMismatchWarning = FormatSuffixMismatchWarning
 
 
-CalledProcessError = CalledProcessError
-
-
-FileExistsError = FileExistsError
+DotSyntaxWarning = DotSyntaxWarning
