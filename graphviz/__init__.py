@@ -38,7 +38,7 @@ from .exceptions import (ExecutableNotFound, CalledProcessError,
 from .graphs import Graph, Digraph
 from .jupyter_integration import SUPPORTED_JUPYTER_FORMATS
 from .parameters import ENGINES, FORMATS, RENDERERS, FORMATTERS
-from .quoting import escape, nohtml
+from .quoting import NodeID, escape, nohtml
 from .sources import Source
 
 __all__ = ['ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
@@ -46,7 +46,7 @@ __all__ = ['ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
            'SUPPORTED_JUPYTER_FORMATS',
            'Graph', 'Digraph',
            'Source',
-           'escape', 'nohtml',
+           'NodeID', 'escape', 'nohtml',
            'render', 'pipe', 'pipe_string', 'pipe_lines', 'pipe_lines_string',
            'unflatten', 'version', 'view',
            'ExecutableNotFound', 'CalledProcessError',

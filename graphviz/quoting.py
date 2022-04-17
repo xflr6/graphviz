@@ -37,8 +37,93 @@ ESCAPE_UNESCAPED_QUOTES = functools.partial(QUOTE_WITH_OPTIONAL_BACKSLASHES.sub,
                                             r'\g<literal_quote>')
 
 
+class NodeID:
+    r"""Represents the `node_id` syntax element of the DOT language.
+    See: https://graphviz.org/doc/info/lang.html
+
+        node_id     :   ID [ port ]
+
+        port        :   ':' ID [ ':' compass_pt ]
+                    |   ':' compass_pt
+
+        compass_pt  :   (n | ne | e | se | s | sw | w | nw | c | _)
+
+    Note that this syntax element is used in both node and edge statements.
+    That is, you can declare a node in the following ways:
+
+        digraph {
+            node1
+            node1:port1
+            node1:port1:nw
+        }
+
+    ...as far as I can tell, the port and compass are ignored, so those 3
+    node statements are equivalent.
+    You can confirm this yourself (somewhat) at the commandline:
+
+        $ echo "digraph { a:b }" | dot
+        digraph {
+            graph [bb="0,0,54,36"];
+            node [label="\N"];
+            a   [height=0.5,
+                pos="27,18",
+                width=0.75];
+        }
+
+        $ echo "digraph { a:b; a:b -> c }" | dot
+        Warning: node a, port b unrecognized
+        digraph {
+            graph [bb="0,0,54,108"];
+            node [label="\N"];
+            a   [height=0.5,
+                pos="27,90",
+                width=0.75];
+            c   [height=0.5,
+                pos="27,18",
+                width=0.75];
+            a:b -> c    [pos="e,27,36.104 27,71.697 27,63.983 27,54.712 27,46.112"];
+        }
+
+    ...in other words, our `a:b` node statements became just `a`, and our `a:b -> c`
+    edge statement gave us a warning that node "a" had no port "b".
+
+    Also, https://graphviz.org/doc/info/lang.html says:
+
+        Note also that the allowed compass point values are not keywords, so these
+        strings can be used elsewhere as ordinary identifiers and, conversely, the
+        parser will actually accept any identifier.
+
+    ...and experimentally, you can determine at commandline that "any identifier" here
+    means "any ID", where ID is a possibly-quoted value.
+    For example, the compass value "x y" is accepted: `echo 'digraph { a:b:"x y" -> c }' | dot`
+    (We are therefore justified in calling quote() on self.compass in NodeID.__str__.)
+    """
+
+    def __init__(self, id, port='', compass=''):
+        # NOTE: port and compass should indeed default to '', not None.
+        # The DOT semantics do not distinguish between their missing vs being provided
+        # as (quoted) empty strings.
+        # For instance, this is a syntax error:
+        #     echo 'digraph { a: -> c }' | dot
+        # ...so is this:
+        #     echo 'digraph { a::n -> c }' | dot
+        # ...whereas the following is accepted, and transformed into "a -> c":
+        #     echo 'digraph { a:"" -> c }' | dot
+        self.id = escape(id)
+        self.port = escape(port)
+        self.compass = escape(compass)
+
+    def __str__(self):
+        s = quote(self.id)
+        if self.port:
+            s = f'{s}:{quote(self.port)}'
+        if self.compass:
+            s = f'{s}:{quote(self.compass)}'
+        return s
+
+
 @_tools.deprecate_positional_args(supported_number=1)
-def quote(identifier: str,
+def quote(identifier: typing.Union[str, NodeID],
           is_html_string=HTML_STRING.match,
           is_valid_id=ID.match,
           dot_keywords=KEYWORDS,
@@ -78,7 +163,15 @@ def quote(identifier: str,
 
     >>> print(quote('\\\\\\"'))
     "\\\""
+
+    >>> quote(NodeID('spam'))
+    'spam'
+
+    >>> quote(NodeID('spam spam', 'eggs eggs', 'one two'))
+    '"spam spam":"eggs eggs":"one two"'
     """
+    if isinstance(identifier, NodeID):
+        return str(identifier)
     if is_html_string(identifier) and not isinstance(identifier, NoHtml):
         pass
     elif not is_valid_id(identifier) or identifier.lower() in dot_keywords:
@@ -90,7 +183,7 @@ def quote(identifier: str,
     return identifier
 
 
-def quote_edge(identifier: str) -> str:
+def quote_edge(identifier: typing.Union[str, NodeID]) -> str:
     """Return DOT edge statement node_id from string, quote if needed.
 
     >>> quote_edge('spam')  # doctest: +NO_EXE
@@ -101,7 +194,12 @@ def quote_edge(identifier: str) -> str:
 
     >>> quote_edge('spam:eggs:s')
     'spam:eggs:s'
+
+    >>> quote_edge(NodeID('spam spam', 'eggs', 'n'))
+    '"spam spam":eggs:n'
     """
+    if isinstance(identifier, NodeID):
+        return str(identifier)
     node, _, rest = identifier.partition(':')
     parts = [quote(node)]
     if rest:
