@@ -15,7 +15,8 @@ DOT_BINARY = pathlib.Path('dot')
 def command(engine: str, format_: str, *,
             renderer: typing.Optional[str] = None,
             formatter: typing.Optional[str] = None,
-            neato_no_op: typing.Union[bool, int, None] = None
+            neato_no_op: typing.Union[bool, int, None] = None,
+            invert_axis: typing.Union[bool, None] = None
             ) -> typing.List[typing.Union[os.PathLike, str]]:
     """Return ``subprocess.Popen`` argument list for rendering.
 
@@ -40,5 +41,8 @@ def command(engine: str, format_: str, *,
 
     if neato_no_op:
         cmd.append(f'-n{neato_no_op:d}')
+
+    if invert_axis:
+        cmd.append(f'-y')
 
     return cmd

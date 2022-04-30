@@ -161,6 +161,7 @@ def render(engine: str,
            renderer: typing.Optional[str] = ...,
            formatter: typing.Optional[str] = ...,
            neato_no_op: typing.Union[bool, int, None] = ...,
+           invert_axis: typing.Union[bool, None] = ...,
            quiet: bool = ..., *,
            outfile: typing.Union[os.PathLike, str, None] = ...,
            raise_if_result_exists: bool = ...,
@@ -175,6 +176,7 @@ def render(engine: str,
            renderer: typing.Optional[str] = ...,
            formatter: typing.Optional[str] = ...,
            neato_no_op: typing.Union[bool, int, None] = ...,
+           invert_axis: typing.Union[bool, None] = ...,
            quiet: bool = False, *,
            outfile: typing.Union[os.PathLike, str, None] = ...,
            raise_if_result_exists: bool = ...,
@@ -189,6 +191,7 @@ def render(engine: str,
            renderer: typing.Optional[str] = ...,
            formatter: typing.Optional[str] = ...,
            neato_no_op: typing.Union[bool, int, None] = ...,
+           invert_axis: typing.Union[bool, None] = ...,
            quiet: bool = False, *,
            outfile: typing.Union[os.PathLike, str, None] = ...,
            raise_if_result_exists: bool = ...,
@@ -203,6 +206,7 @@ def render(engine: str,
            renderer: typing.Optional[str] = None,
            formatter: typing.Optional[str] = None,
            neato_no_op: typing.Union[bool, int, None] = None,
+           invert_axis: typing.Union[bool, None] = ...,
            quiet: bool = False, *,
            outfile: typing.Union[os.PathLike, str, None] = None,
            raise_if_result_exists: bool = False,
@@ -220,6 +224,7 @@ def render(engine: str,
         renderer: Output renderer (``'cairo'``, ``'gd'``, ...).
         formatter: Output formatter (``'cairo'``, ``'gd'``, ...).
         neato_no_op: Neato layout engine no-op flag.
+        invert_axis: Invert the axis via the -y flag
         quiet: Suppress ``stderr`` output from the layout subprocess.
         outfile: Path for the rendered output file.
         raise_if_result_exits: Raise :exc:`graphviz.FileExistsError`
@@ -314,7 +319,8 @@ def render(engine: str,
     cmd = dot_command.command(engine, format,
                               renderer=renderer,
                               formatter=formatter,
-                              neato_no_op=neato_no_op)
+                              neato_no_op=neato_no_op,
+                              invert_axis=invert_axis)
 
     if raise_if_result_exists and os.path.exists(outfile):
         raise exceptions.FileExistsError(f'output file exists: {os.fspath(outfile)!r}')

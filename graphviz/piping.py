@@ -25,6 +25,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
              renderer: typing.Optional[str] = ...,
              formatter: typing.Optional[str] = ...,
              neato_no_op: typing.Union[bool, int, None] = ...,
+             invert_axis: typing.Union[bool, None] = ...,
              quiet: bool = ..., *,
              engine: typing.Optional[str] = ...,
              encoding: None = ...) -> bytes:
@@ -36,6 +37,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
              renderer: typing.Optional[str] = ...,
              formatter: typing.Optional[str] = ...,
              neato_no_op: typing.Union[bool, int, None] = ...,
+             invert_axis: typing.Union[bool, None] = ...,
              quiet: bool = ..., *,
              engine: typing.Optional[str] = ...,
              encoding: str) -> str:
@@ -47,6 +49,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
              renderer: typing.Optional[str] = ...,
              formatter: typing.Optional[str] = ...,
              neato_no_op: typing.Union[bool, int, None] = ...,
+             invert_axis: typing.Union[bool, None] = ...,
              quiet: bool = ..., *,
              engine: typing.Optional[str] = ...,
              encoding: typing.Optional[str]) -> typing.Union[bytes, str]:
@@ -57,6 +60,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
              renderer: typing.Optional[str] = None,
              formatter: typing.Optional[str] = None,
              neato_no_op: typing.Union[bool, int, None] = None,
+             invert_axis: typing.Union[bool, None] = ...,
              quiet: bool = False, *,
              engine: typing.Optional[str] = None,
              encoding: typing.Optional[str] = None) -> typing.Union[bytes, str]:
@@ -105,6 +109,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                                  renderer=renderer,
                                  formatter=formatter,
                                  neato_no_op=neato_no_op,
+                                 invert_axis=invert_axis,
                                  quiet=quiet,
                                  engine=engine,
                                  encoding=encoding)
@@ -115,6 +120,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                      renderer: typing.Optional[str] = None,
                      formatter: typing.Optional[str] = None,
                      neato_no_op: typing.Union[bool, int, None] = None,
+                     invert_axis: typing.Union[bool, None] = None,
                      quiet: bool = False, *,
                      engine: typing.Optional[str] = None,
                      encoding: typing.Optional[str] = None) -> typing.Union[bytes, str]:
@@ -122,6 +128,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                                  renderer=renderer,
                                  formatter=formatter,
                                  neato_no_op=neato_no_op,
+                                 invert_axis=invert_axis,
                                  quiet=quiet,
                                  engine=engine,
                                  encoding=encoding)
@@ -130,6 +137,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                      renderer: typing.Optional[str] = None,
                      formatter: typing.Optional[str] = None,
                      neato_no_op: typing.Union[bool, int, None] = None,
+                     invert_axis: typing.Union[bool, None] = None,
                      quiet: bool = False,
                      engine: typing.Optional[str] = None,
                      encoding: typing.Optional[str] = None) -> typing.Union[bytes, str]:
@@ -138,6 +146,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                                                  renderer=renderer,
                                                  formatter=formatter,
                                                  neato_no_op=neato_no_op,
+                                                 invert_axis=invert_axis,
                                                  quiet=quiet,
                                                  verify=True)
 
