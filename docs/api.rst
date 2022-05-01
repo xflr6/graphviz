@@ -473,6 +473,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
                renderer: Optional[str] = None,
                formatter: Optional[str] = None,
                neato_no_op: Union[bool, int, NoneType] = None,
+               invert_axis: typing.Union[bool, None] = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
                outfile: Union[os.PathLike, str, NoneType] = None,
@@ -496,6 +497,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          formatter: The output formatter used for rendering
      |              (``'cairo'``, ``'gd'``, ...).
      |          neato_no_op: Neato layout engine no-op flag.
+     |          invert_axis: Invert the axis via the -y flag
      |          quiet (bool): Suppress ``stderr`` output
      |              from the layout subprocess.
      |          quiet_view (bool): Suppress ``stderr`` output
@@ -610,6 +612,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
              renderer: Optional[str] = None,
              formatter: Optional[str] = None,
              neato_no_op: Union[bool, int, NoneType] = None,
+             invert_axis: typing.Union[bool, None] = None,
              quiet: bool = False, *,
              engine: Optional[str] = None,
              encoding: Optional[str] = None) -> Union[bytes, str]
@@ -623,6 +626,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          formatter: The output formatter used for rendering
      |              (``'cairo'``, ``'gd'``, ...).
      |          neato_no_op: Neato layout engine no-op flag.
+     |          invert_axis: Invert the axis via the -y flag
      |          quiet (bool): Suppress ``stderr`` output
      |              from the layout subprocess.
      |          engine: Layout engine for rendering
@@ -985,6 +989,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
                renderer: Optional[str] = None,
                formatter: Optional[str] = None,
                neato_no_op: Union[bool, int, NoneType] = None,
+               invert_axis: typing.Union[bool, None] = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
                outfile: Union[os.PathLike, str, NoneType] = None,
@@ -1008,6 +1013,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          formatter: The output formatter used for rendering
      |              (``'cairo'``, ``'gd'``, ...).
      |          neato_no_op: Neato layout engine no-op flag.
+     |          invert_axis: Invert the axis via the -y flag
      |          quiet (bool): Suppress ``stderr`` output
      |              from the layout subprocess.
      |          quiet_view (bool): Suppress ``stderr`` output
@@ -1122,6 +1128,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
              renderer: Optional[str] = None,
              formatter: Optional[str] = None,
              neato_no_op: Union[bool, int, NoneType] = None,
+             invert_axis: typing.Union[bool, None] = None,
              quiet: bool = False, *,
              engine: Optional[str] = None,
              encoding: Optional[str] = None) -> Union[bytes, str]
@@ -1135,6 +1142,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          formatter: The output formatter used for rendering
      |              (``'cairo'``, ``'gd'``, ...).
      |          neato_no_op: Neato layout engine no-op flag.
+     |          invert_axis: Invert the axis via the -y flag
      |          quiet (bool): Suppress ``stderr`` output
      |              from the layout subprocess.
      |          engine: Layout engine for rendering
@@ -1394,6 +1402,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
                renderer: Optional[str] = None,
                formatter: Optional[str] = None,
                neato_no_op: Union[bool, int, NoneType] = None,
+               invert_axis: typing.Union[bool, None] = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
                outfile: Union[os.PathLike, str, NoneType] = None,
@@ -1417,6 +1426,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |          formatter: The output formatter used for rendering
      |              (``'cairo'``, ``'gd'``, ...).
      |          neato_no_op: Neato layout engine no-op flag.
+     |          invert_axis: Invert the axis via the -y flag
      |          quiet (bool): Suppress ``stderr`` output
      |              from the layout subprocess.
      |          quiet_view (bool): Suppress ``stderr`` output
@@ -1514,6 +1524,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
              renderer: Optional[str] = None,
              formatter: Optional[str] = None,
              neato_no_op: Union[bool, int, NoneType] = None,
+             invert_axis: typing.Union[bool, None] = None,
              quiet: bool = False, *,
              engine: Optional[str] = None,
              encoding: Optional[str] = None) -> Union[bytes, str]
@@ -1527,6 +1538,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |          formatter: The output formatter used for rendering
      |              (``'cairo'``, ``'gd'``, ...).
      |          neato_no_op: Neato layout engine no-op flag.
+     |          invert_axis: Invert the axis via the -y flag
      |          quiet (bool): Suppress ``stderr`` output
      |              from the layout subprocess.
      |          engine: Layout engine for rendering

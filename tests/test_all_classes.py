@@ -118,6 +118,7 @@ def test_render_mocked(mocker, mock_render, dot):
                                         mock_save.return_value,
                                         renderer=None, formatter=None,
                                         neato_no_op=None,
+                                        invert_axis=None,
                                         outfile=None,
                                         raise_if_result_exists=False,
                                         overwrite_filepath=False,
@@ -146,6 +147,7 @@ def test_render_outfile_mocked(mocker, mock_render, dot):
                                         mock_save.return_value,
                                         renderer=None, formatter=None,
                                         neato_no_op=None,
+                                        invert_axis=None,
                                         outfile=pathlib.Path(outfile),
                                         raise_if_result_exists=True,
                                         overwrite_filepath=True,
@@ -175,6 +177,7 @@ def test_format_renderer_formatter_mocked(mocker, mock_render,
     mock_render.assert_called_once_with('dot', format, mock_save.return_value,
                                         renderer=renderer, formatter=formatter,
                                         neato_no_op=None,
+                                        invert_axis=None,
                                         outfile=None,
                                         raise_if_result_exists=False,
                                         overwrite_filepath=False,
@@ -200,6 +203,7 @@ def test_neato_no_op_mocked(mocker, mock_render,
     mock_render.assert_called_once_with(engine, format, mock_save.return_value,
                                         renderer=None, formatter=None,
                                         neato_no_op=neato_no_op,
+                                        invert_axis=None,
                                         outfile=None,
                                         raise_if_result_exists=False,
                                         overwrite_filepath=False,
@@ -236,7 +240,8 @@ def test_pipe_mocked(mocker, mock_pipe_lines, mock_pipe_lines_string, quiet,
     expected_kwargs = {'quiet': quiet,
                        'renderer': None,
                        'formatter': None,
-                       'neato_no_op': None}
+                       'neato_no_op': None,
+                       'invert_axis': None}
 
     if encoding == input_encoding:
         assert result is mock_pipe_lines_string.return_value
@@ -263,6 +268,7 @@ def test_pipe_lines_mocked(mocker, mock_pipe_lines, dot, format_='svg'):
     mock_pipe_lines.assert_called_once_with(dot.engine, format_, mocker.ANY,
                                             renderer=None, formatter=None,
                                             neato_no_op=None,
+                                            invert_axis=None,
                                             input_encoding='utf-8',
                                             quiet=False)
     _, _, data = mock_pipe_lines.call_args.args
@@ -324,7 +330,8 @@ def test_pipe_lines_called_process_error_mocked(invalid_dot,
                                             quiet=False,
                                             renderer=None,
                                             formatter=None,
-                                            neato_no_op=None)
+                                            neato_no_op=None,
+                                            invert_axis=None)
 
 
 def test_repr_mimebundle_image_svg_xml_mocked(mocker, dot):

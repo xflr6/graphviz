@@ -60,7 +60,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
              renderer: typing.Optional[str] = None,
              formatter: typing.Optional[str] = None,
              neato_no_op: typing.Union[bool, int, None] = None,
-             invert_axis: typing.Union[bool, None] = ...,
+             invert_axis: typing.Union[bool, None] = None,
              quiet: bool = False, *,
              engine: typing.Optional[str] = None,
              encoding: typing.Optional[str] = None) -> typing.Union[bytes, str]:

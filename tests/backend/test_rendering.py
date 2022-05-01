@@ -118,9 +118,9 @@ def test_render_mocked(capsys, mock_run, quiet, directory,
 
     if directory is not None:
         filepath = os.path.join(directory, filepath)
-
     result = graphviz.render('dot', 'pdf', filepath,
                              neato_no_op=True,
+                             invert_axis=None,
                              quiet=quiet)
 
     assert result == f'{filepath}.pdf'
