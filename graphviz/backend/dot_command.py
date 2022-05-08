@@ -43,6 +43,6 @@ def command(engine: str, format_: str, *,
         cmd.append(f'-n{neato_no_op:d}')
 
     if invert_axis:
-        cmd.append(f'-y')
+        cmd.append('-y')
 
     return cmd
