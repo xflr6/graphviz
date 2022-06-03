@@ -215,7 +215,7 @@ class Dot(quoting.Quote, base.Base):
             The ``tail_name`` and ``head_name`` strings are separated
             by (optional) colon(s) into ``node`` name, ``port`` name,
             and ``compass`` (e.g. ``sw``).
-            See `details in the User Guide <ports>`.
+            See :ref:`details in the User Guide <Ports>`.
         """
         tail_name = self._quote_edge(tail_name)
         head_name = self._quote_edge(head_name)
@@ -235,7 +235,7 @@ class Dot(quoting.Quote, base.Base):
             The ``tail_name`` and ``head_name`` strings are separated
             by (optional) colon(s) into ``node`` name, ``port`` name,
             and ``compass`` (e.g. ``sw``).
-            See `details in the User Guide <ports>`.
+            See :ref:`details in the User Guide <Ports>`.
         """
         edge = self._edge_plain
         quote = self._quote_edge
@@ -252,7 +252,7 @@ class Dot(quoting.Quote, base.Base):
                 (``None`` or ``'graph'``, ``'node'``, ``'edge'``).
             attrs: Attributes to be set (must be strings, may be empty).
 
-        See the `usage examples in the User Guide <attributes>`.
+        See the :ref:`usage examples in the User Guide <Attributes>`.
         """
         if kw is not None and kw.lower() not in ('graph', 'node', 'edge'):
             raise ValueError('attr statement must target graph, node, or edge:'
@@ -294,7 +294,7 @@ class Dot(quoting.Quote, base.Base):
             body: Verbatim lines to add to the subgraph ``body``
                 (``with``-block use).
 
-        See the `usage examples in the User Guide <subgraphs>`.
+        See the :ref:`usage examples in the User Guide <Subgraphs>`.
 
         When used as a context manager, the returned new graph instance
         uses ``strict=None`` and the parent graph's values
