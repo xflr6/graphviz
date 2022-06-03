@@ -16,22 +16,22 @@ User Guide
 
 .. include:: styling.rst
 
-.. _Attributes:
+.. _attributes:
 .. include:: attributes.rst
 
-.. _Ports:
+.. _node-ports-compass:
 .. include:: node_ports.rst
 
-.. _Escapes:
+.. _backslash-escapes:
 .. include:: escapes.rst
 
-.. _Quoting:
+.. _quoting-and-html-like-labels:
 .. include:: quoting.rst
 
-.. _Subgraphs:
+.. _subgraphs-clusters:
 .. include:: subgraphs_and_clusters.rst
 
-.. _Engines:
+.. _engines:
 .. include:: engines.rst
 
 .. include:: neato_no_op.rst
@@ -40,7 +40,7 @@ User Guide
 
 .. include:: custom_dot.rst
 
-.. _Sources:
+.. _using-raw-dot:
 .. include:: raw_dot.rst
 
 .. include:: existing_files.rst

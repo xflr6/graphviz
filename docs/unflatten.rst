@@ -44,7 +44,7 @@ use the :meth:`~.Graph.unflatten` method.
 The method returns a :class:`.Source` object
 that you can :meth:`~.Source.render`, :meth:`~.Source.view`, etc.
 with the same basic API as :class:`.Graph` or :class:`.Digraph` objects
-(minus modification, see details :ref:`below <Sources>`).
+(minus modification, see details :ref:`below <using-raw-dot>`).
 
 .. doctest::
 

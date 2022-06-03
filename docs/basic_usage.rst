@@ -63,7 +63,7 @@ Check the generated DOT source code:
 
 Use the :meth:`~.Graph.render` method to save the DOT source code
 and render it with the default ``dot`` `layout engine <DOT layouts_>`_
-(see :ref:`below <Engines>` for using other layout engines). 
+(see :ref:`below <engines>` for using other layout engines). 
 
 .. doctest::
 
@@ -96,4 +96,5 @@ for the rendered file type.
     and are currently passed on as is by this library.
     If you need to render arbitrary strings literally (e.g. from user input),
     consider wrapping them with the :func:`graphviz.escape` function first.
-    See the sections on :ref:`Escapes` and :ref:`Quoting` below for details.
+    See the sections on :ref:`backslash-escapes`
+    and :ref:`quoting-and-html-like-labels` below for details.
