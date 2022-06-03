@@ -25,7 +25,7 @@ setup(
         'test': ['pytest>=7',
                  'pytest-mock>=3', 'mock>=4',
                  'pytest-cov', 'coverage'],
-        'docs': ['sphinx>=4', 'sphinx-autodoc-typehints', 'sphinx-rtd-theme'],
+        'docs': ['sphinx>=4,<5', 'sphinx-autodoc-typehints', 'sphinx-rtd-theme'],
     },
     long_description=pathlib.Path('README.rst').read_text(encoding='utf-8'),
     classifiers=[
