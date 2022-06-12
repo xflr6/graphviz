@@ -366,7 +366,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |              (``None`` or ``'graph'``, ``'node'``, ``'edge'``).
      |          attrs: Attributes to be set (must be strings, may be empty).
      |
-     |      See the `usage examples in the User Guide <attributes>`.
+     |      See the :ref:`usage examples in the User Guide <attributes>`.
      |
      |  clear(self, keep_attrs: bool = False) -> None
      |      Reset content to an empty body, clear graph/node/egde_attr mappings.
@@ -393,7 +393,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          The ``tail_name`` and ``head_name`` strings are separated
      |          by (optional) colon(s) into ``node`` name, ``port`` name,
      |          and ``compass`` (e.g. ``sw``).
-     |          See `details in the User Guide <ports>`.
+     |          See :ref:`details in the User Guide <node-ports-compass>`.
      |
      |  edges(self, tail_head_iter) -> None
      |      Create a bunch of edges.
@@ -407,7 +407,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          The ``tail_name`` and ``head_name`` strings are separated
      |          by (optional) colon(s) into ``node`` name, ``port`` name,
      |          and ``compass`` (e.g. ``sw``).
-     |          See `details in the User Guide <ports>`.
+     |          See :ref:`details in the User Guide <node-ports-compass>`.
      |
      |  node(self,
              name: str,
@@ -450,7 +450,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          body: Verbatim lines to add to the subgraph ``body``
      |              (``with``-block use).
      |
-     |      See the `usage examples in the User Guide <subgraphs>`.
+     |      See the :ref:`usage examples in the User Guide <subgraphs-clusters>`.
      |
      |      When used as a context manager, the returned new graph instance
      |      uses ``strict=None`` and the parent graph's values
@@ -878,7 +878,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |              (``None`` or ``'graph'``, ``'node'``, ``'edge'``).
      |          attrs: Attributes to be set (must be strings, may be empty).
      |
-     |      See the `usage examples in the User Guide <attributes>`.
+     |      See the :ref:`usage examples in the User Guide <attributes>`.
      |
      |  clear(self, keep_attrs: bool = False) -> None
      |      Reset content to an empty body, clear graph/node/egde_attr mappings.
@@ -905,7 +905,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          The ``tail_name`` and ``head_name`` strings are separated
      |          by (optional) colon(s) into ``node`` name, ``port`` name,
      |          and ``compass`` (e.g. ``sw``).
-     |          See `details in the User Guide <ports>`.
+     |          See :ref:`details in the User Guide <node-ports-compass>`.
      |
      |  edges(self, tail_head_iter) -> None
      |      Create a bunch of edges.
@@ -919,7 +919,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          The ``tail_name`` and ``head_name`` strings are separated
      |          by (optional) colon(s) into ``node`` name, ``port`` name,
      |          and ``compass`` (e.g. ``sw``).
-     |          See `details in the User Guide <ports>`.
+     |          See :ref:`details in the User Guide <node-ports-compass>`.
      |
      |  node(self,
              name: str,
@@ -962,7 +962,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          body: Verbatim lines to add to the subgraph ``body``
      |              (``with``-block use).
      |
-     |      See the `usage examples in the User Guide <subgraphs>`.
+     |      See the :ref:`usage examples in the User Guide <subgraphs-clusters>`.
      |
      |      When used as a context manager, the returned new graph instance
      |      uses ``strict=None`` and the parent graph's values
