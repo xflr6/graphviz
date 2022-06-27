@@ -3,12 +3,12 @@
 
 The `neato <DOT neato_>`_ layout engine
 supports an additional `rendering flag <neato no-op_>`_
-that allows more control over the node positoning and the edge layout
+that allows more control over the node positioning and the edge layout
 via the `pos <DOT pos_>`_,
 `overlap <DOT overlap_>`_,
 and `splines <DOT splines_>`_ attributes.
 
-Use the ``neato_no_op`` keyword argugment of
+Use the ``neato_no_op`` keyword argument of
 :meth:`~.Graph.render` or :meth:`~.Graph.pipe`
 to pass it to the layout command:
 
