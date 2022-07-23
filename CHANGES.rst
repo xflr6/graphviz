@@ -2,10 +2,12 @@ Changelog
 =========
 
 
-Version 0.20.1 (in development)
--------------------------------
+Version 0.20.1
+--------------
 
+Fix documentation building: upgrade to Sphinx 5.0.
 
+Fix broken user guide links in API documentation.
 
 
 Version 0.20
