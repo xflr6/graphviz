@@ -25,25 +25,26 @@ INDENT = ' ' * 4
 
 TARGET = pathlib.Path('docs/api.rst')
 
-PATTERN = (r'''
-           (
-           \ {{4}}>>>\ help\(graphviz\.{cls_name}\).*\n)
-           \ {{4}}Help\ on\ class\ {cls_name}
-                  \ in\ module\ graphviz\.(?:graphs|sources):\n
-           \ {{4}}<BLANKLINE>\n
-           (?:.*\n)+?
-           \ {{4}}<BLANKLINE>\n
-           ''')
+PATTERN_TMPL = (r'''
+                (
+                \ {{4}}>>>\ help\(graphviz\.{cls_name}\).*\n)
+                \ {{4}}Help\ on\ class\ {cls_name}
+                       \ in\ module\ graphviz\.(?:graphs|sources):\n
+                \ {{4}}<BLANKLINE>\n
+                (?:.*\n)+?
+                \ {{4}}<BLANKLINE>\n
+                ''')
 
 IO_KWARGS = {'encoding': 'utf-8'}
 
 
 def get_help(obj) -> str:
     print(f'capture help() output for {obj}')
-    with contextlib.redirect_stdout(io.StringIO()) as buf:
-        help(obj)
-    buf.seek(0)
-    return ''.join(iterlines(buf))
+    with io.StringIO() as buf:
+        with contextlib.redirect_stdout(buf):
+            help(obj)
+        buf.seek(0)
+        return ''.join(iterlines(buf))
 
 
 def rpartition_initial(value: str, *, sep: str) -> typing.Tuple[str, str, str]:
@@ -108,9 +109,9 @@ print('read', TARGET)
 target = target_before = TARGET.read_text(**IO_KWARGS)
 
 for cls_name, doc in help_docs.items():
-    print('replace', cls_name, 'PATTERN match')
+    print('replace', cls_name, 'PATTERN_TMPL match')
 
-    pattern = re.compile(PATTERN.format(cls_name=cls_name), flags=re.VERBOSE)
+    pattern = re.compile(PATTERN_TMPL.format(cls_name=cls_name), flags=re.VERBOSE)
 
     target, found = pattern.subn(fr'\1{doc}', target, count=1)
     assert found, f'replaced {cls_name} section'
