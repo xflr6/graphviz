@@ -322,7 +322,7 @@ def render(engine: str,
     cmd += args
 
     execute.run_check(cmd,
-                      cwd=filepath.parent if filepath.parent.parts else None,
+                      cwd=str(filepath.parent) if filepath.parent.parts else None,
                       quiet=quiet,
                       capture_output=True)
 
