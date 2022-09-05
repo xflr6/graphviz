@@ -59,6 +59,7 @@ def test_render(capsys, tmp_path, engine, format_, renderer, formatter,
 
     assert result == str(rendered)
 
+    assert rendered.exists()
     assert rendered.stat().st_size
     assert capsys.readouterr() == ('', '')
 
@@ -70,6 +71,7 @@ def test_render_img(capsys, tmp_path, files_path, engine='dot', format_='pdf'):
 
     img_path = subdir / 'dot_red.png'
     shutil.copy(files_path / img_path.name, img_path)
+    assert img_path.exists()
     assert img_path.stat().st_size
 
     gv_path = subdir / 'img.gv'
@@ -82,6 +84,7 @@ def test_render_img(capsys, tmp_path, files_path, engine='dot', format_='pdf'):
     with _common.as_cwd(tmp_path):
         assert graphviz.render(engine, format_, gv_rel) == str(rendered_rel)
 
+    assert rendered.exists()
     assert rendered.stat().st_size
     assert capsys.readouterr() == ('', '')
 
@@ -102,6 +105,7 @@ def test_render_outfile_differnt_parent(capsys, tmp_path,
 
     assert result == os.fspath(outfile)
 
+    assert outfile.exists()
     assert outfile.stat().st_size
 
     assert capsys.readouterr() == ('', '')

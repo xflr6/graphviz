@@ -57,6 +57,7 @@ def test_subgraph_render(capsys, tmp_path, cls, expected):
 
     assert lpath.read_text(encoding='ascii') == expected
 
+    assert rendered.exists()
     assert rendered.stat().st_size
     assert capsys.readouterr() == ('', '')
 
