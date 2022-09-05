@@ -48,7 +48,7 @@ Tests
 
 - GitHub Actions
   `Build workflow <https://github.com/xflr6/graphviz/actions/workflows/build.yaml>`_
-  (Python 3.7 to 3.10, experimental: PyPy 3.7 to 3.8)
+  (Python 3.7 to 3.10, experimental: PyPy 3.7 to 3.9)
 - Codecov
   `test coverage <https://app.codecov.io/gh/xflr6/graphviz>`_
   (`main branch <https://app.codecov.io/gh/xflr6/graphviz/branch/master>`_)
