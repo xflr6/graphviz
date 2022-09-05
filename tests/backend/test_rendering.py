@@ -44,7 +44,9 @@ def test_render_unknown_parameter_raises(args, expected_exception, match):
 @pytest.mark.parametrize(
     'format_, renderer, formatter, expected_suffix',
     [('pdf', None, None, 'pdf'),
-     ('plain', 'dot', 'core', 'core.dot.plain')])
+     pytest.param('plain', 'dot', 'core', 'core.dot.plain',
+         marks=pytest.mark.xfail('graphviz.version() == (5, 0, 1)',
+         reason='https://gitlab.com/graphviz/graphviz/-/issues/2270'))])
 @pytest.mark.parametrize('engine', ['dot'])
 def test_render(capsys, tmp_path, engine, format_, renderer, formatter,
                 expected_suffix, filename='hello.gv',
