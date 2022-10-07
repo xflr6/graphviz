@@ -18,6 +18,7 @@ setup(
         'Coverage': 'https://codecov.io/gh/xflr6/graphviz',
     },
     packages=find_packages(),
+    package_data={pkg_name: ["py.typed"] for pkg_name in find_packages()},
     platforms='any',
     python_requires='>=3.7',
     extras_require={
