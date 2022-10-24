@@ -47,7 +47,7 @@ jobs:
             os: ubuntu-latest
     steps:
       - name: Checkout source repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Apt install system dependencies (linux unless -skip-exe)
         if: ${{ startsWith(matrix.name, 'linux-') && !contains(matrix.name, '-skip-exe') }}
         run: |
@@ -91,7 +91,7 @@ jobs:
           echo "::notice::Choco installed ${DOT_VERSION#dot - }"
         shell: bash
       - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
       - name: Pip install dependencies
@@ -111,7 +111,7 @@ jobs:
       - name: Run tests with --skip-exe (always included)
         run: python run-tests.py --skip-exe --cov-append
       - name: Upload test coverage
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
       - name: Check test coverage
         run: |
           echo "::group::Run coverage report --fail-under=100 --show-missing --skip-covered"
@@ -173,7 +173,7 @@ jobs:
           [ $FAILED -eq 0 ] || echo "::warning::pytype failed with exit code $FAILED"
         shell: bash
       - name: Upload ${{ matrix.name }} artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.name }}
           path: |
