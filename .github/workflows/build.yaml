@@ -10,24 +10,24 @@ jobs:
       matrix:
         include:
           - name: linux-3.11
-            python-version: "3.11.0-rc.1 - 3.11"
+            python-version: "3.11"
             os: ubuntu-latest
-          - name: linux-3.10
-            python-version: "3.10"
-            os: ubuntu-latest
-          - name: windows-3.10
-            python-version: "3.10"
+          - name: windows-3.11
+            python-version: "3.11"
             os: windows-latest
           - name: macos-12-skip-exe
-            python-version: "3.10"
+            python-version: "3.11"
             os: macos-12
           - name: macos-11-skip-exe
-            python-version: "3.10"
+            python-version: "3.11"
             os: macos-11
-          - name: linux-3.10-lint-update-help-skip-exe
+          - name: linux-3.11-lint-update-help-skip-exe
+            python-version: "3.11"
+            os: ubuntu-latest
+          - name: linux-3.10-pytype-skip-exe
             python-version: "3.10"
             os: ubuntu-latest
-          - name: linux-3.9-pytype-skip-exe
+          - name: linux-3.9-skip-exe
             python-version: "3.9"
             os: ubuntu-latest
           - name: linux-3.8-skip-exe
