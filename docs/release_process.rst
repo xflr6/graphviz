@@ -27,7 +27,7 @@ Update ``help()`` output:
 
 .. code:: bash
 
-    $ ./update-help.py
+    $ python update-help.py
 
 Set **release version** (remove ``.dev0`` from ``$MAJOR.$MINOR[.$BUGFIX]`` version):
 
@@ -44,9 +44,9 @@ Run the tests, lint the code, and build the documentation:
 .. code:: bash
 
     $ python -m tox -r -- -W error  # --recreate, raise error on warning
-    $ ./lint-code.py --disable-noqa
-    $ ./build-docs.py -b doctest
-    $ ./build-docs.py
+    $ python lint-code.py --disable-noqa
+    $ python build-docs.py -b doctest
+    $ python build-docs.py
     $ git clean -f -d -x
 
 Commit to ``release`` branch and push to ``origin``:

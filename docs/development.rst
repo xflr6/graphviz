@@ -57,14 +57,14 @@ Tests
 
 .. code:: bash
 
-    $ ./run-tests.py
+    $ python run-tests.py
 
 Run **only tests** that are expected to ``PASS`` or ``XFAIL``
 **without Graphviz** executables:
 
 .. code:: bash
 
-    $ ./run-tests.py --skip-exe
+    $ python run-tests.py --skip-exe
 
 **Run the tests** with tox_ (**installing** into a virtualenv_ or many of them):
 
@@ -86,7 +86,7 @@ and `Python versions <pytype_python_versions_>`_):
 
 .. code:: bash
 
-    $ ./lint-code.py
+    $ python lint-code.py
 
 
 Documentation
@@ -102,7 +102,7 @@ Documentation
 
 .. code:: bash
 
-    $ ./build-docs.py
+    $ python build-docs.py
 
 
 Overview
