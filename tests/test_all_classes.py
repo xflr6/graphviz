@@ -223,6 +223,12 @@ def test_save_mocked(mocker, dot, filename='nonfilename', directory='nondirector
     assert mock_open.return_value.write.call_args_list == expected_calls
 
 
+@pytest.mark.exe
+def test_pipe(dot, encoding='utf-8'):
+    svg = dot.pipe(format='svg', encoding='utf-8')
+    assert svg.startswith('<?xml ')
+
+
 @pytest.mark.parametrize(
     'encoding', [None, 'ascii', 'utf-8'])
 def test_pipe_mocked(mocker, mock_pipe_lines, mock_pipe_lines_string, quiet,
