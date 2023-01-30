@@ -225,7 +225,7 @@ def test_save_mocked(mocker, dot, filename='nonfilename', directory='nondirector
 
 @pytest.mark.exe
 def test_pipe(dot, encoding='utf-8'):
-    svg = dot.pipe(format='svg', encoding='utf-8')
+    svg = dot.pipe(format='svg', encoding=encoding)
     assert svg.startswith('<?xml ')
 
 
