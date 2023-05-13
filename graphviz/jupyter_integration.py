@@ -110,3 +110,5 @@ class JupyterIntegration(piping.Pipe):
     def _repr_image_svg_xml(self) -> str:
         """Return the rendered graph as SVG string."""
         return self.pipe(format='svg', encoding=SVG_ENCODING)
+
+    _repr_html_ = _repr_image_svg_xml

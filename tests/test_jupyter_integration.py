@@ -58,3 +58,10 @@ def test_repr_image_svg_xml_encoding_mocked(mocker, mock_pipe_lines_string,
         assert 'encoding' not in mock_pipe_lines.call_args.kwargs
         (mock_pipe_lines.return_value.decode
          .assert_called_once_with(EXPECTED_SVG_ENCODING))
+
+
+@pytest.mark.exe
+def test_repr_html_gives_svg_xml():
+    dot = graphviz.Graph()
+
+    assert dot._repr_html_() == dot._repr_image_svg_xml()

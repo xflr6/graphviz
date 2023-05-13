@@ -27,5 +27,7 @@ that is used for displaying in IPython/Jupyter.
     :class:`.Graph` or :class:`.Digraph` as SVG, PNG or JPEG
     in IPython/Jupyter.
 
+They also have a `_repr_html_` method that returns the SVG description, which is
+valid HTML. This is used by, e.g., sphinx-gallery to directly display the graph.
 
 .. include:: _links.rst
