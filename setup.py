@@ -28,6 +28,7 @@ setup(
         'docs': ['sphinx>=5,<7', 'sphinx-autodoc-typehints', 'sphinx-rtd-theme'],
     },
     long_description=pathlib.Path('README.rst').read_text(encoding='utf-8'),
+    long_description_content_type='text/x-rst',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
