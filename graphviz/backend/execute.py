@@ -59,9 +59,6 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
         CalledProcessError: if the returncode of the subprocess is non-zero.
     """
     log.debug('run %r', cmd)
-
-    cmd = list(map(_compat.make_subprocess_arg, cmd))
-
     if not kwargs.pop('check', True):  # pragma: no cover
         raise NotImplementedError('check must be True or omited')
 

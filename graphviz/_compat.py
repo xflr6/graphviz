@@ -1,17 +1,9 @@
-"""Python 3.7 to 3.8 compatibility and platform compatibility."""
+"""Python 3.8 compatibility and platform compatibility."""
 
-import os
 import platform
 import sys
-import typing
 
-PY38 = (sys.version_info < (3, 9))
-
-
-Literal: typing.Any
-
-
-if PY38:  # pragma: no cover
+if sys.version_info < (3, 9):  # pragma: no cover
     # pytype not supported
     import unittest.mock
 
@@ -39,14 +31,3 @@ if platform.system() == 'Windows':  # pragma: no cover
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW  # pytype: disable=module-attr
         startupinfo.wShowWindow = subprocess.SW_HIDE  # pytype: disable=module-attr
         return startupinfo
-
-
-def make_subprocess_arg(arg: typing.Union[str, os.PathLike]) -> typing.Union[str, os.PathLike]:
-    """Return subprocess argument as is (default no-op)."""
-    return arg
-
-
-if platform.system() == 'Windows' and sys.version_info < (3, 8):  # pragma: no cover
-    def make_subprocess_arg(arg: typing.Union[str, os.PathLike]) -> str:  # noqa: F811
-        """Workaround https://bugs.python.org/issue41649 (not backported)."""
-        return os.fspath(arg)

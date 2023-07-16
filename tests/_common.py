@@ -6,8 +6,6 @@ import pathlib
 import platform
 import subprocess
 
-from graphviz import _compat
-
 __all__ = ['EXPECTED_DOT_BINARY',
            'EXPECTED_UNFLATTEN_BINARY',
            'EXPECTED_DEFAULT_ENGINE',
@@ -16,9 +14,9 @@ __all__ = ['EXPECTED_DOT_BINARY',
            'as_cwd',
            'check_startupinfo', 'StartupinfoMatcher']
 
-EXPECTED_DOT_BINARY = _compat.make_subprocess_arg(pathlib.Path('dot'))
+EXPECTED_DOT_BINARY = pathlib.Path('dot')
 
-EXPECTED_UNFLATTEN_BINARY = _compat.make_subprocess_arg(pathlib.Path('unflatten'))
+EXPECTED_UNFLATTEN_BINARY = pathlib.Path('unflatten')
 
 EXPECTED_DEFAULT_ENGINE = 'dot'
 
