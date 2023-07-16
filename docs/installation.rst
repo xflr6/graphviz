@@ -2,7 +2,7 @@ Installation
 ------------
 
 :doc:`graphviz <api>` provides a simple pure-Python interface for the Graphviz_
-graph-drawing software. It runs under Python 3.7+. To install it with pip_, run
+graph-drawing software. It runs under Python 3.8+. To install it with pip_, run
 the following:
 
 .. code:: bash

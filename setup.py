@@ -19,7 +19,7 @@ setup(
     },
     packages=find_packages(),
     platforms='any',
-    python_requires='>=3.7',
+    python_requires='>=3.8',
     extras_require={
         'dev': ['tox>=3', 'flake8', 'pep8-naming', 'wheel', 'twine'],
         'test': ['pytest>=7',
