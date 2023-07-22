@@ -138,7 +138,7 @@ jobs:
           echo "::endgroup::"
           SEVERITY=warning
           ${{ startsWith(matrix.name, 'windows-') }} && SEVERITY=notice
-          [ $FAILED -eq 0 ] || echo "::$SEVERITY::try-examples.py failed with exit code $FAILED (XFAIL on Windows cbuild)"
+          [ $FAILED -eq 0 ] || echo "::$SEVERITY::try-examples.py failed with exit code $FAILED (XFAIL 'Graphviz not built with triangulation library' on Windows cbuild)"
         shell: bash
       - name: Run lint-code.py (if -lint)
         if: ${{ contains(matrix.name, '-lint') }}
