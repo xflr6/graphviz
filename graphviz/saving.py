@@ -17,7 +17,7 @@ log = logging.getLogger(__name__)
 class Save(encoding.Encoding, base.Base):
     """Save DOT source lines to file."""
 
-    directory: str = ''
+    directory: typing.Union[str, bytes] = ''
 
     _default_extension = _defaults.DEFAULT_SOURCE_EXTENSION
 
