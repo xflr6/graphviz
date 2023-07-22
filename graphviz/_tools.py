@@ -77,7 +77,7 @@ def promote_pathlike(filepath: None, /) -> None:
 
 
 @typing.overload
-def promote_pathlike(filepath: typing.Union[os.PathLike, str, None], /
+def promote_pathlike(filepath: typing.Union[os.PathLike, str, None], /,
                      ) -> typing.Optional[pathlib.Path]:
     """Return path object or ``None`` depending on ``filepath``."""
 
