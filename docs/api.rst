@@ -1380,7 +1380,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  ----------------------------------------------------------------------
      |  Data and other attributes defined here:
      |
-     |  __annotations__ = {}
+     |  __annotations__ = {'_loaded_from_path': typing.Optional[os.PathLike], ...
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.rendering.Render:
