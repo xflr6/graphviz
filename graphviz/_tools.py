@@ -20,7 +20,7 @@ __all__ = ['attach',
 log = logging.getLogger(__name__)
 
 
-def attach(object: typing.Any, name: str) -> typing.Callable:
+def attach(object: typing.Any, /, name: str) -> typing.Callable:
     """Return a decorator doing ``setattr(object, name)`` with its argument.
 
     >>> spam = type('Spam', (object,), {})()  # doctest: +NO_EXE
@@ -39,7 +39,7 @@ def attach(object: typing.Any, name: str) -> typing.Callable:
     return decorator
 
 
-def mkdirs(filename: typing.Union[os.PathLike, str], *, mode: int = 0o777) -> None:
+def mkdirs(filename: typing.Union[os.PathLike, str], /, *, mode: int = 0o777) -> None:
     """Recursively create directories up to the path of ``filename``
         as needed."""
     dirname = os.path.dirname(filename)
@@ -49,7 +49,7 @@ def mkdirs(filename: typing.Union[os.PathLike, str], *, mode: int = 0o777) -> No
     os.makedirs(dirname, mode=mode, exist_ok=True)
 
 
-def mapping_items(mapping):
+def mapping_items(mapping, /):
     """Return an iterator over the ``mapping`` items,
         sort if it's a plain dict.
 
@@ -67,17 +67,17 @@ def mapping_items(mapping):
 
 
 @typing.overload
-def promote_pathlike(filepath: typing.Union[os.PathLike, str]) -> pathlib.Path:
+def promote_pathlike(filepath: typing.Union[os.PathLike, str], /) -> pathlib.Path:
     """Return path object for path-like-object."""
 
 
 @typing.overload
-def promote_pathlike(filepath: None) -> None:
+def promote_pathlike(filepath: None, /) -> None:
     """Return None for None."""
 
 
 @typing.overload
-def promote_pathlike(filepath: typing.Union[os.PathLike, str, None]
+def promote_pathlike(filepath: typing.Union[os.PathLike, str, None], /
                      ) -> typing.Optional[pathlib.Path]:
     """Return path object or ``None`` depending on ``filepath``."""
 
@@ -92,7 +92,7 @@ def promote_pathlike(filepath: typing.Union[os.PathLike, str, None]
     return pathlib.Path(filepath) if filepath is not None else None
 
 
-def promote_pathlike_directory(directory: typing.Union[os.PathLike, str, None], *,
+def promote_pathlike_directory(directory: typing.Union[os.PathLike, str, None], /, *,
                                default: typing.Union[os.PathLike, str, None] = None,
                                ) -> pathlib.Path:
     """Return path-like object ``directory`` promoted into a path object (default to ``os.curdir``).
