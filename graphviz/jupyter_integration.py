@@ -14,15 +14,17 @@ _IMAGE_JPEG = 'image/jpeg'
 JUPYTER_FORMATS = {'jpeg': _IMAGE_JPEG,
                    'jpg': _IMAGE_JPEG,
                    'png': 'image/png',
-                   'svg': 'image/svg+xml'}
+                   'svg': 'image/svg+xml',
+                   'html': 'text/html'}
 
 SUPPORTED_JUPYTER_FORMATS = set(JUPYTER_FORMATS)
 
-DEFAULT_JUPYTER_FORMAT = next(_ for _ in SUPPORTED_JUPYTER_FORMATS if _ == 'svg')
+DEFAULT_JUPYTER_FORMAT = next(_ for _ in SUPPORTED_JUPYTER_FORMATS if _ == 'html')
 
 MIME_TYPES = {'image/jpeg': '_repr_image_jpeg',
               'image/png': '_repr_image_png',
-              'image/svg+xml': '_repr_image_svg_xml'}
+              'image/svg+xml': '_repr_image_svg_xml',
+              'text/html': '_repr_image_svg_xml'}
 
 assert MIME_TYPES.keys() == set(JUPYTER_FORMATS.values())
 
