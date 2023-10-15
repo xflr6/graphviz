@@ -63,7 +63,7 @@ Check the generated DOT source code:
 
 Use the :meth:`~.Graph.render` method to save the DOT source code
 and render it with the default ``dot`` `layout engine <DOT layouts_>`_
-(see :ref:`below <engines>` for using other layout engines). 
+(see :ref:`below <engines>` for using other layout engines).
 
 .. doctest::
 

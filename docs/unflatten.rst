@@ -1,7 +1,7 @@
 Unflatten
 ---------
 
-To prepocess the DOT_ source of a :class:`.Graph` or :class:`.Digraph` with
+To prerpocess the DOT_ source of a :class:`.Graph` or :class:`.Digraph` with
 the `unflatten <DOT unflatten>`_ preprocessor
 (`manpage <DOT unflatten_>`_, `PDF <DOT unflatten_pdf_>`_),
 use the :meth:`~.Graph.unflatten` method.

@@ -37,7 +37,7 @@ Install in a venv_ in development mode (includes all ``extras_require``):
 
 .. hint::
 
-    alteratively: ``pip install -e .[dev,test,docs]``
+    alternatively: ``pip install -e .[dev,test,docs]``
     (same as ``pip install -r requirements.txt``)
 
 
@@ -120,7 +120,7 @@ Use ``help()`` in the REPL to shows/structure methods and attributes in dependen
     In the above, cooperative multiple inheritance classes reveal their
     (diamond) MRO structure and methods are shown in **method resolution order** (MRO),
     which should be an extension of their dependency relation...
-    
+
     TLDR; you might find this presentation helps to follow the implementation.
 
 

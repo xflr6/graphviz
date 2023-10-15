@@ -1,7 +1,7 @@
 Attributes
 ----------
 
-To directly add DOT_ ``att_stmt`` attribute statements, 
+To directly add DOT_ ``att_stmt`` attribute statements,
 call the :meth:`~.Graph.attr` method
 of the :class:`.Graph` or :class:`.Digraph` instance
 with the wanted target as first argument and the attributes as keyword args.

@@ -2,7 +2,7 @@ Existing files
 --------------
 
 To directly render an existing DOT_ source file (e.g. created with other tools),
-you can use the :func:`graphviz.render` function. 
+you can use the :func:`graphviz.render` function.
 
 .. doctest::
 
@@ -43,7 +43,7 @@ Call ``.save(skip_existing=False)`` if you want to re-write the loaded source.
     :meth:`.Source.save`, :meth:`.Source.render`, and :meth:`.Source.view`,
     wrote the content read into source back into the file.
     It was advised to use :func:`graphviz.render` and :func:`graphviz.view`
-    to directly work on files if the superflous saving needed to be avoided.
+    to directly work on files if the superfluous saving needed to be avoided.
 
 
 .. include:: _links.rst
