@@ -6,7 +6,7 @@ Examples
 .. tip::
 
     The following code examples are included in the ``examples/`` directory of the
-    `source repository/distribution <examples directory_>`_. 
+    `source repository/distribution <examples directory_>`_.
 
 .. note::
 
@@ -16,7 +16,7 @@ Examples
 .. include:: _links.rst
 
 
-hello.py 
+hello.py
 --------
 
 .. literalinclude:: ../examples/hello.py

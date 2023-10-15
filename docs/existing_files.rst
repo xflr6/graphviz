@@ -2,7 +2,7 @@ Existing files
 --------------
 
 To directly render an existing DOT_ source file (e.g. created with other tools),
-you can use the :func:`graphviz.render` function. 
+you can use the :func:`graphviz.render` function.
 
 .. doctest::
 

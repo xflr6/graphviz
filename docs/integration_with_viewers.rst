@@ -37,7 +37,7 @@ Other options:
 
 - use a viewer that `support live updates <live viewer updates_>`_
 
-- use the `Jupyter notebook`_ or `Qt Console <Jupyter Qt Console_>`_ 
+- use the `Jupyter notebook`_ or `Qt Console <Jupyter Qt Console_>`_
   (display the current version of the rendered graph
   in repeated add/render/view cycles)
 

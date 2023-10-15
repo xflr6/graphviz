@@ -120,7 +120,7 @@ Use ``help()`` in the REPL to shows/structure methods and attributes in dependen
     In the above, cooperative multiple inheritance classes reveal their
     (diamond) MRO structure and methods are shown in **method resolution order** (MRO),
     which should be an extension of their dependency relation...
-    
+
     TLDR; you might find this presentation helps to follow the implementation.
 
 
