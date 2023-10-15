@@ -37,7 +37,7 @@ Install in a venv_ in development mode (includes all ``extras_require``):
 
 .. hint::
 
-    alteratively: ``pip install -e .[dev,test,docs]``
+    alternatively: ``pip install -e .[dev,test,docs]``
     (same as ``pip install -r requirements.txt``)
 
 

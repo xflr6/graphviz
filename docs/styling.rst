@@ -2,7 +2,7 @@ Styling
 -------
 
 Use the ``graph_attr``, ``node_attr``, and ``edge_attr`` arguments
-of the :class:`.Graph` and :class:`.Digraph` constuctors to change
+of the :class:`.Graph` and :class:`.Digraph` constructors to change
 the default `attributes <DOT attrs_>`_ for your graph, nodes, and edges.
 
 .. doctest::

@@ -2,7 +2,7 @@ Integration with viewers
 ------------------------
 
 On platforms such as Windows, viewer programs opened by :meth:`~.Graph.render`
-with ``view=True`` (or eqivalently with the :meth:`~.Graph.view` shortcut-method)
+with ``view=True`` (or equivalently with the :meth:`~.Graph.view` shortcut-method)
 might **lock** the (PDF, PNG, etc.) file for as long as the viewer is open
 (blocking re-rendering it with a ``Permission denied`` error).
 
