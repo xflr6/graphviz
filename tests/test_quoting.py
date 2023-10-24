@@ -1,3 +1,4 @@
+import sys
 import warnings
 
 import pytest
@@ -14,7 +15,8 @@ def test_deprecated_escape(recwarn, char):
     escape = eval(rf'"\{char}"')
 
     assert len(recwarn) == 1
-    w = recwarn.pop(DeprecationWarning)
+    w = recwarn.pop(DeprecationWarning if sys.version_info < (3, 12)
+                    else SyntaxWarning)
     assert str(w.message).startswith('invalid escape sequence')
 
     assert escape == f'\\{char}'
