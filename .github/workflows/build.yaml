@@ -9,8 +9,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: linux-3.11
-            python-version: "3.11"
+          - name: linux-3.12
+            python-version: "3.12"
             os: ubuntu-latest
           - name: windows-3.11
             python-version: "3.11"
@@ -21,7 +21,10 @@ jobs:
           - name: macos-11-skip-exe
             python-version: "3.11"
             os: macos-11
-          - name: linux-3.11-lint-update-help-skip-exe
+          - name: linux-3.12-lint-update-help-skip-exe
+            python-version: "3.12"
+            os: ubuntu-latest
+          - name: linux-3.11-skip-exe
             python-version: "3.11"
             os: ubuntu-latest
           - name: linux-3.10-pytype-skip-exe
