@@ -15,12 +15,9 @@ jobs:
           - name: windows-3.12
             python-version: "3.12"
             os: windows-latest
-          - name: macos-12-skip-exe
+          - name: macos-3.12-skip-exe
             python-version: "3.12"
-            os: macos-12
-          - name: macos-11-skip-exe
-            python-version: "3.12"
-            os: macos-11
+            os: macos-latest
           - name: linux-3.12-lint-update-help-skip-exe
             python-version: "3.12"
             os: ubuntu-latest
