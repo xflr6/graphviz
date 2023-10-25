@@ -504,7 +504,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          outfile: Path for the rendered output file.
      |          engine: Layout engine for rendering
      |              (``'dot'``, ``'neato'``, ...).
-     |          raise_if_result_exits: Raise :exc:`graphviz.FileExistsError`
+     |          raise_if_result_exists: Raise :exc:`graphviz.FileExistsError`
      |              if the result file exists.
      |          overwrite_source: Allow ``dot`` to write to the file it reads from.
      |              Incompatible with ``raise_if_result_exists``.
@@ -1016,7 +1016,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          outfile: Path for the rendered output file.
      |          engine: Layout engine for rendering
      |              (``'dot'``, ``'neato'``, ...).
-     |          raise_if_result_exits: Raise :exc:`graphviz.FileExistsError`
+     |          raise_if_result_exists: Raise :exc:`graphviz.FileExistsError`
      |              if the result file exists.
      |          overwrite_source: Allow ``dot`` to write to the file it reads from.
      |              Incompatible with ``raise_if_result_exists``.
@@ -1425,7 +1425,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |          outfile: Path for the rendered output file.
      |          engine: Layout engine for rendering
      |              (``'dot'``, ``'neato'``, ...).
-     |          raise_if_result_exits: Raise :exc:`graphviz.FileExistsError`
+     |          raise_if_result_exists: Raise :exc:`graphviz.FileExistsError`
      |              if the result file exists.
      |          overwrite_source: Allow ``dot`` to write to the file it reads from.
      |              Incompatible with ``raise_if_result_exists``.

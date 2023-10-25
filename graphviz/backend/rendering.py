@@ -222,7 +222,7 @@ def render(engine: str,
         neato_no_op: Neato layout engine no-op flag.
         quiet: Suppress ``stderr`` output from the layout subprocess.
         outfile: Path for the rendered output file.
-        raise_if_result_exits: Raise :exc:`graphviz.FileExistsError`
+        raise_if_result_exists: Raise :exc:`graphviz.FileExistsError`
             if the result file exists.
         overwrite_filepath: Allow ``dot`` to write to the file it reads from.
             Incompatible with ``raise_if_result_exists``.
