@@ -5,7 +5,9 @@ Changelog
 Version 0.20.2 (in development)
 -------------------------------
 
-Drop Python 3.7 support. Tag Python 3.11 support.
+Drop Python 3.7 support (end of life 27 Jun 2023).
+
+Tag Python 3.11 and 3.12 support.
 
 
 Version 0.20.1
