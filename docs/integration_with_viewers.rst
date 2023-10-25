@@ -25,7 +25,7 @@ might **lock** the (PDF, PNG, etc.) file for as long as the viewer is open
 
 .. doctest::
 
-    >>> doctest_mark_exe()
+    >>> doctest_mark_exe()  # skip this line
 
     >>> g.view(tempfile.mktemp('.gv'))  # doctest: +SKIP
     'C:\\Users\\User\\AppData\\Local\\Temp\\tmp3aoie8d0.gv.pdf'

@@ -9,6 +9,8 @@ Drop Python 3.7 support (end of life 27 Jun 2023).
 
 Tag Python 3.11 and 3.12 support.
 
+Document that `doctest_skip_exe()` lines in doctest should be ignored.
+
 
 Version 0.20.1
 --------------

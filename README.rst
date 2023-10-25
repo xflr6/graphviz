@@ -102,11 +102,11 @@ Check the generated source code:
         B -> L [constraint=false]
     }
 
-Save and render the source code:
+Save and render the source code (skip/ignore any ``doctest_mark_exe()`` lines):
 
 .. code:: python
 
-    >>> doctest_mark_exe()
+    >>> doctest_mark_exe()  # skip this line
 
     >>> dot.render('doctest-output/round-table.gv').replace('\\', '/')
     'doctest-output/round-table.gv.pdf'
@@ -115,7 +115,7 @@ Save and render and view the result:
 
 .. code:: python
 
-    >>> doctest_mark_exe()
+    >>> doctest_mark_exe()  # skip this line
 
     >>> dot.render('doctest-output/round-table.gv', view=True)  # doctest: +SKIP
     'doctest-output/round-table.gv.pdf'

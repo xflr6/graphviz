@@ -17,7 +17,7 @@ object:
 
 .. doctest::
 
-    >>> doctest_mark_exe()
+    >>> doctest_mark_exe()  # skip this line
 
     >>> dot = graphviz.Digraph('hello')
     >>> dot.edge('hello', 'world')

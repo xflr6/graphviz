@@ -65,9 +65,12 @@ Use the :meth:`~.Graph.render` method to save the DOT source code
 and render it with the default ``dot`` `layout engine <DOT layouts_>`_
 (see :ref:`below <engines>` for using other layout engines).
 
+.. attention::
+    Skip/ignore any ``doctest_mark_exe()`` lines in documentation code examples.
+
 .. doctest::
 
-    >>> doctest_mark_exe()
+    >>> doctest_mark_exe()  # skip this line
 
     >>> dot.render(directory='doctest-output').replace('\\', '/')
     'doctest-output/round-table.gv.pdf'
@@ -78,7 +81,7 @@ for the rendered file type.
 
 .. doctest::
 
-    >>> doctest_mark_exe()
+    >>> doctest_mark_exe()  # skip this line
 
     >>> dot.render(directory='doctest-output', view=True)  # doctest: +SKIP
     'doctest-output/round-table.gv.pdf'

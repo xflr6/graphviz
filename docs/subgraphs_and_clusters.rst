@@ -62,7 +62,7 @@ and ``encoding``:
 
 .. doctest::
 
-    >>> doctest_mark_exe()
+    >>> doctest_mark_exe()  # skip this line
 
     >>> p = graphviz.Graph('parent', directory='doctest-output')
 

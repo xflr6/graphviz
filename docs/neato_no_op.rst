@@ -14,7 +14,7 @@ to pass it to the layout command:
 
 .. doctest::
 
-    >>> doctest_mark_exe()
+    >>> doctest_mark_exe()  # skip this line
 
     >>> import graphviz
 

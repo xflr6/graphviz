@@ -17,7 +17,7 @@ of your :class:`.Graph` or :class:`.Digraph` object:
 
 .. doctest::
 
-    >>> doctest_mark_exe()
+    >>> doctest_mark_exe()  # skip this line
 
     >>> h.pipe(format='pdf')[:4]
     b'%PDF'

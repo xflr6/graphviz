@@ -57,7 +57,7 @@ parenthesis and apply normal quoting/escaping:
 
 .. doctest::
 
-    >>> doctest_mark_exe()
+    >>> doctest_mark_exe()  # skip this line
 
     >>> d.render(directory='doctest-output').replace('\\', '/')
     'doctest-output/diamond.gv.svg'

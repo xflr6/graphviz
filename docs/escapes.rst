@@ -62,7 +62,7 @@ use the :func:`graphviz.escape` function
 
 .. doctest::
 
-    >>> doctest_mark_exe()
+    >>> doctest_mark_exe()  # skip this line
 
     >>> bs.render(format='svg', directory='doctest-output').replace('\\', '/')
     'doctest-output/literal_backslash.gv.svg'

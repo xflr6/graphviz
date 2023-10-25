@@ -19,14 +19,14 @@ Use the :meth:`~.Source.render` method to save and render it:
 
 .. doctest::
 
-    >>> doctest_mark_exe()
+    >>> doctest_mark_exe()  # skip this line
 
     >>> src.render('doctest-output/holy-grenade.gv').replace('\\', '/')
     'doctest-output/holy-grenade.gv.pdf'
 
 .. doctest::
 
-    >>> doctest_mark_exe()
+    >>> doctest_mark_exe()  # skip this line
 
     >>> src.render('doctest-output/holy-grenade.gv', view=True).replace('\\', '/')  # doctest: +SKIP
     'doctest-output/holy-grenade.gv.pdf'

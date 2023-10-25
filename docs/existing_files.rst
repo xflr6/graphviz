@@ -6,7 +6,7 @@ you can use the :func:`graphviz.render` function.
 
 .. doctest::
 
-    >>> doctest_mark_exe()
+    >>> doctest_mark_exe()  # skip this line
 
     >>> import pathlib
     >>> import graphviz

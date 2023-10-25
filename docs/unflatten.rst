@@ -16,7 +16,7 @@ use the :meth:`~.Graph.unflatten` method.
 
 .. doctest::
 
-    >>> doctest_mark_exe()
+    >>> doctest_mark_exe()  # skip this line
 
     >>> w.view()  # doctest: +SKIP
 
@@ -34,7 +34,7 @@ use the :meth:`~.Graph.unflatten` method.
 
 .. doctest::
 
-    >>> doctest_mark_exe()
+    >>> doctest_mark_exe()  # skip this line
 
     >>> u.view()  # doctest: +SKIP
 
@@ -54,7 +54,7 @@ with the same basic API as :class:`.Graph` or :class:`.Digraph` objects
 
 .. doctest::
 
-    >>> doctest_mark_exe()
+    >>> doctest_mark_exe()  # skip this line
 
     >>> u.view()  # doctest: +SKIP
 
