@@ -1,0 +1,48 @@
+import graphviz
+
+def generate_flow_diagram():
+    # Create a new Graphviz graph
+    graph = graphviz.Digraph(format='png')
+
+    # Define the process steps
+    steps = [
+        {
+            'name': 'Appoint Trusted Finance Administrator',
+            'substeps': [
+                'Select a reliable family member or caregiver with a clear understanding of the senior\'s finances.',
+                'Grant access to accounts for monitoring transactions, not for direct financial management.',
+                'The administrator acts as a vigilant observer, flagging potential scams but respecting the senior\'s autonomy.'
+            ]
+        },
+        {
+            'name': 'Collaborate with the Financial Institution',
+            'substeps': [
+                'Establish real-time alerts for suspicious activities based on pre-defined criteria.',
+                'Work closely with the institution to refine and update these criteria as needed.',
+                'Ensure prompt notification of any flagged transactions for further investigation.'
+            ]
+        },
+        {
+            'name': 'Maintain Open Communication',
+            'substeps': [
+                'Encourage regular communication among the senior, administrator, and financial institution.',
+                'Discuss concerns and updates openly to ensure transparency and coordinated action.',
+                'Build a strong collaborative relationship to proactively prevent fraudulent activities.'
+            ]
+        }
+    ]
+
+    # Add nodes and edges to the graph
+    for step in steps:
+        # Add the step as a node
+        graph.node(step['name'])
+
+        # Add substeps as edges from the step node
+        for substep in step['substeps']:
+            graph.edge(step['name'], substep)
+
+    # Render the graph and save it to a file
+    graph.render(filename='flow_diagram', directory='.', cleanup=True, format='png')
+
+# Generate the flow diagram
+generate_flow_diagram()
