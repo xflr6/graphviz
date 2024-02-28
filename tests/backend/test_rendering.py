@@ -1,3 +1,4 @@
+import contextlib
 import pathlib
 import os
 import shutil
@@ -35,8 +36,12 @@ def test_render_missing_file(quiet, engine='dot', format_='pdf'):
       graphviz.RequiredArgumentError, r'without renderer'),
      (['dot', 'ps', 'nonfilepath', 'ps', ''], ValueError, r'unknown formatter')],
     ids=lambda x: getattr(x, '__name__', x))
-def test_render_unknown_parameter_raises(args, expected_exception, match):
-    with pytest.raises(expected_exception, match=match), pytest.deprecated_call():
+def test_render_unknown_parameter_raises(args, expected_exception, match,
+                                         supported_number=3):
+    checker = (pytest.deprecated_call(match=rf'{supported_number:d} positional args')
+               if len(args) > supported_number
+               else contextlib.nullcontext())
+    with pytest.raises(expected_exception, match=match), checker:
         graphviz.render(*args)
 
 
