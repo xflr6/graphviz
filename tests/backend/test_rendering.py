@@ -60,7 +60,7 @@ def test_render(capsys, tmp_path, engine, format_, renderer, formatter,
     assert lpath.write_bytes(data) == len(data) == lpath.stat().st_size
     rendered = lpath.with_suffix(f'{lpath.suffix}.{expected_suffix}')
 
-    with pytest.deprecated_call():
+    with pytest.deprecated_call(match=r'3 positional args'):
         result = graphviz.render(engine, format_, str(lpath),
                                  renderer, formatter)
 

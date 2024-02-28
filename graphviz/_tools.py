@@ -106,6 +106,7 @@ def promote_pathlike_directory(directory: typing.Union[os.PathLike, str, None], 
 
 def deprecate_positional_args(*,
                               supported_number: int,
+                              ignore_argnames: typing.Sequence[str] = ('cls', 'self'),
                               category: typing.Type[Warning] = PendingDeprecationWarning,
                               stacklevel: int = 1):
     """Mark supported_number of positional arguments as the maximum.
@@ -113,6 +114,8 @@ def deprecate_positional_args(*,
     Args:
         supported_number: Number of positional arguments
             for which no warning is raised.
+        ignore_argnames: Name(s) of arguments to ignore
+            ('cls' and 'self' by default).
         category: Type of Warning to raise
             or None to return a nulldecorator
             returning the undecorated function.
@@ -143,7 +146,8 @@ def deprecate_positional_args(*,
     def decorator(func):
         signature = inspect.signature(func)
         argnames = [name for name, param in signature.parameters.items()
-                    if param.kind == inspect.Parameter.POSITIONAL_OR_KEYWORD]
+                    if param.kind == inspect.Parameter.POSITIONAL_OR_KEYWORD
+                    and name not in ignore_argnames]
         log.debug('deprecate positional args: %s.%s(%r)',
                   func.__module__, func.__qualname__,
                   argnames[supported_number:])
@@ -162,7 +166,8 @@ def deprecate_positional_args(*,
                 wanted = ', '.join(f'{name}={value!r}'
                                    for name, value in deprecated.items())
                 warnings.warn(f'The signature of {func.__name__} will be reduced'
-                              f' to {supported_number} positional args'
+                              f' to {supported_number} positional arg'
+                              f"{'s' if supported_number > 1 else ''}"
                               f' {list(supported)}: pass {wanted}'
                               ' as keyword arg(s)',
                               stacklevel=stacklevel,
