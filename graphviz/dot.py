@@ -191,6 +191,12 @@ class Dot(quoting.Quote, base.Base):
             name: Unique identifier for the node inside the source.
             label: Caption to be displayed (defaults to the node ``name``).
             attrs: Any additional node attributes (must be strings).
+
+        Attention:
+            When rendering ``label``, backslash-escapes
+            and strings of the form ``<...>`` have a special meaning.
+            See the sections :ref:`backslash-escapes` and
+            :ref:`quoting-and-html-like-labels` in the user guide for details.
         """
         name = self._quote(name)
         attr_list = self._attr_list(label, kwargs=attrs, attributes=_attributes)
@@ -216,6 +222,12 @@ class Dot(quoting.Quote, base.Base):
             by (optional) colon(s) into ``node`` name, ``port`` name,
             and ``compass`` (e.g. ``sw``).
             See :ref:`details in the User Guide <node-ports-compass>`.
+
+        Attention:
+            When rendering ``label``, backslash-escapes
+            and strings of the form ``<...>`` have a special meaning.
+            See the sections :ref:`backslash-escapes` and
+            :ref:`quoting-and-html-like-labels` in the user guide for details.
         """
         tail_name = self._quote_edge(tail_name)
         head_name = self._quote_edge(head_name)
