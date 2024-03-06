@@ -9,7 +9,15 @@ Drop Python 3.7 support (end of life 27 Jun 2023).
 
 Tag Python 3.11 and 3.12 support.
 
-Document that `doctest_skip_exe()` lines in doctest should be ignored.
+Add caveat about ``labe`` escaping/quoting to ``.node()`` and ``.render()``
+API docs.
+
+Document that ``doctest_skip_exe()`` lines in doctest should be ignored.
+
+Improve internal ``tools.deprecate_positional_args()` decorator
+and fix incorect test assertion.
+
+Update GitHub actions.
 
 
 Version 0.20.1
