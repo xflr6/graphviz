@@ -43,7 +43,7 @@ Run the tests, lint the code, and build the documentation:
 
 .. code:: bash
 
-    $ python -m tox -r -- -W error  # --recreate, raise error on warning
+    $ python -m tox -r -- -W error -W ignore:"The signature of":PendingDeprecationWarning  # --recreate, raise error on warning
     $ python lint-code.py --disable-noqa
     $ python build-docs.py -b doctest
     $ python build-docs.py
