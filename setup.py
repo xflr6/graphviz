@@ -22,7 +22,7 @@ setup(
     python_requires='>=3.8',
     extras_require={
         'dev': ['tox>=3', 'flake8', 'pep8-naming', 'wheel', 'twine'],
-        'test': ['pytest>=7,<8.1',
+        'test': ['pytest>=7,<8.1',  # https://github.com/pytest-dev/pytest/issues/12123
                  'pytest-mock>=3',
                  'pytest-cov', 'coverage'],
         'docs': ['sphinx>=5,<7', 'sphinx-autodoc-typehints', 'sphinx-rtd-theme'],
