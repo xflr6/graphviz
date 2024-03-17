@@ -395,6 +395,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          and ``compass`` (e.g. ``sw``).
      |          See :ref:`details in the User Guide <node-ports-compass>`.
      |
+     |      Attention:
+     |          When rendering ``label``, backslash-escapes
+     |          and strings of the form ``<...>`` have a special meaning.
+     |          See the sections :ref:`backslash-escapes` and
+     |          :ref:`quoting-and-html-like-labels` in the user guide for details.
+     |
      |  edges(self, tail_head_iter) -> None
      |      Create a bunch of edges.
      |
@@ -419,6 +425,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          name: Unique identifier for the node inside the source.
      |          label: Caption to be displayed (defaults to the node ``name``).
      |          attrs: Any additional node attributes (must be strings).
+     |
+     |      Attention:
+     |          When rendering ``label``, backslash-escapes
+     |          and strings of the form ``<...>`` have a special meaning.
+     |          See the sections :ref:`backslash-escapes` and
+     |          :ref:`quoting-and-html-like-labels` in the user guide for details.
      |
      |  subgraph(self,
                  graph=None,
@@ -907,6 +919,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          and ``compass`` (e.g. ``sw``).
      |          See :ref:`details in the User Guide <node-ports-compass>`.
      |
+     |      Attention:
+     |          When rendering ``label``, backslash-escapes
+     |          and strings of the form ``<...>`` have a special meaning.
+     |          See the sections :ref:`backslash-escapes` and
+     |          :ref:`quoting-and-html-like-labels` in the user guide for details.
+     |
      |  edges(self, tail_head_iter) -> None
      |      Create a bunch of edges.
      |
@@ -931,6 +949,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          name: Unique identifier for the node inside the source.
      |          label: Caption to be displayed (defaults to the node ``name``).
      |          attrs: Any additional node attributes (must be strings).
+     |
+     |      Attention:
+     |          When rendering ``label``, backslash-escapes
+     |          and strings of the form ``<...>`` have a special meaning.
+     |          See the sections :ref:`backslash-escapes` and
+     |          :ref:`quoting-and-html-like-labels` in the user guide for details.
      |
      |  subgraph(self,
                  graph=None,
