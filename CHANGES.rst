@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.20.2 (in development)
--------------------------------
+Version 0.20.2
+--------------
 
 Drop Python 3.7 support (end of life 27 Jun 2023).
 

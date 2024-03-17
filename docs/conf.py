@@ -19,11 +19,11 @@ import graphviz
 # -- Project information -----------------------------------------------------
 
 project = 'graphviz'
-copyright = '2013-2022, Sebastian Bank'
+copyright = '2013-2024, Sebastian Bank'
 author = 'Sebastian Bank'
 
 # The full version, including alpha/beta/rc tags
-release = '0.20.2.dev0'
+release = '0.20.2'
 
 
 # -- General configuration ---------------------------------------------------
