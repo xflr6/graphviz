@@ -319,10 +319,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  Data descriptors inherited from graphviz.dot.GraphSyntax:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from BaseGraph:
@@ -843,10 +843,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  Data descriptors inherited from graphviz.dot.DigraphSyntax:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from BaseGraph:
@@ -1631,10 +1631,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  Data descriptors inherited from graphviz.base.LineIterable:
      |
      |  __dict__
-     |      dictionary for instance variables (if defined)
+     |      dictionary for instance variables
      |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
      |
      |  ----------------------------------------------------------------------
      |  Data descriptors inherited from graphviz.parameters.engines.Engine:
