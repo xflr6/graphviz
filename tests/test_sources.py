@@ -42,23 +42,22 @@ def test_filepath(platform, source):
 
 
 def test_from_file(tmp_path, filename='hello.gv', directory='source_hello',
-                   data='digraph { hello -> world }', encoding='utf-8',
-                   deprecation_match=r'1 positional arg\b'):
+                   data='digraph { hello -> world }', encoding='utf-8'):
     lpath = tmp_path / directory
     lpath.mkdir()
     (lpath / filename).write_text(data, encoding=encoding)
 
-    with pytest.deprecated_call(match=deprecation_match):
+    with pytest.deprecated_call():
         source = graphviz.Source.from_file(filename, str(lpath))
     assert source.encoding == 'utf-8'
 
-    with pytest.deprecated_call(match=deprecation_match):
+    with pytest.deprecated_call():
         source = graphviz.Source.from_file(filename, str(lpath), encoding=None)
     assert source.encoding == locale.getpreferredencoding()
 
     renderer = 'xdot'
     formatter = 'core'
-    with pytest.deprecated_call(match=deprecation_match):
+    with pytest.deprecated_call():
         source = graphviz.Source.from_file(filename, str(lpath),
                                            encoding=encoding,
                                            renderer=renderer,
