@@ -25,6 +25,10 @@ and fix incorect test assertion.
 
 Update GitHub actions.
 
+Pin ``pytest`` test dependency to ``<8.1`` as a work around
+for ``import file mismatch error`` related to ``conftest.py`` files,
+in ``pytest 8.1.1``, see https://github.com/pytest-dev/pytest/issues/12123.
+
 
 Version 0.20.1
 --------------
