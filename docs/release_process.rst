@@ -78,13 +78,6 @@ If changes are needed (and go back to: **Cleanup** step):
 
     $ git commit --amend --date=now
 
-Switch to main branch and merge ``release``:
-
-.. code:: bash
-
-    $ git switch master
-    $ git merge --ff-only release
-
 **Tag** with annotated release version tag:
 
 .. code:: bash
@@ -101,11 +94,18 @@ Document post-release:
 
 - add new ``Version $MAJOR.$MINOR[.$BUGFIX] (in development)`` heading to ``CHANGES.rst``
 
-Commit version bump to main branch:
+Commit version bump to ``relase`` branch:
 
 .. code:: bash
 
     $ git commit -m "bump version for development"
+
+Switch to main branch and merge ``release``:
+
+.. code:: bash
+
+    $ git switch master
+    $ git merge --ff-only release
 
 
 Publish
