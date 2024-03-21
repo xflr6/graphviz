@@ -2,10 +2,13 @@ Changelog
 =========
 
 
-Version 0.20.3 (in development)
--------------------------------
+Version 0.20.3
+--------------
 
-
+Revert improvements to the internal ``tools.deprecate_positional_args()``
+decorator that caused false positive
+``PendingDeprecationWarning: The signature of ... will be reduced``
+warnings that have been misinterpreted in the 0.20.2 release process.
 
 
 Version 0.20.2
@@ -25,7 +28,7 @@ and fix incorect test assertion.
 
 Update GitHub actions.
 
-Pin ``pytest`` test dependency to ``<8.1`` as a work around
+Pin ``pytest`` test dependency to ``<8.1`` as a workaround
 for ``import file mismatch error`` related to ``conftest.py`` files,
 in ``pytest 8.1.1``, see https://github.com/pytest-dev/pytest/issues/12123.
 

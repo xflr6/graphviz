@@ -23,7 +23,7 @@ copyright = '2013-2024, Sebastian Bank'
 author = 'Sebastian Bank'
 
 # The full version, including alpha/beta/rc tags
-release = '0.20.3.dev0'
+release = '0.20.3'
 
 
 # -- General configuration ---------------------------------------------------
