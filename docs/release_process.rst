@@ -60,7 +60,7 @@ Commit to ``release`` branch and push to ``origin``:
 - Check GitHub Actions ``relase`` `Build workflow
   <https://github.com/xflr6/graphviz/actions?query=branch%3Arelease>`_
 - Check Codecov ``release`` build `test coverage
-  <https://app.codecov.io/gh/xflr6/graphviz/branch/release>`_
+  <https://app.codecov.io/gh/xflr6/graphviz/tree/release>`_
 
 **Build** and check the release files:
 
