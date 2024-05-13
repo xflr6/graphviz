@@ -38,7 +38,7 @@ def test_render_missing_file(quiet, engine='dot', format_='pdf'):
     ids=lambda x: getattr(x, '__name__', x))
 def test_render_unknown_parameter_raises(args, expected_exception, match,
                                          supported_number=3):
-    checker = (pytest.deprecated_call(match=rf'{supported_number:d} positional args')
+    checker = (pytest.deprecated_call(match=rf'\b{supported_number:d} positional args\b')
                if len(args) > supported_number
                else contextlib.nullcontext())
     with pytest.raises(expected_exception, match=match), checker:
@@ -60,7 +60,7 @@ def test_render(capsys, tmp_path, engine, format_, renderer, formatter,
     assert lpath.write_bytes(data) == len(data) == lpath.stat().st_size
     rendered = lpath.with_suffix(f'{lpath.suffix}.{expected_suffix}')
 
-    with pytest.deprecated_call(match=r'3 positional args'):
+    with pytest.deprecated_call(match=r'\b3 positional args\b'):
         result = graphviz.render(engine, format_, str(lpath),
                                  renderer, formatter)
 
