@@ -32,6 +32,8 @@ Links
 - Changelog: https://graphviz.readthedocs.io/en/latest/changelog.html
 - Issue Tracker: https://github.com/xflr6/graphviz/issues
 - Download: https://pypi.org/project/graphviz/#files
+- Development documentation: https://graphviz.readthedocs.io/en/latest/development.html
+- Release process: https://graphviz.readthedocs.io/en/latest/release_process.html
 
 
 Installation
@@ -144,13 +146,6 @@ License
 -------
 
 This package is distributed under the `MIT license`_.
-
-
-Development
------------
-
-- Development documentation: https://graphviz.readthedocs.io/en/latest/development.html
-- Release process: https://graphviz.readthedocs.io/en/latest/release_process.html
 
 
 .. _Graphviz:  https://www.graphviz.org
