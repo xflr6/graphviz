@@ -181,7 +181,8 @@ class Dot(quoting.Quote, base.Base):
 
         yield self._tail
 
-    @_tools.deprecate_positional_args(supported_number=2, ignore_arg='self')
+    @_tools.deprecate_positional_args(supported_number=2, ignore_arg='self',
+                                      category=DeprecationWarning)
     def node(self, name: str,
              label: typing.Optional[str] = None,
              _attributes=None, **attrs) -> None:
@@ -203,7 +204,8 @@ class Dot(quoting.Quote, base.Base):
         line = self._node(name, attr_list)
         self.body.append(line)
 
-    @_tools.deprecate_positional_args(supported_number=3, ignore_arg='self')
+    @_tools.deprecate_positional_args(supported_number=3, ignore_arg='self',
+                                      category=DeprecationWarning)
     def edge(self, tail_name: str, head_name: str,
              label: typing.Optional[str] = None,
              _attributes=None, **attrs) -> None:
@@ -254,7 +256,8 @@ class Dot(quoting.Quote, base.Base):
         self.body += [edge(tail=quote(t), head=quote(h))
                       for t, h in tail_head_iter]
 
-    @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
+    @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self',
+                                      category=DeprecationWarning)
     def attr(self, kw: typing.Optional[str] = None,
              _attributes=None, **attrs) -> None:
         """Add a general or graph/node/edge attribute statement.
