@@ -106,6 +106,7 @@ def promote_pathlike_directory(directory: typing.Union[os.PathLike, str, None], 
 
 def deprecate_positional_args(*,
                               supported_number: int,
+                              ignore_arg: typing.Optional[str] = None,
                               category: typing.Type[Warning] = PendingDeprecationWarning,
                               stacklevel: int = 1):
     """Mark supported_number of positional arguments as the maximum.
@@ -113,6 +114,7 @@ def deprecate_positional_args(*,
     Args:
         supported_number: Number of positional arguments
             for which no warning is raised.
+        ignore_arg: Name of positional argument to ignore.
         category: Type of Warning to raise
             or None to return a nulldecorator
             returning the undecorated function.
@@ -144,27 +146,39 @@ def deprecate_positional_args(*,
         signature = inspect.signature(func)
         argnames = [name for name, param in signature.parameters.items()
                     if param.kind == inspect.Parameter.POSITIONAL_OR_KEYWORD]
+        check_number = supported_number
+        if ignore_arg is not None:
+            ignored = [name for name in argnames if name == ignore_arg]
+            assert ignored, 'ignore_arg must be a positional arg'
+            check_number += len(ignored)
+            qualification = f' (ignoring {ignore_arg}))'
+        else:
+            qualification = ''
+
+        deprecated = argnames[supported_number:]
+        assert deprecated
         log.debug('deprecate positional args: %s.%s(%r)',
-                  func.__module__, func.__qualname__,
-                  argnames[supported_number:])
+                  func.__module__, func.__qualname__, deprecated)
+
+        # mangle function name in message for this package
+        func_name = func.__name__.lstrip('_')
+        func_name, sep, rest = func_name.partition('_legacy')
+        assert func_name and (not sep or not rest)
+
+        s_ = 's' if supported_number > 1 else ''
 
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            if len(args) > supported_number:
+            if len(args) > check_number:
                 call_args = zip(argnames, args)
-                supported = itertools.islice(call_args, supported_number)
-                supported = dict(supported)
+                supported = dict(itertools.islice(call_args, check_number))
                 deprecated = dict(call_args)
                 assert deprecated
-                func_name = func.__name__.lstrip('_')
-                func_name, sep, rest = func_name.partition('_legacy')
-                assert not set or not rest
                 wanted = ', '.join(f'{name}={value!r}'
                                    for name, value in deprecated.items())
-                warnings.warn(f'The signature of {func.__name__} will be reduced'
-                              f' to {supported_number} positional args'
-                              f' {list(supported)}: pass {wanted}'
-                              ' as keyword arg(s)',
+                warnings.warn(f'The signature of {func_name} will be reduced'
+                              f' to {supported_number} positional arg{s_}{qualification}'
+                              f' {list(supported)}: pass {wanted} as keyword arg{s_}',
                               stacklevel=stacklevel,
                               category=category)
 

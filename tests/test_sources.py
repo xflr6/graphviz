@@ -43,7 +43,7 @@ def test_filepath(platform, source):
 
 def test_from_file(tmp_path, filename='hello.gv', directory='source_hello',
                    data='digraph { hello -> world }', encoding='utf-8',
-                   deprecation_match=r'\b2 positional args\b'):
+                   deprecation_match=r'\b1 positional arg\b'):
     lpath = tmp_path / directory
     lpath.mkdir()
     (lpath / filename).write_text(data, encoding=encoding)
