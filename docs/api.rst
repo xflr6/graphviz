@@ -1383,7 +1383,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
                   engine: Optional[str] = None,
                   encoding: Optional[str] = 'utf-8',
                   renderer: Optional[str] = None,
-                  formatter: Optional[str] = None) -> 'Source' from builtins.type
+                  formatter: Optional[str] = None) -> 'Source'
      |      Return an instance with the source string read from the given file.
      |
      |      Args:
