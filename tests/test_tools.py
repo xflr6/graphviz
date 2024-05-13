@@ -35,24 +35,34 @@ def test_mkdirs(tmp_path):
                                                      (False, 'spam/eggs')]
 
 
-@pytest.mark.parametrize('category, match',
-                         [(FutureWarning, r" third='third' "),
-                          (DeprecationWarning, r" third='third' "),
-                          (PendingDeprecationWarning, r" third='third' "),
-                          (None, None)])
-def test_deprecate_positional_args(category, match):
+@pytest.mark.parametrize('category', [FutureWarning,
+                                      DeprecationWarning,
+                                      PendingDeprecationWarning])
+def test_deprecate_positional_args(category):
+    result = object()
+
     @_tools.deprecate_positional_args(supported_number=2, category=category)
-    def func(first, second, third=None, **kwargs):
-        pass
+    def func(first, second, third=None, **_):
+        return result
+
+    # supported call
+    with warnings.catch_warnings():
+        warnings.simplefilter('error')  # should fail if warnings are emitted
+        assert func('first', 'second', third='third', extra='extra') is result
+
+    # deprecated call
+    with pytest.warns(category, match=r" third='third' "):
+        assert func('first', 'second', 'third', extra='extra') is result
+
+
+def test_deprecate_positional_args_category_none_should_disable():
+    result = object()
+
+    @_tools.deprecate_positional_args(supported_number=2, category=None)
+    def func(first, second, third=None, **_):
+        return result
 
     with warnings.catch_warnings():
-        warnings.simplefilter('error')
-        func('first', 'second', third='third', extra='extra')
-
-    if category is not None:
-        with pytest.warns(category, match=match):
-            func('first', 'second', 'third', extra='extra')
-    else:
-        with warnings.catch_warnings():
-            warnings.simplefilter('error')
-            func('first', 'second', 'third', extra='extra')
+        warnings.simplefilter('error')  # should fail if warnings are emitted
+        assert func('first', 'second', third='third', extra='extra') is result
+        assert func('first', 'second', 'third', extra='extra') is result
