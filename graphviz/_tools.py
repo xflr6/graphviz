@@ -129,7 +129,7 @@ def deprecate_positional_args(*,
         https://docs.python.org/3/library/exceptions.html#DeprecationWarning
         https://docs.python.org/3/library/exceptions.html#PendingDeprecationWarning
     """
-    assert supported_number > 0, f'supported_number at least one: {supported_number!r}'
+    assert supported_number >= 0, f'supported_number => 0: {supported_number!r}'
 
     if category is None:
         def nulldecorator(func):

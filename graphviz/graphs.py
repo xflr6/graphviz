@@ -49,7 +49,7 @@ class BaseGraph(dot.Dot,
                 unflattening.Unflatten):
     """Dot language creation and source code rendering."""
 
-    @_tools.deprecate_positional_args(supported_number=2)
+    @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
     def __init__(self, name: typing.Optional[str] = None,
                  comment: typing.Optional[str] = None,
                  filename=None, directory=None,

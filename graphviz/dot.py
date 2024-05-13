@@ -143,7 +143,7 @@ class Dot(quoting.Quote, base.Base):
                                     body=list(self.body),
                                     strict=self.strict)
 
-    @_tools.deprecate_positional_args(supported_number=1)
+    @_tools.deprecate_positional_args(supported_number=0, ignore_arg='self')
     def clear(self, keep_attrs: bool = False) -> None:
         """Reset content to an empty body, clear graph/node/egde_attr mappings.
 
@@ -155,7 +155,7 @@ class Dot(quoting.Quote, base.Base):
                 a.clear()
         self.body.clear()
 
-    @_tools.deprecate_positional_args(supported_number=1)
+    @_tools.deprecate_positional_args(supported_number=0, ignore_arg='self')
     def __iter__(self, subgraph: bool = False) -> typing.Iterator[str]:
         r"""Yield the DOT source code line by line (as graph or subgraph).
 
@@ -181,7 +181,7 @@ class Dot(quoting.Quote, base.Base):
 
         yield self._tail
 
-    @_tools.deprecate_positional_args(supported_number=3)
+    @_tools.deprecate_positional_args(supported_number=2, ignore_arg='self')
     def node(self, name: str,
              label: typing.Optional[str] = None,
              _attributes=None, **attrs) -> None:
@@ -203,7 +203,7 @@ class Dot(quoting.Quote, base.Base):
         line = self._node(name, attr_list)
         self.body.append(line)
 
-    @_tools.deprecate_positional_args(supported_number=4)
+    @_tools.deprecate_positional_args(supported_number=3, ignore_arg='self')
     def edge(self, tail_name: str, head_name: str,
              label: typing.Optional[str] = None,
              _attributes=None, **attrs) -> None:
@@ -254,7 +254,7 @@ class Dot(quoting.Quote, base.Base):
         self.body += [edge(tail=quote(t), head=quote(h))
                       for t, h in tail_head_iter]
 
-    @_tools.deprecate_positional_args(supported_number=2)
+    @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
     def attr(self, kw: typing.Optional[str] = None,
              _attributes=None, **attrs) -> None:
         """Add a general or graph/node/edge attribute statement.
@@ -278,7 +278,7 @@ class Dot(quoting.Quote, base.Base):
                 line = self._attr(kw, attr_list)
             self.body.append(line)
 
-    @_tools.deprecate_positional_args(supported_number=2)
+    @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
     def subgraph(self, graph=None,
                  name: typing.Optional[str] = None,
                  comment: typing.Optional[str] = None,

@@ -14,7 +14,7 @@ __all__ = ['Unflatten']
 class Unflatten(encoding.Encoding, base.Base, backend.Unflatten):
     """Pipe source through the Graphviz *unflatten* preprocessor."""
 
-    @_tools.deprecate_positional_args(supported_number=1)
+    @_tools.deprecate_positional_args(supported_number=0, ignore_arg='self')
     def unflatten(self,
                   stagger: typing.Optional[int] = None,
                   fanout: bool = False,
