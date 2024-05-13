@@ -210,7 +210,7 @@ def test_save_mocked(mocker, dot, filename='nonfilename', directory='nondirector
     mock_makedirs = mocker.patch('os.makedirs', autospec=True)
     mock_open = mocker.patch('builtins.open', mocker.mock_open())
 
-    with pytest.deprecated_call():
+    with pytest.deprecated_call(match=r'2 positional args\b'):
         assert dot.save(filename, directory) == dot.filepath
 
     assert dot.filename == filename

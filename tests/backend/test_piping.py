@@ -75,7 +75,7 @@ def test_pipe_pipe_invalid_data_mocked(mocker, sentinel, mock_run, quiet):
          reason='https://gitlab.com/graphviz/graphviz/-/issues/1269'))])
 def test_pipe(capsys, engine, format_, renderer, formatter, pattern,
               data=b'graph { spam }'):
-    with pytest.deprecated_call():
+    with pytest.deprecated_call(match=r'3 positional args'):
         out = graphviz.pipe(engine, format_, data,
                             renderer, formatter).decode('ascii')
 
