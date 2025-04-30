@@ -204,9 +204,10 @@ def render(engine: str,
            formatter: typing.Optional[str] = None,
            neato_no_op: typing.Union[bool, int, None] = None,
            quiet: bool = False, *,
-           outfile: typing.Union[os.PathLike, str, None] = None,
+           outfile: typing.Union[os.PathLike, str, typing.Literal[False], None] = None,
            raise_if_result_exists: bool = False,
-           overwrite_filepath: bool = False) -> str:
+           overwrite_filepath: bool = False,
+           lines: typing.Union[typing.Iterable[str], None] = None) -> str:
     r"""Render file with ``engine`` into ``format`` and return result filename.
 
     Args:
@@ -222,6 +223,7 @@ def render(engine: str,
         neato_no_op: Neato layout engine no-op flag.
         quiet: Suppress ``stderr`` output from the layout subprocess.
         outfile: Path for the rendered output file.
+            If False, output is printed to stdout.
         raise_if_result_exists: Raise :exc:`graphviz.FileExistsError`
             if the result file exists.
         overwrite_filepath: Allow ``dot`` to write to the file it reads from.
@@ -278,9 +280,10 @@ def render(engine: str,
         raise ValueError('overwrite_filepath cannot be combined'
                          ' with raise_if_result_exists')
 
-    filepath, outfile = map(_tools.promote_pathlike, (filepath, outfile))
+    if outfile is not False:
+        filepath, outfile = map(_tools.promote_pathlike, (filepath, outfile))
 
-    if outfile is not None:
+    if outfile:
         format = get_format(outfile, format=format)
 
         if filepath is None:
@@ -297,6 +300,9 @@ def render(engine: str,
 
         # https://www.graphviz.org/doc/info/command.html#-o
         args = ['-o', outfile_arg, filepath.name]
+    elif outfile is False:
+        # filepath can be None if outfile is False
+        args = []
     elif filepath is None:
         raise exceptions.RequiredArgumentError('filepath: (required if outfile is not given,'
                                                f' got {filepath!r})')
@@ -321,11 +327,21 @@ def render(engine: str,
 
     cmd += args
 
-    assert filepath is not None, 'work around pytype false alarm'
+    if outfile is False and lines:
+        input_lines = iter(lines)
+        cwd = None
+    else:
+        assert filepath is not None, 'work around pytype false alarm'
+        input_lines = None
+        cwd = filepath.parent if filepath.parent.parts else None
 
-    execute.run_check(cmd,
-                      cwd=filepath.parent if filepath.parent.parts else None,
+    output = execute.run_check(cmd,
+                      cwd=cwd,
                       quiet=quiet,
+                      input_lines=input_lines,
                       capture_output=True)
 
-    return os.fspath(outfile)
+    if outfile is False:
+        return output.stdout.decode("utf-8")
+    else:
+        return os.fspath(outfile)

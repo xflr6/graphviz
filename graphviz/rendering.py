@@ -30,7 +30,7 @@ class Render(saving.Save, backend.Render, backend.View):
                neato_no_op: typing.Union[bool, int, None] = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
-               outfile: typing.Union[os.PathLike, str, None] = None,
+               outfile: typing.Union[os.PathLike, str, typing.Literal[False], None] = None,
                engine: typing.Optional[str] = None,
                raise_if_result_exists: bool = False,
                overwrite_source: bool = False) -> str:
@@ -95,11 +95,12 @@ class Render(saving.Save, backend.Render, backend.View):
             (e.g. ``[image=images/camelot.png]``)
             can be given as paths relative to the DOT source file.
         """
-        outfile = _tools.promote_pathlike(outfile)
-        if outfile is not None:
-            format = self._get_format(outfile, format=format)
-            if directory is None:
-                outfile = pathlib.Path(self.directory, outfile)
+        if outfile is not False:
+            outfile = _tools.promote_pathlike(outfile)
+            if outfile is not None:
+                format = self._get_format(outfile, format=format)
+                if directory is None:
+                    outfile = pathlib.Path(self.directory, outfile)
 
         args, kwargs = self._get_render_parameters(engine=engine,
                                                    format=format,
@@ -111,17 +112,19 @@ class Render(saving.Save, backend.Render, backend.View):
                                                    raise_if_result_exists=raise_if_result_exists,
                                                    overwrite_source=overwrite_source,
                                                    verify=True)
+        if outfile is not False:
+            if outfile is not None and filename is None:
+                filename = self._get_filepath(outfile)
 
-        if outfile is not None and filename is None:
-            filename = self._get_filepath(outfile)
+            filepath = self.save(filename, directory=directory, skip_existing=None)
 
-        filepath = self.save(filename, directory=directory, skip_existing=None)
-
-        args.append(filepath)
+            args.append(filepath)
+        else:
+            kwargs["lines"] = [line.encode() for line in self]
 
         rendered = self._render(*args, **kwargs)
 
-        if cleanup:
+        if cleanup and outfile is not False:
             log.debug('delete %r', filepath)
             os.remove(filepath)
 
