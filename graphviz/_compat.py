@@ -1,17 +1,6 @@
-"""Python 3.8 compatibility and platform compatibility."""
+"""Platform compatibility."""
 
 import platform
-import sys
-
-if sys.version_info < (3, 9):  # pragma: no cover
-    # pytype not supported
-    import unittest.mock
-
-    Literal = unittest.mock.MagicMock(name='Literal')
-else:  # pragma: no cover
-    from typing import Literal
-
-    Literal = Literal  # CAVEAT: use None instead of Literal[None]
 
 
 def get_startupinfo() -> None:
