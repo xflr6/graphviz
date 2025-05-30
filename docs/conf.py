@@ -19,7 +19,7 @@ import graphviz
 # -- Project information -----------------------------------------------------
 
 project = 'graphviz'
-copyright = '2013-2024, Sebastian Bank'
+copyright = '2013-2025, Sebastian Bank'
 author = 'Sebastian Bank'
 
 # The full version, including alpha/beta/rc tags

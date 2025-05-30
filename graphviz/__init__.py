@@ -59,7 +59,7 @@ __title__ = 'graphviz'
 __version__ = '0.20.4.dev0'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE.txt'
-__copyright__ = 'Copyright (c) 2013-2024 Sebastian Bank'
+__copyright__ = 'Copyright (c) 2013-2025 Sebastian Bank'
 
 ENGINES = ENGINES
 """:class:`set` of known layout commands used for rendering
