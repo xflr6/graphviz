@@ -9,7 +9,7 @@ Update build dependencies:
 
 .. code:: bash
 
-    $ pip install -U setuptools wheel twine
+    $ pip install -U build setuptools wheel twine
 
 Create ``release`` branch from main:
 
@@ -33,7 +33,6 @@ Set **release version** (remove ``.dev0`` from ``$MAJOR.$MINOR[.$BUGFIX]`` versi
 
 - ``docs/conf.py``
 - ``graphviz/__init__.py``
-- ``setup.py``
 
 Document release:
 
@@ -66,7 +65,7 @@ Commit to ``release`` branch and push to ``origin``:
 
 .. code:: bash
 
-    $ python setup.py sdist bdist_wheel
+    $ python -m build
     $ python -m twine check --strict dist/*
 
 - ``dist/graphviz-$MAJOR.$MINOR[.$BUGFIX].zip``
@@ -88,7 +87,6 @@ Bump **post-release version** to ``$MAJOR.$MINOR.[.$BUGFIX].dev0``:
 
 - ``docs/conf.py``
 - ``graphviz/__init__.py``
-- ``setup.py``
 
 Document post-release:
 
