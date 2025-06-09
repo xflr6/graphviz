@@ -94,7 +94,7 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel
           echo "::endgroup::"
           echo "::group::Run pip install .[test] flake8 Flake8-pyproject"
-          pip install .[test] flake8
+          pip install .[test] flake8 Flake8-pyproject
           echo "::endgroup::"
       - name: Run full tests (unless -skip-exe)
         if: ${{ !contains(matrix.name, '-skip-exe') }}
