@@ -5,7 +5,7 @@ Changelog
 Version 0.20.4 (in development)
 -------------------------------
 
-
+Switch to pyproject.toml.
 
 
 Version 0.20.3
