@@ -33,7 +33,7 @@ FORMATS = {'bmp',  # https://graphviz.org/docs/outputs/
            'ps2',
            'psd',
            'sgi',
-           'svg', 'svgz',
+           'svg', 'svgz', 'svg_inline',
            'tga',
            'tif', 'tiff',
            'tk',
