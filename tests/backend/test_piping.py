@@ -13,7 +13,8 @@ SVG_PATTERN = r'(?s)^<\?xml .+</svg>\s*$'
 
 @pytest.mark.exe
 @pytest.mark.xfail('graphviz.version() == (2, 36, 0)',
-                   reason='https://bugs.launchpad.net/ubuntu/+source/graphviz/+bug/1694108')
+                   reason='https://bugs.launchpad.net/ubuntu/+source/graphviz/+bug/1694108',
+                   raises=AssertionError)
 def test_pipe_invalid_data(capsys, quiet, engine='dot', format_='svg'):
     with pytest.raises(subprocess.CalledProcessError) as e:
         graphviz.pipe(engine, format_, b'nongraph', quiet=quiet)
@@ -70,9 +71,10 @@ def test_pipe_pipe_invalid_data_mocked(mocker, sentinel, mock_run, quiet):
      ('dot', 'ps', 'ps', 'core', r'%!PS-'),
      # Error: remove_overlap: Graphviz not built with triangulation library
      pytest.param('sfdp', 'svg', None, None, SVG_PATTERN,
-         marks=pytest.mark.xfail('graphviz.version() > (2, 38, 0)'
-                                " and platform.system().lower() == 'windows'",
-         reason='https://gitlab.com/graphviz/graphviz/-/issues/1269'))])
+         marks=pytest.mark.xfail(
+             "graphviz.version() > (2, 38, 0) and platform.system().lower() == 'windows'",
+             reason='https://gitlab.com/graphviz/graphviz/-/issues/1269',
+             raises=graphviz.CalledProcessError))])
 def test_pipe(capsys, engine, format_, renderer, formatter, pattern,
               data=b'graph { spam }'):
     with pytest.deprecated_call(match=r'\b3 positional args\b'):
