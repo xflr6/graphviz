@@ -56,7 +56,7 @@ __all__ = ['ENGINES', 'FORMATS', 'RENDERERS', 'FORMATTERS',
            'set_default_engine', 'set_default_format', 'set_jupyter_format']
 
 __title__ = 'graphviz'
-__version__ = '0.21.dev0'
+__version__ = '0.21'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE.txt'
 __copyright__ = 'Copyright (c) 2013-2025 Sebastian Bank'
