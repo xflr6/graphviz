@@ -6,9 +6,9 @@ DEFAULT_ENGINE = 'dot'
 
 DEFAULT_FORMAT = 'pdf'
 
-DEFAULT_JUPYTER_FORMAT = 'svg'
+DEFAULT_JUPYTER_FORMAT = 'html'
 
-DEFAULT_JUPYTER_MIMETYPE = 'image/svg+xml'
+DEFAULT_JUPYTER_MIMETYPE = 'text/html'
 
 
 def test_set_default_engine_invalid():
