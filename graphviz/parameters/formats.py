@@ -33,7 +33,7 @@ FORMATS = {'bmp',  # https://graphviz.org/docs/outputs/
            'ps2',
            'psd',
            'sgi',
-           'svg', 'svgz', 'svg_inline',
+           'svg', 'svg_inline', 'svgz',  # svg_linline: Graphviz 10.0.1
            'tga',
            'tif', 'tiff',
            'tk',
