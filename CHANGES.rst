@@ -5,6 +5,10 @@ Changelog
 Version 0.21 (in development)
 -----------------------------
 
+Drop Python 3.8 support (end of life 7 Oct 2024).
+
+Tag Python 3.13 support.
+
 Add support for ```format='svg_inline'``, available since upstream Graphviz 10.0.1.
 Produces header-less SVG suitable for inlining into HTML
 (see https://www.graphviz.org/docs/outputs/svg/).
