@@ -2,10 +2,12 @@ Changelog
 =========
 
 
-Version 0.20.4 (in development)
--------------------------------
+Version 0.21 (in development)
+-----------------------------
 
-Switch to pyproject.toml.
+Switch project to ``pyproject.toml`` and build to `python -m build`) (https://build.pypa.io).
+This changes the source distribution formar from `.zip` to PEP 625 compliant
+`.tar.gz`` (https://peps.python.org/pep-0625/).
 
 
 Version 0.20.3
