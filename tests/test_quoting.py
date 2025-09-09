@@ -17,7 +17,7 @@ def test_deprecated_escape(recwarn, char):
     assert len(recwarn) == 1
     w = recwarn.pop(DeprecationWarning if sys.version_info < (3, 12)
                     else SyntaxWarning)
-    assert str(w.message).startswith('invalid escape sequence')
+    assert 'invalid escape sequence' in str(w.message)
 
     assert escape == f'\\{char}'
     assert quoting.quote(escape) == f'"\\{char}"'
