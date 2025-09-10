@@ -20,7 +20,7 @@ Produces header-less SVG suitable for inlining into HTML
 (see https://www.graphviz.org/docs/outputs/svg/).
 
 Switch project to ``pyproject.toml`` and build to ``python -m build``)
-(https://build.pypa.io). This changes the source distribution formar from ``.zip``
+(https://build.pypa.io). This changes the source distribution format from ``.zip``
 to PEP 625 compliant ``.tar.gz`` (https://peps.python.org/pep-0625/).
 
 
