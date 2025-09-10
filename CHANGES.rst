@@ -11,7 +11,7 @@ Version 0.21.1 (in development)
 Version 0.21
 ------------
 
-Drop Python 3.8 support (end of life 7 Oct 2024).
+Drop Python 3.8 support (end of life 2024-10-07).
 
 Tag Python 3.13 support.
 
@@ -36,7 +36,7 @@ warnings that have been misinterpreted in the ``0.20.2`` release process.
 Version 0.20.2
 --------------
 
-Drop Python 3.7 support (end of life 27 Jun 2023).
+Drop Python 3.7 support (end of life 2023-06-27).
 
 Tag Python 3.11 and 3.12 support.
 
@@ -82,7 +82,7 @@ Increase visibility of ``graphviz.escape()`` in the documentation.
 Version 0.19.2
 --------------
 
-Drop Python 3.6 support (end of life 23 Dec 2021).
+Drop Python 3.6 support (end of life 2021-12-23).
 
 Fix ``ExecutableNotFound`` and ``CalledProcessError`` in ``graphviz.__all__``.
 
