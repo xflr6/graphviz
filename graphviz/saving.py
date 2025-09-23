@@ -17,14 +17,14 @@ log = logging.getLogger(__name__)
 class Save(encoding.Encoding, base.Base):
     """Save DOT source lines to file."""
 
-    directory: typing.Union[str, bytes] = ''
+    directory: str = ''
 
     _default_extension = _defaults.DEFAULT_SOURCE_EXTENSION
 
     _mkdirs = staticmethod(_tools.mkdirs)
 
     def __init__(self, *,
-                 filename: typing.Union[os.PathLike[str], str],
+                 filename: typing.Union[os.PathLike[str], str, None],
                  directory: typing.Union[os.PathLike[str], str, None] = None,
                  **kwargs) -> None:
         super().__init__(**kwargs)
@@ -65,9 +65,9 @@ class Save(encoding.Encoding, base.Base):
             The (possibly relative) path of the saved source file.
         """
         if filename is not None:
-            self.filename = filename
+            self.filename = os.fspath(filename)
         if directory is not None:
-            self.directory = directory
+            self.directory = os.fspath(directory)
 
         filepath = self.filepath
         if skip_existing and os.path.exists(filepath):
