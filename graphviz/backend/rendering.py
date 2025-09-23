@@ -162,7 +162,7 @@ def render(engine: str,
            formatter: typing.Optional[str] = ...,
            neato_no_op: typing.Union[bool, int, None] = ...,
            quiet: bool = ..., *,
-           outfile: typing.Union[os.PathLike[str], str, None] = ...,
+           outfile: None = ...,
            raise_if_result_exists: bool = ...,
            overwrite_filepath: bool = ...) -> str:
     """Require ``format`` and ``filepath`` with default ``outfile=None``."""
@@ -176,7 +176,7 @@ def render(engine: str,
            formatter: typing.Optional[str] = ...,
            neato_no_op: typing.Union[bool, int, None] = ...,
            quiet: bool = False, *,
-           outfile: typing.Union[os.PathLike[str], str, None] = ...,
+           outfile: typing.Union[os.PathLike[str], str],
            raise_if_result_exists: bool = ...,
            overwrite_filepath: bool = ...) -> str:
     """Optional ``format`` and ``filepath`` with given ``outfile``."""
