@@ -36,6 +36,7 @@ def command(engine: str, format_: str, *,
     output_format = [f for f in (format_, renderer, formatter) if f is not None]
     output_format_flag = ':'.join(output_format)
 
+    cmd: typing.List[typing.Union[os.PathLike[str], str]]
     cmd = [DOT_BINARY, f'-K{engine}', f'-T{output_format_flag}']
 
     if neato_no_op:

@@ -1,6 +1,7 @@
 """Return the version number from running ``dot -V``."""
 
 import logging
+import os
 import re
 import subprocess
 import typing
@@ -50,7 +51,7 @@ def version() -> typing.Tuple[int, ...]:
         Upstream release version entry format:
         https://gitlab.com/graphviz/graphviz/-/blob/f94e91ba819cef51a4b9dcb2d76153684d06a913/gen_version.py#L17-20
     """
-    cmd = [dot_command.DOT_BINARY, '-V']
+    cmd: typing.List[typing.Union[os.PathLike[str], str]] = [dot_command.DOT_BINARY, '-V']
     proc = execute.run_check(cmd,
                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                              encoding='ascii')

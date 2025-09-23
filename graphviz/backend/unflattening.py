@@ -50,7 +50,7 @@ def unflatten(source: str,
     if fanout and stagger is None:
         raise exceptions.RequiredArgumentError('fanout given without stagger')
 
-    cmd = [UNFLATTEN_BINARY]
+    cmd: typing.List[typing.Union[pathlib.Path, str]] = [UNFLATTEN_BINARY]
     if stagger is not None:
         cmd += ['-l', str(stagger)]
     if fanout:
