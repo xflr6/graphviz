@@ -16,7 +16,7 @@ def command(engine: str, format_: str, *,
             renderer: typing.Optional[str] = None,
             formatter: typing.Optional[str] = None,
             neato_no_op: typing.Union[bool, int, None] = None
-            ) -> typing.List[typing.Union[os.PathLike, str]]:
+            ) -> typing.List[typing.Union[os.PathLike[str], str]]:
     """Return ``subprocess.Popen`` argument list for rendering.
 
     See also:

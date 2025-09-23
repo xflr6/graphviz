@@ -24,8 +24,8 @@ class Save(encoding.Encoding, base.Base):
     _mkdirs = staticmethod(_tools.mkdirs)
 
     def __init__(self, *,
-                 filename: typing.Union[os.PathLike, str],
-                 directory: typing.Union[os.PathLike, str, None] = None,
+                 filename: typing.Union[os.PathLike[str], str],
+                 directory: typing.Union[os.PathLike[str], str, None] = None,
                  **kwargs) -> None:
         super().__init__(**kwargs)
 
@@ -51,8 +51,8 @@ class Save(encoding.Encoding, base.Base):
         return os.path.join(self.directory, self.filename)
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
-    def save(self, filename: typing.Union[os.PathLike, str, None] = None,
-             directory: typing.Union[os.PathLike, str, None] = None, *,
+    def save(self, filename: typing.Union[os.PathLike[str], str, None] = None,
+             directory: typing.Union[os.PathLike[str], str, None] = None, *,
              skip_existing: typing.Optional[bool] = False) -> str:
         """Save the DOT source to file. Ensure the file ends with a newline.
 

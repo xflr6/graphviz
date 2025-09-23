@@ -20,7 +20,7 @@ BytesOrStrIterator = typing.Union[typing.Iterator[bytes],
 
 
 @typing.overload
-def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
+def run_check(cmd: typing.Sequence[typing.Union[os.PathLike[str], str]], *,
               input_lines: typing.Optional[typing.Iterator[bytes]] = ...,
               encoding: None = ...,
               quiet: bool = ...,
@@ -29,7 +29,7 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
 
 
 @typing.overload
-def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
+def run_check(cmd: typing.Sequence[typing.Union[os.PathLike[str], str]], *,
               input_lines: typing.Optional[typing.Iterator[str]] = ...,
               encoding: str,
               quiet: bool = ...,
@@ -38,7 +38,7 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
 
 
 @typing.overload
-def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
+def run_check(cmd: typing.Sequence[typing.Union[os.PathLike[str], str]], *,
               input_lines: typing.Optional[BytesOrStrIterator] = ...,
               encoding: typing.Optional[str] = ...,
               capture_output: bool = ...,
@@ -47,7 +47,7 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
     """Accept bytes or string input_lines depending on ``encoding``."""
 
 
-def run_check(cmd: typing.Sequence[typing.Union[os.PathLike, str]], *,
+def run_check(cmd: typing.Sequence[typing.Union[os.PathLike[str], str]], *,
               input_lines: typing.Optional[BytesOrStrIterator] = None,
               encoding: typing.Optional[str] = None,
               quiet: bool = False,

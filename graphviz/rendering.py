@@ -20,8 +20,8 @@ class Render(saving.Save, backend.Render, backend.View):
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
     def render(self,
-               filename: typing.Union[os.PathLike, str, None] = None,
-               directory: typing.Union[os.PathLike, str, None] = None,
+               filename: typing.Union[os.PathLike[str], str, None] = None,
+               directory: typing.Union[os.PathLike[str], str, None] = None,
                view: bool = False,
                cleanup: bool = False,
                format: typing.Optional[str] = None,
@@ -30,7 +30,7 @@ class Render(saving.Save, backend.Render, backend.View):
                neato_no_op: typing.Union[bool, int, None] = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
-               outfile: typing.Union[os.PathLike, str, None] = None,
+               outfile: typing.Union[os.PathLike[str], str, None] = None,
                engine: typing.Optional[str] = None,
                raise_if_result_exists: bool = False,
                overwrite_source: bool = False) -> str:
@@ -130,7 +130,7 @@ class Render(saving.Save, backend.Render, backend.View):
 
         return rendered
 
-    def _view(self, filepath: typing.Union[os.PathLike, str], *,
+    def _view(self, filepath: typing.Union[os.PathLike[str], str], *,
               format: str, quiet: bool) -> None:
         """Start the right viewer based on file format and platform."""
         methodnames = [
@@ -149,8 +149,8 @@ class Render(saving.Save, backend.Render, backend.View):
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
     def view(self,
-             filename: typing.Union[os.PathLike, str, None] = None,
-             directory: typing.Union[os.PathLike, str, None] = None,
+             filename: typing.Union[os.PathLike[str], str, None] = None,
+             directory: typing.Union[os.PathLike[str], str, None] = None,
              cleanup: bool = False,
              quiet: bool = False,
              quiet_view: bool = False) -> str:

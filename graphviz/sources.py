@@ -40,8 +40,8 @@ class Source(rendering.Render, saving.Save,
 
     @classmethod
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='cls')
-    def from_file(cls, filename: typing.Union[os.PathLike, str],
-                  directory: typing.Union[os.PathLike, str, None] = None,
+    def from_file(cls, filename: typing.Union[os.PathLike[str], str],
+                  directory: typing.Union[os.PathLike[str], str, None] = None,
                   format: typing.Optional[str] = None,
                   engine: typing.Optional[str] = None,
                   encoding: typing.Optional[str] = DEFAULT_ENCODING,
@@ -75,14 +75,14 @@ class Source(rendering.Render, saving.Save,
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
     def __init__(self, source: str,
-                 filename: typing.Union[os.PathLike, str, None] = None,
-                 directory: typing.Union[os.PathLike, str, None] = None,
+                 filename: typing.Union[os.PathLike[str], str, None] = None,
+                 directory: typing.Union[os.PathLike[str], str, None] = None,
                  format: typing.Optional[str] = None,
                  engine: typing.Optional[str] = None,
                  encoding: typing.Optional[str] = DEFAULT_ENCODING, *,
                  renderer: typing.Optional[str] = None,
                  formatter: typing.Optional[str] = None,
-                 loaded_from_path: typing.Optional[os.PathLike] = None) -> None:
+                 loaded_from_path: typing.Optional[os.PathLike[str]] = None) -> None:
         super().__init__(filename=filename, directory=directory,
                          format=format, engine=engine,
                          renderer=renderer, formatter=formatter,
@@ -92,7 +92,7 @@ class Source(rendering.Render, saving.Save,
 
     # work around pytype false alarm
     _source: str
-    _loaded_from_path: typing.Optional[os.PathLike]
+    _loaded_from_path: typing.Optional[os.PathLike[str]]
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
@@ -123,8 +123,8 @@ class Source(rendering.Render, saving.Save,
         return source
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
-    def save(self, filename: typing.Union[os.PathLike, str, None] = None,
-             directory: typing.Union[os.PathLike, str, None] = None, *,
+    def save(self, filename: typing.Union[os.PathLike[str], str, None] = None,
+             directory: typing.Union[os.PathLike[str], str, None] = None, *,
              skip_existing: typing.Optional[bool] = None) -> str:
         """Save the DOT source to file. Ensure the file ends with a newline.
 

@@ -17,7 +17,7 @@ class Render(parameters.Parameters):
     """Parameters for calling and calling ``graphviz.render()``."""
 
     def _get_render_parameters(self,
-                               outfile: typing.Union[os.PathLike, str, None] = None,
+                               outfile: typing.Union[os.PathLike[str], str, None] = None,
                                raise_if_result_exists: bool = False,
                                overwrite_source: bool = False,
                                **kwargs):
