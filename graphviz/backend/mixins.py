@@ -16,6 +16,10 @@ __all__ = ['Render', 'Pipe', 'Unflatten', 'View']
 class Render(parameters.Parameters):
     """Parameters for calling and calling ``graphviz.render()``."""
 
+    _get_format = staticmethod(rendering.get_format)
+
+    _get_filepath = staticmethod(rendering.get_filepath)
+
     def _get_render_parameters(self,
                                outfile: typing.Union[os.PathLike[str], str, None] = None,
                                raise_if_result_exists: bool = False,
@@ -35,10 +39,6 @@ class Render(parameters.Parameters):
 
 class Pipe(parameters.Parameters):
     """Parameters for calling and calling ``graphviz.pipe()``."""
-
-    _get_format = staticmethod(rendering.get_format)
-
-    _get_filepath = staticmethod(rendering.get_filepath)
 
     def _get_pipe_parameters(self, **kwargs):
         kwargs = self._get_parameters(**kwargs)
