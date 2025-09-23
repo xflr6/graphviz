@@ -21,8 +21,8 @@ jobs:
           - name: macos-3.13-skip-exe
             python-version: "3.13"
             os: macos-latest
-          - name: linux-3.12-lint-update-help-skip-exe
-            python-version: "3.12"
+          - name: linux-3.13-lint-update-help-skip-exe
+            python-version: "3.13"
             os: ubuntu-latest
           - name: linux-3.12-pytype-skip-exe
             python-version: "3.12"

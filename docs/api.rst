@@ -239,20 +239,23 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
     Help on class Graph in module graphviz.graphs:
     <BLANKLINE>
     class Graph(graphviz.dot.GraphSyntax, BaseGraph)
-     |  Graph(name: Optional[str] = None,
-              comment: Optional[str] = None,
-              filename=None,
-              directory=None,
-              format: Optional[str] = None,
-              engine: Optional[str] = None,
-              encoding: Optional[str] = 'utf-8',
-              graph_attr=None,
-              node_attr=None,
-              edge_attr=None,
-              body=None,
-              strict: bool = False, *,
-              renderer: Optional[str] = None,
-              formatter: Optional[str] = None) -> None
+     |  Graph(
+     |      name: Optional[str] = None,
+     |      comment: Optional[str] = None,
+     |      filename=None,
+     |      directory=None,
+     |      format: Optional[str] = None,
+     |      engine: Optional[str] = None,
+     |      encoding: Optional[str] = 'utf-8',
+     |      graph_attr=None,
+     |      node_attr=None,
+     |      edge_attr=None,
+     |      body=None,
+     |      strict: bool = False,
+     |      *,
+     |      renderer: Optional[str] = None,
+     |      formatter: Optional[str] = None
+     |  ) -> None
      |
      |  Graph source code in the DOT language.
      |
@@ -327,21 +330,24 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from BaseGraph:
      |
-     |  __init__(self,
-                 name: Optional[str] = None,
-                 comment: Optional[str] = None,
-                 filename=None,
-                 directory=None,
-                 format: Optional[str] = None,
-                 engine: Optional[str] = None,
-                 encoding: Optional[str] = 'utf-8',
-                 graph_attr=None,
-                 node_attr=None,
-                 edge_attr=None,
-                 body=None,
-                 strict: bool = False, *,
-                 renderer: Optional[str] = None,
-                 formatter: Optional[str] = None) -> None
+     |  __init__(
+     |      self,
+     |      name: Optional[str] = None,
+     |      comment: Optional[str] = None,
+     |      filename=None,
+     |      directory=None,
+     |      format: Optional[str] = None,
+     |      engine: Optional[str] = None,
+     |      encoding: Optional[str] = 'utf-8',
+     |      graph_attr=None,
+     |      node_attr=None,
+     |      edge_attr=None,
+     |      body=None,
+     |      strict: bool = False,
+     |      *,
+     |      renderer: Optional[str] = None,
+     |      formatter: Optional[str] = None
+     |  ) -> None
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  ----------------------------------------------------------------------
@@ -374,11 +380,14 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      Args:
      |          keep_attrs (bool): preserve graph/node/egde_attr mappings
      |
-     |  edge(self,
-             tail_name: str,
-             head_name: str,
-             label: Optional[str] = None,
-             _attributes=None, **attrs) -> None
+     |  edge(
+     |      self,
+     |      tail_name: str,
+     |      head_name: str,
+     |      label: Optional[str] = None,
+     |      _attributes=None,
+     |      **attrs
+     |  ) -> None
      |      Create an edge between two nodes.
      |
      |      Args:
@@ -432,14 +441,16 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          See the sections :ref:`backslash-escapes` and
      |          :ref:`quoting-and-html-like-labels` in the user guide for details.
      |
-     |  subgraph(self,
-                 graph=None,
-                 name: Optional[str] = None,
-                 comment: Optional[str] = None,
-                 graph_attr=None,
-                 node_attr=None,
-                 edge_attr=None,
-                 body=None)
+     |  subgraph(
+     |      self,
+     |      graph=None,
+     |      name: Optional[str] = None,
+     |      comment: Optional[str] = None,
+     |      graph_attr=None,
+     |      node_attr=None,
+     |      edge_attr=None,
+     |      body=None
+     |  )
      |      Add the current content of the given sole ``graph`` argument
      |          as subgraph or return a context manager
      |          returning a new graph instance
@@ -476,21 +487,24 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.rendering.Render:
      |
-     |  render(self,
-               filename: Union[os.PathLike, str, NoneType] = None,
-               directory: Union[os.PathLike, str, NoneType] = None,
-               view: bool = False,
-               cleanup: bool = False,
-               format: Optional[str] = None,
-               renderer: Optional[str] = None,
-               formatter: Optional[str] = None,
-               neato_no_op: Union[bool, int, NoneType] = None,
-               quiet: bool = False,
-               quiet_view: bool = False, *,
-               outfile: Union[os.PathLike, str, NoneType] = None,
-               engine: Optional[str] = None,
-               raise_if_result_exists: bool = False,
-               overwrite_source: bool = False) -> str
+     |  render(
+     |      self,
+     |      filename: Union[os.PathLike[str], str, NoneType] = None,
+     |      directory: Union[os.PathLike[str], str, NoneType] = None,
+     |      view: bool = False,
+     |      cleanup: bool = False,
+     |      format: Optional[str] = None,
+     |      renderer: Optional[str] = None,
+     |      formatter: Optional[str] = None,
+     |      neato_no_op: Union[bool, int, NoneType] = None,
+     |      quiet: bool = False,
+     |      quiet_view: bool = False,
+     |      *,
+     |      outfile: Union[os.PathLike[str], str, NoneType] = None,
+     |      engine: Optional[str] = None,
+     |      raise_if_result_exists: bool = False,
+     |      overwrite_source: bool = False
+     |  ) -> str
      |      Save the source to file and render with the Graphviz engine.
      |
      |      Args:
@@ -552,12 +566,14 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          (e.g. ``[image=images/camelot.png]``)
      |          can be given as paths relative to the DOT source file.
      |
-     |  view(self,
-             filename: Union[os.PathLike, str, NoneType] = None,
-             directory: Union[os.PathLike, str, NoneType] = None,
-             cleanup: bool = False,
-             quiet: bool = False,
-             quiet_view: bool = False) -> str
+     |  view(
+     |      self,
+     |      filename: Union[os.PathLike[str], str, NoneType] = None,
+     |      directory: Union[os.PathLike[str], str, NoneType] = None,
+     |      cleanup: bool = False,
+     |      quiet: bool = False,
+     |      quiet_view: bool = False
+     |  ) -> str
      |      Save the source to file, open the rendered result in a viewer.
      |
      |      Convenience short-cut for running ``.render(view=True)``.
@@ -589,10 +605,13 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.saving.Save:
      |
-     |  save(self,
-             filename: Union[os.PathLike, str, NoneType] = None,
-             directory: Union[os.PathLike, str, NoneType] = None, *,
-             skip_existing: Optional[bool] = False) -> str
+     |  save(
+     |      self,
+     |      filename: Union[os.PathLike[str], str, NoneType] = None,
+     |      directory: Union[os.PathLike[str], str, NoneType] = None,
+     |      *,
+     |      skip_existing: Optional[bool] = False
+     |  ) -> str
      |      Save the DOT source to file. Ensure the file ends with a newline.
      |
      |      Args:
@@ -617,14 +636,17 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.piping.Pipe:
      |
-     |  pipe(self,
-             format: Optional[str] = None,
-             renderer: Optional[str] = None,
-             formatter: Optional[str] = None,
-             neato_no_op: Union[bool, int, NoneType] = None,
-             quiet: bool = False, *,
-             engine: Optional[str] = None,
-             encoding: Optional[str] = None) -> Union[bytes, str]
+     |  pipe(
+     |      self,
+     |      format: Optional[str] = None,
+     |      renderer: Optional[str] = None,
+     |      formatter: Optional[str] = None,
+     |      neato_no_op: Union[bool, int, NoneType] = None,
+     |      quiet: bool = False,
+     |      *,
+     |      engine: Optional[str] = None,
+     |      encoding: Optional[str] = None
+     |  ) -> Union[bytes, str]
      |      Return the source piped through the Graphviz layout command.
      |
      |      Args:
@@ -669,10 +691,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.unflattening.Unflatten:
      |
-     |  unflatten(self,
-                  stagger: Optional[int] = None,
-                  fanout: bool = False,
-                  chain: Optional[int] = None) -> 'graphviz.Source'
+     |  unflatten(
+     |      self,
+     |      stagger: Optional[int] = None,
+     |      fanout: bool = False,
+     |      chain: Optional[int] = None
+     |  ) -> 'graphviz.Source'
      |      Return a new :class:`.Source` instance with the source
      |          piped through the Graphviz *unflatten* preprocessor.
      |
@@ -763,20 +787,23 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
     Help on class Digraph in module graphviz.graphs:
     <BLANKLINE>
     class Digraph(graphviz.dot.DigraphSyntax, BaseGraph)
-     |  Digraph(name: Optional[str] = None,
-                comment: Optional[str] = None,
-                filename=None,
-                directory=None,
-                format: Optional[str] = None,
-                engine: Optional[str] = None,
-                encoding: Optional[str] = 'utf-8',
-                graph_attr=None,
-                node_attr=None,
-                edge_attr=None,
-                body=None,
-                strict: bool = False, *,
-                renderer: Optional[str] = None,
-                formatter: Optional[str] = None) -> None
+     |  Digraph(
+     |      name: Optional[str] = None,
+     |      comment: Optional[str] = None,
+     |      filename=None,
+     |      directory=None,
+     |      format: Optional[str] = None,
+     |      engine: Optional[str] = None,
+     |      encoding: Optional[str] = 'utf-8',
+     |      graph_attr=None,
+     |      node_attr=None,
+     |      edge_attr=None,
+     |      body=None,
+     |      strict: bool = False,
+     |      *,
+     |      renderer: Optional[str] = None,
+     |      formatter: Optional[str] = None
+     |  ) -> None
      |
      |  Directed graph source code in the DOT language.
      |
@@ -851,21 +878,24 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from BaseGraph:
      |
-     |  __init__(self,
-                 name: Optional[str] = None,
-                 comment: Optional[str] = None,
-                 filename=None,
-                 directory=None,
-                 format: Optional[str] = None,
-                 engine: Optional[str] = None,
-                 encoding: Optional[str] = 'utf-8',
-                 graph_attr=None,
-                 node_attr=None,
-                 edge_attr=None,
-                 body=None,
-                 strict: bool = False, *,
-                 renderer: Optional[str] = None,
-                 formatter: Optional[str] = None) -> None
+     |  __init__(
+     |      self,
+     |      name: Optional[str] = None,
+     |      comment: Optional[str] = None,
+     |      filename=None,
+     |      directory=None,
+     |      format: Optional[str] = None,
+     |      engine: Optional[str] = None,
+     |      encoding: Optional[str] = 'utf-8',
+     |      graph_attr=None,
+     |      node_attr=None,
+     |      edge_attr=None,
+     |      body=None,
+     |      strict: bool = False,
+     |      *,
+     |      renderer: Optional[str] = None,
+     |      formatter: Optional[str] = None
+     |  ) -> None
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  ----------------------------------------------------------------------
@@ -898,11 +928,14 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      Args:
      |          keep_attrs (bool): preserve graph/node/egde_attr mappings
      |
-     |  edge(self,
-             tail_name: str,
-             head_name: str,
-             label: Optional[str] = None,
-             _attributes=None, **attrs) -> None
+     |  edge(
+     |      self,
+     |      tail_name: str,
+     |      head_name: str,
+     |      label: Optional[str] = None,
+     |      _attributes=None,
+     |      **attrs
+     |  ) -> None
      |      Create an edge between two nodes.
      |
      |      Args:
@@ -956,14 +989,16 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          See the sections :ref:`backslash-escapes` and
      |          :ref:`quoting-and-html-like-labels` in the user guide for details.
      |
-     |  subgraph(self,
-                 graph=None,
-                 name: Optional[str] = None,
-                 comment: Optional[str] = None,
-                 graph_attr=None,
-                 node_attr=None,
-                 edge_attr=None,
-                 body=None)
+     |  subgraph(
+     |      self,
+     |      graph=None,
+     |      name: Optional[str] = None,
+     |      comment: Optional[str] = None,
+     |      graph_attr=None,
+     |      node_attr=None,
+     |      edge_attr=None,
+     |      body=None
+     |  )
      |      Add the current content of the given sole ``graph`` argument
      |          as subgraph or return a context manager
      |          returning a new graph instance
@@ -1000,21 +1035,24 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.rendering.Render:
      |
-     |  render(self,
-               filename: Union[os.PathLike, str, NoneType] = None,
-               directory: Union[os.PathLike, str, NoneType] = None,
-               view: bool = False,
-               cleanup: bool = False,
-               format: Optional[str] = None,
-               renderer: Optional[str] = None,
-               formatter: Optional[str] = None,
-               neato_no_op: Union[bool, int, NoneType] = None,
-               quiet: bool = False,
-               quiet_view: bool = False, *,
-               outfile: Union[os.PathLike, str, NoneType] = None,
-               engine: Optional[str] = None,
-               raise_if_result_exists: bool = False,
-               overwrite_source: bool = False) -> str
+     |  render(
+     |      self,
+     |      filename: Union[os.PathLike[str], str, NoneType] = None,
+     |      directory: Union[os.PathLike[str], str, NoneType] = None,
+     |      view: bool = False,
+     |      cleanup: bool = False,
+     |      format: Optional[str] = None,
+     |      renderer: Optional[str] = None,
+     |      formatter: Optional[str] = None,
+     |      neato_no_op: Union[bool, int, NoneType] = None,
+     |      quiet: bool = False,
+     |      quiet_view: bool = False,
+     |      *,
+     |      outfile: Union[os.PathLike[str], str, NoneType] = None,
+     |      engine: Optional[str] = None,
+     |      raise_if_result_exists: bool = False,
+     |      overwrite_source: bool = False
+     |  ) -> str
      |      Save the source to file and render with the Graphviz engine.
      |
      |      Args:
@@ -1076,12 +1114,14 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          (e.g. ``[image=images/camelot.png]``)
      |          can be given as paths relative to the DOT source file.
      |
-     |  view(self,
-             filename: Union[os.PathLike, str, NoneType] = None,
-             directory: Union[os.PathLike, str, NoneType] = None,
-             cleanup: bool = False,
-             quiet: bool = False,
-             quiet_view: bool = False) -> str
+     |  view(
+     |      self,
+     |      filename: Union[os.PathLike[str], str, NoneType] = None,
+     |      directory: Union[os.PathLike[str], str, NoneType] = None,
+     |      cleanup: bool = False,
+     |      quiet: bool = False,
+     |      quiet_view: bool = False
+     |  ) -> str
      |      Save the source to file, open the rendered result in a viewer.
      |
      |      Convenience short-cut for running ``.render(view=True)``.
@@ -1113,10 +1153,13 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.saving.Save:
      |
-     |  save(self,
-             filename: Union[os.PathLike, str, NoneType] = None,
-             directory: Union[os.PathLike, str, NoneType] = None, *,
-             skip_existing: Optional[bool] = False) -> str
+     |  save(
+     |      self,
+     |      filename: Union[os.PathLike[str], str, NoneType] = None,
+     |      directory: Union[os.PathLike[str], str, NoneType] = None,
+     |      *,
+     |      skip_existing: Optional[bool] = False
+     |  ) -> str
      |      Save the DOT source to file. Ensure the file ends with a newline.
      |
      |      Args:
@@ -1141,14 +1184,17 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.piping.Pipe:
      |
-     |  pipe(self,
-             format: Optional[str] = None,
-             renderer: Optional[str] = None,
-             formatter: Optional[str] = None,
-             neato_no_op: Union[bool, int, NoneType] = None,
-             quiet: bool = False, *,
-             engine: Optional[str] = None,
-             encoding: Optional[str] = None) -> Union[bytes, str]
+     |  pipe(
+     |      self,
+     |      format: Optional[str] = None,
+     |      renderer: Optional[str] = None,
+     |      formatter: Optional[str] = None,
+     |      neato_no_op: Union[bool, int, NoneType] = None,
+     |      quiet: bool = False,
+     |      *,
+     |      engine: Optional[str] = None,
+     |      encoding: Optional[str] = None
+     |  ) -> Union[bytes, str]
      |      Return the source piped through the Graphviz layout command.
      |
      |      Args:
@@ -1193,10 +1239,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.unflattening.Unflatten:
      |
-     |  unflatten(self,
-                  stagger: Optional[int] = None,
-                  fanout: bool = False,
-                  chain: Optional[int] = None) -> 'graphviz.Source'
+     |  unflatten(
+     |      self,
+     |      stagger: Optional[int] = None,
+     |      fanout: bool = False,
+     |      chain: Optional[int] = None
+     |  ) -> 'graphviz.Source'
      |      Return a new :class:`.Source` instance with the source
      |          piped through the Graphviz *unflatten* preprocessor.
      |
@@ -1291,15 +1339,18 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
                  graphviz.jupyter_integration.JupyterIntegration,
                  graphviz.piping.Pipe,
                  graphviz.unflattening.Unflatten)
-     |  Source(source: str,
-               filename: Union[os.PathLike, str, NoneType] = None,
-               directory: Union[os.PathLike, str, NoneType] = None,
-               format: Optional[str] = None,
-               engine: Optional[str] = None,
-               encoding: Optional[str] = 'utf-8', *,
-               renderer: Optional[str] = None,
-               formatter: Optional[str] = None,
-               loaded_from_path: Optional[os.PathLike] = None) -> None
+     |  Source(
+     |      source: str,
+     |      filename: Union[os.PathLike[str], str, NoneType] = None,
+     |      directory: Union[os.PathLike[str], str, NoneType] = None,
+     |      format: Optional[str] = None,
+     |      engine: Optional[str] = None,
+     |      encoding: Optional[str] = 'utf-8',
+     |      *,
+     |      renderer: Optional[str] = None,
+     |      formatter: Optional[str] = None,
+     |      loaded_from_path: Optional[os.PathLike[str]] = None
+     |  ) -> None
      |
      |  Verbatim DOT source code string to be rendered by Graphviz.
      |
@@ -1341,16 +1392,19 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |
      |  Methods defined here:
      |
-     |  __init__(self,
-                 source: str,
-                 filename: Union[os.PathLike, str, NoneType] = None,
-                 directory: Union[os.PathLike, str, NoneType] = None,
-                 format: Optional[str] = None,
-                 engine: Optional[str] = None,
-                 encoding: Optional[str] = 'utf-8', *,
-                 renderer: Optional[str] = None,
-                 formatter: Optional[str] = None,
-                 loaded_from_path: Optional[os.PathLike] = None) -> None
+     |  __init__(
+     |      self,
+     |      source: str,
+     |      filename: Union[os.PathLike[str], str, NoneType] = None,
+     |      directory: Union[os.PathLike[str], str, NoneType] = None,
+     |      format: Optional[str] = None,
+     |      engine: Optional[str] = None,
+     |      encoding: Optional[str] = 'utf-8',
+     |      *,
+     |      renderer: Optional[str] = None,
+     |      formatter: Optional[str] = None,
+     |      loaded_from_path: Optional[os.PathLike[str]] = None
+     |  ) -> None
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
      |  __iter__(self) -> Iterator[str]
@@ -1358,10 +1412,13 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |
      |      Yields: Line ending with a newline (``'\n'``).
      |
-     |  save(self,
-             filename: Union[os.PathLike, str, NoneType] = None,
-             directory: Union[os.PathLike, str, NoneType] = None, *,
-             skip_existing: Optional[bool] = None) -> str
+     |  save(
+     |      self,
+     |      filename: Union[os.PathLike[str], str, NoneType] = None,
+     |      directory: Union[os.PathLike[str], str, NoneType] = None,
+     |      *,
+     |      skip_existing: Optional[bool] = None
+     |  ) -> str
      |      Save the DOT source to file. Ensure the file ends with a newline.
      |
      |      Args:
@@ -1377,13 +1434,15 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  ----------------------------------------------------------------------
      |  Class methods defined here:
      |
-     |  from_file(filename: Union[os.PathLike, str],
-                  directory: Union[os.PathLike, str, NoneType] = None,
-                  format: Optional[str] = None,
-                  engine: Optional[str] = None,
-                  encoding: Optional[str] = 'utf-8',
-                  renderer: Optional[str] = None,
-                  formatter: Optional[str] = None) -> 'Source'
+     |  from_file(
+     |      filename: Union[os.PathLike[str], str],
+     |      directory: Union[os.PathLike[str], str, NoneType] = None,
+     |      format: Optional[str] = None,
+     |      engine: Optional[str] = None,
+     |      encoding: Optional[str] = 'utf-8',
+     |      renderer: Optional[str] = None,
+     |      formatter: Optional[str] = None
+     |  ) -> 'Source'
      |      Return an instance with the source string read from the given file.
      |
      |      Args:
@@ -1404,26 +1463,29 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  ----------------------------------------------------------------------
      |  Data and other attributes defined here:
      |
-     |  __annotations__ = {'_loaded_from_path': typing.Optional[os.PathLike], ...
+     |  __annotations__ = {'_loaded_from_path': typing.Optional[os.PathLike[st...
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.rendering.Render:
      |
-     |  render(self,
-               filename: Union[os.PathLike, str, NoneType] = None,
-               directory: Union[os.PathLike, str, NoneType] = None,
-               view: bool = False,
-               cleanup: bool = False,
-               format: Optional[str] = None,
-               renderer: Optional[str] = None,
-               formatter: Optional[str] = None,
-               neato_no_op: Union[bool, int, NoneType] = None,
-               quiet: bool = False,
-               quiet_view: bool = False, *,
-               outfile: Union[os.PathLike, str, NoneType] = None,
-               engine: Optional[str] = None,
-               raise_if_result_exists: bool = False,
-               overwrite_source: bool = False) -> str
+     |  render(
+     |      self,
+     |      filename: Union[os.PathLike[str], str, NoneType] = None,
+     |      directory: Union[os.PathLike[str], str, NoneType] = None,
+     |      view: bool = False,
+     |      cleanup: bool = False,
+     |      format: Optional[str] = None,
+     |      renderer: Optional[str] = None,
+     |      formatter: Optional[str] = None,
+     |      neato_no_op: Union[bool, int, NoneType] = None,
+     |      quiet: bool = False,
+     |      quiet_view: bool = False,
+     |      *,
+     |      outfile: Union[os.PathLike[str], str, NoneType] = None,
+     |      engine: Optional[str] = None,
+     |      raise_if_result_exists: bool = False,
+     |      overwrite_source: bool = False
+     |  ) -> str
      |      Save the source to file and render with the Graphviz engine.
      |
      |      Args:
@@ -1485,12 +1547,14 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |          (e.g. ``[image=images/camelot.png]``)
      |          can be given as paths relative to the DOT source file.
      |
-     |  view(self,
-             filename: Union[os.PathLike, str, NoneType] = None,
-             directory: Union[os.PathLike, str, NoneType] = None,
-             cleanup: bool = False,
-             quiet: bool = False,
-             quiet_view: bool = False) -> str
+     |  view(
+     |      self,
+     |      filename: Union[os.PathLike[str], str, NoneType] = None,
+     |      directory: Union[os.PathLike[str], str, NoneType] = None,
+     |      cleanup: bool = False,
+     |      quiet: bool = False,
+     |      quiet_view: bool = False
+     |  ) -> str
      |      Save the source to file, open the rendered result in a viewer.
      |
      |      Convenience short-cut for running ``.render(view=True)``.
@@ -1533,14 +1597,17 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.piping.Pipe:
      |
-     |  pipe(self,
-             format: Optional[str] = None,
-             renderer: Optional[str] = None,
-             formatter: Optional[str] = None,
-             neato_no_op: Union[bool, int, NoneType] = None,
-             quiet: bool = False, *,
-             engine: Optional[str] = None,
-             encoding: Optional[str] = None) -> Union[bytes, str]
+     |  pipe(
+     |      self,
+     |      format: Optional[str] = None,
+     |      renderer: Optional[str] = None,
+     |      formatter: Optional[str] = None,
+     |      neato_no_op: Union[bool, int, NoneType] = None,
+     |      quiet: bool = False,
+     |      *,
+     |      engine: Optional[str] = None,
+     |      encoding: Optional[str] = None
+     |  ) -> Union[bytes, str]
      |      Return the source piped through the Graphviz layout command.
      |
      |      Args:
@@ -1585,10 +1652,12 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.unflattening.Unflatten:
      |
-     |  unflatten(self,
-                  stagger: Optional[int] = None,
-                  fanout: bool = False,
-                  chain: Optional[int] = None) -> 'graphviz.Source'
+     |  unflatten(
+     |      self,
+     |      stagger: Optional[int] = None,
+     |      fanout: bool = False,
+     |      chain: Optional[int] = None
+     |  ) -> 'graphviz.Source'
      |      Return a new :class:`.Source` instance with the source
      |          piped through the Graphviz *unflatten* preprocessor.
      |
