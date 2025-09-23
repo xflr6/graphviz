@@ -1,5 +1,7 @@
 """Commonly used exception classes."""
 
+import builtins as _builtins
+
 from .backend.execute import ExecutableNotFound, CalledProcessError
 
 __all__ = ['ExecutableNotFound', 'CalledProcessError',
@@ -12,7 +14,7 @@ class RequiredArgumentError(TypeError):
     """:exc:`TypeError` raised if a required argument is missing."""
 
 
-class FileExistsError(FileExistsError):
+class FileExistsError(_builtins.FileExistsError):
     """:exc:`FileExistsError` raised with ``raise_if_exists=True``."""
 
 

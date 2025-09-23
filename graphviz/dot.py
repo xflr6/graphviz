@@ -69,7 +69,9 @@ def node(left: str, right: str) -> str:
 class Dot(quoting.Quote, base.Base):
     """Assemble DOT source code."""
 
-    directed: bool
+    @property
+    def directed(self) -> bool:  # pragma: no cover
+        raise NotImplementedError('must be implemented by concrete subclasses')
 
     _comment = staticmethod(comment)
 
