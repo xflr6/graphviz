@@ -65,7 +65,7 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike[str], str]], *,
     if encoding is not None:
         kwargs['encoding'] = encoding
 
-    kwargs.setdefault('startupinfo', _compat.get_startupinfo())
+    kwargs.setdefault('startupinfo', _compat.get_startupinfo())  # type: ignore[func-returns-value]
 
     try:
         if input_lines is not None:
