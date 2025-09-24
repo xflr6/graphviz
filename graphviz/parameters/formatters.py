@@ -1,6 +1,6 @@
 """Rendering formatter parameter handling."""
 
-import typing
+from typing import Optional
 
 from . import base
 
@@ -16,7 +16,7 @@ FORMATTERS = {'cairo',
 REQUIRED = False
 
 
-def verify_formatter(formatter: typing.Optional[str], *,
+def verify_formatter(formatter: Optional[str], *,
                      required: bool = REQUIRED) -> None:
     if formatter is None:
         if required:
@@ -33,7 +33,7 @@ class Formatter(base.ParameterBase):
 
     _verify_formatter = staticmethod(verify_formatter)
 
-    def __init__(self, *, formatter: typing.Optional[str] = None, **kwargs) -> None:
+    def __init__(self, *, formatter: Optional[str] = None, **kwargs) -> None:
         super().__init__(**kwargs)
 
         self.formatter = formatter
@@ -46,13 +46,13 @@ class Formatter(base.ParameterBase):
         return super()._copy_kwargs(**kwargs)
 
     @property
-    def formatter(self) -> typing.Optional[str]:
+    def formatter(self) -> Optional[str]:
         """The output formatter used for rendering
             (``'cairo'``, ``'gd'``, ...)."""
         return self._formatter
 
     @formatter.setter
-    def formatter(self, formatter: typing.Optional[str]) -> None:
+    def formatter(self, formatter: Optional[str]) -> None:
         if formatter is None:
             self.__dict__.pop('_formatter', None)
         else:

@@ -1,6 +1,6 @@
 """Display rendered graph as SVG in Jupyter Notebooks and QtConsole."""
 
-import typing
+from typing import Dict, Iterable, Optional, Union
 
 from . import piping
 
@@ -57,9 +57,9 @@ class JupyterIntegration(piping.Pipe):
     _jupyter_mimetype = get_jupyter_format_mimetype(DEFAULT_JUPYTER_FORMAT)
 
     def _repr_mimebundle_(self,
-                          include: typing.Optional[typing.Iterable[str]] = None,
-                          exclude: typing.Optional[typing.Iterable[str]] = None,
-                          **_) -> typing.Dict[str, typing.Union[bytes, str]]:
+                          include: Optional[Iterable[str]] = None,
+                          exclude: Optional[Iterable[str]] = None,
+                          **_) -> Dict[str, Union[bytes, str]]:
         r"""Return the rendered graph as IPython mimebundle.
 
         Args:

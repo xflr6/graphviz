@@ -1,7 +1,7 @@
 """Create DOT code with method-calls."""
 
 import contextlib
-import typing
+from typing import Iterator, Optional
 
 from . import _tools
 from . import base
@@ -108,8 +108,8 @@ class Dot(quoting.Quote, base.Base):
         return cls._edge(tail=tail, head=head, attr='')
 
     def __init__(self, *,
-                 name: typing.Optional[str] = None,
-                 comment: typing.Optional[str] = None,
+                 name: Optional[str] = None,
+                 comment: Optional[str] = None,
                  graph_attr=None, node_attr=None, edge_attr=None, body=None,
                  strict: bool = False, **kwargs) -> None:
         super().__init__(**kwargs)
@@ -121,16 +121,16 @@ class Dot(quoting.Quote, base.Base):
         """str: DOT source comment for the first source line."""
 
         self.graph_attr = dict(graph_attr) if graph_attr is not None else {}
-        """~typing.Dict[str, str]: Attribute-value pairs applying to the graph."""
+        """~Dict[str, str]: Attribute-value pairs applying to the graph."""
 
         self.node_attr = dict(node_attr) if node_attr is not None else {}
-        """~typing.Dict[str, str]: Attribute-value pairs applying to all nodes."""
+        """~Dict[str, str]: Attribute-value pairs applying to all nodes."""
 
         self.edge_attr = dict(edge_attr) if edge_attr is not None else {}
-        """~typing.Dict[str, str]: Attribute-value pairs applying to all edges."""
+        """~Dict[str, str]: Attribute-value pairs applying to all edges."""
 
         self.body = list(body) if body is not None else []
-        """~typing.List[str]: Verbatim DOT source lines including final newline."""
+        """~List[str]: Verbatim DOT source lines including final newline."""
 
         self.strict = strict
         """bool: Rendering should merge multi-edges."""
@@ -158,7 +158,7 @@ class Dot(quoting.Quote, base.Base):
         self.body.clear()
 
     @_tools.deprecate_positional_args(supported_number=0, ignore_arg='self')
-    def __iter__(self, subgraph: bool = False) -> typing.Iterator[str]:
+    def __iter__(self, subgraph: bool = False) -> Iterator[str]:
         r"""Yield the DOT source code line by line (as graph or subgraph).
 
         Yields: Line ending with a newline (``'\n'``).
@@ -186,7 +186,7 @@ class Dot(quoting.Quote, base.Base):
     @_tools.deprecate_positional_args(supported_number=2, ignore_arg='self',
                                       category=DeprecationWarning)
     def node(self, name: str,
-             label: typing.Optional[str] = None,
+             label: Optional[str] = None,
              _attributes=None, **attrs) -> None:
         """Create a node.
 
@@ -209,7 +209,7 @@ class Dot(quoting.Quote, base.Base):
     @_tools.deprecate_positional_args(supported_number=3, ignore_arg='self',
                                       category=DeprecationWarning)
     def edge(self, tail_name: str, head_name: str,
-             label: typing.Optional[str] = None,
+             label: Optional[str] = None,
              _attributes=None, **attrs) -> None:
         """Create an edge between two nodes.
 
@@ -260,7 +260,7 @@ class Dot(quoting.Quote, base.Base):
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self',
                                       category=DeprecationWarning)
-    def attr(self, kw: typing.Optional[str] = None,
+    def attr(self, kw: Optional[str] = None,
              _attributes=None, **attrs) -> None:
         """Add a general or graph/node/edge attribute statement.
 
@@ -285,8 +285,8 @@ class Dot(quoting.Quote, base.Base):
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
     def subgraph(self, graph=None,
-                 name: typing.Optional[str] = None,
-                 comment: typing.Optional[str] = None,
+                 name: Optional[str] = None,
+                 comment: Optional[str] = None,
                  graph_attr=None, node_attr=None, edge_attr=None,
                  body=None):
         """Add the current content of the given sole ``graph`` argument

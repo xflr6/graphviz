@@ -6,7 +6,7 @@ import logging
 import os
 import subprocess
 import sys
-import typing
+from typing import Iterator, Optional, Union, Sequence, overload
 
 from .. import _compat
 
@@ -16,41 +16,40 @@ __all__ = ['run_check', 'ExecutableNotFound', 'CalledProcessError']
 log = logging.getLogger(__name__)
 
 
-BytesOrStrIterator = typing.Union[typing.Iterator[bytes],
-                                  typing.Iterator[str]]
+BytesOrStrIterator = Union[Iterator[bytes], Iterator[str]]
 
 
-@typing.overload
-def run_check(cmd: typing.Sequence[typing.Union[os.PathLike[str], str]], *,
-              input_lines: typing.Optional[typing.Iterator[bytes]] = ...,
+@overload
+def run_check(cmd: Sequence[Union[os.PathLike[str], str]], *,
+              input_lines: Optional[Iterator[bytes]] = ...,
               encoding: None = ...,
               quiet: bool = ...,
               **kwargs) -> subprocess.CompletedProcess:
     """Accept bytes input_lines with default ``encoding=None```."""
 
 
-@typing.overload
-def run_check(cmd: typing.Sequence[typing.Union[os.PathLike[str], str]], *,
-              input_lines: typing.Optional[typing.Iterator[str]] = ...,
+@overload
+def run_check(cmd: Sequence[Union[os.PathLike[str], str]], *,
+              input_lines: Optional[Iterator[str]] = ...,
               encoding: str,
               quiet: bool = ...,
               **kwargs) -> subprocess.CompletedProcess:
     """Accept string input_lines when given ``encoding``."""
 
 
-@typing.overload
-def run_check(cmd: typing.Sequence[typing.Union[os.PathLike[str], str]], *,
-              input_lines: typing.Optional[BytesOrStrIterator] = ...,
-              encoding: typing.Optional[str] = ...,
+@overload
+def run_check(cmd: Sequence[Union[os.PathLike[str], str]], *,
+              input_lines: Optional[BytesOrStrIterator] = ...,
+              encoding: Optional[str] = ...,
               capture_output: bool = ...,
               quiet: bool = ...,
               **kwargs) -> subprocess.CompletedProcess:
     """Accept bytes or string input_lines depending on ``encoding``."""
 
 
-def run_check(cmd: typing.Sequence[typing.Union[os.PathLike[str], str]], *,
-              input_lines: typing.Optional[BytesOrStrIterator] = None,
-              encoding: typing.Optional[str] = None,
+def run_check(cmd: Sequence[Union[os.PathLike[str], str]], *,
+              input_lines: Optional[BytesOrStrIterator] = None,
+              encoding: Optional[str] = None,
               quiet: bool = False,
               **kwargs) -> subprocess.CompletedProcess:
     """Run the command described by ``cmd``

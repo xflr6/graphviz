@@ -1,6 +1,6 @@
 """Pipe bytes, strings, or string iterators through Graphviz ``dot``."""
 
-import typing
+from typing import Iterator, Optional, Union
 
 from .. import _tools
 
@@ -13,9 +13,9 @@ __all__ = ['pipe', 'pipe_string',
 
 @_tools.deprecate_positional_args(supported_number=3)
 def pipe(engine: str, format: str, data: bytes,
-         renderer: typing.Optional[str] = None,
-         formatter: typing.Optional[str] = None,
-         neato_no_op: typing.Union[bool, int, None] = None,
+         renderer: Optional[str] = None,
+         formatter: Optional[str] = None,
+         neato_no_op: Union[bool, int, None] = None,
          quiet: bool = False) -> bytes:
     """Return ``data`` (``bytes``) piped through ``engine`` into ``format`` as ``bytes``.
 
@@ -62,9 +62,9 @@ def pipe(engine: str, format: str, data: bytes,
 
 def pipe_string(engine: str, format: str, input_string: str, *,
                 encoding: str,
-                renderer: typing.Optional[str] = None,
-                formatter: typing.Optional[str] = None,
-                neato_no_op: typing.Union[bool, int, None] = None,
+                renderer: Optional[str] = None,
+                formatter: Optional[str] = None,
+                neato_no_op: Union[bool, int, None] = None,
                 quiet: bool = False) -> str:
     """Return ``input_string`` piped through ``engine`` into ``format`` as string.
 
@@ -111,11 +111,11 @@ def pipe_string(engine: str, format: str, input_string: str, *,
     return proc.stdout
 
 
-def pipe_lines(engine: str, format: str, input_lines: typing.Iterator[str], *,
+def pipe_lines(engine: str, format: str, input_lines: Iterator[str], *,
                input_encoding: str,
-               renderer: typing.Optional[str] = None,
-               formatter: typing.Optional[str] = None,
-               neato_no_op: typing.Union[bool, int, None] = None,
+               renderer: Optional[str] = None,
+               formatter: Optional[str] = None,
+               neato_no_op: Union[bool, int, None] = None,
                quiet: bool = False) -> bytes:
     r"""Return ``input_lines`` piped through ``engine`` into ``format`` as ``bytes``.
 
@@ -162,11 +162,11 @@ def pipe_lines(engine: str, format: str, input_lines: typing.Iterator[str], *,
     return proc.stdout
 
 
-def pipe_lines_string(engine: str, format: str, input_lines: typing.Iterator[str], *,
+def pipe_lines_string(engine: str, format: str, input_lines: Iterator[str], *,
                       encoding: str,
-                      renderer: typing.Optional[str] = None,
-                      formatter: typing.Optional[str] = None,
-                      neato_no_op: typing.Union[bool, int, None] = None,
+                      renderer: Optional[str] = None,
+                      formatter: Optional[str] = None,
+                      neato_no_op: Union[bool, int, None] = None,
                       quiet: bool = False) -> str:
     r"""Return ``input_lines`` piped through ``engine`` into ``format`` as string.
 

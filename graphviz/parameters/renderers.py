@@ -1,6 +1,6 @@
 """Rendering renderer parameter handling."""
 
-import typing
+from typing import Optional
 
 from . import base
 
@@ -25,7 +25,7 @@ RENDERERS = {'cairo',  # $ dot -T:
 REQUIRED = False
 
 
-def verify_renderer(renderer: typing.Optional[str], *,
+def verify_renderer(renderer: Optional[str], *,
                     required: bool = REQUIRED) -> None:
     if renderer is None:
         if required:
@@ -42,7 +42,7 @@ class Renderer(base.ParameterBase):
 
     _verify_renderer = staticmethod(verify_renderer)
 
-    def __init__(self, *, renderer: typing.Optional[str] = None, **kwargs) -> None:
+    def __init__(self, *, renderer: Optional[str] = None, **kwargs) -> None:
         super().__init__(**kwargs)
 
         self.renderer = renderer
@@ -55,13 +55,13 @@ class Renderer(base.ParameterBase):
         return super()._copy_kwargs(**kwargs)
 
     @property
-    def renderer(self) -> typing.Optional[str]:
+    def renderer(self) -> Optional[str]:
         """The output renderer used for rendering
             (``'cairo'``, ``'gd'``, ...)."""
         return self._renderer
 
     @renderer.setter
-    def renderer(self, renderer: typing.Optional[str]) -> None:
+    def renderer(self, renderer: Optional[str]) -> None:
         if renderer is None:
             self.__dict__.pop('_renderer', None)
         else:

@@ -10,7 +10,6 @@ import pathlib
 import re
 import sys
 from typing import Iterator, Tuple
-import typing
 
 import graphviz
 

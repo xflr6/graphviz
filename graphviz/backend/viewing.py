@@ -4,7 +4,7 @@ import logging
 import os
 import platform
 import subprocess
-import typing
+from typing import Union
 
 from .. import _tools
 
@@ -17,7 +17,7 @@ log = logging.getLogger(__name__)
 
 
 @_tools.deprecate_positional_args(supported_number=1)
-def view(filepath: typing.Union[os.PathLike[str], str],
+def view(filepath: Union[os.PathLike[str], str],
          quiet: bool = False) -> None:
     """Open filepath with its default viewing application (platform-specific).
 
@@ -41,7 +41,7 @@ def view(filepath: typing.Union[os.PathLike[str], str],
 
 
 @_tools.attach(view, 'darwin')
-def view_darwin(filepath: typing.Union[os.PathLike[str], str], *,
+def view_darwin(filepath: Union[os.PathLike[str], str], *,
                 quiet: bool) -> None:
     """Open filepath with its default application (mac)."""
     cmd = ['open', filepath]
@@ -52,7 +52,7 @@ def view_darwin(filepath: typing.Union[os.PathLike[str], str], *,
 
 @_tools.attach(view, 'linux')
 @_tools.attach(view, 'freebsd')
-def view_unixoid(filepath: typing.Union[os.PathLike[str], str], *,
+def view_unixoid(filepath: Union[os.PathLike[str], str], *,
                  quiet: bool) -> None:
     """Open filepath in the user's preferred application (linux, freebsd)."""
     cmd = ['xdg-open', filepath]
@@ -62,7 +62,7 @@ def view_unixoid(filepath: typing.Union[os.PathLike[str], str], *,
 
 
 @_tools.attach(view, 'windows')
-def view_windows(filepath: typing.Union[os.PathLike[str], str], *,
+def view_windows(filepath: Union[os.PathLike[str], str], *,
                  quiet: bool) -> None:
     """Start filepath with its associated application (windows)."""
     # TODO: implement quiet=True

@@ -1,6 +1,6 @@
 """Rendering engine parameter handling."""
 
-import typing
+from typing import Optional
 
 from . import base
 
@@ -36,7 +36,7 @@ class Engine(base.ParameterBase):
 
     _verify_engine = staticmethod(verify_engine)
 
-    def __init__(self, *, engine: typing.Optional[str] = None, **kwargs) -> None:
+    def __init__(self, *, engine: Optional[str] = None, **kwargs) -> None:
         super().__init__(**kwargs)
 
         if engine is not None:

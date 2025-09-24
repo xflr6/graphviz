@@ -2,7 +2,7 @@
 
 import codecs
 import logging
-import typing
+from typing import Optional, Union, overload
 
 from . import _tools
 from . import backend
@@ -19,47 +19,47 @@ log = logging.getLogger(__name__)
 class Pipe(encoding.Encoding, base.Base, backend.Pipe):
     """Pipe source lines through the Graphviz layout command."""
 
-    @typing.overload
+    @overload
     def pipe(self,
-             format: typing.Optional[str] = ...,
-             renderer: typing.Optional[str] = ...,
-             formatter: typing.Optional[str] = ...,
-             neato_no_op: typing.Union[bool, int, None] = ...,
+             format: Optional[str] = ...,
+             renderer: Optional[str] = ...,
+             formatter: Optional[str] = ...,
+             neato_no_op: Union[bool, int, None] = ...,
              quiet: bool = ..., *,
-             engine: typing.Optional[str] = ...,
+             engine: Optional[str] = ...,
              encoding: None = ...) -> bytes:
         """Return bytes with default ``encoding=None``."""
 
-    @typing.overload
+    @overload
     def pipe(self,
-             format: typing.Optional[str] = ...,
-             renderer: typing.Optional[str] = ...,
-             formatter: typing.Optional[str] = ...,
-             neato_no_op: typing.Union[bool, int, None] = ...,
+             format: Optional[str] = ...,
+             renderer: Optional[str] = ...,
+             formatter: Optional[str] = ...,
+             neato_no_op: Union[bool, int, None] = ...,
              quiet: bool = ..., *,
-             engine: typing.Optional[str] = ...,
+             engine: Optional[str] = ...,
              encoding: str) -> str:
         """Return string when given encoding."""
 
-    @typing.overload
+    @overload
     def pipe(self,
-             format: typing.Optional[str] = ...,
-             renderer: typing.Optional[str] = ...,
-             formatter: typing.Optional[str] = ...,
-             neato_no_op: typing.Union[bool, int, None] = ...,
+             format: Optional[str] = ...,
+             renderer: Optional[str] = ...,
+             formatter: Optional[str] = ...,
+             neato_no_op: Union[bool, int, None] = ...,
              quiet: bool = ..., *,
-             engine: typing.Optional[str] = ...,
-             encoding: typing.Optional[str]) -> typing.Union[bytes, str]:
+             engine: Optional[str] = ...,
+             encoding: Optional[str]) -> Union[bytes, str]:
         """Return bytes or string depending on encoding argument."""
 
     def pipe(self,
-             format: typing.Optional[str] = None,
-             renderer: typing.Optional[str] = None,
-             formatter: typing.Optional[str] = None,
-             neato_no_op: typing.Union[bool, int, None] = None,
+             format: Optional[str] = None,
+             renderer: Optional[str] = None,
+             formatter: Optional[str] = None,
+             neato_no_op: Union[bool, int, None] = None,
              quiet: bool = False, *,
-             engine: typing.Optional[str] = None,
-             encoding: typing.Optional[str] = None) -> typing.Union[bytes, str]:
+             engine: Optional[str] = None,
+             encoding: Optional[str] = None) -> Union[bytes, str]:
         """Return the source piped through the Graphviz layout command.
 
         Args:
@@ -111,13 +111,13 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
     def _pipe_legacy(self,
-                     format: typing.Optional[str] = None,
-                     renderer: typing.Optional[str] = None,
-                     formatter: typing.Optional[str] = None,
-                     neato_no_op: typing.Union[bool, int, None] = None,
+                     format: Optional[str] = None,
+                     renderer: Optional[str] = None,
+                     formatter: Optional[str] = None,
+                     neato_no_op: Union[bool, int, None] = None,
                      quiet: bool = False, *,
-                     engine: typing.Optional[str] = None,
-                     encoding: typing.Optional[str] = None) -> typing.Union[bytes, str]:
+                     engine: Optional[str] = None,
+                     encoding: Optional[str] = None) -> Union[bytes, str]:
         return self._pipe_future(format,
                                  renderer=renderer,
                                  formatter=formatter,
@@ -126,13 +126,13 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                                  engine=engine,
                                  encoding=encoding)
 
-    def _pipe_future(self, format: typing.Optional[str] = None, *,
-                     renderer: typing.Optional[str] = None,
-                     formatter: typing.Optional[str] = None,
-                     neato_no_op: typing.Union[bool, int, None] = None,
+    def _pipe_future(self, format: Optional[str] = None, *,
+                     renderer: Optional[str] = None,
+                     formatter: Optional[str] = None,
+                     neato_no_op: Union[bool, int, None] = None,
                      quiet: bool = False,
-                     engine: typing.Optional[str] = None,
-                     encoding: typing.Optional[str] = None) -> typing.Union[bytes, str]:
+                     engine: Optional[str] = None,
+                     encoding: Optional[str] = None) -> Union[bytes, str]:
         args, kwargs = self._get_pipe_parameters(engine=engine,
                                                  format=format,
                                                  renderer=renderer,

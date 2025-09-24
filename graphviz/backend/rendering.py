@@ -2,7 +2,7 @@
 
 import os
 import pathlib
-import typing
+from typing import List, Optional, Union, overload
 import warnings
 
 from .._defaults import DEFAULT_SOURCE_EXTENSION
@@ -16,7 +16,7 @@ from . import execute
 __all__ = ['get_format', 'get_filepath', 'render']
 
 
-def get_format(outfile: pathlib.Path, *, format: typing.Optional[str]) -> str:
+def get_format(outfile: pathlib.Path, *, format: Optional[str]) -> str:
     """Return format inferred from outfile suffix and/or given ``format``.
 
     Args:
@@ -58,7 +58,7 @@ def get_format(outfile: pathlib.Path, *, format: typing.Optional[str]) -> str:
         return inferred_format
 
 
-def get_supported_suffixes() -> typing.List[str]:
+def get_supported_suffixes() -> List[str]:
     """Return a sorted list of supported outfile suffixes for exception/warning messages.
 
     >>> get_supported_suffixes()  # doctest: +ELLIPSIS
@@ -67,7 +67,7 @@ def get_supported_suffixes() -> typing.List[str]:
     return [f'.{format}' for format in get_supported_formats()]
 
 
-def get_supported_formats() -> typing.List[str]:
+def get_supported_formats() -> List[str]:
     """Return a sorted list of supported formats for exception/warning messages.
 
     >>> get_supported_formats()  # doctest: +ELLIPSIS
@@ -128,10 +128,10 @@ def infer_format(outfile: pathlib.Path) -> str:
     return format_
 
 
-def get_outfile(filepath: typing.Union[os.PathLike[str], str], *,
+def get_outfile(filepath: Union[os.PathLike[str], str], *,
                 format: str,
-                renderer: typing.Optional[str] = None,
-                formatter: typing.Optional[str] = None) -> pathlib.Path:
+                renderer: Optional[str] = None,
+                formatter: Optional[str] = None) -> pathlib.Path:
     """Return ``filepath`` + ``[[.formatter].renderer].format``.
 
     See also:
@@ -148,19 +148,19 @@ def get_outfile(filepath: typing.Union[os.PathLike[str], str], *,
     return filepath.with_suffix(f'{filepath.suffix}.{suffix}')
 
 
-def get_filepath(outfile: typing.Union[os.PathLike[str], str]) -> pathlib.Path:
+def get_filepath(outfile: Union[os.PathLike[str], str]) -> pathlib.Path:
     """Return ``outfile.with_suffix('.gv')``."""
     outfile = _tools.promote_pathlike(outfile)
     return outfile.with_suffix(f'.{DEFAULT_SOURCE_EXTENSION}')
 
 
-@typing.overload
+@overload
 def render(engine: str,
            format: str,
-           filepath: typing.Union[os.PathLike[str], str],
-           renderer: typing.Optional[str] = ...,
-           formatter: typing.Optional[str] = ...,
-           neato_no_op: typing.Union[bool, int, None] = ...,
+           filepath: Union[os.PathLike[str], str],
+           renderer: Optional[str] = ...,
+           formatter: Optional[str] = ...,
+           neato_no_op: Union[bool, int, None] = ...,
            quiet: bool = ..., *,
            outfile: None = ...,
            raise_if_result_exists: bool = ...,
@@ -168,29 +168,29 @@ def render(engine: str,
     """Require ``format`` and ``filepath`` with default ``outfile=None``."""
 
 
-@typing.overload
+@overload
 def render(engine: str,
-           format: typing.Optional[str] = ...,
-           filepath: typing.Union[os.PathLike[str], str, None] = ...,
-           renderer: typing.Optional[str] = ...,
-           formatter: typing.Optional[str] = ...,
-           neato_no_op: typing.Union[bool, int, None] = ...,
+           format: Optional[str] = ...,
+           filepath: Union[os.PathLike[str], str, None] = ...,
+           renderer: Optional[str] = ...,
+           formatter: Optional[str] = ...,
+           neato_no_op: Union[bool, int, None] = ...,
            quiet: bool = False, *,
-           outfile: typing.Union[os.PathLike[str], str],
+           outfile: Union[os.PathLike[str], str],
            raise_if_result_exists: bool = ...,
            overwrite_filepath: bool = ...) -> str:
     """Optional ``format`` and ``filepath`` with given ``outfile``."""
 
 
-@typing.overload
+@overload
 def render(engine: str,
-           format: typing.Optional[str] = ...,
-           filepath: typing.Union[os.PathLike[str], str, None] = ...,
-           renderer: typing.Optional[str] = ...,
-           formatter: typing.Optional[str] = ...,
-           neato_no_op: typing.Union[bool, int, None] = ...,
+           format: Optional[str] = ...,
+           filepath: Union[os.PathLike[str], str, None] = ...,
+           renderer: Optional[str] = ...,
+           formatter: Optional[str] = ...,
+           neato_no_op: Union[bool, int, None] = ...,
            quiet: bool = False, *,
-           outfile: typing.Union[os.PathLike[str], str, None] = ...,
+           outfile: Union[os.PathLike[str], str, None] = ...,
            raise_if_result_exists: bool = ...,
            overwrite_filepath: bool = ...) -> str:
     """Required/optional ``format`` and ``filepath`` depending on ``outfile``."""
@@ -198,13 +198,13 @@ def render(engine: str,
 
 @_tools.deprecate_positional_args(supported_number=3)
 def render(engine: str,
-           format: typing.Optional[str] = None,
-           filepath: typing.Union[os.PathLike[str], str, None] = None,
-           renderer: typing.Optional[str] = None,
-           formatter: typing.Optional[str] = None,
-           neato_no_op: typing.Union[bool, int, None] = None,
+           format: Optional[str] = None,
+           filepath: Union[os.PathLike[str], str, None] = None,
+           renderer: Optional[str] = None,
+           formatter: Optional[str] = None,
+           neato_no_op: Union[bool, int, None] = None,
            quiet: bool = False, *,
-           outfile: typing.Union[os.PathLike[str], str, None] = None,
+           outfile: Union[os.PathLike[str], str, None] = None,
            raise_if_result_exists: bool = False,
            overwrite_filepath: bool = False) -> str:
     r"""Render file with ``engine`` into ``format`` and return result filename.

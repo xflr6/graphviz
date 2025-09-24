@@ -2,7 +2,7 @@
 
 import functools
 import re
-import typing
+from typing import Optional
 import warnings
 
 from . import _tools
@@ -113,7 +113,7 @@ def quote_edge(identifier: str) -> str:
 
 
 @_tools.deprecate_positional_args(supported_number=1)
-def a_list(label: typing.Optional[str] = None,
+def a_list(label: Optional[str] = None,
            kwargs=None, attributes=None) -> str:
     """Return assembled DOT a_list string.
 
@@ -133,7 +133,7 @@ def a_list(label: typing.Optional[str] = None,
 
 
 @_tools.deprecate_positional_args(supported_number=1)
-def attr_list(label: typing.Optional[str] = None,
+def attr_list(label: Optional[str] = None,
               kwargs=None, attributes=None) -> str:
     """Return assembled DOT attribute list string.
 

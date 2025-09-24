@@ -6,7 +6,7 @@ import itertools
 import logging
 import os
 import pathlib
-import typing
+from typing import Any, Callable, Optional, Type, Union, overload
 import warnings
 
 __all__ = ['attach',
@@ -20,7 +20,7 @@ __all__ = ['attach',
 log = logging.getLogger(__name__)
 
 
-def attach(object: typing.Any, /, name: str) -> typing.Callable:
+def attach(object: Any, /, name: str) -> Callable:
     """Return a decorator doing ``setattr(object, name)`` with its argument.
 
     >>> spam = type('Spam', (object,), {})()  # doctest: +NO_EXE
@@ -39,7 +39,7 @@ def attach(object: typing.Any, /, name: str) -> typing.Callable:
     return decorator
 
 
-def mkdirs(filename: typing.Union[os.PathLike[str], str], /, *, mode: int = 0o777) -> None:
+def mkdirs(filename: Union[os.PathLike[str], str], /, *, mode: int = 0o777) -> None:
     """Recursively create directories up to the path of ``filename``
         as needed."""
     dirname = os.path.dirname(filename)
@@ -66,24 +66,24 @@ def mapping_items(mapping, /):
     return result
 
 
-@typing.overload
-def promote_pathlike(filepath: typing.Union[os.PathLike[str], str], /) -> pathlib.Path:
+@overload
+def promote_pathlike(filepath: Union[os.PathLike[str], str], /) -> pathlib.Path:
     """Return path object for path-like-object."""
 
 
-@typing.overload
+@overload
 def promote_pathlike(filepath: None, /) -> None:
     """Return None for None."""
 
 
-@typing.overload
-def promote_pathlike(filepath: typing.Union[os.PathLike[str], str, None], /,
-                     ) -> typing.Optional[pathlib.Path]:
+@overload
+def promote_pathlike(filepath: Union[os.PathLike[str], str, None], /,
+                     ) -> Optional[pathlib.Path]:
     """Return path object or ``None`` depending on ``filepath``."""
 
 
-def promote_pathlike(filepath: typing.Union[os.PathLike[str], str, None]
-                     ) -> typing.Optional[pathlib.Path]:
+def promote_pathlike(filepath: Union[os.PathLike[str], str, None]
+                     ) -> Optional[pathlib.Path]:
     """Return path-like object ``filepath`` promoted into a path object.
 
     See also:
@@ -92,8 +92,8 @@ def promote_pathlike(filepath: typing.Union[os.PathLike[str], str, None]
     return pathlib.Path(filepath) if filepath is not None else None
 
 
-def promote_pathlike_directory(directory: typing.Union[os.PathLike[str], str, None], /, *,
-                               default: typing.Union[os.PathLike[str], str, None] = None,
+def promote_pathlike_directory(directory: Union[os.PathLike[str], str, None], /, *,
+                               default: Union[os.PathLike[str], str, None] = None,
                                ) -> pathlib.Path:
     """Return path-like object ``directory`` promoted into a path object (default to ``os.curdir``).
 
@@ -106,8 +106,8 @@ def promote_pathlike_directory(directory: typing.Union[os.PathLike[str], str, No
 
 def deprecate_positional_args(*,
                               supported_number: int,
-                              ignore_arg: typing.Optional[str] = None,
-                              category: typing.Type[Warning] = PendingDeprecationWarning,
+                              ignore_arg: Optional[str] = None,
+                              category: Type[Warning] = PendingDeprecationWarning,
                               stacklevel: int = 1):
     """Mark supported_number of positional arguments as the maximum.
 

@@ -1,7 +1,7 @@
 """Pipe DOT source code through ``unflatten``."""
 
 import pathlib
-import typing
+from typing import List, Optional, Union
 
 from ..encoding import DEFAULT_ENCODING
 from .. import _tools
@@ -16,9 +16,9 @@ UNFLATTEN_BINARY = pathlib.Path('unflatten')
 
 @_tools.deprecate_positional_args(supported_number=1)
 def unflatten(source: str,
-              stagger: typing.Optional[int] = None,
+              stagger: Optional[int] = None,
               fanout: bool = False,
-              chain: typing.Optional[int] = None,
+              chain: Optional[int] = None,
               encoding: str = DEFAULT_ENCODING) -> str:
     """Return DOT ``source`` piped through ``unflatten`` preprocessor as string.
 
@@ -50,7 +50,7 @@ def unflatten(source: str,
     if fanout and stagger is None:
         raise exceptions.RequiredArgumentError('fanout given without stagger')
 
-    cmd: typing.List[typing.Union[pathlib.Path, str]] = [UNFLATTEN_BINARY]
+    cmd: List[Union[pathlib.Path, str]] = [UNFLATTEN_BINARY]
     if stagger is not None:
         cmd += ['-l', str(stagger)]
     if fanout:

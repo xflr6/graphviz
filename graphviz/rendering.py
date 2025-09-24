@@ -3,7 +3,7 @@
 import logging
 import os
 import pathlib
-import typing
+from typing import Optional, Union
 
 from . import _tools
 from . import backend
@@ -20,18 +20,18 @@ class Render(saving.Save, backend.Render, backend.View):
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
     def render(self,
-               filename: typing.Union[os.PathLike[str], str, None] = None,
-               directory: typing.Union[os.PathLike[str], str, None] = None,
+               filename: Union[os.PathLike[str], str, None] = None,
+               directory: Union[os.PathLike[str], str, None] = None,
                view: bool = False,
                cleanup: bool = False,
-               format: typing.Optional[str] = None,
-               renderer: typing.Optional[str] = None,
-               formatter: typing.Optional[str] = None,
-               neato_no_op: typing.Union[bool, int, None] = None,
+               format: Optional[str] = None,
+               renderer: Optional[str] = None,
+               formatter: Optional[str] = None,
+               neato_no_op: Union[bool, int, None] = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
-               outfile: typing.Union[os.PathLike[str], str, None] = None,
-               engine: typing.Optional[str] = None,
+               outfile: Union[os.PathLike[str], str, None] = None,
+               engine: Optional[str] = None,
                raise_if_result_exists: bool = False,
                overwrite_source: bool = False) -> str:
         r"""Save the source to file and render with the Graphviz engine.
@@ -130,7 +130,7 @@ class Render(saving.Save, backend.Render, backend.View):
 
         return rendered
 
-    def _view(self, filepath: typing.Union[os.PathLike[str], str], *,
+    def _view(self, filepath: Union[os.PathLike[str], str], *,
               format: str, quiet: bool) -> None:
         """Start the right viewer based on file format and platform."""
         methodnames = [
@@ -149,8 +149,8 @@ class Render(saving.Save, backend.Render, backend.View):
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
     def view(self,
-             filename: typing.Union[os.PathLike[str], str, None] = None,
-             directory: typing.Union[os.PathLike[str], str, None] = None,
+             filename: Union[os.PathLike[str], str, None] = None,
+             directory: Union[os.PathLike[str], str, None] = None,
              cleanup: bool = False,
              quiet: bool = False,
              quiet_view: bool = False) -> str:

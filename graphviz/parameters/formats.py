@@ -1,6 +1,6 @@
 """Rendering format parameter handling."""
 
-import typing
+from typing import Optional
 
 from . import base
 
@@ -64,7 +64,7 @@ class Format(base.ParameterBase):
 
     _verify_format = staticmethod(verify_format)
 
-    def __init__(self, *, format: typing.Optional[str] = None, **kwargs) -> None:
+    def __init__(self, *, format: Optional[str] = None, **kwargs) -> None:
         super().__init__(**kwargs)
 
         if format is not None:

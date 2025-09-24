@@ -30,7 +30,7 @@ Example:
     'doctest-output/m00se.gv.pdf'
 """
 
-import typing
+from typing import Optional
 
 from .encoding import DEFAULT_ENCODING
 from . import _tools
@@ -50,17 +50,17 @@ class BaseGraph(dot.Dot,
     """Dot language creation and source code rendering."""
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
-    def __init__(self, name: typing.Optional[str] = None,
-                 comment: typing.Optional[str] = None,
+    def __init__(self, name: Optional[str] = None,
+                 comment: Optional[str] = None,
                  filename=None, directory=None,
-                 format: typing.Optional[str] = None,
-                 engine: typing.Optional[str] = None,
-                 encoding: typing.Optional[str] = DEFAULT_ENCODING,
+                 format: Optional[str] = None,
+                 engine: Optional[str] = None,
+                 encoding: Optional[str] = DEFAULT_ENCODING,
                  graph_attr=None, node_attr=None, edge_attr=None,
                  body=None,
                  strict: bool = False, *,
-                 renderer: typing.Optional[str] = None,
-                 formatter: typing.Optional[str] = None) -> None:
+                 renderer: Optional[str] = None,
+                 formatter: Optional[str] = None) -> None:
         if filename is None and name is not None:
             filename = f'{name}.{self._default_extension}'
 
