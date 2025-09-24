@@ -9,6 +9,7 @@ import operator
 import pathlib
 import re
 import sys
+from typing import Iterator, Tuple
 import typing
 
 import graphviz
@@ -47,17 +48,17 @@ def get_help(obj) -> str:
         return ''.join(iterlines(buf))
 
 
-def rpartition_initial(value: str, *, sep: str) -> typing.Tuple[str, str, str]:
+def rpartition_initial(value: str, *, sep: str) -> Tuple[str, str, str]:
     """Return (value, '', '') if sep not in value else value.rpartition(sep)."""
     _, sep_found, _ = parts = value.rpartition(sep)
     return tuple(reversed(parts)) if not sep_found else parts
 
 
-def iterarguments(unwrapped_line: str) -> typing.Iterator[str]:
+def iterarguments(unwrapped_line: str) -> Iterator[str]:
     """Yield unwrapped line of argument definitions divided into one line per arg.
 
-    >>> list(iterarguments('spam: str, eggs: typing.Union[str, None], ham'))
-    ['spam: str,', 'eggs: typing.Union[str, None],', 'ham']
+    >>> list(iterarguments('spam: str, eggs: Union[str, None], ham'))
+    ['spam: str,', 'eggs: Union[str, None],', 'ham']
     """
     pos = 0
     bracket_level = paren_level = 0
@@ -80,7 +81,7 @@ def iterarguments(unwrapped_line: str) -> typing.Iterator[str]:
 
 def iterlines(stdout_lines, *,
               line_indent: str = INDENT,
-              wrap_after: int = WRAP_AFTER) -> typing.Iterator[str]:
+              wrap_after: int = WRAP_AFTER) -> Iterator[str]:
     """Yield post-processed help() stdout lines: rstrip, indent, wrap."""
     for line in stdout_lines:
         line = line.rstrip() + '\n'
