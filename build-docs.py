@@ -27,11 +27,8 @@ DEFAULT_ARGS = [BROWSER_OPEN, '-W', '-n', '-v', str(SOURCE), str(TARGET)]
 OPEN_RESULT = BROWSER_OPEN in DEFAULT_ARGS
 
 
-print = functools.partial(print, sep='\n')
-
-
+print('run', [SELF.name] + sys.argv[1:])
 args = sys.argv[1:]
-print(f'run {[SELF.name] + args}')
 if not args:
     args = DEFAULT_ARGS
 
@@ -61,10 +58,11 @@ if not args:  # no pytest args given
 if args == ['-b', 'doctest']:
     args += ['-W', str(SOURCE), str(SOURCE / '_doctest')]
 
-print('', f'sphinx.cmd.build.main({args})',)
+print(f'sphinx.cmd.build.main({args})')
 returncode = build.main(args)
 status = 'FAILED' if returncode else 'PASSED'
-print('', f'{status} (returncode {returncode!r})', end='')
+print = functools.partial(print, sep='\n')
+print('', f'{status}: returncode {returncode!r}', end='')
 
 try:
     if 'doctest' not in args:
