@@ -50,6 +50,16 @@ platforms = ["any"]
 [tool.setuptools.dynamic]
 version = { attr = "graphviz.__version__" }
 
+[tool.mypy]
+packages = ["graphviz"]
+# https://mypy.readthedocs.io/en/stable/existing_code.html#introduce-stricter-options
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+strict_equality = true
+check_untyped_defs = true
+disallow_subclassing_any = true
+
 [tool.pytype]
 inputs = ["graphviz"]
 

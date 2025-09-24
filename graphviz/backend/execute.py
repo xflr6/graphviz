@@ -1,6 +1,7 @@
 """Run subprocesses with ``subprocess.run()`` and ``subprocess.Popen()``."""
 
 import errno
+import io
 import logging
 import os
 import subprocess
@@ -95,6 +96,7 @@ def run_check(cmd: typing.Sequence[typing.Union[os.PathLike[str], str]], *,
 def _run_input_lines(cmd, input_lines, *, kwargs):
     popen = subprocess.Popen(cmd, stdin=subprocess.PIPE, **kwargs)
 
+    assert isinstance(popen.stdin, io.IOBase)
     stdin_write = popen.stdin.write
     for line in input_lines:
         stdin_write(line)
