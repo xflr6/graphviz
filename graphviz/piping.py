@@ -150,12 +150,11 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
             try:
                 raw = self._pipe_lines(*args, input_encoding=self.encoding, **kwargs)
             except exceptions.CalledProcessError as e:
-                *args, output, stderr = e.args
-                if output is not None:
+                if (output := e.output) is not None:
                     output = output.decode(self.encoding)
-                if stderr is not None:
+                if (stderr := e.stderr) is not None:
                     stderr = stderr.decode(self.encoding)
-                raise e.__class__(*args, output=output, stderr=stderr)
+                raise e.__class__(e.returncode, e.cmd, output=output, stderr=stderr)
             else:
                 return raw.decode(encoding)
         return self._pipe_lines(*args, input_encoding=self.encoding, **kwargs)
