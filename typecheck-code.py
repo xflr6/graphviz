@@ -21,7 +21,7 @@ try:
 except SystemExit as e:
     exit = e
 else:
-    exit = SystemExit(0)
+    exit = SystemExit()
 
 print('FAILED:' if exit.code else 'PASSED:', repr(exit))
 sys.exit(exit.code)
