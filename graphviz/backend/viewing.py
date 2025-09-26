@@ -4,13 +4,13 @@ import logging
 import os
 import platform
 import subprocess
-from typing import Union
+from typing import Final, Union
 
 from .. import _tools
 
 __all__ = ['view']
 
-PLATFORM = platform.system().lower()
+PLATFORM: Final = platform.system().lower()
 
 
 log = logging.getLogger(__name__)
@@ -68,4 +68,4 @@ def view_windows(filepath: Union[os.PathLike[str], str], *,
     # TODO: implement quiet=True
     filepath = os.path.normpath(filepath)
     log.debug('view: %r', filepath)
-    os.startfile(filepath)  # type: ignore[attr-defined,unused-ignore]  # pytype: disable=module-attr
+    os.startfile(filepath)  # type: ignore[attr-defined,unused-ignore]  # pytype: disable=module-attr  # noqa: E501

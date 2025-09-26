@@ -30,7 +30,7 @@ Example:
     'doctest-output/m00se.gv.pdf'
 """
 
-from typing import Optional
+from typing import Iterable, Mapping, Optional
 
 from .encoding import DEFAULT_ENCODING
 from . import _tools
@@ -56,8 +56,10 @@ class BaseGraph(dot.Dot,
                  format: Optional[str] = None,
                  engine: Optional[str] = None,
                  encoding: Optional[str] = DEFAULT_ENCODING,
-                 graph_attr=None, node_attr=None, edge_attr=None,
-                 body=None,
+                 graph_attr: Optional[Mapping[str, str]] = None,
+                 node_attr: Optional[Mapping[str, str]] = None,
+                 edge_attr: Optional[Mapping[str, str]] = None,
+                 body: Optional[Iterable[str]] = None,
                  strict: bool = False, *,
                  renderer: Optional[str] = None,
                  formatter: Optional[str] = None) -> None:

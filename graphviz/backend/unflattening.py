@@ -1,7 +1,7 @@
 """Pipe DOT source code through ``unflatten``."""
 
 import pathlib
-from typing import List, Optional, Union
+from typing import Final, List, Optional, Union
 
 from ..encoding import DEFAULT_ENCODING
 from .. import _tools
@@ -11,7 +11,7 @@ from . import execute
 
 __all__ = ['UNFLATTEN_BINARY', 'unflatten']
 
-UNFLATTEN_BINARY = pathlib.Path('unflatten')
+UNFLATTEN_BINARY: Final = pathlib.Path('unflatten')
 
 
 @_tools.deprecate_positional_args(supported_number=1)

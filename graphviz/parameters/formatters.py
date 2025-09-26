@@ -1,19 +1,19 @@
 """Rendering formatter parameter handling."""
 
-from typing import Optional
+from typing import Final, Optional, Set
 
 from . import base
 
 __all__ = ['FORMATTERS', 'verify_formatter', 'Formatter']
 
-FORMATTERS = {'cairo',
-              'core',
-              'gd',
-              'gdiplus',
-              'gdwbmp',
-              'xlib'}
+FORMATTERS: Final[Set] = {'cairo',
+                          'core',
+                          'gd',
+                          'gdiplus',
+                          'gdwbmp',
+                          'xlib'}
 
-REQUIRED = False
+REQUIRED: Final = False
 
 
 def verify_formatter(formatter: Optional[str], *,

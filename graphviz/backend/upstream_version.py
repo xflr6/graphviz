@@ -4,24 +4,24 @@ import logging
 import os
 import re
 import subprocess
-from typing import List, Tuple, Union
+from typing import Final, List, Tuple, Union
 
 from . import dot_command
 from . import execute
 
-VERSION_PATTERN = re.compile(r'''
-                             graphviz[ ]
-                             version[ ]
-                             (\d+)\.(\d+)
-                             (?:\.(\d+)
-                               (?:
-                                 ~dev\.\d{8}\.\d{4}
-                                 |
-                                 \.(\d+)
-                               )?
-                             )?
-                             [ ]
-                             ''', re.VERBOSE)
+VERSION_PATTERN: Final = re.compile(r'''
+                                    graphviz[ ]
+                                    version[ ]
+                                    (\d+)\.(\d+)
+                                    (?:\.(\d+)
+                                      (?:
+                                        ~dev\.\d{8}\.\d{4}
+                                        |
+                                        \.(\d+)
+                                      )?
+                                    )?
+                                    [ ]
+                                    ''', re.VERBOSE)
 
 
 log = logging.getLogger(__name__)

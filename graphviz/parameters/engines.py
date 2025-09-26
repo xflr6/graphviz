@@ -1,23 +1,23 @@
 """Rendering engine parameter handling."""
 
-from typing import Optional
+from typing import Final, Optional, Set
 
 from . import base
 
 __all__ = ['ENGINES', 'verify_engine', 'Engine']
 
-ENGINES = {'dot',  # https://www.graphviz.org/pdf/dot.1.pdf
-           'neato',
-           'twopi',
-           'circo',
-           'fdp',
-           'sfdp',
-           'patchwork',
-           'osage'}
+ENGINES: Final[Set] = {'dot',  # https://www.graphviz.org/pdf/dot.1.pdf
+                       'neato',
+                       'twopi',
+                       'circo',
+                       'fdp',
+                       'sfdp',
+                       'patchwork',
+                       'osage'}
 
-DEFAULT_ENGINE = 'dot'
+DEFAULT_ENGINE: Final = 'dot'
 
-REQUIRED = True
+REQUIRED: Final = True
 
 
 def verify_engine(engine: str, *, required: bool = REQUIRED) -> None:

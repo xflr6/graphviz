@@ -61,30 +61,30 @@ __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE.txt'
 __copyright__ = 'Copyright (c) 2013-2025 Sebastian Bank'
 
-ENGINES = ENGINES
+ENGINES = ENGINES  # type: ignore[misc]
 """:class:`set` of known layout commands used for rendering
 (``'dot'``, ``'neato'``, ...)."""
 
-FORMATS = FORMATS
+FORMATS = FORMATS  # type: ignore[misc]
 """:class:`set` of known output formats for rendering
 (``'pdf'``, ``'png'``, ...)."""
 
-RENDERERS = RENDERERS
+RENDERERS = RENDERERS  # type: ignore[misc]
 """:class:`set` of known output renderers for rendering
 (``'cairo'``, ``'gd'``, ...)."""
 
-FORMATTERS = FORMATTERS
+FORMATTERS = FORMATTERS  # type: ignore[misc]
 """:class:`set` of known output formatters for rendering
 (``'cairo'``, ``'gd'``, ...)."""
 
-SUPPORTED_JUPYTER_FORMATS = SUPPORTED_JUPYTER_FORMATS
+SUPPORTED_JUPYTER_FORMATS = SUPPORTED_JUPYTER_FORMATS  # type: ignore[misc]
 """:class:`set` of supported formats for ``_repr_mimebundle_()``
 (``'svg'``, ``'png'``, ...)."""
 
-DOT_BINARY = DOT_BINARY
+DOT_BINARY = DOT_BINARY  # type: ignore[misc]
 """:class:`pathlib.Path` of rendering command (``Path('dot')``)."""
 
-UNFLATTEN_BINARY = UNFLATTEN_BINARY
+UNFLATTEN_BINARY = UNFLATTEN_BINARY  # type: ignore[misc]
 """:class:`pathlib.Path` of unflatten command (``Path('unflatten')``)."""
 
 

@@ -2,7 +2,7 @@
 
 import functools
 import re
-from typing import Optional
+from typing import Final, Sequence, Mapping, Optional, Tuple, Union
 import warnings
 
 from . import _tools
@@ -15,26 +15,26 @@ __all__ = ['quote', 'quote_edge',
 # https://www.graphviz.org/doc/info/lang.html
 # https://www.graphviz.org/doc/info/attrs.html#k:escString
 
-HTML_STRING = re.compile(r'<.*>$', re.DOTALL)
+HTML_STRING: Final = re.compile(r'<.*>$', re.DOTALL)
 
-ID = re.compile(r'([a-zA-Z_][a-zA-Z0-9_]*|-?(\.[0-9]+|[0-9]+(\.[0-9]*)?))$')
+ID: Final = re.compile(r'([a-zA-Z_][a-zA-Z0-9_]*|-?(\.[0-9]+|[0-9]+(\.[0-9]*)?))$')
 
-KEYWORDS = {'node', 'edge', 'graph', 'digraph', 'subgraph', 'strict'}
+KEYWORDS: Final = {'node', 'edge', 'graph', 'digraph', 'subgraph', 'strict'}
 
-COMPASS = {'n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw', 'c', '_'}  # TODO
+COMPASS: Final = {'n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw', 'c', '_'}  # TODO
 
-FINAL_ODD_BACKSLASHES = re.compile(r'(?<!\\)(?:\\{2})*\\$')
+FINAL_ODD_BACKSLASHES: Final = re.compile(r'(?<!\\)(?:\\{2})*\\$')
 
-QUOTE_WITH_OPTIONAL_BACKSLASHES = re.compile(r'''
-                                            (?P<escaped_backslashes>(?:\\{2})*)
-                                            \\?  # treat \" same as "
-                                            (?P<literal_quote>")
-                                            ''', flags=re.VERBOSE)
+QUOTE_WITH_OPTIONAL_BACKSLASHES: Final = re.compile(r'''
+                                                    (?P<escaped_backslashes>(?:\\{2})*)
+                                                    \\?  # treat \" same as "
+                                                    (?P<literal_quote>")
+                                                    ''', flags=re.VERBOSE)
 
-ESCAPE_UNESCAPED_QUOTES = functools.partial(QUOTE_WITH_OPTIONAL_BACKSLASHES.sub,
-                                            r'\g<escaped_backslashes>'
-                                            r'\\'
-                                            r'\g<literal_quote>')
+ESCAPE_UNESCAPED_QUOTES: Final = functools.partial(QUOTE_WITH_OPTIONAL_BACKSLASHES.sub,
+                                                   r'\g<escaped_backslashes>'
+                                                   r'\\'
+                                                   r'\g<literal_quote>')
 
 
 @_tools.deprecate_positional_args(supported_number=1)
@@ -114,7 +114,9 @@ def quote_edge(identifier: str) -> str:
 
 @_tools.deprecate_positional_args(supported_number=1)
 def a_list(label: Optional[str] = None,
-           kwargs=None, attributes=None) -> str:
+           kwargs: Optional[Mapping[str, str]] = None,
+           attributes: Union[Mapping[str, str],
+                             Sequence[Tuple[str, str]], None] = None) -> str:
     """Return assembled DOT a_list string.
 
     >>> a_list('spam', kwargs={'spam': None, 'ham': 'ham ham', 'eggs': ''})  # doctest: +NO_EXE
@@ -125,16 +127,18 @@ def a_list(label: Optional[str] = None,
         result += [f'{quote(k)}={quote(v)}'
                    for k, v in _tools.mapping_items(kwargs) if v is not None]
     if attributes:
-        if hasattr(attributes, 'items'):
-            attributes = _tools.mapping_items(attributes)
+        items = (_tools.mapping_items(attributes)
+                 if isinstance(attributes, Mapping) else attributes)
         result += [f'{quote(k)}={quote(v)}'
-                   for k, v in attributes if v is not None]
+                   for k, v in items if v is not None]
     return ' '.join(result)
 
 
 @_tools.deprecate_positional_args(supported_number=1)
 def attr_list(label: Optional[str] = None,
-              kwargs=None, attributes=None) -> str:
+              kwargs: Optional[Mapping[str, str]] = None,
+              attributes: Union[Mapping[str, str],
+                                Sequence[Tuple[str, str]], None] = None) -> str:
     """Return assembled DOT attribute list string.
 
     Sorts ``kwargs`` and ``attributes`` if they are plain dicts

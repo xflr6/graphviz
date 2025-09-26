@@ -247,10 +247,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      format: Optional[str] = None,
      |      engine: Optional[str] = None,
      |      encoding: Optional[str] = 'utf-8',
-     |      graph_attr=None,
-     |      node_attr=None,
-     |      edge_attr=None,
-     |      body=None,
+     |      graph_attr: Optional[Mapping[str, str]] = None,
+     |      node_attr: Optional[Mapping[str, str]] = None,
+     |      edge_attr: Optional[Mapping[str, str]] = None,
+     |      body: Optional[Iterable[str]] = None,
      |      strict: bool = False,
      |      *,
      |      renderer: Optional[str] = None,
@@ -339,10 +339,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      format: Optional[str] = None,
      |      engine: Optional[str] = None,
      |      encoding: Optional[str] = 'utf-8',
-     |      graph_attr=None,
-     |      node_attr=None,
-     |      edge_attr=None,
-     |      body=None,
+     |      graph_attr: Optional[Mapping[str, str]] = None,
+     |      node_attr: Optional[Mapping[str, str]] = None,
+     |      edge_attr: Optional[Mapping[str, str]] = None,
+     |      body: Optional[Iterable[str]] = None,
      |      strict: bool = False,
      |      *,
      |      renderer: Optional[str] = None,
@@ -364,7 +364,9 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |
      |      Yields: Line ending with a newline (``'\n'``).
      |
-     |  attr(self, kw: Optional[str] = None, _attributes=None, **attrs) -> None
+     |  attr(self,
+             kw: Optional[str] = None,
+             _attributes=None, **attrs: str) -> None
      |      Add a general or graph/node/edge attribute statement.
      |
      |      Args:
@@ -386,7 +388,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      head_name: str,
      |      label: Optional[str] = None,
      |      _attributes=None,
-     |      **attrs
+     |      **attrs: str
      |  ) -> None
      |      Create an edge between two nodes.
      |
@@ -410,7 +412,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          See the sections :ref:`backslash-escapes` and
      |          :ref:`quoting-and-html-like-labels` in the user guide for details.
      |
-     |  edges(self, tail_head_iter) -> None
+     |  edges(self, tail_head_iter: Iterable[Tuple[str, str]]) -> None
      |      Create a bunch of edges.
      |
      |      Args:
@@ -424,10 +426,13 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          and ``compass`` (e.g. ``sw``).
      |          See :ref:`details in the User Guide <node-ports-compass>`.
      |
-     |  node(self,
-             name: str,
-             label: Optional[str] = None,
-             _attributes=None, **attrs) -> None
+     |  node(
+     |      self,
+     |      name: str,
+     |      label: Optional[str] = None,
+     |      _attributes=None,
+     |      **attrs: str
+     |  ) -> None
      |      Create a node.
      |
      |      Args:
@@ -446,9 +451,9 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      graph=None,
      |      name: Optional[str] = None,
      |      comment: Optional[str] = None,
-     |      graph_attr=None,
-     |      node_attr=None,
-     |      edge_attr=None,
+     |      graph_attr: Optional[Mapping[str, str]] = None,
+     |      node_attr: Optional[Mapping[str, str]] = None,
+     |      edge_attr: Optional[Mapping[str, str]] = None,
      |      body=None
      |  )
      |      Add the current content of the given sole ``graph`` argument
@@ -795,10 +800,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      format: Optional[str] = None,
      |      engine: Optional[str] = None,
      |      encoding: Optional[str] = 'utf-8',
-     |      graph_attr=None,
-     |      node_attr=None,
-     |      edge_attr=None,
-     |      body=None,
+     |      graph_attr: Optional[Mapping[str, str]] = None,
+     |      node_attr: Optional[Mapping[str, str]] = None,
+     |      edge_attr: Optional[Mapping[str, str]] = None,
+     |      body: Optional[Iterable[str]] = None,
      |      strict: bool = False,
      |      *,
      |      renderer: Optional[str] = None,
@@ -887,10 +892,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      format: Optional[str] = None,
      |      engine: Optional[str] = None,
      |      encoding: Optional[str] = 'utf-8',
-     |      graph_attr=None,
-     |      node_attr=None,
-     |      edge_attr=None,
-     |      body=None,
+     |      graph_attr: Optional[Mapping[str, str]] = None,
+     |      node_attr: Optional[Mapping[str, str]] = None,
+     |      edge_attr: Optional[Mapping[str, str]] = None,
+     |      body: Optional[Iterable[str]] = None,
      |      strict: bool = False,
      |      *,
      |      renderer: Optional[str] = None,
@@ -912,7 +917,9 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |
      |      Yields: Line ending with a newline (``'\n'``).
      |
-     |  attr(self, kw: Optional[str] = None, _attributes=None, **attrs) -> None
+     |  attr(self,
+             kw: Optional[str] = None,
+             _attributes=None, **attrs: str) -> None
      |      Add a general or graph/node/edge attribute statement.
      |
      |      Args:
@@ -934,7 +941,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      head_name: str,
      |      label: Optional[str] = None,
      |      _attributes=None,
-     |      **attrs
+     |      **attrs: str
      |  ) -> None
      |      Create an edge between two nodes.
      |
@@ -958,7 +965,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          See the sections :ref:`backslash-escapes` and
      |          :ref:`quoting-and-html-like-labels` in the user guide for details.
      |
-     |  edges(self, tail_head_iter) -> None
+     |  edges(self, tail_head_iter: Iterable[Tuple[str, str]]) -> None
      |      Create a bunch of edges.
      |
      |      Args:
@@ -972,10 +979,13 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          and ``compass`` (e.g. ``sw``).
      |          See :ref:`details in the User Guide <node-ports-compass>`.
      |
-     |  node(self,
-             name: str,
-             label: Optional[str] = None,
-             _attributes=None, **attrs) -> None
+     |  node(
+     |      self,
+     |      name: str,
+     |      label: Optional[str] = None,
+     |      _attributes=None,
+     |      **attrs: str
+     |  ) -> None
      |      Create a node.
      |
      |      Args:
@@ -994,9 +1004,9 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      graph=None,
      |      name: Optional[str] = None,
      |      comment: Optional[str] = None,
-     |      graph_attr=None,
-     |      node_attr=None,
-     |      edge_attr=None,
+     |      graph_attr: Optional[Mapping[str, str]] = None,
+     |      node_attr: Optional[Mapping[str, str]] = None,
+     |      edge_attr: Optional[Mapping[str, str]] = None,
      |      body=None
      |  )
      |      Add the current content of the given sole ``graph`` argument

@@ -1,28 +1,28 @@
 """Rendering renderer parameter handling."""
 
-from typing import Optional
+from typing import Final, Optional, Set
 
 from . import base
 
 __all__ = ['RENDERERS', 'verify_renderer', 'Renderer']
 
-RENDERERS = {'cairo',  # $ dot -T:
-             'dot',
-             'fig',
-             'gd',
-             'gdiplus',
-             'map',
-             'pic',
-             'pov',
-             'ps',
-             'svg',
-             'tk',
-             'vml',
-             'vrml',
-             'xdot'}
+RENDERERS: Final[Set] = {'cairo',  # $ dot -T:
+                         'dot',
+                         'fig',
+                         'gd',
+                         'gdiplus',
+                         'map',
+                         'pic',
+                         'pov',
+                         'ps',
+                         'svg',
+                         'tk',
+                         'vml',
+                         'vrml',
+                         'xdot'}
 
 
-REQUIRED = False
+REQUIRED: Final = False
 
 
 def verify_renderer(renderer: Optional[str], *,

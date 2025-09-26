@@ -6,7 +6,8 @@ import itertools
 import logging
 import os
 import pathlib
-from typing import Any, Callable, Optional, Type, Union, overload
+from typing import (Any, Callable, Iterator, Mapping, Optional, Tuple, Type,
+                    Union, overload)
 import warnings
 
 __all__ = ['attach',
@@ -49,7 +50,7 @@ def mkdirs(filename: Union[os.PathLike[str], str], /, *, mode: int = 0o777) -> N
     os.makedirs(dirname, mode=mode, exist_ok=True)
 
 
-def mapping_items(mapping, /):
+def mapping_items(mapping: Mapping[Any, Any], /) -> Iterator[Tuple[Any, Any]]:
     """Return an iterator over the ``mapping`` items,
         sort if it's a plain dict.
 

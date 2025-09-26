@@ -2,13 +2,13 @@
 
 import codecs
 import locale
-from typing import Optional
+from typing import Final, Optional
 
 from . import copying
 
 __all__ = ['DEFAULT_ENCODING', 'Encoding']
 
-DEFAULT_ENCODING = 'utf-8'
+DEFAULT_ENCODING: Final = 'utf-8'
 
 
 class Encoding(copying.CopyBase):

@@ -2,14 +2,14 @@
 
 import os
 import pathlib
-from typing import List, Optional, Union
+from typing import Final, List, Optional, Union
 
 from .. import exceptions
 from .. import parameters
 
 __all__ = ['DOT_BINARY', 'command']
 
-DOT_BINARY = pathlib.Path('dot')
+DOT_BINARY: Final = pathlib.Path('dot')
 
 
 def command(engine: str, format_: str, *,

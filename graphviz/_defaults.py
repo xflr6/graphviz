@@ -1,9 +1,11 @@
 """Set package-wide default parameters and IPython/Jupyter display format."""
 
+from typing import Final
+
 __all_ = ['DEFAULT_SOURCE_EXTENSION',
           'set_default_engine', 'set_default_format', 'set_jupyter_format']
 
-DEFAULT_SOURCE_EXTENSION = 'gv'
+DEFAULT_SOURCE_EXTENSION: Final = 'gv'
 
 
 def set_default_engine(engine: str) -> str:

@@ -1,6 +1,6 @@
 """Display rendered graph as SVG in Jupyter Notebooks and QtConsole."""
 
-from typing import Dict, Iterable, Optional, Union
+from typing import Dict, Final, Iterable, Mapping, Optional, Set, Union
 
 from . import piping
 
@@ -11,22 +11,23 @@ __all__ = ['JUPYTER_FORMATS',
 
 _IMAGE_JPEG = 'image/jpeg'
 
-JUPYTER_FORMATS = {'jpeg': _IMAGE_JPEG,
-                   'jpg': _IMAGE_JPEG,
-                   'png': 'image/png',
-                   'svg': 'image/svg+xml'}
+JUPYTER_FORMATS: Final[Mapping[str, str]] = {'jpeg': _IMAGE_JPEG,
+                                             'jpg': _IMAGE_JPEG,
+                                             'png': 'image/png',
+                                             'svg': 'image/svg+xml'}
 
-SUPPORTED_JUPYTER_FORMATS = set(JUPYTER_FORMATS)
+SUPPORTED_JUPYTER_FORMATS: Final[Set[str]] = set(JUPYTER_FORMATS)
 
-DEFAULT_JUPYTER_FORMAT = next(_ for _ in SUPPORTED_JUPYTER_FORMATS if _ == 'svg')
+DEFAULT_JUPYTER_FORMAT: Final = next(_ for _ in SUPPORTED_JUPYTER_FORMATS
+                                     if _ == 'svg')
 
-MIME_TYPES = {'image/jpeg': '_repr_image_jpeg',
-              'image/png': '_repr_image_png',
-              'image/svg+xml': '_repr_image_svg_xml'}
+MIME_TYPES: Final[Mapping[str, str]] = {'image/jpeg': '_repr_image_jpeg',
+                                        'image/png': '_repr_image_png',
+                                        'image/svg+xml': '_repr_image_svg_xml'}
 
 assert MIME_TYPES.keys() == set(JUPYTER_FORMATS.values())
 
-SVG_ENCODING = 'utf-8'
+SVG_ENCODING: Final = 'utf-8'
 
 
 def get_jupyter_format_mimetype(jupyter_format: str) -> str:

@@ -129,5 +129,5 @@ class ExecutableNotFound(RuntimeError):
 class CalledProcessError(subprocess.CalledProcessError):
     """:exc:`~subprocess.CalledProcessError` raised if a subprocess ``returncode`` is not ``0``."""  # noqa: E501
 
-    def __str__(self) -> 'str':
+    def __str__(self) -> str:
         return f'{super().__str__()} [stderr: {self.stderr!r}]'
