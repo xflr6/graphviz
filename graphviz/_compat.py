@@ -12,7 +12,7 @@ assert get_startupinfo() is None, 'get_startupinfo() defaults to a no-op'  # typ
 
 
 # avoid platform.system() to work around https://github.com/python/mypy/issues/8166
-if sys.platform == 'win32' or sys.platform == 'cygwin' or sys.platform == 'msys':  # pragma: no cover
+if sys.platform == 'win32' or sys.platform == 'cygwin' or sys.platform == 'msys':  # pragma: no cover  # noqa: E501
     import subprocess
 
     def get_startupinfo() -> subprocess.STARTUPINFO:  # type: ignore[misc]  # noqa: E501

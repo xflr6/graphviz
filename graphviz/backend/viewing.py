@@ -68,4 +68,4 @@ def view_windows(filepath: Union[os.PathLike[str], str], *,
     # TODO: implement quiet=True
     filepath = os.path.normpath(filepath)
     log.debug('view: %r', filepath)
-    os.startfile(filepath)  # pytype: disable=module-attr
+    os.startfile(filepath)  # type: ignore[attr-defined]  # pytype: disable=module-attr
