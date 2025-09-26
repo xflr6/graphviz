@@ -32,7 +32,7 @@ CI = "https://github.com/xflr6/graphviz/actions"
 Coverage = "https://codecov.io/gh/xflr6/graphviz"
 
 [project.optional-dependencies]
-dev = ["build", "wheel", "twine", "flake8", "Flake8-pyproject", "pep8-naming", "tox>=3"]
+dev = ["build", "wheel", "twine", "mypy", "flake8", "Flake8-pyproject", "pep8-naming", "tox>=3"]
 test = [
   "pytest>=7,<8.1",  # https://github.com/pytest-dev/pytest/issues/12123
   "pytest-mock>=3",
