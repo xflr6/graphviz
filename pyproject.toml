@@ -50,6 +50,9 @@ platforms = ["any"]
 [tool.setuptools.dynamic]
 version = { attr = "graphviz.__version__" }
 
+[tool.setuptools.package-data]
+graphviz = ["py.typed"]
+
 [tool.mypy]
 packages = ["graphviz"]
 # https://mypy.readthedocs.io/en/stable/existing_code.html#introduce-stricter-options
