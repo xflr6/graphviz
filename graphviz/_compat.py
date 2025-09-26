@@ -1,6 +1,6 @@
 """Platform compatibility."""
 
-import platform
+import sys
 
 
 def get_startupinfo() -> None:
@@ -11,7 +11,8 @@ def get_startupinfo() -> None:
 assert get_startupinfo() is None, 'get_startupinfo() defaults to a no-op'  # type: ignore[func-returns-value]  # noqa: E501
 
 
-if platform.system() == 'Windows':  # pragma: no cover
+# avoid platform.system() to work around https://github.com/python/mypy/issues/8166
+if sys.platform == 'win32' or sys.platform == 'cygwin' or sys.platform == 'msys':  # pragma: no cover
     import subprocess
 
     def get_startupinfo() -> subprocess.STARTUPINFO:  # type: ignore[misc]  # noqa: E501
