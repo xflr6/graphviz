@@ -56,7 +56,7 @@ def pipe(engine: str, format: str, data: bytes,
                               neato_no_op=neato_no_op)
     kwargs = {'input': data}
 
-    proc = execute.run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
+    proc = execute.run_check(cmd, capture_output=True, quiet=quiet, **kwargs)  # type: ignore[call-overload]  # https://github.com/python/mypy/issues/18481  # noqa: E501
     return proc.stdout
 
 
@@ -107,7 +107,7 @@ def pipe_string(engine: str, format: str, input_string: str, *,
                               neato_no_op=neato_no_op)
     kwargs = {'input': input_string, 'encoding': encoding}
 
-    proc = execute.run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
+    proc = execute.run_check(cmd, capture_output=True, quiet=quiet, **kwargs)  # type: ignore[call-overload]  # https://github.com/python/mypy/issues/18481  # noqa: E501
     return proc.stdout
 
 
@@ -158,7 +158,7 @@ def pipe_lines(engine: str, format: str, input_lines: Iterator[str], *,
                               neato_no_op=neato_no_op)
     kwargs = {'input_lines': (line.encode(input_encoding) for line in input_lines)}
 
-    proc = execute.run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
+    proc = execute.run_check(cmd, capture_output=True, quiet=quiet, **kwargs)  # type: ignore[call-overload]  # https://github.com/python/mypy/issues/18481  # noqa: E501
     return proc.stdout
 
 
@@ -209,5 +209,5 @@ def pipe_lines_string(engine: str, format: str, input_lines: Iterator[str], *,
                               neato_no_op=neato_no_op)
     kwargs = {'input_lines': input_lines, 'encoding': encoding}
 
-    proc = execute.run_check(cmd, capture_output=True, quiet=quiet, **kwargs)
+    proc = execute.run_check(cmd, capture_output=True, quiet=quiet, **kwargs)  # type: ignore[call-overload]  # https://github.com/python/mypy/issues/18481  # noqa: E501
     return proc.stdout

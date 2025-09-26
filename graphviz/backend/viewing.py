@@ -47,7 +47,7 @@ def view_darwin(filepath: Union[os.PathLike[str], str], *,
     cmd = ['open', filepath]
     log.debug('view: %r', cmd)
     kwargs = {'stderr': subprocess.DEVNULL} if quiet else {}
-    subprocess.Popen(cmd, **kwargs)
+    subprocess.Popen(cmd, **kwargs)  # type: ignore[call-overload]  # https://github.com/python/mypy/issues/18481  # noqa: E501
 
 
 @_tools.attach(view, 'linux')
@@ -58,7 +58,7 @@ def view_unixoid(filepath: Union[os.PathLike[str], str], *,
     cmd = ['xdg-open', filepath]
     log.debug('view: %r', cmd)
     kwargs = {'stderr': subprocess.DEVNULL} if quiet else {}
-    subprocess.Popen(cmd, **kwargs)
+    subprocess.Popen(cmd, **kwargs)  # type: ignore[call-overload]  # https://github.com/python/mypy/issues/18481  # noqa: E501
 
 
 @_tools.attach(view, 'windows')
