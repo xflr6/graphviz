@@ -39,7 +39,7 @@ Links
 Installation
 ------------
 
-This package runs under Python 3.9+, use pip_ to install:
+This package runs under Python 3.10+, use pip_ to install:
 
 .. code:: bash
 

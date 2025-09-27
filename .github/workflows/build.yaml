@@ -33,14 +33,8 @@ jobs:
           - name: linux-3.10-skip-exe
             python-version: "3.10"
             os: ubuntu-latest
-          - name: linux-3.9-skip-exe
-            python-version: "3.9"
-            os: ubuntu-latest
           - name: linux-pypy-3.10-skip-exe
             python-version: pypy-3.10
-            os: ubuntu-latest
-          - name: linux-pypy-3.9-skip-exe
-            python-version: pypy-3.9
             os: ubuntu-latest
     steps:
       - name: Checkout source repo
