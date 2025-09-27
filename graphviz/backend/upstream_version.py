@@ -4,7 +4,7 @@ import logging
 import os
 import re
 import subprocess
-from typing import Final, List, Tuple, Union
+from typing import Final
 
 from . import dot_command
 from . import execute
@@ -27,7 +27,7 @@ VERSION_PATTERN: Final = re.compile(r'''
 log = logging.getLogger(__name__)
 
 
-def version() -> Tuple[int, ...]:
+def version() -> tuple[int, ...]:
     """Return the upstream version number tuple from ``stderr`` of ``dot -V``.
 
     Returns:
@@ -51,7 +51,7 @@ def version() -> Tuple[int, ...]:
         Upstream release version entry format:
         https://gitlab.com/graphviz/graphviz/-/blob/f94e91ba819cef51a4b9dcb2d76153684d06a913/gen_version.py#L17-20
     """
-    cmd: List[Union[os.PathLike[str], str]] = [dot_command.DOT_BINARY, '-V']
+    cmd: list[os.PathLike[str] | str] = [dot_command.DOT_BINARY, '-V']
     proc = execute.run_check(cmd,
                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                              encoding='ascii')

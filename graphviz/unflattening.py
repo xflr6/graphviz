@@ -1,7 +1,5 @@
 """Pipe source through the Graphviz *unflatten* preprocessor."""
 
-from typing import Optional
-
 import graphviz
 from . import _tools
 from . import base
@@ -16,9 +14,9 @@ class Unflatten(encoding.Encoding, base.Base, backend.Unflatten):
 
     @_tools.deprecate_positional_args(supported_number=0, ignore_arg='self')
     def unflatten(self,
-                  stagger: Optional[int] = None,
+                  stagger: int | None = None,
                   fanout: bool = False,
-                  chain: Optional[int] = None) -> 'graphviz.Source':
+                  chain: int | None = None) -> 'graphviz.Source':
         """Return a new :class:`.Source` instance with the source
             piped through the Graphviz *unflatten* preprocessor.
 

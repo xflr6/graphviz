@@ -1,7 +1,5 @@
 """Mixin classes used to inherit parameter functionality."""
 
-from typing import Optional
-
 from . import engines
 from . import formats
 from . import renderers
@@ -15,10 +13,10 @@ class Parameters(engines.Engine, formats.Format,
     """Parameters for calling ``graphviz.render()`` and ``graphviz.pipe()``."""
 
     def _get_parameters(self, *,
-                        engine: Optional[str] = None,
-                        format: Optional[str] = None,
-                        renderer: Optional[str] = None,
-                        formatter: Optional[str] = None,
+                        engine: str | None = None,
+                        format: str | None = None,
+                        renderer: str | None = None,
+                        formatter: str | None = None,
                         verify: bool = False,
                         **kwargs):
         if engine is None:

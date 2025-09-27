@@ -1,7 +1,6 @@
 """Mixin classes used by Base subclasses to inherit backend functionality."""
 
 import os
-from typing import Union
 
 from .. import parameters
 
@@ -21,7 +20,7 @@ class Render(parameters.Parameters):
     _get_filepath = staticmethod(rendering.get_filepath)
 
     def _get_render_parameters(self,
-                               outfile: Union[os.PathLike[str], str, None] = None,
+                               outfile: os.PathLike[str] | str | None = None,
                                raise_if_result_exists: bool = False,
                                overwrite_source: bool = False,
                                **kwargs):

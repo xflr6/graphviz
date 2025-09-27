@@ -1,12 +1,13 @@
 """Run subprocesses with ``subprocess.run()`` and ``subprocess.Popen()``."""
 
+from collections.abc import Iterator, Sequence
 import errno
 import io
 import logging
 import os
 import subprocess
 import sys
-from typing import Iterator, Optional, Union, Sequence, overload
+from typing import TypeAlias, overload
 
 from .. import _compat
 
@@ -16,12 +17,12 @@ __all__ = ['run_check', 'ExecutableNotFound', 'CalledProcessError']
 log = logging.getLogger(__name__)
 
 
-BytesOrStrIterator = Union[Iterator[bytes], Iterator[str]]
+BytesOrStrIterator: TypeAlias = Iterator[bytes] | Iterator[str]
 
 
 @overload
-def run_check(cmd: Sequence[Union[os.PathLike[str], str]], *,
-              input_lines: Optional[Iterator[bytes]] = ...,
+def run_check(cmd: Sequence[os.PathLike[str] | str], *,
+              input_lines: Iterator[bytes] | None = ...,
               encoding: None = ...,
               quiet: bool = ...,
               **kwargs) -> subprocess.CompletedProcess:
@@ -29,8 +30,8 @@ def run_check(cmd: Sequence[Union[os.PathLike[str], str]], *,
 
 
 @overload
-def run_check(cmd: Sequence[Union[os.PathLike[str], str]], *,
-              input_lines: Optional[Iterator[str]] = ...,
+def run_check(cmd: Sequence[os.PathLike[str] | str], *,
+              input_lines: Iterator[str] | None = ...,
               encoding: str,
               quiet: bool = ...,
               **kwargs) -> subprocess.CompletedProcess:
@@ -38,18 +39,18 @@ def run_check(cmd: Sequence[Union[os.PathLike[str], str]], *,
 
 
 @overload
-def run_check(cmd: Sequence[Union[os.PathLike[str], str]], *,
-              input_lines: Optional[BytesOrStrIterator] = ...,
-              encoding: Optional[str] = ...,
+def run_check(cmd: Sequence[os.PathLike[str] | str], *,
+              input_lines: BytesOrStrIterator | None = ...,
+              encoding: str | None = ...,
               capture_output: bool = ...,
               quiet: bool = ...,
               **kwargs) -> subprocess.CompletedProcess:
     """Accept bytes or string input_lines depending on ``encoding``."""
 
 
-def run_check(cmd: Sequence[Union[os.PathLike[str], str]], *,
-              input_lines: Optional[BytesOrStrIterator] = None,
-              encoding: Optional[str] = None,
+def run_check(cmd: Sequence[os.PathLike[str] | str], *,
+              input_lines: BytesOrStrIterator | None = None,
+              encoding: str | None = None,
               quiet: bool = False,
               **kwargs) -> subprocess.CompletedProcess:
     """Run the command described by ``cmd``

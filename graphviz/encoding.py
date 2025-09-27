@@ -2,7 +2,7 @@
 
 import codecs
 import locale
-from typing import Final, Optional
+from typing import Final
 
 from . import copying
 
@@ -16,7 +16,7 @@ class Encoding(copying.CopyBase):
 
     _encoding = DEFAULT_ENCODING
 
-    def __init__(self, *, encoding: Optional[str] = DEFAULT_ENCODING,
+    def __init__(self, *, encoding: str | None = DEFAULT_ENCODING,
                  **kwargs) -> None:
         super().__init__(**kwargs)
 
@@ -32,7 +32,7 @@ class Encoding(copying.CopyBase):
         return self._encoding
 
     @encoding.setter
-    def encoding(self, encoding: Optional[str]) -> None:
+    def encoding(self, encoding: str | None) -> None:
         if encoding is None:
             encoding = locale.getpreferredencoding()
 

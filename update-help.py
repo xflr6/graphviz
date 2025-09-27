@@ -2,6 +2,7 @@
 
 """Update the ``help()`` outputs  in ``docs/api.rst``."""
 
+from collections.abc import Iterator
 import contextlib
 import difflib
 import io
@@ -9,7 +10,6 @@ import operator
 import pathlib
 import re
 import sys
-from typing import Iterator, Tuple
 
 import graphviz
 
@@ -47,7 +47,7 @@ def get_help(obj) -> str:
         return ''.join(iterlines(buf))
 
 
-def rpartition_initial(value: str, *, sep: str) -> Tuple[str, str, str]:
+def rpartition_initial(value: str, *, sep: str) -> tuple[str, str, str]:
     """Return (value, '', '') if sep not in value else value.rpartition(sep)."""
     _, sep_found, _ = parts = value.rpartition(sep)
     return tuple(reversed(parts)) if not sep_found else parts

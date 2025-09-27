@@ -30,7 +30,7 @@ Example:
     'doctest-output/m00se.gv.pdf'
 """
 
-from typing import Iterable, Mapping, Optional
+from collections.abc import Iterable, Mapping
 
 from .encoding import DEFAULT_ENCODING
 from . import _tools
@@ -50,19 +50,19 @@ class BaseGraph(dot.Dot,
     """Dot language creation and source code rendering."""
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
-    def __init__(self, name: Optional[str] = None,
-                 comment: Optional[str] = None,
+    def __init__(self, name: str | None = None,
+                 comment: str | None = None,
                  filename=None, directory=None,
-                 format: Optional[str] = None,
-                 engine: Optional[str] = None,
-                 encoding: Optional[str] = DEFAULT_ENCODING,
-                 graph_attr: Optional[Mapping[str, str]] = None,
-                 node_attr: Optional[Mapping[str, str]] = None,
-                 edge_attr: Optional[Mapping[str, str]] = None,
-                 body: Optional[Iterable[str]] = None,
+                 format: str | None = None,
+                 engine: str | None = None,
+                 encoding: str | None = DEFAULT_ENCODING,
+                 graph_attr: Mapping[str, str] | None = None,
+                 node_attr: Mapping[str, str] | None = None,
+                 edge_attr: Mapping[str, str] | None = None,
+                 body: Iterable[str] | None = None,
                  strict: bool = False, *,
-                 renderer: Optional[str] = None,
-                 formatter: Optional[str] = None) -> None:
+                 renderer: str | None = None,
+                 formatter: str | None = None) -> None:
         if filename is None and name is not None:
             filename = f'{name}.{self._default_extension}'
 

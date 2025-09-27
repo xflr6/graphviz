@@ -1,19 +1,20 @@
 """Rendering engine parameter handling."""
 
-from typing import Final, Optional, Set
+from collections.abc import Set
+from typing import Final
 
 from . import base
 
 __all__ = ['ENGINES', 'verify_engine', 'Engine']
 
-ENGINES: Final[Set] = {'dot',  # https://www.graphviz.org/pdf/dot.1.pdf
-                       'neato',
-                       'twopi',
-                       'circo',
-                       'fdp',
-                       'sfdp',
-                       'patchwork',
-                       'osage'}
+ENGINES: Final[Set[str]] = {'dot',  # https://www.graphviz.org/pdf/dot.1.pdf
+                            'neato',
+                            'twopi',
+                            'circo',
+                            'fdp',
+                            'sfdp',
+                            'patchwork',
+                            'osage'}
 
 DEFAULT_ENGINE: Final = 'dot'
 
@@ -36,7 +37,7 @@ class Engine(base.ParameterBase):
 
     _verify_engine = staticmethod(verify_engine)
 
-    def __init__(self, *, engine: Optional[str] = None, **kwargs) -> None:
+    def __init__(self, *, engine: str | None = None, **kwargs) -> None:
         super().__init__(**kwargs)
 
         if engine is not None:

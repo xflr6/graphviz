@@ -1,47 +1,48 @@
 """Rendering format parameter handling."""
 
-from typing import Final, Optional, Set
+from collections.abc import Set
+from typing import Final
 
 from . import base
 
 __all__ = ['FORMATS', 'verify_format', 'Format']
 
-FORMATS: Final[Set] = {'bmp',  # https://graphviz.org/docs/outputs/
-                       'canon', 'dot', 'gv', 'xdot', 'xdot1.2', 'xdot1.4',
-                       'cgimage',
-                       'cmap',
-                       'eps',
-                       'exr',
-                       'fig',
-                       'gd', 'gd2',
-                       'gif',
-                       'gtk',
-                       'ico',
-                       'imap', 'cmapx',
-                       'imap_np', 'cmapx_np',
-                       'ismap',
-                       'jp2',
-                       'jpg', 'jpeg', 'jpe',
-                       'json', 'json0', 'dot_json', 'xdot_json',  # Graphviz 2.40
-                       'pct', 'pict',
-                       'pdf',
-                       'pic',
-                       'plain', 'plain-ext',
-                       'png',
-                       'pov',
-                       'ps',
-                       'ps2',
-                       'psd',
-                       'sgi',
-                       'svg', 'svg_inline', 'svgz',  # svg_linline: Graphviz 10.0.1
-                       'tga',
-                       'tif', 'tiff',
-                       'tk',
-                       'vml', 'vmlz',
-                       'vrml',
-                       'wbmp',
-                       'webp',
-                       'xlib', 'x11'}
+FORMATS: Final[Set[str]] = {'bmp',  # https://graphviz.org/docs/outputs/
+                            'canon', 'dot', 'gv', 'xdot', 'xdot1.2', 'xdot1.4',
+                            'cgimage',
+                            'cmap',
+                            'eps',
+                            'exr',
+                            'fig',
+                            'gd', 'gd2',
+                            'gif',
+                            'gtk',
+                            'ico',
+                            'imap', 'cmapx',
+                            'imap_np', 'cmapx_np',
+                            'ismap',
+                            'jp2',
+                            'jpg', 'jpeg', 'jpe',
+                            'json', 'json0', 'dot_json', 'xdot_json',  # Graphviz 2.40
+                            'pct', 'pict',
+                            'pdf',
+                            'pic',
+                            'plain', 'plain-ext',
+                            'png',
+                            'pov',
+                            'ps',
+                            'ps2',
+                            'psd',
+                            'sgi',
+                            'svg', 'svg_inline', 'svgz',  # svg_linline: Graphviz 10.0.1
+                            'tga',
+                            'tif', 'tiff',
+                            'tk',
+                            'vml', 'vmlz',
+                            'vrml',
+                            'wbmp',
+                            'webp',
+                            'xlib', 'x11'}
 
 DEFAULT_FORMAT: Final = 'pdf'
 
@@ -64,7 +65,7 @@ class Format(base.ParameterBase):
 
     _verify_format = staticmethod(verify_format)
 
-    def __init__(self, *, format: Optional[str] = None, **kwargs) -> None:
+    def __init__(self, *, format: str | None = None, **kwargs) -> None:
         super().__init__(**kwargs)
 
         if format is not None:

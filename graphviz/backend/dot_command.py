@@ -2,7 +2,7 @@
 
 import os
 import pathlib
-from typing import Final, List, Optional, Union
+from typing import Final
 
 from .. import exceptions
 from .. import parameters
@@ -13,10 +13,9 @@ DOT_BINARY: Final = pathlib.Path('dot')
 
 
 def command(engine: str, format_: str, *,
-            renderer: Optional[str] = None,
-            formatter: Optional[str] = None,
-            neato_no_op: Union[bool, int, None] = None
-            ) -> List[Union[os.PathLike[str], str]]:
+            renderer: str | None = None,
+            formatter: str | None = None,
+            neato_no_op: bool | int | None = None) -> list[os.PathLike[str] | str]:
     """Return ``subprocess.Popen`` argument list for rendering.
 
     See also:
@@ -36,7 +35,7 @@ def command(engine: str, format_: str, *,
     output_format = [f for f in (format_, renderer, formatter) if f is not None]
     output_format_flag = ':'.join(output_format)
 
-    cmd: List[Union[os.PathLike[str], str]]
+    cmd: list[os.PathLike[str] | str]
     cmd = [DOT_BINARY, f'-K{engine}', f'-T{output_format_flag}']
 
     if neato_no_op:

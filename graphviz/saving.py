@@ -2,7 +2,6 @@
 
 import logging
 import os
-from typing import Optional, Union
 
 from . import _defaults
 from . import _tools
@@ -24,8 +23,8 @@ class Save(encoding.Encoding, base.Base):
     _mkdirs = staticmethod(_tools.mkdirs)
 
     def __init__(self, *,
-                 filename: Union[os.PathLike[str], str, None],
-                 directory: Union[os.PathLike[str], str, None] = None,
+                 filename: os.PathLike[str] | str | None,
+                 directory: os.PathLike[str] | str | None = None,
                  **kwargs) -> None:
         super().__init__(**kwargs)
 
@@ -51,9 +50,9 @@ class Save(encoding.Encoding, base.Base):
         return os.path.join(self.directory, self.filename)
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
-    def save(self, filename: Union[os.PathLike[str], str, None] = None,
-             directory: Union[os.PathLike[str], str, None] = None, *,
-             skip_existing: Optional[bool] = False) -> str:
+    def save(self, filename: os.PathLike[str] | str | None = None,
+             directory: os.PathLike[str] | str | None = None, *,
+             skip_existing: bool | None = False) -> str:
         """Save the DOT source to file. Ensure the file ends with a newline.
 
         Args:

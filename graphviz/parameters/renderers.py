@@ -1,31 +1,32 @@
 """Rendering renderer parameter handling."""
 
-from typing import Final, Optional, Set
+from collections.abc import Set
+from typing import Final
 
 from . import base
 
 __all__ = ['RENDERERS', 'verify_renderer', 'Renderer']
 
-RENDERERS: Final[Set] = {'cairo',  # $ dot -T:
-                         'dot',
-                         'fig',
-                         'gd',
-                         'gdiplus',
-                         'map',
-                         'pic',
-                         'pov',
-                         'ps',
-                         'svg',
-                         'tk',
-                         'vml',
-                         'vrml',
-                         'xdot'}
+RENDERERS: Final[Set[str]] = {'cairo',  # $ dot -T:
+                              'dot',
+                              'fig',
+                              'gd',
+                              'gdiplus',
+                              'map',
+                              'pic',
+                              'pov',
+                              'ps',
+                              'svg',
+                              'tk',
+                              'vml',
+                              'vrml',
+                              'xdot'}
 
 
 REQUIRED: Final = False
 
 
-def verify_renderer(renderer: Optional[str], *,
+def verify_renderer(renderer: str | None, *,
                     required: bool = REQUIRED) -> None:
     if renderer is None:
         if required:
@@ -42,7 +43,7 @@ class Renderer(base.ParameterBase):
 
     _verify_renderer = staticmethod(verify_renderer)
 
-    def __init__(self, *, renderer: Optional[str] = None, **kwargs) -> None:
+    def __init__(self, *, renderer: str | None = None, **kwargs) -> None:
         super().__init__(**kwargs)
 
         self.renderer = renderer
@@ -55,13 +56,13 @@ class Renderer(base.ParameterBase):
         return super()._copy_kwargs(**kwargs)
 
     @property
-    def renderer(self) -> Optional[str]:
+    def renderer(self) -> str | None:
         """The output renderer used for rendering
             (``'cairo'``, ``'gd'``, ...)."""
         return self._renderer
 
     @renderer.setter
-    def renderer(self, renderer: Optional[str]) -> None:
+    def renderer(self, renderer: str | None) -> None:
         if renderer is None:
             self.__dict__.pop('_renderer', None)
         else:

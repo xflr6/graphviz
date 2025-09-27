@@ -1,9 +1,9 @@
 """Save DOT code objects, render with Graphviz dot, and open in viewer."""
 
+from collections.abc import Iterator
 import locale
 import logging
 import os
-from typing import Iterator, Optional, Union
 
 from .encoding import DEFAULT_ENCODING
 from . import _tools
@@ -40,13 +40,13 @@ class Source(rendering.Render, saving.Save,
 
     @classmethod
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='cls')
-    def from_file(cls, filename: Union[os.PathLike[str], str],
-                  directory: Union[os.PathLike[str], str, None] = None,
-                  format: Optional[str] = None,
-                  engine: Optional[str] = None,
-                  encoding: Optional[str] = DEFAULT_ENCODING,
-                  renderer: Optional[str] = None,
-                  formatter: Optional[str] = None) -> 'Source':
+    def from_file(cls, filename: os.PathLike[str] | str,
+                  directory: os.PathLike[str] | str | None = None,
+                  format: str | None = None,
+                  engine: str | None = None,
+                  encoding: str | None = DEFAULT_ENCODING,
+                  renderer: str | None = None,
+                  formatter: str | None = None) -> 'Source':
         """Return an instance with the source string read from the given file.
 
         Args:
@@ -75,14 +75,14 @@ class Source(rendering.Render, saving.Save,
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
     def __init__(self, source: str,
-                 filename: Union[os.PathLike[str], str, None] = None,
-                 directory: Union[os.PathLike[str], str, None] = None,
-                 format: Optional[str] = None,
-                 engine: Optional[str] = None,
-                 encoding: Optional[str] = DEFAULT_ENCODING, *,
-                 renderer: Optional[str] = None,
-                 formatter: Optional[str] = None,
-                 loaded_from_path: Optional[os.PathLike[str]] = None) -> None:
+                 filename: os.PathLike[str] | str | None = None,
+                 directory: os.PathLike[str] | str | None = None,
+                 format: str | None = None,
+                 engine: str | None = None,
+                 encoding: str | None = DEFAULT_ENCODING, *,
+                 renderer: str | None = None,
+                 formatter: str | None = None,
+                 loaded_from_path: os.PathLike[str] | None = None) -> None:
         super().__init__(filename=filename, directory=directory,
                          format=format, engine=engine,
                          renderer=renderer, formatter=formatter,
@@ -92,7 +92,7 @@ class Source(rendering.Render, saving.Save,
 
     # work around pytype false alarm
     _source: str
-    _loaded_from_path: Optional[os.PathLike[str]]
+    _loaded_from_path: os.PathLike[str] | None
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
@@ -123,9 +123,9 @@ class Source(rendering.Render, saving.Save,
         return source
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
-    def save(self, filename: Union[os.PathLike[str], str, None] = None,
-             directory: Union[os.PathLike[str], str, None] = None, *,
-             skip_existing: Optional[bool] = None) -> str:
+    def save(self, filename: os.PathLike[str] | str | None = None,
+             directory: os.PathLike[str] | str | None = None, *,
+             skip_existing: bool | None = None) -> str:
         """Save the DOT source to file. Ensure the file ends with a newline.
 
         Args:

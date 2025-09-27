@@ -3,7 +3,6 @@
 import logging
 import os
 import pathlib
-from typing import Optional, Union
 
 from . import _tools
 from . import backend
@@ -20,18 +19,18 @@ class Render(saving.Save, backend.Render, backend.View):
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
     def render(self,
-               filename: Union[os.PathLike[str], str, None] = None,
-               directory: Union[os.PathLike[str], str, None] = None,
+               filename: os.PathLike[str] | str | None = None,
+               directory: os.PathLike[str] | str | None = None,
                view: bool = False,
                cleanup: bool = False,
-               format: Optional[str] = None,
-               renderer: Optional[str] = None,
-               formatter: Optional[str] = None,
-               neato_no_op: Union[bool, int, None] = None,
+               format: str | None = None,
+               renderer: str | None = None,
+               formatter: str | None = None,
+               neato_no_op: bool | int | None = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
-               outfile: Union[os.PathLike[str], str, None] = None,
-               engine: Optional[str] = None,
+               outfile: os.PathLike[str] | str | None = None,
+               engine: str | None = None,
                raise_if_result_exists: bool = False,
                overwrite_source: bool = False) -> str:
         r"""Save the source to file and render with the Graphviz engine.
@@ -130,7 +129,7 @@ class Render(saving.Save, backend.Render, backend.View):
 
         return rendered
 
-    def _view(self, filepath: Union[os.PathLike[str], str], *,
+    def _view(self, filepath: os.PathLike[str] | str, *,
               format: str, quiet: bool) -> None:
         """Start the right viewer based on file format and platform."""
         methodnames = [
@@ -149,8 +148,8 @@ class Render(saving.Save, backend.Render, backend.View):
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
     def view(self,
-             filename: Union[os.PathLike[str], str, None] = None,
-             directory: Union[os.PathLike[str], str, None] = None,
+             filename: os.PathLike[str] | str | None = None,
+             directory: os.PathLike[str] | str | None = None,
              cleanup: bool = False,
              quiet: bool = False,
              quiet_view: bool = False) -> str:

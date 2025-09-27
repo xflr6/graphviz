@@ -1,13 +1,13 @@
 """Generic re-useable self-contained helper functions."""
 
+from collections.abc import Callable, Iterator, Mapping
 import functools
 import inspect
 import itertools
 import logging
 import os
 import pathlib
-from typing import (Any, Callable, Iterator, Mapping, Optional, Tuple, Type,
-                    Union, overload)
+from typing import Any, overload
 import warnings
 
 __all__ = ['attach',
@@ -40,7 +40,7 @@ def attach(object: Any, /, name: str) -> Callable:
     return decorator
 
 
-def mkdirs(filename: Union[os.PathLike[str], str], /, *, mode: int = 0o777) -> None:
+def mkdirs(filename: os.PathLike[str] | str, /, *, mode: int = 0o777) -> None:
     """Recursively create directories up to the path of ``filename``
         as needed."""
     dirname = os.path.dirname(filename)
@@ -50,7 +50,7 @@ def mkdirs(filename: Union[os.PathLike[str], str], /, *, mode: int = 0o777) -> N
     os.makedirs(dirname, mode=mode, exist_ok=True)
 
 
-def mapping_items(mapping: Mapping[Any, Any], /) -> Iterator[Tuple[Any, Any]]:
+def mapping_items(mapping: Mapping[Any, Any], /) -> Iterator[tuple[Any, Any]]:
     """Return an iterator over the ``mapping`` items,
         sort if it's a plain dict.
 
@@ -68,7 +68,7 @@ def mapping_items(mapping: Mapping[Any, Any], /) -> Iterator[Tuple[Any, Any]]:
 
 
 @overload
-def promote_pathlike(filepath: Union[os.PathLike[str], str], /) -> pathlib.Path:
+def promote_pathlike(filepath: os.PathLike[str] | str, /) -> pathlib.Path:
     """Return path object for path-like-object."""
 
 
@@ -78,13 +78,13 @@ def promote_pathlike(filepath: None, /) -> None:
 
 
 @overload
-def promote_pathlike(filepath: Union[os.PathLike[str], str, None], /,
-                     ) -> Optional[pathlib.Path]:
+def promote_pathlike(filepath: os.PathLike[str] | str | None, /,
+                     ) -> pathlib.Path | None:
     """Return path object or ``None`` depending on ``filepath``."""
 
 
-def promote_pathlike(filepath: Union[os.PathLike[str], str, None]
-                     ) -> Optional[pathlib.Path]:
+def promote_pathlike(filepath: os.PathLike[str] | str | None
+                     ) -> pathlib.Path | None:
     """Return path-like object ``filepath`` promoted into a path object.
 
     See also:
@@ -93,8 +93,8 @@ def promote_pathlike(filepath: Union[os.PathLike[str], str, None]
     return pathlib.Path(filepath) if filepath is not None else None
 
 
-def promote_pathlike_directory(directory: Union[os.PathLike[str], str, None], /, *,
-                               default: Union[os.PathLike[str], str, None] = None,
+def promote_pathlike_directory(directory: os.PathLike[str] | str | None, /, *,
+                               default: os.PathLike[str] | str | None = None,
                                ) -> pathlib.Path:
     """Return path-like object ``directory`` promoted into a path object (default to ``os.curdir``).
 
@@ -107,8 +107,8 @@ def promote_pathlike_directory(directory: Union[os.PathLike[str], str, None], /,
 
 def deprecate_positional_args(*,
                               supported_number: int,
-                              ignore_arg: Optional[str] = None,
-                              category: Type[Warning] = PendingDeprecationWarning,
+                              ignore_arg: str | None = None,
+                              category: type[Warning] = PendingDeprecationWarning,
                               stacklevel: int = 1):
     """Mark supported_number of positional arguments as the maximum.
 

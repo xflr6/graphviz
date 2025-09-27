@@ -1,6 +1,6 @@
 """Iterables of DOT source code lines (including final newline)."""
 
-from typing import Iterator
+from collections.abc import Iterator
 
 from . import copying
 

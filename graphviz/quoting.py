@@ -1,8 +1,9 @@
 """Quote strings to be valid DOT identifiers, assemble quoted attribute lists."""
 
+from collections.abc import Sequence, Set, Mapping
 import functools
 import re
-from typing import Final, Sequence, Mapping, Optional, Tuple, Union
+from typing import Final
 import warnings
 
 from . import _tools
@@ -19,9 +20,9 @@ HTML_STRING: Final = re.compile(r'<.*>$', re.DOTALL)
 
 ID: Final = re.compile(r'([a-zA-Z_][a-zA-Z0-9_]*|-?(\.[0-9]+|[0-9]+(\.[0-9]*)?))$')
 
-KEYWORDS: Final = {'node', 'edge', 'graph', 'digraph', 'subgraph', 'strict'}
+KEYWORDS: Final[Set[str]] = {'node', 'edge', 'graph', 'digraph', 'subgraph', 'strict'}
 
-COMPASS: Final = {'n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw', 'c', '_'}  # TODO
+COMPASS: Final[Set[str]] = {'n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw', 'c', '_'}  # TODO
 
 FINAL_ODD_BACKSLASHES: Final = re.compile(r'(?<!\\)(?:\\{2})*\\$')
 
@@ -113,10 +114,11 @@ def quote_edge(identifier: str) -> str:
 
 
 @_tools.deprecate_positional_args(supported_number=1)
-def a_list(label: Optional[str] = None,
-           kwargs: Optional[Mapping[str, str]] = None,
-           attributes: Union[Mapping[str, str],
-                             Sequence[Tuple[str, str]], None] = None) -> str:
+def a_list(label: str | None = None,
+           kwargs: Mapping[str, str] | None = None,
+           attributes: (Mapping[str, str]
+                        | Sequence[tuple[str, str]]
+                        | None) = None) -> str:
     """Return assembled DOT a_list string.
 
     >>> a_list('spam', kwargs={'spam': None, 'ham': 'ham ham', 'eggs': ''})  # doctest: +NO_EXE
@@ -135,10 +137,11 @@ def a_list(label: Optional[str] = None,
 
 
 @_tools.deprecate_positional_args(supported_number=1)
-def attr_list(label: Optional[str] = None,
-              kwargs: Optional[Mapping[str, str]] = None,
-              attributes: Union[Mapping[str, str],
-                                Sequence[Tuple[str, str]], None] = None) -> str:
+def attr_list(label: str | None = None,
+              kwargs: Mapping[str, str] | None = None,
+              attributes: (Mapping[str, str]
+                           | Sequence[tuple[str, str]]
+                           | None) = None) -> str:
     """Return assembled DOT attribute list string.
 
     Sorts ``kwargs`` and ``attributes`` if they are plain dicts

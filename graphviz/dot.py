@@ -1,7 +1,7 @@
 """Create DOT code with method-calls."""
 
+from collections.abc import Iterable, Iterator, Mapping
 import contextlib
-from typing import Dict, Iterable, Iterator, List, Mapping, Optional, Tuple
 
 from . import _tools
 from . import base
@@ -108,32 +108,35 @@ class Dot(quoting.Quote, base.Base):
         return cls._edge(tail=tail, head=head, attr='')
 
     def __init__(self, *,
-                 name: Optional[str] = None,
-                 comment: Optional[str] = None,
-                 graph_attr=None, node_attr=None, edge_attr=None, body=None,
+                 name: str | None = None,
+                 comment: str | None = None,
+                 graph_attr: Mapping[str, str] | None = None,
+                 node_attr: Mapping[str, str] | None = None,
+                 edge_attr: Mapping[str, str] | None = None,
+                 body: Iterable[str] | None = None,
                  strict: bool = False, **kwargs) -> None:
         super().__init__(**kwargs)
 
-        self.name = name
-        """str: DOT source identifier for the ``graph`` or ``digraph`` statement."""
+        self.name: str | None = name
+        """DOT source identifier for the ``graph`` or ``digraph`` statement."""
 
-        self.comment = comment
-        """str: DOT source comment for the first source line."""
+        self.comment: str | None = comment
+        """DOT source comment for the first source line."""
 
-        self.graph_attr: Dict[str, str] = dict(graph_attr) if graph_attr is not None else {}
-        """~Dict[str, str]: Attribute-value pairs applying to the graph."""
+        self.graph_attr: dict[str, str] = dict(graph_attr) if graph_attr is not None else {}
+        """Attribute-value pairs applying to the graph."""
 
-        self.node_attr: Dict[str, str] = dict(node_attr) if node_attr is not None else {}
-        """~Dict[str, str]: Attribute-value pairs applying to all nodes."""
+        self.node_attr: dict[str, str] = dict(node_attr) if node_attr is not None else {}
+        """Attribute-value pairs applying to all nodes."""
 
-        self.edge_attr: Dict[str, str] = dict(edge_attr) if edge_attr is not None else {}
-        """~Dict[str, str]: Attribute-value pairs applying to all edges."""
+        self.edge_attr: dict[str, str] = dict(edge_attr) if edge_attr is not None else {}
+        """Attribute-value pairs applying to all edges."""
 
-        self.body: List[str] = list(body) if body is not None else []
-        """~List[str]: Verbatim DOT source lines including final newline."""
+        self.body: list[str] = list(body) if body is not None else []
+        """Verbatim DOT source lines including final newline."""
 
-        self.strict = strict
-        """bool: Rendering should merge multi-edges."""
+        self.strict: bool = strict
+        """Rendering should merge multi-edges."""
 
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
@@ -186,7 +189,7 @@ class Dot(quoting.Quote, base.Base):
     @_tools.deprecate_positional_args(supported_number=2, ignore_arg='self',
                                       category=DeprecationWarning)
     def node(self, name: str,
-             label: Optional[str] = None,
+             label: str | None = None,
              _attributes=None, **attrs: str) -> None:
         """Create a node.
 
@@ -209,7 +212,7 @@ class Dot(quoting.Quote, base.Base):
     @_tools.deprecate_positional_args(supported_number=3, ignore_arg='self',
                                       category=DeprecationWarning)
     def edge(self, tail_name: str, head_name: str,
-             label: Optional[str] = None,
+             label: str | None = None,
              _attributes=None, **attrs: str) -> None:
         """Create an edge between two nodes.
 
@@ -239,7 +242,7 @@ class Dot(quoting.Quote, base.Base):
         line = self._edge(tail=tail_name, head=head_name, attr=attr_list)
         self.body.append(line)
 
-    def edges(self, tail_head_iter: Iterable[Tuple[str, str]]) -> None:
+    def edges(self, tail_head_iter: Iterable[tuple[str, str]]) -> None:
         """Create a bunch of edges.
 
         Args:
@@ -260,7 +263,7 @@ class Dot(quoting.Quote, base.Base):
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self',
                                       category=DeprecationWarning)
-    def attr(self, kw: Optional[str] = None,
+    def attr(self, kw: str | None = None,
              _attributes=None, **attrs: str) -> None:
         """Add a general or graph/node/edge attribute statement.
 
@@ -285,11 +288,11 @@ class Dot(quoting.Quote, base.Base):
 
     @_tools.deprecate_positional_args(supported_number=1, ignore_arg='self')
     def subgraph(self, graph=None,
-                 name: Optional[str] = None,
-                 comment: Optional[str] = None,
-                 graph_attr: Optional[Mapping[str, str]] = None,
-                 node_attr: Optional[Mapping[str, str]] = None,
-                 edge_attr: Optional[Mapping[str, str]] = None,
+                 name: str | None = None,
+                 comment: str | None = None,
+                 graph_attr: Mapping[str, str] | None = None,
+                 node_attr: Mapping[str, str] | None = None,
+                 edge_attr: Mapping[str, str] | None = None,
                  body=None):
         """Add the current content of the given sole ``graph`` argument
             as subgraph or return a context manager

@@ -1,6 +1,7 @@
 """Rendering formatter parameter handling."""
 
-from typing import Final, Optional, Set
+from collections.abc import Set
+from typing import Final
 
 from . import base
 
@@ -16,7 +17,7 @@ FORMATTERS: Final[Set] = {'cairo',
 REQUIRED: Final = False
 
 
-def verify_formatter(formatter: Optional[str], *,
+def verify_formatter(formatter: str | None, *,
                      required: bool = REQUIRED) -> None:
     if formatter is None:
         if required:
@@ -33,7 +34,7 @@ class Formatter(base.ParameterBase):
 
     _verify_formatter = staticmethod(verify_formatter)
 
-    def __init__(self, *, formatter: Optional[str] = None, **kwargs) -> None:
+    def __init__(self, *, formatter: str | None = None, **kwargs) -> None:
         super().__init__(**kwargs)
 
         self.formatter = formatter
@@ -46,13 +47,13 @@ class Formatter(base.ParameterBase):
         return super()._copy_kwargs(**kwargs)
 
     @property
-    def formatter(self) -> Optional[str]:
+    def formatter(self) -> str | None:
         """The output formatter used for rendering
             (``'cairo'``, ``'gd'``, ...)."""
         return self._formatter
 
     @formatter.setter
-    def formatter(self, formatter: Optional[str]) -> None:
+    def formatter(self, formatter: str | None) -> None:
         if formatter is None:
             self.__dict__.pop('_formatter', None)
         else:
