@@ -5,7 +5,7 @@ Changelog
 Version 0.22 (in development)
 -----------------------------
 
-Drop Pyton 3.8 support (end of life 2025-10).
+Drop Pyton 3.9 support (end of life 2025-10).
 
 Tag Python 3.14 support.
 
