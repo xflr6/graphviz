@@ -80,9 +80,11 @@ html_static_path = ['_static']
 
 # -- Extension configuration -------------------------------------------------
 
+# https://github.com/tox-dev/sphinx-autodoc-typehints
 always_use_bars_union = True
 typehints_use_signature = True
 typehints_use_signature_return = True
+
 
 # -- Options for intersphinx extension ---------------------------------------
 
