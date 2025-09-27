@@ -2,10 +2,16 @@ Changelog
 =========
 
 
-Version 0.21.1 (in development)
--------------------------------
+Version 0.22 (in development)
+-----------------------------
+
+Drop Pyton 3.8 support (end of life 2025-10).
 
 Tag Python 3.14 support.
+
+Improve type annotations, switch type checking from
+https://github.com/google/pytype to https://mypy-lang.org, and mark package
+as `py.typed` (PEP 561 compliant).
 
 
 Version 0.21
