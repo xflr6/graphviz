@@ -501,6 +501,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      quiet: bool = False,
      |      quiet_view: bool = False,
      |      *,
+     |      y_invert: bool = False,
      |      outfile: os.PathLike[str] | str | None = None,
      |      engine: str | None = None,
      |      raise_if_result_exists: bool = False,
@@ -528,6 +529,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          quiet_view (bool): Suppress ``stderr`` output
      |              from the viewer process
      |              (implies ``view=True``, ineffective on Windows platform).
+     |          y_invert: Invert y coordinates in the rendered output.
      |          outfile: Path for the rendered output file.
      |          engine: Layout engine for rendering
      |              (``'dot'``, ``'neato'``, ...).
@@ -645,6 +647,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      neato_no_op: bool | int | None = None,
      |      quiet: bool = False,
      |      *,
+     |      y_invert: bool = False,
      |      engine: str | None = None,
      |      encoding: str | None = None
      |  ) -> bytes | str
@@ -660,6 +663,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          neato_no_op: Neato layout engine no-op flag.
      |          quiet (bool): Suppress ``stderr`` output
      |              from the layout subprocess.
+     |          y_invert: Invert y coordinates in the rendered output.
      |          engine: Layout engine for rendering
      |              (``'dot'``, ``'neato'``, ...).
      |          encoding: Encoding for decoding the stdout.
@@ -1050,6 +1054,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      quiet: bool = False,
      |      quiet_view: bool = False,
      |      *,
+     |      y_invert: bool = False,
      |      outfile: os.PathLike[str] | str | None = None,
      |      engine: str | None = None,
      |      raise_if_result_exists: bool = False,
@@ -1077,6 +1082,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          quiet_view (bool): Suppress ``stderr`` output
      |              from the viewer process
      |              (implies ``view=True``, ineffective on Windows platform).
+     |          y_invert: Invert y coordinates in the rendered output.
      |          outfile: Path for the rendered output file.
      |          engine: Layout engine for rendering
      |              (``'dot'``, ``'neato'``, ...).
@@ -1194,6 +1200,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      neato_no_op: bool | int | None = None,
      |      quiet: bool = False,
      |      *,
+     |      y_invert: bool = False,
      |      engine: str | None = None,
      |      encoding: str | None = None
      |  ) -> bytes | str
@@ -1209,6 +1216,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          neato_no_op: Neato layout engine no-op flag.
      |          quiet (bool): Suppress ``stderr`` output
      |              from the layout subprocess.
+     |          y_invert: Invert y coordinates in the rendered output.
      |          engine: Layout engine for rendering
      |              (``'dot'``, ``'neato'``, ...).
      |          encoding: Encoding for decoding the stdout.
@@ -1483,6 +1491,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      quiet: bool = False,
      |      quiet_view: bool = False,
      |      *,
+     |      y_invert: bool = False,
      |      outfile: os.PathLike[str] | str | None = None,
      |      engine: str | None = None,
      |      raise_if_result_exists: bool = False,
@@ -1510,6 +1519,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |          quiet_view (bool): Suppress ``stderr`` output
      |              from the viewer process
      |              (implies ``view=True``, ineffective on Windows platform).
+     |          y_invert: Invert y coordinates in the rendered output.
      |          outfile: Path for the rendered output file.
      |          engine: Layout engine for rendering
      |              (``'dot'``, ``'neato'``, ...).
@@ -1607,6 +1617,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      neato_no_op: bool | int | None = None,
      |      quiet: bool = False,
      |      *,
+     |      y_invert: bool = False,
      |      engine: str | None = None,
      |      encoding: str | None = None
      |  ) -> bytes | str
@@ -1622,6 +1633,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |          neato_no_op: Neato layout engine no-op flag.
      |          quiet (bool): Suppress ``stderr`` output
      |              from the layout subprocess.
+     |          y_invert: Invert y coordinates in the rendered output.
      |          engine: Layout engine for rendering
      |              (``'dot'``, ``'neato'``, ...).
      |          encoding: Encoding for decoding the stdout.
