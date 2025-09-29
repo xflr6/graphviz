@@ -37,7 +37,7 @@ test = [
   "pytest-mock>=3",
   "pytest-cov", "coverage",
 ]
-docs = ["sphinx>=5,<7", "sphinx-autodoc-typehints", "sphinx-rtd-theme>=0.2.5"]
+docs = ["sphinx", "sphinx-autodoc-typehints", "sphinx-rtd-theme"]
 
 [build-system]
 requires = ["setuptools"]
