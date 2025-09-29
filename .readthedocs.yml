@@ -3,7 +3,7 @@ version: 2
 build:
   os: ubuntu-lts-latest
   tools:
-    python: "latest"
+    python: latest
 python:
   install:
     - method: pip
