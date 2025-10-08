@@ -12,14 +12,11 @@ jobs:
           - name: linux-3.14
             python-version: "3.14"
             os: ubuntu-latest
-          - name: linux-3.13
-            python-version: "3.13"
-            os: ubuntu-latest
-          - name: windows-3.13
-            python-version: "3.13"
+          - name: windows-3.14
+            python-version: "3.14"
             os: windows-latest
-          - name: macos-3.13-skip-exe
-            python-version: "3.13"
+          - name: macos-3.14-skip-exe
+            python-version: "3.14"
             os: macos-latest
           - name: linux-3.13-typecheck-lint-update-help-skip-exe
             python-version: "3.13"
