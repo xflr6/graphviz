@@ -10,7 +10,7 @@ jobs:
       matrix:
         include:
           - name: linux-3.14
-            python-version: "3.14.0-rc.2 - 3.14"
+            python-version: "3.14"
             os: ubuntu-latest
           - name: linux-3.13
             python-version: "3.13"
