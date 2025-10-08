@@ -247,10 +247,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      format: str | None = None,
      |      engine: str | None = None,
      |      encoding: str | None = 'utf-8',
-     |      graph_attr: collections.abc.Mapping[str, str] | None = None,
-     |      node_attr: collections.abc.Mapping[str, str] | None = None,
-     |      edge_attr: collections.abc.Mapping[str, str] | None = None,
-     |      body: collections.abc.Iterable[str] | None = None,
+     |      graph_attr: Mapping[str, str] | None = None,
+     |      node_attr: Mapping[str, str] | None = None,
+     |      edge_attr: Mapping[str, str] | None = None,
+     |      body: Iterable[str] | None = None,
      |      strict: bool = False,
      |      *,
      |      renderer: str | None = None,
@@ -314,11 +314,6 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      ``False``
      |
      |  ----------------------------------------------------------------------
-     |  Data and other attributes defined here:
-     |
-     |  __annotations__ = {}
-     |
-     |  ----------------------------------------------------------------------
      |  Data descriptors inherited from graphviz.dot.GraphSyntax:
      |
      |  __dict__
@@ -339,10 +334,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      format: str | None = None,
      |      engine: str | None = None,
      |      encoding: str | None = 'utf-8',
-     |      graph_attr: collections.abc.Mapping[str, str] | None = None,
-     |      node_attr: collections.abc.Mapping[str, str] | None = None,
-     |      edge_attr: collections.abc.Mapping[str, str] | None = None,
-     |      body: collections.abc.Iterable[str] | None = None,
+     |      graph_attr: Mapping[str, str] | None = None,
+     |      node_attr: Mapping[str, str] | None = None,
+     |      edge_attr: Mapping[str, str] | None = None,
+     |      body: Iterable[str] | None = None,
      |      strict: bool = False,
      |      *,
      |      renderer: str | None = None,
@@ -359,7 +354,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.dot.Dot:
      |
-     |  __iter__(self, subgraph: bool = False) -> collections.abc.Iterator[str]
+     |  __iter__(self, subgraph: bool = False) -> Iterator[str]
      |      Yield the DOT source code line by line (as graph or subgraph).
      |
      |      Yields: Line ending with a newline (``'\n'``).
@@ -410,8 +405,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |          See the sections :ref:`backslash-escapes` and
      |          :ref:`quoting-and-html-like-labels` in the user guide for details.
      |
-     |  edges(self,
-              tail_head_iter: collections.abc.Iterable[tuple[str, str]]) -> None
+     |  edges(self, tail_head_iter: Iterable[tuple[str, str]]) -> None
      |      Create a bunch of edges.
      |
      |      Args:
@@ -447,9 +441,9 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      graph=None,
      |      name: str | None = None,
      |      comment: str | None = None,
-     |      graph_attr: collections.abc.Mapping[str, str] | None = None,
-     |      node_attr: collections.abc.Mapping[str, str] | None = None,
-     |      edge_attr: collections.abc.Mapping[str, str] | None = None,
+     |      graph_attr: Mapping[str, str] | None = None,
+     |      node_attr: Mapping[str, str] | None = None,
+     |      edge_attr: Mapping[str, str] | None = None,
      |      body=None
      |  )
      |      Add the current content of the given sole ``graph`` argument
@@ -697,7 +691,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#graph-1
      |      stagger: int | None = None,
      |      fanout: bool = False,
      |      chain: int | None = None
-     |  ) -> 'graphviz.Source'
+     |  ) -> graphviz.Source
      |      Return a new :class:`.Source` instance with the source
      |          piped through the Graphviz *unflatten* preprocessor.
      |
@@ -796,10 +790,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      format: str | None = None,
      |      engine: str | None = None,
      |      encoding: str | None = 'utf-8',
-     |      graph_attr: collections.abc.Mapping[str, str] | None = None,
-     |      node_attr: collections.abc.Mapping[str, str] | None = None,
-     |      edge_attr: collections.abc.Mapping[str, str] | None = None,
-     |      body: collections.abc.Iterable[str] | None = None,
+     |      graph_attr: Mapping[str, str] | None = None,
+     |      node_attr: Mapping[str, str] | None = None,
+     |      edge_attr: Mapping[str, str] | None = None,
+     |      body: Iterable[str] | None = None,
      |      strict: bool = False,
      |      *,
      |      renderer: str | None = None,
@@ -863,11 +857,6 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      ``True``
      |
      |  ----------------------------------------------------------------------
-     |  Data and other attributes defined here:
-     |
-     |  __annotations__ = {}
-     |
-     |  ----------------------------------------------------------------------
      |  Data descriptors inherited from graphviz.dot.DigraphSyntax:
      |
      |  __dict__
@@ -888,10 +877,10 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      format: str | None = None,
      |      engine: str | None = None,
      |      encoding: str | None = 'utf-8',
-     |      graph_attr: collections.abc.Mapping[str, str] | None = None,
-     |      node_attr: collections.abc.Mapping[str, str] | None = None,
-     |      edge_attr: collections.abc.Mapping[str, str] | None = None,
-     |      body: collections.abc.Iterable[str] | None = None,
+     |      graph_attr: Mapping[str, str] | None = None,
+     |      node_attr: Mapping[str, str] | None = None,
+     |      edge_attr: Mapping[str, str] | None = None,
+     |      body: Iterable[str] | None = None,
      |      strict: bool = False,
      |      *,
      |      renderer: str | None = None,
@@ -908,7 +897,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.dot.Dot:
      |
-     |  __iter__(self, subgraph: bool = False) -> collections.abc.Iterator[str]
+     |  __iter__(self, subgraph: bool = False) -> Iterator[str]
      |      Yield the DOT source code line by line (as graph or subgraph).
      |
      |      Yields: Line ending with a newline (``'\n'``).
@@ -959,8 +948,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |          See the sections :ref:`backslash-escapes` and
      |          :ref:`quoting-and-html-like-labels` in the user guide for details.
      |
-     |  edges(self,
-              tail_head_iter: collections.abc.Iterable[tuple[str, str]]) -> None
+     |  edges(self, tail_head_iter: Iterable[tuple[str, str]]) -> None
      |      Create a bunch of edges.
      |
      |      Args:
@@ -996,9 +984,9 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      graph=None,
      |      name: str | None = None,
      |      comment: str | None = None,
-     |      graph_attr: collections.abc.Mapping[str, str] | None = None,
-     |      node_attr: collections.abc.Mapping[str, str] | None = None,
-     |      edge_attr: collections.abc.Mapping[str, str] | None = None,
+     |      graph_attr: Mapping[str, str] | None = None,
+     |      node_attr: Mapping[str, str] | None = None,
+     |      edge_attr: Mapping[str, str] | None = None,
      |      body=None
      |  )
      |      Add the current content of the given sole ``graph`` argument
@@ -1246,7 +1234,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#digraph-1
      |      stagger: int | None = None,
      |      fanout: bool = False,
      |      chain: int | None = None
-     |  ) -> 'graphviz.Source'
+     |  ) -> graphviz.Source
      |      Return a new :class:`.Source` instance with the source
      |          piped through the Graphviz *unflatten* preprocessor.
      |
@@ -1409,7 +1397,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |  ) -> None
      |      Initialize self.  See help(type(self)) for accurate signature.
      |
-     |  __iter__(self) -> collections.abc.Iterator[str]
+     |  __iter__(self) -> Iterator[str]
      |      Yield the DOT source code read from file line by line.
      |
      |      Yields: Line ending with a newline (``'\n'``).
@@ -1444,7 +1432,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      encoding: str | None = 'utf-8',
      |      renderer: str | None = None,
      |      formatter: str | None = None
-     |  ) -> 'Source'
+     |  ) -> Source
      |      Return an instance with the source string read from the given file.
      |
      |      Args:
@@ -1461,11 +1449,6 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      The DOT source code as string.
      |
      |      Normalizes so that the string always ends in a final newline.
-     |
-     |  ----------------------------------------------------------------------
-     |  Data and other attributes defined here:
-     |
-     |  __annotations__ = {'_loaded_from_path': os.PathLike[str] | None, '_sou...
      |
      |  ----------------------------------------------------------------------
      |  Methods inherited from graphviz.rendering.Render:
@@ -1659,7 +1642,7 @@ https://github.com/xflr6/graphviz/blob/master/docs/api.rst#source-1
      |      stagger: int | None = None,
      |      fanout: bool = False,
      |      chain: int | None = None
-     |  ) -> 'graphviz.Source'
+     |  ) -> graphviz.Source
      |      Return a new :class:`.Source` instance with the source
      |          piped through the Graphviz *unflatten* preprocessor.
      |
