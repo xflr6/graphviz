@@ -18,7 +18,10 @@ jobs:
           - name: macos-3.14-skip-exe
             python-version: "3.14"
             os: macos-latest
-          - name: linux-3.13-typecheck-lint-update-help-skip-exe
+          - name: linux-3.14-typecheck-lint-update-help-skip-exe
+            python-version: "3.14"
+            os: ubuntu-latest
+          - name: linux-3.13-skip-exe
             python-version: "3.13"
             os: ubuntu-latest
           - name: linux-3.12-pytype-skip-exe
