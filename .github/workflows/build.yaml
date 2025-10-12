@@ -93,7 +93,7 @@ jobs:
           echo "::group::Run python -m pip install --upgrade pip setuptools wheel"
           python -m pip install --upgrade pip setuptools wheel
           echo "::endgroup::"
-          echo "::group::Run pip install .[test] flake8 Flake8-pyproject"
+          echo "::group::Run pip install .[test] mypy flake8 Flake8-pyproject"
           pip install .[test] mypy flake8 Flake8-pyproject
           echo "::endgroup::"
       - name: Run full tests (unless -skip-exe)
