@@ -18,7 +18,7 @@ jobs:
           - name: macos-3.14-skip-exe
             python-version: "3.14"
             os: macos-latest
-          - name: linux-3.14-update-help-skip-exe
+          - name: linux-3.14-skip-exe
             python-version: "3.14"
             os: ubuntu-latest
           - name: linux-3.13-skip-exe
@@ -190,7 +190,7 @@ jobs:
           python typecheck-code.py || FAILED=$?
           [ $FAILED -eq 0 ] || echo "::warning::typecheck-code.py failed with exit code $FAILED"
         shell: bash
-update-help:
+update_help:
     runs-on: ubuntu-latest
     strategy:
       matrix:
