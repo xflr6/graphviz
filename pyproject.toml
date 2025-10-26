@@ -84,9 +84,6 @@ strict_equality = true
 check_untyped_defs = true
 disallow_subclassing_any = true
 
-[tool.pytype]
-inputs = ["graphviz"]
-
 [tool.flake8]
 exclude = ["docs", "build", ".tox"]
 ignore = ["E126", "E128", "W503"]
