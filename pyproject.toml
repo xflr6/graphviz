@@ -51,7 +51,7 @@ dev = [  # $ pip install -e . --gropup dev
   {include-group = "docs"},
   {include-group = "lint"},
   {include-group = "test"},
-  "tox>=3",
+  "tox>=4.22",
   {include-group = "typing"},
 ]
 docs = [
@@ -119,12 +119,10 @@ branch = false
 omit = ["*/conftest.py"]
 
 [tool.tox]
-legacy_tox_ini = """
-  [tox]
-  envlist = py{314,313,312,311,310}
-  skip_missing_interpreters = true
+requires = ["tox>=4.22"]
+env_list = ["3.14", "3.13", "3.12", "3.11", "3.10"]
+skip_missing_interpreters = true
 
-  [testenv]
-  dependency_groups = test
-  commands = python -X dev run-tests.py {posargs}
-"""
+[tool.tox.env_run_base]
+dependency_groups = ["test"]
+commands = [["python", "-X", "dev", "run-tests.py", { replace = "posargs", extend = true }]]
