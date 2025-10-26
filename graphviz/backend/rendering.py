@@ -321,8 +321,6 @@ def render(engine: str,
 
     cmd += args
 
-    assert filepath is not None, 'work around pytype false alarm'
-
     execute.run_check(cmd,
                       cwd=filepath.parent if filepath.parent.parts else None,
                       quiet=quiet,

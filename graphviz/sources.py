@@ -90,10 +90,6 @@ class Source(rendering.Render, saving.Save,
         self._loaded_from_path = loaded_from_path
         self._source = source
 
-    # work around pytype false alarm
-    _source: str
-    _loaded_from_path: os.PathLike[str] | None
-
     def _copy_kwargs(self, **kwargs):
         """Return the kwargs to create a copy of the instance."""
         return super()._copy_kwargs(source=self._source,
