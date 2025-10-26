@@ -24,7 +24,7 @@ jobs:
           - name: linux-3.13-skip-exe
             python-version: "3.13"
             os: ubuntu-latest
-          - name: linux-3.12-pytype-skip-exe
+          - name: linux-3.12-skip-exe
             python-version: "3.12"
             os: ubuntu-latest
           - name: linux-3.11-skip-exe
@@ -165,18 +165,6 @@ jobs:
           python update-help.py || FAILED=$?
           echo "::endgroup::"
           [ $FAILED -eq 0 ] || echo "::warning::update-help.py failed with exit code $FAILED"
-      - name: Run pytype (if -pytype)
-        if: ${{ contains(matrix.name, '-pytype') }}
-        run: |
-          echo "::group::Run pip install pytype"
-          pip install pytype
-          echo "::endgroup::"
-          echo "::group::Run pytype"
-          FAILED=0
-          pytype || FAILED=$?
-          echo "::endgroup::"
-          [ $FAILED -eq 0 ] || echo "::warning::pytype failed with exit code $FAILED"
-        shell: bash
       - name: Upload ${{ matrix.name }} artifacts
         uses: actions/upload-artifact@v4
         with:

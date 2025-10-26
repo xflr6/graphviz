@@ -17,7 +17,7 @@ if sys.platform == 'win32' or sys.platform == 'cygwin' or sys.platform == 'msys'
 
     def get_startupinfo() -> subprocess.STARTUPINFO:  # type: ignore[misc]  # noqa: E501
         """Return subprocess.STARTUPINFO instance hiding the console window."""
-        startupinfo = subprocess.STARTUPINFO()  # pytype: disable=module-attr
-        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW  # pytype: disable=module-attr
-        startupinfo.wShowWindow = subprocess.SW_HIDE  # pytype: disable=module-attr
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        startupinfo.wShowWindow = subprocess.SW_HIDE
         return startupinfo

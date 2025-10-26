@@ -68,4 +68,4 @@ def view_windows(filepath: os.PathLike[str] | str, *,
     # TODO: implement quiet=True
     filepath = os.path.normpath(filepath)
     log.debug('view: %r', filepath)
-    os.startfile(filepath)  # type: ignore[attr-defined,unused-ignore]  # pytype: disable=module-attr  # noqa: E501
+    os.startfile(filepath)  # type: ignore[attr-defined,unused-ignore]  # noqa: E501

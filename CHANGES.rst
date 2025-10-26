@@ -13,6 +13,9 @@ Improve type annotations, switch type checking from
 https://github.com/google/pytype to https://mypy-lang.org, and mark package
 as `py.typed` (PEP 561 compliant).
 
+Move development dependencies from ``extras`` to ``dependency-groups``
+(https://peps.python.org/pep-0735/).
+
 
 Version 0.21
 ------------
