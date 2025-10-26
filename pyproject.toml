@@ -44,18 +44,18 @@ version = { attr = "graphviz.__version__" }
 graphviz = ["py.typed"]
 
 [dependency-groups]
-dev = [  # $ pip install -e . --gropup dev
+dev = [  # $ pip install -e . --group dev
   "build",
-  "wheel",
+  "tox",
   "twine",
-  {include-group = "docs"},
-  {include-group = "lint"},
-  {include-group = "test"},
-  "tox>=4.22",
-  {include-group = "typing"},
+  "wheel",
+  { include-group = "docs" },
+  { include-group = "lint" },
+  { include-group = "test" },
+  { include-group = "typing" },
 ]
 docs = [
-  "sphinx",
+  "Sphinx",
   "sphinx-autodoc-typehints",
   "sphinx-rtd-theme",
 ]
@@ -65,9 +65,10 @@ lint = [
   "pep8-naming",
 ]
 test = [
+  "coverage",
   "pytest>=7,<8.1",  # https://github.com/pytest-dev/pytest/issues/12123
+  "pytest-cov", 
   "pytest-mock>=3",
-  "pytest-cov", "coverage",
 ]
 typing = [
   "mypy",
