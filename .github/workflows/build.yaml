@@ -18,7 +18,7 @@ jobs:
           - name: macos-3.14-skip-exe
             python-version: "3.14"
             os: macos-latest
-          - name: linux-3.14-lint-update-help-skip-exe
+          - name: linux-3.14-update-help-skip-exe
             python-version: "3.14"
             os: ubuntu-latest
           - name: linux-3.13-skip-exe
@@ -139,15 +139,6 @@ jobs:
           ${{ startsWith(matrix.name, 'windows-') }} && SEVERITY=notice
           [ $FAILED -eq 0 ] || echo "::$SEVERITY::try-examples.py failed with exit code $FAILED (XFAIL 'Graphviz not built with triangulation library' on Windows cbuild)"
         shell: bash
-      - name: Run lint-code.py (if -lint)
-        if: ${{ contains(matrix.name, '-lint') }}
-        run: |
-          echo "::group::Run lint-code.py"
-          FAILED=0
-          python lint-code.py || FAILED=$?
-          echo "::endgroup::"
-          [ $FAILED -eq 0 ] || echo "::warning::lint-code.py failed with exit code $FAILED"
-        shell: bash
       - name: Run update-help.py (if -update-help)
         if: ${{ contains(matrix.name, '-update-help') }}
         run: |
@@ -165,6 +156,27 @@ jobs:
             doctest-output/
             examples/*.gv
             examples/*.pdf
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - python-version: "3.14"
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v4
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Pip install --group lint
+        run: pip install --group lint
+      - name: Run lint-code.py
+        run: |
+          FAILED=0
+          python lint-code.py || FAILED=$?
+          [ $FAILED -eq 0 ] || echo "::warning::lint-code.py failed with exit code $FAILED"
+        shell: bash
   typing:
     runs-on: ubuntu-latest
     strategy:
