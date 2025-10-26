@@ -139,14 +139,6 @@ jobs:
           ${{ startsWith(matrix.name, 'windows-') }} && SEVERITY=notice
           [ $FAILED -eq 0 ] || echo "::$SEVERITY::try-examples.py failed with exit code $FAILED (XFAIL 'Graphviz not built with triangulation library' on Windows cbuild)"
         shell: bash
-      - name: Run update-help.py (if -update-help)
-        if: ${{ contains(matrix.name, '-update-help') }}
-        run: |
-          echo "::group::Run update-help.py"
-          FAILED=0
-          python update-help.py || FAILED=$?
-          echo "::endgroup::"
-          [ $FAILED -eq 0 ] || echo "::warning::update-help.py failed with exit code $FAILED"
       - name: Upload ${{ matrix.name }} artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -197,4 +189,24 @@ jobs:
           FAILED=0
           python typecheck-code.py || FAILED=$?
           [ $FAILED -eq 0 ] || echo "::warning::typecheck-code.py failed with exit code $FAILED"
+        shell: bash
+update-help:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - python-version: "3.14"
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v4
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Pip install .
+        run: pip install .
+      - name: Run update-help.py
+        run: |
+          FAILED=0
+          python update-help.py || FAILED=$?
         shell: bash
