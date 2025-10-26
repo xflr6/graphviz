@@ -9,7 +9,7 @@ Update build dependencies:
 
 .. code:: bash
 
-    $ pip install -U build setuptools wheel twine
+    $ pip install -U --group dev
 
 Create ``release`` branch from main:
 
@@ -38,12 +38,13 @@ Document release:
 
 - remove ``(in development)`` from ``CHANGES.rst`` header
 
-Run the tests, lint the code, and build the documentation:
+Run the tests, lint/typecheck the code, and doctest/build the documentation:
 
 .. code:: bash
 
     $ python -m tox -r -- -W error  # --recreate, raise error on warning
     $ python lint-code.py --disable-noqa
+    $ python typecheck-code.py
     $ python build-docs.py -b doctest
     $ python build-docs.py
     $ git clean -f -d -x

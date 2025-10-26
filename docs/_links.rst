@@ -21,11 +21,9 @@
 .. _venv: https://docs.python.org/3/library/venv.html#creating-virtual-environments
 .. _virtualenv: https://virtualenv.pypa.io
 .. _tox: https://tox.wiki
-.. _pytype: https://google.github.io/pytype/
-.. _pytpe_platforms: https://google.github.io/pytype/#requirements
-.. _pytype_python_versions: https://google.github.io/pytype/support.html#python-version
 .. _sphinx: https://www.sphinx-doc.org
 .. _sphinx-rtd-theme: https://sphinx-rtd-theme.readthedocs.io
+.. _mypy: https://mypy.readthedocs.io
 .. _flake8: https://flake8.pycqa.org
 .. _twine: https://twine.readthedocs.io
 

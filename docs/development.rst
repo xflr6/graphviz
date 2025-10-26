@@ -20,7 +20,7 @@ Development environment **binder** : https://mybinder.org/v2/gh/xflr6/graphviz/H
 Local installation
 ^^^^^^^^^^^^^^^^^^
 
-Install in a venv_ in development mode (includes all ``extras_require``):
+Install in a venv_ in development mode (includes all ``dependency-groups``):
 
 .. code:: bash
 
@@ -28,17 +28,12 @@ Install in a venv_ in development mode (includes all ``extras_require``):
     $ cd graphviz
     $ python -m venv .venv
     $ source .venv/bin/activate
-    $ python -m pip install -r requirements.txt
+    $ python -m pip install -e . --group dev
 
 .. admonition:: Platform: Windows
 
     ``.venv\Script\activate.bat``
     to replace ``source .venv/bin/activate``
-
-.. hint::
-
-    alternatively: ``pip install -e .[dev,test,docs]``
-    (same as ``pip install -r requirements.txt``)
 
 
 Tests
@@ -72,21 +67,17 @@ Run **only tests** that are expected to ``PASS`` or ``XFAIL``
 
     $ python -m tox
 
-**Run the static type checker**
-(pytype_,
-supported `platforms <pytpe_platforms_>`_
-and `Python versions <pytype_python_versions_>`_):
-
-.. code:: bash
-
-    $ pip install pytype
-    $ pytype
-
 **Run the code linter** (flake8_):
 
 .. code:: bash
 
     $ python lint-code.py
+
+**Run the type checker** (mypy_):
+
+.. code:: bash
+
+    $ python typecheck-code.py
 
 
 Documentation

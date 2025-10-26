@@ -30,15 +30,6 @@ Changelog = "https://graphviz.readthedocs.io/en/latest/changelog.html"
 CI = "https://github.com/xflr6/graphviz/actions"
 Coverage = "https://codecov.io/gh/xflr6/graphviz"
 
-[project.optional-dependencies]
-dev = ["build", "wheel", "twine", "mypy", "flake8", "Flake8-pyproject", "pep8-naming", "tox>=3"]
-test = [
-  "pytest>=7,<8.1",  # https://github.com/pytest-dev/pytest/issues/12123
-  "pytest-mock>=3",
-  "pytest-cov", "coverage",
-]
-docs = ["sphinx", "sphinx-autodoc-typehints", "sphinx-rtd-theme"]
-
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
@@ -51,6 +42,36 @@ version = { attr = "graphviz.__version__" }
 
 [tool.setuptools.package-data]
 graphviz = ["py.typed"]
+
+[dependency-groups]
+dev = [  # $ pip install -e . --gropup dev
+  "build",
+  "wheel",
+  "twine",
+  {include-group = "docs"},
+  {include-group = "lint"},
+  {include-group = "test"},
+  "tox>=3",
+  {include-group = "typing"},
+]
+docs = [
+  "sphinx",
+  "sphinx-autodoc-typehints",
+  "sphinx-rtd-theme",
+]
+lint = [
+  "flake8",
+  "Flake8-pyproject",
+  "pep8-naming",
+]
+test = [
+  "pytest>=7,<8.1",  # https://github.com/pytest-dev/pytest/issues/12123
+  "pytest-mock>=3",
+  "pytest-cov", "coverage",
+]
+typing = [
+  "mypy",
+]
 
 [tool.mypy]
 packages = ["graphviz"]
@@ -104,6 +125,6 @@ legacy_tox_ini = """
   skip_missing_interpreters = true
 
   [testenv]
-  extras = test
+  dependency_groups = test
   commands = python -X dev run-tests.py {posargs}
 """
