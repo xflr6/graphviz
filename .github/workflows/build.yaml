@@ -4,14 +4,13 @@ on:
   - pull_request
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os | 'ubuntu-latest' }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - name: linux-3.14
             python-version: "3.14"
-            os: ubuntu-latest
           - name: windows-3.14
             python-version: "3.14"
             os: windows-latest
@@ -20,25 +19,18 @@ jobs:
             os: macos-latest
           - name: linux-3.14-skip-exe
             python-version: "3.14"
-            os: ubuntu-latest
           - name: linux-3.13-skip-exe
             python-version: "3.13"
-            os: ubuntu-latest
           - name: linux-3.12-skip-exe
             python-version: "3.12"
-            os: ubuntu-latest
           - name: linux-3.11-skip-exe
             python-version: "3.10"
-            os: ubuntu-latest
           - name: linux-3.10-skip-exe
             python-version: "3.10"
-            os: ubuntu-latest
           - name: linux-pypy-3.11-skip-exe
             python-version: pypy-3.11
-            os: ubuntu-latest
           - name: linux-pypy-3.10-skip-exe
             python-version: pypy-3.10
-            os: ubuntu-latest
     steps:
       - name: Checkout source repo
         uses: actions/checkout@v4
@@ -148,7 +140,7 @@ jobs:
             doctest-output/
             examples/*.gv
             examples/*.pdf
-  lint:
+  lint-code:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -169,7 +161,7 @@ jobs:
           python lint-code.py || FAILED=$?
           [ $FAILED -eq 0 ] || echo "::warning::lint-code.py failed with exit code $FAILED"
         shell: bash
-  typing:
+  typecheck-code:
     runs-on: ubuntu-latest
     strategy:
       matrix:
