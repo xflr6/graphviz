@@ -4,11 +4,8 @@ build:
   os: ubuntu-lts-latest
   tools:
     python: latest
-python:
-  install:
-    - method: pip
-      path: .
-      extra_requirements:
-        - docs
+  jobs:
+    install:
+      - pip install . --group docs
 sphinx:
   configuration: docs/conf.py
