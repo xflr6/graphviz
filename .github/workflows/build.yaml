@@ -10,13 +10,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - python-version: "3.14"
-            full: true
-          - python-version: "3.14"
-            os: windows
-            full: true
-          - python-version: "3.14"
-            os: macos
+          - {python-version: "3.14", full: true}
+          - {os: windows, python-version: "3.14", full: true}
+          - {os: macos, python-version: "3.14", full: false}
           - python-version: "3.13"
           - python-version: "3.12"
           - python-version: "3.11"
@@ -26,8 +22,8 @@ jobs:
     steps:
       - name: Checkout source repo
         uses: actions/checkout@v4
-      - name: Apt install system dependencies (linux unless skip-exe)
-        if: ${{ !matrix.os && matrix.full }}
+      - name: Apt install system dependencies (ubuntu unless skip-exe)
+        if: ${{ (matrix.os == 'ubuntu' || !matrix.os) && matrix.full }}
         run: |
           echo "::group::Run sudo apt-get update"
           sudo apt-get update
@@ -72,13 +68,13 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Pip install dependencies
+      - name: Pip install . --group test
         run: |
           echo "::group::Run python -m pip install --upgrade pip setuptools wheel"
           python -m pip install --upgrade pip setuptools wheel
           echo "::endgroup::"
-          echo "::group::Run pip install . --group lint --group test --group typing"
-          pip install . --group lint --group test --group typing
+          echo "::group::Run pip install . --group test"
+          pip install . --group test
           echo "::endgroup::"
       - name: Run full tests (unless skip-exe)
         if: ${{ matrix.full }}
