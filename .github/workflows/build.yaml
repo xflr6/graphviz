@@ -190,7 +190,7 @@ jobs:
           python typecheck-code.py || FAILED=$?
           [ $FAILED -eq 0 ] || echo "::warning::typecheck-code.py failed with exit code $FAILED"
         shell: bash
-update_help:
+  update-help:
     runs-on: ubuntu-latest
     strategy:
       matrix:
