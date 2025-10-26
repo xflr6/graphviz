@@ -6,7 +6,7 @@ build:
     python: latest
   jobs:
     install:
-      - pip install .  dependency-groups
+      - pip install . dependency-groups
       - pip-install-dependency-groups docs
 sphinx:
   configuration: docs/conf.py
