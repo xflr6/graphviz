@@ -22,7 +22,7 @@ ARGS = [#'--skip-exe',
        ]
 
 if platform.system() == 'Windows' and 'idlelib' in sys.modules:
-    ARGS += ['--capture=sys', '--color=no']
+    ARGS += ['-p', 'no:faulthandler']
 
 
 print('run', [SELF.name] + sys.argv[1:])
