@@ -32,6 +32,6 @@ args = ARGS + sys.argv[1:]
 print(f'pytest.main({args!r})')
 if (returncode := pytest.main(args)):
     print('FAILED:', returncode)
+    sys.exit(returncode)
 else:
     print('PASSED.')
-sys.exit(returncode)

@@ -3,12 +3,11 @@
 
 """Build the docs with https://www.sphinx-doc.org."""
 
-import functools
 import pathlib
 import sys
 import webbrowser
 
-from sphinx.cmd import build
+import sphinx.cmd.build
 
 SELF = pathlib.Path(__file__)
 
@@ -59,17 +58,16 @@ if args == ['-b', 'doctest']:
     args += ['-W', str(SOURCE), str(SOURCE / '_doctest')]
 
 print(f'sphinx.cmd.build.main({args})')
-returncode = build.main(args)
-status = 'FAILED' if returncode else 'PASSED'
-print = functools.partial(print, sep='\n')
-print('', f'{status}: returncode {returncode!r}', end='')
-
-try:
-    if 'doctest' not in args:
-        print('', f'index: {RESULT}', f'assert {RESULT!r}.stat().st_size', end='')
-        assert open_result.stat().st_size, f'non-empty {open_result}'
-        if open_result:
-            print('', f'webbrowser.open({open_result!r})', end='')
-            webbrowser.open(open_result)
-finally:
+if (returncode := sphinx.cmd.build.main(args)):
+    print('', f'FAILED: returncode {returncode!r}', sep='\n')
     sys.exit(returncode)
+else:
+    if 'doctest' not in args:
+        print('', f'index: {RESULT}', sep='\n')
+        print(f'assert {RESULT!r}.stat().st_size')
+        assert RESULT.stat().st_size, f'non-empty {RESULT}'
+    print('', 'PASSED.', sep='\n')
+
+if open_result:
+    print(f'webbrowser.open({open_result!r})')
+    webbrowser.open(open_result)

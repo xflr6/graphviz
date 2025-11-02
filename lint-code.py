@@ -18,6 +18,6 @@ if __name__ == '__main__':
     print(f'flake8.main.cli.main({args!r})')
     if (returncode := flake8.main.cli.main(args)):
         print('FAILED:', returncode)
+        sys.exit(returncode)
     else:
         print('PASSED.')
-    sys.exit(returncode)

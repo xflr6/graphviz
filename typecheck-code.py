@@ -18,8 +18,6 @@ try:
     mypy.main.main(args=args, clean_exit=True)
 except SystemExit as e:
     print('FAILED:', e.code)
-    status = e.code
+    sys.exit(e.code)
 else:
     print('PASSED.')
-    status = None
-sys.exit(status)
