@@ -19,5 +19,4 @@ try:
 except SystemExit as e:
     print('FAILED:', e.code)
     sys.exit(e.code)
-else:
-    print('PASSED.')
+print('PASSED.')

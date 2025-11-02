@@ -61,12 +61,12 @@ print(f'sphinx.cmd.build.main({args})')
 if (returncode := sphinx.cmd.build.main(args)):
     print('', f'FAILED: returncode {returncode!r}', sep='\n')
     sys.exit(returncode)
-else:
-    if 'doctest' not in args:
-        print('', f'index: {RESULT}', sep='\n')
-        print(f'assert {RESULT!r}.stat().st_size')
-        assert RESULT.stat().st_size, f'non-empty {RESULT}'
-    print('', 'PASSED.', sep='\n')
+
+if 'doctest' not in args:
+    print('', f'index: {RESULT}', sep='\n')
+    print(f'assert {RESULT!r}.stat().st_size')
+    assert RESULT.stat().st_size, f'non-empty {RESULT}'
+print('', 'PASSED.', sep='\n')
 
 if open_result:
     print(f'webbrowser.open({open_result!r})')
