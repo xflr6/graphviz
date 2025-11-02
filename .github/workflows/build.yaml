@@ -1,7 +1,5 @@
 name: Build
-on:
-  - push
-  - pull_request
+on: [push, pull_request]
 jobs:
   build:
     name: run-tests (${{ matrix.os || 'linux' }}-${{ matrix.python-version }}${{ !matrix.full && '-skip-exe' || ''}})
