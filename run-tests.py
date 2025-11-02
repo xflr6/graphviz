@@ -28,5 +28,10 @@ if platform.system() == 'Windows' and 'idlelib' in sys.modules:
 print('run', [SELF.name] + sys.argv[1:])
 args = ARGS + sys.argv[1:]
 
+# https://docs.pytest.org/en/stable/reference/reference.html#pytest-main
 print(f'pytest.main({args!r})')
-sys.exit(pytest.main(args))
+if (returncode := pytest.main(args)):
+    print('FAILED:', returncode)
+else:
+    print('PASSED.')
+sys.exit(returncode)
