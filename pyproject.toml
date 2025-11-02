@@ -45,34 +45,21 @@ graphviz = ["py.typed"]
 
 [dependency-groups]
 dev = [  # $ pip install -e . --group dev
-  "build",
-  "tox",
-  "twine",
-  "wheel",
+  "build", "tox", "twine", "wheel",
   { include-group = "docs" },
   { include-group = "lint" },
   { include-group = "test" },
   { include-group = "typing" },
 ]
-docs = [
-  "Sphinx",
-  "sphinx-autodoc-typehints",
-  "sphinx-rtd-theme",
-]
-lint = [
-  "flake8",
-  "Flake8-pyproject",
-  "pep8-naming",
-]
+docs = ["Sphinx", "sphinx-autodoc-typehints", "sphinx-rtd-theme"]
+lint = ["flake8", "Flake8-pyproject", "pep8-naming"]
 test = [
   "coverage",
   "pytest>=7,<8.1",  # https://github.com/pytest-dev/pytest/issues/12123
   "pytest-cov", 
   "pytest-mock>=3",
 ]
-typing = [
-  "mypy",
-]
+typing = ["mypy"]
 
 [tool.mypy]
 packages = ["graphviz"]
@@ -85,12 +72,12 @@ check_untyped_defs = true
 disallow_subclassing_any = true
 
 [tool.flake8]
-exclude = ["docs", "build", ".tox"]
+exclude = [".tox", "build", "docs"]
 ignore = ["E126", "E128", "W503"]
 max-line-length = 100
 
 [tool.pytest.ini_options]
-minversion = "6"
+minversion = "7"
 testpaths = ["README.rst", "docs", "graphviz", "tests"]
 addopts = [
   "--doctest-modules",
