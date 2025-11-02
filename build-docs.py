@@ -49,6 +49,8 @@ elif any(a.partition('=')[0] == BROWSER_OPEN for a in args):
         if value:
             open_result = open_result.parent / value
     args = [a for a in args if a.partition('=')[0] != BROWSER_OPEN]
+else:
+    open_result = RESULT if 'doctest' not in args else None
 
 if not args:  # no pytest args given
     args = [a for a in DEFAULT_ARGS
