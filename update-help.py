@@ -132,6 +132,7 @@ if target != target_before:
     for diff in difflib.context_diff(target_before, target):
         print(diff)
 
-    print(f'FAILED: changed {TARGET!r} (WARNING)')
+    message = f'FAILED: changed {TARGET!r} (WARNING)'
+    print(message)
     sys.exit(message)
 print(f'PASSED: unchanged {TARGET} (OK)')
