@@ -118,10 +118,7 @@ for cls_name, doc in help_docs.items():
 
     target = target.replace(INDENT + '\n', INDENT + '<BLANKLINE>\n')
 
-if target == target_before:
-    print(f'PASSED: unchanged {TARGET} (OK)')
-    sys.exit(None)
-else:
+if target != target_before:
     print('write', TARGET)
     splitlines = operator.methodcaller('splitlines', keepends=True)
     target_before, target = map(splitlines, (target_before, target))
@@ -135,6 +132,6 @@ else:
     for diff in difflib.context_diff(target_before, target):
         print(diff)
 
-    message = f'FAILED: changed {TARGET!r} (WARNING)'
-    print(f'sys.exit({message!r})')
+    print(f'FAILED: changed {TARGET!r} (WARNING)')
     sys.exit(message)
+print(f'PASSED: unchanged {TARGET} (OK)')
