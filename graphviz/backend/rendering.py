@@ -112,7 +112,7 @@ def infer_format(outfile: pathlib.Path) -> str:
         raise ValueError('cannot infer rendering format from outfile:'
                          f' {os.fspath(outfile)!r} (missing suffix)')
 
-    start, sep, format_ = outfile.suffix.partition('.')
+    (start, sep, format_) = outfile.suffix.partition('.')
     assert sep and not start, f"{outfile.suffix!r}.startswith('.')"
     format_ = format_.lower()
 
@@ -278,7 +278,7 @@ def render(engine: str,
         raise ValueError('overwrite_filepath cannot be combined'
                          ' with raise_if_result_exists')
 
-    filepath, outfile = map(_tools.promote_pathlike, (filepath, outfile))
+    (filepath, outfile) = map(_tools.promote_pathlike, (filepath, outfile))
 
     if outfile is not None:
         format = get_format(outfile, format=format)

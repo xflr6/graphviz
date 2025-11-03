@@ -101,7 +101,7 @@ def _run_input_lines(cmd, input_lines, *, kwargs):
     for line in input_lines:
         stdin_write(line)
 
-    stdout, stderr = popen.communicate()
+    (stdout, stderr) = popen.communicate()
     return subprocess.CompletedProcess(popen.args, popen.returncode,
                                        stdout=stdout, stderr=stderr)
 

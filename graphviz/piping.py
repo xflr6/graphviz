@@ -133,13 +133,13 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                      quiet: bool = False,
                      engine: str | None = None,
                      encoding: str | None = None) -> bytes | str:
-        args, kwargs = self._get_pipe_parameters(engine=engine,
-                                                 format=format,
-                                                 renderer=renderer,
-                                                 formatter=formatter,
-                                                 neato_no_op=neato_no_op,
-                                                 quiet=quiet,
-                                                 verify=True)
+        (args, kwargs) = self._get_pipe_parameters(engine=engine,
+                                                   format=format,
+                                                   renderer=renderer,
+                                                   formatter=formatter,
+                                                   neato_no_op=neato_no_op,
+                                                   quiet=quiet,
+                                                   verify=True)
 
         args.append(iter(self))
 

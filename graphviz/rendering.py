@@ -100,16 +100,16 @@ class Render(saving.Save, backend.Render, backend.View):
             if directory is None:
                 outfile = pathlib.Path(self.directory, outfile)
 
-        args, kwargs = self._get_render_parameters(engine=engine,
-                                                   format=format,
-                                                   renderer=renderer,
-                                                   formatter=formatter,
-                                                   neato_no_op=neato_no_op,
-                                                   quiet=quiet,
-                                                   outfile=outfile,
-                                                   raise_if_result_exists=raise_if_result_exists,
-                                                   overwrite_source=overwrite_source,
-                                                   verify=True)
+        (args, kwargs) = self._get_render_parameters(engine=engine,
+                                                     format=format,
+                                                     renderer=renderer,
+                                                     formatter=formatter,
+                                                     neato_no_op=neato_no_op,
+                                                     quiet=quiet,
+                                                     outfile=outfile,
+                                                     raise_if_result_exists=raise_if_result_exists,
+                                                     overwrite_source=overwrite_source,
+                                                     verify=True)
 
         if outfile is not None and filename is None:
             filename = self._get_filepath(outfile)

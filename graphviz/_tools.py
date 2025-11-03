@@ -163,7 +163,7 @@ def deprecate_positional_args(*,
 
         # mangle function name in message for this package
         func_name = func.__name__.lstrip('_')
-        func_name, sep, rest = func_name.partition('_legacy')
+        (func_name, sep, rest) = func_name.partition('_legacy')
         assert func_name and (not sep or not rest)
 
         s_ = 's' if supported_number > 1 else ''
