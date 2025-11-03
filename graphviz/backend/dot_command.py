@@ -15,6 +15,7 @@ DOT_BINARY: Final = pathlib.Path('dot')
 def command(engine: str, format_: str, *,
             renderer: str | None = None,
             formatter: str | None = None,
+            y_invert: bool = False,
             neato_no_op: bool | int | None = None) -> list[os.PathLike[str] | str]:
     """Return ``subprocess.Popen`` argument list for rendering.
 
@@ -23,6 +24,7 @@ def command(engine: str, format_: str, *,
         - https://www.graphviz.org/doc/info/command.html#-K
         - https://www.graphviz.org/doc/info/command.html#-T
         - https://www.graphviz.org/doc/info/command.html#-n
+        - https://www.graphviz.org/doc/info/command.html#-y
     """
     if formatter is not None and renderer is None:
         raise exceptions.RequiredArgumentError('formatter given without renderer')
@@ -38,6 +40,8 @@ def command(engine: str, format_: str, *,
     cmd: list[os.PathLike[str] | str]
     cmd = [DOT_BINARY, f'-K{engine}', f'-T{output_format_flag}']
 
+    if y_invert:
+        cmd.append('-y')
     if neato_no_op:
         cmd.append(f'-n{neato_no_op:d}')
 

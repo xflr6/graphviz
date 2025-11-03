@@ -16,7 +16,8 @@ def pipe(engine: str, format: str, data: bytes,
          renderer: str | None = None,
          formatter: str | None = None,
          neato_no_op: bool | int | None = None,
-         quiet: bool = False) -> bytes:
+         quiet: bool = False, *,
+         y_invert: bool = False) -> bytes:
     """Return ``data`` (``bytes``) piped through ``engine`` into ``format`` as ``bytes``.
 
     Args:
@@ -27,6 +28,7 @@ def pipe(engine: str, format: str, data: bytes,
         formatter: Output formatter (``'cairo'``, ``'gd'``, ...).
         neato_no_op: Neato layout engine no-op flag.
         quiet: Suppress ``stderr`` output from the layout subprocess.
+        y_invert: Invert y coordinates in the rendered output.
 
     Returns:
         Binary (encoded) stdout of the layout command.
@@ -53,6 +55,7 @@ def pipe(engine: str, format: str, data: bytes,
     cmd = dot_command.command(engine, format,
                               renderer=renderer,
                               formatter=formatter,
+                              y_invert=y_invert,
                               neato_no_op=neato_no_op)
     kwargs = {'input': data}
 
@@ -64,6 +67,7 @@ def pipe_string(engine: str, format: str, input_string: str, *,
                 encoding: str,
                 renderer: str | None = None,
                 formatter: str | None = None,
+                y_invert: bool = False,
                 neato_no_op: bool | int | None = None,
                 quiet: bool = False) -> str:
     """Return ``input_string`` piped through ``engine`` into ``format`` as string.
@@ -75,6 +79,7 @@ def pipe_string(engine: str, format: str, input_string: str, *,
         encoding: Encoding to en/decode subprocess stdin and stdout (required).
         renderer: Output renderer (``'cairo'``, ``'gd'``, ...).
         formatter: Output formatter (``'cairo'``, ``'gd'``, ...).
+        y_invert: Invert y coordinates in the rendered output.
         neato_no_op: Neato layout engine no-op flag.
         quiet: Suppress ``stderr`` output from the layout subprocess.
 
@@ -104,6 +109,7 @@ def pipe_string(engine: str, format: str, input_string: str, *,
     cmd = dot_command.command(engine, format,
                               renderer=renderer,
                               formatter=formatter,
+                              y_invert=y_invert,
                               neato_no_op=neato_no_op)
     kwargs = {'input': input_string, 'encoding': encoding}
 
@@ -115,6 +121,7 @@ def pipe_lines(engine: str, format: str, input_lines: Iterator[str], *,
                input_encoding: str,
                renderer: str | None = None,
                formatter: str | None = None,
+               y_invert: bool = False,
                neato_no_op: bool | int | None = None,
                quiet: bool = False) -> bytes:
     r"""Return ``input_lines`` piped through ``engine`` into ``format`` as ``bytes``.
@@ -126,6 +133,7 @@ def pipe_lines(engine: str, format: str, input_lines: Iterator[str], *,
         input_encoding: Encode input_lines for subprocess stdin (required).
         renderer: Output renderer (``'cairo'``, ``'gd'``, ...).
         formatter: Output formatter (``'cairo'``, ``'gd'``, ...).
+        y_invert: Invert y coordinates in the rendered output.
         neato_no_op: Neato layout engine no-op flag.
         quiet: Suppress ``stderr`` output from the layout subprocess.
 
@@ -155,6 +163,7 @@ def pipe_lines(engine: str, format: str, input_lines: Iterator[str], *,
     cmd = dot_command.command(engine, format,
                               renderer=renderer,
                               formatter=formatter,
+                              y_invert=y_invert,
                               neato_no_op=neato_no_op)
     kwargs = {'input_lines': (line.encode(input_encoding) for line in input_lines)}
 
@@ -166,6 +175,7 @@ def pipe_lines_string(engine: str, format: str, input_lines: Iterator[str], *,
                       encoding: str,
                       renderer: str | None = None,
                       formatter: str | None = None,
+                      y_invert: bool = False,
                       neato_no_op: bool | int | None = None,
                       quiet: bool = False) -> str:
     r"""Return ``input_lines`` piped through ``engine`` into ``format`` as string.
@@ -177,6 +187,7 @@ def pipe_lines_string(engine: str, format: str, input_lines: Iterator[str], *,
         encoding: Encoding to en/decode subprocess stdin and stdout (required).
         renderer: Output renderer (``'cairo'``, ``'gd'``, ...).
         formatter: Output formatter (``'cairo'``, ``'gd'``, ...).
+        y_invert: Invert y coordinates in the rendered output.
         neato_no_op: Neato layout engine no-op flag.
         quiet: Suppress ``stderr`` output from the layout subprocess.
 
@@ -206,6 +217,7 @@ def pipe_lines_string(engine: str, format: str, input_lines: Iterator[str], *,
     cmd = dot_command.command(engine, format,
                               renderer=renderer,
                               formatter=formatter,
+                              y_invert=y_invert,
                               neato_no_op=neato_no_op)
     kwargs = {'input_lines': input_lines, 'encoding': encoding}
 

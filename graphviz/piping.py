@@ -26,6 +26,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
              formatter: str | None = ...,
              neato_no_op: bool | int | None = ...,
              quiet: bool = ..., *,
+             y_invert: bool = ...,
              engine: str | None = ...,
              encoding: None = ...) -> bytes:
         """Return bytes with default ``encoding=None``."""
@@ -37,6 +38,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
              formatter: str | None = ...,
              neato_no_op: bool | int | None = ...,
              quiet: bool = ..., *,
+             y_invert: bool = ...,
              engine: str | None = ...,
              encoding: str) -> str:
         """Return string when given encoding."""
@@ -48,6 +50,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
              formatter: str | None = ...,
              neato_no_op: bool | int | None = ...,
              quiet: bool = ..., *,
+             y_invert: bool = ...,
              engine: str | None = ...,
              encoding: str | None) -> bytes | str:
         """Return bytes or string depending on encoding argument."""
@@ -58,6 +61,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
              formatter: str | None = None,
              neato_no_op: bool | int | None = None,
              quiet: bool = False, *,
+             y_invert: bool = False,
              engine: str | None = None,
              encoding: str | None = None) -> bytes | str:
         """Return the source piped through the Graphviz layout command.
@@ -72,6 +76,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
             neato_no_op: Neato layout engine no-op flag.
             quiet (bool): Suppress ``stderr`` output
                 from the layout subprocess.
+            y_invert: Invert y coordinates in the rendered output.
             engine: Layout engine for rendering
                 (``'dot'``, ``'neato'``, ...).
             encoding: Encoding for decoding the stdout.
@@ -106,6 +111,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                                  formatter=formatter,
                                  neato_no_op=neato_no_op,
                                  quiet=quiet,
+                                 y_invert=y_invert,
                                  engine=engine,
                                  encoding=encoding)
 
@@ -116,6 +122,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                      formatter: str | None = None,
                      neato_no_op: bool | int | None = None,
                      quiet: bool = False, *,
+                     y_invert: bool = False,
                      engine: str | None = None,
                      encoding: str | None = None) -> bytes | str:
         return self._pipe_future(format,
@@ -130,6 +137,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                      renderer: str | None = None,
                      formatter: str | None = None,
                      neato_no_op: bool | int | None = None,
+                     y_invert: bool = False,
                      quiet: bool = False,
                      engine: str | None = None,
                      encoding: str | None = None) -> bytes | str:
@@ -137,6 +145,7 @@ class Pipe(encoding.Encoding, base.Base, backend.Pipe):
                                                    format=format,
                                                    renderer=renderer,
                                                    formatter=formatter,
+                                                   y_invert=y_invert,
                                                    neato_no_op=neato_no_op,
                                                    quiet=quiet,
                                                    verify=True)

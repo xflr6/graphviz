@@ -93,10 +93,13 @@ def test_pipe_mocked(capsys, mock_run, quiet):
                                                         stderr=b'stderr')
 
     assert graphviz.pipe('dot', 'png', b'nongraph',
+                         y_invert=True,
+                         neato_no_op=True,
                          quiet=quiet) == b'stdout'
 
     mock_run.assert_called_once_with([_common.EXPECTED_DOT_BINARY,
-                                      '-Kdot', '-Tpng'],
+                                      '-Kdot', '-Tpng',
+                                      '-y', '-n1'],
                                      input=b'nongraph',
                                      capture_output=True,
                                      startupinfo=_common.StartupinfoMatcher())
