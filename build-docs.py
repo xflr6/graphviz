@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# flake8: noqa
 
 """Build the docs with https://www.sphinx-doc.org."""
 
@@ -45,7 +44,7 @@ elif any(a.partition('=')[0] == BROWSER_OPEN for a in args):
     if values:
         if len(values) != 1:
             raise ValueError(f'conflicting {BROWSER_OPEN}: {values}')
-        value, = values
+        (value,) = values
         if value:
             open_result = open_result.parent / value
     args = [a for a in args if a.partition('=')[0] != BROWSER_OPEN]

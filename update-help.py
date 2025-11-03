@@ -49,7 +49,7 @@ def get_help(obj) -> str:
 
 def rpartition_initial(value: str, *, sep: str) -> tuple[str, str, str]:
     """Return (value, '', '') if sep not in value else value.rpartition(sep)."""
-    _, sep_found, _ = parts = value.rpartition(sep)
+    (_, sep_found, _) = parts = value.rpartition(sep)
     return tuple(reversed(parts)) if not sep_found else parts
 
 
@@ -89,8 +89,8 @@ def iterlines(stdout_lines, *,
         if len(line) > wrap_after and ARGS_LINE.match(line):
             indent = line_indent + ' ' * (line.index('(') + 1)
 
-            *start, rest = line.partition('(')
-            argument_line, *rest = rpartition_initial(rest, sep=' -> ')
+            (*start, rest) = line.partition('(')
+            (argument_line, *rest) = rpartition_initial(rest, sep=' -> ')
 
             arguments = list(iterarguments(argument_line))
             print(len(line), 'character line wrapped into',
@@ -113,7 +113,7 @@ for cls_name, doc in help_docs.items():
 
     pattern = re.compile(PATTERN_TMPL.format(cls_name=cls_name), flags=re.VERBOSE)
 
-    target, found = pattern.subn(fr'\1{doc}', target, count=1)
+    (target, found) = pattern.subn(fr'\1{doc}', target, count=1)
     assert found, f'replaced {cls_name} section'
 
     target = target.replace(INDENT + '\n', INDENT + '<BLANKLINE>\n')
@@ -121,7 +121,7 @@ for cls_name, doc in help_docs.items():
 if target != target_before:
     print('write', TARGET)
     splitlines = operator.methodcaller('splitlines', keepends=True)
-    target_before, target = map(splitlines, (target_before, target))
+    (target_before, target) = map(splitlines, [target_before, target])
     print(len(target_before), 'lines before')
     print(len(target), 'lines after')
 
@@ -132,7 +132,5 @@ if target != target_before:
     for diff in difflib.context_diff(target_before, target):
         print(diff)
 
-    message = f'FAILED: changed {TARGET!r} (WARNING)'
-    print(message)
-    sys.exit(message)
+    sys.exit(f'FAILED: changed {TARGET!r} (WARNING)')
 print(f'PASSED: unchanged {TARGET} (OK)')

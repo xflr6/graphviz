@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# flake8: noqa
 
 """Import ``graphviz`` here and run all scripts in the ``examples/`` dir."""
 
@@ -9,7 +8,7 @@ import sys
 import unittest.mock
 import warnings
 
-import graphviz  # noqa: F401
+import graphviz
 
 SELF = pathlib.Path(__file__)
 
@@ -47,10 +46,7 @@ with unittest.mock.patch.object(graphviz.graphs.BaseGraph, '_view') as mock_view
                                               quiet=False)
             mock_view.reset_mock()
 
-if not raised:
-    print('PASSED: all examples passed without raising')
-    sys.exit(None)
-else:
-    message = f'FAILED: {len(raised)} examples raised (WARNING)'
-    print(message, *raised, sep='\n')
-    sys.exit(message)
+if raised:
+    print(*raised, sep='\n')
+    sys.exit(f'FAILED: {len(raised)} example(s) raised an error (WARNING)')
+print('PASSED: all examples passed without raising')
