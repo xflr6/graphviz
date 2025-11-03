@@ -10,8 +10,6 @@ import warnings
 
 import graphviz
 
-SELF = pathlib.Path(__file__)
-
 EXAMPLES = pathlib.Path('examples')
 
 IO_KWARGS = {'encoding': 'utf-8'}
@@ -19,7 +17,7 @@ IO_KWARGS = {'encoding': 'utf-8'}
 DEFAULT_FORMAT = 'pdf'
 
 
-print('run', [SELF.name] + sys.argv[1:])
+print('run', [pathlib.Path(__file__).name] + sys.argv[1:])
 os.chdir(EXAMPLES)
 
 graphviz.set_default_format(DEFAULT_FORMAT)

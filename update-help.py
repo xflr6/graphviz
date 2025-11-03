@@ -13,8 +13,6 @@ import sys
 
 import graphviz
 
-SELF = pathlib.Path(__file__)
-
 ALL_CLASSES = [graphviz.Graph, graphviz.Digraph, graphviz.Source]
 
 ARGS_LINE = re.compile(r'(?:class | \| {2})\w+\(')
@@ -25,15 +23,15 @@ INDENT = ' ' * 4
 
 TARGET = pathlib.Path('docs/api.rst')
 
-PATTERN_TMPL = (r'''
-                (
-                \ {{4}}>>>\ help\(graphviz\.{cls_name}\).*\n)
-                \ {{4}}Help\ on\ class\ {cls_name}
-                       \ in\ module\ graphviz\.(?:graphs|sources):\n
-                \ {{4}}<BLANKLINE>\n
-                (?:.*\n)+?
-                \ {{4}}<BLANKLINE>\n
-                ''')
+PATTERN_TMPL = r'''
+               (
+               \ {{4}}>>>\ help\(graphviz\.{cls_name}\).*\n)
+               \ {{4}}Help\ on\ class\ {cls_name}
+                      \ in\ module\ graphviz\.(?:graphs|sources):\n
+               \ {{4}}<BLANKLINE>\n
+               (?:.*\n)+?
+               \ {{4}}<BLANKLINE>\n
+               '''
 
 IO_KWARGS = {'encoding': 'utf-8'}
 
@@ -102,7 +100,7 @@ def iterlines(stdout_lines, *,
         yield line_indent + line
 
 
-print('run', [SELF.name] + sys.argv[1:])
+print('run', [pathlib.Path(__file__).name] + sys.argv[1:])
 help_docs = {cls.__name__: get_help(cls) for cls in ALL_CLASSES}
 
 print('read', TARGET)

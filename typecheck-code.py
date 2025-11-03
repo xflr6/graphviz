@@ -7,10 +7,8 @@ import sys
 
 import mypy.main
 
-SELF = pathlib.Path(__file__)
 
-
-print('run', [SELF.name] + sys.argv[1:])
+print('run', [pathlib.Path(__file__).name] + sys.argv[1:])
 args = sys.argv[1:]
 
 print(f'mypy.main.main({args=}, clean_exit=True)')

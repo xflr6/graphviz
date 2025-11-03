@@ -7,11 +7,9 @@ import sys
 
 import flake8.main.cli
 
-SELF = pathlib.Path(__file__)
-
 
 if __name__ == '__main__':
-    print('run', [SELF.name] + sys.argv[1:])
+    print('run', [pathlib.Path(__file__).name] + sys.argv[1:])
     args = sys.argv[1:]
 
     # https://flake8.pycqa.org/en/latest/internal/cli.html#flake8.main.cli.main
