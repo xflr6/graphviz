@@ -117,6 +117,7 @@ def test_render_mocked(mocker, mock_render, dot):
     mock_render.assert_called_once_with(dot.engine, dot.format,
                                         mock_save.return_value,
                                         renderer=None, formatter=None,
+                                        y_invert=False,
                                         neato_no_op=None,
                                         outfile=None,
                                         raise_if_result_exists=False,
@@ -145,6 +146,7 @@ def test_render_outfile_mocked(mocker, mock_render, dot):
     mock_render.assert_called_once_with(dot.engine, dot.format,
                                         mock_save.return_value,
                                         renderer=None, formatter=None,
+                                        y_invert=False,
                                         neato_no_op=None,
                                         outfile=pathlib.Path(outfile),
                                         raise_if_result_exists=True,
@@ -174,6 +176,31 @@ def test_format_renderer_formatter_mocked(mocker, mock_render,
     mock_save.assert_called_once_with(None, None, skip_existing=None)
     mock_render.assert_called_once_with('dot', format, mock_save.return_value,
                                         renderer=renderer, formatter=formatter,
+                                        y_invert=False,
+                                        neato_no_op=None,
+                                        outfile=None,
+                                        raise_if_result_exists=False,
+                                        overwrite_filepath=False,
+                                        quiet=quiet)
+
+
+@pytest.mark.parametrize(
+    'y_invert', [False, True])
+def test_y_invert_mocked(mocker, mock_render,
+                         quiet, cls, y_invert,
+                         filename='y_invert.gv', format='svg'):
+    dot = cls(*[''] if cls.__name__ == 'Source' else [],
+              filename=filename, format=format)
+
+    mock_save = mocker.patch.object(dot, 'save', autospec=True)
+
+    assert dot.render(y_invert=y_invert,
+                      quiet=quiet) is mock_render.return_value
+
+    mock_save.assert_called_once_with(None, None, skip_existing=None)
+    mock_render.assert_called_once_with(dot.engine, format, mock_save.return_value,
+                                        renderer=None, formatter=None,
+                                        y_invert=y_invert,
                                         neato_no_op=None,
                                         outfile=None,
                                         raise_if_result_exists=False,
@@ -199,6 +226,7 @@ def test_neato_no_op_mocked(mocker, mock_render,
     mock_save.assert_called_once_with(None, None, skip_existing=None)
     mock_render.assert_called_once_with(engine, format, mock_save.return_value,
                                         renderer=None, formatter=None,
+                                        y_invert=False,
                                         neato_no_op=neato_no_op,
                                         outfile=None,
                                         raise_if_result_exists=False,
@@ -250,6 +278,7 @@ def test_pipe_mocked(mocker, mock_pipe_lines, mock_pipe_lines_string, quiet,
     expected_kwargs = {'quiet': quiet,
                        'renderer': None,
                        'formatter': None,
+                       'y_invert': False,
                        'neato_no_op': None}
 
     if encoding == input_encoding:
@@ -276,6 +305,7 @@ def test_pipe_lines_mocked(mocker, mock_pipe_lines, dot, format_='svg'):
 
     mock_pipe_lines.assert_called_once_with(dot.engine, format_, mocker.ANY,
                                             renderer=None, formatter=None,
+                                            y_invert=False,
                                             neato_no_op=None,
                                             input_encoding='utf-8',
                                             quiet=False)
@@ -338,6 +368,7 @@ def test_pipe_lines_called_process_error_mocked(invalid_dot,
                                             quiet=False,
                                             renderer=None,
                                             formatter=None,
+                                            y_invert=False,
                                             neato_no_op=None)
 
 
