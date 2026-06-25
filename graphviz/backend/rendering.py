@@ -97,6 +97,12 @@ def infer_format(outfile: pathlib.Path) -> str:
     >>> infer_format(pathlib.Path('spam.PNG'))
     'png'
 
+    >>> infer_format(pathlib.Path('spam.xdot1.2'))
+    'xdot1.2'
+
+    >>> infer_format(pathlib.Path('spam.xdot1.4'))
+    'xdot1.4'
+
     >>> infer_format(pathlib.Path('spam'))
     Traceback (most recent call last):
         ...
@@ -119,6 +125,13 @@ def infer_format(outfile: pathlib.Path) -> str:
     try:
         parameters.verify_format(format_)
     except ValueError:
+        # Fall back to matching the file name against formats that contain dots
+        # (e.g. 'xdot1.2', 'xdot1.4'), since pathlib.Path.suffix only returns
+        # the last component and cannot represent a multi-dot format extension.
+        name_lower = outfile.name.lower()
+        for fmt in sorted(parameters.FORMATS, key=len, reverse=True):
+            if '.' in fmt and name_lower.endswith('.' + fmt):
+                return fmt
         raise ValueError('cannot infer rendering format'
                          f' from suffix {outfile.suffix!r}'
                          f' of outfile: {os.fspath(outfile)!r}'
