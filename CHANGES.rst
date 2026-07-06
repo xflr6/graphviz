@@ -9,6 +9,9 @@ Drop Pyton 3.9 support (end of life 2025-10).
 
 Tag Python 3.14 support.
 
+Fix broken ``format`` inference for dotted format suffixes ``.xdot1.2`` and
+``.xdot1.4`` (aliases for ``.dot``).
+
 Improve type annotations, switch type checking from
 https://github.com/google/pytype to https://mypy-lang.org, and mark package
 as `py.typed` (PEP 561 compliant).

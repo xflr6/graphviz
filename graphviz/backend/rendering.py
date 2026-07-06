@@ -15,6 +15,9 @@ from . import execute
 
 __all__ = ['get_format', 'get_filepath', 'render']
 
+DOUBLE_SUFFIXES = {f'.{fmt}' for fmt in parameters.FORMATS
+                   if fmt in ('xdot1.2', 'xdot1.4')}
+
 
 def get_format(outfile: pathlib.Path, *, format: str | None) -> str:
     """Return format inferred from outfile suffix and/or given ``format``.
@@ -111,6 +114,9 @@ def infer_format(outfile: pathlib.Path) -> str:
     if not outfile.suffix:
         raise ValueError('cannot infer rendering format from outfile:'
                          f' {os.fspath(outfile)!r} (missing suffix)')
+
+    if (double_sfx := ''.join(outfile.suffixes[-2:]).lower()) in DOUBLE_SUFFIXES:
+        return double_sfx.removeprefix('.')
 
     (start, sep, format_) = outfile.suffix.partition('.')
     assert sep and not start, f"{outfile.suffix!r}.startswith('.')"

@@ -195,7 +195,10 @@ def test_get_filepath(outfile, expected_fspath):
      ('spam.jpeg', None, 'jpeg'),
      ('spam.SVG', None, 'svg'),
      ('spam.pdf', None, 'pdf'),
-     ('spam.pdf', 'pdf', 'pdf')])
+     ('spam.pdf', 'pdf', 'pdf'),
+     ('spam.xdot1.2', None, 'xdot1.2'),
+     ('spam.XDOT1.2', None, 'xdot1.2'),
+     ('spam.xdot1.4', None, 'xdot1.4')])
 def test_get_format(outfile_name, format, expected_result):
     outfile = pathlib.Path(outfile_name)
 
