@@ -168,6 +168,7 @@ def render(engine: str,
            formatter: str | None = ...,
            neato_no_op: bool | int | None = ...,
            quiet: bool = ..., *,
+           plain_format_y_invert: bool = ...,
            outfile: None = ...,
            raise_if_result_exists: bool = ...,
            overwrite_filepath: bool = ...) -> str:
@@ -182,6 +183,7 @@ def render(engine: str,
            formatter: str | None = ...,
            neato_no_op: bool | int | None = ...,
            quiet: bool = False, *,
+           plain_format_y_invert: bool = ...,
            outfile: os.PathLike[str] | str,
            raise_if_result_exists: bool = ...,
            overwrite_filepath: bool = ...) -> str:
@@ -196,6 +198,7 @@ def render(engine: str,
            formatter: str | None = ...,
            neato_no_op: bool | int | None = ...,
            quiet: bool = False, *,
+           plain_format_y_invert: bool = ...,
            outfile: os.PathLike[str] | str | None = ...,
            raise_if_result_exists: bool = ...,
            overwrite_filepath: bool = ...) -> str:
@@ -210,6 +213,7 @@ def render(engine: str,
            formatter: str | None = None,
            neato_no_op: bool | int | None = None,
            quiet: bool = False, *,
+           plain_format_y_invert: bool = False,
            outfile: os.PathLike[str] | str | None = None,
            raise_if_result_exists: bool = False,
            overwrite_filepath: bool = False) -> str:
@@ -227,6 +231,7 @@ def render(engine: str,
         formatter: Output formatter (``'cairo'``, ``'gd'``, ...).
         neato_no_op: Neato layout engine no-op flag.
         quiet: Suppress ``stderr`` output from the layout subprocess.
+        plain_format_y_invert: Invert y coordinates in the rendered output.
         outfile: Path for the rendered output file.
         raise_if_result_exists: Raise :exc:`graphviz.FileExistsError`
             if the result file exists.
@@ -320,6 +325,7 @@ def render(engine: str,
     cmd = dot_command.command(engine, format,
                               renderer=renderer,
                               formatter=formatter,
+                              plain_format_y_invert=plain_format_y_invert,
                               neato_no_op=neato_no_op)
 
     if raise_if_result_exists and os.path.exists(outfile):
