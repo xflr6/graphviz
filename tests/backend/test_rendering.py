@@ -3,6 +3,8 @@ import pathlib
 import os
 import shutil
 import subprocess
+from types import MappingProxyType
+from xml.etree import ElementTree
 
 import pytest
 
@@ -120,7 +122,14 @@ def test_render_outfile_differnt_parent(capsys, tmp_path,
 
 @pytest.mark.parametrize(
     'directory', [None, 'dot_sources'])
-def test_render_mocked(capsys, mock_run, quiet, directory,
+@pytest.mark.parametrize(
+    'graph_attr, expected_flags',
+    [(None, []),
+     ({}, []),
+     ({'overlap': 'scale'}, ['-Goverlap=scale']),
+     ({'label': 'spaces "quotes" = values', 'fontname': 'Times New Roman'},
+      ['-Glabel=spaces "quotes" = values', '-Gfontname=Times New Roman'])])
+def test_render_mocked(capsys, mock_run, quiet, directory, graph_attr, expected_flags,
                        filepath='nonfilepath'):
     mock_run.return_value = subprocess.CompletedProcess(_common.INVALID_CMD,
                                                         returncode=0,
@@ -130,20 +139,71 @@ def test_render_mocked(capsys, mock_run, quiet, directory,
     if directory is not None:
         filepath = os.path.join(directory, filepath)
 
+    original_graph_attr = None if graph_attr is None else dict(graph_attr)
     result = graphviz.render('dot', 'pdf', filepath,
                              neato_no_op=True,
-                             quiet=quiet)
+                             quiet=quiet,
+                             graph_attr=graph_attr)
 
     assert result == f'{filepath}.pdf'
+    assert graph_attr == original_graph_attr
 
     mock_run.assert_called_once_with([_common.EXPECTED_DOT_BINARY,
                                       '-Kdot', '-Tpdf',
                                       '-n1',
+                                      *expected_flags,
                                       '-O', 'nonfilepath'],
                                      capture_output=True,
                                      cwd=_tools.promote_pathlike(directory),
                                      startupinfo=_common.StartupinfoMatcher())
     assert capsys.readouterr() == ('', '' if quiet else 'stderr')
+
+
+def test_render_graph_attr_outfile_mocked(tmp_path, mock_run):
+    mock_run.return_value = subprocess.CompletedProcess(_common.INVALID_CMD,
+                                                        returncode=0,
+                                                        stdout=b'', stderr=b'')
+    filepath = tmp_path / 'source files' / 'spam.gv'
+    outfile = tmp_path / 'rendered files' / 'spam.plain'
+    graph_attr = MappingProxyType({'label': ''})
+
+    result = graphviz.render('neato', filepath=filepath, outfile=outfile,
+                             renderer='dot', formatter='core', neato_no_op=2,
+                             graph_attr=graph_attr)
+
+    assert result == os.fspath(outfile)
+    assert graph_attr == {'label': ''}
+    mock_run.assert_called_once_with([_common.EXPECTED_DOT_BINARY,
+                                      '-Kneato', '-Tplain:dot:core', '-n2',
+                                      '-Glabel=', '-o', outfile, 'spam.gv'],
+                                     capture_output=True, cwd=filepath.parent,
+                                     startupinfo=_common.StartupinfoMatcher())
+
+
+@pytest.mark.exe
+@pytest.mark.parametrize('outfile_name', [None, 'rendered.svg'])
+def test_render_graph_attr(tmp_path, outfile_name):
+    filepath = tmp_path / 'spam.gv'
+    source = b'digraph { spam -> eggs }'
+    filepath.write_bytes(source)
+    outfile = None if outfile_name is None else tmp_path / outfile_name
+    label = 'spaces "quotes" = values'
+    graph_attr = {'label': label, 'fontcolor': 'red'}
+
+    result = graphviz.render('dot', 'svg', filepath, outfile=outfile)
+    texts = ElementTree.parse(result).findall('.//{http://www.w3.org/2000/svg}text')
+    assert label not in [text.text for text in texts]
+
+    result_with_attrs = graphviz.render('dot', 'svg', filepath, outfile=outfile,
+                                        graph_attr=graph_attr)
+
+    assert result_with_attrs == result
+    texts = ElementTree.parse(result).findall('.//{http://www.w3.org/2000/svg}text')
+    labels = [text for text in texts if text.text == label]
+    assert len(labels) == 1
+    assert labels[0].get('fill') == 'red'
+    assert filepath.read_bytes() == source
+    assert graph_attr == {'label': label, 'fontcolor': 'red'}
 
 
 @pytest.mark.parametrize(
@@ -168,7 +228,7 @@ def test_render_raises_mocked(tmp_path, mock_run, args, kwargs,
 
     with _common.as_cwd(tmp_path):
         with pytest.raises(expected_exception, match=match):
-            graphviz.render(*args, **kwargs)
+            graphviz.render(*args, graph_attr={'overlap': 'scale'}, **kwargs)
 
 
 @pytest.mark.parametrize(

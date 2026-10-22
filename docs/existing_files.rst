@@ -19,6 +19,19 @@ you can use the :func:`graphviz.render` function.
     >>> graphviz.render('dot', 'png', filepath).replace('\\', '/')
     'doctest-output/the-holy-hand-grenade.gv.png'
 
+Pass a ``graph_attr`` mapping to set graph attributes with the
+`-G flag <https://graphviz.org/doc/info/command.html#-G>`_
+without modifying the DOT_ source file:
+
+.. doctest::
+
+    >>> graphviz.render('sfdp', 'png', filepath,
+    ...                 graph_attr={'overlap': 'scale'}).replace('\\', '/')
+    'doctest-output/the-holy-hand-grenade.gv.png'
+
+Each attribute is passed as a separate ``-Gname=value`` argument.
+Values containing spaces or quotes do not need shell quoting.
+
 To directly display the rendered visualization of an existing DOT_ source file
 inside a  Jupyter `notebook <Jupyter notebook_>`_
 or `Qt Console <Jupyter Qt Console_>`_,

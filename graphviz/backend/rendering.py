@@ -1,5 +1,6 @@
 """Render DOT source files with Graphviz ``dot``."""
 
+from collections.abc import Mapping
 import os
 import pathlib
 from typing import overload
@@ -170,7 +171,8 @@ def render(engine: str,
            quiet: bool = ..., *,
            outfile: None = ...,
            raise_if_result_exists: bool = ...,
-           overwrite_filepath: bool = ...) -> str:
+           overwrite_filepath: bool = ...,
+           graph_attr: Mapping[str, str] | None = ...) -> str:
     """Require ``format`` and ``filepath`` with default ``outfile=None``."""
 
 
@@ -184,7 +186,8 @@ def render(engine: str,
            quiet: bool = False, *,
            outfile: os.PathLike[str] | str,
            raise_if_result_exists: bool = ...,
-           overwrite_filepath: bool = ...) -> str:
+           overwrite_filepath: bool = ...,
+           graph_attr: Mapping[str, str] | None = ...) -> str:
     """Optional ``format`` and ``filepath`` with given ``outfile``."""
 
 
@@ -198,7 +201,8 @@ def render(engine: str,
            quiet: bool = False, *,
            outfile: os.PathLike[str] | str | None = ...,
            raise_if_result_exists: bool = ...,
-           overwrite_filepath: bool = ...) -> str:
+           overwrite_filepath: bool = ...,
+           graph_attr: Mapping[str, str] | None = ...) -> str:
     """Required/optional ``format`` and ``filepath`` depending on ``outfile``."""
 
 
@@ -212,7 +216,8 @@ def render(engine: str,
            quiet: bool = False, *,
            outfile: os.PathLike[str] | str | None = None,
            raise_if_result_exists: bool = False,
-           overwrite_filepath: bool = False) -> str:
+           overwrite_filepath: bool = False,
+           graph_attr: Mapping[str, str] | None = None) -> str:
     r"""Render file with ``engine`` into ``format`` and return result filename.
 
     Args:
@@ -232,6 +237,9 @@ def render(engine: str,
             if the result file exists.
         overwrite_filepath: Allow ``dot`` to write to the file it reads from.
             Incompatible with ``raise_if_result_exists``.
+        graph_attr: Mapping of graph attribute names to values, passed as
+            ``-Gname=value`` arguments without modifying the DOT source file.
+            Values do not need shell quoting.
 
     Returns:
         The (possibly relative) path of the rendered file.
@@ -320,7 +328,8 @@ def render(engine: str,
     cmd = dot_command.command(engine, format,
                               renderer=renderer,
                               formatter=formatter,
-                              neato_no_op=neato_no_op)
+                              neato_no_op=neato_no_op,
+                              graph_attr=graph_attr)
 
     if raise_if_result_exists and os.path.exists(outfile):
         raise exceptions.FileExistsError(f'output file exists: {os.fspath(outfile)!r}')
