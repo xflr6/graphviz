@@ -6,8 +6,9 @@ Version 0.22 (in development)
 -----------------------------
 
 Drop Pyton 3.9 support (end of life 2025-10).
+Drop Pyton 3.10 support (end of life 2026-10).
 
-Tag Python 3.14 support.
+Tag Python 3.14 and Python 3.15 support.
 
 Fix broken ``format`` inference for dotted format suffixes ``.xdot1.2`` and
 ``.xdot1.4`` (aliases for ``.dot``).
