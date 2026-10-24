@@ -29,6 +29,7 @@ class Render(saving.Save, backend.Render, backend.View):
                neato_no_op: bool | int | None = None,
                quiet: bool = False,
                quiet_view: bool = False, *,
+               plain_format_y_invert: bool = False,
                outfile: os.PathLike[str] | str | None = None,
                engine: str | None = None,
                raise_if_result_exists: bool = False,
@@ -55,6 +56,7 @@ class Render(saving.Save, backend.Render, backend.View):
             quiet_view (bool): Suppress ``stderr`` output
                 from the viewer process
                 (implies ``view=True``, ineffective on Windows platform).
+            plain_format_y_invert: Invert y coordinates in the rendered output.
             outfile: Path for the rendered output file.
             engine: Layout engine for rendering
                 (``'dot'``, ``'neato'``, ...).
@@ -104,6 +106,7 @@ class Render(saving.Save, backend.Render, backend.View):
                                                      format=format,
                                                      renderer=renderer,
                                                      formatter=formatter,
+                                                     plain_format_y_invert=plain_format_y_invert,
                                                      neato_no_op=neato_no_op,
                                                      quiet=quiet,
                                                      outfile=outfile,
