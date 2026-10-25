@@ -10,6 +10,9 @@ Drop Pyton 3.10 support (end of life 2026-10).
 
 Tag Python 3.14 and Python 3.15 support.
 
+Add ``graph_attr`` to the file-level ``graphviz.render()`` function to pass
+graph attributes as ``-Gname=value`` arguments (issue #220).
+
 Fix broken ``format`` inference for dotted format suffixes ``.xdot1.2`` and
 ``.xdot1.4`` (aliases for ``.dot``).
 

@@ -1,5 +1,6 @@
 """Check and assemble commands for running Graphviz ``dot``."""
 
+from collections.abc import Mapping
 import os
 import pathlib
 from typing import Final
@@ -15,7 +16,8 @@ DOT_BINARY: Final = pathlib.Path('dot')
 def command(engine: str, format_: str, *,
             renderer: str | None = None,
             formatter: str | None = None,
-            neato_no_op: bool | int | None = None) -> list[os.PathLike[str] | str]:
+            neato_no_op: bool | int | None = None,
+            graph_attr: Mapping[str, str] | None = None) -> list[os.PathLike[str] | str]:
     """Return ``subprocess.Popen`` argument list for rendering.
 
     See also:
@@ -23,6 +25,7 @@ def command(engine: str, format_: str, *,
         - https://www.graphviz.org/doc/info/command.html#-K
         - https://www.graphviz.org/doc/info/command.html#-T
         - https://www.graphviz.org/doc/info/command.html#-n
+        - https://www.graphviz.org/doc/info/command.html#-G
     """
     if formatter is not None and renderer is None:
         raise exceptions.RequiredArgumentError('formatter given without renderer')
@@ -40,5 +43,8 @@ def command(engine: str, format_: str, *,
 
     if neato_no_op:
         cmd.append(f'-n{neato_no_op:d}')
+
+    if graph_attr is not None:
+        cmd.extend(f'-G{name}={value}' for name, value in graph_attr.items())
 
     return cmd
