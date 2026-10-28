@@ -43,6 +43,17 @@ def test_quote(identifier, expected):
 
 
 @pytest.mark.parametrize(
+    'identifier, expected',
+    [('spam', 'spam'),
+     ('spam:eggs', 'spam:eggs'),
+     ('spam:eggs:s', 'spam:eggs:s'),
+     ('spam:eggs:_', 'spam:eggs:_'),
+     ('spam:eggs:s; ham [label="eggs"]', r'spam:eggs:"s; ham [label=\"eggs\"]"')])
+def test_quote_edge(identifier, expected):
+    assert quoting.quote_edge(identifier) == expected
+
+
+@pytest.mark.parametrize(
     'attributes, expected',
     [([('spam', 'eggs')], ' [spam=eggs]'),
      ({'spam': 'eggs'}, ' [spam=eggs]')])
