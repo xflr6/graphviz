@@ -102,6 +102,9 @@ def quote_edge(identifier: str) -> str:
 
     >>> quote_edge('spam:eggs:s')
     'spam:eggs:s'
+
+    >>> quote_edge('spam:eggs:s -> ham')
+    'spam:eggs:"s -> ham"'
     """
     (node, _, rest) = identifier.partition(':')
     parts = [quote(node)]
@@ -109,7 +112,7 @@ def quote_edge(identifier: str) -> str:
         (port, _, compass) = rest.partition(':')
         parts.append(quote(port))
         if compass:
-            parts.append(compass)
+            parts.append(quote(compass))
     return ':'.join(parts)
 
 
