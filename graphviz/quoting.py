@@ -18,7 +18,7 @@ __all__ = ['quote', 'quote_edge',
 
 HTML_STRING: Final = re.compile(r'<.*>$', re.DOTALL)
 
-ID: Final = re.compile(r'([a-zA-Z_][a-zA-Z0-9_]*|-?(\.[0-9]+|[0-9]+(\.[0-9]*)?))$')
+ID: Final = re.compile(r'([a-zA-Z_][a-zA-Z0-9_]*|-?(\.[0-9]+|[0-9]+(\.[0-9]*)?))\Z')
 
 KEYWORDS: Final[Set[str]] = {'node', 'edge', 'graph', 'digraph', 'subgraph', 'strict'}
 

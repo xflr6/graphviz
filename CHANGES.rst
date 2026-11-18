@@ -13,6 +13,9 @@ Tag Python 3.14 and Python 3.15 support.
 Fix broken ``format`` inference for dotted format suffixes ``.xdot1.2`` and
 ``.xdot1.4`` (aliases for ``.dot``).
 
+Fix missing quoting of identifiers with a trailing newline, e.g. ``'node\n'``
+was passed on unquoted as the DOT keyword ``node``.
+
 Improve type annotations, switch type checking from
 https://github.com/google/pytype to https://mypy-lang.org, and mark package
 as `py.typed` (PEP 561 compliant).
