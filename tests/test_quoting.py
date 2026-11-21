@@ -63,3 +63,12 @@ def test_nohtml(string, expected, expected_quoted):
     quoted = quoting.quote(result)
     assert isinstance(quoted, str)
     assert quoted == expected_quoted
+
+
+@pytest.mark.parametrize(
+    'identifier, expected',
+    [(graphviz.nohtml('<spam>:<eggs>'), '"<spam>":"<eggs>"'),
+     (graphviz.escape('<spam>:<eggs>:s'), '"<spam>":"<eggs>":s'),
+     ('<spam>:<eggs>', '<spam>:<eggs>')])
+def test_quote_edge_nohtml(identifier, expected):
+    assert quoting.quote_edge(identifier) == expected
