@@ -102,12 +102,17 @@ def quote_edge(identifier: str) -> str:
 
     >>> quote_edge('spam:eggs:s')
     'spam:eggs:s'
+
+    >>> quote_edge(nohtml('<spam>:<eggs>'))
+    '"<spam>":"<eggs>"'
     """
+    # str.partition() returns plain str parts, keep NoHtml for node and port
+    keep_nohtml = nohtml if isinstance(identifier, NoHtml) else str
     (node, _, rest) = identifier.partition(':')
-    parts = [quote(node)]
+    parts = [quote(keep_nohtml(node))]
     if rest:
         (port, _, compass) = rest.partition(':')
-        parts.append(quote(port))
+        parts.append(quote(keep_nohtml(port)))
         if compass:
             parts.append(compass)
     return ':'.join(parts)

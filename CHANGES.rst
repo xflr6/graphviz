@@ -13,6 +13,9 @@ Tag Python 3.14 and Python 3.15 support.
 Fix broken ``format`` inference for dotted format suffixes ``.xdot1.2`` and
 ``.xdot1.4`` (aliases for ``.dot``).
 
+Fix ``escape()`` and ``nohtml()`` being ignored by ``edge()`` and ``edges()``
+for ``tail_name`` and ``head_name`` containing a colon (``node:port``).
+
 Improve type annotations, switch type checking from
 https://github.com/google/pytype to https://mypy-lang.org, and mark package
 as `py.typed` (PEP 561 compliant).
